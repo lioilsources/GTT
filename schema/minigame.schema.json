@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "minigame.schema.json",
+  "title": "Minigame contract types",
+  "description": "Meta, context and result of a minigame (METROPOLE_PLAN 9.1, DUALSTACK 6.5). Generated into Dart and TypeScript.",
+  "$defs": {
+    "MinigameMeta": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "engine", "targetLengthS", "cities", "casinoLike"],
+      "properties": {
+        "id": {"type": "string"},
+        "engine": {"type": "string"},
+        "targetLengthS": {"type": "integer", "minimum": 60, "maximum": 600},
+        "cities": {"type": "array", "items": {"type": "string"}, "description": "Empty = everywhere."},
+        "casinoLike": {"type": "boolean", "description": "Rating and the regional switch (R11)."}
+      }
+    },
+    "MinigameContext": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["cityId", "difficulty", "seed", "locale"],
+      "properties": {
+        "cityId": {"type": "string"},
+        "difficulty": {"type": "integer", "minimum": 1, "maximum": 5},
+        "seed": {"type": "integer", "minimum": 0},
+        "opponentId": {"type": "string"},
+        "locale": {"type": "string"}
+      }
+    },
+    "MinigameResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["stars", "score", "playedMs", "aborted"],
+      "properties": {
+        "stars": {"type": "integer", "minimum": 0, "maximum": 3},
+        "score": {"type": "integer"},
+        "playedMs": {"type": "integer", "minimum": 0},
+        "aborted": {"type": "boolean"}
+      }
+    }
+  }
+}

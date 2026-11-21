@@ -1,0 +1,34 @@
+name: Setup shared tooling
+description: Go, protoc with the Dart/Go/ES plugins, Node deps of web/ and the metro + citypack binaries.
+runs:
+  using: composite
+  steps:
+    - uses: actions/setup-go@v7
+      with:
+        go-version: '1.26'
+        cache-dependency-path: tools/*/go.sum
+    - uses: arduino/setup-protoc@v3
+      with:
+        version: '36.2'
+        repo-token: ${{ github.token }}
+    - uses: actions/setup-node@v7
+      with:
+        node-version: '26'
+        cache: npm
+        cache-dependency-path: web/package-lock.json
+    - uses: subosito/flutter-action@v2
+      with:
+        flutter-version: '3.44.4'
+        cache: true
+    - name: Plugins and binaries
+      shell: bash
+      run: |
+        go install google.golang.org/protobuf/cmd/protoc-gen-go@v1.36.12
+        dart pub global activate protoc_plugin 25.1.0
+        echo "$HOME/.pub-cache/bin" >> "$GITHUB_PATH"
+        echo "$(go env GOPATH)/bin" >> "$GITHUB_PATH"
+        npm ci --prefix web
+        mkdir -p run/bin
+        (cd tools/metro && go build -o ../../run/bin/metro ./cmd/metro)
+        (cd tools/citypack && go build -o ../../run/bin/citypack ./cmd/citypack)
+        echo "$PWD/run/bin" >> "$GITHUB_PATH"

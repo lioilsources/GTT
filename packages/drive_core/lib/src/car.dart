@@ -3,7 +3,6 @@ import 'dart:math' as math;
 import 'package:forge2d/forge2d.dart';
 import 'package:world_engine/core.dart';
 
-import 'car_spec.dart';
 import 'controls.dart';
 
 /// Collision categories.
@@ -26,7 +25,7 @@ class Car {
       isBullet: true,
     ));
     _shape = body.createShape(
-      Polygon.box(halfLength, halfWidth, radius: t.bodyRound),
+      Polygon.box(halfLength, halfWidth, radius: t.bodyRoundM),
       ShapeDef(
         density: spec.mass / (4 * halfLength * halfWidth),
         material: SurfaceMaterial(friction: t.carFriction, restitution: t.carRestitution),
@@ -38,7 +37,7 @@ class Car {
 
   final World world;
   final CarSpec spec;
-  final DriveTuning t;
+  final TuningDrive t;
   final double scale;
   late final Body body;
   late Shape _shape;
@@ -98,11 +97,11 @@ class Car {
     final topSpeed = math.min(top, spec.topSpeed);
 
     // Steering: wheels turn at steer_speed, less lock at speed.
-    final lock = t.steerLock - t.steerLockDrop * (speed / math.max(topSpeed, 1)).clamp(0.0, 1.0);
+    final lock = t.steerLockRad - t.steerLockDropRad * (speed / math.max(topSpeed, 1)).clamp(0.0, 1.0);
     var target = -input.steer * lock;
     final slip = slipAngle;
     if (speedF > t.countersteerMinMps &&
-        slip.abs() > t.countersteerMinSlip &&
+        slip.abs() > t.countersteerMinSlipRad &&
         input.steer.abs() < t.countersteerMaxInput) {
       target += (slip * t.countersteerGain).clamp(-lock, lock);
     }
@@ -126,10 +125,10 @@ class Car {
       final thr = input.throttle > 0 ? input.throttle : (speedF < wantSpeed ? 1.0 : 0.0);
       final k = 1 - math.pow((speedF / topSpeed).clamp(0.0, 1.0), 2).toDouble();
       accel = spec.power * thr * k;
-      if (speedF > wantSpeed + t.overspeedMps) accel = -t.engineBrake;
+      if (speedF > wantSpeed + t.overspeedMps) accel = -t.engineBrakeMps2;
     }
     if (input.handbrake) {
-      accel = math.min(accel, speedF > t.brakeMinMps ? -t.handbrakeDecel : 0);
+      accel = math.min(accel, speedF > t.brakeMinMps ? -t.handbrakeDecelMps2 : 0);
       // Kick the tail out: yaw acceleration towards the steer direction, stronger with speed.
       if (speedF > t.handbrakeMinMps) {
         final k = (speedF / t.handbrakeYawRefMps).clamp(0.0, t.handbrakeYawMax);

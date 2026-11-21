@@ -32,7 +32,7 @@ var pipeline = []step{
 }
 
 func usage() {
-	fmt.Fprintf(os.Stderr, "usage: citypack [flags] <step|build> <city>\nsteps:")
+	fmt.Fprintf(os.Stderr, "usage: citypack [flags] <step|build|publish> <city> | citypack pull <city|all>\nsteps:")
 	for _, s := range pipeline {
 		fmt.Fprintf(os.Stderr, " %s", s.name)
 	}
@@ -42,7 +42,7 @@ func usage() {
 
 func main() {
 	root := flag.String("root", ".", "repository root (contains content/ and run/)")
-	out := flag.String("out", "", "output directory (default app/assets/cities/<city>)")
+	out := flag.String("out", "", "output directory (default build/packs/<city>)")
 	force := flag.Bool("force", false, "ignore cached step outputs (except downloads)")
 	refetch := flag.Bool("refetch", false, "re-download Overture layers")
 	flag.Usage = usage
@@ -52,6 +52,17 @@ func main() {
 		os.Exit(2)
 	}
 	cmd, city := flag.Arg(0), flag.Arg(1)
+	if cmd == "pull" {
+		var cities []string
+		if city != "all" {
+			cities = []string{city}
+		}
+		if err := steps.Pull(*root, cities); err != nil {
+			slog.Error("citypack pull failed", "err", err)
+			os.Exit(1)
+		}
+		return
+	}
 	if err := run(*root, *out, cmd, city, *force, *refetch); err != nil {
 		slog.Error("citypack failed", "err", err)
 		os.Exit(1)
@@ -64,13 +75,16 @@ func run(root, out, cmd, city string, force, refetch bool) error {
 		return err
 	}
 	if out == "" {
-		out = filepath.Join(root, "app", "assets", "cities", city)
+		out = filepath.Join(root, "build", "packs", city)
 	}
 	env, err := steps.NewEnv(c, filepath.Join(root, "run", "citypack", city), out, force)
 	if err != nil {
 		return err
 	}
 	env.Refetch = refetch
+	if cmd == "publish" {
+		return steps.Publish(env, root)
+	}
 	var todo []step
 	for _, s := range pipeline {
 		if cmd == "build" || cmd == s.name {

@@ -1,0 +1,378 @@
+{
+ "module": "prng",
+ "specVersion": 1,
+ "$comment": "Reference values from METROPOLE_DUALSTACK_PLAN 5.4; state.value is the call result, state.x the generator state after it.",
+ "cases": [
+  {
+   "name": "seed-1-five-u32",
+   "config": {},
+   "seed": 1,
+   "steps": [
+    {
+     "action": {
+      "op": "nextU32"
+     },
+     "state": {
+      "value": 270369,
+      "x": 270369
+     }
+    },
+    {
+     "action": {
+      "op": "nextU32"
+     },
+     "state": {
+      "value": 67634689,
+      "x": 67634689
+     }
+    },
+    {
+     "action": {
+      "op": "nextU32"
+     },
+     "state": {
+      "value": 2647435461,
+      "x": 2647435461
+     }
+    },
+    {
+     "action": {
+      "op": "nextU32"
+     },
+     "state": {
+      "value": 307599695,
+      "x": 307599695
+     }
+    },
+    {
+     "action": {
+      "op": "nextU32"
+     },
+     "state": {
+      "value": 2398689233,
+      "x": 2398689233
+     }
+    }
+   ],
+   "result": null
+  },
+  {
+   "name": "seed-1-shuffle-0-9",
+   "config": {},
+   "seed": 1,
+   "steps": [
+    {
+     "action": {
+      "op": "shuffle",
+      "items": [
+       0,
+       1,
+       2,
+       3,
+       4,
+       5,
+       6,
+       7,
+       8,
+       9
+      ]
+     },
+     "state": {
+      "value": [
+       3,
+       1,
+       0,
+       2,
+       6,
+       7,
+       8,
+       5,
+       4,
+       9
+      ],
+      "x": 2005365029
+     }
+    }
+   ],
+   "result": null
+  },
+  {
+   "name": "seed-42-eight-dice",
+   "config": {},
+   "seed": 42,
+   "steps": [
+    {
+     "action": {
+      "op": "nextInt",
+      "n": 6
+     },
+     "state": {
+      "value": 0,
+      "x": 11355432
+     }
+    },
+    {
+     "action": {
+      "op": "nextInt",
+      "n": 6
+     },
+     "state": {
+      "value": 4,
+      "x": 2836018348
+     }
+    },
+    {
+     "action": {
+      "op": "nextInt",
+      "n": 6
+     },
+     "state": {
+      "value": 3,
+      "x": 476557059
+     }
+    },
+    {
+     "action": {
+      "op": "nextInt",
+      "n": 6
+     },
+     "state": {
+      "value": 2,
+      "x": 3648046016
+     }
+    },
+    {
+     "action": {
+      "op": "nextInt",
+      "n": 6
+     },
+     "state": {
+      "value": 0,
+      "x": 3759983556
+     }
+    },
+    {
+     "action": {
+      "op": "nextInt",
+      "n": 6
+     },
+     "state": {
+      "value": 0,
+      "x": 1441438134
+     }
+    },
+    {
+     "action": {
+      "op": "nextInt",
+      "n": 6
+     },
+     "state": {
+      "value": 0,
+      "x": 3713466840
+     }
+    },
+    {
+     "action": {
+      "op": "nextInt",
+      "n": 6
+     },
+     "state": {
+      "value": 4,
+      "x": 2431644334
+     }
+    }
+   ],
+   "result": null
+  },
+  {
+   "name": "seed-0-replaced",
+   "config": {},
+   "seed": 0,
+   "steps": [
+    {
+     "action": {
+      "op": "nextU32"
+     },
+     "state": {
+      "value": 1359758873,
+      "x": 1359758873
+     }
+    },
+    {
+     "action": {
+      "op": "nextU32"
+     },
+     "state": {
+      "value": 3761132862,
+      "x": 3761132862
+     }
+    },
+    {
+     "action": {
+      "op": "nextU32"
+     },
+     "state": {
+      "value": 2075758394,
+      "x": 2075758394
+     }
+    }
+   ],
+   "result": null
+  },
+  {
+   "name": "seed-123456789-int-1000",
+   "config": {},
+   "seed": 123456789,
+   "steps": [
+    {
+     "action": {
+      "op": "nextInt",
+      "n": 1000
+     },
+     "state": {
+      "value": 881,
+      "x": 2714967881
+     }
+    },
+    {
+     "action": {
+      "op": "nextInt",
+      "n": 1000
+     },
+     "state": {
+      "value": 396,
+      "x": 2238813396
+     }
+    },
+    {
+     "action": {
+      "op": "nextInt",
+      "n": 1000
+     },
+     "state": {
+      "value": 441,
+      "x": 1250077441
+     }
+    },
+    {
+     "action": {
+      "op": "nextInt",
+      "n": 1000
+     },
+     "state": {
+      "value": 336,
+      "x": 3820100336
+     }
+    },
+    {
+     "action": {
+      "op": "nextInt",
+      "n": 1000
+     },
+     "state": {
+      "value": 686,
+      "x": 3177519686
+     }
+    }
+   ],
+   "result": null
+  },
+  {
+   "name": "seed-7-shuffle-0-19",
+   "config": {},
+   "seed": 7,
+   "steps": [
+    {
+     "action": {
+      "op": "shuffle",
+      "items": [
+       0,
+       1,
+       2,
+       3,
+       4,
+       5,
+       6,
+       7,
+       8,
+       9,
+       10,
+       11,
+       12,
+       13,
+       14,
+       15,
+       16,
+       17,
+       18,
+       19
+      ]
+     },
+     "state": {
+      "value": [
+       17,
+       18,
+       8,
+       5,
+       16,
+       9,
+       14,
+       12,
+       19,
+       1,
+       0,
+       11,
+       10,
+       2,
+       6,
+       15,
+       7,
+       13,
+       4,
+       3
+      ],
+      "x": 1936219196
+     }
+    }
+   ],
+   "result": null
+  },
+  {
+   "name": "seed-max-uint32",
+   "config": {},
+   "seed": 4294967295,
+   "steps": [
+    {
+     "action": {
+      "op": "nextU32"
+     },
+     "state": {
+      "value": 253983,
+      "x": 253983
+     }
+    },
+    {
+     "action": {
+      "op": "nextInt",
+      "n": 1
+     },
+     "state": {
+      "value": 0,
+      "x": 4228382207
+     }
+    },
+    {
+     "action": {
+      "op": "nextInt",
+      "n": 3
+     },
+     "state": {
+      "value": 0,
+      "x": 1958451267
+     }
+    }
+   ],
+   "result": null
+  }
+ ]
+}

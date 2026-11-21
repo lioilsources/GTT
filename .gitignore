@@ -23,3 +23,10 @@ bin/
 run/
 app/build/
 *.iml
+
+# Shared-layer outputs (DUALSTACK 5.1/5.2)
+/build/
+app/assets/shared/
+web/public/shared/
+app/lib/l10n/app_localizations*.dart
+PARITY.md

@@ -1,0 +1,13 @@
+name: rules_core
+description: Deterministic P0 rules shared by every module (PRNG, vector replay). Pure Dart, no UI.
+version: 0.1.0
+publish_to: none
+resolution: workspace
+
+environment:
+  sdk: ^3.12.2
+
+dev_dependencies:
+  lints: ^6.0.0
+  test: ^1.26.0
+  yaml: ^3.1.4

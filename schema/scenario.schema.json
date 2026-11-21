@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "scenario.schema.json",
+  "title": "P1 scenario",
+  "description": "scenarios/<module>/<name>.json: inputs over time and expected metrics with tolerance (DUALSTACK 5.5).",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["module", "name", "inputs", "expect"],
+  "properties": {
+    "module": {"type": "string"},
+    "car": {"type": "string"},
+    "name": {"type": "string"},
+    "inputs": {"type": "array", "items": {"type": "object", "required": ["t"], "properties": {"t": {"type": "number", "minimum": 0}}}},
+    "expect": {"type": "object", "additionalProperties": {"type": "object", "required": ["value", "tol"], "properties": {"value": {"type": ["number", "null"]}, "tol": {"type": "number", "minimum": 0}}}}
+  }
+}

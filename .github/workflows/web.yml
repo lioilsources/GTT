@@ -1,0 +1,86 @@
+name: web
+# Client W: web/ → GitHub Pages (DUALSTACK 6.7).
+on:
+  pull_request:
+    paths:
+      - 'web/**'
+      - 'content/**'
+      - 'i18n/**'
+      - 'design/**'
+      - 'schema/**'
+      - 'specs/**'
+      - 'vectors/**'
+      - 'scenarios/**'
+      - 'assets/**'
+      - 'parity.yaml'
+      - 'metro.yaml'
+      - 'packs.lock'
+      - 'tools/**'
+      - 'packages/shared_gen/**'
+      - 'web/src/gen/**'
+      - '.github/**'
+  push:
+    branches: [main]
+    paths:
+      - 'web/**'
+      - 'content/**'
+      - 'i18n/**'
+      - 'design/**'
+      - 'schema/**'
+      - 'specs/**'
+      - 'vectors/**'
+      - 'scenarios/**'
+      - 'assets/**'
+      - 'parity.yaml'
+      - 'metro.yaml'
+      - 'packs.lock'
+      - 'tools/**'
+      - 'packages/shared_gen/**'
+      - 'web/src/gen/**'
+      - '.github/**'
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - uses: ./.github/actions/setup-shared
+      - name: Path ownership
+        if: github.event_name == 'pull_request'
+        run: metro guard --base origin/${{ github.base_ref }}
+      - run: metro gen --check
+      - run: citypack pull all
+      - run: metro sync
+      - working-directory: web
+        run: |
+          npm run typecheck
+          npm test
+          npm run build
+      - if: github.event_name == 'push'
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: web/dist
+
+  deploy:
+    if: github.event_name == 'push'
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - id: deploy
+        uses: actions/deploy-pages@v5

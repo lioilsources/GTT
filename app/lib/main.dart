@@ -4,6 +4,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'l10n/app_localizations.dart';
 import 'ui/game_screen.dart';
+import 'package:shared_gen/shared_gen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,7 +20,11 @@ class MetropoleApp extends StatelessWidget {
     return MaterialApp(
       onGenerateTitle: (c) => AppLocalizations.of(c).appTitle,
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(colorSchemeSeed: const Color(0xFFF4C430), brightness: Brightness.dark, useMaterial3: true),
+      theme: ThemeData(
+        colorSchemeSeed: const Color(Tokens.colorBrandAccent),
+        brightness: Brightness.dark,
+        useMaterial3: true,
+      ),
       localizationsDelegates: const [
         AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,

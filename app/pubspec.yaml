@@ -15,6 +15,8 @@ dependencies:
   intl: any
   flame: ^1.38.2
   yaml: ^3.1.4
+  shared_gen:
+    path: ../packages/shared_gen
   world_engine:
     path: ../packages/world_engine
   drive_core:
@@ -28,8 +30,9 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   generate: true
+  # Filled by `metro sync` (gitignored): run it before building.
   assets:
-    - assets/tuning.yaml
-    - assets/cars/
-    - assets/cities/nyc/
-    - assets/cities/nyc/chunks/
+    - assets/shared/content/
+    - assets/shared/content/cars/
+    - assets/shared/packs/nyc/
+    - assets/shared/packs/nyc/chunks/

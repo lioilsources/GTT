@@ -1,11 +1,11 @@
 import 'dart:ui';
 
-import 'pb/citypack.pbenum.dart';
+import 'package:shared_gen/citypack_pb.dart';
+import 'package:shared_gen/shared_gen.dart';
 
-/// World colours. M0 ships one New York palette with a day and a night variant;
-/// per-city style packs (style.yaml) replace it after the style board.
+/// World colours and lighting, read from design/tokens.json through shared_gen.
 class Palette {
-  const Palette({
+  const Palette._({
     required this.land,
     required this.water,
     required this.park,
@@ -28,21 +28,9 @@ class Palette {
     required this.night,
   });
 
-  final Color land;
-  final Color water;
-  final Color park;
-  final Color plaza;
-  final Color rail;
-  final Color sidewalk;
-  final Color asphalt;
-  final Color alley;
-  final Color marking;
-  final Color centerLine;
-  final Color bridgeDeck;
-  final Color bridgeEdge;
-  final Color tunnel;
+  final Color land, water, park, plaza, rail, sidewalk, asphalt, alley, marking, centerLine;
+  final Color bridgeDeck, bridgeEdge, tunnel, landmark;
   final List<Color> facades;
-  final Color landmark;
 
   /// Roof brightness relative to the facade.
   final double roofLight;
@@ -61,66 +49,49 @@ class Palette {
         _ => land,
       };
 
-  static const day = Palette(
-    land: Color(0xFFE9E1D2),
-    water: Color(0xFF4F8CC9),
-    park: Color(0xFF79B35F),
-    plaza: Color(0xFFDCCFB9),
-    rail: Color(0xFF9C9087),
-    sidewalk: Color(0xFFC9C1B4),
-    asphalt: Color(0xFF55565E),
-    alley: Color(0xFF8D8780),
-    marking: Color(0xFFF2F2F2),
-    centerLine: Color(0xFFF4C430),
-    bridgeDeck: Color(0xFF6A6B73),
-    bridgeEdge: Color(0xFF34343B),
-    tunnel: Color(0xFF3B3B42),
-    facades: [
-      Color(0xFFD9C7A7), // limestone
-      Color(0xFFB0684F), // brick
-      Color(0xFF8FA9C4), // blue glass
-      Color(0xFFBDBDB8), // concrete
-      Color(0xFF6E8296), // dark glass
-      Color(0xFFCFAE86), // sandstone
-      Color(0xFF9A5A48), // brownstone
-    ],
-    landmark: Color(0xFFE8DCC2),
-    roofLight: 1.12,
-    sunX: -0.6,
-    sunY: 0.8,
-    ambient: 0.62,
+  static final day = Palette._(
+    land: const Color(Tokens.colorWorldDayLand),
+    water: const Color(Tokens.colorWorldDayWater),
+    park: const Color(Tokens.colorWorldDayPark),
+    plaza: const Color(Tokens.colorWorldDayPlaza),
+    rail: const Color(Tokens.colorWorldDayRail),
+    sidewalk: const Color(Tokens.colorWorldDaySidewalk),
+    asphalt: const Color(Tokens.colorWorldDayAsphalt),
+    alley: const Color(Tokens.colorWorldDayAlley),
+    marking: const Color(Tokens.colorWorldDayMarking),
+    centerLine: const Color(Tokens.colorWorldDayCenterLine),
+    bridgeDeck: const Color(Tokens.colorWorldDayBridgeDeck),
+    bridgeEdge: const Color(Tokens.colorWorldDayBridgeEdge),
+    tunnel: const Color(Tokens.colorWorldDayTunnel),
+    landmark: const Color(Tokens.colorWorldDayLandmark),
+    facades: [for (final c in Tokens.colorWorldDayFacades) Color(c)],
+    roofLight: Tokens.lightDayRoofLight,
+    sunX: Tokens.lightDaySunX,
+    sunY: Tokens.lightDaySunY,
+    ambient: Tokens.lightDayAmbient,
     night: false,
   );
 
-  static const nightPalette = Palette(
-    land: Color(0xFF2A2C3A),
-    water: Color(0xFF12223D),
-    park: Color(0xFF1E3426),
-    plaza: Color(0xFF3A3846),
-    rail: Color(0xFF2D2B30),
-    sidewalk: Color(0xFF4A4A57),
-    asphalt: Color(0xFF1D1E25),
-    alley: Color(0xFF34333B),
-    marking: Color(0xFFB8B8C4),
-    centerLine: Color(0xFFB8952A),
-    bridgeDeck: Color(0xFF2B2C35),
-    bridgeEdge: Color(0xFF111116),
-    tunnel: Color(0xFF14141A),
-    // Night facades stay bright: the night texture darkens walls and keeps lit windows.
-    facades: [
-      Color(0xFFE6DCF0),
-      Color(0xFFE8C8C0),
-      Color(0xFFC8D8FF),
-      Color(0xFFDCDCE6),
-      Color(0xFFB8C8E6),
-      Color(0xFFE6D8D0),
-      Color(0xFFD8B8B8),
-    ],
-    landmark: Color(0xFFFFF0D0),
-    roofLight: 0.55,
-    sunX: -0.6,
-    sunY: 0.8,
-    ambient: 0.8,
+  static final nightPalette = Palette._(
+    land: const Color(Tokens.colorWorldNightLand),
+    water: const Color(Tokens.colorWorldNightWater),
+    park: const Color(Tokens.colorWorldNightPark),
+    plaza: const Color(Tokens.colorWorldNightPlaza),
+    rail: const Color(Tokens.colorWorldNightRail),
+    sidewalk: const Color(Tokens.colorWorldNightSidewalk),
+    asphalt: const Color(Tokens.colorWorldNightAsphalt),
+    alley: const Color(Tokens.colorWorldNightAlley),
+    marking: const Color(Tokens.colorWorldNightMarking),
+    centerLine: const Color(Tokens.colorWorldNightCenterLine),
+    bridgeDeck: const Color(Tokens.colorWorldNightBridgeDeck),
+    bridgeEdge: const Color(Tokens.colorWorldNightBridgeEdge),
+    tunnel: const Color(Tokens.colorWorldNightTunnel),
+    landmark: const Color(Tokens.colorWorldNightLandmark),
+    facades: [for (final c in Tokens.colorWorldNightFacades) Color(c)],
+    roofLight: Tokens.lightNightRoofLight,
+    sunX: Tokens.lightNightSunX,
+    sunY: Tokens.lightNightSunY,
+    ambient: Tokens.lightNightAmbient,
     night: true,
   );
 }

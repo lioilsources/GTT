@@ -20,7 +20,8 @@ class GameAssets {
     required this.tuning,
     required this.car,
     required this.textures,
-  });
+  }) : tuningBaseline = tuning.flatten(),
+       carBaseline = car.toJson();
 
   final City city;
   final PackSource source;
@@ -28,20 +29,27 @@ class GameAssets {
   final CarSpec car;
   final FacadeTextures textures;
 
-  static Future<GameAssets> load(String cityId) async {
+  /// Values as loaded, so the tuning panel can export only what was changed.
+  final Map<String, Object> tuningBaseline;
+  final Map<String, Object?> carBaseline;
+
+  /// Shared runtime files are copied into assets/shared/ by `metro sync`.
+  static const shared = 'assets/shared/';
+
+  static Future<GameAssets> load(CityId city, CarId car) async {
     await initializeForge2D();
-    final source = AssetPackSource('assets/cities/$cityId/');
+    final source = AssetPackSource('${shared}packs/${city.id}/');
     final results = await Future.wait([
       City.load(source),
-      rootBundle.loadString('assets/tuning.yaml'),
-      rootBundle.loadString('assets/cars/m0_coupe.json'),
+      rootBundle.loadString('${shared}content/tuning.yaml'),
+      rootBundle.loadString('${shared}content/cars/${car.id}.json'),
       FacadeTextures.create(),
     ]);
     return GameAssets(
       city: results[0] as City,
       source: source,
       tuning: Tuning.fromYaml(results[1] as String),
-      car: CarSpec.fromJson(results[2] as String),
+      car: parseCarSpec(results[2] as String),
       textures: results[3] as FacadeTextures,
     );
   }
@@ -80,8 +88,13 @@ class MetropoleGame extends Game {
     final city = data.city;
     tuning = data.tuning;
     drive = DriveWorld(city: city, spec: data.car, tuning: tuning);
-    streamer = ChunkStreamer(city, data.source, tuning,
-        onLoaded: (c) => drive.addChunk(c.data), onUnloaded: (c) => drive.removeChunk(c.data));
+    streamer = ChunkStreamer(
+      city,
+      data.source,
+      tuning,
+      onLoaded: (c) => drive.addChunk(c.data),
+      onUnloaded: (c) => drive.removeChunk(c.data),
+    );
     scheme = ControlScheme.create(ControlSchemeId.a, tuning.controls);
     renderer = WorldRenderer(
       city: city,
@@ -199,13 +212,19 @@ class MetropoleGame extends Game {
   void render(ui.Canvas canvas) {
     if (_size.isEmpty) return;
     final car = drive.car;
-    renderer.render(canvas, _size, camera, playerLayer: car.layer, drawDynamic: (c, layer) {
-      if (layer == 0) {
-        paintSkids(c, drive.skids, car.halfWidth * 0.32);
-        paintProps(c, drive.propsNear(car.x, car.y, camera.visibleRadius(_size, tuning)), night: night);
-      }
-      if (layer == car.layer) paintCar(c, car, night: night);
-    });
+    renderer.render(
+      canvas,
+      _size,
+      camera,
+      playerLayer: car.layer,
+      drawDynamic: (c, layer) {
+        if (layer == 0) {
+          paintSkids(c, drive.skids, car.halfWidth * 0.32);
+          paintProps(c, drive.propsNear(car.x, car.y, camera.visibleRadius(_size, tuning)), night: night);
+        }
+        if (layer == car.layer) paintCar(c, car, night: night);
+      },
+    );
     _streetLabels(canvas);
     paintControls(canvas, _size, scheme);
   }
@@ -224,20 +243,21 @@ class MetropoleGame extends Game {
     for (final hit in hits) {
       if (shown.length >= h.streetLabelsMax || !shown.add(hit.edge.name)) continue;
       final tp = _labels.putIfAbsent(
-          hit.edge.name,
-          () => TextPainter(
-                text: TextSpan(
-                  text: hit.edge.name.toUpperCase(),
-                  style: const TextStyle(
-                    fontSize: 11,
-                    letterSpacing: 1.5,
-                    fontWeight: FontWeight.w700,
-                    color: Color(0xCCFFFFFF),
-                    shadows: [Shadow(blurRadius: 3, color: Color(0xAA000000))],
-                  ),
-                ),
-                textDirection: TextDirection.ltr,
-              )..layout());
+        hit.edge.name,
+        () => TextPainter(
+          text: TextSpan(
+            text: hit.edge.name.toUpperCase(),
+            style: const TextStyle(
+              fontSize: Tokens.fontLabel,
+              letterSpacing: 1.5,
+              fontWeight: FontWeight.w700,
+              color: Color(Tokens.colorUiStreetLabel),
+              shadows: [Shadow(blurRadius: 3, color: Color(Tokens.colorUiLabelShadow))],
+            ),
+          ),
+          textDirection: TextDirection.ltr,
+        )..layout(),
+      );
       // Label at the edge midpoint nearest to the car, rotated along the road, kept upright.
       final p = camera.toScreen(hit.x, hit.y, _size, tuning);
       var a = camera.screenAngle(math.atan2(hit.dirY, hit.dirX));

@@ -40,7 +40,7 @@ enum ControlSchemeId { a, b, c }
 /// from the read-only state each scheme exposes.
 abstract class ControlScheme {
   ControlScheme(this.tuning);
-  final ControlsTuning tuning;
+  final TuningControls tuning;
 
   ControlSchemeId get id;
   void down(int pointer, ScreenPt p, double screenW, double screenH);
@@ -48,7 +48,7 @@ abstract class ControlScheme {
   void up(int pointer);
   void update(ControlInput out);
 
-  static ControlScheme create(ControlSchemeId id, ControlsTuning t) => switch (id) {
+  static ControlScheme create(ControlSchemeId id, TuningControls t) => switch (id) {
         ControlSchemeId.a => SchemeA(t),
         ControlSchemeId.b => SchemeB(t),
         ControlSchemeId.c => SchemeC(t),
@@ -205,7 +205,7 @@ class SchemeC extends ControlScheme {
     while (a < -math.pi) {
       a += 2 * math.pi;
     }
-    wheelAngle = a.clamp(-tuning.cMaxWheel, tuning.cMaxWheel);
+    wheelAngle = a.clamp(-tuning.cMaxWheelRad, tuning.cMaxWheelRad);
   }
 
   @override
@@ -220,7 +220,7 @@ class SchemeC extends ControlScheme {
 
   @override
   void update(ControlInput out) {
-    out.steer = wheelAngle / tuning.cMaxWheel;
+    out.steer = wheelAngle / tuning.cMaxWheelRad;
     if (_brake.isNotEmpty) out.brake = 1;
     if (_hand.isNotEmpty) out.handbrake = true;
   }

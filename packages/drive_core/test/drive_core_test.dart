@@ -4,10 +4,10 @@ import 'package:drive_core/drive_core.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:forge2d/forge2d.dart' show World, Vector2;
 import 'package:world_engine/core.dart';
-import 'package:world_engine/src/pb/citypack.pb.dart' as pb;
+import 'package:shared_gen/citypack_pb.dart' as pb;
 
 final tuning = Tuning.fromYaml(File('../../content/tuning.yaml').readAsStringSync());
-CarSpec spec() => CarSpec.fromJson(File('../../content/cars/m0_coupe.json').readAsStringSync());
+CarSpec spec() => parseCarSpec(File('../../content/cars/m0_coupe.json').readAsStringSync());
 
 /// Ground street along x, bridge along y crossing above it, ramp-free.
 RoadGraph crossing() {
@@ -44,15 +44,15 @@ void main() {
 
     void run(Car car, ControlInput input, double seconds, [World? w]) {
       for (var i = 0; i < seconds * d.stepHz; i++) {
-        car.drive(input, d.step, cruise: tuning.cruiseMps, top: tuning.topMps);
-        (w ?? world).step(d.step, subStepCount: d.substeps);
+        car.drive(input, (1 / d.stepHz), cruise: tuning.speedMps.cruise, top: tuning.speedMps.topDefault);
+        (w ?? world).step((1 / d.stepHz), subStepCount: d.substeps);
       }
     }
 
     test('auto-throttle settles at cruise speed', () {
       final car = newCar(world);
       run(car, ControlInput(), 12);
-      expect(car.forwardSpeed, closeTo(tuning.cruiseMps, tuning.cruiseMps * 0.06));
+      expect(car.forwardSpeed, closeTo(tuning.speedMps.cruise, tuning.speedMps.cruise * 0.06));
       expect(car.y.abs(), lessThan(0.5), reason: 'drives straight');
     });
 
@@ -73,8 +73,8 @@ void main() {
           final input = ControlInput()
             ..steer = 1
             ..handbrake = hand;
-          car.drive(input, d.step, cruise: tuning.cruiseMps, top: tuning.topMps);
-          w.step(d.step, subStepCount: d.substeps);
+          car.drive(input, (1 / d.stepHz), cruise: tuning.speedMps.cruise, top: tuning.speedMps.topDefault);
+          w.step((1 / d.stepHz), subStepCount: d.substeps);
           if (car.rearSlip > maxSlip) maxSlip = car.rearSlip;
         }
         w.destroy();
@@ -135,7 +135,7 @@ void main() {
       s.down(1, (x: ctr.x, y: ctr.y - 60), w, h);
       s.move(1, (x: ctr.x + 60, y: ctr.y), w, h); // quarter turn right
       s.update(out);
-      expect(out.steer, closeTo((3.141592653589793 / 2) / c.cMaxWheel, 1e-9));
+      expect(out.steer, closeTo((3.141592653589793 / 2) / c.cMaxWheelRad, 1e-9));
       final p = SchemeC.pedal(w, h);
       s.down(2, (x: p.left + p.width / 2, y: p.top + p.height / 2), w, h);
       s.update(out..reset());

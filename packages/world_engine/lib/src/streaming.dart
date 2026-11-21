@@ -1,13 +1,13 @@
 import 'dart:ui' as ui;
 
 import 'package:flutter/foundation.dart';
+import 'package:shared_gen/citypack_pb.dart';
+import 'package:shared_gen/shared_gen.dart';
 
 import 'chunk.dart';
 import 'chunk_window.dart';
 import 'citypack.dart';
 import 'model.dart';
-import 'pb/citypack.pbenum.dart';
-import 'tuning.dart';
 
 class LoadedChunk {
   LoadedChunk(this.data)

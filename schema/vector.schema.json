@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "vector.schema.json",
+  "title": "P0 vector file",
+  "description": "vectors/<module>.json: recorded games; every client must replay them with equal state at every step (DUALSTACK 5.4).",
+  "type": "object",
+  "required": ["module", "specVersion", "cases"],
+  "properties": {
+    "module": {"type": "string"},
+    "specVersion": {"type": "integer", "minimum": 1},
+    "$comment": {"type": "string"},
+    "cases": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["name", "config", "seed", "steps", "result"],
+        "properties": {
+          "name": {"type": "string"},
+          "config": {"type": "object"},
+          "seed": {"type": "integer", "minimum": 0},
+          "steps": {"type": "array", "items": {"type": "object", "required": ["action", "state"], "properties": {"action": {}, "state": {}}}},
+          "result": {}
+        }
+      }
+    }
+  }
+}
