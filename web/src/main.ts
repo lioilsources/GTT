@@ -21,6 +21,7 @@ import { installPassport } from './passport/hud';
 import { WorldView } from './render/worldView';
 import { installPhone } from './phone';
 import { installPolice } from './police';
+import { installLoop } from './loop';
 import { HttpPackSource } from './world/citypack';
 import { City } from './world/model';
 import { ChunkStreamer } from './world/streaming';
@@ -131,7 +132,8 @@ async function main(): Promise<void> {
   $('loading').hidden = true;
   let firstFrameMs = 0;
   // In-game phone, feed, map and GPS navigation (specs/phone.md).
-  const phone = installPhone({ city, drive, tuning, t, rig: view.rig, parent: document.body, buttons: $('buttons'), params });
+  const phone = installPhone({ city, drive, tuning, t, rig: view.rig, parent: document.body, buttons: $('buttons'), params,
+    discovered: () => new Set(passport.tracker.stamps.filter((s) => s.startsWith('landmark:')).map((s) => s.slice(9))) });
   const loadMs = performance.now() - tStart;
 
   // ---------- input
@@ -195,6 +197,25 @@ async function main(): Promise<void> {
   // Car name, "Přesednout" / garage button and the garage list (specs/cars.md).
   const carsHud = new CarsHud(fleet, t, $('hud'), () => view.carChanged());
 
+  // Loop glue: arrival → minigame → result → cash, stamp, save (specs/loop.md); loads the save.
+  const loop = await installLoop({
+    city, tuning, locale, t, drive, fleet, passport, phone, params, hud: $('hud'), buttons: $('buttons'),
+    npcPack: await json<NpcPack>('content/npc.json').catch(() => null),
+    onCarChanged: () => view.carChanged(),
+    settings: {
+      get: () => ({ scheme: scheme.id, night }),
+      set: (st) => {
+        scheme = createScheme(st.scheme, tuning.controls);
+        schemeLabel();
+        night = st.night;
+        view.setNight(night);
+        if (drive.traffic) drive.traffic.night = night;
+      },
+    },
+  });
+  // Police fines take cash through the economy (specs/economy.md).
+  police.police.onFined((e) => loop.fine(e.amount));
+
   // ---------- loop
   const perf = { frames: 0, acc: 0, fps: 0, frameMs: 0, worst: 0, worstAcc: 0, hudTimer: 0 };
   const frameTimes: number[] = [];
@@ -203,6 +224,7 @@ async function main(): Promise<void> {
     const now = performance.now();
     const dt = Math.min((now - last) / 1000, 0.1);
     last = now;
+    if (loop.busy) return; // minigame up: the world neither steps nor renders (DUALSTACK 6.5)
     if (firstFrameMs === 0) firstFrameMs = now;
     if (!pilot) {
       const input = drive.input;
@@ -267,6 +289,7 @@ async function main(): Promise<void> {
     const d = drive.borderDistance();
     noticeEl.hidden = !(d !== null && d < tuning.hud.borderNoticeM);
     if (!pilot) passport.update(c.x, c.y);
+    loop.update(0.1);
   }
 
   // ---------- benchmark (specs/bench.md)
@@ -400,7 +423,7 @@ async function main(): Promise<void> {
 
   if (import.meta.env.DEV || params.has('debug')) {
     (window as unknown as Record<string, unknown>)['metro'] = {
-      engine, view, drive, fleet, city, tuning, frameTimes, pilot, bench, peds, phone, passport, police: police.police,
+      engine, view, drive, fleet, city, tuning, frameTimes, pilot, bench, peds, phone, passport, loop, police: police.police,
       timing: () => ({ firstFrameMs, loadMs }),
     };
   }

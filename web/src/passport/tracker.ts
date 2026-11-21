@@ -64,6 +64,20 @@ export class PassportTracker {
     return [...this.state.stamps];
   }
 
+  /** Loads saved stamps (specs/save.md); unknown ones are dropped by the rules. */
+  restore(stamps: readonly string[]): void {
+    const c = this.state.catalog;
+    this.state = this.rules.init({
+      landmarks: c.landmark,
+      districts: c.district,
+      minigames: c.minigame,
+      photos: c.photo,
+      weights: this.tuning.weights,
+      starsForStamp: this.tuning.starsForStamp,
+      stamps: [...stamps],
+    });
+  }
+
   get result(): PassportResult {
     return this.rules.result(this.state);
   }

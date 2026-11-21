@@ -14,6 +14,8 @@ export interface CarEventMap {
   stolen: { car: string; x: number; y: number };
   ownerQuip: { car: string; x: number; y: number };
   carChanged: { car: string };
+  /** A car bought in the garage (M1-S11: the loop saves). */
+  bought: { car: string; price: number };
 }
 export type CarEvent = keyof CarEventMap;
 
@@ -36,7 +38,7 @@ export class CarFleet {
   /** Bumped when the parked set changes (the renderer rebuilds its mesh). */
   version = 0;
   private readonly bodies = new Map<ParkedCar, Body>();
-  private readonly listeners: { [K in CarEvent]: Array<(e: CarEventMap[K]) => void> } = { stolen: [], ownerQuip: [], carChanged: [] };
+  private readonly listeners: { [K in CarEvent]: Array<(e: CarEventMap[K]) => void> } = { stolen: [], ownerQuip: [], carChanged: [], bought: [] };
 
   constructor(
     readonly drive: DriveWorld,
@@ -208,7 +210,29 @@ export class CarFleet {
   }
 
   buy(car: string): void {
+    const before = this.state.cash;
     this.apply({ by: 'player', op: 'buy', car });
+    this.emit('bought', { car, price: before - this.state.cash });
+  }
+
+  /** Cash lives in the cars state (specs/economy.md); the economy writes it back here. */
+  setCash(cash: number): void {
+    this.state = { ...this.state, cash: Math.max(0, Math.floor(cash)) };
+  }
+
+  /** Loads a saved ownership state (specs/save.md); swaps the driven body when the car differs. */
+  restore(s: { cash: number; owned: readonly string[]; driving: string }): void {
+    const prices: Record<string, number> = {};
+    for (const [id, spec] of this.specs) prices[id] = spec.price;
+    const owned = s.owned.filter((c) => this.specs.has(c));
+    if (owned.length === 0) return;
+    const driving = owned.includes(s.driving) ? s.driving : owned[0]!;
+    this.state = this.rules.init({ prices, cash: Math.max(0, s.cash), owned, driving }, 0);
+    if (this.drive.spec.id !== driving) {
+      const c = this.drive.car;
+      this.drive.replaceCar(this.spec, c.x, c.y, c.heading);
+      this.emit('carChanged', { car: driving });
+    }
   }
 
   /** Drive out of the garage with an owned car; the current one stays inside (or is towed away). */
