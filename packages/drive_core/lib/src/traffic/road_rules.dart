@@ -215,3 +215,25 @@ int chooseNext(RoadGraph g, int node, int from, Prng rng, [List<int>? scratch]) 
   if (cands.isEmpty) return canLeave(g.edges[from], node) ? from : -1;
   return cands[rng.nextInt(cands.length)];
 }
+
+/// Pursuit: the edge at [node] that heads most towards the goal ([gx], [gy]) (specs/police.md
+/// "chooseToward"). Any kept edge counts in either direction (sirens), including [from] (U-turn);
+/// ties keep the lowest index. −1 at a border node or when there is no edge at all.
+int chooseToward(RoadGraph g, int node, int from, double gx, double gy) {
+  if (g.border[node]) return -1;
+  final nx = g.nodeXY[2 * node], ny = g.nodeXY[2 * node + 1];
+  final tl = math.sqrt((gx - nx) * (gx - nx) + (gy - ny) * (gy - ny));
+  final tx = tl > 0 ? (gx - nx) / tl : 0.0, ty = tl > 0 ? (gy - ny) / tl : 0.0;
+  var best = -1;
+  var bestDot = double.negativeInfinity;
+  for (final ei in keptEdgesAt(g, node)) {
+    final (dx, dy) = _dirFromNode(g, g.edges[ei], node);
+    final l = math.sqrt((dx * dx + dy * dy).toDouble());
+    final d = l > 0 ? (dx * tx + dy * ty) / l : -1.0;
+    if (d > bestDot) {
+      bestDot = d;
+      best = ei;
+    }
+  }
+  return best < 0 && from >= 0 && from < g.edges.length && g.edges[from].kept ? from : best;
+}

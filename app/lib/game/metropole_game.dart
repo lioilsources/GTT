@@ -14,6 +14,7 @@ import 'package:world_engine/world_engine.dart';
 import 'paint/car_painter.dart';
 import 'paint/controls_painter.dart';
 import 'paint/pedestrians_painter.dart';
+import 'paint/police_painter.dart';
 import 'paint/props_painter.dart';
 import 'paint/traffic_painter.dart';
 import '../ui/passport.dart' show passportCityOf;
@@ -124,9 +125,11 @@ class MetropoleGame extends Game {
       onLoaded: (c) {
         drive.addChunk(c.data);
         fleet.addChunk(c.data);
+        police.addChunk(c.data);
       },
       onUnloaded: (c) {
         fleet.removeChunk(c.data);
+        police.removeChunk(c.data);
         drive.removeChunk(c.data);
       },
     );
@@ -143,6 +146,8 @@ class MetropoleGame extends Game {
     _pedBubbles = PedBubblePainter(
         tr(ui.PlatformDispatcher.instance.locale.languageCode, MessageKey.pedestrianBubble), tuning.pedestrians.bubblePx);
     passport = PassportTracker(passportCityOf(city), tuning.passport)..onStamp((e) => passportEvent.value = e);
+    // Police and wanted level (specs/police.md); the HUD listens to its hooks.
+    police = Police(drive, tuning, fleet);
   }
 
   final GameAssets data;
@@ -151,6 +156,8 @@ class MetropoleGame extends Game {
   late final Tuning tuning;
   late final DriveWorld drive;
   late final CarFleet fleet;
+  late final Police police;
+  double _policeClock = 0;
   late final ChunkStreamer streamer;
   late final WorldRenderer renderer;
   final camera = CameraRig();
@@ -278,7 +285,10 @@ class MetropoleGame extends Game {
       scheme.update(input);
       _keyboard(input);
     }
-    if (!carsPaused) drive.update(dt * timeScale());
+    final stepDt = carsPaused ? 0.0 : dt * timeScale();
+    if (!carsPaused) drive.update(stepDt);
+    police.update(stepDt);
+    _policeClock += stepDt;
     afterUpdate?.call(dt);
     _benchFrame(dt);
     final car = drive.car;
@@ -364,7 +374,10 @@ class MetropoleGame extends Game {
           }
         }
         final tr = drive.traffic;
-        if (tr != null) paintTraffic(c, tr, layer, night: night);
+        if (tr != null) {
+          paintTraffic(c, tr, layer, night: night);
+          paintPolice(c, tr, layer, timeS: _policeClock, blinkS: tuning.police.lightBlinkS, night: night);
+        }
         if (layer == car.layer) paintCar(c, car, night: night);
       },
     );
@@ -423,6 +436,7 @@ class MetropoleGame extends Game {
   @override
   void onRemove() {
     streamer.dispose();
+    police.dispose();
     drive.dispose();
     super.onRemove();
   }

@@ -15,6 +15,7 @@ import '../phone/phone_sheet.dart';
 import 'garage_sheet.dart';
 import 'hud.dart';
 import 'passport.dart';
+import 'police_hud.dart';
 import 'tuning_panel.dart';
 
 class GameScreen extends StatefulWidget {
@@ -107,6 +108,7 @@ class _GameScreenState extends State<GameScreen> {
                 onPassport: () =>
                     PassportScreen.open(context, game.passport, game.city.manifest.name, AboutInfo.of(game.city)),
               ),
+              PoliceHud(police: game.police),
               NavHud(phone: phone),
               PhoneLayer(phone: phone),
               PassportOverlay(events: game.passportEvent, seconds: game.tuning.passport.postcardS),
