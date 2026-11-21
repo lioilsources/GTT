@@ -14,3 +14,13 @@ export function fovX(width: number, h: number): number {
 export function displayHeight(sOfH: number, h: number): number {
   return h * (1 - 1 / sOfH);
 }
+
+/**
+ * Roof scale for height h (METROPOLE_PLAN 6.2), as world_engine extrusionScale:
+ * h_eff = h for h ≤ knee, knee + (h − knee)^exp above; s = min(1 + k·h_eff, max_scale).
+ */
+export function extrusionScale(h: number, t: Tuning): number {
+  const e = t.extrusion;
+  const he = h <= e.kneeM ? h : e.kneeM + (h - e.kneeM) ** e.exp;
+  return Math.min(1 + e.k * he, e.maxScale);
+}
