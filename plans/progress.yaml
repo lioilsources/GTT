@@ -50,7 +50,7 @@ items:
 
   # ---------- D1 – Souboj M0
   - {id: D1-1, milestone: D1, name: "hračka M0 ve webovém klientovi ze stejného citypacku a tuning.yaml", size: L, status: "čeká na Ol1na",
-     started: 2026-11-21T17:10, done: 2026-11-21T17:55, commit: 60eb740, evidence: "npm test ve web/ (jízda po balíčku NYC, geometrie); Chrome desktop 60 fps; chybí test na telefonech (PR #3)"}
+     started: 2026-11-21T17:10, done: 2026-11-21T17:32, commit: 60eb740, evidence: "npm test ve web/ (jízda po balíčku NYC, geometrie); Chrome desktop 60 fps; chybí test na telefonech (PR #3)"}
   - {id: D1-2, milestone: D1, name: "měření obou klientů na obou telefonech (fps, start, paměť, baterie)", size: M, status: todo}
   - {id: D1-3, milestone: D1, name: "plans/BAKEOFF_REPORT.md", size: S, status: todo}
   - {id: D1-4, milestone: D1, name: "brána G1 (rozhoduje Ol1n)", size: S, status: todo}
