@@ -1,0 +1,249 @@
+import 'dart:math' as math;
+import 'dart:ui' as ui;
+
+import 'package:drive_core/drive_core.dart' show RouteGraph;
+import 'package:feed_hub/feed_hub.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/painting.dart';
+import 'package:world_engine/world_engine.dart';
+
+import '../game/metropole_game.dart';
+
+/// Phone apps in home-screen order (specs/phone.md "Telefon").
+enum PhoneAppId { feed, map, garage, passport, camera, contacts, wallet, settings }
+
+/// What the navigation pill shows; refreshed ~10× a second.
+class NavHudState {
+  const NavHudState(this.place, this.remainingM);
+  final String place;
+  final double remainingM;
+}
+
+/// State of the in-game phone, the feed session and the GPS navigation (specs/phone.md).
+/// Wires itself into [MetropoleGame] through its feature hooks.
+class PhoneController extends ChangeNotifier {
+  PhoneController(this.game, {int? feedSeed}) : _firstSeed = feedSeed {
+    final city = game.city;
+    rg = RouteGraph.fromPb(city.graphPb, tuning.route.classCost);
+    _lens = edgeLengthsDm(city.graphPb);
+    nav = Navigator(city.graph, rg, tuning.route, tuning.nav);
+    _spots = {for (final s in city.spots.items) s.id: s};
+    _lastX = game.drive.car.x;
+    _lastY = game.drive.car.y;
+    game
+      ..timeScale = (() => isOpen ? tuning.phone.timeScale : 1.0)
+      ..afterUpdate = _update
+      ..paintWorld = _paintRoute
+      ..paintScreen = _paintArrow;
+  }
+
+  final MetropoleGame game;
+  late final RouteGraph rg;
+  late final Int32List _lens;
+  late final Navigator nav;
+  late final Map<String, Spot> _spots;
+
+  Tuning get tuning => game.tuning;
+
+  bool isOpen = false;
+  PhoneAppId? app;
+
+  /// arrived(spotId): the minigame launch hook for a later feature.
+  final List<void Function(String spotId)> onArrived = [];
+  final navHud = ValueNotifier<NavHudState?>(null);
+
+  /// i18n key of the toast shown now, or null.
+  final toast = ValueNotifier<MessageKey?>(null);
+  double _toastS = 0;
+  double _hudS = 0;
+
+  void open([PhoneAppId? a]) {
+    isOpen = true;
+    if (a != null) app = a;
+    notifyListeners();
+  }
+
+  void close() {
+    isOpen = false;
+    notifyListeners();
+  }
+
+  void toggle() => isOpen ? close() : open();
+
+  void launch(PhoneAppId? a) {
+    app = a;
+    notifyListeners();
+  }
+
+  String spotName(String id) => _spots[id]?.name ?? id;
+
+  // ---------- feed session (specs/feed.md "Po balíčku")
+  final _rules = FeedRules();
+  FeedState? _deck;
+  Map<String, int> _prefs = {};
+  final Map<String, int> _visits = {};
+  final Set<String> _visitedDistricts = {};
+  double _driven = 0;
+  bool _arrivedSinceDeal = false;
+  double _lastX = 0, _lastY = 0;
+  int? _firstSeed;
+  final _random = math.Random();
+
+  FeedRules get rules => _rules;
+
+  FeedState get deck {
+    final d = _deck;
+    if (d == null || (d.over && (_driven >= tuning.feed.redealM || _arrivedSinceDeal))) _deal();
+    return _deck!;
+  }
+
+  void _deal() {
+    final city = game.city, car = game.drive.car, g = city.graph;
+    final start = navStart(g, game.drive.layers.hit, car.x, car.y, car.heading, tuning.nav.searchM);
+    final candidates = buildCandidates(
+      cityId: city.id,
+      spots: [for (final s in city.spots.items) CandidateSpot(s.id, s.minigame, s.x, s.y)],
+      catalog: {for (final e in minigameCatalog.entries) e.key.id: e.value},
+      districtAt: (x, y) => city.districtAt(x / 10, y / 10) ?? '',
+      landmarks: [for (final l in city.landmarks.items) (id: l.id, x: l.x, y: l.y)],
+      discovered: const {},
+      visits: _visits,
+      landmarkRadiusDm: tuning.feed.landmarkRadiusDm,
+      distDm: (id) {
+        final t = NavTarget.fromSpot(_spots[id]!);
+        return feedDistDm(rg, _lens, start, navGoal(g, t), car.x, car.y, t, tuning.feed.straightPct);
+      },
+    );
+    final seed = _firstSeed ?? _random.nextInt(1 << 32);
+    _firstSeed = null;
+    _deck = _rules.deal(FeedConfig.fromTuning(tuning.feed, candidates, _prefs, _visitedDistricts.toList()), seed);
+    _driven = 0;
+    _arrivedSinceDeal = false;
+  }
+
+  /// Applies a feed gesture through the rules; accept closes the phone and navigates.
+  void act(FeedOp op) {
+    final s = deck;
+    if (!_rules.legalActions(s).contains(op)) return;
+    final next = _rules.apply(s, op);
+    _deck = next;
+    _prefs = next.prefs;
+    if (op == FeedOp.accept) {
+      close();
+      navigate(next.accepted);
+    }
+    notifyListeners();
+  }
+
+  // ---------- navigation
+  bool navigate(String spotId) {
+    final s = _spots[spotId];
+    if (s == null) return false;
+    final car = game.drive.car;
+    final ok = nav.start(NavTarget.fromSpot(s), car.x, car.y, car.heading, game.drive.layers.hit);
+    if (!ok) _showToast(MessageKey.noRoute);
+    _hudS = 1e9;
+    notifyListeners();
+    return ok;
+  }
+
+  void cancelNav() {
+    nav.cancel();
+    navHud.value = null;
+    notifyListeners();
+  }
+
+  void _showToast(MessageKey k) {
+    toast.value = k;
+    _toastS = tuning.nav.toastS;
+  }
+
+  void _update(double dt) {
+    final car = game.drive.car;
+    _driven += math.sqrt(math.pow(car.x - _lastX, 2) + math.pow(car.y - _lastY, 2));
+    _lastX = car.x;
+    _lastY = car.y;
+    if (_toastS > 0 && (_toastS -= dt) <= 0) toast.value = null;
+    if (!nav.active) return;
+    final ev = nav.update(car.x, car.y, car.heading, game.drive.layers.hit, dt);
+    if (ev == NavEvent.arrived) {
+      final id = nav.target!.id;
+      cancelNav();
+      _visits[id] = (_visits[id] ?? 0) + 1;
+      final s = _spots[id]!;
+      final d = game.city.districtAt(s.x / 10, s.y / 10);
+      if (d != null) _visitedDistricts.add(d);
+      _arrivedSinceDeal = true;
+      _showToast(MessageKey.arrived);
+      for (final f in onArrived) {
+        f(id);
+      }
+      return;
+    }
+    _hudS += dt;
+    if (_hudS >= 0.1) {
+      _hudS = 0;
+      navHud.value = NavHudState(nav.target!.name, nav.remaining);
+    }
+  }
+
+  void _paintRoute(ui.Canvas c) {
+    if (!nav.active) return;
+    final pts = nav.ahead();
+    if (pts.length < 4) return;
+    final path = ui.Path()..moveTo(pts[0], pts[1]);
+    for (var i = 2; i + 1 < pts.length; i += 2) {
+      path.lineTo(pts[i], pts[i + 1]);
+    }
+    c.drawPath(
+      path,
+      Paint()
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = tuning.route.lineWidthM
+        ..strokeCap = StrokeCap.round
+        ..strokeJoin = StrokeJoin.round
+        ..color = const Color(Tokens.colorUiRoute),
+    );
+  }
+
+  void _paintArrow(ui.Canvas c, ui.Size size) {
+    if (!nav.active) return;
+    final p = game.camera.toScreen(nav.parkX, nav.parkY, size, tuning);
+    final a = edgeArrow(
+      p.dx,
+      p.dy,
+      size.width,
+      size.height,
+      tuning.nav.arrowMarginPx,
+      size.width * tuning.carAnchor.x,
+      size.height * tuning.carAnchor.y,
+    );
+    if (a == null) return;
+    final s = tuning.nav.arrowPx;
+    c.save();
+    c.translate(a.x, a.y);
+    c.rotate(a.angle);
+    c.drawPath(
+      ui.Path()
+        ..moveTo(s, 0)
+        ..lineTo(-s * 0.7, s * 0.8)
+        ..lineTo(-s * 0.3, 0)
+        ..lineTo(-s * 0.7, -s * 0.8)
+        ..close(),
+      Paint()..color = const Color(Tokens.colorUiRouteArrow),
+    );
+    c.restore();
+  }
+
+  @override
+  void dispose() {
+    game
+      ..timeScale = (() => 1.0)
+      ..afterUpdate = null
+      ..paintWorld = null
+      ..paintScreen = null;
+    navHud.dispose();
+    toast.dispose();
+    super.dispose();
+  }
+}

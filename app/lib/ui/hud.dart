@@ -7,12 +7,20 @@ import 'package:shared_gen/shared_gen.dart';
 
 /// Street · district on top, speed bottom-left, FPS overlay, day/night and tuning buttons.
 class Hud extends StatelessWidget {
-  const Hud({super.key, required this.game, required this.scheme, required this.onNight, required this.onTuning});
+  const Hud({
+    super.key,
+    required this.game,
+    required this.scheme,
+    required this.onNight,
+    required this.onTuning,
+    this.onPhone,
+  });
 
   final MetropoleGame game;
   final ControlSchemeId scheme;
   final VoidCallback onNight;
   final VoidCallback onTuning;
+  final VoidCallback? onPhone;
 
   @override
   Widget build(BuildContext context) {
@@ -112,6 +120,10 @@ class Hud extends StatelessWidget {
                   top: 4,
                   child: Row(
                     children: [
+                      if (onPhone != null) ...[
+                        _RoundButton(icon: Icons.smartphone, tooltip: l.phone, onTap: onPhone!),
+                        const SizedBox(width: 6),
+                      ],
                       _RoundButton(icon: Icons.brightness_4, tooltip: l.dayNight, onTap: onNight),
                       const SizedBox(width: 6),
                       _RoundButton(icon: Icons.tune, tooltip: l.debugPanel, onTap: onTuning),

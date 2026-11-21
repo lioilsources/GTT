@@ -1,0 +1,24 @@
+name: feed_hub
+description: In-game phone logic, specs/feed.md (feed deck rules, P0) and specs/phone.md (GPS navigation glue). Pure Dart, no Flutter or dart:ui.
+version: 0.1.0
+publish_to: none
+resolution: workspace
+
+environment:
+  sdk: ^3.12.2
+  flutter: ">=3.44.0"
+
+dependencies:
+  drive_core:
+    path: ../drive_core
+  rules_core:
+    path: ../rules_core
+  shared_gen:
+    path: ../shared_gen
+  world_engine:
+    path: ../world_engine
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
