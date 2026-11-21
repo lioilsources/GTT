@@ -99,6 +99,11 @@ export class Tuning {
   readonly hud: TuningHud;
   /** Minigames (METROPOLE_PLAN 9, specs/minigames/). Rules read these through the generated Tuning. */
   readonly minigames: TuningMinigames;
+  /**
+   * GPS route (specs/route.md). class_cost: per RoadClass index (unknown, motorway, trunk, primary,
+   * secondary, tertiary, residential, service); integer multipliers of the length in dm.
+   */
+  readonly route: TuningRoute;
 
   private constructor(r: R) {
     this.carScale = r.d('car_scale');
@@ -122,6 +127,7 @@ export class Tuning {
     this.bench = new TuningBench(r.sub('bench'));
     this.hud = new TuningHud(r.sub('hud'));
     this.minigames = new TuningMinigames(r.sub('minigames'));
+    this.route = new TuningRoute(r.sub('route'));
   }
 
   toJson(): Record<string, unknown> {
@@ -147,6 +153,7 @@ export class Tuning {
       bench: this.bench.toJson(),
       hud: this.hud.toJson(),
       minigames: this.minigames.toJson(),
+      route: this.route.toJson(),
     };
   }
 
@@ -1333,6 +1340,36 @@ export class TuningMinigamesStrelnice {
       reload_ticks: this.reloadTicks,
       star_scores: this.starScores,
       time_cap_s: this.timeCapS,
+    };
+  }
+}
+
+/**
+ * GPS route (specs/route.md). class_cost: per RoadClass index (unknown, motorway, trunk, primary,
+ * secondary, tertiary, residential, service); integer multipliers of the length in dm.
+ */
+export class TuningRoute {
+  classCost: number[];
+  rerouteM: number;
+  rerouteS: number;
+  arriveM: number;
+  lineWidthM: number;
+
+  constructor(r: R) {
+    this.classCost = r.il('class_cost');
+    this.rerouteM = r.d('reroute_m');
+    this.rerouteS = r.d('reroute_s');
+    this.arriveM = r.d('arrive_m');
+    this.lineWidthM = r.d('line_width_m');
+  }
+
+  toJson(): Record<string, unknown> {
+    return {
+      class_cost: this.classCost,
+      reroute_m: this.rerouteM,
+      reroute_s: this.rerouteS,
+      arrive_m: this.arriveM,
+      line_width_m: this.lineWidthM,
     };
   }
 }

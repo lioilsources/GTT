@@ -100,5 +100,12 @@
   "strelniceRules2": "Malé terče dávají nejvíc. Šest ran, pak krátké přebití.",
   "strelniceRules3": "Tři kola po 90 sekundách.",
   "strelniceRound": "Kolo {round}/3 · {seconds} s",
-  "strelniceReload": "Přebíjím…"
+  "strelniceReload": "Přebíjím…",
+  "routeTo": "{place} · {distance}",
+  "distanceM": "{m} m",
+  "distanceKm": "{km} km",
+  "distanceFt": "{ft} ft",
+  "distanceMi": "{mi} mi",
+  "arrived": "Jsi v cíli",
+  "routeCancel": "Zrušit trasu"
 }

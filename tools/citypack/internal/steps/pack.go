@@ -68,7 +68,7 @@ func Spots(e *Env) error {
 			slog.Warn("spot far from kept road", "id", s.ID, "m", int(d))
 		}
 		sp.Items = append(sp.Items, &pb.Spot{
-			Id: s.ID, Kind: s.Kind, Name: s.Name, X: geo.DM(p.X), Y: geo.DM(p.Y),
+			Id: s.ID, Kind: s.Kind, Name: s.Name, Minigame: s.Minigame, X: geo.DM(p.X), Y: geo.DM(p.Y),
 			Edge: uint32(ei), ParkX: geo.DM(q.X), ParkY: geo.DM(q.Y), ParkHeading: float32(math.Atan2(dir.Y, dir.X)),
 		})
 	}

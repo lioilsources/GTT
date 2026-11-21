@@ -1,8 +1,8 @@
 # Written by `citypack publish`; read by `citypack pull` and `metro sync`. Do not edit by hand.
 packs:
     nyc:
-        version: 5a8c6e78d95e
-        tag: pack-nyc-5a8c6e78d95e
-        asset: nyc-5a8c6e78d95e.tar.gz
-        sha256: 5a8c6e78d95e1e9632436f8412376c5c6341ede3262366bcd7813954cfc8b2a5
+        version: a524e721b2f1
+        tag: pack-nyc-a524e721b2f1
+        asset: nyc-a524e721b2f1.tar.gz
+        sha256: a524e721b2f14d2b55b813c1c4bbc9950967ef2cc3ce9875926eb2455b3c4763
         overture_release: 2026-11-18.0

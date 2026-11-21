@@ -289,5 +289,50 @@
       }
     }
   },
-  "strelniceReload": "Reloading…"
+  "strelniceReload": "Reloading…",
+  "routeTo": "{place} · {distance}",
+  "@routeTo": {
+    "placeholders": {
+      "place": {
+        "type": "String"
+      },
+      "distance": {
+        "type": "String"
+      }
+    }
+  },
+  "distanceM": "{m} m",
+  "@distanceM": {
+    "placeholders": {
+      "m": {
+        "type": "int"
+      }
+    }
+  },
+  "distanceKm": "{km} km",
+  "@distanceKm": {
+    "placeholders": {
+      "km": {
+        "type": "String"
+      }
+    }
+  },
+  "distanceFt": "{ft} ft",
+  "@distanceFt": {
+    "placeholders": {
+      "ft": {
+        "type": "int"
+      }
+    }
+  },
+  "distanceMi": "{mi} mi",
+  "@distanceMi": {
+    "placeholders": {
+      "mi": {
+        "type": "String"
+      }
+    }
+  },
+  "arrived": "You have arrived",
+  "routeCancel": "Cancel route"
 }

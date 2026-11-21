@@ -104,3 +104,10 @@
   lead: web
   flutter: todo
   web: todo
+- id: F-015
+  name: GPS route (Dijkstra on the kept graph)
+  level: P0
+  spec: specs/route.md@1
+  lead: web
+  flutter: todo
+  web: todo

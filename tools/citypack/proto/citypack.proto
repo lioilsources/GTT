@@ -160,4 +160,5 @@ message Spot {
   sint32 park_x = 7;         // parking point on that edge, dm
   sint32 park_y = 8;
   float park_heading = 9;
+  string minigame = 10;      // minigame id played here (content/minigames/catalog.yaml), empty = none
 }

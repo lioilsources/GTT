@@ -20,6 +20,8 @@ abstract final class Tokens {
   static const int colorUiControlWheel = 0x88FFFFFF;
   static const int colorUiControlBrake = 0xAAFF5050;
   static const int colorUiControlHand = 0xAAFFC040;
+  static const int colorUiRoute = 0xD03FA9F5;
+  static const int colorUiRouteArrow = 0xFF3FA9F5;
   static const int colorWorldDayLand = 0xFFE9E1D2;
   static const int colorWorldDayWater = 0xFF4F8CC9;
   static const int colorWorldDayPark = 0xFF79B35F;

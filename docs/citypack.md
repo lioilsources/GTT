@@ -40,3 +40,13 @@ Cache nesleduje změny konfigurace: po úpravě `city.yaml`, `tuning.yaml` (ší
 ## Midtown v číslech (M0)
 
 ~4 000 uzlů, ~4 700 hran (2 873 ponechaných), 9 407 hmot budov, 209 chunků, balíček 0,6 MB.
+
+## Manhattan v číslech (M1)
+
+Manhattan jižně od 110th St s mosty Brooklyn, Manhattan, Williamsburg a Queensboro a krátkými předmostími
+(DUMBO, Williamsburg, Long Island City): 17 065 uzlů, 20 037 hran, 32 246 hmot budov, 896 chunků,
+15 spotů (8 se minihrou), balíček 2,5 MB. Build s `-refetch` ~5 min.
+
+- Spoty mají pole `minigame` (id z katalogu): na tom místě se minihra hraje (9.5).
+- `validate` bere při kontrole „silnice v budově“ v úvahu dvory (díry v obrysu): příjezd do dvora
+  Dakoty na 72nd St není kolize.

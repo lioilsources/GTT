@@ -25,3 +25,18 @@ landmarks:
   - {id: bryant_park, name: Bryant Park, lat: 40.75363, lon: -73.98393, kind: park}
   - {id: port_authority, name: Port Authority Bus Terminal, lat: 40.75688, lon: -73.99069, height_m: 25}
   - {id: javits, name: Javits Center, lat: 40.75735, lon: -74.00243, height_m: 30}
+  # M1: downtown, the bridges and uptown
+  - {id: one_wtc, name: One World Trade Center, lat: 40.71274, lon: -74.01338, height_m: 541, hero: true}
+  - {id: wtc_memorial, name: 9/11 Memorial, lat: 40.71150, lon: -74.01325, kind: plaza, hero: true}
+  - {id: woolworth, name: 233 Broadway, lat: 40.71241, lon: -74.00827, height_m: 241, hero: true}
+  - {id: city_hall, name: New York City Hall, lat: 40.71274, lon: -74.00597, height_m: 32, hero: true}
+  - {id: federal_hall, name: Federal Hall, lat: 40.70728, lon: -74.01005, height_m: 25, hero: true}
+  - {id: trinity_church, name: Trinity Church, lat: 40.70816, lon: -74.01209, height_m: 86, hero: true}
+  - {id: flatiron, name: 175 Fifth Avenue, lat: 40.74106, lon: -73.98965, height_m: 87, hero: true}
+  - {id: washington_arch, name: Washington Square Arch, lat: 40.73113, lon: -73.99710, kind: plaza, hero: true}
+  - {id: high_line, name: The High Line, lat: 40.74800, lon: -74.00480, kind: park, hero: true}
+  - {id: met_museum, name: The Metropolitan Museum of Art, lat: 40.77943, lon: -73.96324, height_m: 30, hero: true}
+  - {id: amnh, name: American Museum of Natural History, lat: 40.78132, lon: -73.97398, height_m: 35, hero: true}
+  - {id: guggenheim, name: Solomon R. Guggenheim Museum, lat: 40.78296, lon: -73.95899, height_m: 28, hero: true}
+  - {id: lincoln_center, name: Lincoln Center, lat: 40.77250, lon: -73.98350, kind: plaza, hero: true}
+  - {id: brooklyn_bridge, name: Brooklyn Bridge, lat: 40.70608, lon: -73.99686, kind: plaza, hero: true}

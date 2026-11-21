@@ -405,6 +405,7 @@ const Spot$json = {
     {'1': 'park_x', '3': 7, '4': 1, '5': 17, '10': 'parkX'},
     {'1': 'park_y', '3': 8, '4': 1, '5': 17, '10': 'parkY'},
     {'1': 'park_heading', '3': 9, '4': 1, '5': 2, '10': 'parkHeading'},
+    {'1': 'minigame', '3': 10, '4': 1, '5': 9, '10': 'minigame'},
   ],
 };
 
@@ -413,4 +414,4 @@ final $typed_data.Uint8List spotDescriptor = $convert.base64Decode(
     'CgRTcG90Eg4KAmlkGAEgASgJUgJpZBISCgRraW5kGAIgASgJUgRraW5kEhIKBG5hbWUYAyABKA'
     'lSBG5hbWUSDAoBeBgEIAEoEVIBeBIMCgF5GAUgASgRUgF5EhIKBGVkZ2UYBiABKA1SBGVkZ2US'
     'FQoGcGFya194GAcgASgRUgVwYXJrWBIVCgZwYXJrX3kYCCABKBFSBXBhcmtZEiEKDHBhcmtfaG'
-    'VhZGluZxgJIAEoAlILcGFya0hlYWRpbmc=');
+    'VhZGluZxgJIAEoAlILcGFya0hlYWRpbmcSGgoIbWluaWdhbWUYCiABKAlSCG1pbmlnYW1l');

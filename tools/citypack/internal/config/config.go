@@ -103,11 +103,12 @@ type Landmark struct {
 }
 
 type Spot struct {
-	ID   string  `yaml:"id"`
-	Kind string  `yaml:"kind"`
-	Name string  `yaml:"name"`
-	Lat  float64 `yaml:"lat"`
-	Lon  float64 `yaml:"lon"`
+	ID       string  `yaml:"id"`
+	Kind     string  `yaml:"kind"`
+	Name     string  `yaml:"name"`
+	Lat      float64 `yaml:"lat"`
+	Lon      float64 `yaml:"lon"`
+	Minigame string  `yaml:"minigame"`
 }
 
 // Content is everything citypack reads for one city.
