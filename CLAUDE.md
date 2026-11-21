@@ -28,7 +28,8 @@ run/bin/metro progress --tests   # po každé dokončené položce plans/progres
 - `packages/rules_core/` – PRNG, tvar modulu P0, přehrávání vektorů (čistý Dart).
 - `packages/npc_dialogue/`, `web/src/dialogue/` – skity NPC, vibe, kontakty, overlay dialogu.
 - `packages/shared_gen/`, `web/src/gen/` – generované `metro gen`, needitovat.
-- `web/` – klient W (Vite, Babylon.js 9, Vitest).
+- `packages/mg_api`, `packages/mg_<id>` – kontrakt a minihry; `npc_dialogue`, `feed_hub`, `meta_progress` – dialogy, feed a navigace, Pas.
+- `web/` – klient W (Vite, Babylon.js 9, Vitest); `src/minigames`, `src/phone`, `src/traffic`, `src/peds`, `src/cars`, `src/passport`, `src/dialogue`.
 - `tools/citypack/` – pipeline map; `tools/metro/` – sdílená vrstva (docs/metro.md).
 - `content/`, `i18n/`, `design/`, `schema/`, `specs/`, `vectors/`, `scenarios/`, `assets/`, `parity.yaml`.
 

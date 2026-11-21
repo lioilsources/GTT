@@ -130,58 +130,66 @@
   level: P1
   spec: specs/pedestrians.md@1
   lead: web
-  flutter: todo
-  web: todo
+  flutter: done
+  web: done
+  checks: {flutter: pass, web: pass}
 - id: F-022
   name: Feed deck selection (6 cards)
   level: P0
   spec: specs/feed.md@1
   vectors: vectors/feed.json
   lead: web
-  flutter: todo
-  web: todo
+  flutter: done
+  web: done
+  checks: {flutter: pass, web: pass}
 - id: F-023
   name: Phone, Map and GPS navigation UI
   level: P2
   spec: specs/phone.md@1
   lead: web
-  flutter: todo
-  web: todo
+  flutter: done
+  web: done
+  checks: {flutter: pass, web: pass}
 - id: F-016
   name: Traffic and two-phase traffic lights
   level: P1
   spec: specs/traffic.md@1
   lead: web
-  flutter: todo
-  web: todo
+  flutter: done
+  web: done
+  checks: {flutter: pass, web: pass}
 - id: F-019
   name: Tourist passport (stamps, completion %, postcards)
   level: P0
   spec: specs/passport.md@1
   vectors: vectors/passport.json
   lead: web
-  flutter: todo
-  web: todo
+  flutter: done
+  web: done
+  checks: {flutter: pass, web: pass}
 - id: F-020
   name: About the maps (sources and licences)
   level: P2
   spec: specs/passport.md@1
   lead: web
-  flutter: todo
-  web: todo
+  flutter: done
+  web: done
+  checks: {flutter: pass, web: pass}
 - id: F-021
   name: NPC dialogue (skit pick, vibe, phone contact)
   level: P0
   spec: specs/dialogue.md@1
   vectors: vectors/dialogue.json
   lead: web
-  flutter: todo
-  web: todo
+  flutter: done
+  web: done
+  checks: {flutter: pass, web: pass}
 - id: F-018
   name: Cars, switching and the garage (5 cars, parked cars, garage)
   level: P0
   spec: specs/cars.md@1
   vectors: vectors/cars.json
   lead: web
-  flutter: todo
-  web: todo
+  flutter: done
+  web: done
+  checks: {flutter: pass, web: pass}
