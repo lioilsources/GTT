@@ -41,8 +41,8 @@ Stav k 2026-11-21 18:54.
 | M0-A4 týden dogfoodingu: výběr schématu ovládání, potvrzení tuning.yaml | 6.7 h | ladicí panel → Kopírovat tuning.yaml |
 | M0-A5 rozhodnutí R3 / brána G1: Flutter, nebo záložní žebřík | 6.7 h | po měření M0-A1 a D1-2 |
 | D1-1 hračka M0 ve webovém klientovi ze stejného citypacku a tuning.yaml | 1.4 h | npm test ve web/ (jízda po balíčku NYC, geometrie); Chrome desktop 60 fps; chybí test na telefonech (PR #3) |
-| D1-2 měření obou klientů na obou telefonech (fps, start, paměť, baterie) | -3 min | benchmark v obou klientech (PR #5, #6): testy projedou trasu NYC; běh v Chromu na Macu 58,4 fps; chybí běhy na telefonech |
-| D1-3 plans/BAKEOFF_REPORT.md | -3 min | plans/BAKEOFF_REPORT.md jako šablona; čeká na čísla z telefonů |
+| D1-2 měření obou klientů na obou telefonech (fps, start, paměť, baterie) | 0 min | benchmark v obou klientech (PR #5, #6): testy projedou trasu NYC; běh v Chromu na Macu 58,4 fps; chybí běhy na telefonech |
+| D1-3 plans/BAKEOFF_REPORT.md | 0 min | plans/BAKEOFF_REPORT.md jako šablona; čeká na čísla z telefonů |
 
 ## Tempo
 
