@@ -25,6 +25,18 @@ dependencies:
     path: ../packages/mg_api
   mg_sirky:
     path: ../packages/mg_sirky
+  mg_oko:
+    path: ../packages/mg_oko
+  mg_dama:
+    path: ../packages/mg_dama
+  mg_desetitisic:
+    path: ../packages/mg_desetitisic
+  mg_sipky:
+    path: ../packages/mg_sipky
+  mg_koulena:
+    path: ../packages/mg_koulena
+  mg_strelnice:
+    path: ../packages/mg_strelnice
 
 dev_dependencies:
   flutter_test:
