@@ -1,6 +1,7 @@
 import type { MessageKey } from '../gen/i18n';
 import type { MinigameContext, MinigameResult } from '../gen/schema';
 import type { MinigameEnv } from './api';
+import { opponentBubble } from '../dialogue/ui';
 import { h } from './dom';
 import type { RulesResult } from './rules';
 
@@ -99,6 +100,7 @@ export function mountShell(
         h('h2', {}, head),
         stars,
         h('p', {}, t('scoreValue', { score: r.score })),
+        env.opponent ? opponentBubble(env.opponent, r.winner) : null,
         h('button.mg-btn', { type: 'button', onclick: () => { sheet.hidden = true; begin(); } }, t('playAgain')),
         h('button.mg-btn.ghost', { type: 'button', onclick: () => onFinish(result) }, t('back'))),
     );

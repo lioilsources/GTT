@@ -9,7 +9,7 @@ import { applyKeys, createScheme, SchemeA, SchemeB, SchemeC, type ControlScheme,
 import { DriveWorld } from './drive/driveWorld';
 import { t as tr, type Locale, type MessageKey } from './gen/i18n';
 import { cityIdValues, type CityId } from './gen/ids';
-import type { BenchResult, BenchRoute, CarSpec } from './gen/schema';
+import type { BenchResult, BenchRoute, CarSpec, NpcPack } from './gen/schema';
 import { tokens } from './gen/tokens';
 import { carPose, PedestrianWorld } from './peds/pedestrians';
 import { drawPedBubbles, PedView } from './render/pedView';
@@ -49,16 +49,23 @@ async function json<T>(path: string): Promise<T> {
 
 async function main(): Promise<void> {
   // ?gallery / ?mg=<id>: minigames without the world (specs/minigames/README.md "Galerie").
-  if (params.has('gallery') || params.has('mg')) {
-    const [{ runGallery }, tuning] = await Promise.all([
+  // ?skits: NPC dialogue debug list (specs/dialogue.md); the gallery also gets NPC opponents.
+  if (params.has('gallery') || params.has('mg') || params.has('skits')) {
+    const [{ runGallery }, { runSkits }, { DialogueSession, setDialogueSession }, tuning, npcPack] = await Promise.all([
       import('./minigames/gallery'),
+      import('./dialogue/skits'),
+      import('./dialogue/session'),
       json<unknown>('content/tuning.json').then((j) => Tuning.fromJson(j)),
+      json<NpcPack>('content/npc.json'),
     ]);
+    const npc = new DialogueSession(npcPack, tuning.npc, 'nyc', (Math.random() * 0xffffffff) >>> 0);
+    setDialogueSession(npc);
     for (const id of ['world', 'overlay', 'hud', 'loading']) $(id).hidden = true;
     const host = document.createElement('div');
     host.id = 'minigames';
     document.body.append(host);
-    runGallery(host, { tuning, locale, t }, params);
+    if (params.has('skits')) runSkits(host, { locale, t }, npc, params.get('skits'));
+    else runGallery(host, { tuning, locale, t }, params, npc);
     return;
   }
   const cityId = (cityIdValues as readonly string[]).includes(params.get('city') ?? '') ? (params.get('city') as CityId) : 'nyc';
