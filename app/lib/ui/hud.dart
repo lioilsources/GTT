@@ -14,6 +14,7 @@ class Hud extends StatelessWidget {
     required this.onNight,
     required this.onTuning,
     this.onPhone,
+    this.onPassport,
   });
 
   final MetropoleGame game;
@@ -21,6 +22,7 @@ class Hud extends StatelessWidget {
   final VoidCallback onNight;
   final VoidCallback onTuning;
   final VoidCallback? onPhone;
+  final VoidCallback? onPassport;
 
   @override
   Widget build(BuildContext context) {
@@ -115,6 +117,12 @@ class Hud extends StatelessWidget {
                     ),
                   ),
                 ),
+                if (onPassport != null)
+                  Positioned(
+                    right: 8,
+                    bottom: 24,
+                    child: _RoundButton(icon: Icons.menu_book, tooltip: l.passport, onTap: onPassport!),
+                  ),
                 Positioned(
                   right: 8,
                   top: 4,

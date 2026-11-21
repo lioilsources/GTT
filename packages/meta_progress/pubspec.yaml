@@ -1,0 +1,18 @@
+name: meta_progress
+description: Tourist passport (specs/passport.md) – pure rules, discovery and the postcard picture. No Flutter.
+version: 0.1.0
+publish_to: none
+resolution: workspace
+
+environment:
+  sdk: ^3.12.2
+
+dependencies:
+  rules_core:
+    path: ../rules_core
+  shared_gen:
+    path: ../shared_gen
+
+dev_dependencies:
+  lints: ^6.0.0
+  test: ^1.26.0

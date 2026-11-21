@@ -39,6 +39,8 @@ dependencies:
     path: ../packages/mg_strelnice
   feed_hub:
     path: ../packages/feed_hub
+  meta_progress:
+    path: ../packages/meta_progress
 
 dev_dependencies:
   flutter_test:

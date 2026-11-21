@@ -13,6 +13,7 @@ import '../phone/nav_hud.dart';
 import '../phone/phone_controller.dart';
 import '../phone/phone_sheet.dart';
 import 'hud.dart';
+import 'passport.dart';
 import 'tuning_panel.dart';
 
 class GameScreen extends StatefulWidget {
@@ -96,9 +97,12 @@ class _GameScreenState extends State<GameScreen> {
                   },
                   onBench: game.startBench,
                 ),
+                onPassport: () =>
+                    PassportScreen.open(context, game.passport, game.city.manifest.name, AboutInfo.of(game.city)),
               ),
               NavHud(phone: phone),
               PhoneLayer(phone: phone),
+              PassportOverlay(events: game.passportEvent, seconds: game.tuning.passport.postcardS),
               _BenchOverlay(game: game),
             ],
           );
