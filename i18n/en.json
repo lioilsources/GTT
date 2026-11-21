@@ -229,5 +229,65 @@
         "type": "int"
       }
     }
-  }
+  },
+  "sipkyRules1": "Drag to aim, release to throw. The sight sways – time it.",
+  "sipkyRules2": "Count down from 301; three darts per turn. Going below zero is a bust.",
+  "sipkyRules3": "Hit exactly zero before the opponent.",
+  "sipkyRemaining": "You {player} · Opponent {ai}",
+  "@sipkyRemaining": {
+    "placeholders": {
+      "player": {
+        "type": "int"
+      },
+      "ai": {
+        "type": "int"
+      }
+    }
+  },
+  "sipkyDart": "Dart {n}/3",
+  "@sipkyDart": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "sipkyBust": "Bust!",
+  "sipkyHit": "{points}",
+  "@sipkyHit": {
+    "placeholders": {
+      "points": {
+        "type": "int"
+      }
+    }
+  },
+  "koulenaRules1": "Flick the ball up the lane into the rings.",
+  "koulenaRules2": "Rings score 10–50, the corner pockets 100.",
+  "koulenaRules3": "Three series of nine balls.",
+  "koulenaSeries": "Series {series}/3 · ball {ball}/9",
+  "@koulenaSeries": {
+    "placeholders": {
+      "series": {
+        "type": "int"
+      },
+      "ball": {
+        "type": "int"
+      }
+    }
+  },
+  "strelniceRules1": "Tap the targets as they glide by.",
+  "strelniceRules2": "Small ones score most. Six shots, then a short reload.",
+  "strelniceRules3": "Three rounds of 90 seconds.",
+  "strelniceRound": "Round {round}/3 · {seconds} s",
+  "@strelniceRound": {
+    "placeholders": {
+      "round": {
+        "type": "int"
+      },
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
+  "strelniceReload": "Reloading…"
 }

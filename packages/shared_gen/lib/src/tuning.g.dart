@@ -1031,7 +1031,10 @@ class TuningMinigames {
         sirky = TuningMinigamesSirky._(r.sub('sirky')),
         oko = TuningMinigamesOko._(r.sub('oko')),
         dama = TuningMinigamesDama._(r.sub('dama')),
-        desetitisic = TuningMinigamesDesetitisic._(r.sub('desetitisic'));
+        desetitisic = TuningMinigamesDesetitisic._(r.sub('desetitisic')),
+        sipky = TuningMinigamesSipky._(r.sub('sipky')),
+        koulena = TuningMinigamesKoulena._(r.sub('koulena')),
+        strelnice = TuningMinigamesStrelnice._(r.sub('strelnice'));
 
   /// hard cap for every minigame (9.2)
   int timeCapS;
@@ -1044,12 +1047,21 @@ class TuningMinigames {
 
   final TuningMinigamesDesetitisic desetitisic;
 
+  final TuningMinigamesSipky sipky;
+
+  final TuningMinigamesKoulena koulena;
+
+  final TuningMinigamesStrelnice strelnice;
+
   Map<String, Object> toJson() => {
         'time_cap_s': timeCapS,
         'sirky': sirky.toJson(),
         'oko': oko.toJson(),
         'dama': dama.toJson(),
         'desetitisic': desetitisic.toJson(),
+        'sipky': sipky.toJson(),
+        'koulena': koulena.toJson(),
+        'strelnice': strelnice.toJson(),
       };
 }
 
@@ -1185,5 +1197,161 @@ class TuningMinigamesDesetitisic {
         'star_margins': starMargins,
         'time_cap_s': timeCapS,
         'ai_think_s': aiThinkS,
+      };
+}
+
+class TuningMinigamesSipky {
+  TuningMinigamesSipky._(_R r)
+      : start = r.i('start'),
+        maxRounds = r.i('max_rounds'),
+        playerScatter = r.i('player_scatter'),
+        aiScatter = r.il('ai_scatter'),
+        starDarts = r.il('star_darts'),
+        playerWobble = r.i('player_wobble'),
+        wobbleHz = r.d('wobble_hz'),
+        timeCapS = r.i('time_cap_s'),
+        aiThinkS = r.d('ai_think_s');
+
+  int start;
+
+  int maxRounds;
+
+  /// 0.1 mm
+  int playerScatter;
+
+  List<int> aiScatter;
+
+  List<int> starDarts;
+
+  /// crosshair sway amplitude, 0.1 mm (UI only)
+  int playerWobble;
+
+  double wobbleHz;
+
+  int timeCapS;
+
+  double aiThinkS;
+
+  Map<String, Object> toJson() => {
+        'start': start,
+        'max_rounds': maxRounds,
+        'player_scatter': playerScatter,
+        'ai_scatter': aiScatter,
+        'star_darts': starDarts,
+        'player_wobble': playerWobble,
+        'wobble_hz': wobbleHz,
+        'time_cap_s': timeCapS,
+        'ai_think_s': aiThinkS,
+      };
+}
+
+class TuningMinigamesKoulena {
+  TuningMinigamesKoulena._(_R r)
+      : series = r.i('series'),
+        balls = r.i('balls'),
+        ringR = r.il('ring_r'),
+        ringPoints = r.il('ring_points'),
+        pockets = r.il('pockets'),
+        pocketR = r.i('pocket_r'),
+        pocketPoints = r.i('pocket_points'),
+        scatter = r.il('scatter'),
+        starScores = r.il('star_scores'),
+        flickMmPerPx = r.d('flick_mm_per_px'),
+        timeCapS = r.i('time_cap_s');
+
+  int series;
+
+  int balls;
+
+  /// mm
+  List<int> ringR;
+
+  List<int> ringPoints;
+
+  /// x, y pairs
+  List<int> pockets;
+
+  int pocketR;
+
+  int pocketPoints;
+
+  /// mm per difficulty 1..5
+  List<int> scatter;
+
+  List<int> starScores;
+
+  /// swipe length to aim distance (UI only)
+  double flickMmPerPx;
+
+  int timeCapS;
+
+  Map<String, Object> toJson() => {
+        'series': series,
+        'balls': balls,
+        'ring_r': ringR,
+        'ring_points': ringPoints,
+        'pockets': pockets,
+        'pocket_r': pocketR,
+        'pocket_points': pocketPoints,
+        'scatter': scatter,
+        'star_scores': starScores,
+        'flick_mm_per_px': flickMmPerPx,
+        'time_cap_s': timeCapS,
+      };
+}
+
+class TuningMinigamesStrelnice {
+  TuningMinigamesStrelnice._(_R r)
+      : tickHz = r.i('tick_hz'),
+        rounds = r.i('rounds'),
+        roundTicks = r.i('round_ticks'),
+        targets = r.i('targets'),
+        width = r.i('width'),
+        lanes = r.il('lanes'),
+        kinds = r.il('kinds'),
+        kindPct = r.il('kind_pct'),
+        magazine = r.i('magazine'),
+        reloadTicks = r.i('reload_ticks'),
+        starScores = r.il('star_scores'),
+        timeCapS = r.i('time_cap_s');
+
+  int tickHz;
+
+  int rounds;
+
+  int roundTicks;
+
+  int targets;
+
+  int width;
+
+  List<int> lanes;
+
+  /// (radius, speed per tick, points) small, medium, large
+  List<int> kinds;
+
+  List<int> kindPct;
+
+  int magazine;
+
+  int reloadTicks;
+
+  List<int> starScores;
+
+  int timeCapS;
+
+  Map<String, Object> toJson() => {
+        'tick_hz': tickHz,
+        'rounds': rounds,
+        'round_ticks': roundTicks,
+        'targets': targets,
+        'width': width,
+        'lanes': lanes,
+        'kinds': kinds,
+        'kind_pct': kindPct,
+        'magazine': magazine,
+        'reload_ticks': reloadTicks,
+        'star_scores': starScores,
+        'time_cap_s': timeCapS,
       };
 }
