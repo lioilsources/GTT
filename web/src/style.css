@@ -336,3 +336,383 @@ body {
 .sirky-buttons .mg-btn {
   flex: 1;
 }
+.oko {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--space-sm);
+  padding: var(--space-md);
+}
+.oko-side {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+.oko-label,
+.oko-info {
+  text-align: center;
+  color: var(--color-ui-text-muted);
+}
+.oko-label {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--color-ui-text);
+}
+.oko-hand {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  min-height: 96px;
+}
+.oko-card {
+  width: 64px;
+  height: 92px;
+  border-radius: var(--radius-button);
+  background: var(--color-ui-text);
+  color: var(--color-ui-background);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  line-height: 1.1;
+}
+.oko-card .rank {
+  font-size: 24px;
+}
+.oko-card .suit {
+  font-size: 26px;
+}
+.oko-card.red {
+  color: var(--color-ui-control-brake);
+}
+.oko-card.back {
+  background: var(--color-brand-accent);
+  border: 4px solid var(--color-ui-text);
+}
+.oko-note {
+  min-height: 32px;
+  text-align: center;
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--color-ui-text);
+  transition: color 0.2s;
+}
+.oko-note.flash {
+  color: var(--color-brand-accent);
+}
+.oko-buttons {
+  display: flex;
+  gap: var(--space-sm);
+}
+.oko-buttons .mg-btn {
+  flex: 1;
+}
+.dama {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-md);
+  gap: var(--space-sm);
+}
+.dama-info,
+.dama-note {
+  text-align: center;
+  color: var(--color-ui-text-muted);
+  min-height: 1.4em;
+}
+.dama-note {
+  font-weight: 700;
+  color: var(--color-ui-notice);
+}
+.dama-board {
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+}
+.dama-board .sq.light {
+  fill: var(--color-world-day-land);
+}
+.dama-board .sq.dark {
+  fill: var(--color-world-day-facades-6);
+}
+.dama-cell {
+  cursor: pointer;
+}
+.dama-cell .hit {
+  fill: transparent;
+}
+.dama-cell .trail {
+  fill: var(--color-ui-control-hand);
+}
+.dama-cell .piece {
+  stroke-width: 0.8;
+}
+.dama-cell .piece.player {
+  fill: var(--color-world-day-marking);
+  stroke: var(--color-world-day-bridge-edge);
+}
+.dama-cell .piece.ai {
+  fill: var(--color-world-night-asphalt);
+  stroke: var(--color-world-night-marking);
+}
+.dama-cell .piece.must {
+  stroke: var(--color-ui-notice);
+  stroke-width: 1.6;
+}
+.dama-cell .piece.selected {
+  stroke: var(--color-brand-accent);
+  stroke-width: 1.8;
+}
+.dama-cell .crown {
+  fill: none;
+  stroke: var(--color-brand-accent);
+  stroke-width: 1;
+}
+.dama-cell .target {
+  fill: var(--color-brand-accent);
+}
+.deset {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-md);
+}
+.deset-info {
+  text-align: center;
+  color: var(--color-ui-text-muted);
+}
+.deset-note {
+  text-align: center;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--color-ui-text);
+  transition: color 0.2s;
+  margin-bottom: var(--space-sm);
+}
+.deset-note.flash {
+  color: var(--color-ui-control-brake);
+}
+.deset-board {
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+}
+.deset-die .face {
+  fill: var(--color-world-day-facades-0);
+  stroke: var(--color-ui-text-faint);
+  stroke-width: 0.8;
+}
+.deset-die .pip {
+  fill: var(--color-ui-background);
+}
+.deset-die.tap {
+  cursor: pointer;
+}
+.deset-die.sel .face,
+.deset-die.kept .face {
+  stroke: var(--color-brand-accent);
+  stroke-width: 2.4;
+}
+.deset-die.bust .face {
+  stroke: var(--color-ui-control-brake);
+  stroke-width: 1.6;
+}
+.deset-buttons {
+  display: flex;
+  gap: var(--space-sm);
+}
+.deset-buttons .mg-btn {
+  flex: 1;
+}
+.sipky {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-md);
+}
+.sipky-info,
+.sipky-note {
+  text-align: center;
+  color: var(--color-ui-text-muted);
+}
+.sipky-note {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--color-ui-text);
+  transition: color 0.2s;
+}
+.sipky-note.flash {
+  color: var(--color-brand-accent);
+}
+.sipky-note.bust {
+  color: var(--color-ui-fps-bad);
+}
+.sipky-pad {
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  touch-action: none;
+  user-select: none;
+}
+.sipky-board .surround {
+  fill: var(--color-world-night-tunnel);
+}
+.sipky-board .single.a {
+  fill: var(--color-world-night-land);
+}
+.sipky-board .single.b {
+  fill: var(--color-world-day-facades-0);
+}
+.sipky-board .ring.a {
+  fill: var(--color-world-day-facades-1);
+}
+.sipky-board .ring.b {
+  fill: var(--color-world-day-park);
+}
+.sipky-board .outer-bull {
+  fill: var(--color-world-day-park);
+}
+.sipky-board .bull {
+  fill: var(--color-world-day-facades-1);
+}
+.sipky-board .num {
+  fill: var(--color-ui-text);
+  font-size: 150px;
+  font-weight: 700;
+  text-anchor: middle;
+  dominant-baseline: central;
+}
+.sipky-dot {
+  fill: var(--color-brand-accent);
+  stroke: var(--color-ui-label-shadow);
+  stroke-width: 8;
+}
+.sipky-sight {
+  fill: none;
+  stroke: var(--color-brand-accent);
+  stroke-width: 14;
+  pointer-events: none;
+}
+.koulena {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  padding: var(--space-md);
+}
+.koulena-info,
+.koulena-note {
+  text-align: center;
+  color: var(--color-ui-text-muted);
+}
+.koulena-note {
+  min-height: 1.4em;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--color-ui-text);
+  transition: color 0.2s;
+}
+.koulena-note.flash {
+  color: var(--color-brand-accent);
+}
+.koulena-lane {
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  touch-action: none;
+  user-select: none;
+}
+.koulena-wood {
+  fill: var(--color-world-day-facades-5);
+}
+.koulena-ring.even {
+  fill: var(--color-world-day-facades-1);
+}
+.koulena-ring.odd {
+  fill: var(--color-world-day-facades-0);
+}
+.koulena-ring {
+  stroke: var(--color-world-day-bridge-edge);
+  stroke-width: 4;
+}
+.koulena-pocket {
+  fill: var(--color-world-day-bridge-edge);
+  stroke: var(--color-brand-accent);
+  stroke-width: 6;
+}
+.koulena-label {
+  fill: var(--color-ui-text);
+  text-anchor: middle;
+  dominant-baseline: central;
+  font-weight: 700;
+  pointer-events: none;
+}
+.koulena-label.pocket {
+  fill: var(--color-brand-accent);
+}
+.koulena-guide {
+  stroke: var(--color-ui-control-hint);
+  stroke-width: 8;
+  stroke-dasharray: 24 18;
+  stroke-linecap: round;
+}
+.koulena-mark {
+  fill: var(--color-ui-control-brake);
+}
+.koulena-ball {
+  fill: var(--color-world-day-facades-4);
+  stroke: var(--color-ui-text);
+  stroke-width: 4;
+}
+.strelnice {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-md);
+  gap: var(--space-sm);
+}
+.strelnice-info {
+  text-align: center;
+  color: var(--color-ui-text-muted);
+}
+.strelnice-wrap {
+  flex: 1;
+  min-height: 0;
+  position: relative;
+}
+.strelnice-field {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  touch-action: none;
+  cursor: crosshair;
+}
+.strelnice-ammo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-md);
+  min-height: 32px;
+}
+.strelnice-pips {
+  display: flex;
+  gap: var(--space-xs);
+}
+.strelnice-pips span {
+  width: 10px;
+  height: 24px;
+  border-radius: 5px;
+  background: var(--color-ui-text-faint);
+}
+.strelnice-pips span.on {
+  background: var(--color-brand-accent);
+}
+.strelnice-note {
+  font-weight: 700;
+  color: var(--color-ui-notice);
+}
