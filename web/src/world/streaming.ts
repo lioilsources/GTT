@@ -81,11 +81,15 @@ export class ChunkStreamer {
     }
   }
 
-  /** Loads everything the window needs and waits for it (start-up, teleports). */
-  async preload(x: number, y: number, heading: number): Promise<void> {
+  /**
+   * Loads what the window needs and waits for it (start-up, teleports). `limit` keeps only the
+   * first chunks (own chunk and the 3×3 ring come first) so the first frame does not wait for the rest.
+   */
+  async preload(x: number, y: number, heading: number, limit = Infinity): Promise<void> {
     await Promise.all(
       this.window
         .wanted(x, y, heading)
+        .slice(0, limit)
         .filter(([cx, cy]) => !this.loaded.has(chunkKey(cx, cy)))
         .map(([cx, cy]) => this.load(cx, cy, chunkKey(cx, cy))),
     );

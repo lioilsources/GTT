@@ -3,7 +3,9 @@ import { join } from 'node:path';
 
 import { beforeAll, describe, expect, it } from 'vitest';
 
-import type { CarSpec } from '../src/gen/schema';
+import type { BenchRoute, CarSpec } from '../src/gen/schema';
+import { Autopilot } from '../src/drive/autopilot';
+import { resolveRoute } from '../src/drive/route';
 import { Tuning } from '../src/gen/tuning';
 import { DriveWorld } from '../src/drive/driveWorld';
 import { chunkPath, type PackSource } from '../src/world/citypack';
@@ -98,4 +100,27 @@ describe.skipIf(!existsSync(pack))('NYC citypack in client W', () => {
     }
     expect(maxSlip).toBeGreaterThan(0.2);
   });
+});
+
+describe.skipIf(!existsSync(pack))('D1 benchmark route (specs/bench.md)', () => {
+  it('resolves the NYC route and the autopilot drives it to the end', async () => {
+    const city = await City.load(source);
+    const route = resolveRoute(city.graph, JSON.parse(readFileSync(join(root, 'content', 'bench', 'nyc.json'), 'utf8')) as BenchRoute);
+    expect(route.legs).toBe(5);
+    expect(route.length).toBeGreaterThan(3000);
+    expect(route.length).toBeLessThan(5000);
+    const d = new DriveWorld(city, car, tuning);
+    for (const c of city.manifest.chunks) d.addChunk(await prepareChunk(await source.read(chunkPath(c.x, c.y))));
+    const pilot = new Autopilot(route, tuning);
+    pilot.start(d);
+    d.beforeStep = (step) => pilot.step(d, d.input, step);
+    let t = 0;
+    while (!pilot.finished && t < 600) {
+      d.update(1 / 60);
+      t += 1 / 60;
+    }
+    expect(pilot.finished).toBe(true);
+    expect(pilot.respawns).toBeLessThanOrEqual(2);
+    expect(t).toBeLessThan(400);
+  }, 120_000);
 });

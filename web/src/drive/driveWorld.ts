@@ -83,6 +83,8 @@ export class DriveWorld {
   readonly skids: number[] = [];
   private lastSkid: [number, number, number, number] | null = null;
   skidsVersion = 0;
+  /** Called before every fixed step (the benchmark autopilot sets the input here). */
+  beforeStep: ((step: number) => void) | null = null;
 
   constructor(
     readonly city: City,
@@ -167,6 +169,7 @@ export class DriveWorld {
   private fixedStep(step: number): void {
     const d = this.tuning.drive;
     this.time += step;
+    this.beforeStep?.(step);
     this.car.drive(this.input, step, this.tuning.speedMps.cruise, this.tuning.speedMps.topDefault);
     this.world.step(step, d.velocityIterations, d.positionIterations);
     this.layers.update(this.car.x, this.car.y);

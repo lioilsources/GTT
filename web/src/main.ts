@@ -3,11 +3,13 @@ import type { AbstractEngine } from '@babylonjs/core/Engines/abstractEngine';
 import { WebGPUEngine } from '@babylonjs/core/Engines/webgpuEngine';
 
 import { ASSET_BASE_URL } from './config';
+import { Autopilot, frameStats } from './drive/autopilot';
+import { resolveRoute } from './drive/route';
 import { applyKeys, createScheme, SchemeA, SchemeB, SchemeC, type ControlScheme, type ControlSchemeId } from './drive/controls';
 import { DriveWorld } from './drive/driveWorld';
 import { t as tr, type Locale, type MessageKey } from './gen/i18n';
 import { cityIdValues, type CityId } from './gen/ids';
-import type { CarSpec } from './gen/schema';
+import type { BenchResult, BenchRoute, CarSpec } from './gen/schema';
 import { tokens } from './gen/tokens';
 import { Tuning } from './gen/tuning';
 import { WorldView } from './render/worldView';
@@ -67,10 +69,21 @@ async function main(): Promise<void> {
     drive.removeChunk(c);
     view.removeChunk(c);
   });
+  // ?bench: the autopilot drives the route of specs/bench.md and reports the numbers.
+  const pilot = params.has('bench')
+    ? new Autopilot(resolveRoute(city.graph, await json<BenchRoute>(`content/bench/${cityId}.json`)), tuning)
+    : null;
+  if (pilot) {
+    pilot.start(drive);
+    view.carChanged();
+    drive.beforeStep = (step) => pilot.step(drive, drive.input, step);
+  }
   view.rig.snap(drive.car.x, drive.car.y, drive.car.heading, tuning);
-  await streamer.preload(drive.car.x, drive.car.y, drive.car.heading);
+  // Own chunk and its ring first (3×3 = 9); the rest streams in while driving.
+  await streamer.preload(drive.car.x, drive.car.y, drive.car.heading, 9);
   $('loading').hidden = true;
-  const firstFrameMs = performance.now() - tStart;
+  let firstFrameMs = 0;
+  const loadMs = performance.now() - tStart;
 
   // ---------- input
   let scheme: ControlScheme = createScheme((['a', 'b', 'c'].includes(params.get('scheme') ?? '') ? params.get('scheme') : 'a') as ControlSchemeId, tuning.controls);
@@ -137,10 +150,13 @@ async function main(): Promise<void> {
     const now = performance.now();
     const dt = Math.min((now - last) / 1000, 0.1);
     last = now;
-    const input = drive.input;
-    input.reset();
-    scheme.update(input);
-    applyKeys(keys, input);
+    if (firstFrameMs === 0) firstFrameMs = now;
+    if (!pilot) {
+      const input = drive.input;
+      input.reset();
+      scheme.update(input);
+      applyKeys(keys, input);
+    }
     drive.update(dt);
     const c = drive.car;
     view.rig.follow(c.x, c.y, c.heading, c.speed, dt, tuning, c.forwardSpeed < -0.5);
@@ -161,6 +177,7 @@ async function main(): Promise<void> {
       perf.acc = 0;
       perf.worstAcc = 0;
     }
+    if (pilot) benchFrame(now, dt);
     perf.hudTimer += dt;
     if (perf.hudTimer >= 0.1) {
       perf.hudTimer = 0;
@@ -188,6 +205,51 @@ async function main(): Promise<void> {
     perfEl.style.color = perf.fps >= 57 ? tokens.colorUiFpsOk : tokens.colorUiFpsBad;
     const d = drive.borderDistance();
     noticeEl.hidden = !(d !== null && d < tuning.hud.borderNoticeM);
+  }
+
+  // ---------- benchmark (specs/bench.md)
+  const bench = { start: 0, times: [] as number[], done: false };
+  function benchFrame(now: number, dt: number): void {
+    if (!pilot || bench.done) return;
+    if (bench.start === 0) bench.start = now;
+    if (now - bench.start >= tuning.bench.warmupS * 1000) bench.times.push(dt * 1000);
+    if (!pilot.finished) {
+      noticeEl.hidden = false;
+      noticeEl.textContent = t('benchRunning', { percent: Math.floor((100 * pilot.s) / pilot.route.length) });
+      return;
+    }
+    bench.done = true;
+    const st = frameStats(bench.times);
+    const mem = (performance as unknown as { memory?: { usedJSHeapSize: number } }).memory;
+    const r: BenchResult = {
+      client: 'web',
+      route: 'midtown-42nd',
+      device: navigator.userAgent,
+      renderer: engine.isWebGPU ? 'WebGPU' : 'WebGL2',
+      completed: true,
+      duration_s: round((now - bench.start) / 1000, 1),
+      frames: bench.times.length,
+      fps_avg: round(st.fpsAvg, 1),
+      fps_1low: round(st.fps1Low, 1),
+      frame_ms_p50: round(st.p50, 2),
+      frame_ms_p99: round(st.p99, 2),
+      first_frame_ms: Math.round(firstFrameMs),
+      ...(mem ? { memory_mb: round(mem.usedJSHeapSize / 1e6, 0) } : {}),
+      respawns: pilot.respawns,
+      date: new Date().toISOString(),
+    };
+    showBench(r);
+  }
+  const round = (v: number, d: number): number => Math.round(v * 10 ** d) / 10 ** d;
+  function showBench(r: BenchResult): void {
+    const text = JSON.stringify(r, null, 2);
+    noticeEl.textContent = t('benchDone');
+    $('bench-json').textContent = text;
+    const copy = $('bench-copy');
+    copy.textContent = t('copy');
+    copy.onclick = () => void navigator.clipboard?.writeText(text).then(() => (copy.textContent = t('copied')));
+    $('bench').hidden = false;
+    console.info('[metro bench]', text);
   }
 
   // ---------- overlay: street labels and control hints (screen space)
@@ -274,7 +336,8 @@ async function main(): Promise<void> {
 
   if (import.meta.env.DEV || params.has('debug')) {
     (window as unknown as Record<string, unknown>)['metro'] = {
-      engine, view, drive, city, tuning, firstFrameMs, frameTimes,
+      engine, view, drive, city, tuning, frameTimes, pilot, bench,
+      timing: () => ({ firstFrameMs, loadMs }),
     };
   }
 }
