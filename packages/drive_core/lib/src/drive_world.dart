@@ -88,6 +88,9 @@ class DriveWorld {
   final List<double> skids = [];
   (double, double, double, double)? _lastSkid;
 
+  /// Called before every fixed step (the benchmark autopilot sets the input here).
+  void Function(double step)? beforeStep;
+
   TuningDrive get _d => tuning.drive;
 
   void spawn(double x, double y, double heading) {
@@ -154,6 +157,7 @@ class DriveWorld {
 
   void _fixedStep(double step) {
     time += step;
+    beforeStep?.call(step);
     car.drive(input, step, cruise: tuning.speedMps.cruise, top: tuning.speedMps.topDefault);
     world.step(step, subStepCount: _d.substeps);
     layers.update(car.x, car.y);

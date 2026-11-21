@@ -8,20 +8,26 @@ import 'package:shared_gen/shared_gen.dart';
 
 /// Live editor for tuning.yaml and the car parameters (M0 dogfooding).
 /// Slider labels are the YAML keys on purpose: they are what gets pasted back into the repo.
-void showTuningPanel(BuildContext context, MetropoleGame game, {required void Function(ControlSchemeId) onScheme}) {
+void showTuningPanel(
+  BuildContext context,
+  MetropoleGame game, {
+  required void Function(ControlSchemeId) onScheme,
+  required Future<void> Function() onBench,
+}) {
   showModalBottomSheet<void>(
     context: context,
     isScrollControlled: true,
     backgroundColor: const Color(Tokens.colorUiSheet),
     barrierColor: Colors.transparent,
-    builder: (_) => _TuningPanel(game: game, onScheme: onScheme),
+    builder: (_) => _TuningPanel(game: game, onScheme: onScheme, onBench: onBench),
   );
 }
 
 class _TuningPanel extends StatefulWidget {
-  const _TuningPanel({required this.game, required this.onScheme});
+  const _TuningPanel({required this.game, required this.onScheme, required this.onBench});
   final MetropoleGame game;
   final void Function(ControlSchemeId) onScheme;
+  final Future<void> Function() onBench;
 
   @override
   State<_TuningPanel> createState() => _TuningPanelState();
@@ -163,6 +169,14 @@ class _TuningPanelState extends State<_TuningPanel> {
                 icon: const Icon(Icons.restart_alt, size: 16),
                 label: Text(l.respawn),
                 onPressed: g.respawn,
+              ),
+              OutlinedButton.icon(
+                icon: const Icon(Icons.speed, size: 16),
+                label: Text(l.benchStart),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  widget.onBench();
+                },
               ),
             ],
           ),

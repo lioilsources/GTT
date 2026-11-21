@@ -34,5 +34,6 @@ flutter:
   assets:
     - assets/shared/content/
     - assets/shared/content/cars/
+    - assets/shared/content/bench/
     - assets/shared/packs/nyc/
     - assets/shared/packs/nyc/chunks/

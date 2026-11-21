@@ -6,7 +6,11 @@ import 'l10n/app_localizations.dart';
 import 'ui/game_screen.dart';
 import 'package:shared_gen/shared_gen.dart';
 
+/// Time since `main` started; the benchmark reports the first playable frame against it (specs/bench.md).
+final Stopwatch appClock = Stopwatch();
+
 void main() {
+  appClock.start();
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   runApp(const MetropoleApp());

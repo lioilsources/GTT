@@ -1,3 +1,5 @@
+import 'dart:convert';
+import 'dart:io';
 import 'dart:math' as math;
 import 'dart:ui' as ui;
 
@@ -116,6 +118,16 @@ class MetropoleGame extends Game {
   final hud = ValueNotifier<HudState>(const HudState());
   bool night = false;
 
+  /// Benchmark (specs/bench.md): progress 0..1 while running, then the result.
+  Autopilot? pilot;
+  final benchProgress = ValueNotifier<double?>(null);
+  final benchResult = ValueNotifier<BenchResult?>(null);
+  final List<double> _benchMs = [];
+  double _benchClock = 0;
+
+  /// Milliseconds from `main` to the first frame with the car's surroundings loaded.
+  int firstFrameMs = 0;
+
   ui.Size _size = ui.Size.zero;
   double _hudTimer = 0;
   int _frames = 0;
@@ -136,6 +148,52 @@ class MetropoleGame extends Game {
 
   void setScheme(ControlSchemeId id) => scheme = ControlScheme.create(id, tuning.controls);
 
+  /// Starts the D1 benchmark: the autopilot takes over and drives the route of content/bench.
+  Future<void> startBench() async {
+    final json = await rootBundle.loadString('${GameAssets.shared}content/bench/${city.id}.json');
+    final route = resolveRoute(city.graph, BenchRoute.fromJson(jsonDecode(json) as Map<String, Object?>));
+    final p = pilot = Autopilot(route, tuning)..start(drive);
+    drive.beforeStep = (step) => p.step(drive, drive.input, step);
+    camera.snap(drive.car.x, drive.car.y, drive.car.heading, tuning);
+    await streamer.preload(drive.car.x, drive.car.y, drive.car.heading);
+    _benchMs.clear();
+    _benchClock = 0;
+    benchResult.value = null;
+    benchProgress.value = 0;
+  }
+
+  void _benchFrame(double dt) {
+    final p = pilot;
+    if (p == null || benchResult.value != null) return;
+    _benchClock += dt;
+    if (_benchClock >= tuning.bench.warmupS) _benchMs.add(dt * 1000);
+    if (!p.finished) {
+      benchProgress.value = p.s / p.route.length;
+      return;
+    }
+    final s = frameStats(_benchMs);
+    double r(double v, int d) => (v * math.pow(10, d)).round() / math.pow(10, d);
+    benchResult.value = BenchResult(
+      client: 'flutter',
+      route: 'midtown-42nd',
+      device: '${Platform.operatingSystem} ${Platform.operatingSystemVersion}',
+      completed: true,
+      durationS: r(_benchClock, 1),
+      frames: _benchMs.length,
+      fpsAvg: r(s.fpsAvg, 1),
+      fps1low: r(s.fps1Low, 1),
+      frameMsP50: r(s.p50, 2),
+      frameMsP99: r(s.p99, 2),
+      firstFrameMs: firstFrameMs.toDouble(),
+      memoryMb: r(ProcessInfo.currentRss / 1e6, 0),
+      respawns: p.respawns,
+      date: DateTime.now().toUtc().toIso8601String(),
+    );
+    benchProgress.value = null;
+    drive.beforeStep = null;
+    pilot = null;
+  }
+
   void respawn() {
     drive.spawn(city.startX, city.startY, city.startHeading);
     camera.snap(drive.car.x, drive.car.y, drive.car.heading, tuning);
@@ -154,10 +212,13 @@ class MetropoleGame extends Game {
 
   @override
   void update(double dt) {
-    final input = drive.input..reset();
-    scheme.update(input);
-    _keyboard(input);
+    if (pilot == null) {
+      final input = drive.input..reset();
+      scheme.update(input);
+      _keyboard(input);
+    }
     drive.update(dt);
+    _benchFrame(dt);
     final car = drive.car;
     camera.follow(car.x, car.y, car.heading, car.speed, dt, tuning, reversing: car.forwardSpeed < -0.5);
     streamer.update(car.x, car.y, car.heading);

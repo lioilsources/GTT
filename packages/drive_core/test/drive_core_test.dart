@@ -1,4 +1,6 @@
+import 'dart:convert';
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:drive_core/drive_core.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -33,6 +35,7 @@ RoadGraph crossing() {
 
 void main() {
   setUpAll(() async => initializeForge2D());
+  benchTests();
 
   group('car physics', () {
     final d = tuning.drive;
@@ -182,4 +185,40 @@ void main() {
       expect(ui.hasMatch(f.readAsStringSync()), isFalse, reason: f.path);
     }
   });
+}
+
+class _FilePack implements PackSource {
+  _FilePack(this.root);
+  final String root;
+  @override
+  Future<Uint8List> read(String path) async => File('$root$path').readAsBytes();
+}
+
+void benchTests() {
+  test('D1 benchmark: the NYC route resolves and the autopilot drives it (specs/bench.md)', () async {
+    const root = '../../build/packs/nyc/';
+    if (!File('${root}manifest.pb').existsSync()) return;
+    await initializeForge2D();
+    final src = _FilePack(root);
+    final city = await City.load(src);
+    final route = resolveRoute(city.graph,
+        BenchRoute.fromJson(jsonDecode(File('../../content/bench/nyc.json').readAsStringSync()) as Map<String, Object?>));
+    expect(route.legs, 5);
+    expect(route.length, inInclusiveRange(3000, 5000));
+    final d = DriveWorld(city: city, spec: spec(), tuning: tuning);
+    for (final c in city.manifest.chunks) {
+      d.addChunk(prepareChunk(await src.read(chunkPath(c.x, c.y))));
+    }
+    final pilot = Autopilot(route, tuning)..start(d);
+    d.beforeStep = (step) => pilot.step(d, d.input, step);
+    var t = 0.0;
+    while (!pilot.finished && t < 600) {
+      d.update(1 / 60);
+      t += 1 / 60;
+    }
+    expect(pilot.finished, isTrue);
+    expect(pilot.respawns, lessThanOrEqualTo(2));
+    expect(t, lessThan(400));
+    d.dispose();
+  }, timeout: const Timeout(Duration(minutes: 3)));
 }

@@ -5,6 +5,7 @@ library;
 
 export 'package:forge2d/forge2d.dart' show initializeForge2D;
 
+export 'src/bench.dart';
 export 'src/car.dart';
 export 'package:shared_gen/shared_gen.dart' show CarSpec;
 
