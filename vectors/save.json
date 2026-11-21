@@ -1,0 +1,937 @@
+{
+ "module": "save",
+ "specVersion": 1,
+ "cases": [
+  {
+   "name": "migrate version 1",
+   "config": {
+    "cityId": "nyc",
+    "startCash": 0,
+    "startOwned": [
+     "m0_coupe"
+    ],
+    "startCar": "m0_coupe",
+    "cars": [
+     "hatch_pip",
+     "m0_coupe",
+     "muscle_brute",
+     "pickup_hauler",
+     "taxi_metro"
+    ]
+   },
+   "seed": 1,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "load",
+      "save": {
+       "version": 1,
+       "cityId": "nyc",
+       "cash": 1250,
+       "stamps": [
+        "minigame:sirky",
+        "landmark:empire_state",
+        "minigame:sirky"
+       ],
+       "cars": [
+        "m0_coupe",
+        "taxi_metro",
+        "gone_car"
+       ],
+       "best": {
+        "sirky": {
+         "stars": 3,
+         "score": 500
+        },
+        "oko": {
+         "stars": 1,
+         "score": 100
+        }
+       }
+      }
+     },
+     "state": {
+      "version": 2,
+      "cityId": "nyc",
+      "cash": 1250,
+      "cars": [
+       "m0_coupe",
+       "taxi_metro"
+      ],
+      "car": "m0_coupe",
+      "stamps": [
+       "minigame:sirky",
+       "landmark:empire_state"
+      ],
+      "best": {
+       "oko": {
+        "stars": 1,
+        "score": 100
+       },
+       "sirky": {
+        "stars": 3,
+        "score": 500
+       }
+      },
+      "plays": {},
+      "feed": {
+       "prefs": {},
+       "visits": {},
+       "districts": []
+      },
+      "npc": {
+       "vibe": {},
+       "contacts": [],
+       "recent": []
+      },
+      "settings": {
+       "scheme": "a",
+       "night": false
+      }
+     }
+    }
+   ],
+   "result": null
+  },
+  {
+   "name": "version 2 normalised",
+   "config": {
+    "cityId": "nyc",
+    "startCash": 0,
+    "startOwned": [
+     "m0_coupe"
+    ],
+    "startCar": "m0_coupe",
+    "cars": [
+     "hatch_pip",
+     "m0_coupe",
+     "muscle_brute",
+     "pickup_hauler",
+     "taxi_metro"
+    ]
+   },
+   "seed": 1,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "load",
+      "save": {
+       "version": 2,
+       "cityId": "nyc",
+       "cash": 300,
+       "cars": [
+        "hatch_pip",
+        "m0_coupe",
+        "hatch_pip"
+       ],
+       "car": "m0_coupe",
+       "stamps": [
+        "district:soho"
+       ],
+       "best": {
+        "dama": {
+         "stars": 5,
+         "score": 1200
+        }
+       },
+       "plays": {
+        "spot_b": 2,
+        "spot_a": -1
+       },
+       "feed": {
+        "prefs": {
+         "flick": -2,
+         "cards": 3
+        },
+        "visits": {
+         "spot_b": 2
+        },
+        "districts": [
+         "SoHo"
+        ]
+       },
+       "npc": {
+        "vibe": {
+         "mia": 7
+        },
+        "contacts": [
+         "mia"
+        ],
+        "recent": [
+         "mia_street_1"
+        ]
+       },
+       "settings": {
+        "scheme": "c",
+        "night": true
+       }
+      }
+     },
+     "state": {
+      "version": 2,
+      "cityId": "nyc",
+      "cash": 300,
+      "cars": [
+       "hatch_pip",
+       "m0_coupe"
+      ],
+      "car": "m0_coupe",
+      "stamps": [
+       "district:soho"
+      ],
+      "best": {
+       "dama": {
+        "stars": 3,
+        "score": 1200
+       }
+      },
+      "plays": {
+       "spot_a": 0,
+       "spot_b": 2
+      },
+      "feed": {
+       "prefs": {
+        "cards": 3,
+        "flick": -2
+       },
+       "visits": {
+        "spot_b": 2
+       },
+       "districts": [
+        "SoHo"
+       ]
+      },
+      "npc": {
+       "vibe": {
+        "mia": 7
+       },
+       "contacts": [
+        "mia"
+       ],
+       "recent": [
+        "mia_street_1"
+       ]
+      },
+      "settings": {
+       "scheme": "c",
+       "night": true
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "load",
+      "save": {
+       "version": 2,
+       "cityId": "nyc",
+       "cash": -5,
+       "cars": [
+        "hatch_pip",
+        "m0_coupe",
+        "hatch_pip"
+       ],
+       "car": "muscle_brute",
+       "stamps": [
+        "district:soho"
+       ],
+       "best": {
+        "dama": {
+         "stars": 5,
+         "score": 1200
+        }
+       },
+       "plays": {
+        "spot_b": 2,
+        "spot_a": -1
+       },
+       "feed": {
+        "prefs": {
+         "flick": -2,
+         "cards": 3
+        },
+        "visits": {
+         "spot_b": 2
+        },
+        "districts": [
+         "SoHo"
+        ]
+       },
+       "npc": {
+        "vibe": {
+         "mia": 7
+        },
+        "contacts": [
+         "mia"
+        ],
+        "recent": [
+         "mia_street_1"
+        ]
+       },
+       "settings": {
+        "scheme": "c",
+        "night": true
+       }
+      }
+     },
+     "state": {
+      "version": 2,
+      "cityId": "nyc",
+      "cash": 0,
+      "cars": [
+       "hatch_pip",
+       "m0_coupe"
+      ],
+      "car": "hatch_pip",
+      "stamps": [
+       "district:soho"
+      ],
+      "best": {
+       "dama": {
+        "stars": 3,
+        "score": 1200
+       }
+      },
+      "plays": {
+       "spot_a": 0,
+       "spot_b": 2
+      },
+      "feed": {
+       "prefs": {
+        "cards": 3,
+        "flick": -2
+       },
+       "visits": {
+        "spot_b": 2
+       },
+       "districts": [
+        "SoHo"
+       ]
+      },
+      "npc": {
+       "vibe": {
+        "mia": 7
+       },
+       "contacts": [
+        "mia"
+       ],
+       "recent": [
+        "mia_street_1"
+       ]
+      },
+      "settings": {
+       "scheme": "c",
+       "night": true
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "load",
+      "save": {
+       "version": 2,
+       "cityId": "nyc",
+       "cash": 300,
+       "cars": [
+        "hatch_pip",
+        "m0_coupe",
+        "hatch_pip"
+       ],
+       "car": "m0_coupe",
+       "stamps": [
+        "district:soho"
+       ],
+       "best": {
+        "dama": {
+         "stars": 5,
+         "score": 1200
+        }
+       },
+       "plays": {
+        "spot_b": 2,
+        "spot_a": -1
+       },
+       "feed": {
+        "prefs": {
+         "flick": -2,
+         "cards": 3
+        },
+        "visits": {
+         "spot_b": 2
+        },
+        "districts": [
+         "SoHo"
+        ]
+       },
+       "npc": {
+        "vibe": {
+         "mia": 7
+        },
+        "contacts": [
+         "mia"
+        ],
+        "recent": [
+         "mia_street_1"
+        ]
+       },
+       "settings": {
+        "scheme": "z",
+        "night": false
+       }
+      }
+     },
+     "state": {
+      "version": 2,
+      "cityId": "nyc",
+      "cash": 300,
+      "cars": [
+       "hatch_pip",
+       "m0_coupe"
+      ],
+      "car": "m0_coupe",
+      "stamps": [
+       "district:soho"
+      ],
+      "best": {
+       "dama": {
+        "stars": 3,
+        "score": 1200
+       }
+      },
+      "plays": {
+       "spot_a": 0,
+       "spot_b": 2
+      },
+      "feed": {
+       "prefs": {
+        "cards": 3,
+        "flick": -2
+       },
+       "visits": {
+        "spot_b": 2
+       },
+       "districts": [
+        "SoHo"
+       ]
+      },
+      "npc": {
+       "vibe": {
+        "mia": 7
+       },
+       "contacts": [
+        "mia"
+       ],
+       "recent": [
+        "mia_street_1"
+       ]
+      },
+      "settings": {
+       "scheme": "a",
+       "night": false
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "load",
+      "save": {
+       "version": 2,
+       "cityId": "nyc",
+       "cash": 300,
+       "cars": [
+        "gone"
+       ],
+       "car": "gone",
+       "stamps": [
+        "district:soho"
+       ],
+       "best": {
+        "dama": {
+         "stars": 5,
+         "score": 1200
+        }
+       },
+       "plays": {
+        "spot_b": 2,
+        "spot_a": -1
+       },
+       "feed": {
+        "prefs": {
+         "flick": -2,
+         "cards": 3
+        },
+        "visits": {
+         "spot_b": 2
+        },
+        "districts": [
+         "SoHo"
+        ]
+       },
+       "npc": {
+        "vibe": {
+         "mia": 7
+        },
+        "contacts": [
+         "mia"
+        ],
+        "recent": [
+         "mia_street_1"
+        ]
+       },
+       "settings": {
+        "scheme": "c",
+        "night": true
+       }
+      }
+     },
+     "state": {
+      "version": 2,
+      "cityId": "nyc",
+      "cash": 300,
+      "cars": [
+       "m0_coupe"
+      ],
+      "car": "m0_coupe",
+      "stamps": [
+       "district:soho"
+      ],
+      "best": {
+       "dama": {
+        "stars": 3,
+        "score": 1200
+       }
+      },
+      "plays": {
+       "spot_a": 0,
+       "spot_b": 2
+      },
+      "feed": {
+       "prefs": {
+        "cards": 3,
+        "flick": -2
+       },
+       "visits": {
+        "spot_b": 2
+       },
+       "districts": [
+        "SoHo"
+       ]
+      },
+      "npc": {
+       "vibe": {
+        "mia": 7
+       },
+       "contacts": [
+        "mia"
+       ],
+       "recent": [
+        "mia_street_1"
+       ]
+      },
+      "settings": {
+       "scheme": "c",
+       "night": true
+      }
+     }
+    }
+   ],
+   "result": null
+  },
+  {
+   "name": "garbage gives a fresh save",
+   "config": {
+    "cityId": "nyc",
+    "startCash": 0,
+    "startOwned": [
+     "m0_coupe"
+    ],
+    "startCar": "m0_coupe",
+    "cars": [
+     "hatch_pip",
+     "m0_coupe",
+     "muscle_brute",
+     "pickup_hauler",
+     "taxi_metro"
+    ]
+   },
+   "seed": 1,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "load",
+      "save": null
+     },
+     "state": {
+      "version": 2,
+      "cityId": "nyc",
+      "cash": 0,
+      "cars": [
+       "m0_coupe"
+      ],
+      "car": "m0_coupe",
+      "stamps": [],
+      "best": {},
+      "plays": {},
+      "feed": {
+       "prefs": {},
+       "visits": {},
+       "districts": []
+      },
+      "npc": {
+       "vibe": {},
+       "contacts": [],
+       "recent": []
+      },
+      "settings": {
+       "scheme": "a",
+       "night": false
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "load",
+      "save": "text"
+     },
+     "state": {
+      "version": 2,
+      "cityId": "nyc",
+      "cash": 0,
+      "cars": [
+       "m0_coupe"
+      ],
+      "car": "m0_coupe",
+      "stamps": [],
+      "best": {},
+      "plays": {},
+      "feed": {
+       "prefs": {},
+       "visits": {},
+       "districts": []
+      },
+      "npc": {
+       "vibe": {},
+       "contacts": [],
+       "recent": []
+      },
+      "settings": {
+       "scheme": "a",
+       "night": false
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "load",
+      "save": {
+       "version": 3,
+       "cityId": "nyc"
+      }
+     },
+     "state": {
+      "version": 2,
+      "cityId": "nyc",
+      "cash": 0,
+      "cars": [
+       "m0_coupe"
+      ],
+      "car": "m0_coupe",
+      "stamps": [],
+      "best": {},
+      "plays": {},
+      "feed": {
+       "prefs": {},
+       "visits": {},
+       "districts": []
+      },
+      "npc": {
+       "vibe": {},
+       "contacts": [],
+       "recent": []
+      },
+      "settings": {
+       "scheme": "a",
+       "night": false
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "load",
+      "save": {
+       "version": 1,
+       "cityId": "paris",
+       "cash": 1250,
+       "stamps": [
+        "minigame:sirky",
+        "landmark:empire_state",
+        "minigame:sirky"
+       ],
+       "cars": [
+        "m0_coupe",
+        "taxi_metro",
+        "gone_car"
+       ],
+       "best": {
+        "sirky": {
+         "stars": 3,
+         "score": 500
+        },
+        "oko": {
+         "stars": 1,
+         "score": 100
+        }
+       }
+      }
+     },
+     "state": {
+      "version": 2,
+      "cityId": "nyc",
+      "cash": 0,
+      "cars": [
+       "m0_coupe"
+      ],
+      "car": "m0_coupe",
+      "stamps": [],
+      "best": {},
+      "plays": {},
+      "feed": {
+       "prefs": {},
+       "visits": {},
+       "districts": []
+      },
+      "npc": {
+       "vibe": {},
+       "contacts": [],
+       "recent": []
+      },
+      "settings": {
+       "scheme": "a",
+       "night": false
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "load",
+      "save": {
+       "version": 1,
+       "cityId": "nyc",
+       "cash": 1.5,
+       "stamps": [
+        "minigame:sirky",
+        "landmark:empire_state",
+        "minigame:sirky"
+       ],
+       "cars": [
+        "m0_coupe",
+        "taxi_metro",
+        "gone_car"
+       ],
+       "best": {
+        "sirky": {
+         "stars": 3,
+         "score": 500
+        },
+        "oko": {
+         "stars": 1,
+         "score": 100
+        }
+       }
+      }
+     },
+     "state": {
+      "version": 2,
+      "cityId": "nyc",
+      "cash": 0,
+      "cars": [
+       "m0_coupe"
+      ],
+      "car": "m0_coupe",
+      "stamps": [],
+      "best": {},
+      "plays": {},
+      "feed": {
+       "prefs": {},
+       "visits": {},
+       "districts": []
+      },
+      "npc": {
+       "vibe": {},
+       "contacts": [],
+       "recent": []
+      },
+      "settings": {
+       "scheme": "a",
+       "night": false
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "load",
+      "save": {
+       "version": 2,
+       "cityId": "nyc",
+       "cash": 300,
+       "cars": [
+        "hatch_pip",
+        "m0_coupe",
+        "hatch_pip"
+       ],
+       "car": "m0_coupe",
+       "stamps": [
+        "district:soho"
+       ],
+       "best": {
+        "dama": {
+         "stars": 5,
+         "score": 1200
+        }
+       },
+       "plays": {
+        "a": "x"
+       },
+       "feed": {
+        "prefs": {
+         "flick": -2,
+         "cards": 3
+        },
+        "visits": {
+         "spot_b": 2
+        },
+        "districts": [
+         "SoHo"
+        ]
+       },
+       "npc": {
+        "vibe": {
+         "mia": 7
+        },
+        "contacts": [
+         "mia"
+        ],
+        "recent": [
+         "mia_street_1"
+        ]
+       },
+       "settings": {
+        "scheme": "c",
+        "night": true
+       }
+      }
+     },
+     "state": {
+      "version": 2,
+      "cityId": "nyc",
+      "cash": 0,
+      "cars": [
+       "m0_coupe"
+      ],
+      "car": "m0_coupe",
+      "stamps": [],
+      "best": {},
+      "plays": {},
+      "feed": {
+       "prefs": {},
+       "visits": {},
+       "districts": []
+      },
+      "npc": {
+       "vibe": {},
+       "contacts": [],
+       "recent": []
+      },
+      "settings": {
+       "scheme": "a",
+       "night": false
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "load",
+      "save": {
+       "version": 2,
+       "cityId": "nyc",
+       "cash": 300,
+       "cars": [
+        "hatch_pip",
+        "m0_coupe",
+        "hatch_pip"
+       ],
+       "car": "m0_coupe",
+       "stamps": [
+        "district:soho"
+       ],
+       "best": {
+        "dama": {
+         "stars": 5,
+         "score": 1200
+        }
+       },
+       "plays": {
+        "spot_b": 2,
+        "spot_a": -1
+       },
+       "feed": {
+        "prefs": {
+         "flick": -2,
+         "cards": 3
+        },
+        "visits": {
+         "spot_b": 2
+        },
+        "districts": [
+         "SoHo"
+        ]
+       },
+       "settings": {
+        "scheme": "c",
+        "night": true
+       }
+      }
+     },
+     "state": {
+      "version": 2,
+      "cityId": "nyc",
+      "cash": 0,
+      "cars": [
+       "m0_coupe"
+      ],
+      "car": "m0_coupe",
+      "stamps": [],
+      "best": {},
+      "plays": {},
+      "feed": {
+       "prefs": {},
+       "visits": {},
+       "districts": []
+      },
+      "npc": {
+       "vibe": {},
+       "contacts": [],
+       "recent": []
+      },
+      "settings": {
+       "scheme": "a",
+       "night": false
+      }
+     }
+    }
+   ],
+   "result": null
+  }
+ ]
+}

@@ -98,7 +98,9 @@ class Tuning {
         passport = TuningPassport._(r.sub('passport')),
         npc = TuningNpc._(r.sub('npc')),
         cars = TuningCars._(r.sub('cars')),
-        police = TuningPolice._(r.sub('police'));
+        police = TuningPolice._(r.sub('police')),
+        economy = TuningEconomy._(r.sub('economy')),
+        loop = TuningLoop._(r.sub('loop'));
 
   factory Tuning.fromYaml(String src) {
     final y = loadYaml(src);
@@ -195,6 +197,13 @@ class Tuning {
   /// Distances in world metres (after car_scale); patrols are traffic cars flagged as police.
   final TuningPolice police;
 
+  /// Economy (specs/economy.md): cash for a loop result, tow fee. The drive part of the reward uses
+  /// feed.reward_base / reward_per_min / drive_dm_per_s, so the feed card shows the 3★ trip money.
+  final TuningEconomy economy;
+
+  /// Loop glue (specs/loop.md): the "Play" context button at a spot without a route.
+  final TuningLoop loop;
+
   Map<String, Object> toJson() => {
         'car_scale': carScale,
         'lane_width_m': laneWidthM,
@@ -227,6 +236,8 @@ class Tuning {
         'npc': npc.toJson(),
         'cars': cars.toJson(),
         'police': police.toJson(),
+        'economy': economy.toJson(),
+        'loop': loop.toJson(),
       };
 
   /// Dotted YAML path → value, for diffs against the loaded file.
@@ -2287,4 +2298,151 @@ class TuningPoliceOffenceLevel {
       };
 
   static const keys = ['crash', 'hitrun', 'sidewalk', 'theft'];
+}
+
+/// Economy (specs/economy.md): cash for a loop result, tow fee. The drive part of the reward uses
+/// feed.reward_base / reward_per_min / drive_dm_per_s, so the feed card shows the 3★ trip money.
+class TuningEconomy {
+  TuningEconomy._(_R r)
+      : base = r.i('base'),
+        enginePct = TuningEconomyEnginePct._(r.sub('engine_pct')),
+        starPct = r.il('star_pct'),
+        scoreBands = r.il('score_bands'),
+        bandBonus = r.il('band_bonus'),
+        firstBonus = r.i('first_bonus'),
+        firstMinStars = r.i('first_min_stars'),
+        towFee = r.i('tow_fee');
+
+  /// game money before engine and star percentages
+  int base;
+
+  final TuningEconomyEnginePct enginePct;
+
+  /// per stars 0..3
+  List<int> starPct;
+
+  /// ascending score thresholds
+  List<int> scoreBands;
+
+  /// one more than score_bands
+  List<int> bandBonus;
+
+  /// first finish of a minigame with at least first_min_stars
+  int firstBonus;
+
+  int firstMinStars;
+
+  /// wrecked car (paid up to the cash the player has)
+  int towFee;
+
+  Map<String, Object> toJson() => {
+        'base': base,
+        'engine_pct': enginePct.toJson(),
+        'star_pct': starPct,
+        'score_bands': scoreBands,
+        'band_bonus': bandBonus,
+        'first_bonus': firstBonus,
+        'first_min_stars': firstMinStars,
+        'tow_fee': towFee,
+      };
+}
+
+class TuningEconomyEnginePct {
+  TuningEconomyEnginePct._(_R r)
+      : cards = r.i('cards'),
+        board = r.i('board'),
+        dice = r.i('dice'),
+        tiles = r.i('tiles'),
+        flick = r.i('flick'),
+        rhythm = r.i('rhythm'),
+        arcade = r.i('arcade'),
+        puzzle = r.i('puzzle'),
+        drive = r.i('drive'),
+        service = r.i('service'),
+        sport = r.i('sport');
+
+  int cards;
+
+  int board;
+
+  int dice;
+
+  int tiles;
+
+  int flick;
+
+  int rhythm;
+
+  int arcade;
+
+  int puzzle;
+
+  int drive;
+
+  int service;
+
+  int sport;
+
+  Map<String, Object> toJson() => {
+        'cards': cards,
+        'board': board,
+        'dice': dice,
+        'tiles': tiles,
+        'flick': flick,
+        'rhythm': rhythm,
+        'arcade': arcade,
+        'puzzle': puzzle,
+        'drive': drive,
+        'service': service,
+        'sport': sport,
+      };
+
+  /// Value by YAML key, null when the key is unknown.
+  int? operator [](String key) => switch (key) {
+        'cards' => cards,
+        'board' => board,
+        'dice' => dice,
+        'tiles' => tiles,
+        'flick' => flick,
+        'rhythm' => rhythm,
+        'arcade' => arcade,
+        'puzzle' => puzzle,
+        'drive' => drive,
+        'service' => service,
+        'sport' => sport,
+        _ => null,
+      };
+
+  static const keys = ['cards', 'board', 'dice', 'tiles', 'flick', 'rhythm', 'arcade', 'puzzle', 'drive', 'service', 'sport'];
+}
+
+/// Loop glue (specs/loop.md): the "Play" context button at a spot without a route.
+class TuningLoop {
+  TuningLoop._(_R r)
+      : spotRadiusM = r.d('spot_radius_m'),
+        stopSpeedMps = r.d('stop_speed_mps'),
+        actionHoldS = r.d('action_hold_s');
+
+  /// around the spot's parking point
+  double spotRadiusM;
+
+  double stopSpeedMps;
+
+  double actionHoldS;
+
+  Map<String, Object> toJson() => {
+        'spot_radius_m': spotRadiusM,
+        'stop_speed_mps': stopSpeedMps,
+        'action_hold_s': actionHoldS,
+      };
+
+  /// Value by YAML key, null when the key is unknown.
+  double? operator [](String key) => switch (key) {
+        'spot_radius_m' => spotRadiusM,
+        'stop_speed_mps' => stopSpeedMps,
+        'action_hold_s' => actionHoldS,
+        _ => null,
+      };
+
+  static const keys = ['spot_radius_m', 'stop_speed_mps', 'action_hold_s'];
 }

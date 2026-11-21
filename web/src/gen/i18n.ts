@@ -252,6 +252,24 @@ export type MessageKey =
   | "policeEscaped"
   | "policeBusted"
   | "policeFine"
+  | "loopPlay"
+  | "loopSoon"
+  | "loopTitle"
+  | "loopCash"
+  | "loopBase"
+  | "loopTrip"
+  | "loopBand"
+  | "loopFirst"
+  | "loopStamp"
+  | "loopStampHint"
+  | "loopBest"
+  | "loopAborted"
+  | "loopDrive"
+  | "loopFeed"
+  | "cashHud"
+  | "garageForSale"
+  | "garageBuy"
+  | "saveReset"
 ;
 
 export const messages: Record<Locale, Record<MessageKey, string>> = {
@@ -504,6 +522,24 @@ export const messages: Record<Locale, Record<MessageKey, string>> = {
     policeEscaped: "Hlídka tě ztratila",
     policeBusted: "Dopaden!",
     policeFine: "Pokuta: {amount}",
+    loopPlay: "Hrát {name}",
+    loopSoon: "{name} už brzy",
+    loopTitle: "Výsledek",
+    loopCash: "+{cash} hotovosti",
+    loopBase: "Hra {cash}",
+    loopTrip: "Jízda {cash}",
+    loopBand: "Bonus za skóre {cash}",
+    loopFirst: "Poprvé {cash}",
+    loopStamp: "Razítko do Pasu: {name}",
+    loopStampHint: "Za tři hvězdy je razítko do Pasu",
+    loopBest: "Nový rekord!",
+    loopAborted: "Hra vzdaná, bez odměny",
+    loopDrive: "Jet dál",
+    loopFeed: "Feed",
+    cashHud: "{cash} hotovosti",
+    garageForSale: "Na prodej",
+    garageBuy: "Koupit · {price}",
+    saveReset: "Smazat uložení",
   },
   "en": {
     appTitle: "Metropole",
@@ -754,6 +790,24 @@ export const messages: Record<Locale, Record<MessageKey, string>> = {
     policeEscaped: "You lost the patrol",
     policeBusted: "Busted!",
     policeFine: "Fine: {amount}",
+    loopPlay: "Play {name}",
+    loopSoon: "{name}: coming soon",
+    loopTitle: "Result",
+    loopCash: "+{cash} cash",
+    loopBase: "Game {cash}",
+    loopTrip: "Drive {cash}",
+    loopBand: "Score bonus {cash}",
+    loopFirst: "First time {cash}",
+    loopStamp: "Passport stamp: {name}",
+    loopStampHint: "Three stars earn the passport stamp",
+    loopBest: "New best!",
+    loopAborted: "Game abandoned, no reward",
+    loopDrive: "Drive on",
+    loopFeed: "Feed",
+    cashHud: "{cash} cash",
+    garageForSale: "For sale",
+    garageBuy: "Buy · {price}",
+    saveReset: "Reset save",
   },
 };
 
