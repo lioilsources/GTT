@@ -240,5 +240,13 @@
   "carClassHatchback": "Hatchback",
   "carClassMuscle": "Muscle car",
   "carClassTaxi": "Taxi",
-  "carClassPickup": "Pick-up"
+  "carClassPickup": "Pick-up",
+  "policeWanted": "Hledanost {level}",
+  "policeReason_crash": "Hlídka viděla, jak jsi narazil do auta",
+  "policeReason_sidewalk": "Viděl tě, jak jedeš po chodníku",
+  "policeReason_theft": "Hlídka viděla, jak bereš cizí auto",
+  "policeReason_hitrun": "Hlídka viděla, jak ujíždíš od nehody",
+  "policeEscaped": "Hlídka tě ztratila",
+  "policeBusted": "Dopaden!",
+  "policeFine": "Pokuta: {amount}"
 }

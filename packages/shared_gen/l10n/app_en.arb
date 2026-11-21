@@ -283,5 +283,15 @@
   "carClassHatchback": "Hatchback",
   "carClassMuscle": "Muscle car",
   "carClassTaxi": "Taxi",
-  "carClassPickup": "Pick-up"
+  "carClassPickup": "Pick-up",
+  "policeWanted": "Wanted level {level}",
+  "@policeWanted": {"placeholders":{"level":{"type":"int"}}},
+  "policeReason_crash": "A patrol saw you crash into a car",
+  "policeReason_sidewalk": "A patrol saw you driving on the sidewalk",
+  "policeReason_theft": "A patrol saw you take someone else's car",
+  "policeReason_hitrun": "A patrol saw you drive off after a crash",
+  "policeEscaped": "You lost the patrol",
+  "policeBusted": "Busted!",
+  "policeFine": "Fine: {amount}",
+  "@policeFine": {"placeholders":{"amount":{"type":"int"}}}
 }

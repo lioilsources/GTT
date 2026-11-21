@@ -177,6 +177,17 @@
   --color-car-detail-taxi-checker: #1B1B1F;
   --color-car-detail-bed: #2F3A28;
   --color-car-detail-bed-rim: #1B1B1F;
+  --color-police-body: #1F2A44;
+  --color-police-door: #F2F2F2;
+  --color-police-bar: #2B2B33;
+  --color-police-light-red: #FF3B30;
+  --color-police-light-blue: #2F7BFF;
+  --color-police-light-off: #5A5F6B;
+  --color-police-star: #F4C430;
+  --color-police-star-empty: #FFFFFF40;
+  --color-police-toast: #1F2A44E6;
+  --color-police-busted: #1F2A44F2;
+  --color-police-busted-edge: #2F7BFF;
   --light-day-roof-light: 1.12;
   --light-day-sun-x: -0.6;
   --light-day-sun-y: 0.8;
