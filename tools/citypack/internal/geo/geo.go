@@ -145,3 +145,21 @@ func Orient(r []Pt, ccw bool) []Pt {
 	}
 	return r
 }
+
+// Canonical rotates a ring to start at its lowest (x, then y) vertex after rounding to
+// decimetres, so the same polygon always serialises the same way.
+func Canonical(r []Pt) []Pt {
+	if len(r) == 0 {
+		return r
+	}
+	k := 0
+	for i, p := range r {
+		a, b := DM(p.X), DM(r[k].X)
+		if a < b || (a == b && DM(p.Y) < DM(r[k].Y)) {
+			k = i
+		}
+	}
+	out := make([]Pt, 0, len(r))
+	out = append(out, r[k:]...)
+	return append(out, r[:k]...)
+}

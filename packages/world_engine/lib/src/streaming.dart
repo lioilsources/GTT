@@ -1,12 +1,13 @@
-import 'dart:math' as math;
 import 'dart:ui' as ui;
 
 import 'package:flutter/foundation.dart';
 
 import 'chunk.dart';
+import 'chunk_window.dart';
 import 'citypack.dart';
 import 'model.dart';
 import 'pb/citypack.pbenum.dart';
+import 'tuning.dart';
 
 class LoadedChunk {
   LoadedChunk(this.data)
@@ -27,53 +28,28 @@ class LoadedChunk {
   }
 }
 
-/// Keeps a 3×5 window of chunks loaded around the player, stretched in the driving
-/// direction (METROPOLE_PLAN 6.4). Decoding runs in an isolate on native platforms.
+/// Loads the [ChunkWindow] around the player; decoding runs in an isolate on native platforms.
 class ChunkStreamer {
-  ChunkStreamer(this.city, this.source, {this.onLoaded, this.onUnloaded, this.maxInFlight = 2});
+  ChunkStreamer(this.city, this.source, this.tuning, {this.onLoaded, this.onUnloaded})
+      : window = ChunkWindow(city, tuning);
 
   final City city;
   final PackSource source;
+  final Tuning tuning;
+  final ChunkWindow window;
   final void Function(LoadedChunk)? onLoaded;
   final void Function(LoadedChunk)? onUnloaded;
-  final int maxInFlight;
 
   final Map<int, LoadedChunk> loaded = {};
   final Set<int> _inFlight = {};
   final Map<int, DateTime> _failedAt = {};
   bool _disposed = false;
 
-  /// Chunks whose last load failed are retried after this pause.
-  static const retryAfter = Duration(seconds: 2);
-
   Iterable<LoadedChunk> get chunks => loaded.values;
 
-  /// Chunk keys wanted for a player at (x, y) heading [heading] (radians, 0 = east), nearest first.
-  List<(int, int)> wanted(double x, double y, double heading) {
-    final cm = city.chunkM;
-    final fx = math.cos(heading), fy = math.sin(heading);
-    final out = <(int, int)>[];
-    final seen = <int>{};
-    void add(double px, double py) {
-      final cx = (px / cm).floor(), cy = (py / cm).floor();
-      if (city.hasChunk(cx, cy) && seen.add(City.chunkKey(cx, cy))) out.add((cx, cy));
-    }
+  List<(int, int)> wanted(double x, double y, double heading) => window.wanted(x, y, heading);
 
-    // Own chunk and its ring first, so a sharp turn never shows an empty street.
-    for (var dx = -1; dx <= 1; dx++) {
-      for (var dy = -1; dy <= 1; dy++) {
-        add(x + dx * cm, y + dy * cm);
-      }
-    }
-    for (var j = -1; j <= 3; j++) {
-      for (var i = -1; i <= 1; i++) {
-        add(x + (fx * j - fy * i) * cm, y + (fy * j + fx * i) * cm);
-      }
-    }
-    return out;
-  }
-
-  /// Call every frame; schedules loads and drops chunks outside a 5×5 keep-ring.
+  /// Call every frame; schedules loads and drops chunks outside the keep ring.
   void update(double x, double y, double heading) {
     if (_disposed) return;
     final want = wanted(x, y, heading);
@@ -81,15 +57,15 @@ class ChunkStreamer {
       final key = City.chunkKey(cx, cy);
       if (loaded.containsKey(key) || _inFlight.contains(key)) continue;
       final failed = _failedAt[key];
-      if (failed != null && DateTime.now().difference(failed) < retryAfter) continue;
-      if (_inFlight.length >= maxInFlight) break;
+      if (failed != null && DateTime.now().difference(failed).inMilliseconds < tuning.streaming.retryS * 1000) {
+        continue;
+      }
+      if (_inFlight.length >= tuning.streaming.maxInFlight) break;
       _load(cx, cy, key);
     }
-    final cm = city.chunkM;
-    final px = (x / cm).floor(), py = (y / cm).floor();
     final drop = <int>[];
     loaded.forEach((key, c) {
-      if ((c.data.x - px).abs() > 3 || (c.data.y - py).abs() > 3) drop.add(key);
+      if (window.drop(c.data.x, c.data.y, x, y)) drop.add(key);
     });
     for (final key in drop) {
       final c = loaded.remove(key)!;

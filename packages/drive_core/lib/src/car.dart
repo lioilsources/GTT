@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 
 import 'package:forge2d/forge2d.dart';
+import 'package:world_engine/core.dart';
 
 import 'car_spec.dart';
 import 'controls.dart';
@@ -12,23 +13,23 @@ const int catCar = 2;
 /// Player car on a Box2D body with a custom tyre model (METROPOLE_PLAN 7.2):
 /// each step the lateral velocity at each axle is cancelled by an impulse capped by
 /// that axle's grip; past the cap the axle slides, which is the drift.
+/// All handling numbers come from `drive` in tuning.yaml and from the car spec.
 class Car {
-  Car(this.world, this.spec, {required double x, required double y, required double heading, required this.scale}) {
+  Car(this.world, this.spec, this.t, {required double x, required double y, required double heading, required this.scale}) {
     halfLength = spec.lengthM * scale / 2;
     halfWidth = spec.widthM * scale / 2;
     body = world.createBody(BodyDef(
       type: BodyType.dynamic,
       position: Vector2(x, y),
       rotation: Rot.fromAngle(heading),
-      angularDamping: 1.2,
-      linearDamping: 0.0,
+      angularDamping: t.angularDamping,
       isBullet: true,
     ));
     _shape = body.createShape(
-      Polygon.box(halfLength, halfWidth, radius: 0.4),
+      Polygon.box(halfLength, halfWidth, radius: t.bodyRound),
       ShapeDef(
         density: spec.mass / (4 * halfLength * halfWidth),
-        material: SurfaceMaterial(friction: 0.25, restitution: 0.15),
+        material: SurfaceMaterial(friction: t.carFriction, restitution: t.carRestitution),
         filter: Filter(categoryBits: catCar, maskBits: catBuildings),
         enableContactEvents: true,
       ),
@@ -37,6 +38,7 @@ class Car {
 
   final World world;
   final CarSpec spec;
+  final DriveTuning t;
   final double scale;
   late final Body body;
   late Shape _shape;
@@ -47,7 +49,7 @@ class Car {
   double wheelAngle = 0;
   int layer = 0;
 
-  /// Lateral slip of the rear axle in the last step, m/s (skid marks, smoke).
+  /// Lateral slip left over at each axle in the last step, m/s (skid marks).
   double rearSlip = 0;
   double frontSlip = 0;
   bool braking = false;
@@ -58,6 +60,7 @@ class Car {
   double get heading => body.angle;
   Vector2 get velocity => body.linearVelocity;
   double get speed => body.linearVelocity.length;
+  double get axleOffset => halfLength * t.axleOffset;
 
   /// Signed speed along the car's nose.
   double get forwardSpeed {
@@ -66,13 +69,13 @@ class Car {
     return v.x * r.cos + v.y * r.sin;
   }
 
-  /// Sideways slip angle of the whole car (radians), 0 when rolling straight.
+  /// Sideways slip angle of the whole car (radians), 0 when rolling straight or slow.
   double get slipAngle {
     final r = body.rotation;
     final v = body.linearVelocity;
+    if (v.length < t.countersteerMinMps) return 0;
     final f = v.x * r.cos + v.y * r.sin;
     final l = -v.x * r.sin + v.y * r.cos;
-    if (v.length < 3) return 0;
     return math.atan2(l, f.abs());
   }
 
@@ -83,7 +86,7 @@ class Car {
     _shape.filter = Filter(categoryBits: catCar, maskBits: l == 0 ? catBuildings : 0);
   }
 
-  /// Applies controls and tyre forces; call before `world.step(dt)`.
+  /// Applies controls and tyre forces; call before `world.step`.
   void drive(ControlInput input, double dt, {required double cruise, required double top}) {
     final rot = body.rotation;
     final fx = rot.cos, fy = rot.sin; // nose
@@ -95,58 +98,57 @@ class Car {
     final topSpeed = math.min(top, spec.topSpeed);
 
     // Steering: wheels turn at steer_speed, less lock at speed.
-    final lock = 0.62 - 0.42 * (speed / math.max(topSpeed, 1)).clamp(0.0, 1.0);
+    final lock = t.steerLock - t.steerLockDrop * (speed / math.max(topSpeed, 1)).clamp(0.0, 1.0);
     var target = -input.steer * lock;
-    // Counter-steer assist while drifting forward.
     final slip = slipAngle;
-    if (speedF > 4 && slip.abs() > 0.12 && input.steer.abs() < 0.9) {
-      target += (slip * 0.55).clamp(-lock, lock);
+    if (speedF > t.countersteerMinMps &&
+        slip.abs() > t.countersteerMinSlip &&
+        input.steer.abs() < t.countersteerMaxInput) {
+      target += (slip * t.countersteerGain).clamp(-lock, lock);
     }
     final maxStep = spec.steerSpeed * dt;
     wheelAngle += (target - wheelAngle).clamp(-maxStep, maxStep);
 
     // Longitudinal: auto-throttle to cruise (or top with boost), brake, reverse.
     final wantSpeed = input.boost ? topSpeed : math.min(cruise, topSpeed);
-    var drive = 0.0;
+    var accel = 0.0;
     braking = false;
     reversing = false;
     if (input.brake > 0) {
-      if (speedF > 1.0) {
-        drive = -spec.brake * input.brake;
+      if (speedF > t.brakeMinMps) {
+        accel = -spec.brake * input.brake;
         braking = true;
       } else {
-        // Reverse up to 9 m/s.
         reversing = true;
-        drive = speedF > -9 ? -spec.power * 0.6 : 0;
+        accel = speedF > -t.reverseMaxMps ? -spec.power * t.reversePower : 0;
       }
     } else {
       final thr = input.throttle > 0 ? input.throttle : (speedF < wantSpeed ? 1.0 : 0.0);
-      final k = (1 - math.pow((speedF / topSpeed).clamp(0.0, 1.0), 2)).toDouble();
-      drive = spec.power * thr * k;
-      if (speedF > wantSpeed + 1) drive = -2.0; // engine braking back to cruise
+      final k = 1 - math.pow((speedF / topSpeed).clamp(0.0, 1.0), 2).toDouble();
+      accel = spec.power * thr * k;
+      if (speedF > wantSpeed + t.overspeedMps) accel = -t.engineBrake;
     }
     if (input.handbrake) {
-      drive = math.min(drive, speedF > 1 ? -3.5 : 0);
+      accel = math.min(accel, speedF > t.brakeMinMps ? -t.handbrakeDecel : 0);
       // Kick the tail out: yaw acceleration towards the steer direction, stronger with speed.
-      if (speedF > 5) {
-        final k = (speedF / 20).clamp(0.0, 1.5);
-        body.applyAngularImpulse(-input.steer * body.rotationalInertia * 2.6 * k * dt);
+      if (speedF > t.handbrakeMinMps) {
+        final k = (speedF / t.handbrakeYawRefMps).clamp(0.0, t.handbrakeYawMax);
+        body.applyAngularImpulse(-input.steer * body.rotationalInertia * t.handbrakeYaw * k * dt);
       }
     }
-    final rearOff = -halfLength * 0.62;
-    final rearPx = x + fx * rearOff, rearPy = y + fy * rearOff;
-    body.applyForce(Vector2(fx * drive * m, fy * drive * m), point: Vector2(rearPx, rearPy));
+    final rearOff = -axleOffset;
+    body.applyForce(Vector2(fx * accel * m, fy * accel * m), point: Vector2(x + fx * rearOff, y + fy * rearOff));
 
     // Drag: rolling + air.
-    body.applyForce(Vector2(-v.x * m * (0.04 + 0.0012 * speed), -v.y * m * (0.04 + 0.0012 * speed)));
+    final drag = m * (t.dragLinear + t.dragQuadratic * speed);
+    body.applyForce(Vector2(-v.x * drag, -v.y * drag));
 
     // Lateral tyre impulses.
-    frontSlip = _axle(halfLength * 0.62, wheelAngle, spec.gripFront, dt, fx, fy, v, w, m);
+    frontSlip = _axle(axleOffset, wheelAngle, spec.gripFront, dt, fx, fy, v, w, m);
     final rearGrip = input.handbrake ? spec.gripRear * spec.driftBias : spec.gripRear;
     rearSlip = _axle(rearOff, 0, rearGrip, dt, fx, fy, v, w, m);
-    // Quiet the spin when nearly stopped.
-    if (speed < 0.5 && input.brake == 0 && input.steer == 0) {
-      body.angularVelocity = w * 0.8;
+    if (speed < t.stopSpeedMps && input.brake == 0 && input.steer == 0) {
+      body.angularVelocity = w * t.stopSpinDamping;
     }
   }
 
@@ -169,13 +171,6 @@ class Car {
     }
     body.applyLinearImpulse(Vector2(nx * j, ny * j), point: Vector2(x + rx, y + ry));
     return slip;
-  }
-
-  void teleport(double px, double py, double heading) {
-    body.setTransform(Vector2(px, py), Rot.fromAngle(heading));
-    body.linearVelocity = Vector2.zero();
-    body.angularVelocity = 0;
-    wheelAngle = 0;
   }
 
   void destroy() => body.destroy();

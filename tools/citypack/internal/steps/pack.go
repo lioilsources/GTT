@@ -10,7 +10,6 @@ import (
 	"os"
 	"path/filepath"
 	"sort"
-	"time"
 
 	"citypack/internal/geo"
 	"citypack/internal/pb"
@@ -182,6 +181,25 @@ func Pack(e *Env) error {
 	if err != nil {
 		return err
 	}
+	// DuckDB returns rows in no fixed order; sort so the same input packs to the same bytes.
+	for i := range masses {
+		holes := masses[i].Rings[1:]
+		sort.Slice(holes, func(a, b int) bool { return ptLess(holes[a][0], holes[b][0]) })
+	}
+	sort.Slice(masses, func(i, j int) bool { return massLess(masses[i], masses[j]) })
+	sort.Slice(ground, func(i, j int) bool { return groundLess(ground[i], ground[j]) })
+	// Exact duplicates (a building listed twice in the source) would z-fight; keep one.
+	uniq := masses[:0]
+	for i, m := range masses {
+		if i > 0 && !massLess(masses[i-1], m) && !massLess(m, masses[i-1]) {
+			continue
+		}
+		uniq = append(uniq, m)
+	}
+	if d := len(masses) - len(uniq); d > 0 {
+		slog.Info("pack: dropped duplicate masses", "count", d)
+	}
+	masses = uniq
 	cm := float64(e.C.Tuning.ChunkM)
 	chunks := map[[2]int]*pb.Chunk{}
 	chunk := func(x, y int) *pb.Chunk {
@@ -248,7 +266,6 @@ func Pack(e *Env) error {
 		OriginLat: e.C.City.Origin.Lat, OriginLon: e.C.City.Origin.Lon,
 		DriveSide: e.C.City.DriveSide, Units: e.C.City.Units, OvertureRelease: e.C.City.OvertureRelease,
 		ChunkM: uint32(e.C.Tuning.ChunkM), Attribution: attribution,
-		BuiltAt: time.Now().UTC().Format(time.RFC3339),
 	}
 	area := e.AreaRingM()
 	minX, minY, maxX, maxY := math.Inf(1), math.Inf(1), math.Inf(-1), math.Inf(-1)
@@ -309,6 +326,51 @@ func Pack(e *Env) error {
 	return nil
 }
 
+func ptLess(a, b geo.Pt) bool {
+	if a.X != b.X {
+		return a.X < b.X
+	}
+	return a.Y < b.Y
+}
+
+// massLess is a total order (heights, then every vertex), so ties never depend on input order.
+func massLess(a, b MassRow) bool {
+	if a.MinH != b.MinH {
+		return a.MinH < b.MinH
+	}
+	if a.HeightM != b.HeightM {
+		return a.HeightM < b.HeightM
+	}
+	return ringsLess(a.Rings, b.Rings)
+}
+
+func ringsLess(a, b [][]geo.Pt) bool {
+	for i := 0; i < len(a) && i < len(b); i++ {
+		for j := 0; j < len(a[i]) && j < len(b[i]); j++ {
+			if a[i][j] != b[i][j] {
+				return ptLess(a[i][j], b[i][j])
+			}
+		}
+		if len(a[i]) != len(b[i]) {
+			return len(a[i]) < len(b[i])
+		}
+	}
+	return len(a) < len(b)
+}
+
+func groundLess(a, b GroundRow) bool {
+	if a.CX != b.CX {
+		return a.CX < b.CX
+	}
+	if a.CY != b.CY {
+		return a.CY < b.CY
+	}
+	if a.Kind != b.Kind {
+		return a.Kind < b.Kind
+	}
+	return ringsLess(a.Rings, b.Rings)
+}
+
 func buildingPB(m MassRow) (*pb.Building, error) {
 	idx, err := geo.Triangulate(m.Rings)
 	if err != nil {
@@ -321,8 +383,9 @@ func buildingPB(m MassRow) (*pb.Building, error) {
 		HeightM: float32(m.HeightM), MinHeightM: float32(m.MinH),
 		Landmark: uint32(m.Landmark), Collide: m.MinH < 0.5,
 	}
+	// Seed from the geometry, not the source id: merged masses get new ids on every run.
 	h := fnv.New32a()
-	h.Write([]byte(m.SourceID))
+	fmt.Fprintf(h, "%d %d %.1f", geo.DM(m.Rings[0][0].X), geo.DM(m.Rings[0][0].Y), m.HeightM)
 	b.WallSeed = h.Sum32()
 	n := 0
 	for _, r := range m.Rings {

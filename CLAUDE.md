@@ -17,13 +17,16 @@ run/bin/citypack build nyc                            # postav nejdřív: go bui
 ## Mapa
 - `app/` – Flutter shell, Flame smyčka (`lib/game`), HUD a ladicí panel (`lib/ui`), ARB cs/en (`lib/l10n`).
 - `packages/world_engine/` – citypack loader, streaming, renderer, kamera; `lib/src/pb` je generované.
-- `packages/drive_core/` – auto, ovládání A/B/C, vrstvy, mobiliář (forge2d = Box2D v3, nativně i WASM).
+- `packages/drive_core/` – čistá logika (bez Flutteru, `dart:ui`): auto, ovládání A/B/C, vrstvy, mobiliář.
+- `packages/world_engine/lib/core.dart` – čistá část enginu (graf, chunky, okno streamingu, `Tuning`).
 - `tools/citypack/` – Go pipeline, schéma `proto/citypack.proto`.
 - `content/` – jediný zdroj laditelných hodnot a obsahu (`tuning.yaml`, `cars/`, `cities/<id>/`).
 - `app/assets/cities/<id>/` – výstup `citypack pack` (commitovaný, ODbL).
 
 ## Invarianty
-- `content/tuning.yaml` a `content/cars/*.json` jsou do `app/assets` symlinkované, nekopíruj je.
+- Herní čísla jen v `content/tuning.yaml` (parser je přísný, výchozí hodnoty v kódu nejsou);
+  do `app/assets` je symlinkovaný stejně jako `content/cars/*.json`, nekopíruj je.
+- Pravidla a logika v čistých modulech; test v `drive_core` hlídá, že neimportují Flutter ani `dart:ui`.
 - Změna `citypack.proto`: přegeneruj Go i Dart (`protoc --go_out=… --dart_out=packages/world_engine/lib/src/pb`)
   a při nekompatibilní změně zvyš `FormatVersion` v `pack.go` i kontrolu v `model.dart`.
 - Souřadnice: metry lokální rovinné projekce od `origin`, y na sever; v protobufu decimetry.
@@ -36,4 +39,5 @@ run/bin/citypack build nyc                            # postav nejdřív: go bui
 Žádné. (Lokální složka je GTT, projekt a Dart balíčky se jmenují `metropole`.)
 
 ## Kam dál
-`docs/m0.md` (stav, akceptace), `docs/citypack.md` (pipeline, ověřená schémata), `plans/` (pod-plány M1+).
+`docs/m0.md` (stav, akceptace), `docs/m0-test.md` (testy na telefonu), `docs/citypack.md` (pipeline),
+`Prompts/01-METROPOLE_DUALSTACK_PLAN.md` (druhý klient ve `web/`, další fáze D0).

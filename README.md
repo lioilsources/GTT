@@ -12,10 +12,10 @@ policie, feedu, miniher a ukládání. Co je hotové a co zbývá k akceptaci: [
 ```sh
 flutter pub get                         # workspace: app + packages
 cd app && flutter run --profile         # telefon / macOS
-cd app && flutter build web --profile   # web build k nasdílení (build/web)
 ```
 
-Ovládání na klávesnici (desktop, web): šipky / WASD, mezerník = ruční brzda.
+Ovládání na klávesnici (desktop): šipky / WASD, mezerník = ruční brzda.
+Webový klient vznikne ve `web/` podle `Prompts/01-METROPOLE_DUALSTACK_PLAN.md` (fáze D0/D1).
 V aplikaci: ☀︎ přepíná den a noc, ⚙ otevře ladicí panel (schéma ovládání A/B/C, hodnoty z `tuning.yaml`
 a parametry auta za běhu, tlačítko „Kopírovat tuning.yaml“).
 
@@ -41,9 +41,9 @@ Podrobnosti: [docs/citypack.md](docs/citypack.md).
 |---|---|
 | `app/` | Flutter aplikace: herní smyčka (Flame), HUD, ladicí panel, lokalizace (ARB cs/en) |
 | `packages/world_engine/` | načtení citypacku, streaming chunků, 2,5D renderer, kamera |
-| `packages/drive_core/` | fyzika auta (Box2D v3 přes forge2d), ovládání A/B/C, vrstvy mostů a tunelů, mobiliář |
+| `packages/drive_core/` | čistá logika bez UI: fyzika auta (Box2D v3 přes forge2d), ovládání A/B/C, vrstvy mostů a tunelů, mobiliář |
 | `tools/citypack/` | Go pipeline map, schéma `proto/citypack.proto` |
-| `content/` | `tuning.yaml`, auta, konfigurace měst (`city.yaml`, `area.geojson`, `landmarks.yaml`, `spots.yaml`, `districts.yaml`) |
+| `content/` | `tuning.yaml` (jediný zdroj herních čísel, čte ho aplikace i `citypack`), auta, konfigurace měst |
 | `plans/` | pod-plány dalších milníků |
 
 ## Referenční telefony

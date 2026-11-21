@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import 'car.dart';
+import 'package:drive_core/drive_core.dart';
 
 /// Top-down car drawn in world space (canvas transformed to metres, y north).
 void paintCar(Canvas canvas, Car car, {required bool night}) {
@@ -26,7 +26,7 @@ void paintCar(Canvas canvas, Car car, {required bool night}) {
   // Wheels (front ones steer).
   p.color = const Color(0xFF1B1B1F);
   final ww = hl * 0.36, wt = hw * 0.32;
-  for (final fx in [hl * 0.62, -hl * 0.62]) {
+  for (final fx in [car.axleOffset, -car.axleOffset]) {
     for (final sy in [hw * 0.92, -hw * 0.92]) {
       canvas.save();
       canvas.translate(fx, sy);
@@ -36,13 +36,13 @@ void paintCar(Canvas canvas, Car car, {required bool night}) {
     }
   }
   // Body.
-  p.color = car.spec.paint;
+  p.color = Color(car.spec.paintArgb);
   canvas.drawRRect(RRect.fromRectAndRadius(Rect.fromLTRB(-hl, -hw, hl, hw), Radius.circular(hw * 0.45)), p);
   // Cabin and glass.
   p.color = const Color(0xFF26313D);
   canvas.drawRRect(
       RRect.fromRectAndRadius(Rect.fromLTRB(-hl * 0.42, -hw * 0.78, hl * 0.3, hw * 0.78), Radius.circular(hw * 0.25)), p);
-  p.color = Color.lerp(car.spec.paint, const Color(0xFFFFFFFF), 0.12)!;
+  p.color = Color.lerp(Color(car.spec.paintArgb), const Color(0xFFFFFFFF), 0.12)!;
   canvas.drawRRect(
       RRect.fromRectAndRadius(Rect.fromLTRB(-hl * 0.3, -hw * 0.66, hl * 0.12, hw * 0.66), Radius.circular(hw * 0.2)), p);
   // Racing stripe.

@@ -10,7 +10,7 @@ class CameraRig {
 
   /// World heading that points up on screen (radians, 0 = east, CCW).
   double heading = math.pi / 2;
-  double viewWidth = 50;
+  double viewWidth = 1; // set by snap() from tuning
 
   void snap(double px, double py, double h, Tuning t) {
     x = px;
@@ -25,12 +25,12 @@ class CameraRig {
     y = py;
     if (!reversing) {
       final d = _wrap(carHeading - heading);
-      final rate = 1 - math.exp(-dt * 5.5);
+      final rate = 1 - math.exp(-dt * t.camera.headingFollowRate);
       heading = _wrap(heading + d * rate);
     }
     final k = (speed / math.max(t.topMps, 1)).clamp(0.0, 1.0);
     final target = t.viewWidthSlow + (t.viewWidthFast - t.viewWidthSlow) * k;
-    viewWidth += (target - viewWidth) * (1 - math.exp(-dt * 1.8));
+    viewWidth += (target - viewWidth) * (1 - math.exp(-dt * t.camera.zoomFollowRate));
   }
 
   double pixelsPerMetre(Size size) => size.width / viewWidth;

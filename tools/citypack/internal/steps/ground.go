@@ -54,13 +54,13 @@ CREATE TABLE cells AS
   FROM range(%[11]d, %[12]d) t1(cx), range(%[13]d, %[14]d) t2(cy);
 COPY (
   SELECT cx, cy, kind, ST_AsGeoJSON(d.geom)::JSON AS geom FROM (
-    SELECT c.cx, c.cy, m.kind, unnest(ST_Dump(ST_SimplifyPreserveTopology(ST_Intersection(m.g, c.g), 1.0))) AS d
+    SELECT c.cx, c.cy, m.kind, unnest(ST_Dump(ST_SimplifyPreserveTopology(ST_Intersection(m.g, c.g), %[16]f))) AS d
     FROM merged m JOIN cells c ON ST_Intersects(m.g, c.g)
-  ) WHERE ST_GeometryType(d.geom) = 'POLYGON' AND ST_Area(d.geom) >= 4
+  ) WHERE ST_GeometryType(d.geom) = 'POLYGON' AND ST_Area(d.geom) >= %[17]f
 ) TO %[15]s (FORMAT json);
 `, area, pb.GroundKind_WATER, proj, duck.Quote(e.Raw("water")),
 		pb.GroundKind_PLAZA, pb.GroundKind_RAIL, pb.GroundKind_PARK, duck.Quote(e.Raw("land_use")), duck.Quote(e.Raw("land")),
-		cm, x0, x1+1, y0, y1+1, duck.Quote(out+".tmp"))
+		cm, x0, x1+1, y0, y1+1, duck.Quote(out+".tmp"), e.C.Tuning.Ground.SimplifyM, e.C.Tuning.Ground.MinAreaM2)
 	if _, err := duck.Exec("ground", sql); err != nil {
 		return err
 	}
@@ -106,7 +106,7 @@ func (e *Env) LoadGround() ([]GroundRow, error) {
 			}
 			pts = geo.OpenRing(pts)
 			if len(pts) >= 3 {
-				g.Rings = append(g.Rings, geo.Orient(pts, i == 0))
+				g.Rings = append(g.Rings, geo.Canonical(geo.Orient(pts, i == 0)))
 			}
 		}
 		if len(g.Rings) > 0 {

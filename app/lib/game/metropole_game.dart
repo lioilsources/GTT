@@ -8,6 +8,10 @@ import 'package:flutter/painting.dart';
 import 'package:flutter/services.dart';
 import 'package:world_engine/world_engine.dart';
 
+import 'paint/car_painter.dart';
+import 'paint/controls_painter.dart';
+import 'paint/props_painter.dart';
+
 /// Everything loaded before the first frame.
 class GameAssets {
   GameAssets({
@@ -76,7 +80,9 @@ class MetropoleGame extends Game {
     final city = data.city;
     tuning = data.tuning;
     drive = DriveWorld(city: city, spec: data.car, tuning: tuning);
-    streamer = ChunkStreamer(city, data.source, onLoaded: drive.addChunk, onUnloaded: drive.removeChunk);
+    streamer = ChunkStreamer(city, data.source, tuning,
+        onLoaded: (c) => drive.addChunk(c.data), onUnloaded: (c) => drive.removeChunk(c.data));
+    scheme = ControlScheme.create(ControlSchemeId.a, tuning.controls);
     renderer = WorldRenderer(
       city: city,
       roads: RoadMeshes.build(city.graph, city.chunkM, sidewalkM: tuning.sidewalkWidthM, laneM: tuning.laneWidthM),
@@ -93,7 +99,7 @@ class MetropoleGame extends Game {
   late final ChunkStreamer streamer;
   late final WorldRenderer renderer;
   final camera = CameraRig();
-  ControlScheme scheme = ControlScheme.create(ControlSchemeId.a);
+  late ControlScheme scheme;
   final hud = ValueNotifier<HudState>(const HudState());
   bool night = false;
 
@@ -115,7 +121,7 @@ class MetropoleGame extends Game {
     renderer.palette = v ? Palette.nightPalette : Palette.day;
   }
 
-  void setScheme(ControlSchemeId id) => scheme = ControlScheme.create(id);
+  void setScheme(ControlSchemeId id) => scheme = ControlScheme.create(id, tuning.controls);
 
   void respawn() {
     drive.spawn(city.startX, city.startY, city.startHeading);
@@ -129,8 +135,8 @@ class MetropoleGame extends Game {
   }
 
   // Pointer events arrive from a Listener wrapping the GameWidget.
-  void pointerDown(int id, ui.Offset p) => scheme.down(id, p, _size);
-  void pointerMove(int id, ui.Offset p) => scheme.move(id, p, _size);
+  void pointerDown(int id, ui.Offset p) => scheme.down(id, (x: p.dx, y: p.dy), _size.width, _size.height);
+  void pointerMove(int id, ui.Offset p) => scheme.move(id, (x: p.dx, y: p.dy), _size.width, _size.height);
   void pointerUp(int id) => scheme.up(id);
 
   @override
@@ -175,17 +181,8 @@ class MetropoleGame extends Game {
   }
 
   bool _nearBorder() {
-    final g = city.graph;
-    final car = drive.car;
-    for (final ei in g.neighbours(drive.layers.edge?.index ?? 0)) {
-      final e = g.edges[ei];
-      for (final n in [e.from, e.to]) {
-        if (!g.border[n]) continue;
-        final dx = g.nodeXY[2 * n] - car.x, dy = g.nodeXY[2 * n + 1] - car.y;
-        if (dx * dx + dy * dy < 80 * 80) return true;
-      }
-    }
-    return false;
+    final d = drive.borderDistance();
+    return d != null && d < tuning.hud.borderNoticeM;
   }
 
   void _keyboard(ControlInput input) {
@@ -202,16 +199,15 @@ class MetropoleGame extends Game {
   void render(ui.Canvas canvas) {
     if (_size.isEmpty) return;
     final car = drive.car;
-    final scale = tuning.carScale;
     renderer.render(canvas, _size, camera, playerLayer: car.layer, drawDynamic: (c, layer) {
       if (layer == 0) {
         paintSkids(c, drive.skids, car.halfWidth * 0.32);
-        paintProps(c, drive.propsNear(car.x, car.y, camera.visibleRadius(_size, tuning)), night: night, scale: scale);
+        paintProps(c, drive.propsNear(car.x, car.y, camera.visibleRadius(_size, tuning)), night: night);
       }
       if (layer == car.layer) paintCar(c, car, night: night);
     });
     _streetLabels(canvas);
-    scheme.paint(canvas, _size);
+    paintControls(canvas, _size, scheme);
   }
 
   final Map<String, TextPainter> _labels = {};
@@ -219,18 +215,19 @@ class MetropoleGame extends Game {
   /// Street names along the road axis while driving slowly (METROPOLE_PLAN 6.3 step 8).
   void _streetLabels(ui.Canvas canvas) {
     final car = drive.car;
-    if (car.speed > 9) return;
-    final hits = city.graph.near(car.x, car.y, 70)
+    final h = tuning.hud;
+    if (car.speed > h.streetLabelsBelowMps) return;
+    final hits = city.graph.near(car.x, car.y, h.streetLabelRadiusM)
       ..removeWhere((h) => !h.edge.kept || h.edge.name.isEmpty || h.edge.drawLayer != car.layer)
       ..sort((a, b) => a.dist.compareTo(b.dist));
     final shown = <String>{};
-    for (final h in hits) {
-      if (shown.length >= 4 || !shown.add(h.edge.name)) continue;
+    for (final hit in hits) {
+      if (shown.length >= h.streetLabelsMax || !shown.add(hit.edge.name)) continue;
       final tp = _labels.putIfAbsent(
-          h.edge.name,
+          hit.edge.name,
           () => TextPainter(
                 text: TextSpan(
-                  text: h.edge.name.toUpperCase(),
+                  text: hit.edge.name.toUpperCase(),
                   style: const TextStyle(
                     fontSize: 11,
                     letterSpacing: 1.5,
@@ -242,8 +239,8 @@ class MetropoleGame extends Game {
                 textDirection: TextDirection.ltr,
               )..layout());
       // Label at the edge midpoint nearest to the car, rotated along the road, kept upright.
-      final p = camera.toScreen(h.x, h.y, _size, tuning);
-      var a = camera.screenAngle(math.atan2(h.dirY, h.dirX));
+      final p = camera.toScreen(hit.x, hit.y, _size, tuning);
+      var a = camera.screenAngle(math.atan2(hit.dirY, hit.dirX));
       while (a > math.pi / 2) {
         a -= math.pi;
       }

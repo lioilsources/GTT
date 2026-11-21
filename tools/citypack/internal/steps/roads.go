@@ -10,6 +10,7 @@ import (
 	"os"
 	"slices"
 
+	"citypack/internal/config"
 	"citypack/internal/duck"
 	"citypack/internal/geo"
 	"citypack/internal/pb"
@@ -28,18 +29,6 @@ var drivableClasses = map[string]pb.RoadClass{
 	"unclassified":  pb.RoadClass_RESIDENTIAL,
 	"living_street": pb.RoadClass_RESIDENTIAL,
 	"service":       pb.RoadClass_SERVICE,
-}
-
-// Default total lane count per class. Overture dropped `lanes` from the schema (still absent
-// in 2026-11-18.0), so lanes come from the class; one-way roads lose one lane (min 2).
-var defaultLanes = map[pb.RoadClass]int{
-	pb.RoadClass_MOTORWAY:    4,
-	pb.RoadClass_TRUNK:       4,
-	pb.RoadClass_PRIMARY:     4,
-	pb.RoadClass_SECONDARY:   3,
-	pb.RoadClass_TERTIARY:    2,
-	pb.RoadClass_RESIDENTIAL: 1,
-	pb.RoadClass_SERVICE:     1,
 }
 
 type rangeVal struct {
@@ -170,6 +159,11 @@ func Roads(e *Env) error {
 	if e.fresh(out) {
 		skip("roads", out)
 		return nil
+	}
+	for _, c := range drivableClasses {
+		if _, ok := e.C.Tuning.Roads.LanesByClass[lower(pb.RoadClass_name[int32(c)])]; !ok {
+			return fmt.Errorf("tuning.yaml: roads.lanes_by_class.%s missing", lower(pb.RoadClass_name[int32(c)]))
+		}
 	}
 	segs, err := e.loadSegments()
 	if err != nil {
@@ -647,19 +641,10 @@ func (e *Env) toProto(g *workGraph) *pb.Graph {
 		gp.Nodes = append(gp.Nodes, &pb.Node{X: geo.DM(p.X), Y: geo.DM(p.Y), Border: g.border[i]})
 	}
 	for _, ed := range g.edges {
-		lanes := defaultLanes[ed.class]
-		if ed.link {
-			lanes = 1
-		}
-		if ed.kept && ed.oneway != 0 && lanes > 2 {
-			lanes--
-		}
-		if ed.kept && lanes < 2 {
-			lanes = 2
-		}
+		lanes := edgeLanes(ed, t)
 		width := float64(lanes)*t.LaneWidthM + 2*t.SidewalkWidthM
 		if !ed.kept {
-			width = 1.5 * t.LaneWidthM
+			width = t.Roads.AlleyWidthLanes * t.LaneWidthM
 		}
 		ni, ok := nameIdx[ed.name]
 		if !ok {
@@ -679,6 +664,23 @@ func (e *Env) toProto(g *workGraph) *pb.Graph {
 		})
 	}
 	return gp
+}
+
+// edgeLanes is the total lane count. Overture dropped `lanes` from the schema (still absent
+// in 2026-11-18.0), so it comes from roads.lanes_by_class in tuning.yaml.
+func edgeLanes(ed workEdge, t config.Tuning) int {
+	r := t.Roads
+	lanes := r.LanesByClass[lower(pb.RoadClass_name[int32(ed.class)])]
+	if ed.link {
+		lanes = r.LinkLanes
+	}
+	if ed.kept && ed.oneway != 0 {
+		lanes -= r.OnewayLaneReduction
+	}
+	if ed.kept && lanes < r.MinKeptLanes {
+		lanes = r.MinKeptLanes
+	}
+	return max(lanes, 1)
 }
 
 // LoadGraph reads the work-dir graph produced by Roads.

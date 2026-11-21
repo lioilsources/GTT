@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"log/slog"
+	"math"
 	"os"
 	"strconv"
 
@@ -112,21 +113,22 @@ func Buildings(e *Env) error {
 		return err
 	}
 	def := e.C.City.DefaultHeightM
+	bt := e.C.Tuning.Buildings
 	sql := fmt.Sprintf(`
 CREATE TABLE lm AS SELECT idx::INT AS idx, x::DOUBLE AS x, y::DOUBLE AS y, h::DOUBLE AS h, coalesce(overture_id, '') AS oid
   FROM read_csv(%[1]s, header=true, all_varchar=true);
 CREATE TABLE c AS
   SELECT id, part, parent, has_parts,
-         coalesce(height, num_floors * 3.2, %[2]f) AS h, coalesce(min_height, 0) AS mh,
-         ST_SimplifyPreserveTopology(g, 1.5) AS g
-  FROM read_parquet(%[3]s) WHERE NOT ST_IsEmpty(g) AND ST_Area(g) >= 4;
--- Landmark ↔ building: explicit Overture id, else the nearest building within 40 m
+         coalesce(height, num_floors * %[5]f, %[2]f) AS h, coalesce(min_height, 0) AS mh,
+         ST_SimplifyPreserveTopology(g, %[6]f) AS g
+  FROM read_parquet(%[3]s) WHERE NOT ST_IsEmpty(g) AND ST_Area(g) >= %[7]f;
+-- Landmark ↔ building: explicit Overture id, else the nearest building within landmark_search_m
 -- (containing buildings first, the largest of them).
 CREATE TABLE lmb AS
   SELECT lm.idx, lm.h,
          arg_min(c.id, round(ST_Distance(c.g, ST_Point(lm.x, lm.y)), 0) * 1e9 - ST_Area(c.g)) AS id
   FROM lm JOIN c
-    ON NOT c.part AND (c.id = lm.oid OR (lm.oid = '' AND ST_DWithin(c.g, ST_Point(lm.x, lm.y), 40)))
+    ON NOT c.part AND (c.id = lm.oid OR (lm.oid = '' AND ST_DWithin(c.g, ST_Point(lm.x, lm.y), %[8]f)))
   GROUP BY lm.idx, lm.h;
 CREATE TABLE parents_with_parts AS SELECT DISTINCT parent AS id FROM c WHERE part;
 -- Parts: scale a landmark's parts so its tallest part matches the curated height.
@@ -139,9 +141,9 @@ CREATE TABLE singles AS
   FROM c JOIN lmb ON lmb.id = c.id WHERE c.id NOT IN (SELECT id FROM parents_with_parts);
 CREATE TABLE plain AS
   SELECT id, g, h,
-         CASE WHEN h < 12 THEN 0 WHEN h < 25 THEN 1 WHEN h < 50 THEN 2 WHEN h < 100 THEN 3 WHEN h < 200 THEN 4 ELSE 5 END AS band
+         %[9]s AS band
   FROM c WHERE NOT part AND id NOT IN (SELECT id FROM parents_with_parts) AND id NOT IN (SELECT id FROM lmb);
-CREATE TABLE clustered AS SELECT *, ST_ClusterDBSCAN(g, 0.5, 1) OVER (PARTITION BY band) AS cid FROM plain;
+CREATE TABLE clustered AS SELECT *, ST_ClusterDBSCAN(g, %[10]f, 1) OVER (PARTITION BY band) AS cid FROM plain;
 CREATE TABLE masses AS
   SELECT 'mass-' || band || '-' || coalesce(cid, -row_number() OVER ()) AS id, ST_Union_Agg(g) AS g,
          sum(h * ST_Area(g)) / nullif(sum(ST_Area(g)), 0) AS h
@@ -153,9 +155,10 @@ CREATE TABLE all_rows AS
 COPY (
   SELECT id, coalesce(h, %[2]f) AS h, mh, lm, part, ST_AsGeoJSON(d.geom)::JSON AS geom
   FROM (SELECT id, h, mh, lm, part, unnest(ST_Dump(ST_MakeValid(g))) AS d FROM all_rows)
-  WHERE ST_GeometryType(d.geom) = 'POLYGON' AND ST_Area(d.geom) >= 12
+  WHERE ST_GeometryType(d.geom) = 'POLYGON' AND ST_Area(d.geom) >= %[11]f
 ) TO %[4]s (FORMAT json);
-`, duck.Quote(lmCSV), def, duck.Quote(e.W("buildings_clipped.parquet")), duck.Quote(out+".tmp"))
+`, duck.Quote(lmCSV), def, duck.Quote(e.W("buildings_clipped.parquet")), duck.Quote(out+".tmp"),
+		bt.FloorHeightM, bt.SimplifyM, bt.DegenerateM2, bt.LandmarkSearchM, bandSQL(bt.HeightBandsM), bt.MergeGapM, bt.MinAreaM2)
 	if _, err := duck.Exec("buildings", sql); err != nil {
 		return err
 	}
@@ -179,6 +182,15 @@ COPY (
 	}
 	slog.Info("buildings", "masses", len(rows), "landmarks_matched", len(matched))
 	return nil
+}
+
+// bandSQL turns height band edges into a CASE expression: band i holds heights below edge i.
+func bandSQL(edges []float64) string {
+	s := "CASE"
+	for i, e := range edges {
+		s += fmt.Sprintf(" WHEN h < %f THEN %d", e, i)
+	}
+	return s + fmt.Sprintf(" ELSE %d END", len(edges))
 }
 
 // LoadMasses reads buildings.jsonl.
@@ -205,7 +217,8 @@ func (e *Env) LoadMasses() ([]MassRow, error) {
 		if err := json.Unmarshal(sc.Bytes(), &r); err != nil {
 			return nil, err
 		}
-		m := MassRow{HeightM: r.H, MinH: r.MH, Landmark: r.LM, Part: r.Part, SourceID: r.ID}
+		// Round heights to decimetres: merged heights are float sums in no fixed order.
+		m := MassRow{HeightM: math.Round(r.H*10) / 10, MinH: math.Round(r.MH*10) / 10, Landmark: r.LM, Part: r.Part, SourceID: r.ID}
 		for i, ring := range r.Geom.Coordinates {
 			pts := make([]geo.Pt, len(ring))
 			for j, c := range ring {
@@ -215,7 +228,7 @@ func (e *Env) LoadMasses() ([]MassRow, error) {
 			if len(pts) < 3 {
 				continue
 			}
-			m.Rings = append(m.Rings, geo.Orient(pts, i == 0))
+			m.Rings = append(m.Rings, geo.Canonical(geo.Orient(pts, i == 0)))
 		}
 		if len(m.Rings) > 0 && len(m.Rings[0]) >= 3 {
 			out = append(out, m)

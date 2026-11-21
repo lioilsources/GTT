@@ -42,22 +42,49 @@ pb.Graph crossingGraph() {
   );
 }
 
+final tuningSrc = File('../../content/tuning.yaml').readAsStringSync();
+Tuning loadTuning() => Tuning.fromYaml(tuningSrc);
+
 void main() {
   test('extrusion scale follows the knee curve and caps at max_scale', () {
-    final t = Tuning();
+    final t = loadTuning();
+    final k = t.extrusionK, knee = t.extrusionKnee;
     expect(extrusionScale(0, t), 1);
-    expect(extrusionScale(50, t), closeTo(1.2, 1e-9));
-    expect(extrusionScale(150, t), closeTo(1 + 0.004 * (50 + math.pow(100, 0.85)), 1e-9));
-    expect(extrusionScale(5000, t), t.extrusionMaxScale);
+    expect(extrusionScale(knee, t), closeTo(1 + k * knee, 1e-9));
+    expect(extrusionScale(knee + 100, t), closeTo(1 + k * (knee + math.pow(100, t.extrusionExp)), 1e-9));
+    expect(extrusionScale(1e6, t), t.extrusionMaxScale);
   });
 
-  test('tuning yaml round trip', () {
-    final t = Tuning.fromYaml(File('../../content/tuning.yaml').readAsStringSync());
-    final again = Tuning.fromYaml(t.toYaml());
-    expect(again.carScale, t.carScale);
+  test('tuning is strict and the panel yaml round-trips', () {
+    final t = loadTuning();
+    expect(() => Tuning.fromYaml(tuningSrc.replaceFirst(RegExp(r'^car_scale:.*$', multiLine: true), '')),
+        throwsFormatException);
+    t.carScale = 3.25;
+    final merged = tuningSrc
+        .split('\n')
+        .where((l) => !RegExp(r'^(car_scale|view_width_m|car_anchor|extrusion|speed_mps):').hasMatch(l))
+        .join('\n');
+    final again = Tuning.fromYaml('$merged\n${t.panelYaml()}');
+    expect(again.carScale, 3.25);
     expect(again.viewWidthFast, t.viewWidthFast);
     expect(again.extrusionK, t.extrusionK);
-    expect(again.anchorY, t.anchorY);
+    expect(again.drive.stepHz, t.drive.stepHz);
+  });
+
+  test('chunk window covers the 3×3 ring and looks ahead', () async {
+    const root = '../../app/assets/cities/nyc/';
+    if (!File('${root}manifest.pb').existsSync()) return;
+    final t = loadTuning();
+    final city = await City.load(FilePackSource(root));
+    final w = ChunkWindow(city, t);
+    final cm = city.chunkM;
+    final x = city.startX, y = city.startY;
+    final want = w.wanted(x, y, 0);
+    final own = ((x / cm).floor(), (y / cm).floor());
+    expect(want.first, own);
+    expect(want, contains(((x / cm).floor() + t.streaming.ahead, (y / cm).floor())));
+    expect(w.drop(own.$1 + t.streaming.keep + 1, own.$2, x, y), isTrue);
+    expect(w.drop(own.$1 + t.streaming.keep, own.$2, x, y), isFalse);
   });
 
   test('road graph nearest and layers', () {
@@ -98,7 +125,7 @@ void main() {
   });
 
   test('camera keeps the car at the anchor and heading up', () {
-    final t = Tuning();
+    final t = loadTuning();
     final cam = CameraRig()..snap(100, 200, 0, t); // heading east
     const size = Size(400, 800);
     final car = cam.toScreen(100, 200, size, t);

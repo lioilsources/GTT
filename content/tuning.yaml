@@ -1,4 +1,7 @@
-# Shared tuning values. Tuned during M0 dogfooding; edit live in the debug panel.
+# The single source of game numbers (METROPOLE_PLAN 5.1). Clients and tools read it, nothing
+# else may hard-code these values. Tuned during M0 dogfooding; edit live in the debug panel.
+# Units: metres, seconds, m/s, m/s², radians unless the key says otherwise.
+
 car_scale: 2.5
 lane_width_m: 8.0
 sidewalk_width_m: 5.0
@@ -7,3 +10,105 @@ car_anchor: {x: 0.5, y: 0.72}          # car position on screen
 extrusion: {k: 0.004, knee_m: 50, exp: 0.85, max_scale: 2.2}
 chunk_m: 256
 speed_mps: {cruise: 25, top_default: 40}
+
+# citypack: road corridors and building masses.
+roads:
+  lanes_by_class: {motorway: 4, trunk: 4, primary: 4, secondary: 3, tertiary: 2, residential: 1, service: 1}
+  link_lanes: 1                 # ramps and slip roads
+  min_kept_lanes: 2
+  oneway_lane_reduction: 1      # one-way roads lose this many lanes (not below min_kept_lanes)
+  alley_width_lanes: 1.5        # alley corridor width in lanes, no sidewalk
+buildings:
+  simplify_m: 1.5
+  merge_gap_m: 0.5
+  height_bands_m: [12, 25, 50, 100, 200]   # merge only within the same band
+  min_area_m2: 12
+  floor_height_m: 3.2
+  landmark_search_m: 40
+  degenerate_m2: 4              # clipped leftovers smaller than this are dropped before matching
+ground:
+  simplify_m: 1.0
+  min_area_m2: 4
+
+# Chunk streaming (METROPOLE_PLAN 6.4): window in chunks around the player.
+streaming: {ahead: 3, behind: 1, side: 1, keep: 3, max_in_flight: 2, retry_s: 2}
+
+camera:
+  heading_follow_rate: 5.5      # 1/s, exponential smoothing of the map rotation
+  zoom_follow_rate: 1.8         # 1/s
+
+# Tyre model and car handling (METROPOLE_PLAN 7.2). Per-car values live in content/cars/.
+drive:
+  step_hz: 60
+  substeps: 4                   # Box2D v3 sub-steps per step
+  axle_offset: 0.62             # axle distance from the centre, fraction of half length
+  steer_lock_rad: 0.62          # wheel lock at standstill
+  steer_lock_drop_rad: 0.42     # lock lost at top speed
+  countersteer_gain: 0.55
+  countersteer_min_slip_rad: 0.12
+  countersteer_min_mps: 4
+  countersteer_max_input: 0.9   # assist only while the player is not at full lock
+  brake_min_mps: 1.0            # below this, brake means reverse
+  reverse_max_mps: 9
+  reverse_power: 0.6            # fraction of car power
+  engine_brake_mps2: 2.0
+  overspeed_mps: 1.0            # engine braking starts this far above the wanted speed
+  drag_linear: 0.04             # 1/s
+  drag_quadratic: 0.0012        # 1/m
+  handbrake_decel_mps2: 3.5
+  handbrake_yaw: 2.6            # rad/s² at the reference speed
+  handbrake_yaw_ref_mps: 20
+  handbrake_yaw_max: 1.5        # cap of the speed factor
+  handbrake_min_mps: 5
+  angular_damping: 1.2
+  stop_spin_damping: 0.8        # angular velocity kept per step when stopped and idle
+  stop_speed_mps: 0.5
+  body_round_m: 0.4
+  car_friction: 0.25
+  car_restitution: 0.15
+  building_friction: 0.2
+  building_restitution: 0.12
+
+# Bridges and tunnels: layer tracking and rails.
+layers:
+  search_m: 30
+  switch_margin_m: 2            # an edge counts while within half width + this
+  rail_margin: 0.6              # fraction of the car half width kept inside the deck edge
+  rail_bounce: 1.25             # outward velocity removed (1 = stop, >1 = bounce back)
+  spawn_search_m: 200
+
+controls:
+  a_full_steer_width: 0.22      # thumb travel for full lock, fraction of screen width
+  a_dead_zone_height: 0.06      # vertical travel before brake/boost, fraction of screen height
+  a_full_brake_height: 0.08     # extra travel to full brake
+  c_max_wheel_rad: 1.885
+
+# Street furniture (procedural per chunk, never stored).
+props:
+  spacing_m: 20
+  spacing_jitter_m: 10
+  skip_chance: 0.35
+  first_m: 14
+  clear_intersection_m: 16
+  mix: {lamp: 0.38, hydrant: 0.17, bin: 0.25, newsbox: 0.10, planter: 0.10}
+  radius_m: {lamp: 0.25, hydrant: 0.25, bin: 0.35, newsbox: 0.4, planter: 0.6}   # before car_scale
+  knock_min_mps: 1.5
+  knock_slowdown: 0.94          # car speed kept after knocking a prop
+  knock_carry: 0.9              # fraction of car velocity given to the prop
+  knock_side: 0.3               # sideways kick, fraction of car speed
+  knock_spin: 4                 # rad/s, plus knock_spin_per_mps × speed
+  knock_spin_per_mps: 0.2
+  fly_s: 2.5
+  fly_damping: 0.08             # velocity kept after 1 s of sliding
+  respawn_s: 25
+
+skids:
+  min_slip_mps: 2.5
+  brake_min_mps: 12
+  max_segments: 600
+
+hud:
+  street_labels_below_mps: 9
+  street_label_radius_m: 70
+  street_labels_max: 4
+  border_notice_m: 80

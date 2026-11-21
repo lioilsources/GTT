@@ -6,6 +6,9 @@ bez CGO a stejně se staví na Macu i na Sparku (ARM64). Cestu k binárce jde p�
 
 ## Kroky
 
+Čísla pipeline (pruhy podle třídy, šířka uliček, zjednodušení, výškové pásy, prahy ploch) jsou v
+`content/tuning.yaml` (`roads`, `buildings`, `ground`); chybějící klíč je chyba.
+
 Cache nesleduje změny konfigurace: po úpravě `city.yaml`, `tuning.yaml` (šířky silnic) nebo
 `landmarks.yaml` spusť `citypack -force build <city>` (stažená data zůstanou, `-refetch` je stáhne znovu).
 
@@ -17,7 +20,7 @@ Cache nesleduje změny konfigurace: po úpravě `city.yaml`, `tuning.yaml` (ší
 | `buildings` | → `buildings.jsonl` | Výška: `height` → `num_floors` × 3,2 → `default_height_m`. Zjednodušení 1,5 m, sloučení sousedů ve stejném výškovém pásmu (DBSCAN 0,5 m). Památky a části budov (`building_part`) se neslučují; části památky se přeškálují na ruční výšku. |
 | `ground` | voda, parky, náměstí, kolejiště → `ground.jsonl` | Sjednocení po druhu, ořez oblastí a mřížkou chunků. |
 | `landmarks`, `spots` | YAML → `landmarks.pb`, `spots.pb` | Památka = nejbližší budova do 40 m od bodu (nebo `overture_id`). Spoty se přichytí na nejbližší ponechanou silnici. |
-| `pack` | → `app/assets/cities/<city>/` | `manifest.pb`, `graph.pb`, `chunks/{x}_{y}.pb`, `landmarks.pb`, `spots.pb`; vše gzip protobuf, souřadnice v decimetrech. Střechy a země předtriangulované (earcut). |
+| `pack` | → `app/assets/cities/<city>/` | `manifest.pb`, `graph.pb`, `chunks/{x}_{y}.pb`, `landmarks.pb`, `spots.pb`; vše gzip protobuf, souřadnice v decimetrech. Střechy a země předtriangulované (earcut). Deterministický: kanonické prstence, úplné řazení, bez času buildu – stejný vstup dá stejné bajty. |
 | `validate` | hotový balíček | Souvislý graf, mosty a tunely napojené na obou koncích, trasa ze startu ke každému spotu (po ponechaných silnicích, s jednosměrkami), žádná budova na ose silnice, limit velikosti chunku, každá hero památka má budovu. |
 | `preview` | → `preview/{city.png,index.html}` | Přehledka a porovnání s OSM. |
 
@@ -36,4 +39,4 @@ Cache nesleduje změny konfigurace: po úpravě `city.yaml`, `tuning.yaml` (ší
 
 ## Midtown v číslech (M0)
 
-~4 000 uzlů, ~4 700 hran (2 870 ponechaných), 9 400 hmot budov, 209 chunků, balíček 0,6 MB.
+~4 000 uzlů, ~4 700 hran (2 873 ponechaných), 9 407 hmot budov, 209 chunků, balíček 0,6 MB.

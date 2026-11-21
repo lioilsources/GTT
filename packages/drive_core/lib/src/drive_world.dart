@@ -1,18 +1,12 @@
 import 'dart:math' as math;
 
 import 'package:forge2d/forge2d.dart';
-import 'package:world_engine/world_engine.dart';
+import 'package:world_engine/core.dart';
 
 import 'car.dart';
 import 'car_spec.dart';
 import 'controls.dart';
 import 'props.dart';
-
-/// Ground-layer building colliders of one loaded chunk.
-class _ChunkColliders {
-  _ChunkColliders(this.body);
-  final Body body;
-}
 
 /// Tracks which road edge the car is on, and with it the layer (−1 tunnel, 0, +1 bridge).
 ///
@@ -20,27 +14,28 @@ class _ChunkColliders {
 /// under a bridge never lifts it onto the deck. On layers ≠ 0 the edge corridor acts as
 /// rails (there are no buildings up there to stop the car).
 class LayerTracker {
-  LayerTracker(this.graph);
+  LayerTracker(this.graph, this.t);
   final RoadGraph graph;
+  final LayerTuning t;
   RoadEdge? edge;
   EdgeHit? hit;
 
   int get layer => hit == null ? 0 : hit!.edge.layerAt(hit!.t);
 
   void reset(double x, double y) {
-    hit = graph.nearest(x, y, maxDist: 200, where: (e) => e.isGround);
+    hit = graph.nearest(x, y, maxDist: t.spawnSearchM, where: (e) => e.isGround);
     edge = hit?.edge;
   }
 
   void update(double x, double y) {
     final cur = edge;
-    final cands = graph.near(x, y, 30);
+    final cands = graph.near(x, y, t.searchM);
+    bool onIt(EdgeHit h) => h.dist <= h.edge.width / 2 + t.switchMarginM;
     EdgeHit? best;
     if (cur != null) {
       final adj = graph.neighbours(cur.index).toSet();
       for (final h in cands) {
-        if (!adj.contains(h.edge.index)) continue;
-        if (h.dist > h.edge.width / 2 + 2) continue;
+        if (!adj.contains(h.edge.index) || !onIt(h)) continue;
         if (best == null || h.dist < best.dist) best = h;
       }
     }
@@ -48,7 +43,7 @@ class LayerTracker {
       // Off our edge's neighbourhood: re-acquire, staying on the current layer.
       final l = layer;
       for (final h in cands) {
-        if (h.edge.layerAt(h.t) != l || h.dist > h.edge.width / 2 + 2) continue;
+        if (h.edge.layerAt(h.t) != l || !onIt(h)) continue;
         if (best == null || h.dist < best.dist) best = h;
       }
     }
@@ -68,10 +63,11 @@ class LayerTracker {
 }
 
 /// Physics for M0: one car, building colliders, layers, knockable street furniture.
+/// Pure logic (no UI); the app draws from the public state.
 class DriveWorld {
   DriveWorld({required this.city, required this.spec, required this.tuning}) {
     world = World(gravity: Vector2.zero());
-    layers = LayerTracker(city.graph);
+    layers = LayerTracker(city.graph, tuning.layers);
     spawn(city.startX, city.startY, city.startHeading);
   }
 
@@ -82,43 +78,44 @@ class DriveWorld {
   late Car car;
   late final LayerTracker layers;
   final input = ControlInput();
-  final Map<int, _ChunkColliders> _colliders = {};
+  final Map<int, Body> _colliders = {};
   final Map<int, PropSet> props = {};
   double time = 0;
   double _acc = 0;
   int knockedCount = 0;
+  bool _spawned = false;
 
   /// Skid marks: x0, y0, x1, y1 per segment, newest last.
   final List<double> skids = [];
-  static const _maxSkids = 600;
+  (double, double, double, double)? _lastSkid;
 
-  static const double step = 1 / 60;
+  DriveTuning get _d => tuning.drive;
 
   void spawn(double x, double y, double heading) {
     if (_spawned) car.destroy();
-    car = Car(world, spec, x: x, y: y, heading: heading, scale: tuning.carScale);
+    car = Car(world, spec, _d, x: x, y: y, heading: heading, scale: tuning.carScale);
     _spawned = true;
     layers.reset(x, y);
     car.setLayer(layers.layer);
   }
-
-  bool _spawned = false;
 
   /// Rebuilds the car after `car_scale` changed in the debug panel.
   void rescaleCar() {
     final x = car.x, y = car.y, h = car.heading, v = car.velocity;
     final l = car.layer;
     car.destroy();
-    car = Car(world, spec, x: x, y: y, heading: h, scale: tuning.carScale);
+    car = Car(world, spec, _d, x: x, y: y, heading: h, scale: tuning.carScale);
     car.body.linearVelocity = v;
     car.setLayer(l);
   }
 
-  void addChunk(LoadedChunk c) {
-    final key = c.key;
+  void addChunk(ChunkData c) {
+    final key = City.chunkKey(c.x, c.y);
     if (_colliders.containsKey(key)) return;
     final body = world.createBody(BodyDef(type: BodyType.static));
-    for (final b in c.data.buildings) {
+    final filter = Filter(categoryBits: catBuildings, maskBits: catCar);
+    final material = SurfaceMaterial(friction: _d.buildingFriction, restitution: _d.buildingRestitution);
+    for (final b in c.buildings) {
       if (!b.collide) continue;
       var start = 0;
       for (final end in b.ringEnds) {
@@ -127,84 +124,82 @@ class DriveWorld {
         start = end;
         try {
           if (n >= 4) {
-            body.createChain(ChainDef(
-              points: pts,
-              isLoop: true,
-              filter: Filter(categoryBits: catBuildings, maskBits: catCar),
-              materials: [SurfaceMaterial(friction: 0.2, restitution: 0.12)],
-            ));
+            body.createChain(ChainDef(points: pts, isLoop: true, filter: filter, materials: [material]));
           } else if (n == 3) {
-            body.createShape(Polygon(pts), ShapeDef(filter: Filter(categoryBits: catBuildings, maskBits: catCar)));
+            body.createShape(Polygon(pts), ShapeDef(filter: filter, material: material));
           }
         } on ArgumentError {
           // Degenerate ring (collinear points); skip it.
         }
       }
     }
-    _colliders[key] = _ChunkColliders(body);
-    props[key] = generateProps(city.graph, c.data.x, c.data.y, city.chunkM, tuning.sidewalkWidthM, tuning.carScale);
+    _colliders[key] = body;
+    props[key] = generateProps(city.graph, c.x, c.y, tuning);
   }
 
-  void removeChunk(LoadedChunk c) {
-    _colliders.remove(c.key)?.body.destroy();
-    props.remove(c.key);
+  void removeChunk(ChunkData c) {
+    final key = City.chunkKey(c.x, c.y);
+    _colliders.remove(key)?.destroy();
+    props.remove(key);
   }
 
-  /// Advances with a fixed 60 Hz step.
+  /// Advances with a fixed step (`drive.step_hz`).
   void update(double dt) {
-    _acc = math.min(_acc + dt, 0.1);
+    final step = _d.step;
+    _acc = math.min(_acc + dt, step * 6);
     while (_acc >= step) {
       _acc -= step;
-      _fixedStep();
+      _fixedStep(step);
     }
   }
 
-  void _fixedStep() {
+  void _fixedStep(double step) {
     time += step;
     car.drive(input, step, cruise: tuning.cruiseMps, top: tuning.topMps);
-    world.step(step);
+    world.step(step, subStepCount: _d.substeps);
     layers.update(car.x, car.y);
     car.setLayer(layers.layer);
     if (car.layer != 0) _rails();
-    _props();
+    _props(step);
     _skidMarks();
   }
 
   /// Keeps the car on bridge decks and in tunnels.
   void _rails() {
     final h = layers.hit;
-    if (h == null) return;
-    final limit = math.max(1.0, h.edge.width / 2 - car.halfWidth * 0.6);
+    if (h == null || h.dist == 0) return;
+    final limit = math.max(0.0, h.edge.width / 2 - car.halfWidth * tuning.layers.railMargin);
     if (h.dist <= limit) return;
     final nx = (car.x - h.x) / h.dist, ny = (car.y - h.y) / h.dist;
-    final px = h.x + nx * limit, py = h.y + ny * limit;
     final v = car.velocity;
     final out = v.x * nx + v.y * ny;
-    car.body.setTransform(Vector2(px, py), car.body.rotation);
+    car.body.setTransform(Vector2(h.x + nx * limit, h.y + ny * limit), car.body.rotation);
     if (out > 0) {
-      car.body.linearVelocity = Vector2(v.x - nx * out * 1.25, v.y - ny * out * 1.25);
+      final k = out * tuning.layers.railBounce;
+      car.body.linearVelocity = Vector2(v.x - nx * k, v.y - ny * k);
     }
   }
 
-  void _props() {
+  void _props(double step) {
+    final t = tuning.props;
     final rot = car.body.rotation;
     final cx = car.x, cy = car.y;
     final v = car.velocity;
     final speed = v.length;
-    final reach = car.halfLength + 3;
+    final damp = math.pow(t.flyDamping, step).toDouble();
     for (final set in props.values) {
       for (final p in set.props) {
         if (p.knocked) {
           final age = time - p.knockedAt;
-          if (age < 2.5) {
-            p.ox += p.vx * step;
-            p.oy += p.vy * step;
-            p.rot += p.spin * step;
-            final f = math.pow(0.08, step).toDouble();
-            p.vx *= f;
-            p.vy *= f;
-            p.spin *= f;
-          } else if (age > respawnSeconds) {
+          if (age < t.flyS) {
+            p
+              ..ox += p.vx * step
+              ..oy += p.vy * step
+              ..rot += p.spin * step
+              ..vx *= damp
+              ..vy *= damp
+              ..spin *= damp;
+          } else if (age > t.respawnS) {
             p
               ..knocked = false
               ..ox = 0
@@ -213,43 +208,44 @@ class DriveWorld {
           }
           continue;
         }
-        if (car.layer != 0) continue;
+        if (car.layer != 0 || speed < t.knockMinMps) continue;
         final dx = p.x - cx, dy = p.y - cy;
-        if (dx.abs() > reach || dy.abs() > reach) continue;
+        final reachX = car.halfLength + p.radius, reachY = car.halfWidth + p.radius;
+        if (dx.abs() > reachX + reachY || dy.abs() > reachX + reachY) continue;
         final lx = dx * rot.cos + dy * rot.sin, ly = -dx * rot.sin + dy * rot.cos;
-        if (lx.abs() > car.halfLength + p.radius || ly.abs() > car.halfWidth + p.radius) continue;
-        if (speed < 1.5) continue;
+        if (lx.abs() > reachX || ly.abs() > reachY) continue;
+        final side = ly >= 0 ? 1.0 : -1.0;
         p
           ..knocked = true
           ..knockedAt = time
-          ..vx = v.x * 0.9 + (ly.sign) * -rot.sin * speed * 0.3
-          ..vy = v.y * 0.9 + (ly.sign) * rot.cos * speed * 0.3
-          ..spin = (ly >= 0 ? 1 : -1) * (4 + speed * 0.2);
+          ..vx = v.x * t.knockCarry - side * rot.sin * speed * t.knockSide
+          ..vy = v.y * t.knockCarry + side * rot.cos * speed * t.knockSide
+          ..spin = side * (t.knockSpin + speed * t.knockSpinPerMps);
         knockedCount++;
-        car.body.linearVelocity = v * 0.94;
+        car.body.linearVelocity = v * t.knockSlowdown;
       }
     }
   }
 
   void _skidMarks() {
-    if (car.rearSlip < 2.5 && !(car.braking && car.speed > 12)) {
+    final s = tuning.skids;
+    if (car.rearSlip < s.minSlipMps && !(car.braking && car.speed > s.brakeMinMps)) {
       _lastSkid = null;
       return;
     }
     final rot = car.body.rotation;
-    final off = -car.halfLength * 0.62;
-    final side = car.halfWidth * 0.8;
+    final off = -car.axleOffset;
+    final side = car.halfWidth;
     final rx = car.x + rot.cos * off, ry = car.y + rot.sin * off;
     final l = (rx - rot.sin * side, ry + rot.cos * side), r = (rx + rot.sin * side, ry - rot.cos * side);
     final last = _lastSkid;
     if (last != null) {
       skids.addAll([last.$1, last.$2, l.$1, l.$2, last.$3, last.$4, r.$1, r.$2]);
-      if (skids.length > _maxSkids * 4) skids.removeRange(0, skids.length - _maxSkids * 4);
+      final max = s.maxSegments * 4;
+      if (skids.length > max) skids.removeRange(0, skids.length - max);
     }
     _lastSkid = (l.$1, l.$2, r.$1, r.$2);
   }
-
-  (double, double, double, double)? _lastSkid;
 
   /// Props within [radius] of (x, y).
   Iterable<Prop> propsNear(double x, double y, double radius) sync* {
@@ -258,6 +254,24 @@ class DriveWorld {
         if ((p.x - x).abs() < radius && (p.y - y).abs() < radius) yield p;
       }
     }
+  }
+
+  /// Distance from the car to the nearest roadblock on its edge's neighbourhood, or null.
+  double? borderDistance() {
+    final g = city.graph;
+    final e = layers.edge;
+    if (e == null) return null;
+    double? best;
+    for (final ei in g.neighbours(e.index)) {
+      final n = g.edges[ei];
+      for (final node in [n.from, n.to]) {
+        if (!g.border[node]) continue;
+        final dx = g.nodeXY[2 * node] - car.x, dy = g.nodeXY[2 * node + 1] - car.y;
+        final d = math.sqrt(dx * dx + dy * dy);
+        if (best == null || d < best) best = d;
+      }
+    }
+    return best;
   }
 
   void dispose() => world.destroy();

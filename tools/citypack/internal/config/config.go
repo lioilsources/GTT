@@ -41,11 +41,52 @@ type Start struct {
 	Street     string  `yaml:"street"`      // snap only onto edges with this name
 }
 
+// Tuning is the part of content/tuning.yaml the pipeline uses. Every field is required.
 type Tuning struct {
 	CarScale       float64 `yaml:"car_scale"`
 	LaneWidthM     float64 `yaml:"lane_width_m"`
 	SidewalkWidthM float64 `yaml:"sidewalk_width_m"`
 	ChunkM         int     `yaml:"chunk_m"`
+	Roads          struct {
+		LanesByClass        map[string]int `yaml:"lanes_by_class"`
+		LinkLanes           int            `yaml:"link_lanes"`
+		MinKeptLanes        int            `yaml:"min_kept_lanes"`
+		OnewayLaneReduction int            `yaml:"oneway_lane_reduction"`
+		AlleyWidthLanes     float64        `yaml:"alley_width_lanes"`
+	} `yaml:"roads"`
+	Buildings struct {
+		SimplifyM       float64   `yaml:"simplify_m"`
+		MergeGapM       float64   `yaml:"merge_gap_m"`
+		HeightBandsM    []float64 `yaml:"height_bands_m"`
+		MinAreaM2       float64   `yaml:"min_area_m2"`
+		FloorHeightM    float64   `yaml:"floor_height_m"`
+		LandmarkSearchM float64   `yaml:"landmark_search_m"`
+		DegenerateM2    float64   `yaml:"degenerate_m2"`
+	} `yaml:"buildings"`
+	Ground struct {
+		SimplifyM float64 `yaml:"simplify_m"`
+		MinAreaM2 float64 `yaml:"min_area_m2"`
+	} `yaml:"ground"`
+}
+
+func (t *Tuning) check() error {
+	b, g, r := t.Buildings, t.Ground, t.Roads
+	for name, v := range map[string]float64{
+		"car_scale": t.CarScale, "lane_width_m": t.LaneWidthM, "sidewalk_width_m": t.SidewalkWidthM,
+		"chunk_m": float64(t.ChunkM), "roads.link_lanes": float64(r.LinkLanes), "roads.min_kept_lanes": float64(r.MinKeptLanes),
+		"roads.alley_width_lanes": r.AlleyWidthLanes, "buildings.simplify_m": b.SimplifyM,
+		"buildings.merge_gap_m": b.MergeGapM, "buildings.min_area_m2": b.MinAreaM2,
+		"buildings.floor_height_m": b.FloorHeightM, "buildings.landmark_search_m": b.LandmarkSearchM,
+		"buildings.degenerate_m2": b.DegenerateM2, "ground.simplify_m": g.SimplifyM, "ground.min_area_m2": g.MinAreaM2,
+	} {
+		if v <= 0 {
+			return fmt.Errorf("tuning.yaml: %s missing or not positive", name)
+		}
+	}
+	if len(r.LanesByClass) == 0 || len(b.HeightBandsM) == 0 {
+		return fmt.Errorf("tuning.yaml: roads.lanes_by_class and buildings.height_bands_m are required")
+	}
+	return nil
 }
 
 type Landmark struct {
@@ -99,8 +140,8 @@ func Load(contentDir, cityID string) (*Content, error) {
 	if err := readYAML(filepath.Join(contentDir, "tuning.yaml"), &c.Tuning); err != nil {
 		return nil, err
 	}
-	if c.Tuning.ChunkM == 0 {
-		c.Tuning.ChunkM = 256
+	if err := c.Tuning.check(); err != nil {
+		return nil, err
 	}
 	var lm struct {
 		Landmarks []Landmark `yaml:"landmarks"`
@@ -129,11 +170,13 @@ func readYAML(path string, v any) error {
 	if err != nil {
 		return err
 	}
-	if err := yaml.Unmarshal(b, v); err != nil {
+	if err := readYAMLBytes(b, v); err != nil {
 		return fmt.Errorf("%s: %w", path, err)
 	}
 	return nil
 }
+
+func readYAMLBytes(b []byte, v any) error { return yaml.Unmarshal(b, v) }
 
 func readYAMLOptional(path string, v any) error {
 	if _, err := os.Stat(path); os.IsNotExist(err) {

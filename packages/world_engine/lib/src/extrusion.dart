@@ -6,13 +6,6 @@ import 'chunk.dart';
 import 'palette.dart';
 import 'tuning.dart';
 
-/// Roof scale for height [h] (METROPOLE_PLAN 6.2):
-/// h_eff = h for h ≤ knee, knee + (h − knee)^exp above; s = min(1 + k·h_eff, max_scale).
-double extrusionScale(double h, Tuning t) {
-  final he = h <= t.extrusionKnee ? h : t.extrusionKnee + math.pow(h - t.extrusionKnee, t.extrusionExp);
-  return math.min(1 + t.extrusionK * he, t.extrusionMaxScale);
-}
-
 /// Window texture tiling: one window cell is 4 m wide and 3.2 m tall, 64 px square.
 const double texPxPerMetreU = 16;
 const double texPxPerMetreV = 20;

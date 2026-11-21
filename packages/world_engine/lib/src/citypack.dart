@@ -1,25 +1,11 @@
 import 'package:archive/archive.dart';
-import 'package:flutter/services.dart';
+import 'dart:typed_data';
 
 import 'pb/citypack.pb.dart' as pb;
 
 /// Where citypack files come from (app assets now, a CDN download later).
 abstract class PackSource {
   Future<Uint8List> read(String path);
-}
-
-class AssetPackSource implements PackSource {
-  AssetPackSource(this.root, {AssetBundle? bundle}) : bundle = bundle ?? rootBundle;
-
-  /// e.g. `assets/cities/nyc/`
-  final String root;
-  final AssetBundle bundle;
-
-  @override
-  Future<Uint8List> read(String path) async {
-    final data = await bundle.load('$root$path');
-    return data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes);
-  }
 }
 
 /// Every citypack file is gzip-compressed protobuf.

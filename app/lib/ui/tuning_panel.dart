@@ -117,7 +117,7 @@ class _TuningPanelState extends State<_TuningPanel> {
                   final car = 'power: ${c.power}\nbrake: ${c.brake}\ngrip_front: ${c.gripFront}\n'
                       'grip_rear: ${c.gripRear}\ndrift_bias: ${c.driftBias}\nsteer_speed: ${c.steerSpeed}\n'
                       'top_speed: ${c.topSpeed}\n';
-                  await Clipboard.setData(ClipboardData(text: '${t.toYaml()}\n# ${c.id}\n$car'));
+                  await Clipboard.setData(ClipboardData(text: '${t.panelYaml()}\n# ${c.id}\n$car'));
                   if (context.mounted) {
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l.copied)));
                   }

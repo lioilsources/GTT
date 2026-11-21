@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:ui';
 
 /// Car definition from `content/cars/<id>.json` (METROPOLE_PLAN 7.2, 10).
 ///
@@ -22,13 +21,13 @@ class CarSpec {
     required this.driftBias,
     required this.steerSpeed,
     required this.topSpeed,
-    required this.paint,
+    required this.paintArgb,
   });
 
   factory CarSpec.fromJson(String src) {
     final j = jsonDecode(src) as Map<String, dynamic>;
     double d(String k) => (j[k] as num).toDouble();
-    final hex = (j['paint'] as String? ?? '#D7263D').replaceFirst('#', '');
+    final hex = (j['paint'] as String).replaceFirst('#', '');
     return CarSpec(
       id: j['id'] as String,
       name: j['name'] as String,
@@ -43,7 +42,7 @@ class CarSpec {
       driftBias: d('drift_bias'),
       steerSpeed: d('steer_speed'),
       topSpeed: d('top_speed'),
-      paint: Color(int.parse('FF$hex', radix: 16)),
+      paintArgb: int.parse('FF$hex', radix: 16),
     );
   }
 
@@ -60,5 +59,6 @@ class CarSpec {
   double driftBias;
   double steerSpeed;
   double topSpeed;
-  Color paint;
+  /// Body colour as 0xAARRGGBB.
+  int paintArgb;
 }
