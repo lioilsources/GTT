@@ -118,3 +118,29 @@ body {
   transform: translate(-50%, -50%);
   font-size: var(--font-hud);
 }
+
+#bench {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: min(92vw, 420px);
+  max-height: 70vh;
+  overflow: auto;
+  padding: var(--space-md);
+  border-radius: var(--radius-button);
+  background: var(--color-ui-sheet);
+  font-size: var(--font-faint);
+  -webkit-user-select: text;
+  user-select: text;
+}
+
+#bench pre {
+  margin: 0 0 var(--space-md);
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+#bench button {
+  width: 100%;
+}
