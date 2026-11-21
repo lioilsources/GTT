@@ -79,6 +79,46 @@ func Run(root string, only ...string) []error {
 	if len(only) == 0 {
 		errs = append(errs, npc.Check(root)...)
 	}
+	if len(only) == 0 || contains(only, "car.schema.json") {
+		errs = append(errs, CarPaints(root)...)
+	}
+	return errs
+}
+
+// CarPaints checks that every car's paint names a key of color.carPaint in design/tokens.json
+// (specs/cars.md: body colours live only in the tokens).
+func CarPaints(root string) []error {
+	var tok struct {
+		Color struct {
+			CarPaint map[string]any `json:"carPaint"`
+		} `json:"color"`
+	}
+	b, err := os.ReadFile(filepath.Join(root, repo.Tokens))
+	if err != nil {
+		return []error{err}
+	}
+	if err := json.Unmarshal(b, &tok); err != nil {
+		return []error{fmt.Errorf("%s: %w", repo.Tokens, err)}
+	}
+	var errs []error
+	files, _ := filepath.Glob(filepath.Join(root, repo.Cars, "*.json"))
+	for _, f := range files {
+		var car struct {
+			Paint string `json:"paint"`
+		}
+		rel, _ := filepath.Rel(root, f)
+		b, err := os.ReadFile(f)
+		if err == nil {
+			err = json.Unmarshal(b, &car)
+		}
+		if err != nil {
+			errs = append(errs, fmt.Errorf("%s: %w", rel, err))
+			continue
+		}
+		if _, ok := tok.Color.CarPaint[car.Paint]; !ok || strings.HasPrefix(car.Paint, "$") {
+			errs = append(errs, fmt.Errorf("%s: paint %q is not a key of color.carPaint in %s", rel, car.Paint, repo.Tokens))
+		}
+	}
 	return errs
 }
 

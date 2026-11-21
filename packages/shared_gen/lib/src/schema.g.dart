@@ -108,6 +108,7 @@ class CarSpec {
   int price;
   String rarity;
   List<String> tuningSlots;
+  /// Key in design/tokens.json color.carPaint (body colour, tinted at runtime).
   String paint;
 
   Map<String, Object?> toJson() => {

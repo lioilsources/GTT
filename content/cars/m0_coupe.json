@@ -17,5 +17,5 @@
   "price": 0,
   "rarity": "common",
   "tuning_slots": ["engine", "tyres", "brakes", "weight", "drift"],
-  "paint": "#D7263D"
+  "paint": "comet_red"
 }

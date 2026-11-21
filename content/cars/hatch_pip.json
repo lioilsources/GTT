@@ -1,0 +1,21 @@
+{
+  "id": "hatch_pip",
+  "name": "Lumo Pip",
+  "class": "hatchback",
+  "length_m": 3.9,
+  "width_m": 1.75,
+  "mass": 1050,
+  "power": 7.6,
+  "brake": 15.0,
+  "grip_front": 22.5,
+  "grip_rear": 21.5,
+  "drift_bias": 0.4,
+  "steer_speed": 5.6,
+  "top_speed": 33.0,
+  "seats": 4,
+  "tags": ["nyc"],
+  "price": 6000,
+  "rarity": "common",
+  "tuning_slots": ["engine", "tyres", "brakes", "weight", "drift"],
+  "paint": "pip_teal"
+}

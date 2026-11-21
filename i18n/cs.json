@@ -228,5 +228,15 @@
   "npcCtx_minigame_win": "Po tvé výhře",
   "npcCtx_minigame_lose": "Po tvé prohře",
   "npcCtx_crash": "Po nehodě",
-  "npcCtx_car_owner": "Majitel auta"
+  "npcCtx_car_owner": "Majitel auta",
+  "boardCar": "Přesednout",
+  "garage": "Garáž",
+  "garageTitle": "Tvoje auta",
+  "garageDriving": "Řídíš",
+  "garageTakeOut": "Vyjet",
+  "carClassCoupe": "Kupé",
+  "carClassHatchback": "Hatchback",
+  "carClassMuscle": "Muscle car",
+  "carClassTaxi": "Taxi",
+  "carClassPickup": "Pick-up"
 }

@@ -72,3 +72,33 @@ func TestCheckReportsDriftAndStaleFiles(t *testing.T) {
 		t.Fatalf("want differs + stale, got %v", bad)
 	}
 }
+
+func TestTokenMapGroups(t *testing.T) {
+	dir := t.TempDir()
+	src := `{"color": {"paint": {"$map": true, "red_one": "#D7263D", "teal": "#2BA6A0"}, "x": "#000000"}}`
+	if err := os.WriteFile(filepath.Join(dir, "t.json"), []byte(src), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	o := NewOutput(dir)
+	if err := Tokens(o, "t.json"); err != nil {
+		t.Fatal(err)
+	}
+	d := string(o.Files["packages/shared_gen/lib/src/tokens.g.dart"])
+	if !strings.Contains(d, "static const Map<String, int> colorPaint = {'red_one': 0xFFD7263D, 'teal': 0xFF2BA6A0};") {
+		t.Errorf("dart map missing:\n%s", d)
+	}
+	ts := string(o.Files["web/src/gen/tokens.ts"])
+	if !strings.Contains(ts, `colorPaint: {"red_one": "#D7263D", "teal": "#2BA6A0"}`) {
+		t.Errorf("ts map missing:\n%s", ts)
+	}
+	if css := string(o.Files["web/src/gen/tokens.css"]); !strings.Contains(css, "--color-paint-red-one: #D7263D;") {
+		t.Errorf("css missing:\n%s", css)
+	}
+	bad := `{"color": {"paint": {"$map": true, "a": "red"}}}`
+	if err := os.WriteFile(filepath.Join(dir, "t.json"), []byte(bad), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	if err := Tokens(NewOutput(dir), "t.json"); err == nil {
+		t.Error("non-colour map entry must be an error")
+	}
+}

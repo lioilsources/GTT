@@ -353,3 +353,25 @@ npc:
   contact_base_pct: 25        # chance at contact_min_vibe
   contact_step_pct: 10        # + per vibe point above it
   contact_max_pct: 85
+# Cars, switching and the garage (specs/cars.md). Distances in world metres (after car_scale).
+cars:
+  start_car: m0_coupe
+  start_owned: [m0_coupe]
+  start_cash: 0
+  board_distance_m: 10.0      # centre to centre, player car to a parked car
+  board_speed_mps: 1.5
+  garage_radius_m: 18.0       # around the garage spot's parking point
+  garage_speed_mps: 1.5
+  action_hold_s: 1.5          # the context button stays this long after the stop (auto-throttle moves on)
+  parked:
+    salt: 739982445
+    per_chunk: 4
+    attempts: 24
+    classes: [3, 4, 5, 6]      # RoadClass: primary, secondary, tertiary, residential
+    models: [hatch_pip, muscle_brute, taxi_metro, pickup_hauler, m0_coupe]
+    segment_margin_m: 14.0
+    curb_gap_m: 0.5
+    min_inner_m: 2.0
+    min_spacing_m: 16.0
+    clear_player_m: 20.0
+    forget_m: 600.0

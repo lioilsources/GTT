@@ -45,11 +45,46 @@ type token struct {
 	path  []string
 	node  *yaml.Node
 	color bool
+	// entries is set for a group marked "$map": true: a lookup table by key (e.g. car paints).
+	entries [][2]string
+}
+
+// isMap reports whether a mapping node carries "$map": true.
+func isMap(n *yaml.Node) bool {
+	for i := 0; i+1 < len(n.Content); i += 2 {
+		if n.Content[i].Value == "$map" && n.Content[i+1].Value == "true" {
+			return true
+		}
+	}
+	return false
+}
+
+func validColor(s string) bool {
+	_, ok := colorARGB(s)
+	return ok
 }
 
 func flattenTokens(n *yaml.Node, path []string, out *[]token) error {
 	switch n.Kind {
 	case yaml.MappingNode:
+		if isMap(n) {
+			t := token{path: path, node: n, color: path[0] == "color"}
+			for i := 0; i+1 < len(n.Content); i += 2 {
+				k, v := n.Content[i].Value, n.Content[i+1]
+				if strings.HasPrefix(k, "$") {
+					continue
+				}
+				if v.Kind != yaml.ScalarNode || (t.color && !validColor(v.Value)) {
+					return fmt.Errorf("design tokens: %s.%s: %q is not a #RRGGBB(AA) colour", strings.Join(path, "."), k, v.Value)
+				}
+				t.entries = append(t.entries, [2]string{k, v.Value})
+			}
+			if !t.color {
+				return fmt.Errorf("design tokens: %s: \"$map\" groups must be colours", strings.Join(path, "."))
+			}
+			*out = append(*out, t)
+			return nil
+		}
 		for i := 0; i+1 < len(n.Content); i += 2 {
 			k := n.Content[i].Value
 			if strings.HasPrefix(k, "$") {
@@ -97,6 +132,16 @@ func Tokens(o *Output, src string) error {
 		name := Camel(strings.Join(t.path, "_"))
 		cssName := "--" + strings.ToLower(strings.Join(kebab(t.path), "-"))
 		switch {
+		case t.entries != nil:
+			var dv, tv []string
+			for _, e := range t.entries {
+				c, _ := colorARGB(e[1])
+				dv = append(dv, fmt.Sprintf("'%s': 0x%08X", e[0], c))
+				tv = append(tv, fmt.Sprintf("%s: %s", strconv.Quote(e[0]), strconv.Quote(e[1])))
+				fmt.Fprintf(&css, "  %s-%s: %s;\n", cssName, strings.ReplaceAll(e[0], "_", "-"), e[1])
+			}
+			fmt.Fprintf(&d, "  static const Map<String, int> %s = {%s};\n", name, strings.Join(dv, ", "))
+			fmt.Fprintf(&ts, "  %s: {%s} as Readonly<Record<string, string>>,\n", name, strings.Join(tv, ", "))
 		case t.node.Kind == yaml.SequenceNode:
 			var dv, tv []string
 			for _, it := range t.node.Content {

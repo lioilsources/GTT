@@ -273,5 +273,15 @@
   "npcCtx_minigame_win": "After your win",
   "npcCtx_minigame_lose": "After your loss",
   "npcCtx_crash": "After a crash",
-  "npcCtx_car_owner": "Car owner"
+  "npcCtx_car_owner": "Car owner",
+  "boardCar": "Change car",
+  "garage": "Garage",
+  "garageTitle": "Your cars",
+  "garageDriving": "Driving",
+  "garageTakeOut": "Drive out",
+  "carClassCoupe": "Coupé",
+  "carClassHatchback": "Hatchback",
+  "carClassMuscle": "Muscle car",
+  "carClassTaxi": "Taxi",
+  "carClassPickup": "Pick-up"
 }

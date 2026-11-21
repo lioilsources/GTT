@@ -1,0 +1,224 @@
+{
+ "module": "cars",
+ "specVersion": 1,
+ "cases": [
+  {
+   "name": "steal a parked car, then board the own car again",
+   "config": {
+    "prices": {
+     "hatch_pip": 6000,
+     "m0_coupe": 0,
+     "muscle_brute": 30000,
+     "pickup_hauler": 18000,
+     "taxi_metro": 15000
+    },
+    "cash": 0,
+    "owned": [
+     "m0_coupe"
+    ],
+    "driving": "m0_coupe"
+   },
+   "seed": 1,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "board",
+      "car": "taxi_metro",
+      "owner": "npc"
+     },
+     "state": {
+      "cash": 0,
+      "owned": [
+       "m0_coupe"
+      ],
+      "driving": "taxi_metro",
+      "stolen": true,
+      "thefts": 1
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "board",
+      "car": "taxi_metro",
+      "owner": "npc"
+     },
+     "state": {
+      "cash": 0,
+      "owned": [
+       "m0_coupe"
+      ],
+      "driving": "taxi_metro",
+      "stolen": true,
+      "thefts": 2
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "board",
+      "car": "m0_coupe",
+      "owner": "player"
+     },
+     "state": {
+      "cash": 0,
+      "owned": [
+       "m0_coupe"
+      ],
+      "driving": "m0_coupe",
+      "stolen": false,
+      "thefts": 2
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "board",
+      "car": "m0_coupe",
+      "owner": "npc"
+     },
+     "state": {
+      "cash": 0,
+      "owned": [
+       "m0_coupe"
+      ],
+      "driving": "m0_coupe",
+      "stolen": true,
+      "thefts": 3
+     }
+    }
+   ],
+   "result": null
+  },
+  {
+   "name": "garage: buy with cash and drive out",
+   "config": {
+    "prices": {
+     "hatch_pip": 6000,
+     "m0_coupe": 0,
+     "muscle_brute": 30000,
+     "pickup_hauler": 18000,
+     "taxi_metro": 15000
+    },
+    "cash": 25000,
+    "owned": [
+     "m0_coupe"
+    ],
+    "driving": "m0_coupe"
+   },
+   "seed": 7,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "buy",
+      "car": "taxi_metro"
+     },
+     "state": {
+      "cash": 10000,
+      "owned": [
+       "m0_coupe",
+       "taxi_metro"
+      ],
+      "driving": "m0_coupe",
+      "stolen": false,
+      "thefts": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "buy",
+      "car": "hatch_pip"
+     },
+     "state": {
+      "cash": 4000,
+      "owned": [
+       "m0_coupe",
+       "taxi_metro",
+       "hatch_pip"
+      ],
+      "driving": "m0_coupe",
+      "stolen": false,
+      "thefts": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "select",
+      "car": "hatch_pip"
+     },
+     "state": {
+      "cash": 4000,
+      "owned": [
+       "m0_coupe",
+       "taxi_metro",
+       "hatch_pip"
+      ],
+      "driving": "hatch_pip",
+      "stolen": false,
+      "thefts": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "board",
+      "car": "muscle_brute",
+      "owner": "npc"
+     },
+     "state": {
+      "cash": 4000,
+      "owned": [
+       "m0_coupe",
+       "taxi_metro",
+       "hatch_pip"
+      ],
+      "driving": "muscle_brute",
+      "stolen": true,
+      "thefts": 1
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "select",
+      "car": "hatch_pip"
+     },
+     "state": {
+      "cash": 4000,
+      "owned": [
+       "m0_coupe",
+       "taxi_metro",
+       "hatch_pip"
+      ],
+      "driving": "hatch_pip",
+      "stolen": false,
+      "thefts": 1
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "select",
+      "car": "m0_coupe"
+     },
+     "state": {
+      "cash": 4000,
+      "owned": [
+       "m0_coupe",
+       "taxi_metro",
+       "hatch_pip"
+      ],
+      "driving": "m0_coupe",
+      "stolen": false,
+      "thefts": 1
+     }
+    }
+   ],
+   "result": null
+  }
+ ]
+}

@@ -234,6 +234,16 @@ export type MessageKey =
   | "npcCtx_minigame_lose"
   | "npcCtx_crash"
   | "npcCtx_car_owner"
+  | "boardCar"
+  | "garage"
+  | "garageTitle"
+  | "garageDriving"
+  | "garageTakeOut"
+  | "carClassCoupe"
+  | "carClassHatchback"
+  | "carClassMuscle"
+  | "carClassTaxi"
+  | "carClassPickup"
 ;
 
 export const messages: Record<Locale, Record<MessageKey, string>> = {
@@ -468,6 +478,16 @@ export const messages: Record<Locale, Record<MessageKey, string>> = {
     npcCtx_minigame_lose: "Po tvé prohře",
     npcCtx_crash: "Po nehodě",
     npcCtx_car_owner: "Majitel auta",
+    boardCar: "Přesednout",
+    garage: "Garáž",
+    garageTitle: "Tvoje auta",
+    garageDriving: "Řídíš",
+    garageTakeOut: "Vyjet",
+    carClassCoupe: "Kupé",
+    carClassHatchback: "Hatchback",
+    carClassMuscle: "Muscle car",
+    carClassTaxi: "Taxi",
+    carClassPickup: "Pick-up",
   },
   "en": {
     appTitle: "Metropole",
@@ -700,6 +720,16 @@ export const messages: Record<Locale, Record<MessageKey, string>> = {
     npcCtx_minigame_lose: "After your loss",
     npcCtx_crash: "After a crash",
     npcCtx_car_owner: "Car owner",
+    boardCar: "Change car",
+    garage: "Garage",
+    garageTitle: "Your cars",
+    garageDriving: "Driving",
+    garageTakeOut: "Drive out",
+    carClassCoupe: "Coupé",
+    carClassHatchback: "Hatchback",
+    carClassMuscle: "Muscle car",
+    carClassTaxi: "Taxi",
+    carClassPickup: "Pick-up",
   },
 };
 

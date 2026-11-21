@@ -96,7 +96,8 @@ class Tuning {
         nav = TuningNav._(r.sub('nav')),
         traffic = TuningTraffic._(r.sub('traffic')),
         passport = TuningPassport._(r.sub('passport')),
-        npc = TuningNpc._(r.sub('npc'));
+        npc = TuningNpc._(r.sub('npc')),
+        cars = TuningCars._(r.sub('cars'));
 
   factory Tuning.fromYaml(String src) {
     final y = loadYaml(src);
@@ -186,6 +187,9 @@ class Tuning {
   /// NPC dialogue (specs/dialogue.md): skit queue, vibe meter, phone contact chance (integers, P0).
   final TuningNpc npc;
 
+  /// Cars, switching and the garage (specs/cars.md). Distances in world metres (after car_scale).
+  final TuningCars cars;
+
   Map<String, Object> toJson() => {
         'car_scale': carScale,
         'lane_width_m': laneWidthM,
@@ -216,6 +220,7 @@ class Tuning {
         'traffic': traffic.toJson(),
         'passport': passport.toJson(),
         'npc': npc.toJson(),
+        'cars': cars.toJson(),
       };
 
   /// Dotted YAML path → value, for diffs against the loaded file.
@@ -2019,4 +2024,103 @@ class TuningNpc {
       };
 
   static const keys = ['recent_k', 'vibe_max', 'vibe_start', 'contact_min_vibe', 'contact_base_pct', 'contact_step_pct', 'contact_max_pct'];
+}
+
+/// Cars, switching and the garage (specs/cars.md). Distances in world metres (after car_scale).
+class TuningCars {
+  TuningCars._(_R r)
+      : startCar = r.s('start_car'),
+        startOwned = r.sl('start_owned'),
+        startCash = r.i('start_cash'),
+        boardDistanceM = r.d('board_distance_m'),
+        boardSpeedMps = r.d('board_speed_mps'),
+        garageRadiusM = r.d('garage_radius_m'),
+        garageSpeedMps = r.d('garage_speed_mps'),
+        actionHoldS = r.d('action_hold_s'),
+        parked = TuningCarsParked._(r.sub('parked'));
+
+  String startCar;
+
+  List<String> startOwned;
+
+  int startCash;
+
+  /// centre to centre, player car to a parked car
+  double boardDistanceM;
+
+  double boardSpeedMps;
+
+  /// around the garage spot's parking point
+  double garageRadiusM;
+
+  double garageSpeedMps;
+
+  /// the context button stays this long after the stop (auto-throttle moves on)
+  double actionHoldS;
+
+  final TuningCarsParked parked;
+
+  Map<String, Object> toJson() => {
+        'start_car': startCar,
+        'start_owned': startOwned,
+        'start_cash': startCash,
+        'board_distance_m': boardDistanceM,
+        'board_speed_mps': boardSpeedMps,
+        'garage_radius_m': garageRadiusM,
+        'garage_speed_mps': garageSpeedMps,
+        'action_hold_s': actionHoldS,
+        'parked': parked.toJson(),
+      };
+}
+
+class TuningCarsParked {
+  TuningCarsParked._(_R r)
+      : salt = r.i('salt'),
+        perChunk = r.i('per_chunk'),
+        attempts = r.i('attempts'),
+        classes = r.il('classes'),
+        models = r.sl('models'),
+        segmentMarginM = r.d('segment_margin_m'),
+        curbGapM = r.d('curb_gap_m'),
+        minInnerM = r.d('min_inner_m'),
+        minSpacingM = r.d('min_spacing_m'),
+        clearPlayerM = r.d('clear_player_m'),
+        forgetM = r.d('forget_m');
+
+  int salt;
+
+  int perChunk;
+
+  int attempts;
+
+  /// RoadClass: primary, secondary, tertiary, residential
+  List<int> classes;
+
+  List<String> models;
+
+  double segmentMarginM;
+
+  double curbGapM;
+
+  double minInnerM;
+
+  double minSpacingM;
+
+  double clearPlayerM;
+
+  double forgetM;
+
+  Map<String, Object> toJson() => {
+        'salt': salt,
+        'per_chunk': perChunk,
+        'attempts': attempts,
+        'classes': classes,
+        'models': models,
+        'segment_margin_m': segmentMarginM,
+        'curb_gap_m': curbGapM,
+        'min_inner_m': minInnerM,
+        'min_spacing_m': minSpacingM,
+        'clear_player_m': clearPlayerM,
+        'forget_m': forgetM,
+      };
 }
