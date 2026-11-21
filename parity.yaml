@@ -45,3 +45,17 @@
   lead: web
   flutter: todo
   web: todo
+- id: F-007
+  name: Minigame contract and Gallery
+  level: P2
+  spec: specs/minigames/README.md@1
+  lead: web
+  flutter: todo
+  web: todo
+- id: F-008
+  name: Sirky (duel)
+  level: P0
+  spec: specs/minigames/sirky.md@1
+  lead: web
+  flutter: todo
+  web: todo

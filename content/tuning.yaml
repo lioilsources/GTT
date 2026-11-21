@@ -134,3 +134,16 @@ hud:
   street_label_radius_m: 70.0
   street_labels_max: 4
   border_notice_m: 80.0
+
+# Minigames (METROPOLE_PLAN 9, specs/minigames/). Rules read these through the generated Tuning.
+minigames:
+  time_cap_s: 600               # hard cap for every minigame (9.2)
+  sirky:
+    start: 15
+    min_start: 12
+    max_start: 25
+    max_take: 3
+    rounds_to_win: 5
+    ai_error_pct: [60, 45, 30, 15, 0]   # per AI level 1..5
+    time_cap_s: 300
+    ai_think_s: 0.7             # pause before the opponent's move (UI only)

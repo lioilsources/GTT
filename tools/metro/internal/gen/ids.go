@@ -58,8 +58,11 @@ func Ids(o *Output, citiesDir, carsDir, catalog string) error {
 	var cat struct {
 		Engines   []string `yaml:"engines"`
 		Minigames []struct {
-			ID     string `yaml:"id"`
-			Engine string `yaml:"engine"`
+			ID         string   `yaml:"id"`
+			Engine     string   `yaml:"engine"`
+			TargetMin  int      `yaml:"target_min"`
+			Cities     []string `yaml:"cities"`
+			CasinoLike bool     `yaml:"casino_like"`
 		} `yaml:"minigames"`
 	}
 	if err := yaml.Unmarshal(b, &cat); err != nil {
@@ -80,7 +83,9 @@ func Ids(o *Output, citiesDir, carsDir, catalog string) error {
 
 	var d, ts strings.Builder
 	d.WriteString(Header("//", citiesDir+", "+carsDir+", "+catalog))
+	d.WriteString("\nimport 'schema.g.dart';\n")
 	ts.WriteString(Header("//", citiesDir+", "+carsDir+", "+catalog))
+	ts.WriteString("\nimport type { MinigameMeta } from './schema';\n")
 	for _, e := range enums {
 		vals := append([]string{}, e.values...)
 		if e.name != "EngineId" && e.name != "MinigameId" {
@@ -115,6 +120,22 @@ func Ids(o *Output, citiesDir, carsDir, catalog string) error {
 			ts.WriteString("};\n")
 		}
 	}
+	// Catalog metadata per minigame (the MinigameMeta of the contract, DUALSTACK 6.5).
+	d.WriteString("\n/// Contract metadata of every minigame in content/minigames/catalog.yaml.\nfinal Map<MinigameId, MinigameMeta> minigameCatalog = {\n")
+	ts.WriteString("\n/** Contract metadata of every minigame in content/minigames/catalog.yaml. */\nexport const minigameCatalog: Record<MinigameId, MinigameMeta> = {\n")
+	for _, m := range cat.Minigames {
+		dc := make([]string, len(m.Cities))
+		for i, c := range m.Cities {
+			dc[i] = "'" + c + "'"
+		}
+		cities := strings.Join(dc, ", ")
+		fmt.Fprintf(&d, "  MinigameId.%s: MinigameMeta(id: '%s', engine: '%s', targetLengthS: %d, cities: [%s], casinoLike: %t),\n",
+			Camel(m.ID), m.ID, m.Engine, m.TargetMin*60, cities, m.CasinoLike)
+		fmt.Fprintf(&ts, "  %s: { id: '%s', engine: '%s', targetLengthS: %d, cities: [%s], casinoLike: %t },\n",
+			m.ID, m.ID, m.Engine, m.TargetMin*60, cities, m.CasinoLike)
+	}
+	d.WriteString("};\n")
+	ts.WriteString("};\n")
 	o.Add("packages/shared_gen/lib/src/ids.g.dart", []byte(d.String()))
 	o.Add("web/src/gen/ids.ts", []byte(ts.String()))
 	return nil

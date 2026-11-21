@@ -3,7 +3,8 @@
 # Path ownership for `metro guard`: a branch may only touch paths of its own session.
 # Everything not listed belongs to SHARED; generated folders belong to SHARED too.
 owners:
-  flutter: [app/, packages/]
+  # The root pubspec is the Flutter workspace: new packages/mg_<id> are added by flutter branches.
+  flutter: [app/, packages/, pubspec.yaml, pubspec.lock]
   web: [web/]
   shared_generated: [packages/shared_gen/, web/src/gen/]
 # One-off branches allowed to touch every path (the D0 bootstrap that wires both clients up).

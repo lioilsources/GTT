@@ -97,6 +97,8 @@ export class Tuning {
   /** D1 measurement autopilot (specs/bench.md); route in content/bench/<city>.json. */
   readonly bench: TuningBench;
   readonly hud: TuningHud;
+  /** Minigames (METROPOLE_PLAN 9, specs/minigames/). Rules read these through the generated Tuning. */
+  readonly minigames: TuningMinigames;
 
   private constructor(r: R) {
     this.carScale = r.d('car_scale');
@@ -119,6 +121,7 @@ export class Tuning {
     this.skids = new TuningSkids(r.sub('skids'));
     this.bench = new TuningBench(r.sub('bench'));
     this.hud = new TuningHud(r.sub('hud'));
+    this.minigames = new TuningMinigames(r.sub('minigames'));
   }
 
   toJson(): Record<string, unknown> {
@@ -143,6 +146,7 @@ export class Tuning {
       skids: this.skids.toJson(),
       bench: this.bench.toJson(),
       hud: this.hud.toJson(),
+      minigames: this.minigames.toJson(),
     };
   }
 
@@ -1030,6 +1034,62 @@ export class TuningHud {
       street_label_radius_m: this.streetLabelRadiusM,
       street_labels_max: this.streetLabelsMax,
       border_notice_m: this.borderNoticeM,
+    };
+  }
+}
+
+/** Minigames (METROPOLE_PLAN 9, specs/minigames/). Rules read these through the generated Tuning. */
+export class TuningMinigames {
+  /** hard cap for every minigame (9.2) */
+  timeCapS: number;
+  readonly sirky: TuningMinigamesSirky;
+
+  constructor(r: R) {
+    this.timeCapS = r.i('time_cap_s');
+    this.sirky = new TuningMinigamesSirky(r.sub('sirky'));
+  }
+
+  toJson(): Record<string, unknown> {
+    return {
+      time_cap_s: this.timeCapS,
+      sirky: this.sirky.toJson(),
+    };
+  }
+}
+
+export class TuningMinigamesSirky {
+  start: number;
+  minStart: number;
+  maxStart: number;
+  maxTake: number;
+  roundsToWin: number;
+  /** per AI level 1..5 */
+  aiErrorPct: number[];
+  timeCapS: number;
+  /** pause before the opponent's move (UI only) */
+  aiThinkS: number;
+
+  constructor(r: R) {
+    this.start = r.i('start');
+    this.minStart = r.i('min_start');
+    this.maxStart = r.i('max_start');
+    this.maxTake = r.i('max_take');
+    this.roundsToWin = r.i('rounds_to_win');
+    this.aiErrorPct = r.il('ai_error_pct');
+    this.timeCapS = r.i('time_cap_s');
+    this.aiThinkS = r.d('ai_think_s');
+  }
+
+  toJson(): Record<string, unknown> {
+    return {
+      start: this.start,
+      min_start: this.minStart,
+      max_start: this.maxStart,
+      max_take: this.maxTake,
+      rounds_to_win: this.roundsToWin,
+      ai_error_pct: this.aiErrorPct,
+      time_cap_s: this.timeCapS,
+      ai_think_s: this.aiThinkS,
     };
   }
 }

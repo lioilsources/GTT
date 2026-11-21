@@ -59,5 +59,91 @@
   },
   "benchDone": "Benchmark finished",
   "copy": "Copy",
-  "benchStart": "Benchmark"
+  "benchStart": "Benchmark",
+  "gallery": "Minigame gallery",
+  "difficulty": "Difficulty {level}",
+  "@difficulty": {
+    "placeholders": {
+      "level": {
+        "type": "int"
+      }
+    }
+  },
+  "seed": "Seed {seed}",
+  "@seed": {
+    "placeholders": {
+      "seed": {
+        "type": "int"
+      }
+    }
+  },
+  "play": "Play",
+  "notYet": "Not in this client yet",
+  "pause": "Pause",
+  "resume": "Resume",
+  "giveUp": "Give up",
+  "playAgain": "Play again",
+  "back": "Back",
+  "next": "Next",
+  "youWin": "You win!",
+  "youLose": "You lose",
+  "draw": "Draw",
+  "scoreValue": "Score {score}",
+  "@scoreValue": {
+    "placeholders": {
+      "score": {
+        "type": "int"
+      }
+    }
+  },
+  "yourTurn": "Your turn",
+  "opponentTurn": "Opponent is thinking…",
+  "roundScore": "Rounds {player} : {ai}",
+  "@roundScore": {
+    "placeholders": {
+      "player": {
+        "type": "int"
+      },
+      "ai": {
+        "type": "int"
+      }
+    }
+  },
+  "roundWon": "Round won!",
+  "roundLost": "Round lost",
+  "mg_sirky": "Matches",
+  "mg_oko": "Twenty-one",
+  "mg_dama": "Checkers",
+  "mg_desetitisic": "Ten thousand",
+  "mg_sipky": "Darts 301",
+  "mg_strelnice": "Shooting gallery",
+  "mg_taxi": "Taxi",
+  "mg_koulena": "Boardwalk roll",
+  "sirkyRules1": "Take 1 to 3 matches in turn.",
+  "sirkyRules2": "Whoever takes the last match loses the round.",
+  "sirkyRules3": "First to win 5 rounds wins the game.",
+  "sirkyLeft": "{count} left",
+  "@sirkyLeft": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "sirkyTake": "Take {count}",
+  "@sirkyTake": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "sirkyRound": "Round {round}",
+  "@sirkyRound": {
+    "placeholders": {
+      "round": {
+        "type": "int"
+      }
+    }
+  }
 }

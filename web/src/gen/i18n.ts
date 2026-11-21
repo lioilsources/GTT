@@ -30,6 +30,40 @@ export type MessageKey =
   | "benchDone"
   | "copy"
   | "benchStart"
+  | "gallery"
+  | "difficulty"
+  | "seed"
+  | "play"
+  | "notYet"
+  | "pause"
+  | "resume"
+  | "giveUp"
+  | "playAgain"
+  | "back"
+  | "next"
+  | "youWin"
+  | "youLose"
+  | "draw"
+  | "scoreValue"
+  | "yourTurn"
+  | "opponentTurn"
+  | "roundScore"
+  | "roundWon"
+  | "roundLost"
+  | "mg_sirky"
+  | "mg_oko"
+  | "mg_dama"
+  | "mg_desetitisic"
+  | "mg_sipky"
+  | "mg_strelnice"
+  | "mg_taxi"
+  | "mg_koulena"
+  | "sirkyRules1"
+  | "sirkyRules2"
+  | "sirkyRules3"
+  | "sirkyLeft"
+  | "sirkyTake"
+  | "sirkyRound"
 ;
 
 export const messages: Record<Locale, Record<MessageKey, string>> = {
@@ -60,6 +94,40 @@ export const messages: Record<Locale, Record<MessageKey, string>> = {
     benchDone: "Benchmark dokončen",
     copy: "Kopírovat",
     benchStart: "Benchmark",
+    gallery: "Galerie miniher",
+    difficulty: "Obtížnost {level}",
+    seed: "Seed {seed}",
+    play: "Hrát",
+    notYet: "V tomhle klientovi zatím není",
+    pause: "Pauza",
+    resume: "Pokračovat",
+    giveUp: "Vzdát",
+    playAgain: "Znovu",
+    back: "Zpět",
+    next: "Dál",
+    youWin: "Vyhráváš!",
+    youLose: "Prohra",
+    draw: "Remíza",
+    scoreValue: "Skóre {score}",
+    yourTurn: "Jsi na tahu",
+    opponentTurn: "Soupeř přemýšlí…",
+    roundScore: "Kola {player} : {ai}",
+    roundWon: "Kolo je tvoje!",
+    roundLost: "Kolo prohráno",
+    mg_sirky: "Sirky",
+    mg_oko: "Oko bere",
+    mg_dama: "Dáma",
+    mg_desetitisic: "Desetitisíc",
+    mg_sipky: "Šipky 301",
+    mg_strelnice: "Střelnice",
+    mg_taxi: "Taxi",
+    mg_koulena: "Koulená",
+    sirkyRules1: "Berete střídavě 1 až 3 sirky.",
+    sirkyRules2: "Kdo vezme poslední sirku, prohrál kolo.",
+    sirkyRules3: "Kdo první vyhraje 5 kol, vyhrál hru.",
+    sirkyLeft: "Zbývá {count}",
+    sirkyTake: "Vzít {count}",
+    sirkyRound: "{round}. kolo",
   },
   "en": {
     appTitle: "Metropole",
@@ -88,6 +156,40 @@ export const messages: Record<Locale, Record<MessageKey, string>> = {
     benchDone: "Benchmark finished",
     copy: "Copy",
     benchStart: "Benchmark",
+    gallery: "Minigame gallery",
+    difficulty: "Difficulty {level}",
+    seed: "Seed {seed}",
+    play: "Play",
+    notYet: "Not in this client yet",
+    pause: "Pause",
+    resume: "Resume",
+    giveUp: "Give up",
+    playAgain: "Play again",
+    back: "Back",
+    next: "Next",
+    youWin: "You win!",
+    youLose: "You lose",
+    draw: "Draw",
+    scoreValue: "Score {score}",
+    yourTurn: "Your turn",
+    opponentTurn: "Opponent is thinking…",
+    roundScore: "Rounds {player} : {ai}",
+    roundWon: "Round won!",
+    roundLost: "Round lost",
+    mg_sirky: "Matches",
+    mg_oko: "Twenty-one",
+    mg_dama: "Checkers",
+    mg_desetitisic: "Ten thousand",
+    mg_sipky: "Darts 301",
+    mg_strelnice: "Shooting gallery",
+    mg_taxi: "Taxi",
+    mg_koulena: "Boardwalk roll",
+    sirkyRules1: "Take 1 to 3 matches in turn.",
+    sirkyRules2: "Whoever takes the last match loses the round.",
+    sirkyRules3: "First to win 5 rounds wins the game.",
+    sirkyLeft: "{count} left",
+    sirkyTake: "Take {count}",
+    sirkyRound: "Round {round}",
   },
 };
 
