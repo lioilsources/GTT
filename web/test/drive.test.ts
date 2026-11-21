@@ -56,6 +56,8 @@ describe.skipIf(!existsSync(pack))('NYC citypack in client W', () => {
   function world(): DriveWorld {
     const d = new DriveWorld(city, car, tuning);
     for (const c of chunks) d.addChunk(c);
+    // Car physics only: traffic must not stand in the way (specs/traffic.md "solid").
+    if (d.traffic) d.traffic.solid = false;
     return d;
   }
 

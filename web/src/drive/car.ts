@@ -7,6 +7,8 @@ import type { ControlInput } from './controls';
 /** Collision categories. */
 export const CAT_BUILDINGS = 1;
 export const CAT_CAR = 2;
+/** AI traffic (specs/traffic.md): collides with the player's car only. */
+export const CAT_TRAFFIC = 4;
 
 const clamp = (v: number, lo: number, hi: number): number => Math.min(hi, Math.max(lo, v));
 
@@ -65,7 +67,7 @@ export class Car {
       friction: t.carFriction,
       restitution: t.carRestitution,
       filterCategoryBits: CAT_CAR,
-      filterMaskBits: CAT_BUILDINGS,
+      filterMaskBits: CAT_BUILDINGS | CAT_TRAFFIC,
     });
     // Same mass as client F: its density over the area of the rounded box, not of the chamfer.
     const density = spec.mass / (4 * this.halfLength * this.halfWidth);
@@ -110,8 +112,9 @@ export class Car {
   setLayer(l: number): void {
     if (l === this.layer) return;
     this.layer = l;
-    // Buildings only exist on the ground layer; bridges and tunnels use rails instead.
-    this.fixture.setFilterData({ groupIndex: 0, categoryBits: CAT_CAR, maskBits: l === 0 ? CAT_BUILDINGS : 0 });
+    // Buildings only exist on the ground layer; bridges and tunnels use rails instead. Traffic
+    // cars switch their own mask by layer (traffic.ts).
+    this.fixture.setFilterData({ groupIndex: 0, categoryBits: CAT_CAR, maskBits: (l === 0 ? CAT_BUILDINGS : 0) | CAT_TRAFFIC });
   }
 
   /** Applies controls and tyre forces; call before world.step. */

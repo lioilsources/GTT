@@ -7,6 +7,7 @@ import { chunkKey, type City, type EdgeHit, type RoadEdge, type RoadGraph } from
 import { CAT_BUILDINGS, CAT_CAR, Car } from './car';
 import { ControlInput } from './controls';
 import { generateProps, type Prop, type PropSet } from './props';
+import { Traffic } from '../traffic/traffic';
 
 /**
  * Tracks which road edge the car is on, and with it the layer (−1 tunnel, 0, +1 bridge).
@@ -85,6 +86,8 @@ export class DriveWorld {
   skidsVersion = 0;
   /** Called before every fixed step (the benchmark autopilot sets the input here). */
   beforeStep: ((step: number) => void) | null = null;
+  /** AI traffic and lights (specs/traffic.md); null when traffic.enabled is off. */
+  readonly traffic: Traffic | null;
 
   constructor(
     readonly city: City,
@@ -96,6 +99,7 @@ export class DriveWorld {
     this.car = this.makeCar(city.startX, city.startY, city.startHeading);
     this.layers.reset(this.car.x, this.car.y);
     this.car.setLayer(this.layers.layer);
+    this.traffic = tuning.traffic.enabled ? new Traffic(this.world, city, tuning) : null;
   }
 
   private makeCar(x: number, y: number, h: number): Car {
@@ -171,9 +175,11 @@ export class DriveWorld {
     this.time += step;
     this.beforeStep?.(step);
     this.car.drive(this.input, step, this.tuning.speedMps.cruise, this.tuning.speedMps.topDefault);
+    this.traffic?.preStep(step, this.car);
     this.world.step(step, d.velocityIterations, d.positionIterations);
     this.layers.update(this.car.x, this.car.y);
     this.car.setLayer(this.layers.layer);
+    this.traffic?.postStep(this.car);
     if (this.car.layer !== 0) this.rails();
     this.stepProps(step);
     this.skidMarks();
