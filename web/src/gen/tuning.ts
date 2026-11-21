@@ -135,6 +135,13 @@ export class Tuning {
    * Distances in world metres (after car_scale); patrols are traffic cars flagged as police.
    */
   readonly police: TuningPolice;
+  /**
+   * Economy (specs/economy.md): cash for a loop result, tow fee. The drive part of the reward uses
+   * feed.reward_base / reward_per_min / drive_dm_per_s, so the feed card shows the 3★ trip money.
+   */
+  readonly economy: TuningEconomy;
+  /** Loop glue (specs/loop.md): the "Play" context button at a spot without a route. */
+  readonly loop: TuningLoop;
 
   private constructor(r: R) {
     this.carScale = r.d('car_scale');
@@ -168,6 +175,8 @@ export class Tuning {
     this.npc = new TuningNpc(r.sub('npc'));
     this.cars = new TuningCars(r.sub('cars'));
     this.police = new TuningPolice(r.sub('police'));
+    this.economy = new TuningEconomy(r.sub('economy'));
+    this.loop = new TuningLoop(r.sub('loop'));
   }
 
   toJson(): Record<string, unknown> {
@@ -203,6 +212,8 @@ export class Tuning {
       npc: this.npc.toJson(),
       cars: this.cars.toJson(),
       police: this.police.toJson(),
+      economy: this.economy.toJson(),
+      loop: this.loop.toJson(),
     };
   }
 
@@ -2168,4 +2179,163 @@ export class TuningPoliceOffenceLevel {
   }
 
   static readonly keys = ['crash', 'hitrun', 'sidewalk', 'theft'] as const;
+}
+
+/**
+ * Economy (specs/economy.md): cash for a loop result, tow fee. The drive part of the reward uses
+ * feed.reward_base / reward_per_min / drive_dm_per_s, so the feed card shows the 3★ trip money.
+ */
+export class TuningEconomy {
+  /** game money before engine and star percentages */
+  base: number;
+  readonly enginePct: TuningEconomyEnginePct;
+  /** per stars 0..3 */
+  starPct: number[];
+  /** ascending score thresholds */
+  scoreBands: number[];
+  /** one more than score_bands */
+  bandBonus: number[];
+  /** first finish of a minigame with at least first_min_stars */
+  firstBonus: number;
+  firstMinStars: number;
+  /** wrecked car (paid up to the cash the player has) */
+  towFee: number;
+
+  constructor(r: R) {
+    this.base = r.i('base');
+    this.enginePct = new TuningEconomyEnginePct(r.sub('engine_pct'));
+    this.starPct = r.il('star_pct');
+    this.scoreBands = r.il('score_bands');
+    this.bandBonus = r.il('band_bonus');
+    this.firstBonus = r.i('first_bonus');
+    this.firstMinStars = r.i('first_min_stars');
+    this.towFee = r.i('tow_fee');
+  }
+
+  toJson(): Record<string, unknown> {
+    return {
+      base: this.base,
+      engine_pct: this.enginePct.toJson(),
+      star_pct: this.starPct,
+      score_bands: this.scoreBands,
+      band_bonus: this.bandBonus,
+      first_bonus: this.firstBonus,
+      first_min_stars: this.firstMinStars,
+      tow_fee: this.towFee,
+    };
+  }
+}
+
+export class TuningEconomyEnginePct {
+  cards: number;
+  board: number;
+  dice: number;
+  tiles: number;
+  flick: number;
+  rhythm: number;
+  arcade: number;
+  puzzle: number;
+  drive: number;
+  service: number;
+  sport: number;
+
+  constructor(r: R) {
+    this.cards = r.i('cards');
+    this.board = r.i('board');
+    this.dice = r.i('dice');
+    this.tiles = r.i('tiles');
+    this.flick = r.i('flick');
+    this.rhythm = r.i('rhythm');
+    this.arcade = r.i('arcade');
+    this.puzzle = r.i('puzzle');
+    this.drive = r.i('drive');
+    this.service = r.i('service');
+    this.sport = r.i('sport');
+  }
+
+  toJson(): Record<string, unknown> {
+    return {
+      cards: this.cards,
+      board: this.board,
+      dice: this.dice,
+      tiles: this.tiles,
+      flick: this.flick,
+      rhythm: this.rhythm,
+      arcade: this.arcade,
+      puzzle: this.puzzle,
+      drive: this.drive,
+      service: this.service,
+      sport: this.sport,
+    };
+  }
+
+  /** Value by YAML key, undefined when the key is unknown. */
+  get(key: string): number | undefined {
+    switch (key) {
+      case 'cards':
+        return this.cards;
+      case 'board':
+        return this.board;
+      case 'dice':
+        return this.dice;
+      case 'tiles':
+        return this.tiles;
+      case 'flick':
+        return this.flick;
+      case 'rhythm':
+        return this.rhythm;
+      case 'arcade':
+        return this.arcade;
+      case 'puzzle':
+        return this.puzzle;
+      case 'drive':
+        return this.drive;
+      case 'service':
+        return this.service;
+      case 'sport':
+        return this.sport;
+      default:
+        return undefined;
+    }
+  }
+
+  static readonly keys = ['cards', 'board', 'dice', 'tiles', 'flick', 'rhythm', 'arcade', 'puzzle', 'drive', 'service', 'sport'] as const;
+}
+
+/** Loop glue (specs/loop.md): the "Play" context button at a spot without a route. */
+export class TuningLoop {
+  /** around the spot's parking point */
+  spotRadiusM: number;
+  stopSpeedMps: number;
+  actionHoldS: number;
+
+  constructor(r: R) {
+    this.spotRadiusM = r.d('spot_radius_m');
+    this.stopSpeedMps = r.d('stop_speed_mps');
+    this.actionHoldS = r.d('action_hold_s');
+  }
+
+  toJson(): Record<string, unknown> {
+    return {
+      spot_radius_m: this.spotRadiusM,
+      stop_speed_mps: this.stopSpeedMps,
+      action_hold_s: this.actionHoldS,
+    };
+  }
+
+  /** Value by YAML key, undefined when the key is unknown. */
+  get(key: string): number | undefined {
+    switch (key) {
+      case 'spot_radius_m':
+        return this.spotRadiusM;
+      case 'stop_speed_mps':
+        return this.stopSpeedMps;
+      case 'action_hold_s':
+        return this.actionHoldS;
+      default:
+        return undefined;
+    }
+  }
+
+  static readonly keys = ['spot_radius_m', 'stop_speed_mps', 'action_hold_s'] as const;
 }

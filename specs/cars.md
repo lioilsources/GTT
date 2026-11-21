@@ -100,7 +100,7 @@ Klient po každé úspěšné akci porovná stav před a po a ohlásí:
   (vlastní) nebo ho odveze odtahovka (cizí; nezůstane stát). Odstavené vlastní auto jinde ve městě
   zmizí (je teď v garáži / venku).
 - Dokud je seznam garáže otevřený, svět stojí (jízda se nekrokuje).
-- Nákup: seznam `buy` z `legalActions` (API `buyable`) – v M1 skrytý, dokud M1-S11 nepřinese hotovost.
+- Nákup: pod vlastními auty seznam aut na prodej s cenou; koupit jde auta z `buyable` (`specs/economy.md` „Nákup auta“).
 
 ## Kreslení (P2)
 Pohled shora, vektorové obdélníky v souřadnicích auta (x dopředu, y doleva, `hl`, `hw` = půldélka

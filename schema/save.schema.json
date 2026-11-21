@@ -2,19 +2,24 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "save.schema.json",
   "title": "Save",
-  "description": "Local save, the same format in both clients (SQLite in F, IndexedDB in W). Version 1 is the M1 skeleton.",
+  "description": "Local save, the same JSON in both clients (specs/save.md): a JSON file in F, IndexedDB in W. Version 2; version 1 (M1 skeleton) is migrated on load.",
   "$defs": {
     "Save": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["version", "cityId", "cash", "stamps", "cars", "best"],
+      "required": ["version", "cityId", "cash", "cars", "car", "stamps", "best", "plays", "feed", "npc", "settings"],
       "properties": {
-        "version": {"type": "integer", "const": 1},
+        "version": {"type": "integer", "const": 2},
         "cityId": {"type": "string"},
         "cash": {"type": "integer", "minimum": 0},
-        "stamps": {"type": "array", "items": {"type": "string"}, "description": "Passport stamps (landmark, district or minigame ids)."},
-        "cars": {"type": "array", "items": {"type": "string"}},
-        "best": {"type": "object", "additionalProperties": {"$ref": "#/$defs/BestResult"}, "description": "Per minigame id."}
+        "cars": {"type": "array", "items": {"type": "string"}, "description": "Owned cars in the order acquired."},
+        "car": {"type": "string", "description": "The car the player drives out with; always one of cars."},
+        "stamps": {"type": "array", "items": {"type": "string"}, "description": "Passport stamps kind:id in the order collected (discovered landmarks and districts too)."},
+        "best": {"type": "object", "additionalProperties": {"$ref": "#/$defs/BestResult"}, "description": "Per minigame id."},
+        "plays": {"type": "object", "additionalProperties": {"type": "integer", "minimum": 0}, "description": "Finished loops per spot id."},
+        "feed": {"$ref": "#/$defs/SaveFeed"},
+        "npc": {"$ref": "#/$defs/SaveNpc"},
+        "settings": {"$ref": "#/$defs/SaveSettings"}
       }
     },
     "BestResult": {
@@ -24,6 +29,35 @@
       "properties": {
         "stars": {"type": "integer", "minimum": 0, "maximum": 3},
         "score": {"type": "integer"}
+      }
+    },
+    "SaveFeed": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["prefs", "visits", "districts"],
+      "properties": {
+        "prefs": {"type": "object", "additionalProperties": {"type": "integer"}, "description": "Feed preference per engine."},
+        "visits": {"type": "object", "additionalProperties": {"type": "integer", "minimum": 0}, "description": "Arrivals per spot id."},
+        "districts": {"type": "array", "items": {"type": "string"}, "description": "Districts where the player arrived at a spot."}
+      }
+    },
+    "SaveNpc": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["vibe", "contacts", "recent"],
+      "properties": {
+        "vibe": {"type": "object", "additionalProperties": {"type": "integer"}},
+        "contacts": {"type": "array", "items": {"type": "string"}},
+        "recent": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "SaveSettings": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["scheme", "night"],
+      "properties": {
+        "scheme": {"type": "string", "enum": ["a", "b", "c"]},
+        "night": {"type": "boolean"}
       }
     }
   }

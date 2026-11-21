@@ -66,11 +66,39 @@ export interface Save {
   version: number;
   cityId: string;
   cash: number;
-  /** Passport stamps (landmark, district or minigame ids). */
-  stamps: string[];
+  /** Owned cars in the order acquired. */
   cars: string[];
+  /** The car the player drives out with; always one of cars. */
+  car: string;
+  /** Passport stamps kind:id in the order collected (discovered landmarks and districts too). */
+  stamps: string[];
   /** Per minigame id. */
   best: Record<string, BestResult>;
+  /** Finished loops per spot id. */
+  plays: Record<string, number>;
+  feed: SaveFeed;
+  npc: SaveNpc;
+  settings: SaveSettings;
+}
+
+export interface SaveFeed {
+  /** Feed preference per engine. */
+  prefs: Record<string, number>;
+  /** Arrivals per spot id. */
+  visits: Record<string, number>;
+  /** Districts where the player arrived at a spot. */
+  districts: string[];
+}
+
+export interface SaveNpc {
+  vibe: Record<string, number>;
+  contacts: string[];
+  recent: string[];
+}
+
+export interface SaveSettings {
+  scheme: 'a' | 'b' | 'c';
+  night: boolean;
 }
 
 /** content/bench/<city>.json: the autopilot route of the D1 measurement (specs/bench.md). Intersections are named by two streets; each leg follows only the listed streets. */

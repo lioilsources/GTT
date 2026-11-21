@@ -253,36 +253,130 @@ class Save {
     required this.version,
     required this.cityId,
     required this.cash,
-    required this.stamps,
     required this.cars,
+    required this.car,
+    required this.stamps,
     required this.best,
+    required this.plays,
+    required this.feed,
+    required this.npc,
+    required this.settings,
   });
 
   factory Save.fromJson(Map<String, Object?> j) => Save(
         version: _int(j['version'], 'version'),
         cityId: _str(j['cityId'], 'cityId'),
         cash: _int(j['cash'], 'cash'),
-        stamps: [for (final e in _list(j['stamps'], 'stamps')) _str(e, 'stamps[]')],
         cars: [for (final e in _list(j['cars'], 'cars')) _str(e, 'cars[]')],
+        car: _str(j['car'], 'car'),
+        stamps: [for (final e in _list(j['stamps'], 'stamps')) _str(e, 'stamps[]')],
         best: {for (final e in _map(j['best'], 'best').entries) e.key: BestResult.fromJson(_map(e.value, 'best{}'))},
+        plays: {for (final e in _map(j['plays'], 'plays').entries) e.key: _int(e.value, 'plays{}')},
+        feed: SaveFeed.fromJson(_map(j['feed'], 'feed')),
+        npc: SaveNpc.fromJson(_map(j['npc'], 'npc')),
+        settings: SaveSettings.fromJson(_map(j['settings'], 'settings')),
       );
 
   int version;
   String cityId;
   int cash;
-  /// Passport stamps (landmark, district or minigame ids).
-  List<String> stamps;
+  /// Owned cars in the order acquired.
   List<String> cars;
+  /// The car the player drives out with; always one of cars.
+  String car;
+  /// Passport stamps kind:id in the order collected (discovered landmarks and districts too).
+  List<String> stamps;
   /// Per minigame id.
   Map<String, BestResult> best;
+  /// Finished loops per spot id.
+  Map<String, int> plays;
+  SaveFeed feed;
+  SaveNpc npc;
+  SaveSettings settings;
 
   Map<String, Object?> toJson() => {
         'version': version,
         'cityId': cityId,
         'cash': cash,
-        'stamps': stamps,
         'cars': cars,
+        'car': car,
+        'stamps': stamps,
         'best': {for (final e in best.entries) e.key: e.value.toJson()},
+        'plays': {for (final e in plays.entries) e.key: e.value},
+        'feed': feed.toJson(),
+        'npc': npc.toJson(),
+        'settings': settings.toJson(),
+      };
+}
+
+class SaveFeed {
+  SaveFeed({
+    required this.prefs,
+    required this.visits,
+    required this.districts,
+  });
+
+  factory SaveFeed.fromJson(Map<String, Object?> j) => SaveFeed(
+        prefs: {for (final e in _map(j['prefs'], 'prefs').entries) e.key: _int(e.value, 'prefs{}')},
+        visits: {for (final e in _map(j['visits'], 'visits').entries) e.key: _int(e.value, 'visits{}')},
+        districts: [for (final e in _list(j['districts'], 'districts')) _str(e, 'districts[]')],
+      );
+
+  /// Feed preference per engine.
+  Map<String, int> prefs;
+  /// Arrivals per spot id.
+  Map<String, int> visits;
+  /// Districts where the player arrived at a spot.
+  List<String> districts;
+
+  Map<String, Object?> toJson() => {
+        'prefs': {for (final e in prefs.entries) e.key: e.value},
+        'visits': {for (final e in visits.entries) e.key: e.value},
+        'districts': districts,
+      };
+}
+
+class SaveNpc {
+  SaveNpc({
+    required this.vibe,
+    required this.contacts,
+    required this.recent,
+  });
+
+  factory SaveNpc.fromJson(Map<String, Object?> j) => SaveNpc(
+        vibe: {for (final e in _map(j['vibe'], 'vibe').entries) e.key: _int(e.value, 'vibe{}')},
+        contacts: [for (final e in _list(j['contacts'], 'contacts')) _str(e, 'contacts[]')],
+        recent: [for (final e in _list(j['recent'], 'recent')) _str(e, 'recent[]')],
+      );
+
+  Map<String, int> vibe;
+  List<String> contacts;
+  List<String> recent;
+
+  Map<String, Object?> toJson() => {
+        'vibe': {for (final e in vibe.entries) e.key: e.value},
+        'contacts': contacts,
+        'recent': recent,
+      };
+}
+
+class SaveSettings {
+  SaveSettings({
+    required this.scheme,
+    required this.night,
+  });
+
+  factory SaveSettings.fromJson(Map<String, Object?> j) => SaveSettings(
+        scheme: _str(j['scheme'], 'scheme', const ['a', 'b', 'c']),
+        night: _bool(j['night'], 'night'),
+      );
+
+  String scheme;
+  bool night;
+
+  Map<String, Object?> toJson() => {
+        'scheme': scheme,
+        'night': night,
       };
 }
 

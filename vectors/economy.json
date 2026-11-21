@@ -1,0 +1,572 @@
+{
+ "module": "economy",
+ "specVersion": 1,
+ "cases": [
+  {
+   "name": "three stars with a card, first time",
+   "config": {
+    "cash": 0,
+    "base": 60,
+    "enginePct": {
+     "cards": 100,
+     "board": 120,
+     "dice": 100,
+     "puzzle": 90,
+     "flick": 100,
+     "drive": 110
+    },
+    "starPct": [
+     0,
+     50,
+     80,
+     100
+    ],
+    "scoreBands": [
+     300,
+     700,
+     1200
+    ],
+    "bandBonus": [
+     0,
+     10,
+     25,
+     50
+    ],
+    "firstBonus": 100,
+    "firstMinStars": 1,
+    "rewardBase": 50,
+    "rewardPerMin": 20,
+    "driveDmPerS": 110,
+    "towFee": 75
+   },
+   "seed": 1,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "reward",
+      "engine": "puzzle",
+      "stars": 3,
+      "score": 500,
+      "first": true,
+      "driveDm": 13200,
+      "aborted": false
+     },
+     "state": {
+      "cash": 254,
+      "earned": 254,
+      "paid": 0,
+      "last": {
+       "op": "reward",
+       "amount": 254,
+       "base": 54,
+       "trip": 90,
+       "band": 10,
+       "first": 100
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "reward",
+      "engine": "puzzle",
+      "stars": 3,
+      "score": 500,
+      "first": false,
+      "driveDm": 0,
+      "aborted": false
+     },
+     "state": {
+      "cash": 318,
+      "earned": 318,
+      "paid": 0,
+      "last": {
+       "op": "reward",
+       "amount": 64,
+       "base": 54,
+       "trip": 0,
+       "band": 10,
+       "first": 0
+      }
+     }
+    }
+   ],
+   "result": null
+  },
+  {
+   "name": "stars scale, score bands, unknown engine",
+   "config": {
+    "cash": 0,
+    "base": 60,
+    "enginePct": {
+     "cards": 100,
+     "board": 120,
+     "dice": 100,
+     "puzzle": 90,
+     "flick": 100,
+     "drive": 110
+    },
+    "starPct": [
+     0,
+     50,
+     80,
+     100
+    ],
+    "scoreBands": [
+     300,
+     700,
+     1200
+    ],
+    "bandBonus": [
+     0,
+     10,
+     25,
+     50
+    ],
+    "firstBonus": 100,
+    "firstMinStars": 1,
+    "rewardBase": 50,
+    "rewardPerMin": 20,
+    "driveDmPerS": 110,
+    "towFee": 75
+   },
+   "seed": 2,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "reward",
+      "engine": "board",
+      "stars": 1,
+      "score": 0,
+      "first": true,
+      "driveDm": 0,
+      "aborted": false
+     },
+     "state": {
+      "cash": 136,
+      "earned": 136,
+      "paid": 0,
+      "last": {
+       "op": "reward",
+       "amount": 136,
+       "base": 36,
+       "trip": 0,
+       "band": 0,
+       "first": 100
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "reward",
+      "engine": "board",
+      "stars": 2,
+      "score": 299,
+      "first": false,
+      "driveDm": 0,
+      "aborted": false
+     },
+     "state": {
+      "cash": 193,
+      "earned": 193,
+      "paid": 0,
+      "last": {
+       "op": "reward",
+       "amount": 57,
+       "base": 57,
+       "trip": 0,
+       "band": 0,
+       "first": 0
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "reward",
+      "engine": "cards",
+      "stars": 2,
+      "score": 300,
+      "first": false,
+      "driveDm": 0,
+      "aborted": false
+     },
+     "state": {
+      "cash": 251,
+      "earned": 251,
+      "paid": 0,
+      "last": {
+       "op": "reward",
+       "amount": 58,
+       "base": 48,
+       "trip": 0,
+       "band": 10,
+       "first": 0
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "reward",
+      "engine": "dice",
+      "stars": 3,
+      "score": 1200,
+      "first": false,
+      "driveDm": 5000,
+      "aborted": false
+     },
+     "state": {
+      "cash": 426,
+      "earned": 426,
+      "paid": 0,
+      "last": {
+       "op": "reward",
+       "amount": 175,
+       "base": 60,
+       "trip": 65,
+       "band": 50,
+       "first": 0
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "reward",
+      "engine": "sport",
+      "stars": 3,
+      "score": 99999,
+      "first": true,
+      "driveDm": 110,
+      "aborted": false
+     },
+     "state": {
+      "cash": 686,
+      "earned": 686,
+      "paid": 0,
+      "last": {
+       "op": "reward",
+       "amount": 260,
+       "base": 60,
+       "trip": 50,
+       "band": 50,
+       "first": 100
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "reward",
+      "engine": "mystery",
+      "stars": 1,
+      "score": 700,
+      "first": false,
+      "driveDm": 0,
+      "aborted": false
+     },
+     "state": {
+      "cash": 741,
+      "earned": 741,
+      "paid": 0,
+      "last": {
+       "op": "reward",
+       "amount": 55,
+       "base": 30,
+       "trip": 0,
+       "band": 25,
+       "first": 0
+      }
+     }
+    }
+   ],
+   "result": null
+  },
+  {
+   "name": "zero stars and abandoned games pay nothing",
+   "config": {
+    "cash": 40,
+    "base": 60,
+    "enginePct": {
+     "cards": 100,
+     "board": 120,
+     "dice": 100,
+     "puzzle": 90,
+     "flick": 100,
+     "drive": 110
+    },
+    "starPct": [
+     0,
+     50,
+     80,
+     100
+    ],
+    "scoreBands": [
+     300,
+     700,
+     1200
+    ],
+    "bandBonus": [
+     0,
+     10,
+     25,
+     50
+    ],
+    "firstBonus": 100,
+    "firstMinStars": 1,
+    "rewardBase": 50,
+    "rewardPerMin": 20,
+    "driveDmPerS": 110,
+    "towFee": 75
+   },
+   "seed": 3,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "reward",
+      "engine": "cards",
+      "stars": 0,
+      "score": 900,
+      "first": true,
+      "driveDm": 20000,
+      "aborted": false
+     },
+     "state": {
+      "cash": 40,
+      "earned": 0,
+      "paid": 0,
+      "last": {
+       "op": "reward",
+       "amount": 0,
+       "base": 0,
+       "trip": 0,
+       "band": 0,
+       "first": 0
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "reward",
+      "engine": "flick",
+      "stars": 3,
+      "score": 1500,
+      "first": true,
+      "driveDm": 20000,
+      "aborted": true
+     },
+     "state": {
+      "cash": 40,
+      "earned": 0,
+      "paid": 0,
+      "last": {
+       "op": "reward",
+       "amount": 0,
+       "base": 0,
+       "trip": 0,
+       "band": 0,
+       "first": 0
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "reward",
+      "engine": "flick",
+      "stars": 1,
+      "score": -50,
+      "first": false,
+      "driveDm": 0,
+      "aborted": false
+     },
+     "state": {
+      "cash": 70,
+      "earned": 30,
+      "paid": 0,
+      "last": {
+       "op": "reward",
+       "amount": 30,
+       "base": 30,
+       "trip": 0,
+       "band": 0,
+       "first": 0
+      }
+     }
+    }
+   ],
+   "result": null
+  },
+  {
+   "name": "tow and fines never go below zero",
+   "config": {
+    "cash": 100,
+    "base": 60,
+    "enginePct": {
+     "cards": 100,
+     "board": 120,
+     "dice": 100,
+     "puzzle": 90,
+     "flick": 100,
+     "drive": 110
+    },
+    "starPct": [
+     0,
+     50,
+     80,
+     100
+    ],
+    "scoreBands": [
+     300,
+     700,
+     1200
+    ],
+    "bandBonus": [
+     0,
+     10,
+     25,
+     50
+    ],
+    "firstBonus": 100,
+    "firstMinStars": 1,
+    "rewardBase": 50,
+    "rewardPerMin": 20,
+    "driveDmPerS": 110,
+    "towFee": 75
+   },
+   "seed": 4,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "tow"
+     },
+     "state": {
+      "cash": 25,
+      "earned": 0,
+      "paid": 75,
+      "last": {
+       "op": "tow",
+       "amount": 75,
+       "base": 0,
+       "trip": 0,
+       "band": 0,
+       "first": 0
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "fine",
+      "amount": 10
+     },
+     "state": {
+      "cash": 15,
+      "earned": 0,
+      "paid": 85,
+      "last": {
+       "op": "fine",
+       "amount": 10,
+       "base": 0,
+       "trip": 0,
+       "band": 0,
+       "first": 0
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "fine",
+      "amount": 500
+     },
+     "state": {
+      "cash": 0,
+      "earned": 0,
+      "paid": 100,
+      "last": {
+       "op": "fine",
+       "amount": 15,
+       "base": 0,
+       "trip": 0,
+       "band": 0,
+       "first": 0
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tow"
+     },
+     "state": {
+      "cash": 0,
+      "earned": 0,
+      "paid": 100,
+      "last": {
+       "op": "tow",
+       "amount": 0,
+       "base": 0,
+       "trip": 0,
+       "band": 0,
+       "first": 0
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "reward",
+      "engine": "cards",
+      "stars": 3,
+      "score": 700,
+      "first": false,
+      "driveDm": 0,
+      "aborted": false
+     },
+     "state": {
+      "cash": 85,
+      "earned": 85,
+      "paid": 100,
+      "last": {
+       "op": "reward",
+       "amount": 85,
+       "base": 60,
+       "trip": 0,
+       "band": 25,
+       "first": 0
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "fine",
+      "amount": 0
+     },
+     "state": {
+      "cash": 85,
+      "earned": 85,
+      "paid": 100,
+      "last": {
+       "op": "fine",
+       "amount": 0,
+       "base": 0,
+       "trip": 0,
+       "band": 0,
+       "first": 0
+      }
+     }
+    }
+   ],
+   "result": null
+  }
+ ]
+}
