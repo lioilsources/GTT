@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 
 import '../game/metropole_game.dart';
 import '../l10n/app_localizations.dart';
+import '../minigames/gallery.dart';
 import 'package:shared_gen/shared_gen.dart';
 
 /// Live editor for tuning.yaml and the car parameters (M0 dogfooding).
@@ -169,6 +170,14 @@ class _TuningPanelState extends State<_TuningPanel> {
                 icon: const Icon(Icons.restart_alt, size: 16),
                 label: Text(l.respawn),
                 onPressed: g.respawn,
+              ),
+              OutlinedButton.icon(
+                icon: const Icon(Icons.grid_view, size: 16),
+                label: Text(l.gallery),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => GalleryScreen(tuning: g.tuning)));
+                },
               ),
               OutlinedButton.icon(
                 icon: const Icon(Icons.speed, size: 16),

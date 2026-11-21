@@ -1,0 +1,22 @@
+name: mg_api
+description: Minigame contract (METROPOLE_PLAN 9.1) and the shared minigame chrome (rules cards, pause, time cap, result).
+version: 0.1.0
+publish_to: none
+resolution: workspace
+
+environment:
+  sdk: ^3.12.2
+  flutter: ">=3.44.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  rules_core:
+    path: ../rules_core
+  shared_gen:
+    path: ../shared_gen
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
