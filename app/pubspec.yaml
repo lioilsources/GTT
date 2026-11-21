@@ -21,6 +21,10 @@ dependencies:
     path: ../packages/world_engine
   drive_core:
     path: ../packages/drive_core
+  mg_api:
+    path: ../packages/mg_api
+  mg_sirky:
+    path: ../packages/mg_sirky
 
 dev_dependencies:
   flutter_test:
