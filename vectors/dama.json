@@ -1,0 +1,6022 @@
+{
+ "module": "dama",
+ "specVersion": 1,
+ "$comment": "Player moves are written out (seeded random policy, or a stronger player using the AI search); AI moves are {by: ai, level} and decided by aiAction (specs/minigames/README.md). Cases capped at 120 plies end with a timeout (material decides). States recorded by the lead client (web).",
+ "cases": [
+  {
+   "name": "random-player-vs-level-1",
+   "config": {
+    "aiDepth": [
+     1,
+     2,
+     3,
+     4,
+     5
+    ],
+    "aiErrorPct": [
+     35,
+     20,
+     10,
+     5,
+     0
+    ],
+    "quietLimit": 50,
+    "fastPlies": 80
+   },
+   "seed": 42,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       20,
+       16
+      ]
+     },
+     "state": {
+      "board": "bbbbbbbbbbbb....w....wwwwwwwwwww",
+      "turn": "ai",
+      "plies": 1,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 42
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "board": "bbbbbbbb.bbbb...w....wwwwwwwwwww",
+      "turn": "player",
+      "plies": 2,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 42
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       22,
+       18
+      ]
+     },
+     "state": {
+      "board": "bbbbbbbb.bbbb...w.w..w.wwwwwwwww",
+      "turn": "ai",
+      "plies": 3,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 42
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "board": "bbbbbbbb.b.bb.b.w.w..w.wwwwwwwww",
+      "turn": "player",
+      "plies": 4,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 42
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       23,
+       19
+      ]
+     },
+     "state": {
+      "board": "bbbbbbbb.b.bb.b.w.ww.w..wwwwwwww",
+      "turn": "ai",
+      "plies": 5,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 42
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "board": "bbbbbbbb.b.bb...w..w.w.bwwwwwwww",
+      "turn": "player",
+      "plies": 6,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 42
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       27,
+       18
+      ]
+     },
+     "state": {
+      "board": "bbbbbbbb.b.bb...w.ww.w..www.wwww",
+      "turn": "ai",
+      "plies": 7,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 42
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "board": "bbbbbbbb.b..b..bw.ww.w..www.wwww",
+      "turn": "player",
+      "plies": 8,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 42
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       18,
+       11
+      ]
+     },
+     "state": {
+      "board": "bbbbbbbb.b.wb...w..w.w..www.wwww",
+      "turn": "ai",
+      "plies": 9,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 42
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "board": "bbbb.bbbbb.wb...w..w.w..www.wwww",
+      "turn": "player",
+      "plies": 10,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 42
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       21,
+       17
+      ]
+     },
+     "state": {
+      "board": "bbbb.bbbbb.wb...ww.w....www.wwww",
+      "turn": "ai",
+      "plies": 11,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 42
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "board": "bbbb.bbbbb.w.....w.w.b..www.wwww",
+      "turn": "player",
+      "plies": 12,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 42
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       25,
+       16
+      ]
+     },
+     "state": {
+      "board": "bbbb.bbbbb.w....ww.w....w.w.wwww",
+      "turn": "ai",
+      "plies": 13,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 42
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "board": ".bbbbbbbbb.w....ww.w....w.w.wwww",
+      "turn": "player",
+      "plies": 14,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 42
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       24,
+       20
+      ]
+     },
+     "state": {
+      "board": ".bbbbbbbbb.w....ww.ww.....w.wwww",
+      "turn": "ai",
+      "plies": 15,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 42
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "board": ".bbbbbbb.b.wb...ww.ww.....w.wwww",
+      "turn": "player",
+      "plies": 16,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 42
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       31,
+       27
+      ]
+     },
+     "state": {
+      "board": ".bbbbbbb.b.wb...ww.ww.....wwwww.",
+      "turn": "ai",
+      "plies": 17,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 42
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "board": ".bbbbbbb.b.w.....w.wwb....wwwww.",
+      "turn": "player",
+      "plies": 18,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 42
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       17,
+       14
+      ]
+     },
+     "state": {
+      "board": ".bbbbbbb.b.w..w....wwb....wwwww.",
+      "turn": "ai",
+      "plies": 19,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 42
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "board": ".bbbbbbb...w......bwwb....wwwww.",
+      "turn": "player",
+      "plies": 20,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 42
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       20,
+       16
+      ]
+     },
+     "state": {
+      "board": ".bbbbbbb...w....w.bw.b....wwwww.",
+      "turn": "ai",
+      "plies": 21,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 42
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "board": ".bbb.bbbb..w....w.bw.b....wwwww.",
+      "turn": "player",
+      "plies": 22,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 42
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       16,
+       12
+      ]
+     },
+     "state": {
+      "board": ".bbb.bbbb..ww.....bw.b....wwwww.",
+      "turn": "ai",
+      "plies": 23,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 42
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "board": ".bbb..bbbb.ww.....bw.b....wwwww.",
+      "turn": "player",
+      "plies": 24,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 42
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       12,
+       5
+      ]
+     },
+     "state": {
+      "board": ".bbb.wbb.b.w......bw.b....wwwww.",
+      "turn": "ai",
+      "plies": 25,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 42
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "board": "..bb..bbbb.w......bw.b....wwwww.",
+      "turn": "player",
+      "plies": 26,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 42
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       26,
+       22
+      ]
+     },
+     "state": {
+      "board": "..bb..bbbb.w......bw.bw....wwww.",
+      "turn": "ai",
+      "plies": 27,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 42
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "board": "..bb..bbbb.w.......w.b...b.wwww.",
+      "turn": "player",
+      "plies": 28,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 42
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       29,
+       22
+      ]
+     },
+     "state": {
+      "board": "..bb..bbbb.w.......w.bw....ww.w.",
+      "turn": "ai",
+      "plies": 29,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 42
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "board": "..bb...bbbbw.......w.bw....ww.w.",
+      "turn": "player",
+      "plies": 30,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 42
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       22,
+       18
+      ]
+     },
+     "state": {
+      "board": "..bb...bbbbw......ww.b.....ww.w.",
+      "turn": "ai",
+      "plies": 31,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 42
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "board": "...b..bbbbbw......ww.b.....ww.w.",
+      "turn": "player",
+      "plies": 32,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 42
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       11,
+       2
+      ]
+     },
+     "state": {
+      "board": "..Wb..b.bbb.......ww.b.....ww.w.",
+      "turn": "ai",
+      "plies": 33,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 42
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "board": "..Wb..b.bb.....b..ww.b.....ww.w.",
+      "turn": "player",
+      "plies": 34,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 42
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       18,
+       11
+      ]
+     },
+     "state": {
+      "board": "..Wb..b.bb.w.......w.b.....ww.w.",
+      "turn": "ai",
+      "plies": 35,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 42
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "board": "..Wb..b..b.wb......w.b.....ww.w.",
+      "turn": "player",
+      "plies": 36,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 42
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       27,
+       23
+      ]
+     },
+     "state": {
+      "board": "..Wb..b..b.wb......w.b.w....w.w.",
+      "turn": "ai",
+      "plies": 37,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 42
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "board": "..Wb..b....wb.b....w.b.w....w.w.",
+      "turn": "player",
+      "plies": 38,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 42
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       2,
+       16,
+       25
+      ]
+     },
+     "state": {
+      "board": "...b.......wb.b....w...w.W..w.w.",
+      "turn": "ai",
+      "plies": 39,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 42
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "board": "...b.......wb....b.w...w.W..w.w.",
+      "turn": "player",
+      "plies": 40,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 42
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       19,
+       15
+      ]
+     },
+     "state": {
+      "board": "...b.......wb..w.b.....w.W..w.w.",
+      "turn": "ai",
+      "plies": 41,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 42
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "board": ".......b...wb..w.b.....w.W..w.w.",
+      "turn": "player",
+      "plies": 42,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 42
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       11,
+       2
+      ]
+     },
+     "state": {
+      "board": "..W.........b..w.b.....w.W..w.w.",
+      "turn": "ai",
+      "plies": 43,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 42
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "board": "..W............wbb.....w.W..w.w.",
+      "turn": "player",
+      "plies": 44,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 42
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       2,
+       20
+      ]
+     },
+     "state": {
+      "board": "...............w.b..W..w.W..w.w.",
+      "turn": "ai",
+      "plies": 45,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 42
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "board": "...............w....Wb.w.W..w.w.",
+      "turn": "player",
+      "plies": 46,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 42
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       25,
+       12
+      ]
+     },
+     "state": {
+      "board": "............W..w....W..w....w.w.",
+      "turn": "ai",
+      "plies": 47,
+      "quiet": 0,
+      "over": true,
+      "winner": "player",
+      "byMaterial": false,
+      "rng": 42
+     }
+    }
+   ],
+   "result": {
+    "winner": "player",
+    "stars": 3,
+    "score": 1200,
+    "byMaterial": false,
+    "plies": 47
+   }
+  },
+  {
+   "name": "random-player-vs-level-2",
+   "config": {
+    "aiDepth": [
+     1,
+     2,
+     3,
+     4,
+     5
+    ],
+    "aiErrorPct": [
+     35,
+     20,
+     10,
+     5,
+     0
+    ],
+    "quietLimit": 50,
+    "fastPlies": 80
+   },
+   "seed": 7,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       21,
+       16
+      ]
+     },
+     "state": {
+      "board": "bbbbbbbbbbbb....w...w.wwwwwwwwww",
+      "turn": "ai",
+      "plies": 1,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 7
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "board": "bbbbbbbb.bbbb...w...w.wwwwwwwwww",
+      "turn": "player",
+      "plies": 2,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 7
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       24,
+       21
+      ]
+     },
+     "state": {
+      "board": "bbbbbbbb.bbbb...w...wwww.wwwwwww",
+      "turn": "ai",
+      "plies": 3,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 7
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "board": "bbbb.bbbbbbbb...w...wwww.wwwwwww",
+      "turn": "player",
+      "plies": 4,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 7
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       29,
+       24
+      ]
+     },
+     "state": {
+      "board": "bbbb.bbbbbbbb...w...wwwwwwwww.ww",
+      "turn": "ai",
+      "plies": 5,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 7
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "board": ".bbbbbbbbbbbb...w...wwwwwwwww.ww",
+      "turn": "player",
+      "plies": 6,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 7
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       23,
+       19
+      ]
+     },
+     "state": {
+      "board": ".bbbbbbbbbbbb...w..wwww.wwwww.ww",
+      "turn": "ai",
+      "plies": 7,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 7
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "board": ".bbbbbbb.bbbbb..w..wwww.wwwww.ww",
+      "turn": "player",
+      "plies": 8,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 7
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       21,
+       17
+      ]
+     },
+     "state": {
+      "board": ".bbbbbbb.bbbbb..ww.ww.w.wwwww.ww",
+      "turn": "ai",
+      "plies": 9,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 7
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "board": ".bbbbbbb.bbb.b...w.wwbw.wwwww.ww",
+      "turn": "player",
+      "plies": 10,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 7
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       17,
+       8
+      ]
+     },
+     "state": {
+      "board": ".bbbbbbbwbbb.......wwbw.wwwww.ww",
+      "turn": "ai",
+      "plies": 11,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 7
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "board": ".bbbb.bb.bbbb......wwbw.wwwww.ww",
+      "turn": "player",
+      "plies": 12,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 7
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       25,
+       16
+      ]
+     },
+     "state": {
+      "board": ".bbbb.bb.bbbb...w..ww.w.w.www.ww",
+      "turn": "ai",
+      "plies": 13,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 7
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "board": ".bbbb.bb.bbb.......wwbw.w.www.ww",
+      "turn": "player",
+      "plies": 14,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 7
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       24,
+       17
+      ]
+     },
+     "state": {
+      "board": ".bbbb.bb.bbb.....w.ww.w...www.ww",
+      "turn": "ai",
+      "plies": 15,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 7
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "board": "..bbbbbb.bbb.....w.ww.w...www.ww",
+      "turn": "player",
+      "plies": 16,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 7
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       17,
+       14
+      ]
+     },
+     "state": {
+      "board": "..bbbbbb.bbb..w....ww.w...www.ww",
+      "turn": "ai",
+      "plies": 17,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 7
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "board": "..bbbbbb..bb.......ww....bwww.ww",
+      "turn": "player",
+      "plies": 18,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 7
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       30,
+       21
+      ]
+     },
+     "state": {
+      "board": "..bbbbbb..bb.......www....www..w",
+      "turn": "ai",
+      "plies": 19,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 7
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "board": "..bb.bbbb.bb.......www....www..w",
+      "turn": "player",
+      "plies": 20,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 7
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       21,
+       16
+      ]
+     },
+     "state": {
+      "board": "..bb.bbbb.bb....w..ww.....www..w",
+      "turn": "ai",
+      "plies": 21,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 7
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "board": "..bb.bbb..bbb...w..ww.....www..w",
+      "turn": "player",
+      "plies": 22,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 7
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       28,
+       24
+      ]
+     },
+     "state": {
+      "board": "..bb.bbb..bbb...w..ww...w.ww...w",
+      "turn": "ai",
+      "plies": 23,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 7
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "board": "..bb.bbb..bb.......ww.....wwB..w",
+      "turn": "player",
+      "plies": 24,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 7
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       19,
+       15
+      ]
+     },
+     "state": {
+      "board": "..bb.bbb..bb...w....w.....wwB..w",
+      "turn": "ai",
+      "plies": 25,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 7
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "board": "..bb.bbb...b.......bw.....wwB..w",
+      "turn": "player",
+      "plies": 26,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 7
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       26,
+       23
+      ]
+     },
+     "state": {
+      "board": "..bb.bbb...b.......bw..w...wB..w",
+      "turn": "ai",
+      "plies": 27,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 7
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "board": "..bb.bbb...b........w.....bwB..w",
+      "turn": "player",
+      "plies": 28,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 7
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       31,
+       22
+      ]
+     },
+     "state": {
+      "board": "..bb.bbb...b........w.w....wB...",
+      "turn": "ai",
+      "plies": 29,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 7
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "board": "..bb..bbb..b........w.w....wB...",
+      "turn": "player",
+      "plies": 30,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 7
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       20,
+       16
+      ]
+     },
+     "state": {
+      "board": "..bb..bbb..b....w.....w....wB...",
+      "turn": "ai",
+      "plies": 31,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 7
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "board": "..bb..b.b.bb....w.....w....wB...",
+      "turn": "player",
+      "plies": 32,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 7
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       22,
+       17
+      ]
+     },
+     "state": {
+      "board": "..bb..b.b.bb....ww.........wB...",
+      "turn": "ai",
+      "plies": 33,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 7
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "board": "..bb..b.b.bb..B.w..........w....",
+      "turn": "player",
+      "plies": 34,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 7
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       27,
+       23
+      ]
+     },
+     "state": {
+      "board": "..bb..b.b.bb..B.w......w........",
+      "turn": "ai",
+      "plies": 35,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 7
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "board": "..bb..b.b.bb....w..........B....",
+      "turn": "player",
+      "plies": 36,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 7
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       16,
+       13
+      ]
+     },
+     "state": {
+      "board": "..bb..b.b.bb.w.............B....",
+      "turn": "ai",
+      "plies": 37,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 7
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "board": "..bb..b...bb.....b.........B....",
+      "turn": "player",
+      "plies": 38,
+      "quiet": 0,
+      "over": true,
+      "winner": "ai",
+      "byMaterial": false,
+      "rng": 7
+     }
+    }
+   ],
+   "result": {
+    "winner": "ai",
+    "stars": 0,
+    "score": 500,
+    "byMaterial": false,
+    "plies": 38
+   }
+  },
+  {
+   "name": "random-player-vs-level-3",
+   "config": {
+    "aiDepth": [
+     1,
+     2,
+     3,
+     4,
+     5
+    ],
+    "aiErrorPct": [
+     35,
+     20,
+     10,
+     5,
+     0
+    ],
+    "quietLimit": 50,
+    "fastPlies": 80
+   },
+   "seed": 2026,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       21,
+       17
+      ]
+     },
+     "state": {
+      "board": "bbbbbbbbbbbb.....w..w.wwwwwwwwww",
+      "turn": "ai",
+      "plies": 1,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 2026
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "board": "bbbbbbbb.bbbb....w..w.wwwwwwwwww",
+      "turn": "player",
+      "plies": 2,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 2026
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       24,
+       21
+      ]
+     },
+     "state": {
+      "board": "bbbbbbbb.bbbb....w..wwww.wwwwwww",
+      "turn": "ai",
+      "plies": 3,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 2026
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "board": "bbbb.bbbbbbbb....w..wwww.wwwwwww",
+      "turn": "player",
+      "plies": 4,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 2026
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       21,
+       16
+      ]
+     },
+     "state": {
+      "board": "bbbb.bbbbbbbb...ww..w.ww.wwwwwww",
+      "turn": "ai",
+      "plies": 5,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 2026
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "board": "bbbb.bbbbbbb.....w..wbww.wwwwwww",
+      "turn": "player",
+      "plies": 6,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 2026
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       25,
+       16
+      ]
+     },
+     "state": {
+      "board": "bbbb.bbbbbbb....ww..w.ww..wwwwww",
+      "turn": "ai",
+      "plies": 7,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 2026
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "board": "bbbb.bbb.bbbb...ww..w.ww..wwwwww",
+      "turn": "player",
+      "plies": 8,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 2026
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       29,
+       24
+      ]
+     },
+     "state": {
+      "board": "bbbb.bbb.bbbb...ww..w.www.www.ww",
+      "turn": "ai",
+      "plies": 9,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 2026
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "board": "bbbb.bbb.bbb.....w..wbwww.www.ww",
+      "turn": "player",
+      "plies": 10,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 2026
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       17,
+       14
+      ]
+     },
+     "state": {
+      "board": "bbbb.bbb.bbb..w.....wbwww.www.ww",
+      "turn": "ai",
+      "plies": 11,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 2026
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "board": "bbbb.bbb..bb........wb.wwbwww.ww",
+      "turn": "player",
+      "plies": 12,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 2026
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       24,
+       17
+      ]
+     },
+     "state": {
+      "board": "bbbb.bbb..bb.....w..w..w.bwww.ww",
+      "turn": "ai",
+      "plies": 13,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 2026
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "board": "bbbb.bbb..bb.....w..w..w..wwwBww",
+      "turn": "player",
+      "plies": 14,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 2026
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       20,
+       16
+      ]
+     },
+     "state": {
+      "board": "bbbb.bbb..bb....ww.....w..wwwBww",
+      "turn": "ai",
+      "plies": 15,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 2026
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "board": ".bbbbbbb..bb....ww.....w..wwwBww",
+      "turn": "player",
+      "plies": 16,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 2026
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       17,
+       13
+      ]
+     },
+     "state": {
+      "board": ".bbbbbbb..bb.w..w......w..wwwBww",
+      "turn": "ai",
+      "plies": 17,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 2026
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "board": ".bbbb.bbb.bb.w..w......w..wwwBww",
+      "turn": "player",
+      "plies": 18,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 2026
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       13,
+       9
+      ]
+     },
+     "state": {
+      "board": ".bbbb.bbbwbb....w......w..wwwBww",
+      "turn": "ai",
+      "plies": 19,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 2026
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "board": ".bbbb..bb.bb........b..w..wwwBww",
+      "turn": "player",
+      "plies": 20,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 2026
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       28,
+       24
+      ]
+     },
+     "state": {
+      "board": ".bbbb..bb.bb........b..ww.ww.Bww",
+      "turn": "ai",
+      "plies": 21,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 2026
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "board": ".b.bb.bbb.bb........b..ww.ww.Bww",
+      "turn": "player",
+      "plies": 22,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 2026
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       24,
+       21
+      ]
+     },
+     "state": {
+      "board": ".b.bb.bbb.bb........bw.w..ww.Bww",
+      "turn": "ai",
+      "plies": 23,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 2026
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "board": ".b.bb.bbb.bb.........w.wb.ww.Bww",
+      "turn": "player",
+      "plies": 24,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 2026
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       30,
+       25
+      ]
+     },
+     "state": {
+      "board": ".b.bb.bbb.bb.........w.wbwww.B.w",
+      "turn": "ai",
+      "plies": 25,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 2026
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "board": ".b.bb.bbb.bb...B.....w.wb.ww...w",
+      "turn": "player",
+      "plies": 26,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 2026
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       23,
+       19
+      ]
+     },
+     "state": {
+      "board": ".b.bb.bbb.bb...B...w.w..b.ww...w",
+      "turn": "ai",
+      "plies": 27,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 2026
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "board": ".b.bb.bb..bbb..B...w.w..b.ww...w",
+      "turn": "player",
+      "plies": 28,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 2026
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       26,
+       23
+      ]
+     },
+     "state": {
+      "board": ".b.bb.bb..bbb..B...w.w.wb..w...w",
+      "turn": "ai",
+      "plies": 29,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 2026
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "board": ".b.bb.bb..bbb..B...w.w.w...wB..w",
+      "turn": "player",
+      "plies": 30,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 2026
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       21,
+       16
+      ]
+     },
+     "state": {
+      "board": ".b.bb.bb..bbb..Bw..w...w...wB..w",
+      "turn": "ai",
+      "plies": 31,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 2026
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "board": ".b.bb.bb..bb...B...w.b.w...wB..w",
+      "turn": "player",
+      "plies": 32,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 2026
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       31,
+       26
+      ]
+     },
+     "state": {
+      "board": ".b.bb.bb..bb...B...w.b.w..wwB...",
+      "turn": "ai",
+      "plies": 33,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 2026
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "board": ".b.bb.bb..bb...B...w...w.bwwB...",
+      "turn": "player",
+      "plies": 34,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 2026
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       23,
+       18
+      ]
+     },
+     "state": {
+      "board": ".b.bb.bb..bb...B..ww.....bwwB...",
+      "turn": "ai",
+      "plies": 35,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 2026
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "board": ".b.bb.bb..bb.......w.....b.wB..B",
+      "turn": "player",
+      "plies": 36,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 2026
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       19,
+       15
+      ]
+     },
+     "state": {
+      "board": ".b.bb.bb..bb...w.........b.wB..B",
+      "turn": "ai",
+      "plies": 37,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 2026
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "board": ".b.bb.bb...b.......b.....b.wB..B",
+      "turn": "player",
+      "plies": 38,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 2026
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       27,
+       23
+      ]
+     },
+     "state": {
+      "board": ".b.bb.bb...b.......b...w.b..B..B",
+      "turn": "ai",
+      "plies": 39,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 2026
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "board": ".b.bb.bb...b.............bb.B..B",
+      "turn": "player",
+      "plies": 40,
+      "quiet": 0,
+      "over": true,
+      "winner": "ai",
+      "byMaterial": false,
+      "rng": 2026
+     }
+    }
+   ],
+   "result": {
+    "winner": "ai",
+    "stars": 0,
+    "score": 200,
+    "byMaterial": false,
+    "plies": 40
+   }
+  },
+  {
+   "name": "random-player-vs-level-4",
+   "config": {
+    "aiDepth": [
+     1,
+     2,
+     3,
+     4,
+     5
+    ],
+    "aiErrorPct": [
+     35,
+     20,
+     10,
+     5,
+     0
+    ],
+    "quietLimit": 50,
+    "fastPlies": 80
+   },
+   "seed": 1234,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       22,
+       18
+      ]
+     },
+     "state": {
+      "board": "bbbbbbbbbbbb......w.ww.wwwwwwwww",
+      "turn": "ai",
+      "plies": 1,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 1234
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "board": "bbbbbbbb.bbbb.....w.ww.wwwwwwwww",
+      "turn": "player",
+      "plies": 2,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 1234
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       26,
+       22
+      ]
+     },
+     "state": {
+      "board": "bbbbbbbb.bbbb.....w.wwwwww.wwwww",
+      "turn": "ai",
+      "plies": 3,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 1234
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "board": "bbbb.bbbbbbbb.....w.wwwwww.wwwww",
+      "turn": "player",
+      "plies": 4,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 1234
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       21,
+       17
+      ]
+     },
+     "state": {
+      "board": "bbbb.bbbbbbbb....ww.w.wwww.wwwww",
+      "turn": "ai",
+      "plies": 5,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 1234
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "board": ".bbbbbbbbbbbb....ww.w.wwww.wwwww",
+      "turn": "player",
+      "plies": 6,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 1234
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       17,
+       14
+      ]
+     },
+     "state": {
+      "board": ".bbbbbbbbbbbb.w...w.w.wwww.wwwww",
+      "turn": "ai",
+      "plies": 7,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 1234
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "board": ".bbbbbbbbb.bb.....w.w..wwwbwwwww",
+      "turn": "player",
+      "plies": 8,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 1234
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       31,
+       22
+      ]
+     },
+     "state": {
+      "board": ".bbbbbbbbb.bb.....w.w.wwww.wwww.",
+      "turn": "ai",
+      "plies": 9,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 1234
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "board": ".bbbbbbbbb.b....b.w.w.wwww.wwww.",
+      "turn": "player",
+      "plies": 10,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 1234
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       20,
+       13
+      ]
+     },
+     "state": {
+      "board": ".bbbbbbbbb.b.w....w...wwww.wwww.",
+      "turn": "ai",
+      "plies": 11,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 1234
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "board": ".bbbbbbb.b.b......w....wwwbwwww.",
+      "turn": "player",
+      "plies": 12,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 1234
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       25,
+       21
+      ]
+     },
+     "state": {
+      "board": ".bbbbbbb.b.b......w..w.ww.bwwww.",
+      "turn": "ai",
+      "plies": 13,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 1234
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "board": ".bbbbbbb.b.b......w..w.ww..wwwwB",
+      "turn": "player",
+      "plies": 14,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 1234
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       30,
+       26
+      ]
+     },
+     "state": {
+      "board": ".bbbbbbb.b.b......w..w.ww.wwww.B",
+      "turn": "ai",
+      "plies": 15,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 1234
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "board": ".bbbbbbb.b.b...B.....w.ww..www..",
+      "turn": "player",
+      "plies": 16,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 1234
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       24,
+       20
+      ]
+     },
+     "state": {
+      "board": ".bbbbbbb.b.b...B....ww.w...www..",
+      "turn": "ai",
+      "plies": 17,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 1234
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "board": ".bbb.bbbbb.b...B....ww.w...www..",
+      "turn": "player",
+      "plies": 18,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 1234
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       29,
+       25
+      ]
+     },
+     "state": {
+      "board": ".bbb.bbbbb.b...B....ww.w.w.ww...",
+      "turn": "ai",
+      "plies": 19,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 1234
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "board": ".bbb.bbbbb.b........ww.w...wwB..",
+      "turn": "player",
+      "plies": 20,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 1234
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       21,
+       17
+      ]
+     },
+     "state": {
+      "board": ".bbb.bbbbb.b.....w..w..w...wwB..",
+      "turn": "ai",
+      "plies": 21,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 1234
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "board": ".bbb.b.bbbbb.....w..w..w...wwB..",
+      "turn": "player",
+      "plies": 22,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 1234
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       23,
+       19
+      ]
+     },
+     "state": {
+      "board": ".bbb.b.bbbbb.....w.ww......wwB..",
+      "turn": "ai",
+      "plies": 23,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 1234
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "board": ".bbb.b.bb.bb.b...w.ww......wwB..",
+      "turn": "player",
+      "plies": 24,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 1234
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       19,
+       15
+      ]
+     },
+     "state": {
+      "board": ".bbb.b.bb.bb.b.w.w..w......wwB..",
+      "turn": "ai",
+      "plies": 25,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 1234
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "board": ".bbb.b.bb.b..b...wb.w......wwB..",
+      "turn": "player",
+      "plies": 26,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 1234
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       27,
+       23
+      ]
+     },
+     "state": {
+      "board": ".bbb.b.bb.b..b...wb.w..w....wB..",
+      "turn": "ai",
+      "plies": 27,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 1234
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "board": ".bbb.b.bb.b..b...w..w......bwB..",
+      "turn": "player",
+      "plies": 28,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 1234
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       20,
+       16
+      ]
+     },
+     "state": {
+      "board": ".bbb.b.bb.b..b..ww.........bwB..",
+      "turn": "ai",
+      "plies": 29,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 1234
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "board": ".bbb.b.bb.b......w..b......bwB..",
+      "turn": "player",
+      "plies": 30,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 1234
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       17,
+       13
+      ]
+     },
+     "state": {
+      "board": ".bbb.b.bb.b..w......b......bwB..",
+      "turn": "ai",
+      "plies": 31,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 1234
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "board": ".bbb.b.b..b......b..b......bwB..",
+      "turn": "player",
+      "plies": 32,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 1234
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       28,
+       24
+      ]
+     },
+     "state": {
+      "board": ".bbb.b.b..b......b..b...w..b.B..",
+      "turn": "ai",
+      "plies": 33,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 1234
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "board": "..bb.bbb..b......b..b...w..b.B..",
+      "turn": "player",
+      "plies": 34,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 1234
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       24,
+       21
+      ]
+     },
+     "state": {
+      "board": "..bb.bbb..b......b..bw.....b.B..",
+      "turn": "ai",
+      "plies": 35,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 1234
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "board": "..bb.bbb..b.........b...b..b.B..",
+      "turn": "player",
+      "plies": 36,
+      "quiet": 0,
+      "over": true,
+      "winner": "ai",
+      "byMaterial": false,
+      "rng": 1234
+     }
+    }
+   ],
+   "result": {
+    "winner": "ai",
+    "stars": 0,
+    "score": 200,
+    "byMaterial": false,
+    "plies": 36
+   }
+  },
+  {
+   "name": "random-player-vs-level-5",
+   "config": {
+    "aiDepth": [
+     1,
+     2,
+     3,
+     4,
+     5
+    ],
+    "aiErrorPct": [
+     35,
+     20,
+     10,
+     5,
+     0
+    ],
+    "quietLimit": 50,
+    "fastPlies": 80
+   },
+   "seed": 5,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       21,
+       16
+      ]
+     },
+     "state": {
+      "board": "bbbbbbbbbbbb....w...w.wwwwwwwwww",
+      "turn": "ai",
+      "plies": 1,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 5
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "board": "bbbbbbbb.bbbb...w...w.wwwwwwwwww",
+      "turn": "player",
+      "plies": 2,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 5
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       16,
+       13
+      ]
+     },
+     "state": {
+      "board": "bbbbbbbb.bbbbw......w.wwwwwwwwww",
+      "turn": "ai",
+      "plies": 3,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 5
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "board": "bbbbbbbb..bbb...b...w.wwwwwwwwww",
+      "turn": "player",
+      "plies": 4,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 5
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       20,
+       13
+      ]
+     },
+     "state": {
+      "board": "bbbbbbbb..bbbw........wwwwwwwwww",
+      "turn": "ai",
+      "plies": 5,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 5
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "board": "bbbbb.bbb.bbbw........wwwwwwwwww",
+      "turn": "player",
+      "plies": 6,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 5
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       23,
+       18
+      ]
+     },
+     "state": {
+      "board": "bbbbb.bbb.bbbw....w...w.wwwwwwww",
+      "turn": "ai",
+      "plies": 7,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 5
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "board": "bbbbb.bb..bbb....bw...w.wwwwwwww",
+      "turn": "player",
+      "plies": 8,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 5
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       22,
+       13
+      ]
+     },
+     "state": {
+      "board": "bbbbb.bb..bbbw....w.....wwwwwwww",
+      "turn": "ai",
+      "plies": 9,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 5
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "board": ".bbbbbbb..bbbw....w.....wwwwwwww",
+      "turn": "player",
+      "plies": 10,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 5
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       24,
+       20
+      ]
+     },
+     "state": {
+      "board": ".bbbbbbb..bbbw....w.w....wwwwwww",
+      "turn": "ai",
+      "plies": 11,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 5
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "board": ".bbbb.bbb.bbbw....w.w....wwwwwww",
+      "turn": "player",
+      "plies": 12,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 5
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       29,
+       24
+      ]
+     },
+     "state": {
+      "board": ".bbbb.bbb.bbbw....w.w...wwwww.ww",
+      "turn": "ai",
+      "plies": 13,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 5
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "board": ".bbbb.bb..bbb....bw.w...wwwww.ww",
+      "turn": "player",
+      "plies": 14,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 5
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       26,
+       23
+      ]
+     },
+     "state": {
+      "board": ".bbbb.bb..bbb....bw.w..www.ww.ww",
+      "turn": "ai",
+      "plies": 15,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 5
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "board": ".bbbb.bb..bbb.....w.w.bwww.ww.ww",
+      "turn": "player",
+      "plies": 16,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 5
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       20,
+       16
+      ]
+     },
+     "state": {
+      "board": ".bbbb.bb..bbb...w.w...bwww.ww.ww",
+      "turn": "ai",
+      "plies": 17,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 5
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "board": ".bbbb.bb..bbb...w.w....ww..wwBww",
+      "turn": "player",
+      "plies": 18,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 5
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       16,
+       13
+      ]
+     },
+     "state": {
+      "board": ".bbbb.bb..bbbw....w....ww..wwBww",
+      "turn": "ai",
+      "plies": 19,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 5
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "board": ".bbbb.bb..bbbw.B.......ww..ww.ww",
+      "turn": "player",
+      "plies": 20,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 5
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       23,
+       19
+      ]
+     },
+     "state": {
+      "board": ".bbbb.bb..bbbw.B...w....w..ww.ww",
+      "turn": "ai",
+      "plies": 21,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 5
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "board": "..bbbbbb..bbbw.B...w....w..ww.ww",
+      "turn": "player",
+      "plies": 22,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 5
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       13,
+       8
+      ]
+     },
+     "state": {
+      "board": "..bbbbbbw.bbb..B...w....w..ww.ww",
+      "turn": "ai",
+      "plies": 23,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 5
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "board": "..bb.bbb..bbbb.B...w....w..ww.ww",
+      "turn": "player",
+      "plies": 24,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 5
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       30,
+       25
+      ]
+     },
+     "state": {
+      "board": "..bb.bbb..bbbb.B...w....ww.ww..w",
+      "turn": "ai",
+      "plies": 25,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 5
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "board": "..bb.bbb..bbbb.....wB......ww..w",
+      "turn": "player",
+      "plies": 26,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 5
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       28,
+       24
+      ]
+     },
+     "state": {
+      "board": "..bb.bbb..bbbb.....wB...w..w...w",
+      "turn": "ai",
+      "plies": 27,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 5
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "board": "..bb.bbb..bbbb.....w.......w.B.w",
+      "turn": "player",
+      "plies": 28,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 5
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       31,
+       26
+      ]
+     },
+     "state": {
+      "board": "..bb.bbb..bbbb.....w......ww.B..",
+      "turn": "ai",
+      "plies": 29,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 5
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "board": "..bb..bbb.bbbb.....w......ww.B..",
+      "turn": "player",
+      "plies": 30,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 5
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       26,
+       23
+      ]
+     },
+     "state": {
+      "board": "..bb..bbb.bbbb.....w...w...w.B..",
+      "turn": "ai",
+      "plies": 31,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 5
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "board": "..bb...bbbbbbb.....w...w...w.B..",
+      "turn": "player",
+      "plies": 32,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 5
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       19,
+       15
+      ]
+     },
+     "state": {
+      "board": "..bb...bbbbbbb.w.......w...w.B..",
+      "turn": "ai",
+      "plies": 33,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 5
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "board": "..bb...bbb.bbb............bw.B..",
+      "turn": "player",
+      "plies": 34,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 5
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       27,
+       23
+      ]
+     },
+     "state": {
+      "board": "..bb...bbb.bbb.........w..b..B..",
+      "turn": "ai",
+      "plies": 35,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 5
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "board": "..bb....bbbbbb.........w..b..B..",
+      "turn": "player",
+      "plies": 36,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 5
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       23,
+       18
+      ]
+     },
+     "state": {
+      "board": "..bb....bbbbbb....w.......b..B..",
+      "turn": "ai",
+      "plies": 37,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 5
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "board": "..bb....bbbbbb.B..........b.....",
+      "turn": "player",
+      "plies": 38,
+      "quiet": 0,
+      "over": true,
+      "winner": "ai",
+      "byMaterial": false,
+      "rng": 5
+     }
+    }
+   ],
+   "result": {
+    "winner": "ai",
+    "stars": 0,
+    "score": 200,
+    "byMaterial": false,
+    "plies": 38
+   }
+  },
+  {
+   "name": "strong-player-vs-level-1",
+   "config": {
+    "aiDepth": [
+     1,
+     2,
+     3,
+     4,
+     5
+    ],
+    "aiErrorPct": [
+     35,
+     20,
+     10,
+     5,
+     0
+    ],
+    "quietLimit": 50,
+    "fastPlies": 80
+   },
+   "seed": 77,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       20,
+       16
+      ]
+     },
+     "state": {
+      "board": "bbbbbbbbbbbb....w....wwwwwwwwwww",
+      "turn": "ai",
+      "plies": 1,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 77
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "board": "bbbbbbbb.bbbb...w....wwwwwwwwwww",
+      "turn": "player",
+      "plies": 2,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 77
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       16,
+       13
+      ]
+     },
+     "state": {
+      "board": "bbbbbbbb.bbbbw.......wwwwwwwwwww",
+      "turn": "ai",
+      "plies": 3,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 77
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "board": "bbbbbbbb..bbb...b....wwwwwwwwwww",
+      "turn": "player",
+      "plies": 4,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 77
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       21,
+       17
+      ]
+     },
+     "state": {
+      "board": "bbbbbbbb..bbb...bw....wwwwwwwwww",
+      "turn": "ai",
+      "plies": 5,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 77
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "board": "bbbb.bbbb.bbb...bw....wwwwwwwwww",
+      "turn": "player",
+      "plies": 6,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 77
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       17,
+       14
+      ]
+     },
+     "state": {
+      "board": "bbbb.bbbb.bbb.w.b.....wwwwwwwwww",
+      "turn": "ai",
+      "plies": 7,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 77
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "board": "bbbb.bbbb..bb...bb....wwwwwwwwww",
+      "turn": "player",
+      "plies": 8,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 77
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       22,
+       13,
+       4
+      ]
+     },
+     "state": {
+      "board": "bbbbwbbb...bb...b......wwwwwwwww",
+      "turn": "ai",
+      "plies": 9,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 77
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "board": "bbbbwb.b..bbb...b......wwwwwwwww",
+      "turn": "player",
+      "plies": 10,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 77
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       23,
+       18
+      ]
+     },
+     "state": {
+      "board": "bbbbwb.b..bbb...b.w.....wwwwwwww",
+      "turn": "ai",
+      "plies": 11,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 77
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "board": "b.bbwbbb..bbb...b.w.....wwwwwwww",
+      "turn": "player",
+      "plies": 12,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 77
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       18,
+       14
+      ]
+     },
+     "state": {
+      "board": "b.bbwbbb..bbb.w.b.......wwwwwwww",
+      "turn": "ai",
+      "plies": 13,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 77
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "board": "b.bbwbbb...bb...bb......wwwwwwww",
+      "turn": "player",
+      "plies": 14,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 77
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       24,
+       21
+      ]
+     },
+     "state": {
+      "board": "b.bbwbbb...bb...bb...w...wwwwwww",
+      "turn": "ai",
+      "plies": 15,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 77
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "board": "b.bbwbbb...bb...b.......bwwwwwww",
+      "turn": "player",
+      "plies": 16,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 77
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       29,
+       20,
+       13
+      ]
+     },
+     "state": {
+      "board": "b.bbwbbb...bbw...........wwww.ww",
+      "turn": "ai",
+      "plies": 17,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 77
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "board": "b.bbw.bbb..bbw...........wwww.ww",
+      "turn": "player",
+      "plies": 18,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 77
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       25,
+       22
+      ]
+     },
+     "state": {
+      "board": "b.bbw.bbb..bbw........w...www.ww",
+      "turn": "ai",
+      "plies": 19,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 77
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "board": "b.bbw.bb...bb....b....w...www.ww",
+      "turn": "player",
+      "plies": 20,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 77
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       22,
+       13
+      ]
+     },
+     "state": {
+      "board": "b.bbw.bb...bbw............www.ww",
+      "turn": "ai",
+      "plies": 21,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 77
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "board": "b.bbw.b...bbbw............www.ww",
+      "turn": "player",
+      "plies": 22,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 77
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       13,
+       8
+      ]
+     },
+     "state": {
+      "board": "b.bbw.b.w.bbb.............www.ww",
+      "turn": "ai",
+      "plies": 23,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 77
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "board": "b.b.w.bbw.bbb.............www.ww",
+      "turn": "player",
+      "plies": 24,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 77
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       8,
+       5
+      ]
+     },
+     "state": {
+      "board": "b.b.wwbb..bbb.............www.ww",
+      "turn": "ai",
+      "plies": 25,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 77
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "board": "..b.w.bb.bbbb.............www.ww",
+      "turn": "player",
+      "plies": 26,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 77
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       4,
+       0
+      ]
+     },
+     "state": {
+      "board": "W.b...bb.bbbb.............www.ww",
+      "turn": "ai",
+      "plies": 27,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 77
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "board": "W.b...bb..bbbb............www.ww",
+      "turn": "player",
+      "plies": 28,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 77
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       0,
+       4
+      ]
+     },
+     "state": {
+      "board": "..b.W.bb..bbbb............www.ww",
+      "turn": "ai",
+      "plies": 29,
+      "quiet": 1,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 77
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "board": "..b.W..b.bbbbb............www.ww",
+      "turn": "player",
+      "plies": 30,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 77
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       4,
+       17
+      ]
+     },
+     "state": {
+      "board": "..b....b.bbbb....W........www.ww",
+      "turn": "ai",
+      "plies": 31,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 77
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "board": "......bb.bbbb....W........www.ww",
+      "turn": "player",
+      "plies": 32,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 77
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       17,
+       4
+      ]
+     },
+     "state": {
+      "board": "....W.bb.bbbb.............www.ww",
+      "turn": "ai",
+      "plies": 33,
+      "quiet": 1,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 77
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "board": "....W.bb..bbb.b...........www.ww",
+      "turn": "player",
+      "plies": 34,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 77
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       4,
+       13
+      ]
+     },
+     "state": {
+      "board": "......bb..bbbWb...........www.ww",
+      "turn": "ai",
+      "plies": 35,
+      "quiet": 1,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 77
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "board": ".......b.bbbbWb...........www.ww",
+      "turn": "player",
+      "plies": 36,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 77
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       13,
+       6,
+       19
+      ]
+     },
+     "state": {
+      "board": ".......b...bb.b....W......www.ww",
+      "turn": "ai",
+      "plies": 37,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 77
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "board": ".......b....b.bb...W......www.ww",
+      "turn": "player",
+      "plies": 38,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 77
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       19,
+       10,
+       3
+      ]
+     },
+     "state": {
+      "board": "...W........b.b...........www.ww",
+      "turn": "ai",
+      "plies": 39,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 77
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "board": "...W..........b.b.........www.ww",
+      "turn": "player",
+      "plies": 40,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 77
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       3,
+       21,
+       12
+      ]
+     },
+     "state": {
+      "board": "............W.............www.ww",
+      "turn": "ai",
+      "plies": 41,
+      "quiet": 0,
+      "over": true,
+      "winner": "player",
+      "byMaterial": false,
+      "rng": 77
+     }
+    }
+   ],
+   "result": {
+    "winner": "player",
+    "stars": 3,
+    "score": 1200,
+    "byMaterial": false,
+    "plies": 41
+   }
+  },
+  {
+   "name": "quiet-limit-draw",
+   "config": {
+    "aiDepth": [
+     1,
+     2,
+     3,
+     4,
+     5
+    ],
+    "aiErrorPct": [
+     35,
+     20,
+     10,
+     5,
+     0
+    ],
+    "quietLimit": 4,
+    "fastPlies": 80
+   },
+   "seed": 6,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       23,
+       19
+      ]
+     },
+     "state": {
+      "board": "bbbbbbbbbbbb.......wwww.wwwwwwww",
+      "turn": "ai",
+      "plies": 1,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 6
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "board": "bbbbbbbb.bbbb......wwww.wwwwwwww",
+      "turn": "player",
+      "plies": 2,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 6
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       27,
+       23
+      ]
+     },
+     "state": {
+      "board": "bbbbbbbb.bbbb......wwwwwwww.wwww",
+      "turn": "ai",
+      "plies": 3,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 6
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "board": "bbbb.bbbbbbbb......wwwwwwww.wwww",
+      "turn": "player",
+      "plies": 4,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 6
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       21,
+       16
+      ]
+     },
+     "state": {
+      "board": "bbbb.bbbbbbbb...w..ww.wwwww.wwww",
+      "turn": "ai",
+      "plies": 5,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 6
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "board": "bbbb.bbbbbbb.......wwbwwwww.wwww",
+      "turn": "player",
+      "plies": 6,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 6
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       24,
+       17
+      ]
+     },
+     "state": {
+      "board": "bbbb.bbbbbbb.....w.ww.ww.ww.wwww",
+      "turn": "ai",
+      "plies": 7,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 6
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "board": ".bbbbbbbbbbb.....w.ww.ww.ww.wwww",
+      "turn": "player",
+      "plies": 8,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 6
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       17,
+       13
+      ]
+     },
+     "state": {
+      "board": ".bbbbbbbbbbb.w.....ww.ww.ww.wwww",
+      "turn": "ai",
+      "plies": 9,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 6
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "board": ".bbbbbbb.bbb.....b.ww.ww.ww.wwww",
+      "turn": "player",
+      "plies": 10,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 6
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       22,
+       13
+      ]
+     },
+     "state": {
+      "board": ".bbbbbbb.bbb.w.....ww..w.ww.wwww",
+      "turn": "ai",
+      "plies": 11,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 6
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "board": ".bbbbbbb..bb....b..ww..w.ww.wwww",
+      "turn": "player",
+      "plies": 12,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 6
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       20,
+       13
+      ]
+     },
+     "state": {
+      "board": ".bbbbbbb..bb.w.....w...w.ww.wwww",
+      "turn": "ai",
+      "plies": 13,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 6
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "board": ".bbb.bbbb.bb.w.....w...w.ww.wwww",
+      "turn": "player",
+      "plies": 14,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 6
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       13,
+       4
+      ]
+     },
+     "state": {
+      "board": ".bbbwbbb..bb.......w...w.ww.wwww",
+      "turn": "ai",
+      "plies": 15,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 6
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "board": ".bbbw.bbb.bb.......w...w.ww.wwww",
+      "turn": "player",
+      "plies": 16,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 6
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       4,
+       0
+      ]
+     },
+     "state": {
+      "board": "Wbbb..bbb.bb.......w...w.ww.wwww",
+      "turn": "ai",
+      "plies": 17,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 6
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "board": "W.bb.bbbb.bb.......w...w.ww.wwww",
+      "turn": "player",
+      "plies": 18,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 6
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       0,
+       14
+      ]
+     },
+     "state": {
+      "board": "..bb..bbb.bb..W....w...w.ww.wwww",
+      "turn": "ai",
+      "plies": 19,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 6
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "board": "..bb..bbb..b.....b.w...w.ww.wwww",
+      "turn": "player",
+      "plies": 20,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 6
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       23,
+       18
+      ]
+     },
+     "state": {
+      "board": "..bb..bbb..b.....bww.....ww.wwww",
+      "turn": "ai",
+      "plies": 21,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 6
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "board": "..bb...bbb.b.....bww.....ww.wwww",
+      "turn": "player",
+      "plies": 22,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 6
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       18,
+       14
+      ]
+     },
+     "state": {
+      "board": "..bb...bbb.b..w..b.w.....ww.wwww",
+      "turn": "ai",
+      "plies": 23,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 6
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "board": "..bb...bb..b.....bbw.....ww.wwww",
+      "turn": "player",
+      "plies": 24,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 6
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       25,
+       22
+      ]
+     },
+     "state": {
+      "board": "..bb...bb..b.....bbw..w...w.wwww",
+      "turn": "ai",
+      "plies": 25,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 6
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "board": "..bb...bb..b.....b.w.....bw.wwww",
+      "turn": "player",
+      "plies": 26,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 6
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       29,
+       22,
+       13,
+       4
+      ]
+     },
+     "state": {
+      "board": "..bbw..b...b.......w......w.w.ww",
+      "turn": "ai",
+      "plies": 27,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 6
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "board": "...bw.bb...b.......w......w.w.ww",
+      "turn": "player",
+      "plies": 28,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 6
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       26,
+       22
+      ]
+     },
+     "state": {
+      "board": "...bw.bb...b.......w..w.....w.ww",
+      "turn": "ai",
+      "plies": 29,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 6
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "board": "...bw..b.b.b.......w..w.....w.ww",
+      "turn": "player",
+      "plies": 30,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 6
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       30,
+       26
+      ]
+     },
+     "state": {
+      "board": "...bw..b.b.b.......w..w...w.w..w",
+      "turn": "ai",
+      "plies": 31,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 6
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "board": "...bw....bbb.......w..w...w.w..w",
+      "turn": "player",
+      "plies": 32,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 6
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       31,
+       27
+      ]
+     },
+     "state": {
+      "board": "...bw....bbb.......w..w...www...",
+      "turn": "ai",
+      "plies": 33,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 6
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "board": "....w..b.bbb.......w..w...www...",
+      "turn": "player",
+      "plies": 34,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 6
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       22,
+       18
+      ]
+     },
+     "state": {
+      "board": "....w..b.bbb......ww......www...",
+      "turn": "ai",
+      "plies": 35,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 6
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "board": "....w..b..bb.b....ww......www...",
+      "turn": "player",
+      "plies": 36,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 6
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       27,
+       23
+      ]
+     },
+     "state": {
+      "board": "....w..b..bb.b....ww...w..w.w...",
+      "turn": "ai",
+      "plies": 37,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 6
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "board": "....w..b...b.bb...ww...w..w.w...",
+      "turn": "player",
+      "plies": 38,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 6
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       18,
+       9
+      ]
+     },
+     "state": {
+      "board": "....w..b.w.b.b.....w...w..w.w...",
+      "turn": "ai",
+      "plies": 39,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 6
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "board": "....w....wbb.b.....w...w..w.w...",
+      "turn": "player",
+      "plies": 40,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 6
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       26,
+       22
+      ]
+     },
+     "state": {
+      "board": "....w....wbb.b.....w..ww....w...",
+      "turn": "ai",
+      "plies": 41,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 6
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "board": "....w....w.b.bb....w..ww....w...",
+      "turn": "player",
+      "plies": 42,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 6
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       28,
+       24
+      ]
+     },
+     "state": {
+      "board": "....w....w.b.bb....w..www.......",
+      "turn": "ai",
+      "plies": 43,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 6
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "board": "....w....w.b..b.b..w..www.......",
+      "turn": "player",
+      "plies": 44,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 6
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       9,
+       6
+      ]
+     },
+     "state": {
+      "board": "....w.w....b..b.b..w..www.......",
+      "turn": "ai",
+      "plies": 45,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 6
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "board": "....w.w....b..b....w.bwww.......",
+      "turn": "player",
+      "plies": 46,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 6
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       24,
+       17,
+       10
+      ]
+     },
+     "state": {
+      "board": "....w.w...wb.......w..ww........",
+      "turn": "ai",
+      "plies": 47,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 6
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "board": "....w.w...w....b...w..ww........",
+      "turn": "player",
+      "plies": 48,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 6
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       22,
+       18
+      ]
+     },
+     "state": {
+      "board": "....w.w...w....b..ww...w........",
+      "turn": "ai",
+      "plies": 49,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 6
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "board": "....w.w...w........w..bw........",
+      "turn": "player",
+      "plies": 50,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 6
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       6,
+       2
+      ]
+     },
+     "state": {
+      "board": "..W.w.....w........w..bw........",
+      "turn": "ai",
+      "plies": 51,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 6
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "board": "..W.w.....w........w...w..b.....",
+      "turn": "player",
+      "plies": 52,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 6
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       23,
+       18
+      ]
+     },
+     "state": {
+      "board": "..W.w.....w.......ww......b.....",
+      "turn": "ai",
+      "plies": 53,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 6
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "board": "..W.w.....w.......ww..........B.",
+      "turn": "player",
+      "plies": 54,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 6
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       2,
+       13
+      ]
+     },
+     "state": {
+      "board": "....w.....w..W....ww..........B.",
+      "turn": "ai",
+      "plies": 55,
+      "quiet": 1,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 6
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "board": "....w.....w.BW....ww............",
+      "turn": "player",
+      "plies": 56,
+      "quiet": 2,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 6
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       13,
+       26
+      ]
+     },
+     "state": {
+      "board": "....w.....w.B.....ww......W.....",
+      "turn": "ai",
+      "plies": 57,
+      "quiet": 3,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 6
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "board": ".B..w.....w.......ww......W.....",
+      "turn": "player",
+      "plies": 58,
+      "quiet": 4,
+      "over": true,
+      "winner": "draw",
+      "byMaterial": false,
+      "rng": 6
+     }
+    }
+   ],
+   "result": {
+    "winner": "draw",
+    "stars": 0,
+    "score": 1100,
+    "byMaterial": false,
+    "plies": 58
+   }
+  },
+  {
+   "name": "timeout-by-material",
+   "config": {
+    "aiDepth": [
+     1,
+     2,
+     3,
+     4,
+     5
+    ],
+    "aiErrorPct": [
+     35,
+     20,
+     10,
+     5,
+     0
+    ],
+    "quietLimit": 50,
+    "fastPlies": 80
+   },
+   "seed": 99,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       22,
+       18
+      ]
+     },
+     "state": {
+      "board": "bbbbbbbbbbbb......w.ww.wwwwwwwww",
+      "turn": "ai",
+      "plies": 1,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 99
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "board": "bbbbbbbb.bbbb.....w.ww.wwwwwwwww",
+      "turn": "player",
+      "plies": 2,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 99
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       21,
+       16
+      ]
+     },
+     "state": {
+      "board": "bbbbbbbb.bbbb...w.w.w..wwwwwwwww",
+      "turn": "ai",
+      "plies": 3,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 99
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "board": "bbbbbbbb.bbb......w.wb.wwwwwwwww",
+      "turn": "player",
+      "plies": 4,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 99
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       24,
+       17
+      ]
+     },
+     "state": {
+      "board": "bbbbbbbb.bbb.....ww.w..w.wwwwwww",
+      "turn": "ai",
+      "plies": 5,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 99
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "board": "bbbbbbbb..bb..b..ww.w..w.wwwwwww",
+      "turn": "player",
+      "plies": 6,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 99
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       18,
+       9
+      ]
+     },
+     "state": {
+      "board": "bbbbbbbb.wbb.....w..w..w.wwwwwww",
+      "turn": "ai",
+      "plies": 7,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 99
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "board": "bbbbb.bb..bb........wb.w.wwwwwww",
+      "turn": "player",
+      "plies": 8,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 99
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       25,
+       16
+      ]
+     },
+     "state": {
+      "board": "bbbbb.bb..bb....w...w..w..wwwwww",
+      "turn": "ai",
+      "plies": 9,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 99
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "board": ".bbbbbbb..bb....w...w..w..wwwwww",
+      "turn": "player",
+      "plies": 10,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 99
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       26,
+       22
+      ]
+     },
+     "state": {
+      "board": ".bbbbbbb..bb....w...w.ww...wwwww",
+      "turn": "ai",
+      "plies": 11,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 99
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "board": ".bbb.bbbb.bb....w...w.ww...wwwww",
+      "turn": "player",
+      "plies": 12,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 99
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       29,
+       24
+      ]
+     },
+     "state": {
+      "board": ".bbb.bbbb.bb....w...w.www..ww.ww",
+      "turn": "ai",
+      "plies": 13,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 99
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "board": ".bbb..bbbbbb....w...w.www..ww.ww",
+      "turn": "player",
+      "plies": 14,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 99
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       16,
+       12
+      ]
+     },
+     "state": {
+      "board": ".bbb..bbbbbbw.......w.www..ww.ww",
+      "turn": "ai",
+      "plies": 15,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 99
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "board": "..bb.bbbbbbbw.......w.www..ww.ww",
+      "turn": "player",
+      "plies": 16,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 99
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       22,
+       17
+      ]
+     },
+     "state": {
+      "board": "..bb.bbbbbbbw....w..w..ww..ww.ww",
+      "turn": "ai",
+      "plies": 17,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 99
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "board": "..bb.bbbb.bbwb...w..w..ww..ww.ww",
+      "turn": "player",
+      "plies": 18,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 99
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       23,
+       19
+      ]
+     },
+     "state": {
+      "board": "..bb.bbbb.bbwb...w.ww...w..ww.ww",
+      "turn": "ai",
+      "plies": 19,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 99
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "board": "..bb.bbbb.bbw......ww.b.w..ww.ww",
+      "turn": "player",
+      "plies": 20,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 99
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       24,
+       21
+      ]
+     },
+     "state": {
+      "board": "..bb.bbbb.bbw......wwwb....ww.ww",
+      "turn": "ai",
+      "plies": 21,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 99
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "board": "..bb.bbbb.bbw......www...b.ww.ww",
+      "turn": "player",
+      "plies": 22,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 99
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       28,
+       24
+      ]
+     },
+     "state": {
+      "board": "..bb.bbbb.bbw......www..wb.w..ww",
+      "turn": "ai",
+      "plies": 23,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 99
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "board": "..bb.bbbb.b.w..b...www..wb.w..ww",
+      "turn": "player",
+      "plies": 24,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 99
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       20,
+       16
+      ]
+     },
+     "state": {
+      "board": "..bb.bbbb.b.w..bw..w.w..wb.w..ww",
+      "turn": "ai",
+      "plies": 25,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 99
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "board": "..bb.bbbb.b.w..bw..w.w..w..w.Bww",
+      "turn": "player",
+      "plies": 26,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 99
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       21,
+       17
+      ]
+     },
+     "state": {
+      "board": "..bb.bbbb.b.w..bww.w....w..w.Bww",
+      "turn": "ai",
+      "plies": 27,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 99
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "board": "..bb.bbbb.b.w..b...w..B....w..ww",
+      "turn": "player",
+      "plies": 28,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 99
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "path": [
+       30,
+       26
+      ]
+     },
+     "state": {
+      "board": "..bb.bbbb.b.w..b...w..B...ww...w",
+      "turn": "ai",
+      "plies": 29,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 99
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "board": "..bb.bbbb.b.wB.b...w......ww...w",
+      "turn": "player",
+      "plies": 30,
+      "quiet": 1,
+      "over": false,
+      "winner": "",
+      "byMaterial": false,
+      "rng": 99
+     }
+    },
+    {
+     "action": {
+      "by": "timeout"
+     },
+     "state": {
+      "board": "..bb.bbbb.b.wB.b...w......ww...w",
+      "turn": "player",
+      "plies": 30,
+      "quiet": 1,
+      "over": true,
+      "winner": "ai",
+      "byMaterial": true,
+      "rng": 99
+     }
+    }
+   ],
+   "result": {
+    "winner": "ai",
+    "stars": 0,
+    "score": 300,
+    "byMaterial": true,
+    "plies": 30
+   }
+  }
+ ]
+}

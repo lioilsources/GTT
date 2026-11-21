@@ -66,44 +66,56 @@
   name: Oko bere
   level: P0
   spec: specs/minigames/oko.md@1
+  vectors: vectors/oko.json
   lead: web
-  flutter: todo
-  web: todo
+  flutter: done
+  web: done
+  checks: {flutter: pass, web: pass}
 - id: F-010
   name: Dáma
   level: P0
   spec: specs/minigames/dama.md@1
+  vectors: vectors/dama.json
   lead: web
-  flutter: todo
-  web: todo
+  flutter: done
+  web: done
+  checks: {flutter: pass, web: pass}
 - id: F-011
   name: Desetitisíc
   level: P0
   spec: specs/minigames/desetitisic.md@1
+  vectors: vectors/desetitisic.json
   lead: web
-  flutter: todo
-  web: todo
+  flutter: done
+  web: done
+  checks: {flutter: pass, web: pass}
 - id: F-012
   name: Šipky 301
   level: P0
   spec: specs/minigames/sipky.md@1
+  vectors: vectors/sipky.json
   lead: web
-  flutter: todo
-  web: todo
+  flutter: done
+  web: done
+  checks: {flutter: pass, web: pass}
 - id: F-013
   name: Koulená
   level: P0
   spec: specs/minigames/koulena.md@1
+  vectors: vectors/koulena.json
   lead: web
-  flutter: todo
-  web: todo
+  flutter: done
+  web: done
+  checks: {flutter: pass, web: pass}
 - id: F-014
   name: Střelnice
   level: P0
   spec: specs/minigames/strelnice.md@1
+  vectors: vectors/strelnice.json
   lead: web
-  flutter: todo
-  web: todo
+  flutter: done
+  web: done
+  checks: {flutter: pass, web: pass}
 - id: F-015
   name: GPS route (Dijkstra on the kept graph)
   level: P0

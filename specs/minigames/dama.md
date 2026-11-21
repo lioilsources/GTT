@@ -81,3 +81,13 @@ Remíza i prohra 0★. `score = 100 × (počet AI kusů sebraných hráčem)` (1
 
 - Dáma s braním přes více směrů: každá větev je samostatná cesta.
 - Kámen, který se v cestě dostane na poslední řadu, pokračuje v braní jako kámen (dopředu).
+
+## Upřesnění v1 (podle implementace, vektory je pokrývají)
+
+- Strana bez tahu má v hledání hodnotu `−(100000 + zbývající hloubka)`, aby AI dávala přednost rychlejší výhře.
+- Konec se kontroluje v pořadí: strana na tahu nemá tah → prohra; pak `quiet ≥ quietLimit` → remíza.
+  V hledání se konec kontroluje před řezem v hloubce 0.
+- Tah, který hru ukončí, předá `turn` poražené straně.
+- Během braní je výchozí pole táhnoucího kusu prázdné (dáma jím smí projet).
+- Kámen, který projde poslední řadou během skoku, dál brát nemůže (bere jen dopředu); případ z „Hraničních
+  případů“ proto nenastane.

@@ -58,18 +58,27 @@ items:
   - {id: D1-4, milestone: D1, name: "brána G1 (rozhoduje Ol1n)", size: S, status: todo}
 
   # ---------- D2 – První minihry
-  - {id: D2-1, milestone: D2, name: "kontrakt miniher a Galerie v obou klientech", size: M, status: todo}
-  - {id: D2-2, milestone: D2, name: "Sirky v obou klientech", size: S, status: todo}
-  - {id: D2-3, milestone: D2, name: "Oko bere v obou klientech", size: M, status: todo}
-  - {id: D2-4, milestone: D2, name: "Dáma v obou klientech", size: M, status: todo}
-  - {id: D2-5, milestone: D2, name: "Desetitisíc v obou klientech", size: M, status: todo}
-  - {id: D2-6, milestone: D2, name: "Šipky 301 v obou klientech", size: M, status: todo}
-  - {id: D2-7, milestone: D2, name: "Koulená v obou klientech", size: M, status: todo}
-  - {id: D2-8, milestone: D2, name: "Střelnice v obou klientech", size: M, status: todo}
+  - {id: D2-1, milestone: D2, name: "kontrakt miniher a Galerie v obou klientech", size: M, status: "čeká na Ol1na",
+     started: 2026-11-21T20:20, done: 2026-11-21T20:48, commit: 2bc2704, evidence: "kontrakt (specs/minigames/README.md), mg_api, shell a Galerie v obou klientech; widget testy; web v Chromu; chybí telefon (PR #10–#14)"}
+  - {id: D2-2, milestone: D2, name: "Sirky v obou klientech", size: S, status: "čeká na Ol1na",
+     started: 2026-11-21T20:20, done: 2026-11-21T20:48, commit: 2bc2704, evidence: "vectors/sirky.json 6 partií, oba klienti shodně (F-008 zelená); hra ověřena v Chromu; chybí telefon"}
+  - {id: D2-3, milestone: D2, name: "Oko bere v obou klientech", size: M, status: "čeká na Ol1na",
+     started: 2026-11-21T20:50, done: 2026-11-21T21:54, commit: 2bc2704, evidence: "vectors/oko.json 7 případů, oba klienti shodně, testy pravidel a widgetu (PR #15, #18, #19); chybí telefon"}
+  - {id: D2-4, milestone: D2, name: "Dáma v obou klientech", size: M, status: "čeká na Ol1na",
+     started: 2026-11-21T20:50, done: 2026-11-21T21:54, commit: 2bc2704, evidence: "vectors/dama.json 8 případů, oba klienti shodně, testy pravidel a widgetu (PR #15, #18, #19); chybí telefon"}
+  - {id: D2-5, milestone: D2, name: "Desetitisíc v obou klientech", size: M, status: "čeká na Ol1na",
+     started: 2026-11-21T20:50, done: 2026-11-21T21:54, commit: 2bc2704, evidence: "vectors/desetitisic.json 6 případů, oba klienti shodně, testy pravidel a widgetu (PR #15, #18, #19); chybí telefon"}
+  - {id: D2-6, milestone: D2, name: "Šipky 301 v obou klientech", size: M, status: "čeká na Ol1na",
+     started: 2026-11-21T20:59, done: 2026-11-21T21:54, commit: 2bc2704, evidence: "vectors/sipky.json 6 případů, oba klienti shodně, testy pravidel a widgetu (PR #16, #18, #19); chybí telefon"}
+  - {id: D2-7, milestone: D2, name: "Koulená v obou klientech", size: M, status: "čeká na Ol1na",
+     started: 2026-11-21T20:59, done: 2026-11-21T21:54, commit: 2bc2704, evidence: "vectors/koulena.json 7 případů, oba klienti shodně, testy pravidel a widgetu (PR #16, #18, #19); chybí telefon"}
+  - {id: D2-8, milestone: D2, name: "Střelnice v obou klientech", size: M, status: "čeká na Ol1na",
+     started: 2026-11-21T20:59, done: 2026-11-21T21:54, commit: 2bc2704, evidence: "vectors/strelnice.json 4 případů, oba klienti shodně, testy pravidel a widgetu (PR #16, #18, #19); chybí telefon"}
   - {id: D2-9, milestone: D2, name: "Taxi v obou klientech", size: L, status: todo}
 
   # ---------- M1 – Vertikální řez (scope)
-  - {id: M1-S1, milestone: M1, name: "oblast M1, graf, GPS trasa, mosty", size: L, status: todo}
+  - {id: M1-S1, milestone: M1, name: "oblast M1, graf, GPS trasa, mosty", size: L, status: wip,
+     started: 2026-11-21T21:00}
   - {id: M1-S2, milestone: M1, name: "provoz a semafory", size: L, status: todo}
   - {id: M1-S3, milestone: M1, name: "chodci s uskakováním", size: M, status: todo}
   - {id: M1-S4, milestone: M1, name: "policie, hledanost 1–2", size: M, status: todo}
