@@ -1,5 +1,5 @@
 name: drive_core
-description: Car physics, controls, layers and street furniture.
+description: Car physics, controls, layers, street furniture and traffic.
 version: 0.1.0
 publish_to: none
 resolution: workspace

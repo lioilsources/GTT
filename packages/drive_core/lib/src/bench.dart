@@ -170,6 +170,7 @@ class Autopilot {
   void start(DriveWorld drive) {
     final p = route.at(0);
     drive.spawn(p.x, p.y, p.dir);
+    drive.traffic?.solid = false; // the autopilot does not avoid cars
     s = 0;
   }
 

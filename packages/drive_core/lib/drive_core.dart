@@ -15,3 +15,5 @@ export 'src/drive_world.dart';
 export 'src/gps.dart';
 export 'src/pedestrians.dart';
 export 'src/props.dart';
+export 'src/traffic/road_rules.dart';
+export 'src/traffic/traffic.dart';
