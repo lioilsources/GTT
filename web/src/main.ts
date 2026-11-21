@@ -14,6 +14,7 @@ import { tokens } from './gen/tokens';
 import { carPose, PedestrianWorld } from './peds/pedestrians';
 import { drawPedBubbles, PedView } from './render/pedView';
 import { Tuning } from './gen/tuning';
+import { TrafficView } from './render/trafficView';
 import { WorldView } from './render/worldView';
 import { installPhone } from './phone';
 import { HttpPackSource } from './world/citypack';
@@ -80,6 +81,7 @@ async function main(): Promise<void> {
   const view = new WorldView(engine, city, tuning, drive);
   const peds = new PedestrianWorld(city, tuning);
   const pedView = new PedView(view.scene);
+  const trafficView = drive.traffic ? new TrafficView(view.scene, drive.traffic, tuning) : null;
   const streamer = new ChunkStreamer(city, source, tuning, (c) => {
     drive.addChunk(c);
     view.addChunk(c);
@@ -122,6 +124,7 @@ async function main(): Promise<void> {
   $('btn-night').addEventListener('click', () => {
     night = !night;
     view.setNight(night);
+    if (drive.traffic) drive.traffic.night = night;
   });
   $('btn-respawn').title = t('respawn');
   $('btn-respawn').addEventListener('click', () => {
@@ -184,6 +187,7 @@ async function main(): Promise<void> {
     streamer.update(c.x, c.y, c.heading, now);
     peds.update(dt, [carPose(c)], view.rig.visibleRadius(size.w, size.h, tuning), night);
     pedView.update(peds);
+    trafficView?.update(view.rig.x, view.rig.y, view.rig.visibleRadius(size.w, size.h, tuning), c.layer);
     view.render();
     drawOverlay();
 
@@ -224,7 +228,7 @@ async function main(): Promise<void> {
     perfEl.textContent =
       `${perf.fps.toFixed(0)} fps  ${perf.frameMs.toFixed(1)} ms  max ${perf.worst.toFixed(0)}\n` +
       `draw ${s.drawCalls}  tri ${(s.triangles / 1000).toFixed(0)}k\n` +
-      `chunks ${s.chunks}  ${engine.isWebGPU ? 'WebGPU' : 'WebGL2'}  ${scheme.id.toUpperCase()}`;
+      `chunks ${s.chunks}  cars ${drive.traffic?.cars.length ?? 0}  ${engine.isWebGPU ? 'WebGPU' : 'WebGL2'}  ${scheme.id.toUpperCase()}`;
     perfEl.style.color = perf.fps >= 57 ? tokens.colorUiFpsOk : tokens.colorUiFpsBad;
     const d = drive.borderDistance();
     noticeEl.hidden = !(d !== null && d < tuning.hud.borderNoticeM);
