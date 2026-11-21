@@ -12,6 +12,7 @@ import 'package:world_engine/world_engine.dart';
 
 import 'paint/car_painter.dart';
 import 'paint/controls_painter.dart';
+import 'paint/pedestrians_painter.dart';
 import 'paint/props_painter.dart';
 
 /// Everything loaded before the first frame.
@@ -106,9 +107,14 @@ class MetropoleGame extends Game {
       textures: data.textures,
     );
     camera.snap(drive.car.x, drive.car.y, drive.car.heading, tuning);
+    peds = PedestrianWorld(city, tuning);
+    _pedBubbles = PedBubblePainter(
+        tr(ui.PlatformDispatcher.instance.locale.languageCode, MessageKey.pedestrianBubble), tuning.pedestrians.bubblePx);
   }
 
   final GameAssets data;
+  late final PedestrianWorld peds;
+  late final PedBubblePainter _pedBubbles;
   late final Tuning tuning;
   late final DriveWorld drive;
   late final ChunkStreamer streamer;
@@ -222,6 +228,7 @@ class MetropoleGame extends Game {
     final car = drive.car;
     camera.follow(car.x, car.y, car.heading, car.speed, dt, tuning, reversing: car.forwardSpeed < -0.5);
     streamer.update(car.x, car.y, car.heading);
+    if (!_size.isEmpty) peds.update(dt, [CarPose.of(car)], camera.visibleRadius(_size, tuning), night: night);
 
     _frames++;
     _frameAcc += dt;
@@ -282,11 +289,13 @@ class MetropoleGame extends Game {
         if (layer == 0) {
           paintSkids(c, drive.skids, car.halfWidth * 0.32);
           paintProps(c, drive.propsNear(car.x, car.y, camera.visibleRadius(_size, tuning)), night: night);
+          paintPedestrians(c, peds);
         }
         if (layer == car.layer) paintCar(c, car, night: night);
       },
     );
     _streetLabels(canvas);
+    _pedBubbles.paint(canvas, _size, peds, camera, tuning);
     paintControls(canvas, _size, scheme);
   }
 
