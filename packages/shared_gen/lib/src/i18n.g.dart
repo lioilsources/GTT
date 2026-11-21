@@ -107,6 +107,13 @@ enum MessageKey {
   strelniceRules3('strelniceRules3'),
   strelniceRound('strelniceRound'),
   strelniceReload('strelniceReload'),
+  routeTo('routeTo'),
+  distanceM('distanceM'),
+  distanceKm('distanceKm'),
+  distanceFt('distanceFt'),
+  distanceMi('distanceMi'),
+  arrived('arrived'),
+  routeCancel('routeCancel'),
   ;
 
   const MessageKey(this.key);
@@ -219,6 +226,13 @@ const Map<String, Map<String, String>> _messages = {
     'strelniceRules3': 'Tři kola po 90 sekundách.',
     'strelniceRound': 'Kolo {round}/3 · {seconds} s',
     'strelniceReload': 'Přebíjím…',
+    'routeTo': '{place} · {distance}',
+    'distanceM': '{m} m',
+    'distanceKm': '{km} km',
+    'distanceFt': '{ft} ft',
+    'distanceMi': '{mi} mi',
+    'arrived': 'Jsi v cíli',
+    'routeCancel': 'Zrušit trasu',
   },
   'en': {
     'appTitle': 'Metropole',
@@ -323,6 +337,13 @@ const Map<String, Map<String, String>> _messages = {
     'strelniceRules3': 'Three rounds of 90 seconds.',
     'strelniceRound': 'Round {round}/3 · {seconds} s',
     'strelniceReload': 'Reloading…',
+    'routeTo': '{place} · {distance}',
+    'distanceM': '{m} m',
+    'distanceKm': '{km} km',
+    'distanceFt': '{ft} ft',
+    'distanceMi': '{mi} mi',
+    'arrived': 'You have arrived',
+    'routeCancel': 'Cancel route',
   },
 };
 

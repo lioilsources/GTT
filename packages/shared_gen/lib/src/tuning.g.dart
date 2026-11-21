@@ -88,7 +88,8 @@ class Tuning {
         skids = TuningSkids._(r.sub('skids')),
         bench = TuningBench._(r.sub('bench')),
         hud = TuningHud._(r.sub('hud')),
-        minigames = TuningMinigames._(r.sub('minigames'));
+        minigames = TuningMinigames._(r.sub('minigames')),
+        route = TuningRoute._(r.sub('route'));
 
   factory Tuning.fromYaml(String src) {
     final y = loadYaml(src);
@@ -149,6 +150,10 @@ class Tuning {
   /// Minigames (METROPOLE_PLAN 9, specs/minigames/). Rules read these through the generated Tuning.
   final TuningMinigames minigames;
 
+  /// GPS route (specs/route.md). class_cost: per RoadClass index (unknown, motorway, trunk, primary,
+  /// secondary, tertiary, residential, service); integer multipliers of the length in dm.
+  final TuningRoute route;
+
   Map<String, Object> toJson() => {
         'car_scale': carScale,
         'lane_width_m': laneWidthM,
@@ -171,6 +176,7 @@ class Tuning {
         'bench': bench.toJson(),
         'hud': hud.toJson(),
         'minigames': minigames.toJson(),
+        'route': route.toJson(),
       };
 
   /// Dotted YAML path → value, for diffs against the loaded file.
@@ -1353,5 +1359,34 @@ class TuningMinigamesStrelnice {
         'reload_ticks': reloadTicks,
         'star_scores': starScores,
         'time_cap_s': timeCapS,
+      };
+}
+
+/// GPS route (specs/route.md). class_cost: per RoadClass index (unknown, motorway, trunk, primary,
+/// secondary, tertiary, residential, service); integer multipliers of the length in dm.
+class TuningRoute {
+  TuningRoute._(_R r)
+      : classCost = r.il('class_cost'),
+        rerouteM = r.d('reroute_m'),
+        rerouteS = r.d('reroute_s'),
+        arriveM = r.d('arrive_m'),
+        lineWidthM = r.d('line_width_m');
+
+  List<int> classCost;
+
+  double rerouteM;
+
+  double rerouteS;
+
+  double arriveM;
+
+  double lineWidthM;
+
+  Map<String, Object> toJson() => {
+        'class_cost': classCost,
+        'reroute_m': rerouteM,
+        'reroute_s': rerouteS,
+        'arrive_m': arriveM,
+        'line_width_m': lineWidthM,
       };
 }

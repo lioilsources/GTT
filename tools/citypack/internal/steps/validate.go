@@ -186,7 +186,11 @@ func reachable(g *pb.Graph, start int) []bool {
 
 func buildingRoadOverlaps(p *PackData) int {
 	const cell = 64.0
-	type poly struct{ ring []geo.Pt }
+	type poly struct {
+		ring     []geo.Pt
+		holes    [][]geo.Pt // courtyards: a driveway into a courtyard is not inside the building
+		landmark uint32
+	}
 	grid := map[[2]int][]int{}
 	var polys []poly
 	for _, c := range p.Chunks {
@@ -202,7 +206,16 @@ func buildingRoadOverlaps(p *PackData) int {
 				minX, maxX = math.Min(minX, ring[i].X), math.Max(maxX, ring[i].X)
 				minY, maxY = math.Min(minY, ring[i].Y), math.Max(maxY, ring[i].Y)
 			}
-			polys = append(polys, poly{ring})
+			var holes [][]geo.Pt
+			for h := 1; h < len(b.RingEnds); h++ {
+				s, e := int(b.RingEnds[h-1]), int(b.RingEnds[h])
+				hole := make([]geo.Pt, 0, e-s)
+				for i := s; i < e; i++ {
+					hole = append(hole, geo.Pt{X: float64(b.Rings[2*i]) / 10, Y: float64(b.Rings[2*i+1]) / 10})
+				}
+				holes = append(holes, hole)
+			}
+			polys = append(polys, poly{ring, holes, b.Landmark})
 			for x := int(math.Floor(minX / cell)); x <= int(math.Floor(maxX/cell)); x++ {
 				for y := int(math.Floor(minY / cell)); y <= int(math.Floor(maxY/cell)); y++ {
 					grid[[2]int{x, y}] = append(grid[[2]int{x, y}], len(polys)-1)
@@ -221,8 +234,11 @@ func buildingRoadOverlaps(p *PackData) int {
 			for s := 0.0; s < l; s += 2 {
 				q := pts[j-1].Add(pts[j].Sub(pts[j-1]).Mul(s / l))
 				for _, pi := range grid[[2]int{int(math.Floor(q.X / cell)), int(math.Floor(q.Y / cell))}] {
-					if geo.PointInRing(q, polys[pi].ring) {
+					if geo.PointInRing(q, polys[pi].ring) && !inAnyRing(q, polys[pi].holes) {
 						bad++
+						if bad <= 40 {
+							slog.Warn("validate: road inside building", "name", p.Graph.Names[ed.Name], "x", int(q.X), "y", int(q.Y), "landmark", polys[pi].landmark)
+						}
 						break
 					}
 				}
@@ -230,4 +246,13 @@ func buildingRoadOverlaps(p *PackData) int {
 		}
 	}
 	return bad
+}
+
+func inAnyRing(q geo.Pt, rings [][]geo.Pt) bool {
+	for _, r := range rings {
+		if geo.PointInRing(q, r) {
+			return true
+		}
+	}
+	return false
 }

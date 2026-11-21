@@ -1,4 +1,6 @@
-# Curated points snapped to the nearest kept road; M0 uses them only for the reachability check.
+# Curated points snapped to the nearest kept road (5.5). kind: plaza|station|park|landmark|bar|pier|stand.
+# minigame: the M1 minigame played at the spot (9.5, "každá se spotem na autentickém místě").
+# Commercial places keep a fictional name (R10); the point is a real location of that kind.
 spots:
   - {id: times_square, kind: plaza, name: Times Square, lat: 40.75800, lon: -73.98557}
   - {id: grand_central, kind: station, name: Grand Central Terminal, lat: 40.75272, lon: -73.97722}
@@ -7,3 +9,12 @@ spots:
   - {id: hudson_yards, kind: plaza, name: Hudson Yards, lat: 40.75380, lon: -74.00200}
   - {id: un_plaza, kind: plaza, name: United Nations Plaza, lat: 40.74990, lon: -73.96880}
   - {id: empire_state, kind: landmark, name: Empire State Building, lat: 40.74844, lon: -73.98566}
+  # M1 minigame spots
+  - {id: east_village_bar, kind: bar, name: The Old Match Saloon, lat: 40.72870, lon: -73.98950, minigame: sirky}
+  - {id: little_italy_club, kind: bar, name: Social Club Mulberry, lat: 40.71930, lon: -73.99710, minigame: oko}
+  - {id: washington_square, kind: park, name: Washington Square Park, lat: 40.73080, lon: -73.99730, minigame: dama}
+  - {id: columbus_park, kind: park, name: Columbus Park, lat: 40.71560, lon: -73.99990, minigame: desetitisic}
+  - {id: hells_kitchen_pub, kind: bar, name: The Ninth Avenue Arms, lat: 40.76200, lon: -73.99060, minigame: sipky}
+  - {id: pier_62, kind: pier, name: Hudson River Park Pier 62, lat: 40.74930, lon: -74.00980, minigame: strelnice}
+  - {id: seaport_boardwalk, kind: pier, name: Seaport Boardwalk, lat: 40.70560, lon: -74.00290, minigame: koulena}
+  - {id: penn_taxi_stand, kind: stand, name: Penn Station Taxi Stand, lat: 40.75060, lon: -73.99350, minigame: taxi}

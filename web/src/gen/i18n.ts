@@ -106,6 +106,13 @@ export type MessageKey =
   | "strelniceRules3"
   | "strelniceRound"
   | "strelniceReload"
+  | "routeTo"
+  | "distanceM"
+  | "distanceKm"
+  | "distanceFt"
+  | "distanceMi"
+  | "arrived"
+  | "routeCancel"
 ;
 
 export const messages: Record<Locale, Record<MessageKey, string>> = {
@@ -212,6 +219,13 @@ export const messages: Record<Locale, Record<MessageKey, string>> = {
     strelniceRules3: "Tři kola po 90 sekundách.",
     strelniceRound: "Kolo {round}/3 · {seconds} s",
     strelniceReload: "Přebíjím…",
+    routeTo: "{place} · {distance}",
+    distanceM: "{m} m",
+    distanceKm: "{km} km",
+    distanceFt: "{ft} ft",
+    distanceMi: "{mi} mi",
+    arrived: "Jsi v cíli",
+    routeCancel: "Zrušit trasu",
   },
   "en": {
     appTitle: "Metropole",
@@ -316,6 +330,13 @@ export const messages: Record<Locale, Record<MessageKey, string>> = {
     strelniceRules3: "Three rounds of 90 seconds.",
     strelniceRound: "Round {round}/3 · {seconds} s",
     strelniceReload: "Reloading…",
+    routeTo: "{place} · {distance}",
+    distanceM: "{m} m",
+    distanceKm: "{km} km",
+    distanceFt: "{ft} ft",
+    distanceMi: "{mi} mi",
+    arrived: "You have arrived",
+    routeCancel: "Cancel route",
   },
 };
 

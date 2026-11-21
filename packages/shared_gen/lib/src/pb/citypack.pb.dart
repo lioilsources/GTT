@@ -1412,6 +1412,7 @@ class Spot extends $pb.GeneratedMessage {
     $core.int? parkX,
     $core.int? parkY,
     $core.double? parkHeading,
+    $core.String? minigame,
   }) {
     final result = Spot._();
     if (id != null) result.id = id;
@@ -1423,6 +1424,7 @@ class Spot extends $pb.GeneratedMessage {
     if (parkX != null) result.parkX = parkX;
     if (parkY != null) result.parkY = parkY;
     if (parkHeading != null) result.parkHeading = parkHeading;
+    if (minigame != null) result.minigame = minigame;
     return result;
   }
 
@@ -1448,6 +1450,7 @@ class Spot extends $pb.GeneratedMessage {
     ..aI(7, _omitFieldNames ? '' : 'parkX', fieldType: $pb.PbFieldType.OS3)
     ..aI(8, _omitFieldNames ? '' : 'parkY', fieldType: $pb.PbFieldType.OS3)
     ..aD(9, _omitFieldNames ? '' : 'parkHeading', fieldType: $pb.PbFieldType.OF)
+    ..aOS(10, _omitFieldNames ? '' : 'minigame')
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -1550,6 +1553,15 @@ class Spot extends $pb.GeneratedMessage {
   $core.bool hasParkHeading() => $_has(8);
   @$pb.TagNumber(9)
   void clearParkHeading() => $_clearField(9);
+
+  @$pb.TagNumber(10)
+  $core.String get minigame => $_getSZ(9);
+  @$pb.TagNumber(10)
+  set minigame($core.String value) => $_setString(9, value);
+  @$pb.TagNumber(10)
+  $core.bool hasMinigame() => $_has(9);
+  @$pb.TagNumber(10)
+  void clearMinigame() => $_clearField(10);
 }
 
 const $core.bool _omitFieldNames =
