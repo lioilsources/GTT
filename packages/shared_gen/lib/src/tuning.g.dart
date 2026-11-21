@@ -494,6 +494,8 @@ class TuningDrive {
   TuningDrive._(_R r)
       : stepHz = r.i('step_hz'),
         substeps = r.i('substeps'),
+        velocityIterations = r.i('velocity_iterations'),
+        positionIterations = r.i('position_iterations'),
         axleOffset = r.d('axle_offset'),
         steerLockRad = r.d('steer_lock_rad'),
         steerLockDropRad = r.d('steer_lock_drop_rad'),
@@ -524,8 +526,13 @@ class TuningDrive {
 
   int stepHz;
 
-  /// Box2D v3 sub-steps per step
+  /// Box2D v3 sub-steps per step (client F)
   int substeps;
+
+  /// planck.js solver iterations per step (client W, DUALSTACK 6.4)
+  int velocityIterations;
+
+  int positionIterations;
 
   /// axle distance from the centre, fraction of half length
   double axleOffset;
@@ -596,6 +603,8 @@ class TuningDrive {
   Map<String, Object> toJson() => {
         'step_hz': stepHz,
         'substeps': substeps,
+        'velocity_iterations': velocityIterations,
+        'position_iterations': positionIterations,
         'axle_offset': axleOffset,
         'steer_lock_rad': steerLockRad,
         'steer_lock_drop_rad': steerLockDropRad,
@@ -633,7 +642,8 @@ class TuningLayers {
         switchMarginM = r.d('switch_margin_m'),
         railMargin = r.d('rail_margin'),
         railBounce = r.d('rail_bounce'),
-        spawnSearchM = r.d('spawn_search_m');
+        spawnSearchM = r.d('spawn_search_m'),
+        deckLiftM = r.d('deck_lift_m');
 
   double searchM;
 
@@ -648,12 +658,16 @@ class TuningLayers {
 
   double spawnSearchM;
 
+  /// bridge deck height per layer in the 3D client W (DUALSTACK 6.2)
+  double deckLiftM;
+
   Map<String, Object> toJson() => {
         'search_m': searchM,
         'switch_margin_m': switchMarginM,
         'rail_margin': railMargin,
         'rail_bounce': railBounce,
         'spawn_search_m': spawnSearchM,
+        'deck_lift_m': deckLiftM,
       };
 
   /// Value by YAML key, null when the key is unknown.
@@ -663,10 +677,11 @@ class TuningLayers {
         'rail_margin' => railMargin,
         'rail_bounce' => railBounce,
         'spawn_search_m' => spawnSearchM,
+        'deck_lift_m' => deckLiftM,
         _ => null,
       };
 
-  static const keys = ['search_m', 'switch_margin_m', 'rail_margin', 'rail_bounce', 'spawn_search_m'];
+  static const keys = ['search_m', 'switch_margin_m', 'rail_margin', 'rail_bounce', 'spawn_search_m', 'deck_lift_m'];
 }
 
 class TuningControls {
