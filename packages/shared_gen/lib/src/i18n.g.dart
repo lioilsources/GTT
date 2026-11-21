@@ -114,6 +114,7 @@ enum MessageKey {
   distanceMi('distanceMi'),
   arrived('arrived'),
   routeCancel('routeCancel'),
+  pedestrianBubble('pedestrianBubble'),
   ;
 
   const MessageKey(this.key);
@@ -233,6 +234,7 @@ const Map<String, Map<String, String>> _messages = {
     'distanceMi': '{mi} mi',
     'arrived': 'Jsi v cíli',
     'routeCancel': 'Zrušit trasu',
+    'pedestrianBubble': '!!',
   },
   'en': {
     'appTitle': 'Metropole',
@@ -344,6 +346,7 @@ const Map<String, Map<String, String>> _messages = {
     'distanceMi': '{mi} mi',
     'arrived': 'You have arrived',
     'routeCancel': 'Cancel route',
+    'pedestrianBubble': '!!',
   },
 };
 

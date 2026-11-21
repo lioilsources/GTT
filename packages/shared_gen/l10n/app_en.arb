@@ -138,5 +138,6 @@
   "distanceMi": "{mi} mi",
   "@distanceMi": {"placeholders":{"mi":{"type":"String"}}},
   "arrived": "You have arrived",
-  "routeCancel": "Cancel route"
+  "routeCancel": "Cancel route",
+  "pedestrianBubble": "!!"
 }

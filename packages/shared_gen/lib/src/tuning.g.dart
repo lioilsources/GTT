@@ -89,7 +89,8 @@ class Tuning {
         bench = TuningBench._(r.sub('bench')),
         hud = TuningHud._(r.sub('hud')),
         minigames = TuningMinigames._(r.sub('minigames')),
-        route = TuningRoute._(r.sub('route'));
+        route = TuningRoute._(r.sub('route')),
+        pedestrians = TuningPedestrians._(r.sub('pedestrians'));
 
   factory Tuning.fromYaml(String src) {
     final y = loadYaml(src);
@@ -154,6 +155,11 @@ class Tuning {
   /// secondary, tertiary, residential, service); integer multipliers of the length in dm.
   final TuningRoute route;
 
+  /// Pedestrians (specs/pedestrians.md). They always dodge (R7) and are never physics bodies.
+  /// class_density: spawn acceptance per RoadClass index (unknown, motorway, trunk, primary,
+  /// secondary, tertiary, residential, service).
+  final TuningPedestrians pedestrians;
+
   Map<String, Object> toJson() => {
         'car_scale': carScale,
         'lane_width_m': laneWidthM,
@@ -177,6 +183,7 @@ class Tuning {
         'hud': hud.toJson(),
         'minigames': minigames.toJson(),
         'route': route.toJson(),
+        'pedestrians': pedestrians.toJson(),
       };
 
   /// Dotted YAML path → value, for diffs against the loaded file.
@@ -1388,5 +1395,140 @@ class TuningRoute {
         'reroute_s': rerouteS,
         'arrive_m': arriveM,
         'line_width_m': lineWidthM,
+      };
+}
+
+/// Pedestrians (specs/pedestrians.md). They always dodge (R7) and are never physics bodies.
+/// class_density: spawn acceptance per RoadClass index (unknown, motorway, trunk, primary,
+/// secondary, tertiary, residential, service).
+class TuningPedestrians {
+  TuningPedestrians._(_R r)
+      : enabled = r.b('enabled'),
+        seed = r.i('seed'),
+        maxCount = r.i('max_count'),
+        nightFactor = r.d('night_factor'),
+        radiusM = r.d('radius_m'),
+        walkMps = r.d('walk_mps'),
+        walkJitterMps = r.d('walk_jitter_mps'),
+        classDensity = r.dl('class_density'),
+        busyDistricts = r.sl('busy_districts'),
+        busyFactor = r.d('busy_factor'),
+        quietFactor = r.d('quiet_factor'),
+        spawnMarginM = r.d('spawn_margin_m'),
+        spawnBandM = r.d('spawn_band_m'),
+        despawnMarginM = r.d('despawn_margin_m'),
+        spawnPerS = r.d('spawn_per_s'),
+        fillAttempts = r.i('fill_attempts'),
+        fillClearM = r.d('fill_clear_m'),
+        snapM = r.d('snap_m'),
+        crossChance = r.d('cross_chance'),
+        dodgeHorizonS = r.d('dodge_horizon_s'),
+        dodgeMinMps = r.d('dodge_min_mps'),
+        dodgeMarginM = r.d('dodge_margin_m'),
+        dodgeExtraM = r.d('dodge_extra_m'),
+        leapS = r.d('leap_s'),
+        leapFraction = r.d('leap_fraction'),
+        stunS = r.d('stun_s'),
+        bubbleS = r.d('bubble_s'),
+        bubblePx = r.d('bubble_px'),
+        bubbleLiftPx = r.d('bubble_lift_px');
+
+  bool enabled;
+
+  int seed;
+
+  int maxCount;
+
+  /// density and max_count at night
+  double nightFactor;
+
+  /// body radius before car_scale
+  double radiusM;
+
+  double walkMps;
+
+  double walkJitterMps;
+
+  List<double> classDensity;
+
+  List<String> busyDistricts;
+
+  double busyFactor;
+
+  double quietFactor;
+
+  /// the spawn ring starts this far beyond the visible radius
+  double spawnMarginM;
+
+  double spawnBandM;
+
+  /// farther than visible radius + this from the car = removed
+  double despawnMarginM;
+
+  /// spawn attempts per second
+  double spawnPerS;
+
+  /// attempts when the area is filled at once (start, teleport)
+  int fillAttempts;
+
+  double fillClearM;
+
+  /// max distance from a sample point to a sidewalk
+  double snapM;
+
+  /// at a node: switch to the other side of the street
+  double crossChance;
+
+  double dodgeHorizonS;
+
+  double dodgeMinMps;
+
+  double dodgeMarginM;
+
+  double dodgeExtraM;
+
+  double leapS;
+
+  /// a leap takes at most this part of the time to contact (<= 0.5)
+  double leapFraction;
+
+  double stunS;
+
+  double bubbleS;
+
+  double bubblePx;
+
+  double bubbleLiftPx;
+
+  Map<String, Object> toJson() => {
+        'enabled': enabled,
+        'seed': seed,
+        'max_count': maxCount,
+        'night_factor': nightFactor,
+        'radius_m': radiusM,
+        'walk_mps': walkMps,
+        'walk_jitter_mps': walkJitterMps,
+        'class_density': classDensity,
+        'busy_districts': busyDistricts,
+        'busy_factor': busyFactor,
+        'quiet_factor': quietFactor,
+        'spawn_margin_m': spawnMarginM,
+        'spawn_band_m': spawnBandM,
+        'despawn_margin_m': despawnMarginM,
+        'spawn_per_s': spawnPerS,
+        'fill_attempts': fillAttempts,
+        'fill_clear_m': fillClearM,
+        'snap_m': snapM,
+        'cross_chance': crossChance,
+        'dodge_horizon_s': dodgeHorizonS,
+        'dodge_min_mps': dodgeMinMps,
+        'dodge_margin_m': dodgeMarginM,
+        'dodge_extra_m': dodgeExtraM,
+        'leap_s': leapS,
+        'leap_fraction': leapFraction,
+        'stun_s': stunS,
+        'bubble_s': bubbleS,
+        'bubble_px': bubblePx,
+        'bubble_lift_px': bubbleLiftPx,
       };
 }

@@ -83,6 +83,12 @@ abstract final class Tokens {
   static const int colorPropsNewsbox = 0xFF285AAA;
   static const int colorPropsPlanter = 0xFF786050;
   static const int colorPropsPlanterGreen = 0xFF468C46;
+  static const List<int> colorPedestriansShirts = [0xFFD2483C, 0xFF3C78C8, 0xFFE6B43C, 0xFF46A06E, 0xFF8C5AB4, 0xFFE67896, 0xFFF0F0EA, 0xFF3C3C46];
+  static const int colorPedestriansHead = 0xFF5A4134;
+  static const int colorPedestriansShadow = 0x38000000;
+  static const int colorPedestriansBubble = 0xF0FFFFFF;
+  static const int colorPedestriansBubbleOutline = 0xFF1C1C22;
+  static const int colorPedestriansBubbleText = 0xFFE02828;
   static const double lightDayRoofLight = 1.12;
   static const double lightDaySunX = -0.6;
   static const double lightDaySunY = 0.8;

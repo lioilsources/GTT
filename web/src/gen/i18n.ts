@@ -113,6 +113,7 @@ export type MessageKey =
   | "distanceMi"
   | "arrived"
   | "routeCancel"
+  | "pedestrianBubble"
 ;
 
 export const messages: Record<Locale, Record<MessageKey, string>> = {
@@ -226,6 +227,7 @@ export const messages: Record<Locale, Record<MessageKey, string>> = {
     distanceMi: "{mi} mi",
     arrived: "Jsi v cíli",
     routeCancel: "Zrušit trasu",
+    pedestrianBubble: "!!",
   },
   "en": {
     appTitle: "Metropole",
@@ -337,6 +339,7 @@ export const messages: Record<Locale, Record<MessageKey, string>> = {
     distanceMi: "{mi} mi",
     arrived: "You have arrived",
     routeCancel: "Cancel route",
+    pedestrianBubble: "!!",
   },
 };
 
