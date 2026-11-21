@@ -11,6 +11,8 @@ import { t as tr, type Locale, type MessageKey } from './gen/i18n';
 import { cityIdValues, type CityId } from './gen/ids';
 import type { BenchResult, BenchRoute, CarSpec } from './gen/schema';
 import { tokens } from './gen/tokens';
+import { carPose, PedestrianWorld } from './peds/pedestrians';
+import { drawPedBubbles, PedView } from './render/pedView';
 import { Tuning } from './gen/tuning';
 import { WorldView } from './render/worldView';
 import { HttpPackSource } from './world/citypack';
@@ -75,6 +77,8 @@ async function main(): Promise<void> {
   if (spot) drive.spawn(spot.parkX / 10, spot.parkY / 10, spot.parkHeading);
 
   const view = new WorldView(engine, city, tuning, drive);
+  const peds = new PedestrianWorld(city, tuning);
+  const pedView = new PedView(view.scene);
   const streamer = new ChunkStreamer(city, source, tuning, (c) => {
     drive.addChunk(c);
     view.addChunk(c);
@@ -174,6 +178,8 @@ async function main(): Promise<void> {
     const c = drive.car;
     view.rig.follow(c.x, c.y, c.heading, c.speed, dt, tuning, c.forwardSpeed < -0.5);
     streamer.update(c.x, c.y, c.heading, now);
+    peds.update(dt, [carPose(c)], view.rig.visibleRadius(size.w, size.h, tuning), night);
+    pedView.update(peds);
     view.render();
     drawOverlay();
 
@@ -298,6 +304,7 @@ async function main(): Promise<void> {
       }
       ctx.shadowBlur = 0;
     }
+    drawPedBubbles(ctx, peds, rig, size, tuning, t('pedestrianBubble'));
     controlHints();
   }
 
@@ -349,7 +356,7 @@ async function main(): Promise<void> {
 
   if (import.meta.env.DEV || params.has('debug')) {
     (window as unknown as Record<string, unknown>)['metro'] = {
-      engine, view, drive, city, tuning, frameTimes, pilot, bench,
+      engine, view, drive, city, tuning, frameTimes, pilot, bench, peds,
       timing: () => ({ firstFrameMs, loadMs }),
     };
   }
