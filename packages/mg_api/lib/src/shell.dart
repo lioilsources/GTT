@@ -263,6 +263,7 @@ class _MinigameShellState extends State<MinigameShell> with WidgetsBindingObserv
             ],
           ),
           Text(t(MessageKey.scoreValue, {'score': o.score}), style: text),
+          if (widget.env.opponent case final opp?) OpponentLine(opponent: opp, winner: o.winner),
           button(t(MessageKey.playAgain), () => setState(_begin)),
           button(
             t(MessageKey.back),
@@ -282,6 +283,52 @@ class _MinigameShellState extends State<MinigameShell> with WidgetsBindingObserv
         borderRadius: BorderRadius.circular(Tokens.radiusButton),
       ),
       child: Column(mainAxisSize: MainAxisSize.min, children: children),
+    );
+  }
+}
+
+/// The opponent's short line on the result screen: placeholder portrait (initials on a token
+/// colour; manga portraits come later via ComfyUI) and a speech bubble.
+class OpponentLine extends StatelessWidget {
+  const OpponentLine({super.key, required this.opponent, required this.winner});
+
+  final MinigameOpponent opponent;
+  final String winner;
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = Tokens.colorNpcPortraits;
+    final initial = opponent.name.isEmpty ? '?' : opponent.name[0].toUpperCase();
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: Tokens.spaceSm),
+      child: Row(
+        children: [
+          CircleAvatar(
+            radius: 20,
+            backgroundColor: Color(colors[opponent.portrait % colors.length]),
+            child: Text(initial, style: const TextStyle(color: Color(Tokens.colorNpcPortraitText), fontWeight: FontWeight.w700)),
+          ),
+          const SizedBox(width: Tokens.spaceSm),
+          Expanded(
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: Tokens.spaceMd, vertical: Tokens.spaceSm),
+              decoration: BoxDecoration(
+                color: const Color(Tokens.colorNpcBubble),
+                borderRadius: BorderRadius.circular(14),
+              ),
+              child: Text.rich(
+                TextSpan(
+                  children: [
+                    TextSpan(text: '${opponent.name} ', style: const TextStyle(fontWeight: FontWeight.w700)),
+                    TextSpan(text: opponent.line(winner)),
+                  ],
+                ),
+                style: const TextStyle(color: Color(Tokens.colorNpcBubbleText), fontSize: 14),
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

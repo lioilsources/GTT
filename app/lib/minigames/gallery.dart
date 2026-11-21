@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:mg_api/mg_api.dart';
+import 'package:npc_dialogue/npc_dialogue.dart';
 import 'package:shared_gen/shared_gen.dart';
 
 import '../l10n/app_localizations.dart';
@@ -21,14 +22,40 @@ class _GalleryScreenState extends State<GalleryScreen> {
   // A fresh seed per game; Random is fine here, the rules themselves are seeded.
   final Random _random = Random();
   int _level = 3;
+
+  // NPC opponent for the result-screen line (specs/dialogue.md); 0 = none.
+  int _opponent = 0;
+  DialogueSession? _npc;
   late int _seed = _newSeed();
 
   int _newSeed() => _random.nextInt(1 << 32);
 
+  @override
+  void initState() {
+    super.initState();
+    ensureDialogueSession(widget.tuning).then((s) {
+      if (mounted) setState(() => _npc = s);
+    });
+  }
+
+  List<String> get _opponents => ['', ...?_npc?.pack.characters.map((c) => c.id)];
+
   void _open(MinigameId id, Minigame game) {
     final locale = Localizations.localeOf(context).languageCode;
-    final env = MinigameEnv(tuning: widget.tuning, locale: messageLocales.contains(locale) ? locale : 'en');
-    final ctx = MinigameContext(cityId: CityId.nyc.id, difficulty: _level, seed: _seed, locale: env.locale);
+    final lang = messageLocales.contains(locale) ? locale : 'en';
+    final opponentId = _opponents[_opponent % _opponents.length];
+    final env = MinigameEnv(
+      tuning: widget.tuning,
+      locale: lang,
+      opponent: opponentFor(_npc, opponentId.isEmpty ? null : opponentId, _seed, lang),
+    );
+    final ctx = MinigameContext(
+      cityId: CityId.nyc.id,
+      difficulty: _level,
+      seed: _seed,
+      locale: env.locale,
+      opponentId: opponentId.isEmpty ? null : opponentId,
+    );
     Navigator.of(context).push(
       MaterialPageRoute<void>(
         builder: (routeContext) => game.build(ctx, env, (r) {
@@ -69,6 +96,21 @@ class _GalleryScreenState extends State<GalleryScreen> {
               Text(l.seed(_seed), style: muted),
             ],
           ),
+          if (_npc case final npc?)
+            Row(
+              children: [
+                IconButton(
+                  icon: const Icon(Icons.face, color: Color(Tokens.colorUiText)),
+                  onPressed: () => setState(() => _opponent = (_opponent + 1) % _opponents.length),
+                ),
+                Text(
+                  _opponents[_opponent % _opponents.length].isEmpty
+                      ? l.npcNoOpponent
+                      : l.npcOpponent(npc.character(_opponents[_opponent % _opponents.length])!.name),
+                  style: muted,
+                ),
+              ],
+            ),
           for (final id in MinigameId.values)
             Padding(
               padding: const EdgeInsets.only(bottom: Tokens.spaceSm),

@@ -41,6 +41,8 @@ dependencies:
     path: ../packages/feed_hub
   meta_progress:
     path: ../packages/meta_progress
+  npc_dialogue:
+    path: ../packages/npc_dialogue
 
 dev_dependencies:
   flutter_test:
