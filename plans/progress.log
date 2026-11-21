@@ -2,3 +2,4 @@
 2026-11-21 | 10:50–14:35 (3 h 45 min) | M0 implementováno (citypack, world_engine, drive_core, app, HUD, tuning panel), čísla do tuning.yaml, čistá logika; D0 (metro, shared_gen, rules_core, web/, schémata, PRNG vektory, CI); zavedeno měření postupu – +34 bodů, 54/54 testů
 2026-11-21 | 16:40–16:55 (15 min) | veřejné repo lioilsources/GTT, push, PR #1, první publish NYC balíčku, Pages zapnuté, CI zelené – +3 body (D0-6, D0-8)
 2026-11-21 | 17:10–17:35 (25 min) | merge PR #1, Pages živé (D0-7); klíče tuning pro W (PR #2); D1-1 hračka M0 ve webu (PR #3) – +2 body hotovo, +4 čekají
+2026-11-21 | 18:30–19:00 (30 min) | merge #2, #3 (W na Pages); benchmark D1: trasa, specs/bench.md, autopilot v obou klientech, šablona BAKEOFF_REPORT (PR #4–#6); rychlejší start W – +0 hotovo, +3 čekají
