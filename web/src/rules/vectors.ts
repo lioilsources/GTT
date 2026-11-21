@@ -1,3 +1,5 @@
+import { replay } from '../minigames/rules';
+import { SirkyRules } from '../minigames/sirky/rules';
 import { Prng } from './prng';
 
 /** One step of a P0 vector: an action and the state after it (DUALSTACK 5.4). */
@@ -23,7 +25,24 @@ export interface VectorFile {
 /** Replays a case and returns the states this client produces, one per step. */
 export type Replayer = (c: VectorCase) => Array<Record<string, unknown>>;
 
+type AnyRules = Parameters<typeof replay>[0];
+
+/** Minigame rules modules by vector module id (specs/minigames/README.md "Vektory"). */
+export const rulesModules: Record<string, () => AnyRules> = {
+  sirky: () => new SirkyRules() as unknown as AnyRules,
+};
+
+/** Final result of a rules case (compared with case.result). */
+export function replayResult(module: string, c: VectorCase): unknown {
+  const make = rulesModules[module];
+  return make ? replay(make(), c).result : undefined;
+}
+
+const rulesReplayer = (make: () => AnyRules): Replayer => (c) =>
+  replay(make(), c).states as unknown as Array<Record<string, unknown>>;
+
 export const replayers: Record<string, Replayer> = {
+  ...Object.fromEntries(Object.entries(rulesModules).map(([k, make]) => [k, rulesReplayer(make)])),
   prng: (c) => {
     const r = new Prng(c.seed);
     return c.steps.map(({ action }) => {

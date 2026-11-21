@@ -43,6 +43,19 @@ async function json<T>(path: string): Promise<T> {
 }
 
 async function main(): Promise<void> {
+  // ?gallery / ?mg=<id>: minigames without the world (specs/minigames/README.md "Galerie").
+  if (params.has('gallery') || params.has('mg')) {
+    const [{ runGallery }, tuning] = await Promise.all([
+      import('./minigames/gallery'),
+      json<unknown>('content/tuning.json').then((j) => Tuning.fromJson(j)),
+    ]);
+    for (const id of ['world', 'overlay', 'hud', 'loading']) $(id).hidden = true;
+    const host = document.createElement('div');
+    host.id = 'minigames';
+    document.body.append(host);
+    runGallery(host, { tuning, locale, t }, params);
+    return;
+  }
   const cityId = (cityIdValues as readonly string[]).includes(params.get('city') ?? '') ? (params.get('city') as CityId) : 'nyc';
   $('loading').textContent = t('loading', { city: cityId });
   $('about').textContent = t('aboutMaps');

@@ -15,6 +15,8 @@ npm run typecheck && npm test && npm run build
 - `src/drive/` – auto (model pneumatik ze `specs/drive.md`), vrstvy, zábradlí, mobiliář, ovládání A/B/C.
   Čistá logika bez Babylonu; testy ve `test/drive.test.ts` jezdí po skutečném balíčku NYC.
 - `src/render/` – geometrie (čistá, testovaná) a scéna Babylonu.
+- `src/minigames/` – kontrakt miniher (`api.ts`, `rules.ts`), společné UI (`shell.ts`: návod, pauza,
+  strop, výsledek), Galerie a hry (`<id>/rules.ts` čistá pravidla, `<id>/game.ts` UI).
 - `src/gen/` – generuje `metro gen`, needitovat.
 
 ## Obraz shodný s F (DUALSTACK 6.2)
@@ -25,6 +27,7 @@ Auto drží na `car_anchor` posunutá projekce (lens shift), ne posun kamery. Mo
 
 ## Parametry adresy
 - `?debug` – `window.metro` (engine, scéna, jízda, `firstFrameMs`, `frameTimes`).
+- `?gallery` – Galerie miniher; `?mg=<id>&seed=<n>&level=<1-5>` – rovnou minihra.
 - `?scheme=a|b|c` – schéma ovládání; `?spot=<id>` – start na spotu; `?gpu=webgpu` – volitelně WebGPU.
 - Klávesnice: šipky/WASD, mezerník = ruční brzda.
 
@@ -32,3 +35,8 @@ Auto drží na `car_anchor` posunutá projekce (lens shift), ne posun kamery. Mo
 - Mobiliář rozmisťuje sdílený PRNG (`specs/prng.md`); F zatím `dart:math` Random, takže pozice se liší.
 - Auto v planck.js má zkosené rohy místo zaobleného boxu Box2D v3; hmotnost je stejná jako ve F.
 - Spadlá lampa je kreslená jako kotouč, ne ležící sloup.
+
+## Odchylka od plánu (6.1)
+UI miniher je čisté DOM/SVG s malým pomocníkem `h()` (`src/minigames/dom.ts`), ne Svelte: typová
+kontrola `.svelte` souborů (svelte-check) nad TypeScriptem 7 není ověřená a diskrétní hry UI
+framework nepotřebují. Až přijde telefon s feedem (M1-S7), rozhodne se znovu.
