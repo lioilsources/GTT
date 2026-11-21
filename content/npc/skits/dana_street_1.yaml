@@ -1,0 +1,121 @@
+# DRAFT for Ol1n's review (specs/dialogue.md). Dana on a Midtown kerb, phone almost dead.
+id: dana_street_1
+character: dana
+context: street
+city: nyc
+beats:
+  - npc:
+      en: "Excuse me. Do you know if 42nd is moving? I have a meeting at Grand Central in eleven minutes."
+      cs: "Promiň. Nevíš, jestli se na 42. ulici jede? Za jedenáct minut mám schůzku na Grand Central."
+    replies:
+      flirt:
+        en: "For you, I'd make it move."
+        cs: "Kvůli tobě ji rozhýbu."
+      joke:
+        en: "42nd hasn't moved since the nineties."
+        cs: "Dvaačtyřicítka se nehnula od devadesátek."
+      dry:
+        en: "It's moving. Slowly. Walk."
+        cs: "Jede se. Pomalu. Jdi pěšky."
+    reactions:
+      flirt:
+        en: "Generous. Also impossible. Next."
+        cs: "Velkorysé. A taky nemožné. Dál."
+      joke:
+        en: "That's not helpful. I now have ten minutes."
+        cs: "To mi nepomůže. Teď už mám deset minut."
+      dry:
+        en: "Finally, a useful answer. Walking it is."
+        cs: "Konečně užitečná odpověď. Tak pěšky."
+  - npc:
+      en: "My phone's at four percent and my calendar is on it. If it dies, I cease to exist."
+      cs: "Telefon mám na čtyřech procentech a je v něm celý můj kalendář. Jestli umře, přestanu existovat."
+    replies:
+      flirt:
+        en: "You'd still exist to me."
+        cs: "Pro mě bys existovala dál."
+      joke:
+        en: "Four percent is plenty. Live a little."
+        cs: "Čtyři procenta stačí. Užij si život."
+      dry:
+        en: "Write the next meeting on your hand."
+        cs: "Napiš si další schůzku na ruku."
+    reactions:
+      flirt:
+        en: "Sweet. Not a calendar, though."
+        cs: "Milé. Ale kalendář to není."
+      joke:
+        en: "I live a lot. Between nine and six."
+        cs: "Žiju hodně. Od devíti do šesti."
+      dry:
+        en: "Low-tech. Efficient. I respect it."
+        cs: "Low-tech. Efektivní. Respekt."
+  - npc:
+      en: "Oh. Email. The meeting moved to tomorrow. I'm... early. I'm never early. I don't know what to do."
+      cs: "Á. E-mail. Schůzka se přesunula na zítřek. Jsem... napřed. Já nikdy nejsem napřed. Nevím, co dělat."
+    replies:
+      flirt:
+        en: "Spend the free time with me?"
+        cs: "Stráv ten volný čas se mnou?"
+      joke:
+        en: "Celebrate! Throw your calendar in the air!"
+        cs: "Oslav to! Vyhoď kalendář do vzduchu!"
+      dry:
+        en: "Get a coffee. Sit down. Breathe."
+        cs: "Dej si kafe. Sedni si. Dýchej."
+    reactions:
+      flirt:
+        en: "Bold. I have twenty free minutes. Don't waste them."
+        cs: "Odvážné. Mám dvacet volných minut. Nepromrhej je."
+      joke:
+        en: "It's on my phone. At three percent. No."
+        cs: "Je v telefonu. Na třech procentech. Ne."
+      dry:
+        en: "Coffee, sit, breathe. A three-step plan. I like it."
+        cs: "Kafe, sednout, dýchat. Plán ve třech krocích. To se mi líbí."
+  - npc:
+      en: "Bryant Park is right there. I've walked past it every day for six years. Never sat down once."
+      cs: "Bryant Park je hned tamhle. Šest let kolem něj chodím každý den. Ani jednou jsem si nesedla."
+    replies:
+      flirt:
+        en: "Then sit. I'll keep you company."
+        cs: "Tak si sedni. Udělám ti společnost."
+      joke:
+        en: "The chairs have been waiting. They're very patient."
+        cs: "Židle čekají. Jsou hodně trpělivé."
+      dry:
+        en: "The chairs are free. That's efficient."
+        cs: "Židle jsou zdarma. To je efektivní."
+    reactions:
+      flirt:
+        en: "Fine. Twenty minutes. I'm setting a timer."
+        cs: "Dobře. Dvacet minut. Nastavím si časovač."
+      joke:
+        en: "Chairs don't wait. Chairs are furniture."
+        cs: "Židle nečekají. Židle jsou nábytek."
+      dry:
+        en: "Free and efficient. You speak my language."
+        cs: "Zdarma a efektivní. Mluvíš mým jazykem."
+  - npc:
+      en: "Two percent. I'll find a charger and pretend this never happened. Thanks. Genuinely."
+      cs: "Dvě procenta. Najdu nabíječku a budu dělat, že se nic nestalo. Díky. Upřímně."
+    replies:
+      flirt:
+        en: "Text me when you're at a hundred."
+        cs: "Napiš mi, až budeš na stovce."
+      joke:
+        en: "Say hi to your calendar for me."
+        cs: "Pozdravuj ode mě kalendář."
+      dry:
+        en: "The library on Fifth has outlets."
+        cs: "Knihovna na Páté má zásuvky."
+    reactions:
+      flirt:
+        en: "Maybe. I'll pencil you in. Literally. Bye."
+        cs: "Možná. Zapíšu si tě tužkou. Doslova. Ahoj."
+      joke:
+        en: "It doesn't take greetings. Bye."
+        cs: "Ten pozdravy nepřijímá. Ahoj."
+      dry:
+        en: "Of course it does. Very useful conversation. Bye."
+        cs: "Samozřejmě, že má. Velmi užitečný rozhovor. Ahoj."

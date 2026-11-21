@@ -13,6 +13,7 @@ import (
 
 	"gopkg.in/yaml.v3"
 
+	"metro/internal/npc"
 	"metro/internal/repo"
 )
 
@@ -61,8 +62,22 @@ func Sync(root string) error {
 			}
 		}
 	}
+	// NPC dialogue content merged into one file for both clients (specs/dialogue.md).
+	pack, err := npc.Load(root)
+	if err != nil {
+		return err
+	}
+	b, err := pack.JSON()
+	if err != nil {
+		return err
+	}
+	for _, d := range []string{app, web} {
+		if err := writeFile(filepath.Join(d, "content", "npc.json"), b); err != nil {
+			return err
+		}
+	}
 	// assets/ as is (README files excluded).
-	err := filepath.WalkDir(filepath.Join(root, repo.Assets), func(p string, e os.DirEntry, err error) error {
+	err = filepath.WalkDir(filepath.Join(root, repo.Assets), func(p string, e os.DirEntry, err error) error {
 		if err != nil || e.IsDir() || strings.EqualFold(e.Name(), "README.md") {
 			return err
 		}
@@ -118,6 +133,13 @@ func writeJSON(path string, v any) error {
 		return err
 	}
 	return os.WriteFile(path, append(b, '\n'), 0o644)
+}
+
+func writeFile(path string, b []byte) error {
+	if err := os.MkdirAll(filepath.Dir(path), 0o755); err != nil {
+		return err
+	}
+	return os.WriteFile(path, b, 0o644)
 }
 
 func copyFile(src, dst string) error {

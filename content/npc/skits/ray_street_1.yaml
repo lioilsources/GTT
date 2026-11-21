@@ -1,0 +1,121 @@
+# DRAFT for Ol1n's review (specs/dialogue.md). Ray waiting for a fare outside Grand Central.
+id: ray_street_1
+character: ray
+context: street
+city: nyc
+beats:
+  - npc:
+      en: "Nice stop, kid. Clean, no honking. Thirty years in a cab, you notice these things."
+      cs: "Pěkně zastaveno. Čistě, bez troubení. Po třiceti letech v taxíku si takových věcí všímám."
+    replies:
+      flirt:
+        en: "Thanks. Hope you notice other things too."
+        cs: "Díky. Snad si všímáš i jiných věcí."
+      joke:
+        en: "Thirty years? Was there traffic back then?"
+        cs: "Třicet let? To už tehdy byly zácpy?"
+      dry:
+        en: "Thanks. I try."
+        cs: "Díky. Snažím se."
+    reactions:
+      flirt:
+        en: "Save the charm for someone who still has hair."
+        cs: "Šarm si nech pro někoho, kdo ještě má vlasy."
+      joke:
+        en: "Traffic? Kid, I was the traffic."
+        cs: "Zácpy? Já byl ta zácpa."
+      dry:
+        en: "Trying is half of driving. The other half is luck."
+        cs: "Snaha je půlka řízení. Druhá půlka je štěstí."
+  - npc:
+      en: "Forty minutes waiting for a fare outside Grand Central. You know what waiting is? A bridge you can't see."
+      cs: "Čtyřicet minut čekám na zákazníka před Grand Central. Víš, co je čekání? Most, který není vidět."
+    replies:
+      flirt:
+        en: "Good company is worth forty minutes."
+        cs: "Na dobrou společnost se vyplatí čekat."
+      joke:
+        en: "And the toll is your patience?"
+        cs: "A mýtné se platí trpělivostí?"
+      dry:
+        en: "Waiting is just waiting."
+        cs: "Čekání je prostě čekání."
+    reactions:
+      flirt:
+        en: "Forty minutes with me is mostly stories about tolls."
+        cs: "Čtyřicet minut se mnou jsou hlavně historky o mýtném."
+      joke:
+        en: "Ha! The toll is always patience. You get it."
+        cs: "Cha! Mýtné je vždycky trpělivost. Chápeš to."
+      dry:
+        en: "Sure. But it's nicer my way."
+        cs: "Jasně. Ale po mém je to hezčí."
+  - npc:
+      en: "Every bridge in this town has a personality. The Brooklyn Bridge? A romantic. The Queensboro? A hard worker."
+      cs: "Každý most v tomhle městě má svou povahu. Brooklynský? Romantik. Queensboro? Dříč."
+    replies:
+      flirt:
+        en: "And which bridge are you?"
+        cs: "A jaký most jsi ty?"
+      joke:
+        en: "And the Manhattan Bridge is the moody middle child."
+        cs: "A Manhattanský most je náladové prostřední dítě."
+      dry:
+        en: "They're steel. They carry cars."
+        cs: "Jsou z oceli. Vozí auta."
+    reactions:
+      flirt:
+        en: "Me? The Williamsburg. Old, noisy, not your type. Next question."
+        cs: "Já? Williamsburský. Starý, hlučný, nic pro tebe. Další otázka."
+      joke:
+        en: "The moody middle child! Exactly. You know that bridge."
+        cs: "Náladové prostřední dítě! Přesně. Je vidět, že ho znáš."
+      dry:
+        en: "Steel with feelings. Trust me."
+        cs: "Ocel s city. Věř mi."
+  - npc:
+      en: "My wife says I talk too much to strangers. I say strangers are just fares who haven't paid yet."
+      cs: "Žena říká, že moc mluvím s cizími. Já říkám, že cizí jsou jen zákazníci, co ještě nezaplatili."
+    replies:
+      flirt:
+        en: "I'd happily chat with you every day."
+        cs: "S tebou si klidně povídám každý den."
+      joke:
+        en: "So I owe you a fare now?"
+        cs: "Takže ti teď dlužím za jízdu?"
+      dry:
+        en: "She might have a point."
+        cs: "Možná má pravdu."
+    reactions:
+      flirt:
+        en: "Careful. My wife reads people better than maps."
+        cs: "Opatrně. Moje žena čte lidi líp než mapy."
+      joke:
+        en: "First ride's free. The second one, we talk."
+        cs: "První jízda zdarma. U druhé se domluvíme."
+      dry:
+        en: "She always does. Don't tell her I said so."
+        cs: "Má vždycky. Neříkej jí, že jsem to přiznal."
+  - npc:
+      en: "There's my fare, finally. Drive soft, keep right on the FDR, and never trust a yellow light."
+      cs: "Konečně, zákazník. Jeď měkce, na FDR se drž vpravo a žluté nikdy nevěř."
+    replies:
+      flirt:
+        en: "Only if you wave when you pass me."
+        cs: "Jen když mi zamáváš, až mě budeš míjet."
+      joke:
+        en: "Yellow is just green with doubts."
+        cs: "Žlutá je jen zelená s pochybnostmi."
+      dry:
+        en: "Noted. Keep right, no yellow."
+        cs: "Beru. Vpravo, žádná žlutá."
+    reactions:
+      flirt:
+        en: "I wave at everybody. Nothing special. Okay, a little. Bye."
+        cs: "Mávám všem. Nic zvláštního. No, trochu. Měj se."
+      joke:
+        en: "Ha! I'm stealing that for my next fare. See ya."
+        cs: "Cha! To použiju u dalšího zákazníka. Ahoj."
+      dry:
+        en: "Good. You'll live long. So long."
+        cs: "Dobře. Takhle se dožiješ vysokého věku. Měj se."

@@ -1,0 +1,121 @@
+# DRAFT for Ol1n's review (specs/dialogue.md). Maya on the street, golden hour.
+id: maya_street_1
+character: maya
+context: street
+city: nyc
+beats:
+  - npc:
+      en: "Hey, sorry, can you hold this for one sec? The light on the High Line is perfect right now."
+      cs: "Ahoj, promiň, podržíš mi to na vteřinku? Světlo na High Line je teď úplně dokonalé."
+    replies:
+      flirt:
+        en: "Only if I get to be in the shot."
+        cs: "Jen když budu taky v záběru."
+      joke:
+        en: "Sure. Do I get credited as the tripod?"
+        cs: "Jasně. Budu v titulcích jako stativ?"
+      dry:
+        en: "It's a phone. It weighs nothing."
+        cs: "Je to telefon. Neváží nic."
+    reactions:
+      flirt:
+        en: "Bold. I like bold. Stand on the left, that's your good side."
+        cs: "Odvaha. To se mi líbí. Stoupni si doleva, to je tvoje lepší strana."
+      joke:
+        en: "Tripod with personality. My followers will love you."
+        cs: "Stativ s osobností. Sledující tě budou milovat."
+      dry:
+        en: "Wow. Okay. Holding it would still help."
+        cs: "Páni. Dobře. Podržet by to i tak pomohlo."
+  - npc:
+      en: "Twelve takes and the wind keeps ruining my hair. Is it windy where you are, or just here?"
+      cs: "Dvanáct pokusů a vítr mi pořád ničí vlasy. Fouká i u tebe, nebo jen tady?"
+    replies:
+      flirt:
+        en: "Your hair looks great. Blame the Hudson."
+        cs: "Vlasy máš skvělé. Může za to Hudson."
+      joke:
+        en: "The wind is just trying to go viral too."
+        cs: "Vítr se taky jen snaží být virální."
+      dry:
+        en: "It's a riverside park. It's windy."
+        cs: "Je to park u řeky. Fouká tu."
+    reactions:
+      flirt:
+        en: "Stop, you'll make me blush on camera."
+        cs: "Přestaň, budu na kameře červená."
+      joke:
+        en: "Ha! I'm stealing that for the caption."
+        cs: "Cha! Tohle si beru do popisku."
+      dry:
+        en: "Thank you, weather report."
+        cs: "Díky, předpovědi počasí."
+  - npc:
+      en: "I need one shot of the skyline before the sun drops behind New Jersey. Any ideas?"
+      cs: "Potřebuju jeden záběr panoramatu, než slunce zapadne za New Jersey. Nějaký nápad?"
+    replies:
+      flirt:
+        en: "Turn around. The best view is right here."
+        cs: "Otoč se. Nejlepší výhled je právě tady."
+      joke:
+        en: "Shoot it upside down. Very artistic."
+        cs: "Natoč to vzhůru nohama. Hrozně umělecké."
+      dry:
+        en: "Point the phone at the buildings."
+        cs: "Namiř telefon na budovy."
+    reactions:
+      flirt:
+        en: "Okay, that was smooth. Annoyingly smooth."
+        cs: "Dobře, to bylo hladké. Až otravně hladké."
+      joke:
+        en: "You laugh, but upside-down skylines do numbers."
+        cs: "Směj se, ale panorama vzhůru nohama má čísla."
+      dry:
+        en: "Genius. Why didn't I think of that."
+        cs: "Geniální. Jak mě to nenapadlo."
+  - npc:
+      en: "Got it! Now I'm starving. Do you know a place nearby that does pancakes after six?"
+      cs: "Mám to! A teď umírám hlady. Neznáš tu poblíž místo, kde dělají palačinky i po šesté?"
+    replies:
+      flirt:
+        en: "I know one. Table for two?"
+        cs: "Jedno znám. Stůl pro dva?"
+      joke:
+        en: "Every diner in Chelsea. It's basically the law."
+        cs: "Každý diner v Chelsea. To je skoro zákon."
+      dry:
+        en: "Pancakes are a morning food."
+        cs: "Palačinky se jí ráno."
+    reactions:
+      flirt:
+        en: "Smooth again. I'll think about it while I edit."
+        cs: "Zase hladké. Promyslím si to, zatímco budu stříhat."
+      joke:
+        en: "Then the law is on my side. Love that."
+        cs: "Tak je zákon na mojí straně. To miluju."
+      dry:
+        en: "Not in this city, they aren't."
+        cs: "V tomhle městě teda ne."
+  - npc:
+      en: "Okay, I have to post this before golden hour is over. You were a good tripod."
+      cs: "Dobře, musím to dát ven, než skončí zlatá hodinka. Stativ z tebe je skvělý."
+    replies:
+      flirt:
+        en: "Tag me. I want to see it."
+        cs: "Označ mě. Chci to vidět."
+      joke:
+        en: "Best gig I've had all week."
+        cs: "Nejlepší kšeft za celý týden."
+      dry:
+        en: "Happy to stand there. Professionally."
+        cs: "Stát umím. Profesionálně."
+    reactions:
+      flirt:
+        en: "Maybe I will. Watch the feed."
+        cs: "Možná jo. Sleduj feed."
+      joke:
+        en: "I'll pay you in likes. See you around!"
+        cs: "Zaplatím ti v lajcích. Tak zase!"
+      dry:
+        en: "Riveting. Okay, bye!"
+        cs: "Napínavé. Tak ahoj!"

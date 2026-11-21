@@ -1,0 +1,121 @@
+# DRAFT for Ol1n's review (specs/dialogue.md). Iris right after she beat the player.
+id: iris_minigame_lose_1
+character: iris
+context: minigame_lose
+city: nyc
+beats:
+  - npc:
+      en: "I won? Oh. I don't know what to do with my hands now. Sorry. Good game!"
+      cs: "Vyhrála jsem? Ach. Teď nevím, co s rukama. Promiň. Dobrá hra!"
+    replies:
+      flirt:
+        en: "That smile makes losing worth it."
+        cs: "Kvůli tomu úsměvu se prohra vyplatí."
+      joke:
+        en: "Hold the trophy. It's imaginary."
+        cs: "Drž trofej. Je imaginární."
+      dry:
+        en: "You won. It happens."
+        cs: "Vyhrála jsi. Stává se."
+    reactions:
+      flirt:
+        en: "Oh. I'm smiling more now. That's your fault."
+        cs: "Ach. Teď se usmívám ještě víc. To je tvoje vina."
+      joke:
+        en: "Imaginary trophies are the only kind I own."
+        cs: "Imaginární trofeje jsou jediné, co mám."
+      dry:
+        en: "It happens to me about once a year. I'm savouring it."
+        cs: "Mně se to stává tak jednou za rok. Vychutnávám si to."
+  - npc:
+      en: "I once read a book about strategy. The Patient Hand. Mostly it says wait, then wait more."
+      cs: "Jednou jsem četla knížku o strategii. Trpělivá ruka. Hlavně v ní stojí: čekej, a pak čekej ještě víc."
+    replies:
+      flirt:
+        en: "I'd wait for a rematch with you."
+        cs: "Na odvetu s tebou klidně počkám."
+      joke:
+        en: "I don't wait. I honk."
+        cs: "Já nečekám. Já troubím."
+      dry:
+        en: "Waiting. Groundbreaking advice."
+        cs: "Čekat. Převratná rada."
+    reactions:
+      flirt:
+        en: "That's very patient of you. Chapter one approves."
+        cs: "To je od tebe trpělivé. První kapitola souhlasí."
+      joke:
+        en: "That explains that last round, honestly."
+        cs: "To vlastně vysvětluje to poslední kolo."
+      dry:
+        en: "It's four hundred pages of it. Weirdly convincing."
+        cs: "Je to čtyři sta stran toho. Divně přesvědčivé."
+  - npc:
+      en: "It was close in the middle. I had to bite my pencil."
+      cs: "Uprostřed to bylo hodně těsné. Musela jsem kousat tužku."
+    replies:
+      flirt:
+        en: "For that pencil face, I'd lose again."
+        cs: "Kvůli tomu výrazu s tužkou prohraju klidně znovu."
+      joke:
+        en: "Your pencil is the real winner here."
+        cs: "Skutečný vítěz je tady tvoje tužka."
+      dry:
+        en: "Close is still a loss."
+        cs: "Těsně vedle je taky vedle."
+    reactions:
+      flirt:
+        en: "Don't you dare lose on purpose. I'll know."
+        cs: "Opovaž se prohrát schválně. Poznám to."
+      joke:
+        en: "It has bite marks. It earned them."
+        cs: "Má na sobě otisky zubů. Zasloužila si je."
+      dry:
+        en: "True. Still, I was nervous. Take that as a compliment."
+        cs: "Pravda. Ale byla jsem nervózní. Ber to jako kompliment."
+  - npc:
+      en: "Can I buy you a pretzel from the cart? Winner pays. That's a rule I just invented."
+      cs: "Můžu ti koupit preclík ze stánku? Vítěz platí. To pravidlo jsem právě vymyslela."
+    replies:
+      flirt:
+        en: "Only if we split it."
+        cs: "Jen když se o něj rozdělíme."
+      joke:
+        en: "Extra salt. To match my tears."
+        cs: "S extra solí. Ladí k mým slzám."
+      dry:
+        en: "A pretzel's fine. Thanks."
+        cs: "Preclík beru. Díky."
+    reactions:
+      flirt:
+        en: "Split it. Okay. That's very... sharing. I like it."
+        cs: "Rozdělit. Dobře. To je takové... sdílené. Líbí se mi to."
+      joke:
+        en: "Extra salt and a napkin for the tears."
+        cs: "Extra sůl a ubrousek na slzy."
+      dry:
+        en: "Simple. I like simple."
+        cs: "Jednoduché. To mám ráda."
+  - npc:
+      en: "I'll write this one in the margins. Small. I don't want the other games to get jealous."
+      cs: "Tohle si zapíšu na okraj. Malým písmem. Ať ostatní hry nežárlí."
+    replies:
+      flirt:
+        en: "Write my name next to it."
+        cs: "Napiš vedle i moje jméno."
+      joke:
+        en: "I'll be in the footnotes, crying."
+        cs: "Já budu v poznámkách pod čarou. Plakat."
+      dry:
+        en: "Rematch soon. Watch out next time."
+        cs: "Brzy odveta. A tentokrát pozor."
+    reactions:
+      flirt:
+        en: "Next to it. In pencil. That's a promise. Bye!"
+        cs: "Vedle. Tužkou. To je slib. Ahoj!"
+      joke:
+        en: "Footnotes are the best part. Bye!"
+        cs: "Poznámky pod čarou jsou nejlepší část. Ahoj!"
+      dry:
+        en: "I'll read up. Bye!"
+        cs: "Budu se připravovat. Ahoj!"

@@ -344,3 +344,12 @@ passport:
   stars_for_stamp: 3
   discover_radius_m: 110.0    # car to a landmark's label anchor (Met Museum is 95 m off the road)
   postcard_s: 6.0             # postcard / stamp label stays this long (UI)
+# NPC dialogue (specs/dialogue.md): skit queue, vibe meter, phone contact chance (integers, P0).
+npc:
+  recent_k: 4                 # last K skits that are not repeated while fresh ones exist
+  vibe_max: 20
+  vibe_start: 0
+  contact_min_vibe: 6         # no contact roll below this vibe
+  contact_base_pct: 25        # chance at contact_min_vibe
+  contact_step_pct: 10        # + per vibe point above it
+  contact_max_pct: 85

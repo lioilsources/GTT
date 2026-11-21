@@ -169,3 +169,11 @@
   lead: web
   flutter: todo
   web: todo
+- id: F-021
+  name: NPC dialogue (skit pick, vibe, phone contact)
+  level: P0
+  spec: specs/dialogue.md@1
+  vectors: vectors/dialogue.json
+  lead: web
+  flutter: todo
+  web: todo

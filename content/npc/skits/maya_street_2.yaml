@@ -1,0 +1,121 @@
+# DRAFT for Ol1n's review (specs/dialogue.md). Maya on the street, rating pizza by the slice.
+id: maya_street_2
+character: maya
+context: street
+city: nyc
+beats:
+  - npc:
+      en: "Hi! Quick question: would you eat this slice on camera? I'm rating pizza by the slice in the Village."
+      cs: "Ahoj! Rychlá otázka: dáš si tenhle kousek před kamerou? Hodnotím pizzu na kousky ve Village."
+    replies:
+      flirt:
+        en: "Only if we share the next one."
+        cs: "Jen když se o další rozdělíme."
+      joke:
+        en: "Will I be famous or just greasy?"
+        cs: "Čeká mě sláva, nebo jen mastné prsty?"
+      dry:
+        en: "I'm not hungry."
+        cs: "Nemám hlad."
+    reactions:
+      flirt:
+        en: "Deal. Sharing is cute, and it's great content."
+        cs: "Platí. Dělit se je roztomilé a navíc dobrý obsah."
+      joke:
+        en: "Both. Honestly, that's the dream."
+        cs: "Obojí. Upřímně, to je sen."
+      dry:
+        en: "Nobody is hungry until the cheese pulls. Watch."
+        cs: "Nikdo nemá hlad, dokud se netáhne sýr. Koukej."
+  - npc:
+      en: "Okay, take a bite. Look surprised, but not too surprised. Natural, like there's no camera."
+      cs: "Tak kousni. Tvař se překvapeně, ale ne moc. Přirozeně, jako by tu kamera nebyla."
+    replies:
+      flirt:
+        en: "Hard to look natural when you're watching."
+        cs: "Přirozeně to nejde, když se na mě díváš."
+      joke:
+        en: "My natural face is pure panic."
+        cs: "Můj přirozený výraz je čistá panika."
+      dry:
+        en: "That's not how natural works."
+        cs: "Takhle přirozenost nefunguje."
+    reactions:
+      flirt:
+        en: "Aw. Keep that face, the camera loves it."
+        cs: "Ááá. Ten výraz si nech, kamera ho miluje."
+      joke:
+        en: "Panic is relatable. Relatable gets shared."
+        cs: "Paniku zná každý. A to se sdílí."
+      dry:
+        en: "In content it is. Bite, please."
+        cs: "V obsahu jo. Kousni, prosím."
+  - npc:
+      en: "Score it out of ten. Be honest, but my followers are watching, so be honest nicely."
+      cs: "Dej tomu známku do deseti. Upřímně, ale sledující koukají, tak upřímně a hezky."
+    replies:
+      flirt:
+        en: "A nine. The company makes it a ten."
+        cs: "Devítka. Se společností desítka."
+      joke:
+        en: "Eleven. I have no self-control around cheese."
+        cs: "Jedenáct. U sýra nemám sebeovládání."
+      dry:
+        en: "Six. The crust is soggy."
+        cs: "Šestka. Korpus je rozmoklý."
+    reactions:
+      flirt:
+        en: "Smooth. I'm keeping the ten in the edit."
+        cs: "Hladké. V sestřihu nechám tu desítku."
+      joke:
+        en: "Eleven! That's going straight in the caption."
+        cs: "Jedenáct! To jde rovnou do popisku."
+      dry:
+        en: "Brutal. Accurate, but brutal."
+        cs: "Kruté. Přesné, ale kruté."
+  - npc:
+      en: "Next stop is a dumpling place in Chinatown. Real food, zero filters. Coming, or driving off?"
+      cs: "Další zastávka jsou knedlíčky v Chinatownu. Opravdové jídlo, nula filtrů. Jdeš se mnou, nebo odjedeš?"
+    replies:
+      flirt:
+        en: "For you, I'd even park legally."
+        cs: "Kvůli tobě klidně zaparkuju podle předpisů."
+      joke:
+        en: "Only if the dumplings get their own episode."
+        cs: "Jen když knedlíčky dostanou vlastní díl."
+      dry:
+        en: "I'm double-parked."
+        cs: "Stojím tu v druhé řadě."
+    reactions:
+      flirt:
+        en: "Legally? In this city that's basically romance."
+        cs: "Podle předpisů? To je v tomhle městě skoro romantika."
+      joke:
+        en: "Every dumpling deserves an episode. You get me."
+        cs: "Každý knedlíček si zaslouží díl. Chápeš mě."
+      dry:
+        en: "Classic Manhattan. Okay, no pressure."
+        cs: "Klasický Manhattan. Dobře, bez tlaku."
+  - npc:
+      en: "I'll edit this tonight. If you go viral as the cheese face, you're welcome in advance."
+      cs: "Dneska večer to stříhám. Jestli se z tebe stane virální sýrový obličej, předem není zač."
+    replies:
+      flirt:
+        en: "Send me the link. I'll watch it twice."
+        cs: "Pošli mi odkaz. Pustím si to dvakrát."
+      joke:
+        en: "Tell my fans fame won't change me."
+        cs: "Vyřiď fanouškům, že mi sláva nestoupne do hlavy."
+      dry:
+        en: "Please blur my face."
+        cs: "Rozmaž mi prosím obličej."
+    reactions:
+      flirt:
+        en: "Twice? Careful, I'll start counting. Bye!"
+        cs: "Dvakrát? Pozor, začnu počítat. Ahoj!"
+      joke:
+        en: "A humble cheese icon. Love it. See you!"
+        cs: "Skromná sýrová ikona. Miluju. Tak zase!"
+      dry:
+        en: "No promises. Byeee!"
+        cs: "Nic neslibuju. Čauky!"

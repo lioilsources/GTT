@@ -126,6 +126,8 @@ export class Tuning {
    * minigame, photo); percent = floor(100 × points / all points).
    */
   readonly passport: TuningPassport;
+  /** NPC dialogue (specs/dialogue.md): skit queue, vibe meter, phone contact chance (integers, P0). */
+  readonly npc: TuningNpc;
 
   private constructor(r: R) {
     this.carScale = r.d('car_scale');
@@ -156,6 +158,7 @@ export class Tuning {
     this.nav = new TuningNav(r.sub('nav'));
     this.traffic = new TuningTraffic(r.sub('traffic'));
     this.passport = new TuningPassport(r.sub('passport'));
+    this.npc = new TuningNpc(r.sub('npc'));
   }
 
   toJson(): Record<string, unknown> {
@@ -188,6 +191,7 @@ export class Tuning {
       nav: this.nav.toJson(),
       traffic: this.traffic.toJson(),
       passport: this.passport.toJson(),
+      npc: this.npc.toJson(),
     };
   }
 
@@ -1860,4 +1864,65 @@ export class TuningPassport {
       postcard_s: this.postcardS,
     };
   }
+}
+
+/** NPC dialogue (specs/dialogue.md): skit queue, vibe meter, phone contact chance (integers, P0). */
+export class TuningNpc {
+  /** last K skits that are not repeated while fresh ones exist */
+  recentK: number;
+  vibeMax: number;
+  vibeStart: number;
+  /** no contact roll below this vibe */
+  contactMinVibe: number;
+  /** chance at contact_min_vibe */
+  contactBasePct: number;
+  /** + per vibe point above it */
+  contactStepPct: number;
+  contactMaxPct: number;
+
+  constructor(r: R) {
+    this.recentK = r.i('recent_k');
+    this.vibeMax = r.i('vibe_max');
+    this.vibeStart = r.i('vibe_start');
+    this.contactMinVibe = r.i('contact_min_vibe');
+    this.contactBasePct = r.i('contact_base_pct');
+    this.contactStepPct = r.i('contact_step_pct');
+    this.contactMaxPct = r.i('contact_max_pct');
+  }
+
+  toJson(): Record<string, unknown> {
+    return {
+      recent_k: this.recentK,
+      vibe_max: this.vibeMax,
+      vibe_start: this.vibeStart,
+      contact_min_vibe: this.contactMinVibe,
+      contact_base_pct: this.contactBasePct,
+      contact_step_pct: this.contactStepPct,
+      contact_max_pct: this.contactMaxPct,
+    };
+  }
+
+  /** Value by YAML key, undefined when the key is unknown. */
+  get(key: string): number | undefined {
+    switch (key) {
+      case 'recent_k':
+        return this.recentK;
+      case 'vibe_max':
+        return this.vibeMax;
+      case 'vibe_start':
+        return this.vibeStart;
+      case 'contact_min_vibe':
+        return this.contactMinVibe;
+      case 'contact_base_pct':
+        return this.contactBasePct;
+      case 'contact_step_pct':
+        return this.contactStepPct;
+      case 'contact_max_pct':
+        return this.contactMaxPct;
+      default:
+        return undefined;
+    }
+  }
+
+  static readonly keys = ['recent_k', 'vibe_max', 'vibe_start', 'contact_min_vibe', 'contact_base_pct', 'contact_step_pct', 'contact_max_pct'] as const;
 }

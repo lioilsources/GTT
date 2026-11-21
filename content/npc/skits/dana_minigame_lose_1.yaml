@@ -1,0 +1,121 @@
+# DRAFT for Ol1n's review (specs/dialogue.md). Dana right after she beat the player.
+id: dana_minigame_lose_1
+character: dana
+context: minigame_lose
+city: nyc
+beats:
+  - npc:
+      en: "That's game. Efficient. I have a call in four minutes, so let's debrief in three."
+      cs: "Konec hry. Efektivní. Za čtyři minuty mám call, tak to rozebereme za tři."
+    replies:
+      flirt:
+        en: "Three minutes with you? I'll take it."
+        cs: "Tři minuty s tebou? Beru."
+      joke:
+        en: "Can I appeal? To the board?"
+        cs: "Můžu se odvolat? K představenstvu?"
+      dry:
+        en: "Fair win. Debrief away."
+        cs: "Zasloužená výhra. Spusť rozbor."
+    reactions:
+      flirt:
+        en: "Two fifty-five now. Use them well."
+        cs: "Teď už dvě minuty padesát pět. Využij je dobře."
+      joke:
+        en: "I am the board. Denied."
+        cs: "Představenstvo jsem já. Zamítnuto."
+      dry:
+        en: "Thank you. Gracious and brief. Rare combination."
+        cs: "Děkuju. Slušně a stručně. Vzácná kombinace."
+  - npc:
+      en: "Good play until the middle. Then the improvising started. Never improvise."
+      cs: "Do půlky dobrá hra. Pak přišla improvizace. Nikdy neimprovizuj."
+    replies:
+      flirt:
+        en: "You make it hard to focus."
+        cs: "S tebou se těžko soustředí."
+      joke:
+        en: "Improvising is my whole personality."
+        cs: "Improvizace je celá moje osobnost."
+      dry:
+        en: "Noted. Stick to the plan."
+        cs: "Beru na vědomí. Držet se plánu."
+    reactions:
+      flirt:
+        en: "That's a you problem. But noted."
+        cs: "To je tvůj problém. Ale beru na vědomí."
+      joke:
+        en: "Then your personality needs a roadmap."
+        cs: "Tak tvoje osobnost potřebuje harmonogram."
+      dry:
+        en: "Exactly. Plans win. Plans always win."
+        cs: "Přesně. Plány vyhrávají. Plány vyhrávají vždycky."
+  - npc:
+      en: "I learned this game on the commuter train. Forty minutes each way, every day, for nine years."
+      cs: "Tuhle hru jsem se naučila ve vlaku do práce. Čtyřicet minut každým směrem, každý den, devět let."
+    replies:
+      flirt:
+        en: "Nine years of commuting and still this sharp?"
+        cs: "Devět let dojíždění a pořád tak ostrá?"
+      joke:
+        en: "So the train is the real champion."
+        cs: "Takže skutečný šampion je ten vlak."
+      dry:
+        en: "That explains a lot."
+        cs: "To vysvětluje hodně."
+    reactions:
+      flirt:
+        en: "Sharp is in the job description. Thank you."
+        cs: "Ostrost je v popisu práce. Díky."
+      joke:
+        en: "The train is always late. It is not a champion."
+        cs: "Ten vlak má vždycky zpoždění. Šampion to není."
+      dry:
+        en: "It explains everything. Practice beats talent."
+        cs: "Vysvětluje to všechno. Trénink porazí talent."
+  - npc:
+      en: "My advice: practise ten minutes a day. Put it in your calendar. You have a calendar, right?"
+      cs: "Moje rada: trénuj deset minut denně. Dej si to do kalendáře. Kalendář máš, ne?"
+    replies:
+      flirt:
+        en: "I'll make space for anything you suggest."
+        cs: "Udělám místo pro cokoli, co navrhneš."
+      joke:
+        en: "I have a fridge with magnets."
+        cs: "Mám lednici s magnetkami."
+      dry:
+        en: "I do. Ten minutes, daily. Done."
+        cs: "Mám. Deset minut denně. Hotovo."
+    reactions:
+      flirt:
+        en: "Then start with the ten minutes. Not with me."
+        cs: "Tak začni těmi deseti minutami. Ne mnou."
+      joke:
+        en: "That's not a calendar. That's a cry for help."
+        cs: "To není kalendář. To je volání o pomoc."
+      dry:
+        en: "Done. Look at that. Midtown would take you."
+        cs: "Hotovo. Podívejme. Midtown by tě přijal."
+  - npc:
+      en: "That's my call. Good game. Rematch when you've practised. I'll know if you haven't."
+      cs: "To je můj call. Dobrá hra. Odveta, až budeš mít natrénováno. Poznám, jestli ne."
+    replies:
+      flirt:
+        en: "I'll practise. For a rematch with you."
+        cs: "Budu trénovat. Kvůli odvetě s tebou."
+      joke:
+        en: "I'll practise on the subway. Very Midtown."
+        cs: "Budu trénovat v metru. Hodně midtownské."
+      dry:
+        en: "Ten minutes a day. Understood."
+        cs: "Deset minut denně. Rozumím."
+    reactions:
+      flirt:
+        en: "Motivation is motivation. Bye."
+        cs: "Motivace je motivace. Ahoj."
+      joke:
+        en: "Hold the pole first, then the game. Bye."
+        cs: "Nejdřív se drž tyče, pak teprve hraj. Ahoj."
+      dry:
+        en: "Good. I'll check. Bye."
+        cs: "Dobře. Zkontroluju to. Ahoj."

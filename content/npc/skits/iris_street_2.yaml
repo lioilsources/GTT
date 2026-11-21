@@ -1,0 +1,121 @@
+# DRAFT for Ol1n's review (specs/dialogue.md). Iris by the fountain in Washington Square Park, heat wave.
+id: iris_street_2
+character: iris
+context: street
+city: nyc
+beats:
+  - npc:
+      en: "It's so hot the pages are curling. I'm reading a book about snow to cool down. It's not working."
+      cs: "Je takové vedro, že se kroutí stránky. Čtu knížku o sněhu, abych se zchladila. Nefunguje to."
+    replies:
+      flirt:
+        en: "Maybe it's not the weather. Maybe it's the company."
+        cs: "Možná to není počasím. Možná společností."
+      joke:
+        en: "Try a book about air conditioning."
+        cs: "Zkus knížku o klimatizaci."
+      dry:
+        en: "It's July in Manhattan. Nothing works."
+        cs: "Je červenec na Manhattanu. Nefunguje nic."
+    reactions:
+      flirt:
+        en: "Oh. Well. Now it's definitely warmer."
+        cs: "Ach. No. Teď je to rozhodně teplejší."
+      joke:
+        en: "That's just a manual. I've read worse."
+        cs: "To je jen návod. Četla jsem horší věci."
+      dry:
+        en: "True. Even the pigeons gave up."
+        cs: "Pravda. I holubi to vzdali."
+  - npc:
+      en: "It's called Winter Hours on Mott Street. Everyone in it is cold and nobody complains. Inspiring."
+      cs: "Jmenuje se Zimní hodiny v Mott Street. Všem je tam zima a nikdo si nestěžuje. Inspirativní."
+    replies:
+      flirt:
+        en: "Read me a page and I'm sold."
+        cs: "Přečti mi stránku a máš mě."
+      joke:
+        en: "Nobody complains? Sounds like fantasy."
+        cs: "Nikdo si nestěžuje? To je teda fantasy."
+      dry:
+        en: "Fiction. Got it."
+        cs: "Fikce. Chápu."
+    reactions:
+      flirt:
+        en: "Out loud? Here? Okay. Maybe one paragraph."
+        cs: "Nahlas? Tady? Tak dobře. Možná jeden odstavec."
+      joke:
+        en: "It's literary fiction. Close enough."
+        cs: "Je to literární fikce. Skoro to samé."
+      dry:
+        en: "Very fiction. The snow is gorgeous, though."
+        cs: "Hodně fikce. Ale ten sníh je nádherný."
+  - npc:
+      en: "'The snow fell on Mott Street like the city was finally exhaling.' Okay, that's my favourite line."
+      cs: "'Sníh padal na Mott Street, jako by si město konečně vydechlo.' Tak, to je moje nejoblíbenější věta."
+    replies:
+      flirt:
+        en: "You read beautifully. Seriously."
+        cs: "Předčítáš nádherně. Vážně."
+      joke:
+        en: "The city exhales mostly through manholes."
+        cs: "Město vydechuje hlavně kanály."
+      dry:
+        en: "Snow on Mott Street is mostly slush."
+        cs: "Sníh v Mott Street je hlavně břečka."
+    reactions:
+      flirt:
+        en: "Nobody's ever said that. I'm going to be weird about it all day."
+        cs: "To mi ještě nikdo neřekl. Budu z toho celý den divná."
+      joke:
+        en: "Ha, the steam. That's actually poetic. Annoyingly."
+        cs: "Cha, ta pára. To je vlastně poetické. Až otravně."
+      dry:
+        en: "Fair. The book skips the slush. Kindly."
+        cs: "Pravda. Knížka břečku vynechává. Laskavě."
+  - npc:
+      en: "I think I'll get a lemonade from the cart by the fountain. Do you think it's real lemons?"
+      cs: "Asi si dám limonádu ze stánku u fontány. Myslíš, že je z opravdových citronů?"
+    replies:
+      flirt:
+        en: "Get two. One's on me."
+        cs: "Vezmi dvě. Jedna je ode mě."
+      joke:
+        en: "Real lemons, imaginary ice."
+        cs: "Pravé citrony, imaginární led."
+      dry:
+        en: "It's yellow. That's all I can promise."
+        cs: "Je žlutá. Víc slíbit nemůžu."
+    reactions:
+      flirt:
+        en: "Two lemonades. In my books, that's practically a date."
+        cs: "Dvě limonády. V mých knížkách je to skoro rande."
+      joke:
+        en: "Imaginary ice is still ice. I'll take it."
+        cs: "Imaginární led je pořád led. Beru."
+      dry:
+        en: "Yellow is honest. I respect yellow."
+        cs: "Žlutá je poctivá. Žlutou respektuju."
+  - npc:
+      en: "Okay, I'm going before the ice melts in theory too. Thanks, this was nicer than chapter four."
+      cs: "Dobře, jdu, než ten led roztaje i v teorii. Díky, bylo to hezčí než čtvrtá kapitola."
+    replies:
+      flirt:
+        en: "Save me a chapter for next time."
+        cs: "Nech mi kapitolu na příště."
+      joke:
+        en: "Chapter four must be really bad."
+        cs: "Čtvrtá kapitola musí být hrozná."
+      dry:
+        en: "Stay in the shade. It's ninety-five out."
+        cs: "Drž se ve stínu. Je pětatřicet."
+    reactions:
+      flirt:
+        en: "Deal. I'll fold the corner. Don't tell anyone."
+        cs: "Platí. Přehnu roh. Nikomu to neříkej."
+      joke:
+        en: "It's ten pages about a broken radiator. Bye!"
+        cs: "Je to deset stran o rozbitém radiátoru. Ahoj!"
+      dry:
+        en: "Shade, water, book. I have a system. Bye!"
+        cs: "Stín, voda, knížka. Mám systém. Ahoj!"

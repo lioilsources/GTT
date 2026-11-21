@@ -1,0 +1,121 @@
+# DRAFT for Ol1n's review (specs/dialogue.md). Ray right after the player beat him.
+id: ray_minigame_win_1
+character: ray
+context: minigame_win
+city: nyc
+beats:
+  - npc:
+      en: "Well, look at that. You beat me fair and square. Thirty years and I still get surprised."
+      cs: "No vida. Poctivá výhra, a je tvoje. Třicet let a pořád se nechám překvapit."
+    replies:
+      flirt:
+        en: "Maybe I just wanted to impress you."
+        cs: "Možná se ti jen chci zalíbit."
+      joke:
+        en: "I've been training in rush hour."
+        cs: "Trénuju ve špičce."
+      dry:
+        en: "Good game. It was close."
+        cs: "Dobrá hra. Bylo to těsné."
+    reactions:
+      flirt:
+        en: "Impress my game, not me. I'm too old for impressing."
+        cs: "Zalíbit se mé hře, ne mně. Na to jsem moc starý."
+      joke:
+        en: "Rush hour training! Best school there is."
+        cs: "Trénink ve špičce! Lepší školu neznám."
+      dry:
+        en: "Close is a kind word for it. Thanks."
+        cs: "Těsné je hezké slovo. Díky."
+  - npc:
+      en: "That last round, no rush. Most people rush. Waiting is the real skill. Like merging onto a bridge."
+      cs: "To poslední kolo, žádný spěch. Většina lidí spěchá. Umět počkat je umění. Jako zařadit se na most."
+    replies:
+      flirt:
+        en: "I'm good at waiting. For the right person."
+        cs: "Umím čekat. Na toho pravého člověka."
+      joke:
+        en: "That's what the crosstown bus is for."
+        cs: "Na to je škola autobusu přes město."
+      dry:
+        en: "Patience usually works."
+        cs: "Trpělivost většinou funguje."
+    reactions:
+      flirt:
+        en: "The right person is the next green light. Keep driving."
+        cs: "Pravý člověk je další zelená. Jeď dál."
+      joke:
+        en: "The crosstown bus! A master teacher. Ha!"
+        cs: "Autobus přes město! Mistr učitel. Cha!"
+      dry:
+        en: "Usually. And usually is a lot in this town."
+        cs: "Většinou. A většinou je v tomhle městě hodně."
+  - npc:
+      en: "When I lose, I buy a hot dog from the cart on the corner. Tradition. Want one? Loser's treat."
+      cs: "Když prohraju, kupuju si párek ze stánku na rohu. Tradice. Dáš si taky? Platí poražený."
+    replies:
+      flirt:
+        en: "Only if we share it."
+        cs: "Jen když se rozdělíme."
+      joke:
+        en: "With everything? Onions, mustard, regrets?"
+        cs: "Se vším? Cibule, hořčice, výčitky?"
+      dry:
+        en: "Sure. Mustard only."
+        cs: "Jasně. Jen s hořčicí."
+    reactions:
+      flirt:
+        en: "Sharing a hot dog is how marriages start. Get your own."
+        cs: "Dělený párek, tak začínají manželství. Dej si vlastní."
+      joke:
+        en: "Onions, mustard, regrets. The Ray special."
+        cs: "Cibule, hořčice, výčitky. Rayova specialita."
+      dry:
+        en: "Mustard only. A classic. Respect."
+        cs: "Jen hořčice. Čistá klasika. Respekt."
+  - npc:
+      en: "My daughter beats me at this too. She says I think too long. I say I think the right amount, slowly."
+      cs: "Dcera mě v tom taky poráží. Říká, že moc dlouho přemýšlím. Já říkám, že přiměřeně, jen pomalu."
+    replies:
+      flirt:
+        en: "I bet she gets her charm from you."
+        cs: "Šarm má určitě po tobě."
+      joke:
+        en: "Slow thinking is still thinking. Like the subway."
+        cs: "Pomalé přemýšlení je pořád přemýšlení. Jako metro."
+      dry:
+        en: "She might be right."
+        cs: "Možná má pravdu."
+    reactions:
+      flirt:
+        en: "From her mother. Everybody says so. Nice try."
+        cs: "Po mámě. Říkají to všichni. Hezký pokus."
+      joke:
+        en: "Like the subway! Late, but it gets there."
+        cs: "Jako metro! Se zpožděním, ale dojede."
+      dry:
+        en: "She's always right. It's a family curse."
+        cs: "Má vždycky pravdu. Rodinná kletba."
+  - npc:
+      en: "Okay, I've got a fare waiting. Rematch some rainy day. Rain makes me lucky."
+      cs: "Tak jo, čeká na mě zákazník. Odveta někdy, až bude pršet. V dešti mám štěstí."
+    replies:
+      flirt:
+        en: "It's a date. Bring the rain."
+        cs: "Platí, rande. Přines déšť."
+      joke:
+        en: "I'll do a rain dance on Fifth Avenue."
+        cs: "Zatancuju na Páté avenue tanec deště."
+      dry:
+        en: "Rainy day. Got it."
+        cs: "Až bude pršet. Jasně."
+    reactions:
+      flirt:
+        en: "It's a rematch, not a date. Drive safe."
+        cs: "Je to odveta, ne rande. Jeď opatrně."
+      joke:
+        en: "Ha! Fifth Avenue's seen weirder. See ya."
+        cs: "Cha! Pátá avenue viděla horší věci. Měj se."
+      dry:
+        en: "Good. Bring an umbrella. Take care."
+        cs: "Dobře. Vezmi si deštník. Měj se."

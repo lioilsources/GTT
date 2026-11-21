@@ -129,6 +129,16 @@ abstract final class Tokens {
   static const int colorPassportStamp = 0xFFC0392B;
   static const int colorPassportStampEmpty = 0x33FFFFFF;
   static const int colorPassportProgress = 0xFFF4C430;
+  static const List<int> colorNpcPortraits = [0xFFE0609A, 0xFF6B8F5E, 0xFFE0A030, 0xFF5A7FC8, 0xFF9A6AC8, 0xFF3F9E9A];
+  static const int colorNpcPortraitText = 0xFFFFFFFF;
+  static const int colorNpcBubble = 0xFF2C2C36;
+  static const int colorNpcBubbleText = 0xFFFFFFFF;
+  static const int colorNpcPlayer = 0xFFF4C430;
+  static const int colorNpcPlayerText = 0xFF1C1C22;
+  static const int colorNpcReply = 0x1FFFFFFF;
+  static const int colorNpcVibe = 0xFFFF6FA8;
+  static const int colorNpcVibeTrack = 0x26FFFFFF;
+  static const int colorNpcContact = 0xFF7CE08A;
   static const double lightDayRoofLight = 1.12;
   static const double lightDaySunX = -0.6;
   static const double lightDaySunY = 0.8;

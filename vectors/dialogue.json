@@ -1,0 +1,2776 @@
+{
+ "module": "dialogue",
+ "specVersion": 1,
+ "$comment": "specs/dialogue.md: synthetic pools (independent of content/npc). All actions are the player's; states recorded by the lead client (web).",
+ "cases": [
+  {
+   "name": "full-skit-clamp-and-contact",
+   "config": {
+    "city": "nyc",
+    "recentK": 2,
+    "vibeMax": 12,
+    "vibeStart": 0,
+    "contactMinVibe": 4,
+    "contactBasePct": 30,
+    "contactStepPct": 20,
+    "contactMaxPct": 90,
+    "characters": [
+     {
+      "id": "ana",
+      "tones": {
+       "flirt": 3,
+       "joke": 1,
+       "dry": -2
+      }
+     },
+     {
+      "id": "bo",
+      "tones": {
+       "flirt": -1,
+       "joke": 2,
+       "dry": 1
+      }
+     }
+    ],
+    "skits": [
+     {
+      "id": "ana_bar_1",
+      "character": "ana",
+      "context": "bar",
+      "city": "",
+      "beats": 5
+     },
+     {
+      "id": "ana_street_1",
+      "character": "ana",
+      "context": "street",
+      "city": "nyc",
+      "beats": 5
+     },
+     {
+      "id": "ana_street_2",
+      "character": "ana",
+      "context": "street",
+      "city": "",
+      "beats": 5
+     },
+     {
+      "id": "ana_street_3",
+      "character": "ana",
+      "context": "street",
+      "city": "prg",
+      "beats": 5
+     },
+     {
+      "id": "ana_street_4",
+      "character": "ana",
+      "context": "street",
+      "city": "nyc",
+      "beats": 5
+     },
+     {
+      "id": "bo_crash_1",
+      "character": "bo",
+      "context": "crash",
+      "city": "",
+      "beats": 2
+     },
+     {
+      "id": "bo_street_1",
+      "character": "bo",
+      "context": "street",
+      "city": "nyc",
+      "beats": 5
+     }
+    ]
+   },
+   "seed": 42,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "type": "start",
+      "character": "ana",
+      "context": "street"
+     },
+     "state": {
+      "rng": 11355432,
+      "recent": [
+       "ana_street_1"
+      ],
+      "vibe": {
+       "ana": 0,
+       "bo": 0
+      },
+      "contacts": [],
+      "skit": "ana_street_1",
+      "character": "ana",
+      "beat": 0,
+      "tones": [],
+      "gained": 0,
+      "last": "",
+      "completed": false,
+      "newContact": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "type": "reply",
+      "tone": "flirt"
+     },
+     "state": {
+      "rng": 11355432,
+      "recent": [
+       "ana_street_1"
+      ],
+      "vibe": {
+       "ana": 3,
+       "bo": 0
+      },
+      "contacts": [],
+      "skit": "ana_street_1",
+      "character": "ana",
+      "beat": 1,
+      "tones": [
+       "flirt"
+      ],
+      "gained": 3,
+      "last": "",
+      "completed": false,
+      "newContact": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "type": "reply",
+      "tone": "flirt"
+     },
+     "state": {
+      "rng": 11355432,
+      "recent": [
+       "ana_street_1"
+      ],
+      "vibe": {
+       "ana": 6,
+       "bo": 0
+      },
+      "contacts": [],
+      "skit": "ana_street_1",
+      "character": "ana",
+      "beat": 2,
+      "tones": [
+       "flirt",
+       "flirt"
+      ],
+      "gained": 6,
+      "last": "",
+      "completed": false,
+      "newContact": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "type": "reply",
+      "tone": "flirt"
+     },
+     "state": {
+      "rng": 11355432,
+      "recent": [
+       "ana_street_1"
+      ],
+      "vibe": {
+       "ana": 9,
+       "bo": 0
+      },
+      "contacts": [],
+      "skit": "ana_street_1",
+      "character": "ana",
+      "beat": 3,
+      "tones": [
+       "flirt",
+       "flirt",
+       "flirt"
+      ],
+      "gained": 9,
+      "last": "",
+      "completed": false,
+      "newContact": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "type": "reply",
+      "tone": "flirt"
+     },
+     "state": {
+      "rng": 11355432,
+      "recent": [
+       "ana_street_1"
+      ],
+      "vibe": {
+       "ana": 12,
+       "bo": 0
+      },
+      "contacts": [],
+      "skit": "ana_street_1",
+      "character": "ana",
+      "beat": 4,
+      "tones": [
+       "flirt",
+       "flirt",
+       "flirt",
+       "flirt"
+      ],
+      "gained": 12,
+      "last": "",
+      "completed": false,
+      "newContact": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "type": "reply",
+      "tone": "flirt"
+     },
+     "state": {
+      "rng": 2836018348,
+      "recent": [
+       "ana_street_1"
+      ],
+      "vibe": {
+       "ana": 12,
+       "bo": 0
+      },
+      "contacts": [
+       "ana"
+      ],
+      "skit": "",
+      "character": "ana",
+      "beat": 5,
+      "tones": [
+       "flirt",
+       "flirt",
+       "flirt",
+       "flirt",
+       "flirt"
+      ],
+      "gained": 12,
+      "last": "ana_street_1",
+      "completed": true,
+      "newContact": true
+     }
+    }
+   ],
+   "result": {
+    "skit": "ana_street_1",
+    "character": "ana",
+    "completed": true,
+    "gained": 12,
+    "vibe": 12,
+    "contact": true,
+    "newContact": true
+   }
+  },
+  {
+   "name": "contact-roll-per-seed",
+   "config": {
+    "city": "nyc",
+    "recentK": 2,
+    "vibeMax": 12,
+    "vibeStart": 0,
+    "contactMinVibe": 4,
+    "contactBasePct": 30,
+    "contactStepPct": 20,
+    "contactMaxPct": 90,
+    "characters": [
+     {
+      "id": "ana",
+      "tones": {
+       "flirt": 3,
+       "joke": 1,
+       "dry": -2
+      }
+     },
+     {
+      "id": "bo",
+      "tones": {
+       "flirt": -1,
+       "joke": 2,
+       "dry": 1
+      }
+     }
+    ],
+    "skits": [
+     {
+      "id": "ana_bar_1",
+      "character": "ana",
+      "context": "bar",
+      "city": "",
+      "beats": 5
+     },
+     {
+      "id": "ana_street_1",
+      "character": "ana",
+      "context": "street",
+      "city": "nyc",
+      "beats": 5
+     },
+     {
+      "id": "ana_street_2",
+      "character": "ana",
+      "context": "street",
+      "city": "",
+      "beats": 5
+     },
+     {
+      "id": "ana_street_3",
+      "character": "ana",
+      "context": "street",
+      "city": "prg",
+      "beats": 5
+     },
+     {
+      "id": "ana_street_4",
+      "character": "ana",
+      "context": "street",
+      "city": "nyc",
+      "beats": 5
+     },
+     {
+      "id": "bo_crash_1",
+      "character": "bo",
+      "context": "crash",
+      "city": "",
+      "beats": 2
+     },
+     {
+      "id": "bo_street_1",
+      "character": "bo",
+      "context": "street",
+      "city": "nyc",
+      "beats": 5
+     }
+    ]
+   },
+   "seed": 7,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "type": "start",
+      "character": "ana",
+      "context": "street"
+     },
+     "state": {
+      "rng": 1892583,
+      "recent": [
+       "ana_street_1"
+      ],
+      "vibe": {
+       "ana": 0,
+       "bo": 0
+      },
+      "contacts": [],
+      "skit": "ana_street_1",
+      "character": "ana",
+      "beat": 0,
+      "tones": [],
+      "gained": 0,
+      "last": "",
+      "completed": false,
+      "newContact": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "type": "reply",
+      "tone": "flirt"
+     },
+     "state": {
+      "rng": 1892583,
+      "recent": [
+       "ana_street_1"
+      ],
+      "vibe": {
+       "ana": 3,
+       "bo": 0
+      },
+      "contacts": [],
+      "skit": "ana_street_1",
+      "character": "ana",
+      "beat": 1,
+      "tones": [
+       "flirt"
+      ],
+      "gained": 3,
+      "last": "",
+      "completed": false,
+      "newContact": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "type": "reply",
+      "tone": "joke"
+     },
+     "state": {
+      "rng": 1892583,
+      "recent": [
+       "ana_street_1"
+      ],
+      "vibe": {
+       "ana": 4,
+       "bo": 0
+      },
+      "contacts": [],
+      "skit": "ana_street_1",
+      "character": "ana",
+      "beat": 2,
+      "tones": [
+       "flirt",
+       "joke"
+      ],
+      "gained": 4,
+      "last": "",
+      "completed": false,
+      "newContact": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "type": "reply",
+      "tone": "dry"
+     },
+     "state": {
+      "rng": 1892583,
+      "recent": [
+       "ana_street_1"
+      ],
+      "vibe": {
+       "ana": 2,
+       "bo": 0
+      },
+      "contacts": [],
+      "skit": "ana_street_1",
+      "character": "ana",
+      "beat": 3,
+      "tones": [
+       "flirt",
+       "joke",
+       "dry"
+      ],
+      "gained": 2,
+      "last": "",
+      "completed": false,
+      "newContact": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "type": "reply",
+      "tone": "joke"
+     },
+     "state": {
+      "rng": 1892583,
+      "recent": [
+       "ana_street_1"
+      ],
+      "vibe": {
+       "ana": 3,
+       "bo": 0
+      },
+      "contacts": [],
+      "skit": "ana_street_1",
+      "character": "ana",
+      "beat": 4,
+      "tones": [
+       "flirt",
+       "joke",
+       "dry",
+       "joke"
+      ],
+      "gained": 3,
+      "last": "",
+      "completed": false,
+      "newContact": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "type": "reply",
+      "tone": "joke"
+     },
+     "state": {
+      "rng": 470389255,
+      "recent": [
+       "ana_street_1"
+      ],
+      "vibe": {
+       "ana": 4,
+       "bo": 0
+      },
+      "contacts": [],
+      "skit": "",
+      "character": "ana",
+      "beat": 5,
+      "tones": [
+       "flirt",
+       "joke",
+       "dry",
+       "joke",
+       "joke"
+      ],
+      "gained": 4,
+      "last": "ana_street_1",
+      "completed": true,
+      "newContact": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "type": "start",
+      "character": "ana",
+      "context": "bar"
+     },
+     "state": {
+      "rng": 3882205507,
+      "recent": [
+       "ana_street_1",
+       "ana_bar_1"
+      ],
+      "vibe": {
+       "ana": 4,
+       "bo": 0
+      },
+      "contacts": [],
+      "skit": "ana_bar_1",
+      "character": "ana",
+      "beat": 0,
+      "tones": [],
+      "gained": 0,
+      "last": "ana_street_1",
+      "completed": true,
+      "newContact": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "type": "reply",
+      "tone": "flirt"
+     },
+     "state": {
+      "rng": 3882205507,
+      "recent": [
+       "ana_street_1",
+       "ana_bar_1"
+      ],
+      "vibe": {
+       "ana": 7,
+       "bo": 0
+      },
+      "contacts": [],
+      "skit": "ana_bar_1",
+      "character": "ana",
+      "beat": 1,
+      "tones": [
+       "flirt"
+      ],
+      "gained": 3,
+      "last": "ana_street_1",
+      "completed": true,
+      "newContact": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "type": "reply",
+      "tone": "flirt"
+     },
+     "state": {
+      "rng": 3882205507,
+      "recent": [
+       "ana_street_1",
+       "ana_bar_1"
+      ],
+      "vibe": {
+       "ana": 10,
+       "bo": 0
+      },
+      "contacts": [],
+      "skit": "ana_bar_1",
+      "character": "ana",
+      "beat": 2,
+      "tones": [
+       "flirt",
+       "flirt"
+      ],
+      "gained": 6,
+      "last": "ana_street_1",
+      "completed": true,
+      "newContact": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "type": "reply",
+      "tone": "flirt"
+     },
+     "state": {
+      "rng": 3882205507,
+      "recent": [
+       "ana_street_1",
+       "ana_bar_1"
+      ],
+      "vibe": {
+       "ana": 12,
+       "bo": 0
+      },
+      "contacts": [],
+      "skit": "ana_bar_1",
+      "character": "ana",
+      "beat": 3,
+      "tones": [
+       "flirt",
+       "flirt",
+       "flirt"
+      ],
+      "gained": 8,
+      "last": "ana_street_1",
+      "completed": true,
+      "newContact": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "type": "reply",
+      "tone": "flirt"
+     },
+     "state": {
+      "rng": 3882205507,
+      "recent": [
+       "ana_street_1",
+       "ana_bar_1"
+      ],
+      "vibe": {
+       "ana": 12,
+       "bo": 0
+      },
+      "contacts": [],
+      "skit": "ana_bar_1",
+      "character": "ana",
+      "beat": 4,
+      "tones": [
+       "flirt",
+       "flirt",
+       "flirt",
+       "flirt"
+      ],
+      "gained": 8,
+      "last": "ana_street_1",
+      "completed": true,
+      "newContact": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "type": "reply",
+      "tone": "flirt"
+     },
+     "state": {
+      "rng": 3069989445,
+      "recent": [
+       "ana_street_1",
+       "ana_bar_1"
+      ],
+      "vibe": {
+       "ana": 12,
+       "bo": 0
+      },
+      "contacts": [
+       "ana"
+      ],
+      "skit": "",
+      "character": "ana",
+      "beat": 5,
+      "tones": [
+       "flirt",
+       "flirt",
+       "flirt",
+       "flirt",
+       "flirt"
+      ],
+      "gained": 8,
+      "last": "ana_bar_1",
+      "completed": true,
+      "newContact": true
+     }
+    }
+   ],
+   "result": {
+    "skit": "ana_bar_1",
+    "character": "ana",
+    "completed": true,
+    "gained": 8,
+    "vibe": 12,
+    "contact": true,
+    "newContact": true
+   }
+  },
+  {
+   "name": "queue-fresh-then-wrap",
+   "config": {
+    "city": "nyc",
+    "recentK": 2,
+    "vibeMax": 12,
+    "vibeStart": 0,
+    "contactMinVibe": 4,
+    "contactBasePct": 30,
+    "contactStepPct": 20,
+    "contactMaxPct": 90,
+    "characters": [
+     {
+      "id": "ana",
+      "tones": {
+       "flirt": 3,
+       "joke": 1,
+       "dry": -2
+      }
+     },
+     {
+      "id": "bo",
+      "tones": {
+       "flirt": -1,
+       "joke": 2,
+       "dry": 1
+      }
+     }
+    ],
+    "skits": [
+     {
+      "id": "ana_bar_1",
+      "character": "ana",
+      "context": "bar",
+      "city": "",
+      "beats": 5
+     },
+     {
+      "id": "ana_street_1",
+      "character": "ana",
+      "context": "street",
+      "city": "nyc",
+      "beats": 5
+     },
+     {
+      "id": "ana_street_2",
+      "character": "ana",
+      "context": "street",
+      "city": "",
+      "beats": 5
+     },
+     {
+      "id": "ana_street_3",
+      "character": "ana",
+      "context": "street",
+      "city": "prg",
+      "beats": 5
+     },
+     {
+      "id": "ana_street_4",
+      "character": "ana",
+      "context": "street",
+      "city": "nyc",
+      "beats": 5
+     },
+     {
+      "id": "bo_crash_1",
+      "character": "bo",
+      "context": "crash",
+      "city": "",
+      "beats": 2
+     },
+     {
+      "id": "bo_street_1",
+      "character": "bo",
+      "context": "street",
+      "city": "nyc",
+      "beats": 5
+     }
+    ]
+   },
+   "seed": 3,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "type": "start",
+      "character": "ana",
+      "context": "street"
+     },
+     "state": {
+      "rng": 811107,
+      "recent": [
+       "ana_street_1"
+      ],
+      "vibe": {
+       "ana": 0,
+       "bo": 0
+      },
+      "contacts": [],
+      "skit": "ana_street_1",
+      "character": "ana",
+      "beat": 0,
+      "tones": [],
+      "gained": 0,
+      "last": "",
+      "completed": false,
+      "newContact": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "type": "leave"
+     },
+     "state": {
+      "rng": 811107,
+      "recent": [
+       "ana_street_1"
+      ],
+      "vibe": {
+       "ana": 0,
+       "bo": 0
+      },
+      "contacts": [],
+      "skit": "",
+      "character": "ana",
+      "beat": 0,
+      "tones": [],
+      "gained": 0,
+      "last": "ana_street_1",
+      "completed": false,
+      "newContact": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "type": "start",
+      "character": "ana",
+      "context": "street"
+     },
+     "state": {
+      "rng": 201886211,
+      "recent": [
+       "ana_street_1",
+       "ana_street_4"
+      ],
+      "vibe": {
+       "ana": 0,
+       "bo": 0
+      },
+      "contacts": [],
+      "skit": "ana_street_4",
+      "character": "ana",
+      "beat": 0,
+      "tones": [],
+      "gained": 0,
+      "last": "ana_street_1",
+      "completed": false,
+      "newContact": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "type": "leave"
+     },
+     "state": {
+      "rng": 201886211,
+      "recent": [
+       "ana_street_1",
+       "ana_street_4"
+      ],
+      "vibe": {
+       "ana": 0,
+       "bo": 0
+      },
+      "contacts": [],
+      "skit": "",
+      "character": "ana",
+      "beat": 0,
+      "tones": [],
+      "gained": 0,
+      "last": "ana_street_4",
+      "completed": false,
+      "newContact": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "type": "start",
+      "character": "ana",
+      "context": "street"
+     },
+     "state": {
+      "rng": 3025432647,
+      "recent": [
+       "ana_street_4",
+       "ana_street_2"
+      ],
+      "vibe": {
+       "ana": 0,
+       "bo": 0
+      },
+      "contacts": [],
+      "skit": "ana_street_2",
+      "character": "ana",
+      "beat": 0,
+      "tones": [],
+      "gained": 0,
+      "last": "ana_street_4",
+      "completed": false,
+      "newContact": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "type": "leave"
+     },
+     "state": {
+      "rng": 3025432647,
+      "recent": [
+       "ana_street_4",
+       "ana_street_2"
+      ],
+      "vibe": {
+       "ana": 0,
+       "bo": 0
+      },
+      "contacts": [],
+      "skit": "",
+      "character": "ana",
+      "beat": 0,
+      "tones": [],
+      "gained": 0,
+      "last": "ana_street_2",
+      "completed": false,
+      "newContact": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "type": "start",
+      "character": "ana",
+      "context": "street"
+     },
+     "state": {
+      "rng": 1909268553,
+      "recent": [
+       "ana_street_2",
+       "ana_street_1"
+      ],
+      "vibe": {
+       "ana": 0,
+       "bo": 0
+      },
+      "contacts": [],
+      "skit": "ana_street_1",
+      "character": "ana",
+      "beat": 0,
+      "tones": [],
+      "gained": 0,
+      "last": "ana_street_2",
+      "completed": false,
+      "newContact": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "type": "leave"
+     },
+     "state": {
+      "rng": 1909268553,
+      "recent": [
+       "ana_street_2",
+       "ana_street_1"
+      ],
+      "vibe": {
+       "ana": 0,
+       "bo": 0
+      },
+      "contacts": [],
+      "skit": "",
+      "character": "ana",
+      "beat": 0,
+      "tones": [],
+      "gained": 0,
+      "last": "ana_street_1",
+      "completed": false,
+      "newContact": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "type": "start",
+      "character": "ana",
+      "context": "street"
+     },
+     "state": {
+      "rng": 1833517003,
+      "recent": [
+       "ana_street_1",
+       "ana_street_4"
+      ],
+      "vibe": {
+       "ana": 0,
+       "bo": 0
+      },
+      "contacts": [],
+      "skit": "ana_street_4",
+      "character": "ana",
+      "beat": 0,
+      "tones": [],
+      "gained": 0,
+      "last": "ana_street_1",
+      "completed": false,
+      "newContact": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "type": "leave"
+     },
+     "state": {
+      "rng": 1833517003,
+      "recent": [
+       "ana_street_1",
+       "ana_street_4"
+      ],
+      "vibe": {
+       "ana": 0,
+       "bo": 0
+      },
+      "contacts": [],
+      "skit": "",
+      "character": "ana",
+      "beat": 0,
+      "tones": [],
+      "gained": 0,
+      "last": "ana_street_4",
+      "completed": false,
+      "newContact": false
+     }
+    }
+   ],
+   "result": {
+    "skit": "ana_street_4",
+    "character": "ana",
+    "completed": false,
+    "gained": 0,
+    "vibe": 0,
+    "contact": false,
+    "newContact": false
+   }
+  },
+  {
+   "name": "single-skit-pool-repeats",
+   "config": {
+    "city": "nyc",
+    "recentK": 2,
+    "vibeMax": 12,
+    "vibeStart": 0,
+    "contactMinVibe": 4,
+    "contactBasePct": 30,
+    "contactStepPct": 20,
+    "contactMaxPct": 90,
+    "characters": [
+     {
+      "id": "ana",
+      "tones": {
+       "flirt": 3,
+       "joke": 1,
+       "dry": -2
+      }
+     },
+     {
+      "id": "bo",
+      "tones": {
+       "flirt": -1,
+       "joke": 2,
+       "dry": 1
+      }
+     }
+    ],
+    "skits": [
+     {
+      "id": "ana_bar_1",
+      "character": "ana",
+      "context": "bar",
+      "city": "",
+      "beats": 5
+     },
+     {
+      "id": "ana_street_1",
+      "character": "ana",
+      "context": "street",
+      "city": "nyc",
+      "beats": 5
+     },
+     {
+      "id": "ana_street_2",
+      "character": "ana",
+      "context": "street",
+      "city": "",
+      "beats": 5
+     },
+     {
+      "id": "ana_street_3",
+      "character": "ana",
+      "context": "street",
+      "city": "prg",
+      "beats": 5
+     },
+     {
+      "id": "ana_street_4",
+      "character": "ana",
+      "context": "street",
+      "city": "nyc",
+      "beats": 5
+     },
+     {
+      "id": "bo_crash_1",
+      "character": "bo",
+      "context": "crash",
+      "city": "",
+      "beats": 2
+     },
+     {
+      "id": "bo_street_1",
+      "character": "bo",
+      "context": "street",
+      "city": "nyc",
+      "beats": 5
+     }
+    ]
+   },
+   "seed": 11,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "type": "start",
+      "character": "bo",
+      "context": "street"
+     },
+     "state": {
+      "rng": 2974059,
+      "recent": [
+       "bo_street_1"
+      ],
+      "vibe": {
+       "ana": 0,
+       "bo": 0
+      },
+      "contacts": [],
+      "skit": "bo_street_1",
+      "character": "bo",
+      "beat": 0,
+      "tones": [],
+      "gained": 0,
+      "last": "",
+      "completed": false,
+      "newContact": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "type": "reply",
+      "tone": "joke"
+     },
+     "state": {
+      "rng": 2974059,
+      "recent": [
+       "bo_street_1"
+      ],
+      "vibe": {
+       "ana": 0,
+       "bo": 2
+      },
+      "contacts": [],
+      "skit": "bo_street_1",
+      "character": "bo",
+      "beat": 1,
+      "tones": [
+       "joke"
+      ],
+      "gained": 2,
+      "last": "",
+      "completed": false,
+      "newContact": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "type": "leave"
+     },
+     "state": {
+      "rng": 2974059,
+      "recent": [
+       "bo_street_1"
+      ],
+      "vibe": {
+       "ana": 0,
+       "bo": 2
+      },
+      "contacts": [],
+      "skit": "",
+      "character": "bo",
+      "beat": 1,
+      "tones": [
+       "joke"
+      ],
+      "gained": 2,
+      "last": "bo_street_1",
+      "completed": false,
+      "newContact": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "type": "start",
+      "character": "bo",
+      "context": "street"
+     },
+     "state": {
+      "rng": 2974059,
+      "recent": [
+       "bo_street_1"
+      ],
+      "vibe": {
+       "ana": 0,
+       "bo": 2
+      },
+      "contacts": [],
+      "skit": "bo_street_1",
+      "character": "bo",
+      "beat": 0,
+      "tones": [],
+      "gained": 0,
+      "last": "bo_street_1",
+      "completed": false,
+      "newContact": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "type": "leave"
+     },
+     "state": {
+      "rng": 2974059,
+      "recent": [
+       "bo_street_1"
+      ],
+      "vibe": {
+       "ana": 0,
+       "bo": 2
+      },
+      "contacts": [],
+      "skit": "",
+      "character": "bo",
+      "beat": 0,
+      "tones": [],
+      "gained": 0,
+      "last": "bo_street_1",
+      "completed": false,
+      "newContact": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "type": "start",
+      "character": "bo",
+      "context": "crash"
+     },
+     "state": {
+      "rng": 738900491,
+      "recent": [
+       "bo_street_1",
+       "bo_crash_1"
+      ],
+      "vibe": {
+       "ana": 0,
+       "bo": 2
+      },
+      "contacts": [],
+      "skit": "bo_crash_1",
+      "character": "bo",
+      "beat": 0,
+      "tones": [],
+      "gained": 0,
+      "last": "bo_street_1",
+      "completed": false,
+      "newContact": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "type": "reply",
+      "tone": "joke"
+     },
+     "state": {
+      "rng": 738900491,
+      "recent": [
+       "bo_street_1",
+       "bo_crash_1"
+      ],
+      "vibe": {
+       "ana": 0,
+       "bo": 4
+      },
+      "contacts": [],
+      "skit": "bo_crash_1",
+      "character": "bo",
+      "beat": 1,
+      "tones": [
+       "joke"
+      ],
+      "gained": 2,
+      "last": "bo_street_1",
+      "completed": false,
+      "newContact": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "type": "reply",
+      "tone": "joke"
+     },
+     "state": {
+      "rng": 305599086,
+      "recent": [
+       "bo_street_1",
+       "bo_crash_1"
+      ],
+      "vibe": {
+       "ana": 0,
+       "bo": 6
+      },
+      "contacts": [],
+      "skit": "",
+      "character": "bo",
+      "beat": 2,
+      "tones": [
+       "joke",
+       "joke"
+      ],
+      "gained": 4,
+      "last": "bo_crash_1",
+      "completed": true,
+      "newContact": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "type": "start",
+      "character": "bo",
+      "context": "street"
+     },
+     "state": {
+      "rng": 305599086,
+      "recent": [
+       "bo_crash_1",
+       "bo_street_1"
+      ],
+      "vibe": {
+       "ana": 0,
+       "bo": 6
+      },
+      "contacts": [],
+      "skit": "bo_street_1",
+      "character": "bo",
+      "beat": 0,
+      "tones": [],
+      "gained": 0,
+      "last": "bo_crash_1",
+      "completed": true,
+      "newContact": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "type": "reply",
+      "tone": "dry"
+     },
+     "state": {
+      "rng": 305599086,
+      "recent": [
+       "bo_crash_1",
+       "bo_street_1"
+      ],
+      "vibe": {
+       "ana": 0,
+       "bo": 7
+      },
+      "contacts": [],
+      "skit": "bo_street_1",
+      "character": "bo",
+      "beat": 1,
+      "tones": [
+       "dry"
+      ],
+      "gained": 1,
+      "last": "bo_crash_1",
+      "completed": true,
+      "newContact": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "type": "leave"
+     },
+     "state": {
+      "rng": 305599086,
+      "recent": [
+       "bo_crash_1",
+       "bo_street_1"
+      ],
+      "vibe": {
+       "ana": 0,
+       "bo": 7
+      },
+      "contacts": [],
+      "skit": "",
+      "character": "bo",
+      "beat": 1,
+      "tones": [
+       "dry"
+      ],
+      "gained": 1,
+      "last": "bo_street_1",
+      "completed": false,
+      "newContact": false
+     }
+    }
+   ],
+   "result": {
+    "skit": "bo_street_1",
+    "character": "bo",
+    "completed": false,
+    "gained": 1,
+    "vibe": 7,
+    "contact": false,
+    "newContact": false
+   }
+  },
+  {
+   "name": "vibe-floor-and-no-roll",
+   "config": {
+    "city": "nyc",
+    "recentK": 2,
+    "vibeMax": 12,
+    "vibeStart": 0,
+    "contactMinVibe": 4,
+    "contactBasePct": 30,
+    "contactStepPct": 20,
+    "contactMaxPct": 90,
+    "characters": [
+     {
+      "id": "ana",
+      "tones": {
+       "flirt": 3,
+       "joke": 1,
+       "dry": -2
+      }
+     },
+     {
+      "id": "bo",
+      "tones": {
+       "flirt": -1,
+       "joke": 2,
+       "dry": 1
+      }
+     }
+    ],
+    "skits": [
+     {
+      "id": "ana_bar_1",
+      "character": "ana",
+      "context": "bar",
+      "city": "",
+      "beats": 5
+     },
+     {
+      "id": "ana_street_1",
+      "character": "ana",
+      "context": "street",
+      "city": "nyc",
+      "beats": 5
+     },
+     {
+      "id": "ana_street_2",
+      "character": "ana",
+      "context": "street",
+      "city": "",
+      "beats": 5
+     },
+     {
+      "id": "ana_street_3",
+      "character": "ana",
+      "context": "street",
+      "city": "prg",
+      "beats": 5
+     },
+     {
+      "id": "ana_street_4",
+      "character": "ana",
+      "context": "street",
+      "city": "nyc",
+      "beats": 5
+     },
+     {
+      "id": "bo_crash_1",
+      "character": "bo",
+      "context": "crash",
+      "city": "",
+      "beats": 2
+     },
+     {
+      "id": "bo_street_1",
+      "character": "bo",
+      "context": "street",
+      "city": "nyc",
+      "beats": 5
+     }
+    ]
+   },
+   "seed": 5,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "type": "start",
+      "character": "ana",
+      "context": "bar"
+     },
+     "state": {
+      "rng": 1351845,
+      "recent": [
+       "ana_bar_1"
+      ],
+      "vibe": {
+       "ana": 0,
+       "bo": 0
+      },
+      "contacts": [],
+      "skit": "ana_bar_1",
+      "character": "ana",
+      "beat": 0,
+      "tones": [],
+      "gained": 0,
+      "last": "",
+      "completed": false,
+      "newContact": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "type": "reply",
+      "tone": "dry"
+     },
+     "state": {
+      "rng": 1351845,
+      "recent": [
+       "ana_bar_1"
+      ],
+      "vibe": {
+       "ana": 0,
+       "bo": 0
+      },
+      "contacts": [],
+      "skit": "ana_bar_1",
+      "character": "ana",
+      "beat": 1,
+      "tones": [
+       "dry"
+      ],
+      "gained": 0,
+      "last": "",
+      "completed": false,
+      "newContact": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "type": "reply",
+      "tone": "dry"
+     },
+     "state": {
+      "rng": 1351845,
+      "recent": [
+       "ana_bar_1"
+      ],
+      "vibe": {
+       "ana": 0,
+       "bo": 0
+      },
+      "contacts": [],
+      "skit": "ana_bar_1",
+      "character": "ana",
+      "beat": 2,
+      "tones": [
+       "dry",
+       "dry"
+      ],
+      "gained": 0,
+      "last": "",
+      "completed": false,
+      "newContact": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "type": "reply",
+      "tone": "dry"
+     },
+     "state": {
+      "rng": 1351845,
+      "recent": [
+       "ana_bar_1"
+      ],
+      "vibe": {
+       "ana": 0,
+       "bo": 0
+      },
+      "contacts": [],
+      "skit": "ana_bar_1",
+      "character": "ana",
+      "beat": 3,
+      "tones": [
+       "dry",
+       "dry",
+       "dry"
+      ],
+      "gained": 0,
+      "last": "",
+      "completed": false,
+      "newContact": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "type": "reply",
+      "tone": "dry"
+     },
+     "state": {
+      "rng": 1351845,
+      "recent": [
+       "ana_bar_1"
+      ],
+      "vibe": {
+       "ana": 0,
+       "bo": 0
+      },
+      "contacts": [],
+      "skit": "ana_bar_1",
+      "character": "ana",
+      "beat": 4,
+      "tones": [
+       "dry",
+       "dry",
+       "dry",
+       "dry"
+      ],
+      "gained": 0,
+      "last": "",
+      "completed": false,
+      "newContact": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "type": "reply",
+      "tone": "dry"
+     },
+     "state": {
+      "rng": 1351845,
+      "recent": [
+       "ana_bar_1"
+      ],
+      "vibe": {
+       "ana": 0,
+       "bo": 0
+      },
+      "contacts": [],
+      "skit": "",
+      "character": "ana",
+      "beat": 5,
+      "tones": [
+       "dry",
+       "dry",
+       "dry",
+       "dry",
+       "dry"
+      ],
+      "gained": 0,
+      "last": "ana_bar_1",
+      "completed": true,
+      "newContact": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "type": "start",
+      "character": "bo",
+      "context": "crash"
+     },
+     "state": {
+      "rng": 336141829,
+      "recent": [
+       "ana_bar_1",
+       "bo_crash_1"
+      ],
+      "vibe": {
+       "ana": 0,
+       "bo": 0
+      },
+      "contacts": [],
+      "skit": "bo_crash_1",
+      "character": "bo",
+      "beat": 0,
+      "tones": [],
+      "gained": 0,
+      "last": "ana_bar_1",
+      "completed": true,
+      "newContact": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "type": "reply",
+      "tone": "flirt"
+     },
+     "state": {
+      "rng": 336141829,
+      "recent": [
+       "ana_bar_1",
+       "bo_crash_1"
+      ],
+      "vibe": {
+       "ana": 0,
+       "bo": 0
+      },
+      "contacts": [],
+      "skit": "bo_crash_1",
+      "character": "bo",
+      "beat": 1,
+      "tones": [
+       "flirt"
+      ],
+      "gained": 0,
+      "last": "ana_bar_1",
+      "completed": true,
+      "newContact": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "type": "reply",
+      "tone": "flirt"
+     },
+     "state": {
+      "rng": 336141829,
+      "recent": [
+       "ana_bar_1",
+       "bo_crash_1"
+      ],
+      "vibe": {
+       "ana": 0,
+       "bo": 0
+      },
+      "contacts": [],
+      "skit": "",
+      "character": "bo",
+      "beat": 2,
+      "tones": [
+       "flirt",
+       "flirt"
+      ],
+      "gained": 0,
+      "last": "bo_crash_1",
+      "completed": true,
+      "newContact": false
+     }
+    }
+   ],
+   "result": {
+    "skit": "bo_crash_1",
+    "character": "bo",
+    "completed": true,
+    "gained": 0,
+    "vibe": 0,
+    "contact": false,
+    "newContact": false
+   }
+  },
+  {
+   "name": "recent-k-zero",
+   "config": {
+    "city": "nyc",
+    "recentK": 0,
+    "vibeMax": 12,
+    "vibeStart": 0,
+    "contactMinVibe": 4,
+    "contactBasePct": 30,
+    "contactStepPct": 20,
+    "contactMaxPct": 90,
+    "characters": [
+     {
+      "id": "ana",
+      "tones": {
+       "flirt": 3,
+       "joke": 1,
+       "dry": -2
+      }
+     },
+     {
+      "id": "bo",
+      "tones": {
+       "flirt": -1,
+       "joke": 2,
+       "dry": 1
+      }
+     }
+    ],
+    "skits": [
+     {
+      "id": "ana_bar_1",
+      "character": "ana",
+      "context": "bar",
+      "city": "",
+      "beats": 5
+     },
+     {
+      "id": "ana_street_1",
+      "character": "ana",
+      "context": "street",
+      "city": "nyc",
+      "beats": 5
+     },
+     {
+      "id": "ana_street_2",
+      "character": "ana",
+      "context": "street",
+      "city": "",
+      "beats": 5
+     },
+     {
+      "id": "ana_street_3",
+      "character": "ana",
+      "context": "street",
+      "city": "prg",
+      "beats": 5
+     },
+     {
+      "id": "ana_street_4",
+      "character": "ana",
+      "context": "street",
+      "city": "nyc",
+      "beats": 5
+     },
+     {
+      "id": "bo_crash_1",
+      "character": "bo",
+      "context": "crash",
+      "city": "",
+      "beats": 2
+     },
+     {
+      "id": "bo_street_1",
+      "character": "bo",
+      "context": "street",
+      "city": "nyc",
+      "beats": 5
+     }
+    ]
+   },
+   "seed": 99,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "type": "start",
+      "character": "ana",
+      "context": "street"
+     },
+     "state": {
+      "rng": 25193669,
+      "recent": [],
+      "vibe": {
+       "ana": 0,
+       "bo": 0
+      },
+      "contacts": [],
+      "skit": "ana_street_4",
+      "character": "ana",
+      "beat": 0,
+      "tones": [],
+      "gained": 0,
+      "last": "",
+      "completed": false,
+      "newContact": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "type": "leave"
+     },
+     "state": {
+      "rng": 25193669,
+      "recent": [],
+      "vibe": {
+       "ana": 0,
+       "bo": 0
+      },
+      "contacts": [],
+      "skit": "",
+      "character": "ana",
+      "beat": 0,
+      "tones": [],
+      "gained": 0,
+      "last": "ana_street_4",
+      "completed": false,
+      "newContact": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "type": "start",
+      "character": "ana",
+      "context": "street"
+     },
+     "state": {
+      "rng": 2399245289,
+      "recent": [],
+      "vibe": {
+       "ana": 0,
+       "bo": 0
+      },
+      "contacts": [],
+      "skit": "ana_street_4",
+      "character": "ana",
+      "beat": 0,
+      "tones": [],
+      "gained": 0,
+      "last": "ana_street_4",
+      "completed": false,
+      "newContact": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "type": "leave"
+     },
+     "state": {
+      "rng": 2399245289,
+      "recent": [],
+      "vibe": {
+       "ana": 0,
+       "bo": 0
+      },
+      "contacts": [],
+      "skit": "",
+      "character": "ana",
+      "beat": 0,
+      "tones": [],
+      "gained": 0,
+      "last": "ana_street_4",
+      "completed": false,
+      "newContact": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "type": "start",
+      "character": "ana",
+      "context": "street"
+     },
+     "state": {
+      "rng": 316753847,
+      "recent": [],
+      "vibe": {
+       "ana": 0,
+       "bo": 0
+      },
+      "contacts": [],
+      "skit": "ana_street_4",
+      "character": "ana",
+      "beat": 0,
+      "tones": [],
+      "gained": 0,
+      "last": "ana_street_4",
+      "completed": false,
+      "newContact": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "type": "leave"
+     },
+     "state": {
+      "rng": 316753847,
+      "recent": [],
+      "vibe": {
+       "ana": 0,
+       "bo": 0
+      },
+      "contacts": [],
+      "skit": "",
+      "character": "ana",
+      "beat": 0,
+      "tones": [],
+      "gained": 0,
+      "last": "ana_street_4",
+      "completed": false,
+      "newContact": false
+     }
+    }
+   ],
+   "result": {
+    "skit": "ana_street_4",
+    "character": "ana",
+    "completed": false,
+    "gained": 0,
+    "vibe": 0,
+    "contact": false,
+    "newContact": false
+   }
+  },
+  {
+   "name": "already-contact-no-second-roll",
+   "config": {
+    "city": "nyc",
+    "recentK": 2,
+    "vibeMax": 12,
+    "vibeStart": 0,
+    "contactMinVibe": 2,
+    "contactBasePct": 90,
+    "contactStepPct": 20,
+    "contactMaxPct": 90,
+    "characters": [
+     {
+      "id": "ana",
+      "tones": {
+       "flirt": 3,
+       "joke": 1,
+       "dry": -2
+      }
+     },
+     {
+      "id": "bo",
+      "tones": {
+       "flirt": -1,
+       "joke": 2,
+       "dry": 1
+      }
+     }
+    ],
+    "skits": [
+     {
+      "id": "ana_bar_1",
+      "character": "ana",
+      "context": "bar",
+      "city": "",
+      "beats": 5
+     },
+     {
+      "id": "ana_street_1",
+      "character": "ana",
+      "context": "street",
+      "city": "nyc",
+      "beats": 5
+     },
+     {
+      "id": "ana_street_2",
+      "character": "ana",
+      "context": "street",
+      "city": "",
+      "beats": 5
+     },
+     {
+      "id": "ana_street_3",
+      "character": "ana",
+      "context": "street",
+      "city": "prg",
+      "beats": 5
+     },
+     {
+      "id": "ana_street_4",
+      "character": "ana",
+      "context": "street",
+      "city": "nyc",
+      "beats": 5
+     },
+     {
+      "id": "bo_crash_1",
+      "character": "bo",
+      "context": "crash",
+      "city": "",
+      "beats": 2
+     },
+     {
+      "id": "bo_street_1",
+      "character": "bo",
+      "context": "street",
+      "city": "nyc",
+      "beats": 5
+     }
+    ]
+   },
+   "seed": 1,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "type": "start",
+      "character": "bo",
+      "context": "street"
+     },
+     "state": {
+      "rng": 270369,
+      "recent": [
+       "bo_street_1"
+      ],
+      "vibe": {
+       "ana": 0,
+       "bo": 0
+      },
+      "contacts": [],
+      "skit": "bo_street_1",
+      "character": "bo",
+      "beat": 0,
+      "tones": [],
+      "gained": 0,
+      "last": "",
+      "completed": false,
+      "newContact": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "type": "reply",
+      "tone": "joke"
+     },
+     "state": {
+      "rng": 270369,
+      "recent": [
+       "bo_street_1"
+      ],
+      "vibe": {
+       "ana": 0,
+       "bo": 2
+      },
+      "contacts": [],
+      "skit": "bo_street_1",
+      "character": "bo",
+      "beat": 1,
+      "tones": [
+       "joke"
+      ],
+      "gained": 2,
+      "last": "",
+      "completed": false,
+      "newContact": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "type": "reply",
+      "tone": "joke"
+     },
+     "state": {
+      "rng": 270369,
+      "recent": [
+       "bo_street_1"
+      ],
+      "vibe": {
+       "ana": 0,
+       "bo": 4
+      },
+      "contacts": [],
+      "skit": "bo_street_1",
+      "character": "bo",
+      "beat": 2,
+      "tones": [
+       "joke",
+       "joke"
+      ],
+      "gained": 4,
+      "last": "",
+      "completed": false,
+      "newContact": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "type": "reply",
+      "tone": "joke"
+     },
+     "state": {
+      "rng": 270369,
+      "recent": [
+       "bo_street_1"
+      ],
+      "vibe": {
+       "ana": 0,
+       "bo": 6
+      },
+      "contacts": [],
+      "skit": "bo_street_1",
+      "character": "bo",
+      "beat": 3,
+      "tones": [
+       "joke",
+       "joke",
+       "joke"
+      ],
+      "gained": 6,
+      "last": "",
+      "completed": false,
+      "newContact": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "type": "reply",
+      "tone": "joke"
+     },
+     "state": {
+      "rng": 270369,
+      "recent": [
+       "bo_street_1"
+      ],
+      "vibe": {
+       "ana": 0,
+       "bo": 8
+      },
+      "contacts": [],
+      "skit": "bo_street_1",
+      "character": "bo",
+      "beat": 4,
+      "tones": [
+       "joke",
+       "joke",
+       "joke",
+       "joke"
+      ],
+      "gained": 8,
+      "last": "",
+      "completed": false,
+      "newContact": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "type": "reply",
+      "tone": "joke"
+     },
+     "state": {
+      "rng": 67634689,
+      "recent": [
+       "bo_street_1"
+      ],
+      "vibe": {
+       "ana": 0,
+       "bo": 10
+      },
+      "contacts": [
+       "bo"
+      ],
+      "skit": "",
+      "character": "bo",
+      "beat": 5,
+      "tones": [
+       "joke",
+       "joke",
+       "joke",
+       "joke",
+       "joke"
+      ],
+      "gained": 10,
+      "last": "bo_street_1",
+      "completed": true,
+      "newContact": true
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "type": "start",
+      "character": "bo",
+      "context": "street"
+     },
+     "state": {
+      "rng": 67634689,
+      "recent": [
+       "bo_street_1"
+      ],
+      "vibe": {
+       "ana": 0,
+       "bo": 10
+      },
+      "contacts": [
+       "bo"
+      ],
+      "skit": "bo_street_1",
+      "character": "bo",
+      "beat": 0,
+      "tones": [],
+      "gained": 0,
+      "last": "bo_street_1",
+      "completed": true,
+      "newContact": true
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "type": "reply",
+      "tone": "joke"
+     },
+     "state": {
+      "rng": 67634689,
+      "recent": [
+       "bo_street_1"
+      ],
+      "vibe": {
+       "ana": 0,
+       "bo": 12
+      },
+      "contacts": [
+       "bo"
+      ],
+      "skit": "bo_street_1",
+      "character": "bo",
+      "beat": 1,
+      "tones": [
+       "joke"
+      ],
+      "gained": 2,
+      "last": "bo_street_1",
+      "completed": true,
+      "newContact": true
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "type": "reply",
+      "tone": "joke"
+     },
+     "state": {
+      "rng": 67634689,
+      "recent": [
+       "bo_street_1"
+      ],
+      "vibe": {
+       "ana": 0,
+       "bo": 12
+      },
+      "contacts": [
+       "bo"
+      ],
+      "skit": "bo_street_1",
+      "character": "bo",
+      "beat": 2,
+      "tones": [
+       "joke",
+       "joke"
+      ],
+      "gained": 2,
+      "last": "bo_street_1",
+      "completed": true,
+      "newContact": true
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "type": "reply",
+      "tone": "joke"
+     },
+     "state": {
+      "rng": 67634689,
+      "recent": [
+       "bo_street_1"
+      ],
+      "vibe": {
+       "ana": 0,
+       "bo": 12
+      },
+      "contacts": [
+       "bo"
+      ],
+      "skit": "bo_street_1",
+      "character": "bo",
+      "beat": 3,
+      "tones": [
+       "joke",
+       "joke",
+       "joke"
+      ],
+      "gained": 2,
+      "last": "bo_street_1",
+      "completed": true,
+      "newContact": true
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "type": "reply",
+      "tone": "joke"
+     },
+     "state": {
+      "rng": 67634689,
+      "recent": [
+       "bo_street_1"
+      ],
+      "vibe": {
+       "ana": 0,
+       "bo": 12
+      },
+      "contacts": [
+       "bo"
+      ],
+      "skit": "bo_street_1",
+      "character": "bo",
+      "beat": 4,
+      "tones": [
+       "joke",
+       "joke",
+       "joke",
+       "joke"
+      ],
+      "gained": 2,
+      "last": "bo_street_1",
+      "completed": true,
+      "newContact": true
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "type": "reply",
+      "tone": "joke"
+     },
+     "state": {
+      "rng": 67634689,
+      "recent": [
+       "bo_street_1"
+      ],
+      "vibe": {
+       "ana": 0,
+       "bo": 12
+      },
+      "contacts": [
+       "bo"
+      ],
+      "skit": "",
+      "character": "bo",
+      "beat": 5,
+      "tones": [
+       "joke",
+       "joke",
+       "joke",
+       "joke",
+       "joke"
+      ],
+      "gained": 2,
+      "last": "bo_street_1",
+      "completed": true,
+      "newContact": false
+     }
+    }
+   ],
+   "result": {
+    "skit": "bo_street_1",
+    "character": "bo",
+    "completed": true,
+    "gained": 2,
+    "vibe": 12,
+    "contact": true,
+    "newContact": false
+   }
+  },
+  {
+   "name": "other-city-pool",
+   "config": {
+    "city": "prg",
+    "recentK": 2,
+    "vibeMax": 12,
+    "vibeStart": 0,
+    "contactMinVibe": 4,
+    "contactBasePct": 30,
+    "contactStepPct": 20,
+    "contactMaxPct": 90,
+    "characters": [
+     {
+      "id": "ana",
+      "tones": {
+       "flirt": 3,
+       "joke": 1,
+       "dry": -2
+      }
+     },
+     {
+      "id": "bo",
+      "tones": {
+       "flirt": -1,
+       "joke": 2,
+       "dry": 1
+      }
+     }
+    ],
+    "skits": [
+     {
+      "id": "ana_bar_1",
+      "character": "ana",
+      "context": "bar",
+      "city": "",
+      "beats": 5
+     },
+     {
+      "id": "ana_street_1",
+      "character": "ana",
+      "context": "street",
+      "city": "nyc",
+      "beats": 5
+     },
+     {
+      "id": "ana_street_2",
+      "character": "ana",
+      "context": "street",
+      "city": "",
+      "beats": 5
+     },
+     {
+      "id": "ana_street_3",
+      "character": "ana",
+      "context": "street",
+      "city": "prg",
+      "beats": 5
+     },
+     {
+      "id": "ana_street_4",
+      "character": "ana",
+      "context": "street",
+      "city": "nyc",
+      "beats": 5
+     },
+     {
+      "id": "bo_crash_1",
+      "character": "bo",
+      "context": "crash",
+      "city": "",
+      "beats": 2
+     },
+     {
+      "id": "bo_street_1",
+      "character": "bo",
+      "context": "street",
+      "city": "nyc",
+      "beats": 5
+     }
+    ]
+   },
+   "seed": 23,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "type": "start",
+      "character": "ana",
+      "context": "street"
+     },
+     "state": {
+      "rng": 6218454,
+      "recent": [
+       "ana_street_2"
+      ],
+      "vibe": {
+       "ana": 0,
+       "bo": 0
+      },
+      "contacts": [],
+      "skit": "ana_street_2",
+      "character": "ana",
+      "beat": 0,
+      "tones": [],
+      "gained": 0,
+      "last": "",
+      "completed": false,
+      "newContact": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "type": "leave"
+     },
+     "state": {
+      "rng": 6218454,
+      "recent": [
+       "ana_street_2"
+      ],
+      "vibe": {
+       "ana": 0,
+       "bo": 0
+      },
+      "contacts": [],
+      "skit": "",
+      "character": "ana",
+      "beat": 0,
+      "tones": [],
+      "gained": 0,
+      "last": "ana_street_2",
+      "completed": false,
+      "newContact": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "type": "start",
+      "character": "ana",
+      "context": "street"
+     },
+     "state": {
+      "rng": 1552799316,
+      "recent": [
+       "ana_street_2",
+       "ana_street_3"
+      ],
+      "vibe": {
+       "ana": 0,
+       "bo": 0
+      },
+      "contacts": [],
+      "skit": "ana_street_3",
+      "character": "ana",
+      "beat": 0,
+      "tones": [],
+      "gained": 0,
+      "last": "ana_street_2",
+      "completed": false,
+      "newContact": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "type": "leave"
+     },
+     "state": {
+      "rng": 1552799316,
+      "recent": [
+       "ana_street_2",
+       "ana_street_3"
+      ],
+      "vibe": {
+       "ana": 0,
+       "bo": 0
+      },
+      "contacts": [],
+      "skit": "",
+      "character": "ana",
+      "beat": 0,
+      "tones": [],
+      "gained": 0,
+      "last": "ana_street_3",
+      "completed": false,
+      "newContact": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "type": "start",
+      "character": "ana",
+      "context": "street"
+     },
+     "state": {
+      "rng": 1552799316,
+      "recent": [
+       "ana_street_3",
+       "ana_street_2"
+      ],
+      "vibe": {
+       "ana": 0,
+       "bo": 0
+      },
+      "contacts": [],
+      "skit": "ana_street_2",
+      "character": "ana",
+      "beat": 0,
+      "tones": [],
+      "gained": 0,
+      "last": "ana_street_3",
+      "completed": false,
+      "newContact": false
+     }
+    }
+   ],
+   "result": null
+  }
+ ]
+}

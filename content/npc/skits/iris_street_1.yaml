@@ -1,0 +1,121 @@
+# DRAFT for Ol1n's review (specs/dialogue.md). Iris under a tree in Bryant Park, rain.
+id: iris_street_1
+character: iris
+context: street
+city: nyc
+beats:
+  - npc:
+      en: "Oh! Sorry, I didn't see you. I'm hiding from the rain under this tree with a book."
+      cs: "Jé! Promiň, nevšimla jsem si tě. Schovávám se tu před deštěm pod stromem s knížkou."
+    replies:
+      flirt:
+        en: "Lucky book. It gets all your attention."
+        cs: "Ta knížka má štěstí. Má celou tvou pozornost."
+      joke:
+        en: "The tree's doing a terrible job, though."
+        cs: "Ten strom ti teda moc nepomáhá."
+      dry:
+        en: "It's raining. Most people go inside."
+        cs: "Prší. Většina lidí jde dovnitř."
+    reactions:
+      flirt:
+        en: "Oh. Um. It's a very good book, to be fair."
+        cs: "Ach. Ehm. Je to teda hodně dobrá knížka."
+      joke:
+        en: "It's trying its best. Like me with small talk."
+        cs: "Snaží se, jak může. Jako já s konverzací."
+      dry:
+        en: "Inside is loud. Rain is quieter than people."
+        cs: "Uvnitř je hluk. Déšť je tišší než lidi."
+  - npc:
+      en: "It's called The Lighthouse at Pier Nine. A woman keeps a lamp lit for ships that stopped coming."
+      cs: "Jmenuje se Maják na Molu devět. Žena v ní svítí lodím, které už nepřiplouvají."
+    replies:
+      flirt:
+        en: "If your lamp was on, I'd stop by."
+        cs: "Kdyby svítila tvoje lampa, zastavím."
+      joke:
+        en: "Sounds like the ferry schedule on a Sunday."
+        cs: "To zní jako jízdní řád trajektu v neděli."
+      dry:
+        en: "So nothing happens for three hundred pages."
+        cs: "Takže tři sta stran se nic neděje."
+    reactions:
+      flirt:
+        en: "That's... a really nice thing to say. I'm blushing into chapter twelve."
+        cs: "To je... moc hezky řečeno. Červenám se do dvanácté kapitoly."
+      joke:
+        en: "Ha. The Staten Island Ferry does run, though. Mostly."
+        cs: "Cha. Trajekt na Staten Island ale jezdí. Většinou."
+      dry:
+        en: "Things happen. Quietly. That's the point."
+        cs: "Děje se. Potichu. O to právě jde."
+  - npc:
+      en: "There's a line in it: 'Some cities are read, not walked.' I underlined it twice. Is that silly?"
+      cs: "Je tam věta: 'Některá města se neprocházejí, ale čtou.' Podtrhla jsem ji dvakrát. Je to hloupé?"
+    replies:
+      flirt:
+        en: "Not silly. Kind of adorable, actually."
+        cs: "Hloupé ne. Spíš roztomilé."
+      joke:
+        en: "Manhattan is both. Mostly honking, though."
+        cs: "Manhattan je obojí. Hlavně ale troubí."
+      dry:
+        en: "Underlining twice is just bolder underlining."
+        cs: "Dvakrát podtržené je jen tučnější podtržení."
+    reactions:
+      flirt:
+        en: "Adorable. Okay. I'm writing that in the margin."
+        cs: "Roztomilé. Dobře. To si napíšu na okraj."
+      joke:
+        en: "Honking as punctuation. I like that, oddly."
+        cs: "Troubení jako interpunkce. Zvláštně se mi to líbí."
+      dry:
+        en: "Fair. I'm a bold underliner. It's a known flaw."
+        cs: "Pravda. Podtrhávám tučně. Známá vada."
+  - npc:
+      en: "The rain's easing. Steam's coming up from the manholes on 42nd. It looks like a novel cover."
+      cs: "Déšť polevuje. Z kanálů na 42. ulici stoupá pára. Vypadá to jako obálka románu."
+    replies:
+      flirt:
+        en: "You'd be on the cover. Pencil behind the ear."
+        cs: "Na obálce bys byla ty. S tužkou za uchem."
+      joke:
+        en: "A thriller. 'The Manhole at Midnight.'"
+        cs: "Thriller. 'Kanál o půlnoci.'"
+      dry:
+        en: "It's a steam pipe. It always looks like that."
+        cs: "To je parovod. Takhle to vypadá pořád."
+    reactions:
+      flirt:
+        en: "The pencil didn't escape you. Nobody notices the pencil."
+        cs: "Ta tužka ti neunikla. Té si nikdo nevšímá."
+      joke:
+        en: "I'd read it. Probably at noon, though."
+        cs: "Četla bych to. Ale asi v poledne."
+      dry:
+        en: "Then it's always a novel cover. Lucky us."
+        cs: "Tak je to pořád obálka románu. Máme štěstí."
+  - npc:
+      en: "I should get back before the library closes. Thanks for keeping me company under the tree."
+      cs: "Měla bych se vrátit, než zavřou knihovnu. Díky za společnost pod stromem."
+    replies:
+      flirt:
+        en: "Same tree tomorrow? I'll bring an umbrella."
+        cs: "Zítra pod stejným stromem? Vezmu deštník."
+      joke:
+        en: "Tell the lighthouse lady I said hi."
+        cs: "Pozdravuj ode mě tu paní z majáku."
+      dry:
+        en: "Library's on Fifth. You can't miss it."
+        cs: "Knihovna je na Páté. Nemůžeš ji minout."
+    reactions:
+      flirt:
+        en: "Maybe. I'll save you a spot on the bench. Bye!"
+        cs: "Možná. Podržím ti místo na lavičce. Ahoj!"
+      joke:
+        en: "I will. She'll leave a light on for you."
+        cs: "Vyřídím. Nechá ti rozsvíceno."
+      dry:
+        en: "Two stone lions out front. Hard to miss. Bye!"
+        cs: "Dva kamenní lvi před vchodem. Těžko minout. Ahoj!"

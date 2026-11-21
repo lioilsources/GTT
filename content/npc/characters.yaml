@@ -1,0 +1,143 @@
+# NPC characters (METROPOLE_PLAN 11, specs/dialogue.md). DRAFT for Ol1n's review.
+# Adults only (21+), fictional, no real people or brands. `tones` = vibe change per reply tone,
+# `portrait` = index into design/tokens.json color.npc.portraits (placeholder: initials on a circle).
+# quips: win = the player beat this opponent, lose = the player lost, draw.
+characters:
+  - id: maya
+    name: Maya
+    age: 24
+    archetype: influencer
+    portrait: 0
+    tones: {flirt: 2, joke: 1, dry: -1}
+    bio:
+      en: Shoots golden-hour content on the High Line and rates every brunch out of ten.
+      cs: Natáčí obsah za zlaté hodinky na High Line a každému brunchi dává známku do deseti.
+    quips:
+      win:
+        - en: "Okay, you won. I'm cropping that out of the story."
+          cs: "Dobře, výhra je tvoje. Tohle ze storky vystřihnu."
+        - en: "Rematch. And this time the lighting is on my side."
+          cs: "Odveta. A tentokrát bude světlo na mojí straně."
+      lose:
+        - en: "Victory selfie! You can be in the background."
+          cs: "Vítězné selfie! Ty můžeš být v pozadí."
+        - en: "Ten out of ten for me, solid six for you."
+          cs: "Deset z deseti pro mě, poctivá šestka pro tebe."
+      draw:
+        - en: "A tie? The algorithm hates ties."
+          cs: "Remíza? Algoritmus remízy nesnáší."
+  - id: theo
+    name: Theo
+    age: 27
+    archetype: barista_hipster
+    portrait: 1
+    tones: {flirt: 0, joke: 1, dry: 2}
+    bio:
+      en: Pulls espresso in the East Village, owns more vinyl than plates, knew every band before you did.
+      cs: Tahá espresso v East Village, má víc desek než talířů a každou kapelu znal dřív než ty.
+    quips:
+      win:
+        - en: "You won. I liked this game before it was cool, for the record."
+          cs: "Výhra je tvoje. Pro pořádek: tuhle hru jsem měl rád dřív, než byla cool."
+        - en: "Fine. Your coffee is still on me. Decaf, though."
+          cs: "Fajn. Kafe máš stejně u mě. Ale bez kofeinu."
+      lose:
+        - en: "Don't worry, losing is very underground right now."
+          cs: "Neboj, prohrávat je teď hrozně underground."
+        - en: "Smooth finish, notes of defeat. Yours."
+          cs: "Jemný závěr, tóny porážky. Tvojí."
+      draw:
+        - en: "A draw. Perfectly balanced, like a flat white."
+          cs: "Remíza. Dokonale vyvážená, jako flat white."
+  - id: ray
+    name: Ray
+    age: 58
+    archetype: taxi_philosopher
+    portrait: 2
+    tones: {flirt: -1, joke: 2, dry: 1}
+    bio:
+      en: Thirty years behind the wheel of a cab; has a theory about life for every bridge in town.
+      cs: Třicet let za volantem taxíku; na každý most ve městě má jednu teorii o životě.
+    quips:
+      win:
+        - en: "You beat me fair. Like a green wave on Second Avenue."
+          cs: "Poctivá výhra. Jako zelená vlna na Second Avenue."
+        - en: "Winning is a bridge, kid. Losing is the toll."
+          cs: "Výhra je most. Prohra je mýtné."
+      lose:
+        - en: "Thirty years of traffic teaches patience. And this."
+          cs: "Třicet let v zácpách tě naučí trpělivost. A tohle."
+        - en: "Don't sweat it. Even the express train stops sometimes."
+          cs: "Nic si z toho nedělej. I expres občas zastaví."
+      draw:
+        - en: "A tie. Like two cabs at the same corner, same second."
+          cs: "Remíza. Jako dva taxíky na stejném rohu ve stejnou vteřinu."
+  - id: iris
+    name: Iris
+    age: 29
+    archetype: bookworm
+    portrait: 3
+    tones: {flirt: 2, joke: 0, dry: 1}
+    bio:
+      en: Reads in Bryant Park in any weather and keeps a pencil behind her ear for margin notes.
+      cs: Čte v Bryant Parku za každého počasí a za uchem nosí tužku na poznámky na okraj.
+    quips:
+      win:
+        - en: "You won. I'll write it in the margins, small."
+          cs: "Výhra je tvoje. Napíšu si to na okraj, malým písmem."
+        - en: "Plot twist. I did not see that ending coming."
+          cs: "Zvrat v ději. Takový konec jsem nečekala."
+      lose:
+        - en: "Chapter closed. Better luck in the sequel."
+          cs: "Kapitola uzavřená. Víc štěstí v pokračování."
+        - en: "I read a book about this game. Twice."
+          cs: "Četla jsem o téhle hře knížku. Dvakrát."
+      draw:
+        - en: "A draw. An open ending, my favourite kind."
+          cs: "Remíza. Otevřený konec, ten mám nejradši."
+  - id: jules
+    name: Jules
+    age: 31
+    archetype: street_musician
+    portrait: 4
+    tones: {flirt: 1, joke: 2, dry: 0}
+    bio:
+      en: Plays guitar in Washington Square Park and on subway platforms with good echo.
+      cs: Hraje na kytaru ve Washington Square Parku a na stanicích metra, kde je dobrá ozvěna.
+    quips:
+      win:
+        - en: "You won! I'm writing a sad song about it right now."
+          cs: "Výhra je tvoje! Právě o tom skládám smutnou písničku."
+        - en: "Nice. That deserves a drum roll. I only have a guitar."
+          cs: "Pěkný. To by chtělo vířivku. Mám jen kytaru."
+      lose:
+        - en: "And the crowd goes wild! The crowd is me."
+          cs: "A publikum šílí! Publikum jsem já."
+        - en: "Don't worry, every encore starts with a miss."
+          cs: "Neboj, každý přídavek začíná přešlapem."
+      draw:
+        - en: "A draw. Let's call it a duet."
+          cs: "Remíza. Říkejme tomu duet."
+  - id: dana
+    name: Dana
+    age: 38
+    archetype: busy_manager
+    portrait: 5
+    tones: {flirt: 0, joke: -1, dry: 2}
+    bio:
+      en: Runs a team in Midtown, answers emails at red lights and has never once been late.
+      cs: Vede tým v Midtownu, na červené odpovídá na e-maily a ještě nikdy nepřišla pozdě.
+    quips:
+      win:
+        - en: "You won. I'll schedule a rematch for Thursday."
+          cs: "Výhra je tvoje. Odvetu dám do kalendáře na čtvrtek."
+        - en: "Noted. Unexpected, but noted."
+          cs: "Beru na vědomí. Nečekané, ale beru na vědomí."
+      lose:
+        - en: "Efficient. I have a call in four minutes."
+          cs: "Efektivní. Za čtyři minuty mám call."
+        - en: "Good effort. Let's circle back when you've practised."
+          cs: "Dobrá snaha. Vrátíme se k tomu, až budeš mít natrénováno."
+      draw:
+        - en: "A tie. Nobody gets the corner office."
+          cs: "Remíza. Rohovou kancelář nedostane nikdo."

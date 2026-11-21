@@ -1,0 +1,121 @@
+# DRAFT for Ol1n's review (specs/dialogue.md). Ray right after he beat the player.
+id: ray_minigame_lose_1
+character: ray
+context: minigame_lose
+city: nyc
+beats:
+  - npc:
+      en: "Ha! Got you. Don't feel bad. I had thirty years of red lights and waiting rooms to practise."
+      cs: "Cha! Mám tě. Nic si z toho nedělej. Na trénink jsem měl třicet let červených a čekáren."
+    replies:
+      flirt:
+        en: "Losing to you isn't so bad."
+        cs: "Prohrát s tebou není tak hrozné."
+      joke:
+        en: "I demand a recount. And a slice."
+        cs: "Žádám přepočítání. A kousek pizzy."
+      dry:
+        en: "You played well."
+        cs: "Hrál jsi dobře."
+    reactions:
+      flirt:
+        en: "That's sweet, but save it for someone your own age."
+        cs: "Milé, ale to si nech pro někoho ve svém věku."
+      joke:
+        en: "Recount denied. The slice we can talk about."
+        cs: "Přepočítání zamítnuto. O pizze se dá mluvit."
+      dry:
+        en: "Thanks. Coming from you, that means something."
+        cs: "Díky. Od tebe to něco znamená."
+  - npc:
+      en: "Here's a secret: in games and in traffic, whoever panics loses. A little panic showed on you."
+      cs: "Prozradím ti tajemství: ve hře i v provozu prohrává ten, kdo panikaří. U tebe byla trochu znát panika."
+    replies:
+      flirt:
+        en: "Only because you were watching me."
+        cs: "Jen protože ses na mě díval."
+      joke:
+        en: "A little? It was screaming inside me."
+        cs: "Trochu? Uvnitř mě to křičelo."
+      dry:
+        en: "Fair. The ending was rushed."
+        cs: "Fér. Konec byl uspěchaný."
+    reactions:
+      flirt:
+        en: "I was watching the board. You watch the road."
+        cs: "Já se díval na hru. Ty se dívej na silnici."
+      joke:
+        en: "Screaming inside. That's how I drive through Times Square."
+        cs: "Vnitřní křik. Tak jezdím přes Times Square."
+      dry:
+        en: "Rushing. The enemy of good games and good parking."
+        cs: "Spěch. Nepřítel dobrých her i dobrého parkování."
+  - npc:
+      en: "Losing is like the Brooklyn Bridge at rush hour. Slow, a little painful, but the view is great."
+      cs: "Prohra je jako Brooklynský most ve špičce. Pomalé, trochu to bolí, ale výhled je skvělý."
+    replies:
+      flirt:
+        en: "The view is pretty good right now."
+        cs: "Výhled je teď docela pěkný."
+      joke:
+        en: "And the toll is my pride."
+        cs: "A mýtné je moje hrdost."
+      dry:
+        en: "There's no toll on that bridge, though."
+        cs: "Na tom mostě se ale mýtné neplatí."
+    reactions:
+      flirt:
+        en: "Look at the skyline, not at me. Much prettier."
+        cs: "Koukej na panorama, ne na mě. Je mnohem hezčí."
+      joke:
+        en: "Pride is a cheap toll. You'll get it back."
+        cs: "Hrdost je levné mýtné. Vrátí se ti."
+      dry:
+        en: "Right! Free. Like a lesson. Sharp mind."
+        cs: "Správně! Zadarmo. Jako ponaučení. Bystrá hlava."
+  - npc:
+      en: "Tell you what. Rematch next week, and I'll give you a head start. Three moves. Thirty years earns that."
+      cs: "Víš co? Odveta příští týden a dám ti náskok. Tři tahy. Třicet let za volantem si to zaslouží."
+    replies:
+      flirt:
+        en: "Keep the head start. Give me a smile."
+        cs: "Náskok si nech. Dej mi úsměv."
+      joke:
+        en: "Make it four. I have a delicate soul."
+        cs: "Dej mi čtyři. Mám jemnou duši."
+      dry:
+        en: "No head start. I want a fair game."
+        cs: "Žádný náskok. Chci férovou hru."
+    reactions:
+      flirt:
+        en: "A smile's free. Here. Now focus."
+        cs: "Úsměv je zadarmo. Tady máš. A teď se soustřeď."
+      joke:
+        en: "Four moves for the delicate soul. Okay, deal."
+        cs: "Čtyři tahy pro jemnou duši. Dobře, platí."
+      dry:
+        en: "A fair game. Now I like you even more."
+        cs: "Férová hra. Teď se mi líbíš ještě víc."
+  - npc:
+      en: "Okay, the meter doesn't run while I sit here. Good game. Drive easy, and remember: the bridge is the journey."
+      cs: "Dobře, taxametr neběží, když tu sedím. Dobrá hra. Jeď v klidu a pamatuj: cesta je ten most."
+    replies:
+      flirt:
+        en: "See you next week, handsome."
+        cs: "Tak příští týden, fešáku."
+      joke:
+        en: "And the pothole is the destination?"
+        cs: "A cílem je výmol?"
+      dry:
+        en: "Good game. Drive easy too."
+        cs: "Dobrá hra. Taky jeď v klidu."
+    reactions:
+      flirt:
+        en: "Handsome! My wife will laugh at that. Take care."
+        cs: "Fešáku! Žena se tomu zasměje. Měj se."
+      joke:
+        en: "Ha! Sometimes it is. See ya."
+        cs: "Cha! Někdy jo. Tak zatím."
+      dry:
+        en: "I always do. Take care out there."
+        cs: "Jezdím vždycky. Měj se tam venku."

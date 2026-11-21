@@ -1,0 +1,121 @@
+# DRAFT for Ol1n's review (specs/dialogue.md). The player just bumped Ray's cab. Light scratch, nobody hurt.
+id: ray_crash_1
+character: ray
+context: crash
+city: nyc
+beats:
+  - npc:
+      en: "Whoa! Easy there. That was a kiss on my bumper. Everybody okay? Good. Let's take a look."
+      cs: "Hoplá! Pomalu. To byla pusa mému nárazníku. Všichni v pořádku? Dobře. Mrkneme na to."
+    replies:
+      flirt:
+        en: "Sorry. Guess that's my way of saying hi."
+        cs: "Promiň. Asi můj způsob, jak se seznámit."
+      joke:
+        en: "My car just wanted to say hi. Very loudly."
+        cs: "Moje auto jen chtělo pozdravit. Hodně nahlas."
+      dry:
+        en: "Sorry. My fault. Let's check it."
+        cs: "Promiň. Moje chyba. Podíváme se na to."
+    reactions:
+      flirt:
+        en: "There are easier ways to meet a guy. Like waving."
+        cs: "Jsou i jednodušší způsoby, jak se seznámit. Třeba zamávat."
+      joke:
+        en: "It said hi in bumper. I speak bumper. Thirty years."
+        cs: "Pozdravilo nárazníkovou řečí. Tu umím. Třicet let."
+      dry:
+        en: "Honest. I like that. Most people blame a pigeon."
+        cs: "Upřímně. To se mi líbí. Většina lidí to hodí na holuba."
+  - npc:
+      en: "See? A scratch. My cab has more scratches than I have stories, and I have a lot of stories."
+      cs: "Vidíš? Škrábanec. Můj taxík má víc škrábanců než já historek, a že jich mám."
+    replies:
+      flirt:
+        en: "I'd listen to every one of them."
+        cs: "Poslechnu si všechny."
+      joke:
+        en: "And this one? The FDR story?"
+        cs: "A tenhle bude historka z FDR?"
+      dry:
+        en: "Just a scratch. Good."
+        cs: "Jen škrábanec. Dobře."
+    reactions:
+      flirt:
+        en: "All of them takes a week. Easy, I'm a married man."
+        cs: "Všechny trvají týden. Pomalu, jsem ženatý chlap."
+      joke:
+        en: "Ha! You're getting it. Every scratch, a story."
+        cs: "Cha! Už to chytáš. Každý škrábanec, jedna historka."
+      dry:
+        en: "Good. Scratches heal. Well, mine don't, but you get it."
+        cs: "Dobře. Škrábance se zahojí. Teda moje ne, ale chápeš."
+  - npc:
+      en: "You know what a fender-bender is? The city telling you to slow down. Cheaper than a doctor."
+      cs: "Víš, co je ťukanec? Město ti připomíná, ať zpomalíš. Levnější než doktor."
+    replies:
+      flirt:
+        en: "For you, I'd slow down anytime."
+        cs: "Kvůli tobě zpomalím kdykoliv."
+      joke:
+        en: "So my car is basically a wellness coach."
+        cs: "Takže moje auto je vlastně kouč na pohodu."
+      dry:
+        en: "I'll slow down."
+        cs: "Zpomalím."
+    reactions:
+      flirt:
+        en: "Slow down for the traffic, not for me."
+        cs: "Zpomaluj kvůli provozu, ne kvůli mně."
+      joke:
+        en: "A wellness coach on four wheels! I like you."
+        cs: "Kouč na čtyřech kolech! Ty se mi líbíš."
+      dry:
+        en: "Good. Short answer, right answer."
+        cs: "Dobře. Krátká odpověď, správná odpověď."
+  - npc:
+      en: "No need for paperwork over a scratch like this. A handshake will do. Deal?"
+      cs: "Kvůli takovému škrábanci žádné papíry. Stačí podání ruky. Platí?"
+    replies:
+      flirt:
+        en: "Deal. Can it be a hug instead?"
+        cs: "Platí. Nemůže to být spíš obejmutí?"
+      joke:
+        en: "Deal. Do we sign it in pizza grease?"
+        cs: "Platí. Podepíšeme to mastnotou z pizzy?"
+      dry:
+        en: "Deal. Thanks for being decent."
+        cs: "Platí. Díky za férovost."
+    reactions:
+      flirt:
+        en: "A handshake. Firm. Don't push your luck."
+        cs: "Podání ruky. Pevné. Nepokoušej štěstí."
+      joke:
+        en: "Pizza grease is binding in Brooklyn. Deal."
+        cs: "Mastnota z pizzy v Brooklynu platí jako podpis. Platí."
+      dry:
+        en: "Decent costs nothing and it pays. Deal."
+        cs: "Férovost nic nestojí a vyplácí se. Platí."
+  - npc:
+      en: "All right, back on the road. Leave more space next time. Space is the rarest thing in this city."
+      cs: "Tak jo, zpátky na silnici. Příště nech větší odstup. Místo je v tomhle městě nejvzácnější věc."
+    replies:
+      flirt:
+        en: "I'll save you a space. In my heart."
+        cs: "Místo ti nechám. V srdci."
+      joke:
+        en: "Space in Manhattan? Now that's a fairy tale."
+        cs: "Místo na Manhattanu? To jsou pohádky."
+      dry:
+        en: "Got it. More space."
+        cs: "Jasně. Větší odstup."
+    reactions:
+      flirt:
+        en: "Leave it on the road, please. Drive safe."
+        cs: "Nech ho radši na silnici. Jeď opatrně."
+      joke:
+        en: "Fairy tales are my specialty. Drive safe!"
+        cs: "Pohádky jsou moje specialita. Opatrně!"
+      dry:
+        en: "Good. You'll be fine out there. Take care."
+        cs: "Dobře. Venku to zvládneš. Měj se."

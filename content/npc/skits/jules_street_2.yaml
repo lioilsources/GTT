@@ -1,0 +1,121 @@
+# DRAFT for Ol1n's review (specs/dialogue.md). Jules busking in the rain, hat full of water.
+id: jules_street_2
+character: jules
+context: street
+city: nyc
+beats:
+  - npc:
+      en: "Rain again. My hat's collecting water instead of tips. Want to make it a fountain or a donation?"
+      cs: "Zase prší. Klobouk mi místo dýšek sbírá vodu. Uděláš z něj fontánu, nebo přispěješ?"
+    replies:
+      flirt:
+        en: "I'll donate if you play me something."
+        cs: "Přispěju, když mi něco zahraješ."
+      joke:
+        en: "Make it a fountain. Charge admission."
+        cs: "Udělej z něj fontánu. A vybírej vstupné."
+      dry:
+        en: "Put the hat under the awning."
+        cs: "Dej ten klobouk pod stříšku."
+    reactions:
+      flirt:
+        en: "Deal. A song for a coin, best rate in town."
+        cs: "Platí. Písnička za minci, nejlepší kurz ve městě."
+      joke:
+        en: "Washington Square has one already. Competition is fierce."
+        cs: "Washington Square už jednu má. Konkurence je tvrdá."
+      dry:
+        en: "Practical. Boring, but practical."
+        cs: "Praktické. Nudné, ale praktické."
+  - npc:
+      en: "Rain's actually great for business. People walk slower under umbrellas. Captive audience."
+      cs: "Déšť je vlastně dobrý na kšeft. Lidi pod deštníky chodí pomaleji. Publikum v pasti."
+    replies:
+      flirt:
+        en: "I'm staying. Not because of the rain."
+        cs: "Zůstávám. A není to kvůli dešti."
+      joke:
+        en: "So you're rooting for a storm?"
+        cs: "Takže fandíš bouřce?"
+      dry:
+        en: "Or they walk faster to get dry."
+        cs: "Nebo chodí rychleji, aby uschli."
+    reactions:
+      flirt:
+        en: "Oh? Then I'll play the long version."
+        cs: "Jo? Tak hraju dlouhou verzi."
+      joke:
+        en: "A light drizzle. Storms drown out the chorus."
+        cs: "Lehké mrholení. Bouřka přehluší refrén."
+      dry:
+        en: "Statistically debatable. Emotionally true."
+        cs: "Statisticky sporné. Emocionálně pravdivé."
+  - npc:
+      en: "Every song I write in the rain ends up about puddles. I've got eleven puddle songs now."
+      cs: "Každá písnička, co v dešti napíšu, je nakonec o kalužích. Mám jich už jedenáct."
+    replies:
+      flirt:
+        en: "Sing me your favourite puddle."
+        cs: "Zazpívej mi tu nejoblíbenější kaluž."
+      joke:
+        en: "That's an album. Call it 'Making Waves.'"
+        cs: "To je album. Nazvi ho 'Kaluž hitů'."
+      dry:
+        en: "Write one about umbrellas. For variety."
+        cs: "Napiš jednu o deštnících. Pro změnu."
+    reactions:
+      flirt:
+        en: "'Puddle Number Four.' It's a love song, oddly."
+        cs: "'Kaluž číslo čtyři.' Je to zvláštně zamilovaná písnička."
+      joke:
+        en: "Ha! Stealing it. You get a thank-you in the liner notes."
+        cs: "Cha! Beru si to. Budeš v poděkování na obalu."
+      dry:
+        en: "Tried. By verse two it was a puddle song."
+        cs: "Zkoušel jsem. Ve druhé sloce z toho byla kaluž."
+  - npc:
+      en: "The hot dog cart on the corner's still open. I'm thinking dinner. Musician budget."
+      cs: "Stánek s párky na rohu má ještě otevřeno. Myslím na večeři. Muzikantský rozpočet."
+    replies:
+      flirt:
+        en: "My treat. Pay me back in a song."
+        cs: "Zvu tě. Zaplatíš písničkou."
+      joke:
+        en: "Dinner and a show. The rain does the lighting."
+        cs: "Večeře a show. Osvětlení obstará déšť."
+      dry:
+        en: "A hot dog isn't dinner."
+        cs: "Párek není večeře."
+    reactions:
+      flirt:
+        en: "Private concert, then. One song, two mustards."
+        cs: "Tak máš soukromý koncert. Jedna písnička, dvě hořčice."
+      joke:
+        en: "Ha! Mood lighting by the streetlamp. Classy."
+        cs: "Cha! Romantické světlo od lampy. Elegance."
+      dry:
+        en: "In this city? With onions, it's a three-course meal."
+        cs: "V tomhle městě? S cibulí je to tříchodové menu."
+  - npc:
+      en: "Okay, I'm running to the cart before the guy packs up. Thanks for the company, it beat the puddles!"
+      cs: "Dobře, letím ke stánku, než to ten pán zabalí. Díky za společnost, byla lepší než kaluže!"
+    replies:
+      flirt:
+        en: "Save me a song for next time."
+        cs: "Schovej mi písničku na příště."
+      joke:
+        en: "Puddle song number twelve: about me."
+        cs: "Kalužová písnička číslo dvanáct: o mně."
+      dry:
+        en: "Go. He's folding the umbrella."
+        cs: "Běž. Už zavírá slunečník."
+    reactions:
+      flirt:
+        en: "Already saved. It's in G, your key. Bye!"
+        cs: "Už je schovaná. V G, tvoje tónina. Ahoj!"
+      joke:
+        en: "Working title: 'Splash Hit.' Bye!"
+        cs: "Pracovní název: 'Kaluž, která všechno změnila.' Ahoj!"
+      dry:
+        en: "Running! Wish my hat luck. Bye!"
+        cs: "Běžím! Drž mému klobouku palce. Čau!"

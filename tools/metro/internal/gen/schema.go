@@ -10,7 +10,7 @@ import (
 )
 
 // TypeSchemas are the schema files whose types both clients use.
-var TypeSchemas = []string{"car.schema.json", "minigame.schema.json", "save.schema.json", "bench.schema.json", "bench_result.schema.json"}
+var TypeSchemas = []string{"car.schema.json", "minigame.schema.json", "save.schema.json", "bench.schema.json", "bench_result.schema.json", "npc.schema.json"}
 
 type jsProp struct {
 	Type                 any                `json:"type"`

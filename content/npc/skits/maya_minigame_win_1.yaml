@@ -1,0 +1,121 @@
+# DRAFT for Ol1n's review (specs/dialogue.md). Maya right after the player beat her.
+id: maya_minigame_win_1
+character: maya
+context: minigame_win
+city: nyc
+beats:
+  - npc:
+      en: "Wait, you won? I was literally filming that for my story. This is a disaster."
+      cs: "Počkej, výhra je tvoje? Já to doslova natáčela do storky. To je katastrofa."
+    replies:
+      flirt:
+        en: "Post it anyway. We look good together."
+        cs: "Dej to tam stejně. Spolu vypadáme dobře."
+      joke:
+        en: "Caption it: plot twist."
+        cs: "Popisek: nečekaný zvrat."
+      dry:
+        en: "Then stop filming."
+        cs: "Tak to přestaň točit."
+    reactions:
+      flirt:
+        en: "We do, annoyingly. Fine, it stays in drafts."
+        cs: "To jo, bohužel. Fajn, zůstane to v konceptech."
+      joke:
+        en: "Plot twist. Okay, that's actually not bad."
+        cs: "Nečekaný zvrat. Dobře, to vlastně není špatné."
+      dry:
+        en: "Wow. Rubbing it in, I see."
+        cs: "Páni. Ještě do mě rýpeš, jo?"
+  - npc:
+      en: "Okay, be honest. Was it skill or luck? Because I'm telling everyone it was luck."
+      cs: "Dobře, upřímně. Um, nebo štěstí? Protože všem budu říkat, že štěstí."
+    replies:
+      flirt:
+        en: "Skill. You were busy looking good for the camera."
+        cs: "Um. Ty jsi měla plno práce vypadat dobře na kameře."
+      joke:
+        en: "Skill. I train during subway delays."
+        cs: "Um. Trénuju při zpožděních metra."
+      dry:
+        en: "Skill."
+        cs: "Um."
+    reactions:
+      flirt:
+        en: "True, and I nailed that part. Smooth."
+        cs: "Pravda, a to se mi povedlo. Hladké."
+      joke:
+        en: "Subway training. That's very New York, honestly."
+        cs: "Trénink v metru. Upřímně, hrozně newyorské."
+      dry:
+        en: "One word. Fine, I'm going with luck."
+        cs: "Jedno slovo. Fajn, jedu na štěstí."
+  - npc:
+      en: "My followers think nobody can beat me at this. What do I tell them now?"
+      cs: "Sledující si myslí, že mě v tomhle nikdo neporazí. Co jim teď řeknu?"
+    replies:
+      flirt:
+        en: "Tell them someone special beat you."
+        cs: "Řekni jim, že tě porazil někdo výjimečný."
+      joke:
+        en: "Tell them it was a stunt double."
+        cs: "Řekni, že to byl kaskadér."
+      dry:
+        en: "The truth."
+        cs: "Pravdu."
+    reactions:
+      flirt:
+        en: "Someone special? Bold thing to say about yourself."
+        cs: "Někdo výjimečný? Odvážně řečeno o sobě."
+      joke:
+        en: "A stunt double! You're saving my brand right now."
+        cs: "Kaskadér! Právě mi zachraňuješ značku."
+      dry:
+        en: "The truth is terrible for engagement."
+        cs: "Pravda je pro dosah hrozná."
+  - npc:
+      en: "Rematch. Next week, Washington Square, better lighting, and this time I'll be ready."
+      cs: "Odveta. Příští týden, Washington Square, lepší světlo a tentokrát budu připravená."
+    replies:
+      flirt:
+        en: "It's a date. You bring the lighting."
+        cs: "Platí, rande. Světlo zařídíš ty."
+      joke:
+        en: "Loser buys the pretzels."
+        cs: "Kdo prohraje, kupuje preclíky."
+      dry:
+        en: "Lighting won't change the score."
+        cs: "Světlo na skóre nic nezmění."
+    reactions:
+      flirt:
+        en: "A date? I said rematch. But okay, maybe."
+        cs: "Rande? Řekla jsem odveta. Ale dobře, možná."
+      joke:
+        en: "Deal. Pretzels from the cart, the big ones."
+        cs: "Platí. Preclíky z vozíku, ty velké."
+      dry:
+        en: "Lighting changes everything. Everything."
+        cs: "Světlo mění všechno. Úplně všechno."
+  - npc:
+      en: "Okay, I'm going to go cry into an iced coffee. Not really. Maybe a little. Congrats."
+      cs: "Dobře, jdu si poplakat do ledové kávy. Ne doopravdy. Možná trochu. Gratuluju."
+    replies:
+      flirt:
+        en: "Save me a sip for the rematch."
+        cs: "Nech mi doušek na odvetu."
+      joke:
+        en: "Get extra foam. For dignity."
+        cs: "Dej si extra pěnu. Pro důstojnost."
+      dry:
+        en: "Thanks. Good game."
+        cs: "Díky. Dobrá hra."
+    reactions:
+      flirt:
+        en: "Not a chance. Okay, maybe. Bye, superstar!"
+        cs: "Ani náhodou. No, možná. Ahoj, hvězdo!"
+      joke:
+        en: "Foam for dignity. Stealing that. Bye!"
+        cs: "Pěna pro důstojnost. Beru si to. Čau!"
+      dry:
+        en: "Good game. Ugh, so polite. Bye!"
+        cs: "Dobrá hra. Fuj, jak slušné. Ahoj!"

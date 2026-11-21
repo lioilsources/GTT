@@ -1,0 +1,121 @@
+# DRAFT for Ol1n's review (specs/dialogue.md). Dana right after the player beat her.
+id: dana_minigame_win_1
+character: dana
+context: minigame_win
+city: nyc
+beats:
+  - npc:
+      en: "You won. I'm adding a post-mortem to my calendar. Fifteen minutes, just me."
+      cs: "Výhra je tvoje. Dávám si do kalendáře rozbor. Patnáct minut, jen já."
+    replies:
+      flirt:
+        en: "Invite me. I'll bring snacks."
+        cs: "Pozvi mě. Přinesu něco k zakousnutí."
+      joke:
+        en: "Fifteen? You'll need a whole retreat."
+        cs: "Patnáct? Budeš potřebovat celý teambuilding."
+      dry:
+        en: "Fifteen is generous. Ten is enough."
+        cs: "Patnáct je moc. Deset stačí."
+    reactions:
+      flirt:
+        en: "Snacks are a strong pitch. Still no."
+        cs: "Jídlo je silný argument. Stejně ne."
+      joke:
+        en: "I don't do retreats. I do rematches."
+        cs: "Teambuildingy nedělám. Dělám odvety."
+      dry:
+        en: "Ten. You're right. Updating."
+        cs: "Deset. Máš pravdu. Upravuju."
+  - npc:
+      en: "In that last round, I hesitated. I never hesitate. I've approved budgets faster than that."
+      cs: "V tom posledním kole jsem zaváhala. Já nikdy neváhám. Rozpočty schvaluju rychleji."
+    replies:
+      flirt:
+        en: "Maybe the company distracted you."
+        cs: "Možná tě rozptylovala společnost."
+      joke:
+        en: "Should've emailed your move in."
+        cs: "Měla jsi ten tah poslat e-mailem."
+      dry:
+        en: "Hesitation costs. You know that."
+        cs: "Váhání stojí peníze. To víš."
+    reactions:
+      flirt:
+        en: "The company was fine. The hesitation was mine."
+        cs: "Společnost byla v pořádku. Zaváhání bylo moje."
+      joke:
+        en: "That's not how games work. Or emails."
+        cs: "Takhle hry nefungujou. Ani e-maily."
+      dry:
+        en: "I do. It's on a slide somewhere. Probably mine."
+        cs: "Vím. Je to na nějakém slajdu. Nejspíš mém."
+  - npc:
+      en: "Walk me through your strategy. Briefly. Bullet points."
+      cs: "Projdi se mnou svoji strategii. Stručně. V bodech."
+    replies:
+      flirt:
+        en: "Point one: smile at the opponent."
+        cs: "Bod jedna: usmát se na soupeřku."
+      joke:
+        en: "Point one: luck. Point two: more luck."
+        cs: "Bod jedna: štěstí. Bod dva: víc štěstí."
+      dry:
+        en: "Wait for a mistake. Then use it."
+        cs: "Počkat na chybu. Pak ji využít."
+    reactions:
+      flirt:
+        en: "That's not a strategy. Annoyingly, it's in my notes now."
+        cs: "To není strategie. Bohužel už to mám v poznámkách."
+      joke:
+        en: "Luck isn't a deliverable."
+        cs: "Štěstí není výstup projektu."
+      dry:
+        en: "Clean. Repeatable. I hate that it's good."
+        cs: "Čisté. Opakovatelné. Štve mě, že je to dobré."
+  - npc:
+      en: "Rematch Thursday, six-fifteen. I have a gap between a call and another call."
+      cs: "Odveta ve čtvrtek v šest patnáct. Mám tam mezeru mezi jedním callem a dalším callem."
+    replies:
+      flirt:
+        en: "I'll clear my whole evening."
+        cs: "Uvolním si celý večer."
+      joke:
+        en: "Six-sixteen? Let's live dangerously."
+        cs: "Šest šestnáct? Žijme nebezpečně."
+      dry:
+        en: "Thursday works. I'll be on time."
+        cs: "Čtvrtek sedí. Dorazím včas."
+    reactions:
+      flirt:
+        en: "Fourteen minutes is plenty. Don't overcommit."
+        cs: "Čtrnáct minut bohatě stačí. Nepřeháněj to."
+      joke:
+        en: "No. Six-fifteen. Danger is not on the agenda."
+        cs: "Ne. Šest patnáct. Nebezpečí není na programu."
+      dry:
+        en: "Good. I'll send an invite. Please accept it."
+        cs: "Dobře. Pošlu pozvánku. Prosím, přijmi ji."
+  - npc:
+      en: "Well played. I mean that. I don't say it often, so don't screenshot it."
+      cs: "Dobře zahráno. Myslím to vážně. Neříkám to často, tak si to nefoť."
+    replies:
+      flirt:
+        en: "Already framed in my heart."
+        cs: "Už to mám zarámované v srdci."
+      joke:
+        en: "Too late, it's on the feed."
+        cs: "Pozdě, už je to ve feedu."
+      dry:
+        en: "Thanks. See you Thursday."
+        cs: "Díky. Ve čtvrtek."
+    reactions:
+      flirt:
+        en: "Unframe it by Thursday. Bye."
+        cs: "Do čtvrtka to odrámuj. Ahoj."
+      joke:
+        en: "It is not. I checked. Goodbye."
+        cs: "Není. Kontrolovala jsem to. Sbohem."
+      dry:
+        en: "Six-fifteen. Sharp. Bye."
+        cs: "Šest patnáct. Přesně. Ahoj."

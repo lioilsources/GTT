@@ -1,0 +1,121 @@
+# DRAFT for Ol1n's review (specs/dialogue.md). Ray on a rainy night in Midtown.
+id: ray_street_2
+character: ray
+context: street
+city: nyc
+beats:
+  - npc:
+      en: "Rain in Manhattan. Everybody wants a cab, nobody wants to tip. Want half my umbrella?"
+      cs: "Prší na Manhattanu. Všichni chtějí taxík, nikdo nechce dát dýško. Chceš půlku deštníku?"
+    replies:
+      flirt:
+        en: "Half an umbrella with you? Romantic."
+        cs: "Půlka deštníku s tebou? Romantika."
+      joke:
+        en: "Only if it comes with a weather forecast."
+        cs: "Jen když k tomu bude předpověď počasí."
+      dry:
+        en: "I'm in a car. I'm dry."
+        cs: "Sedím v autě. Jsem v suchu."
+    reactions:
+      flirt:
+        en: "Romantic? It has three broken spokes. Easy now."
+        cs: "Romantika? Má tři zlomené dráty. Pomalu."
+      joke:
+        en: "Forecast: wet, then wetter, then a hot dog."
+        cs: "Předpověď: mokro, pak mokřeji, pak párek v rohlíku."
+      dry:
+        en: "Dry and sensible. Rare combo on a night like this."
+        cs: "V suchu a s rozumem. V takové noci vzácná kombinace."
+  - npc:
+      en: "Rain is a red light for the whole city. Everyone stops, everyone thinks. Then they honk."
+      cs: "Déšť je jako červená pro celé město. Všichni zastaví, všichni přemýšlí. A pak troubí."
+    replies:
+      flirt:
+        en: "I like stopping to think with you."
+        cs: "S tebou se mi přemýšlí hezky."
+      joke:
+        en: "And the honking is the city's applause."
+        cs: "A to troubení je potlesk města."
+      dry:
+        en: "Mostly they just honk."
+        cs: "Většinou jen troubí."
+    reactions:
+      flirt:
+        en: "Think up a better line, then. That one leaks."
+        cs: "Tak vymysli lepší hlášku. Tahle prosakuje."
+      joke:
+        en: "Applause! Thirty years of applause and I never knew."
+        cs: "Potlesk! Třicet let potlesku a já to nevěděl."
+      dry:
+        en: "Mostly. You know this town, huh."
+        cs: "Většinou. Ty už to tu znáš, co?"
+  - npc:
+      en: "Best free thing in New York? The Staten Island Ferry at night. The whole skyline, lit up."
+      cs: "Nejlepší věc v New Yorku zadarmo? Trajekt na Staten Island v noci. Celé panorama rozsvícené."
+    replies:
+      flirt:
+        en: "Sounds like a date spot. Know anyone?"
+        cs: "Zní to jako místo na rande. Víš o někom?"
+      joke:
+        en: "Free, with a view? Sounds illegal here."
+        cs: "Zadarmo a s výhledem? To tu zní skoro nelegálně."
+      dry:
+        en: "I've only heard about it."
+        cs: "To znám jen z doslechu."
+    reactions:
+      flirt:
+        en: "I know my wife. She's taken. By me."
+        cs: "Vím o své ženě. Je zadaná. Mnou."
+      joke:
+        en: "Ha! Don't tell the city, they'll start charging."
+        cs: "Cha! Neříkej to městu, začnou vybírat."
+      dry:
+        en: "Go. Best half hour you'll never pay for."
+        cs: "Jeď. Nejlepší půlhodina, za kterou nikdy nezaplatíš."
+  - npc:
+      en: "Know what I eat on nights like this? A slice, folded, standing up. Like a professional."
+      cs: "Víš, co jím v takové noci? Kousek pizzy, přeložený, ve stoje. Jako profík."
+    replies:
+      flirt:
+        en: "Can I join you? I'll bring napkins."
+        cs: "Můžu se přidat? Přinesu ubrousky."
+      joke:
+        en: "Folded? Isn't that just a pizza taco?"
+        cs: "Přeložený? To je přece pizza-taco."
+      dry:
+        en: "Folded is the only correct way."
+        cs: "Přeložený je jediný správný způsob."
+    reactions:
+      flirt:
+        en: "Napkins, yes. The flirting, not so much."
+        cs: "Ubrousky beru. Flirtování ne tolik."
+      joke:
+        en: "Pizza taco! Don't say that out loud on this block."
+        cs: "Pizza-taco! To tady na ulici neříkej nahlas."
+      dry:
+        en: "Exactly. There's a cabbie in you."
+        cs: "Přesně. Je v tobě kus taxikáře."
+  - npc:
+      en: "Rain's easing. Go on, drive home slow. The puddles in this town are deeper than they look."
+      cs: "Déšť polevuje. No tak, jeď domů pomalu. Kaluže jsou tady hlubší, než vypadají."
+    replies:
+      flirt:
+        en: "Thanks, handsome. Stay dry."
+        cs: "Díky, fešáku. Zůstaň v suchu."
+      joke:
+        en: "Like people, right? Deep puddles."
+        cs: "Jako lidi, ne? Hluboké kaluže."
+      dry:
+        en: "Will do. Good night."
+        cs: "Pojedu. Dobrou noc."
+    reactions:
+      flirt:
+        en: "Handsome. Ha. Tell my mirror. Good night."
+        cs: "Fešáku. Cha. Řekni to mému zrcadlu. Dobrou."
+      joke:
+        en: "Like people! Now you're the philosopher. Night."
+        cs: "Jako lidi! Teď filozofuješ ty. Dobrou."
+      dry:
+        en: "Night. Mind the potholes on Tenth."
+        cs: "Dobrou. Na Desáté avenue pozor na díry."
