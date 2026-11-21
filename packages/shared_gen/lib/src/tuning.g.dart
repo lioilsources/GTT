@@ -94,7 +94,8 @@ class Tuning {
         phone = TuningPhone._(r.sub('phone')),
         feed = TuningFeed._(r.sub('feed')),
         nav = TuningNav._(r.sub('nav')),
-        traffic = TuningTraffic._(r.sub('traffic'));
+        traffic = TuningTraffic._(r.sub('traffic')),
+        passport = TuningPassport._(r.sub('passport'));
 
   factory Tuning.fromYaml(String src) {
     final y = loadYaml(src);
@@ -177,6 +178,10 @@ class Tuning {
   /// (unknown, motorway, trunk, primary, secondary, tertiary, residential, service).
   final TuningTraffic traffic;
 
+  /// Tourist passport (specs/passport.md). weights: points per stamp kind (landmark, district,
+  /// minigame, photo); percent = floor(100 × points / all points).
+  final TuningPassport passport;
+
   Map<String, Object> toJson() => {
         'car_scale': carScale,
         'lane_width_m': laneWidthM,
@@ -205,6 +210,7 @@ class Tuning {
         'feed': feed.toJson(),
         'nav': nav.toJson(),
         'traffic': traffic.toJson(),
+        'passport': passport.toJson(),
       };
 
   /// Dotted YAML path → value, for diffs against the loaded file.
@@ -1926,5 +1932,32 @@ class TuningTraffic {
         'light_side_m': lightSideM,
         'light_radius_m': lightRadiusM,
         'light_draw_max': lightDrawMax,
+      };
+}
+
+/// Tourist passport (specs/passport.md). weights: points per stamp kind (landmark, district,
+/// minigame, photo); percent = floor(100 × points / all points).
+class TuningPassport {
+  TuningPassport._(_R r)
+      : weights = r.il('weights'),
+        starsForStamp = r.i('stars_for_stamp'),
+        discoverRadiusM = r.d('discover_radius_m'),
+        postcardS = r.d('postcard_s');
+
+  List<int> weights;
+
+  int starsForStamp;
+
+  /// car to a landmark's label anchor (Met Museum is 95 m off the road)
+  double discoverRadiusM;
+
+  /// postcard / stamp label stays this long (UI)
+  double postcardS;
+
+  Map<String, Object> toJson() => {
+        'weights': weights,
+        'stars_for_stamp': starsForStamp,
+        'discover_radius_m': discoverRadiusM,
+        'postcard_s': postcardS,
       };
 }
