@@ -25,6 +25,7 @@ class GameAssets {
     required this.source,
     required this.tuning,
     required this.car,
+    required this.cars,
     required this.textures,
   }) : tuningBaseline = tuning.flatten(),
        carBaseline = car.toJson();
@@ -33,6 +34,9 @@ class GameAssets {
   final PackSource source;
   final Tuning tuning;
   final CarSpec car;
+
+  /// Every car of content/cars by id (specs/cars.md); [car] is one of them.
+  final Map<String, CarSpec> cars;
   final FacadeTextures textures;
 
   /// Values as loaded, so the tuning panel can export only what was changed.
@@ -48,14 +52,16 @@ class GameAssets {
     final results = await Future.wait([
       City.load(source),
       rootBundle.loadString('${shared}content/tuning.yaml'),
-      rootBundle.loadString('${shared}content/cars/${car.id}.json'),
+      Future.wait([for (final c in CarId.values) rootBundle.loadString('${shared}content/cars/${c.id}.json')]),
       FacadeTextures.create(),
     ]);
+    final cars = {for (final j in results[2] as List<String>) for (final s in [parseCarSpec(j)]) s.id: s};
     return GameAssets(
       city: results[0] as City,
       source: source,
       tuning: Tuning.fromYaml(results[1] as String),
-      car: parseCarSpec(results[2] as String),
+      car: cars[car.id]!,
+      cars: cars,
       textures: results[3] as FacadeTextures,
     );
   }
@@ -74,6 +80,8 @@ class HudState {
     this.buildings = 0,
     this.chunks = 0,
     this.nearBorder = false,
+    this.carName = '',
+    this.carAction,
   });
 
   final String street;
@@ -86,20 +94,41 @@ class HudState {
   final int buildings;
   final int chunks;
   final bool nearBorder;
+
+  /// Name of the car being driven and the context button (specs/cars.md).
+  final String carName;
+  final CarAction? carAction;
 }
+
+/// Context button next to a parked car or in the garage.
+enum CarAction { board, garage }
 
 /// M0 game loop: drive, stream, render (no traffic, peds, police, feed or saving).
 class MetropoleGame extends Game {
   MetropoleGame(this.data) {
     final city = data.city;
     tuning = data.tuning;
-    drive = DriveWorld(city: city, spec: data.car, tuning: tuning);
+    drive = DriveWorld(city: city, spec: data.cars[tuning.cars.startCar] ?? data.car, tuning: tuning);
+    // Cars, switching and the garage (specs/cars.md).
+    final g = city.spots.items.where((s) => s.kind == 'garage').firstOrNull;
+    fleet = CarFleet(
+      drive,
+      data.cars,
+      tuning,
+      g == null ? null : (id: g.id, x: g.parkX / 10, y: g.parkY / 10, heading: g.parkHeading),
+    );
     streamer = ChunkStreamer(
       city,
       data.source,
       tuning,
-      onLoaded: (c) => drive.addChunk(c.data),
-      onUnloaded: (c) => drive.removeChunk(c.data),
+      onLoaded: (c) {
+        drive.addChunk(c.data);
+        fleet.addChunk(c.data);
+      },
+      onUnloaded: (c) {
+        fleet.removeChunk(c.data);
+        drive.removeChunk(c.data);
+      },
     );
     scheme = ControlScheme.create(ControlSchemeId.a, tuning.controls);
     renderer = WorldRenderer(
@@ -121,6 +150,7 @@ class MetropoleGame extends Game {
   late final PedBubblePainter _pedBubbles;
   late final Tuning tuning;
   late final DriveWorld drive;
+  late final CarFleet fleet;
   late final ChunkStreamer streamer;
   late final WorldRenderer renderer;
   final camera = CameraRig();
@@ -216,6 +246,15 @@ class MetropoleGame extends Game {
     pilot = null;
   }
 
+  /// The context button: switch to the parked car, or open the garage (the UI shows the list).
+  void boardCandidate() {
+    final p = fleet.boardTarget;
+    if (hud.value.carAction == CarAction.board && p != null && fleet.parked.contains(p)) fleet.board(p);
+  }
+
+  /// True while the garage list is open: the world does not step (specs/cars.md).
+  bool carsPaused = false;
+
   void respawn() {
     drive.spawn(city.startX, city.startY, city.startHeading);
     camera.snap(drive.car.x, drive.car.y, drive.car.heading, tuning);
@@ -239,7 +278,7 @@ class MetropoleGame extends Game {
       scheme.update(input);
       _keyboard(input);
     }
-    drive.update(dt * timeScale());
+    if (!carsPaused) drive.update(dt * timeScale());
     afterUpdate?.call(dt);
     _benchFrame(dt);
     final car = drive.car;
@@ -259,7 +298,9 @@ class MetropoleGame extends Game {
     }
     _hudTimer += dt;
     if (_hudTimer >= 0.1) {
+      final action = fleet.action(_hudTimer);
       _hudTimer = 0;
+      fleet.update();
       final edge = drive.layers.edge;
       hud.value = HudState(
         street: edge?.name ?? '',
@@ -272,6 +313,12 @@ class MetropoleGame extends Game {
         buildings: renderer.stats.buildings,
         chunks: renderer.stats.chunks,
         nearBorder: _nearBorder(),
+        carName: drive.spec.name,
+        carAction: switch (action) {
+          'board' => CarAction.board,
+          'garage' => CarAction.garage,
+          _ => null,
+        },
       );
       _prepAcc = 0;
       _prepN = 0;
@@ -306,12 +353,14 @@ class MetropoleGame extends Game {
       drawDynamic: (c, layer) {
         if (layer == 0) {
           paintSkids(c, drive.skids, car.halfWidth * 0.32);
-          paintProps(c, drive.propsNear(car.x, car.y, camera.visibleRadius(_size, tuning)), night: night);
+          final r = camera.visibleRadius(_size, tuning);
+          paintProps(c, drive.propsNear(car.x, car.y, r), night: night);
+          paintParked(c, fleet.parked.where((p) => (p.x - car.x).abs() < r && (p.y - car.y).abs() < r), data.cars, tuning);
           paintPedestrians(c, peds);
           paintWorld?.call(c);
           final tr = drive.traffic;
           if (tr != null && car.layer >= 0) {
-            paintTrafficLights(c, tr, camera.x, camera.y, camera.visibleRadius(_size, tuning), tuning.traffic);
+            paintTrafficLights(c, tr, camera.x, camera.y, r, tuning.traffic);
           }
         }
         final tr = drive.traffic;

@@ -9,5 +9,5 @@ import 'package:shared_gen/shared_gen.dart';
 /// lateral acceleration per axle (m/s²), driftBias scales rear grip under handbrake.
 CarSpec parseCarSpec(String json) => CarSpec.fromJson(jsonDecode(json) as Map<String, Object?>);
 
-/// Body colour as 0xAARRGGBB.
-int paintArgb(CarSpec s) => 0xFF000000 | int.parse(s.paint.substring(1), radix: 16);
+/// Body colour as 0xAARRGGBB: `paint` is a key of `color.carPaint` in design/tokens.json.
+int paintArgb(CarSpec s) => Tokens.colorCarPaint[s.paint] ?? Tokens.colorCarPaint['comet_red']!;

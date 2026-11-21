@@ -73,7 +73,9 @@ class DriveWorld {
   }
 
   final City city;
-  final CarSpec spec;
+
+  /// The car being driven; [replaceCar] switches it (specs/cars.md).
+  CarSpec spec;
   final Tuning tuning;
   late final World world;
   late Car car;
@@ -104,6 +106,13 @@ class DriveWorld {
     _spawned = true;
     layers.reset(x, y);
     car.setLayer(layers.layer);
+  }
+
+  /// Switches to another car: a new body with that car's parameters, at rest (specs/cars.md).
+  void replaceCar(CarSpec next, double x, double y, double heading) {
+    spec = next;
+    _lastSkid = null;
+    spawn(x, y, heading);
   }
 
   /// Rebuilds the car after `car_scale` changed in the debug panel.
