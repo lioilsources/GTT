@@ -87,7 +87,8 @@ class Tuning {
         props = TuningProps._(r.sub('props')),
         skids = TuningSkids._(r.sub('skids')),
         bench = TuningBench._(r.sub('bench')),
-        hud = TuningHud._(r.sub('hud'));
+        hud = TuningHud._(r.sub('hud')),
+        minigames = TuningMinigames._(r.sub('minigames'));
 
   factory Tuning.fromYaml(String src) {
     final y = loadYaml(src);
@@ -145,6 +146,9 @@ class Tuning {
 
   final TuningHud hud;
 
+  /// Minigames (METROPOLE_PLAN 9, specs/minigames/). Rules read these through the generated Tuning.
+  final TuningMinigames minigames;
+
   Map<String, Object> toJson() => {
         'car_scale': carScale,
         'lane_width_m': laneWidthM,
@@ -166,6 +170,7 @@ class Tuning {
         'skids': skids.toJson(),
         'bench': bench.toJson(),
         'hud': hud.toJson(),
+        'minigames': minigames.toJson(),
       };
 
   /// Dotted YAML path → value, for diffs against the loaded file.
@@ -1016,5 +1021,63 @@ class TuningHud {
         'street_label_radius_m': streetLabelRadiusM,
         'street_labels_max': streetLabelsMax,
         'border_notice_m': borderNoticeM,
+      };
+}
+
+/// Minigames (METROPOLE_PLAN 9, specs/minigames/). Rules read these through the generated Tuning.
+class TuningMinigames {
+  TuningMinigames._(_R r)
+      : timeCapS = r.i('time_cap_s'),
+        sirky = TuningMinigamesSirky._(r.sub('sirky'));
+
+  /// hard cap for every minigame (9.2)
+  int timeCapS;
+
+  final TuningMinigamesSirky sirky;
+
+  Map<String, Object> toJson() => {
+        'time_cap_s': timeCapS,
+        'sirky': sirky.toJson(),
+      };
+}
+
+class TuningMinigamesSirky {
+  TuningMinigamesSirky._(_R r)
+      : start = r.i('start'),
+        minStart = r.i('min_start'),
+        maxStart = r.i('max_start'),
+        maxTake = r.i('max_take'),
+        roundsToWin = r.i('rounds_to_win'),
+        aiErrorPct = r.il('ai_error_pct'),
+        timeCapS = r.i('time_cap_s'),
+        aiThinkS = r.d('ai_think_s');
+
+  int start;
+
+  int minStart;
+
+  int maxStart;
+
+  int maxTake;
+
+  int roundsToWin;
+
+  /// per AI level 1..5
+  List<int> aiErrorPct;
+
+  int timeCapS;
+
+  /// pause before the opponent's move (UI only)
+  double aiThinkS;
+
+  Map<String, Object> toJson() => {
+        'start': start,
+        'min_start': minStart,
+        'max_start': maxStart,
+        'max_take': maxTake,
+        'rounds_to_win': roundsToWin,
+        'ai_error_pct': aiErrorPct,
+        'time_cap_s': timeCapS,
+        'ai_think_s': aiThinkS,
       };
 }
