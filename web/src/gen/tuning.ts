@@ -116,6 +116,11 @@ export class Tuning {
   readonly feed: TuningFeed;
   /** GPS navigation UI (specs/phone.md "Navigace"); route search numbers are in `route`. */
   readonly nav: TuningNav;
+  /**
+   * Traffic and traffic lights (specs/traffic.md). Per-class lists are indexed by RoadClass
+   * (unknown, motorway, trunk, primary, secondary, tertiary, residential, service).
+   */
+  readonly traffic: TuningTraffic;
 
   private constructor(r: R) {
     this.carScale = r.d('car_scale');
@@ -144,6 +149,7 @@ export class Tuning {
     this.phone = new TuningPhone(r.sub('phone'));
     this.feed = new TuningFeed(r.sub('feed'));
     this.nav = new TuningNav(r.sub('nav'));
+    this.traffic = new TuningTraffic(r.sub('traffic'));
   }
 
   toJson(): Record<string, unknown> {
@@ -174,6 +180,7 @@ export class Tuning {
       phone: this.phone.toJson(),
       feed: this.feed.toJson(),
       nav: this.nav.toJson(),
+      traffic: this.traffic.toJson(),
     };
   }
 
@@ -1668,6 +1675,153 @@ export class TuningNav {
       round_m: this.roundM,
       mi_from: this.miFrom,
       round_ft: this.roundFt,
+    };
+  }
+}
+
+/**
+ * Traffic and traffic lights (specs/traffic.md). Per-class lists are indexed by RoadClass
+ * (unknown, motorway, trunk, primary, secondary, tertiary, residential, service).
+ */
+export class TuningTraffic {
+  enabled: boolean;
+  /** dynamic bodies for traffic in total (METROPOLE_PLAN 7.3) */
+  maxCars: number;
+  /** fraction of max_cars at night */
+  nightFactor: number;
+  /** spawn acceptance per class */
+  classWeight: number[];
+  classSpeedMps: number[];
+  /** before car_scale */
+  carLengthM: number;
+  carWidthM: number;
+  /** spawn ring around the player, outside the view */
+  spawnMinM: number;
+  spawnMaxM: number;
+  despawnM: number;
+  /** inner radius of the first fill (start, respawn) */
+  initialMinM: number;
+  /** a player jump longer than this refills like a start */
+  teleportM: number;
+  spawnIntervalS: number;
+  spawnTries: number;
+  initialTries: number;
+  spawnClearM: number;
+  searchM: number;
+  seed: number;
+  accelMps2: number;
+  brakeMps2: number;
+  minGapM: number;
+  headwayS: number;
+  lookAheadM: number;
+  /** lateral reach for the car ahead, × sum of half widths */
+  corridor: number;
+  /** 1/s, smoothing of position and heading towards the lane */
+  followRate: number;
+  hitStopS: number;
+  hitMinMps: number;
+  hitMarginM: number;
+  /** on amber, cars closer than this to the stop line go on */
+  amberCommitM: number;
+  stopMarginM: number;
+  /** trunk, primary, secondary */
+  signalClasses: number[];
+  signalMinMain: number;
+  signalMinEdges: number;
+  signalSeed: number;
+  greenMs: number;
+  amberMs: number;
+  allRedMs: number;
+  /** indicator outside the carriageway edge */
+  lightSideM: number;
+  lightRadiusM: number;
+  lightDrawMax: number;
+
+  constructor(r: R) {
+    this.enabled = r.b('enabled');
+    this.maxCars = r.i('max_cars');
+    this.nightFactor = r.d('night_factor');
+    this.classWeight = r.dl('class_weight');
+    this.classSpeedMps = r.dl('class_speed_mps');
+    this.carLengthM = r.d('car_length_m');
+    this.carWidthM = r.d('car_width_m');
+    this.spawnMinM = r.d('spawn_min_m');
+    this.spawnMaxM = r.d('spawn_max_m');
+    this.despawnM = r.d('despawn_m');
+    this.initialMinM = r.d('initial_min_m');
+    this.teleportM = r.d('teleport_m');
+    this.spawnIntervalS = r.d('spawn_interval_s');
+    this.spawnTries = r.i('spawn_tries');
+    this.initialTries = r.i('initial_tries');
+    this.spawnClearM = r.d('spawn_clear_m');
+    this.searchM = r.d('search_m');
+    this.seed = r.i('seed');
+    this.accelMps2 = r.d('accel_mps2');
+    this.brakeMps2 = r.d('brake_mps2');
+    this.minGapM = r.d('min_gap_m');
+    this.headwayS = r.d('headway_s');
+    this.lookAheadM = r.d('look_ahead_m');
+    this.corridor = r.d('corridor');
+    this.followRate = r.d('follow_rate');
+    this.hitStopS = r.d('hit_stop_s');
+    this.hitMinMps = r.d('hit_min_mps');
+    this.hitMarginM = r.d('hit_margin_m');
+    this.amberCommitM = r.d('amber_commit_m');
+    this.stopMarginM = r.d('stop_margin_m');
+    this.signalClasses = r.il('signal_classes');
+    this.signalMinMain = r.i('signal_min_main');
+    this.signalMinEdges = r.i('signal_min_edges');
+    this.signalSeed = r.i('signal_seed');
+    this.greenMs = r.i('green_ms');
+    this.amberMs = r.i('amber_ms');
+    this.allRedMs = r.i('all_red_ms');
+    this.lightSideM = r.d('light_side_m');
+    this.lightRadiusM = r.d('light_radius_m');
+    this.lightDrawMax = r.i('light_draw_max');
+  }
+
+  toJson(): Record<string, unknown> {
+    return {
+      enabled: this.enabled,
+      max_cars: this.maxCars,
+      night_factor: this.nightFactor,
+      class_weight: this.classWeight,
+      class_speed_mps: this.classSpeedMps,
+      car_length_m: this.carLengthM,
+      car_width_m: this.carWidthM,
+      spawn_min_m: this.spawnMinM,
+      spawn_max_m: this.spawnMaxM,
+      despawn_m: this.despawnM,
+      initial_min_m: this.initialMinM,
+      teleport_m: this.teleportM,
+      spawn_interval_s: this.spawnIntervalS,
+      spawn_tries: this.spawnTries,
+      initial_tries: this.initialTries,
+      spawn_clear_m: this.spawnClearM,
+      search_m: this.searchM,
+      seed: this.seed,
+      accel_mps2: this.accelMps2,
+      brake_mps2: this.brakeMps2,
+      min_gap_m: this.minGapM,
+      headway_s: this.headwayS,
+      look_ahead_m: this.lookAheadM,
+      corridor: this.corridor,
+      follow_rate: this.followRate,
+      hit_stop_s: this.hitStopS,
+      hit_min_mps: this.hitMinMps,
+      hit_margin_m: this.hitMarginM,
+      amber_commit_m: this.amberCommitM,
+      stop_margin_m: this.stopMarginM,
+      signal_classes: this.signalClasses,
+      signal_min_main: this.signalMinMain,
+      signal_min_edges: this.signalMinEdges,
+      signal_seed: this.signalSeed,
+      green_ms: this.greenMs,
+      amber_ms: this.amberMs,
+      all_red_ms: this.allRedMs,
+      light_side_m: this.lightSideM,
+      light_radius_m: this.lightRadiusM,
+      light_draw_max: this.lightDrawMax,
     };
   }
 }

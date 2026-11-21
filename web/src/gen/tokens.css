@@ -126,6 +126,18 @@
   --color-phone-map-game: #F4C430;
   --color-phone-map-player: #FF2A2A;
   --color-phone-toast: #2E9E5BEE;
+  --color-traffic-bodies-0: #3A6EA5;
+  --color-traffic-bodies-1: #E8E4DA;
+  --color-traffic-bodies-2: #2F2F36;
+  --color-traffic-bodies-3: #8C9AA6;
+  --color-traffic-bodies-4: #B5482F;
+  --color-traffic-bodies-5: #4F7F52;
+  --color-traffic-bodies-6: #D9A441;
+  --color-traffic-bodies-7: #6B4E8C;
+  --color-traffic-light-housing: #1E1F24;
+  --color-traffic-light-red: #FF3B30;
+  --color-traffic-light-amber: #FFB020;
+  --color-traffic-light-green: #34D058;
   --light-day-roof-light: 1.12;
   --light-day-sun-x: -0.6;
   --light-day-sun-y: 0.8;

@@ -294,3 +294,46 @@ nav:
   round_m: 10
   mi_from: 0.1
   round_ft: 50
+# Traffic and traffic lights (specs/traffic.md). Per-class lists are indexed by RoadClass
+# (unknown, motorway, trunk, primary, secondary, tertiary, residential, service).
+traffic:
+  enabled: true
+  max_cars: 30                  # dynamic bodies for traffic in total (METROPOLE_PLAN 7.3)
+  night_factor: 0.5             # fraction of max_cars at night
+  class_weight: [0.0, 1.0, 1.0, 1.0, 0.85, 0.6, 0.35, 0.1]   # spawn acceptance per class
+  class_speed_mps: [8.0, 22.0, 17.0, 14.0, 13.0, 11.0, 9.0, 6.0]
+  car_length_m: 4.6             # before car_scale
+  car_width_m: 1.9
+  spawn_min_m: 150.0            # spawn ring around the player, outside the view
+  spawn_max_m: 250.0
+  despawn_m: 280.0
+  initial_min_m: 30.0           # inner radius of the first fill (start, respawn)
+  teleport_m: 60.0              # a player jump longer than this refills like a start
+  spawn_interval_s: 0.25
+  spawn_tries: 4
+  initial_tries: 400
+  spawn_clear_m: 20.0
+  search_m: 40.0
+  seed: 20251
+  accel_mps2: 2.5
+  brake_mps2: 7.0
+  min_gap_m: 2.5
+  headway_s: 1.1
+  look_ahead_m: 45.0
+  corridor: 1.15                # lateral reach for the car ahead, × sum of half widths
+  follow_rate: 7.0              # 1/s, smoothing of position and heading towards the lane
+  hit_stop_s: 2.5
+  hit_min_mps: 1.5
+  hit_margin_m: 0.3
+  amber_commit_m: 14.0          # on amber, cars closer than this to the stop line go on
+  stop_margin_m: 1.5
+  signal_classes: [2, 3, 4]     # trunk, primary, secondary
+  signal_min_main: 2
+  signal_min_edges: 3
+  signal_seed: 7919
+  green_ms: 14000
+  amber_ms: 3000
+  all_red_ms: 1500
+  light_side_m: 1.2             # indicator outside the carriageway edge
+  light_radius_m: 1.1
+  light_draw_max: 160
