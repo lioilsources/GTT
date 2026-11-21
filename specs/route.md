@@ -32,6 +32,8 @@ Výstup: `{cost, nodes: [from … to], edges: [indexy hran po cestě]}`.
 
 ## Napojení na hru (P2, jen klient)
 
+Přesná pravidla (start, cíl, lomená čára, přepočet, šipka, formát vzdálenosti): `specs/phone.md` „Navigace“.
+
 - Start: hrana, na které auto je; z jejích konců povolených jednosměrkou se vezme ten ve směru jízdy
   (při jízdě po uličce nejbližší ponechaná hrana).
 - Cíl: spot má `edge` a parkovací bod; trasa vede do bližšího konce té hrany a pak k parkovacímu bodu.
