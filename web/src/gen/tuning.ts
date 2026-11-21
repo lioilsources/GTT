@@ -104,6 +104,12 @@ export class Tuning {
    * secondary, tertiary, residential, service); integer multipliers of the length in dm.
    */
   readonly route: TuningRoute;
+  /**
+   * Pedestrians (specs/pedestrians.md). They always dodge (R7) and are never physics bodies.
+   * class_density: spawn acceptance per RoadClass index (unknown, motorway, trunk, primary,
+   * secondary, tertiary, residential, service).
+   */
+  readonly pedestrians: TuningPedestrians;
 
   private constructor(r: R) {
     this.carScale = r.d('car_scale');
@@ -128,6 +134,7 @@ export class Tuning {
     this.hud = new TuningHud(r.sub('hud'));
     this.minigames = new TuningMinigames(r.sub('minigames'));
     this.route = new TuningRoute(r.sub('route'));
+    this.pedestrians = new TuningPedestrians(r.sub('pedestrians'));
   }
 
   toJson(): Record<string, unknown> {
@@ -154,6 +161,7 @@ export class Tuning {
       hud: this.hud.toJson(),
       minigames: this.minigames.toJson(),
       route: this.route.toJson(),
+      pedestrians: this.pedestrians.toJson(),
     };
   }
 
@@ -1370,6 +1378,118 @@ export class TuningRoute {
       reroute_s: this.rerouteS,
       arrive_m: this.arriveM,
       line_width_m: this.lineWidthM,
+    };
+  }
+}
+
+/**
+ * Pedestrians (specs/pedestrians.md). They always dodge (R7) and are never physics bodies.
+ * class_density: spawn acceptance per RoadClass index (unknown, motorway, trunk, primary,
+ * secondary, tertiary, residential, service).
+ */
+export class TuningPedestrians {
+  enabled: boolean;
+  seed: number;
+  maxCount: number;
+  /** density and max_count at night */
+  nightFactor: number;
+  /** body radius before car_scale */
+  radiusM: number;
+  walkMps: number;
+  walkJitterMps: number;
+  classDensity: number[];
+  busyDistricts: string[];
+  busyFactor: number;
+  quietFactor: number;
+  /** the spawn ring starts this far beyond the visible radius */
+  spawnMarginM: number;
+  spawnBandM: number;
+  /** farther than visible radius + this from the car = removed */
+  despawnMarginM: number;
+  /** spawn attempts per second */
+  spawnPerS: number;
+  /** attempts when the area is filled at once (start, teleport) */
+  fillAttempts: number;
+  fillClearM: number;
+  /** max distance from a sample point to a sidewalk */
+  snapM: number;
+  /** at a node: switch to the other side of the street */
+  crossChance: number;
+  dodgeHorizonS: number;
+  dodgeMinMps: number;
+  dodgeMarginM: number;
+  dodgeExtraM: number;
+  leapS: number;
+  /** a leap takes at most this part of the time to contact (<= 0.5) */
+  leapFraction: number;
+  stunS: number;
+  bubbleS: number;
+  bubblePx: number;
+  bubbleLiftPx: number;
+
+  constructor(r: R) {
+    this.enabled = r.b('enabled');
+    this.seed = r.i('seed');
+    this.maxCount = r.i('max_count');
+    this.nightFactor = r.d('night_factor');
+    this.radiusM = r.d('radius_m');
+    this.walkMps = r.d('walk_mps');
+    this.walkJitterMps = r.d('walk_jitter_mps');
+    this.classDensity = r.dl('class_density');
+    this.busyDistricts = r.sl('busy_districts');
+    this.busyFactor = r.d('busy_factor');
+    this.quietFactor = r.d('quiet_factor');
+    this.spawnMarginM = r.d('spawn_margin_m');
+    this.spawnBandM = r.d('spawn_band_m');
+    this.despawnMarginM = r.d('despawn_margin_m');
+    this.spawnPerS = r.d('spawn_per_s');
+    this.fillAttempts = r.i('fill_attempts');
+    this.fillClearM = r.d('fill_clear_m');
+    this.snapM = r.d('snap_m');
+    this.crossChance = r.d('cross_chance');
+    this.dodgeHorizonS = r.d('dodge_horizon_s');
+    this.dodgeMinMps = r.d('dodge_min_mps');
+    this.dodgeMarginM = r.d('dodge_margin_m');
+    this.dodgeExtraM = r.d('dodge_extra_m');
+    this.leapS = r.d('leap_s');
+    this.leapFraction = r.d('leap_fraction');
+    this.stunS = r.d('stun_s');
+    this.bubbleS = r.d('bubble_s');
+    this.bubblePx = r.d('bubble_px');
+    this.bubbleLiftPx = r.d('bubble_lift_px');
+  }
+
+  toJson(): Record<string, unknown> {
+    return {
+      enabled: this.enabled,
+      seed: this.seed,
+      max_count: this.maxCount,
+      night_factor: this.nightFactor,
+      radius_m: this.radiusM,
+      walk_mps: this.walkMps,
+      walk_jitter_mps: this.walkJitterMps,
+      class_density: this.classDensity,
+      busy_districts: this.busyDistricts,
+      busy_factor: this.busyFactor,
+      quiet_factor: this.quietFactor,
+      spawn_margin_m: this.spawnMarginM,
+      spawn_band_m: this.spawnBandM,
+      despawn_margin_m: this.despawnMarginM,
+      spawn_per_s: this.spawnPerS,
+      fill_attempts: this.fillAttempts,
+      fill_clear_m: this.fillClearM,
+      snap_m: this.snapM,
+      cross_chance: this.crossChance,
+      dodge_horizon_s: this.dodgeHorizonS,
+      dodge_min_mps: this.dodgeMinMps,
+      dodge_margin_m: this.dodgeMarginM,
+      dodge_extra_m: this.dodgeExtraM,
+      leap_s: this.leapS,
+      leap_fraction: this.leapFraction,
+      stun_s: this.stunS,
+      bubble_s: this.bubbleS,
+      bubble_px: this.bubblePx,
+      bubble_lift_px: this.bubbleLiftPx,
     };
   }
 }

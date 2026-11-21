@@ -107,5 +107,6 @@
   "distanceFt": "{ft} ft",
   "distanceMi": "{mi} mi",
   "arrived": "Jsi v cíli",
-  "routeCancel": "Zrušit trasu"
+  "routeCancel": "Zrušit trasu",
+  "pedestrianBubble": "!!"
 }

@@ -125,3 +125,10 @@
   flutter: done
   web: done
   checks: {flutter: pass, web: pass}
+- id: F-017
+  name: Pedestrians that always dodge (R7)
+  level: P1
+  spec: specs/pedestrians.md@1
+  lead: web
+  flutter: todo
+  web: todo

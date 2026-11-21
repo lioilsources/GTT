@@ -334,5 +334,6 @@
     }
   },
   "arrived": "You have arrived",
-  "routeCancel": "Cancel route"
+  "routeCancel": "Cancel route",
+  "pedestrianBubble": "!!"
 }
