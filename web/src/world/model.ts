@@ -222,6 +222,8 @@ export class City {
     readonly spots: Spots,
     readonly districts: { name: string; ring: Float32Array }[],
     readonly area: Float32Array,
+    /** Raw graph (dm integers) for the GPS route (specs/route.md). */
+    readonly graphPb: Graph,
   ) {
     this.chunkKeys = new Set(manifest.chunks.map((c) => chunkKey(c.x, c.y)));
   }
@@ -260,13 +262,15 @@ export class City {
     );
     const manifest = await decodeManifest(m!);
     if (manifest.formatVersion !== 1) throw new Error(`citypack format ${manifest.formatVersion} is not supported`);
+    const graph = await decodeGraph(g!);
     return new City(
       manifest,
-      RoadGraph.fromPb(await decodeGraph(g!)),
+      RoadGraph.fromPb(graph),
       await decodeLandmarks(l!),
       await decodeSpots(s!),
       manifest.districts.map((d) => ({ name: d.name, ring: ringM(d.ring) })),
       ringM(manifest.area),
+      graph,
     );
   }
 }
