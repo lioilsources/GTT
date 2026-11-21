@@ -24,6 +24,8 @@ import { cameraHeight, fovX } from '../world/camera';
 import { buildRoads, buildingTris, groundTris, Tris, Z, type RoadChunk } from './geometry';
 import { dayPalette, nightPalette, rgba, type Palette, type Rgba } from './palette';
 import { facadeTexture } from './textures';
+import { carTris, parkedTris } from '../cars/carTris';
+import type { CarFleet } from '../cars/fleet';
 
 /** Rotating follow camera state (port of world_engine camera.dart). */
 export class CameraRig {
@@ -132,6 +134,10 @@ export class WorldView {
   private readonly projArr = new Float32Array(16);
   private inTunnel = false;
   private readonly instr: SceneInstrumentation;
+  /** Parked cars (specs/cars.md), one merged mesh rebuilt when the fleet's version changes. */
+  private fleet: CarFleet | null = null;
+  private parkedMesh: Mesh | null = null;
+  private parkedVersion = -1;
 
   constructor(
     readonly engine: AbstractEngine,
@@ -315,31 +321,16 @@ export class WorldView {
     root.parent = this.carRoot;
     const hl = car.halfLength, hw = car.halfWidth;
     const night = this.palette.night;
-    const paint = rgba(car.spec.paint);
     const body = new Tris();
     const z = 0.0;
-    const r = (x0: number, y0: number, x1: number, y1: number, c: Rgba, h = z): void => body.rect(0, 0, 0, x0, y0, x1, y1, h, c);
-    r(-hl + 0.6, -hw - 0.6, hl + 0.6, hw - 0.6, rgba(tokens.colorCarShadow), z - 0.02);
-    r(-hl, -hw, hl, hw, paint, z + 0.02);
-    r(-hl * 0.42, -hw * 0.78, hl * 0.3, hw * 0.78, rgba(tokens.colorCarCabin), z + 0.03);
-    const glass = rgba(tokens.colorUiText);
-    const mix: Rgba = [paint[0] * 0.88 + glass[0] * 0.12, paint[1] * 0.88 + glass[1] * 0.12, paint[2] * 0.88 + glass[2] * 0.12, 1];
-    r(-hl * 0.3, -hw * 0.66, hl * 0.12, hw * 0.66, mix, z + 0.04);
-    const stripe = rgba(tokens.colorCarStripe);
-    r(hl * 0.3, -hw * 0.12, hl * 0.98, hw * 0.12, stripe, z + 0.04);
-    r(-hl * 0.98, -hw * 0.12, -hl * 0.42, hw * 0.12, stripe, z + 0.04);
-    const head = rgba(night ? tokens.colorCarHeadlightNight : tokens.colorCarHeadlightDay);
-    r(hl * 0.9, hw * 0.5, hl, hw * 0.85, head, z + 0.05);
-    r(hl * 0.9, -hw * 0.85, hl, -hw * 0.5, head, z + 0.05);
-    const tail = rgba(tokens.colorCarTail);
-    r(-hl, hw * 0.5, -hl * 0.92, hw * 0.85, tail, z + 0.05);
-    r(-hl, -hw * 0.85, -hl * 0.92, -hw * 0.5, tail, z + 0.05);
+    // Class-specific vector shape (specs/cars.md "Kreslení"); lights go above its top part.
+    const top = carTris(body, car.spec, hl, hw, car.axleOffset, 0, 0, 0, z - 0.01, night, false) - 0.01;
     this.mesh('car-body', body, this.flatMat, true, false).parent = root;
 
     const lights = (c: string): Mesh => {
       const t = new Tris();
-      t.rect(0, 0, 0, -hl, hw * 0.5, -hl * 0.92, hw * 0.85, z + 0.06, rgba(c));
-      t.rect(0, 0, 0, -hl, -hw * 0.85, -hl * 0.92, -hw * 0.5, z + 0.06, rgba(c));
+      t.rect(0, 0, 0, -hl, hw * 0.5, -hl * 0.92, hw * 0.85, top + 0.01, rgba(c));
+      t.rect(0, 0, 0, -hl, -hw * 0.85, -hl * 0.92, -hw * 0.5, top + 0.01, rgba(c));
       const m = this.mesh('car-lights', t, this.flatMat, false, false);
       m.parent = root;
       m.setEnabled(false);
@@ -372,6 +363,20 @@ export class WorldView {
       }
     }
     this.carParts = { wheels, brake, reverse, cone: coneMesh, root };
+  }
+
+  setFleet(f: CarFleet): void {
+    this.fleet = f;
+    this.parkedVersion = -1;
+  }
+
+  private updateParked(): void {
+    const f = this.fleet;
+    if (!f || f.version === this.parkedVersion) return;
+    this.parkedVersion = f.version;
+    this.parkedMesh?.dispose();
+    const t = parkedTris(f.parked, f.specs, this.tuning.carScale, this.tuning.drive.axleOffset, Z.car);
+    this.parkedMesh = t.empty ? null : this.mesh('parked-cars', t, this.flatMat, true, false);
   }
 
   /** Rebuilds the car after a respawn (new body, maybe new size). */
@@ -503,6 +508,7 @@ export class WorldView {
     this.updateCamera();
     this.updateCar(car);
     this.updateProps();
+    this.updateParked();
     this.updateSkids(car.halfWidth * 0.32);
     this.scene.render();
     this.stats.chunks = this.chunks.size;

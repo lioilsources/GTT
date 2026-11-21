@@ -91,7 +91,7 @@ export class DriveWorld {
 
   constructor(
     readonly city: City,
-    readonly spec: CarSpec,
+    public spec: CarSpec,
     readonly tuning: Tuning,
   ) {
     this.world = new World({ gravity: { x: 0, y: 0 } });
@@ -112,6 +112,12 @@ export class DriveWorld {
     this.layers.reset(x, y);
     this.car.setLayer(this.layers.layer);
     this.lastSkid = null;
+  }
+
+  /** Switches to another car (specs/cars.md): a new body with that car's parameters, at rest. */
+  replaceCar(spec: CarSpec, x: number, y: number, heading: number): void {
+    this.spec = spec;
+    this.spawn(x, y, heading);
   }
 
   addChunk(c: ChunkData): void {
