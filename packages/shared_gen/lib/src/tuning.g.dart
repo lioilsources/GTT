@@ -1028,16 +1028,28 @@ class TuningHud {
 class TuningMinigames {
   TuningMinigames._(_R r)
       : timeCapS = r.i('time_cap_s'),
-        sirky = TuningMinigamesSirky._(r.sub('sirky'));
+        sirky = TuningMinigamesSirky._(r.sub('sirky')),
+        oko = TuningMinigamesOko._(r.sub('oko')),
+        dama = TuningMinigamesDama._(r.sub('dama')),
+        desetitisic = TuningMinigamesDesetitisic._(r.sub('desetitisic'));
 
   /// hard cap for every minigame (9.2)
   int timeCapS;
 
   final TuningMinigamesSirky sirky;
 
+  final TuningMinigamesOko oko;
+
+  final TuningMinigamesDama dama;
+
+  final TuningMinigamesDesetitisic desetitisic;
+
   Map<String, Object> toJson() => {
         'time_cap_s': timeCapS,
         'sirky': sirky.toJson(),
+        'oko': oko.toJson(),
+        'dama': dama.toJson(),
+        'desetitisic': desetitisic.toJson(),
       };
 }
 
@@ -1077,6 +1089,100 @@ class TuningMinigamesSirky {
         'max_take': maxTake,
         'rounds_to_win': roundsToWin,
         'ai_error_pct': aiErrorPct,
+        'time_cap_s': timeCapS,
+        'ai_think_s': aiThinkS,
+      };
+}
+
+class TuningMinigamesOko {
+  TuningMinigamesOko._(_R r)
+      : roundsToWin = r.i('rounds_to_win'),
+        dealerStand = r.i('dealer_stand'),
+        timeCapS = r.i('time_cap_s'),
+        dealerDrawS = r.d('dealer_draw_s');
+
+  int roundsToWin;
+
+  int dealerStand;
+
+  int timeCapS;
+
+  /// pause between the banker's cards (UI only)
+  double dealerDrawS;
+
+  Map<String, Object> toJson() => {
+        'rounds_to_win': roundsToWin,
+        'dealer_stand': dealerStand,
+        'time_cap_s': timeCapS,
+        'dealer_draw_s': dealerDrawS,
+      };
+}
+
+class TuningMinigamesDama {
+  TuningMinigamesDama._(_R r)
+      : aiDepth = r.il('ai_depth'),
+        aiErrorPct = r.il('ai_error_pct'),
+        quietLimit = r.i('quiet_limit'),
+        fastPlies = r.i('fast_plies'),
+        timeCapS = r.i('time_cap_s'),
+        aiThinkS = r.d('ai_think_s');
+
+  /// minimax plies per AI level 1..5
+  List<int> aiDepth;
+
+  List<int> aiErrorPct;
+
+  /// plies without a capture or a man move = draw
+  int quietLimit;
+
+  /// a win within this many plies = 3 stars
+  int fastPlies;
+
+  int timeCapS;
+
+  double aiThinkS;
+
+  Map<String, Object> toJson() => {
+        'ai_depth': aiDepth,
+        'ai_error_pct': aiErrorPct,
+        'quiet_limit': quietLimit,
+        'fast_plies': fastPlies,
+        'time_cap_s': timeCapS,
+        'ai_think_s': aiThinkS,
+      };
+}
+
+class TuningMinigamesDesetitisic {
+  TuningMinigamesDesetitisic._(_R r)
+      : target = r.i('target'),
+        maxRounds = r.i('max_rounds'),
+        aiBankAt = r.il('ai_bank_at'),
+        aiErrorPct = r.il('ai_error_pct'),
+        starMargins = r.il('star_margins'),
+        timeCapS = r.i('time_cap_s'),
+        aiThinkS = r.d('ai_think_s');
+
+  int target;
+
+  int maxRounds;
+
+  List<int> aiBankAt;
+
+  List<int> aiErrorPct;
+
+  /// lead for 3 and 2 stars
+  List<int> starMargins;
+
+  int timeCapS;
+
+  double aiThinkS;
+
+  Map<String, Object> toJson() => {
+        'target': target,
+        'max_rounds': maxRounds,
+        'ai_bank_at': aiBankAt,
+        'ai_error_pct': aiErrorPct,
+        'star_margins': starMargins,
         'time_cap_s': timeCapS,
         'ai_think_s': aiThinkS,
       };

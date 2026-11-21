@@ -145,5 +145,89 @@
         "type": "int"
       }
     }
+  },
+  "okoRules1": "Get closer to 21 than the banker without going over.",
+  "okoRules2": "Hit takes a card, Stand ends your turn. The banker draws to 17.",
+  "okoRules3": "Two cards making 21 win at once. First to 5 rounds wins.",
+  "okoHit": "Hit",
+  "okoStand": "Stand",
+  "okoBanker": "Banker",
+  "okoYou": "You",
+  "okoTotal": "{total}",
+  "@okoTotal": {
+    "placeholders": {
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "okoBust": "Bust!",
+  "okoPush": "Push",
+  "okoNatural": "Twenty-one!",
+  "damaRules1": "Move diagonally forward; kings move any distance.",
+  "damaRules2": "Capturing is compulsory and must continue while possible.",
+  "damaRules3": "Win by leaving the opponent no move. After 8 minutes material decides.",
+  "damaMustCapture": "You must capture",
+  "damaPieces": "Pieces {player} : {ai}",
+  "@damaPieces": {
+    "placeholders": {
+      "player": {
+        "type": "int"
+      },
+      "ai": {
+        "type": "int"
+      }
+    }
+  },
+  "desetRules1": "Roll six dice and set aside scoring ones: 1 = 100, 5 = 50.",
+  "desetRules2": "Three of a kind = 100 × value (three 1s = 1000), 1–6 = 1500.",
+  "desetRules3": "Bank or roll on – a roll without points loses the turn. First to 5000.",
+  "desetRoll": "Roll",
+  "desetKeep": "Keep {points}",
+  "@desetKeep": {
+    "placeholders": {
+      "points": {
+        "type": "int"
+      }
+    }
+  },
+  "desetBank": "Bank {points}",
+  "@desetBank": {
+    "placeholders": {
+      "points": {
+        "type": "int"
+      }
+    }
+  },
+  "desetTurn": "This turn: {points}",
+  "@desetTurn": {
+    "placeholders": {
+      "points": {
+        "type": "int"
+      }
+    }
+  },
+  "desetBust": "No points – turn lost",
+  "desetScores": "You {player} · Opponent {ai}",
+  "@desetScores": {
+    "placeholders": {
+      "player": {
+        "type": "int"
+      },
+      "ai": {
+        "type": "int"
+      }
+    }
+  },
+  "desetRound": "Round {round}/{max}",
+  "@desetRound": {
+    "placeholders": {
+      "round": {
+        "type": "int"
+      },
+      "max": {
+        "type": "int"
+      }
+    }
   }
 }

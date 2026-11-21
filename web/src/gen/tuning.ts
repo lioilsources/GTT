@@ -1043,16 +1043,25 @@ export class TuningMinigames {
   /** hard cap for every minigame (9.2) */
   timeCapS: number;
   readonly sirky: TuningMinigamesSirky;
+  readonly oko: TuningMinigamesOko;
+  readonly dama: TuningMinigamesDama;
+  readonly desetitisic: TuningMinigamesDesetitisic;
 
   constructor(r: R) {
     this.timeCapS = r.i('time_cap_s');
     this.sirky = new TuningMinigamesSirky(r.sub('sirky'));
+    this.oko = new TuningMinigamesOko(r.sub('oko'));
+    this.dama = new TuningMinigamesDama(r.sub('dama'));
+    this.desetitisic = new TuningMinigamesDesetitisic(r.sub('desetitisic'));
   }
 
   toJson(): Record<string, unknown> {
     return {
       time_cap_s: this.timeCapS,
       sirky: this.sirky.toJson(),
+      oko: this.oko.toJson(),
+      dama: this.dama.toJson(),
+      desetitisic: this.desetitisic.toJson(),
     };
   }
 }
@@ -1088,6 +1097,95 @@ export class TuningMinigamesSirky {
       max_take: this.maxTake,
       rounds_to_win: this.roundsToWin,
       ai_error_pct: this.aiErrorPct,
+      time_cap_s: this.timeCapS,
+      ai_think_s: this.aiThinkS,
+    };
+  }
+}
+
+export class TuningMinigamesOko {
+  roundsToWin: number;
+  dealerStand: number;
+  timeCapS: number;
+  /** pause between the banker's cards (UI only) */
+  dealerDrawS: number;
+
+  constructor(r: R) {
+    this.roundsToWin = r.i('rounds_to_win');
+    this.dealerStand = r.i('dealer_stand');
+    this.timeCapS = r.i('time_cap_s');
+    this.dealerDrawS = r.d('dealer_draw_s');
+  }
+
+  toJson(): Record<string, unknown> {
+    return {
+      rounds_to_win: this.roundsToWin,
+      dealer_stand: this.dealerStand,
+      time_cap_s: this.timeCapS,
+      dealer_draw_s: this.dealerDrawS,
+    };
+  }
+}
+
+export class TuningMinigamesDama {
+  /** minimax plies per AI level 1..5 */
+  aiDepth: number[];
+  aiErrorPct: number[];
+  /** plies without a capture or a man move = draw */
+  quietLimit: number;
+  /** a win within this many plies = 3 stars */
+  fastPlies: number;
+  timeCapS: number;
+  aiThinkS: number;
+
+  constructor(r: R) {
+    this.aiDepth = r.il('ai_depth');
+    this.aiErrorPct = r.il('ai_error_pct');
+    this.quietLimit = r.i('quiet_limit');
+    this.fastPlies = r.i('fast_plies');
+    this.timeCapS = r.i('time_cap_s');
+    this.aiThinkS = r.d('ai_think_s');
+  }
+
+  toJson(): Record<string, unknown> {
+    return {
+      ai_depth: this.aiDepth,
+      ai_error_pct: this.aiErrorPct,
+      quiet_limit: this.quietLimit,
+      fast_plies: this.fastPlies,
+      time_cap_s: this.timeCapS,
+      ai_think_s: this.aiThinkS,
+    };
+  }
+}
+
+export class TuningMinigamesDesetitisic {
+  target: number;
+  maxRounds: number;
+  aiBankAt: number[];
+  aiErrorPct: number[];
+  /** lead for 3 and 2 stars */
+  starMargins: number[];
+  timeCapS: number;
+  aiThinkS: number;
+
+  constructor(r: R) {
+    this.target = r.i('target');
+    this.maxRounds = r.i('max_rounds');
+    this.aiBankAt = r.il('ai_bank_at');
+    this.aiErrorPct = r.il('ai_error_pct');
+    this.starMargins = r.il('star_margins');
+    this.timeCapS = r.i('time_cap_s');
+    this.aiThinkS = r.d('ai_think_s');
+  }
+
+  toJson(): Record<string, unknown> {
+    return {
+      target: this.target,
+      max_rounds: this.maxRounds,
+      ai_bank_at: this.aiBankAt,
+      ai_error_pct: this.aiErrorPct,
+      star_margins: this.starMargins,
       time_cap_s: this.timeCapS,
       ai_think_s: this.aiThinkS,
     };
