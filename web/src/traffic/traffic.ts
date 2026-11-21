@@ -6,7 +6,7 @@ import { CAT_CAR, CAT_TRAFFIC, type Car } from '../drive/car';
 import { Prng } from '../rules/prng';
 import type { City, RoadEdge, RoadGraph } from '../world/model';
 import {
-  buildSignals, canLeave, chooseNext, laneOffset, lanesPerDir, LIGHT_AMBER, LIGHT_GREEN, lightState,
+  buildSignals, canLeave, chooseNext, chooseToward, laneOffset, lanesPerDir, LIGHT_AMBER, LIGHT_GREEN, lightState,
   signalClockMs, type Signals,
 } from './roadRules';
 
@@ -21,6 +21,14 @@ export class TrafficCar {
   braking = false;
   /** Seconds left standing still after the player hit it. */
   hitTimer = 0;
+  /** Police hooks (specs/police.md), set by the police module: a patrol car, chasing a goal. */
+  police = false;
+  pursuing = false;
+  goalX = 0;
+  goalY = 0;
+  pursuitMps = 0;
+  /** A chasing patrol brakes to stop this far from its goal. */
+  goalStopM = 0;
 
   /** @internal path state */
   edge: RoadEdge;
@@ -270,6 +278,12 @@ export class Traffic {
     return c;
   }
 
+  /** Turns a car around on its edge (police U-turn): same point, opposite direction. */
+  turnAround(c: TrafficCar): void {
+    c.dir = -c.dir;
+    c.s = Math.max(0, c.edge.length - c.s);
+  }
+
   private remove(i: number): void {
     const c = this.cars[i]!;
     this.world.destroyBody(c.body);
@@ -287,7 +301,7 @@ export class Traffic {
       c.speed = 0;
     } else {
       const gap = this.gapAhead(c, player);
-      const vmax = t.classSpeedMps[c.edge.roadClass] ?? t.classSpeedMps[0]!;
+      const vmax = c.pursuing ? this.pursuitSpeed(c) : (t.classSpeedMps[c.edge.roadClass] ?? t.classSpeedMps[0]!);
       const free = Math.max(0, gap - t.minGapM);
       const want = Math.min(vmax, free / t.headwayS, Math.sqrt(2 * t.brakeMps2 * free));
       const dv = want - c.speed;
@@ -298,7 +312,9 @@ export class Traffic {
     // Edge transitions (a short edge may be crossed within one step).
     while (c.s >= c.edge.length) {
       const node = c.dir > 0 ? c.edge.to : c.edge.from;
-      const next = chooseNext(this.graph, node, c.edge.index, c.rng, this.scratch);
+      const next = c.pursuing
+        ? chooseToward(this.graph, node, c.edge.index, c.goalX, c.goalY)
+        : chooseNext(this.graph, node, c.edge.index, c.rng, this.scratch);
       if (next < 0) return false;
       c.s -= c.edge.length;
       const e = this.graph.edges[next]!;
@@ -315,6 +331,12 @@ export class Traffic {
     c.body.setLinearVelocity(this.v);
     c.body.setAngularVelocity(wrap(c.heading - oh) / dt);
     return true;
+  }
+
+  /** Chase speed: pursuitMps, braking to a stop goalStopM from the goal (specs/police.md). */
+  private pursuitSpeed(c: TrafficCar): number {
+    const left = Math.max(0, Math.hypot(c.goalX - c.x, c.goalY - c.y) - c.goalStopM);
+    return Math.min(c.pursuitMps, Math.sqrt(2 * this.tuning.traffic.brakeMps2 * left));
   }
 
   /** Moves the car's pose towards its lane point at s; k = 1 snaps. */
@@ -368,6 +390,8 @@ export class Traffic {
       const g = this.gapTo(c, hc, hs, player.x, player.y, player.halfLength, player.halfWidth, look);
       if (g < gap) gap = g;
     }
+    // A chasing patrol ignores other cars and the lights (sirens, specs/police.md).
+    if (c.pursuing) return gap;
     for (const o of this.cars) {
       if (o === c || o.layer !== c.layer) continue;
       // Only cars going roughly our way (±60°); crossing traffic is ignored (spec, step 5).
