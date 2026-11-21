@@ -10,18 +10,24 @@ policie, feedu, miniher a ukládání. Co je hotové a co zbývá k akceptaci: [
 ## Spuštění
 
 ```sh
+run/bin/citypack pull all               # balíčky měst podle packs.lock (nebo citypack build nyc)
+run/bin/metro sync                      # sdílené soubory do app/assets/shared a web/public/shared
 flutter pub get                         # workspace: app + packages
 cd app && flutter run --profile         # telefon / macOS
+cd web && npm ci && npm run dev         # webový klient (Babylon.js)
 ```
 
+Sdílená vrstva (`metro`, generovaný kód, vektory, parita): [docs/metro.md](docs/metro.md).
+
 Ovládání na klávesnici (desktop): šipky / WASD, mezerník = ruční brzda.
-Webový klient vznikne ve `web/` podle `Prompts/01-METROPOLE_DUALSTACK_PLAN.md` (fáze D0/D1).
+Webový klient je ve `web/` (fáze D0: prázdná scéna; M0 v D1), plán `Prompts/01-METROPOLE_DUALSTACK_PLAN.md`.
 V aplikaci: ☀︎ přepíná den a noc, ⚙ otevře ladicí panel (schéma ovládání A/B/C, hodnoty z `tuning.yaml`
 a parametry auta za běhu, tlačítko „Kopírovat tuning.yaml“).
 
 ## Balíček města (`citypack`)
 
-Go CLI v `tools/citypack` staví z Overture Maps balíček města do `app/assets/cities/<city>/`.
+Go CLI v `tools/citypack` staví z Overture Maps balíček města do `build/packs/<city>/` (mimo git;
+sdílí se přes GitHub Releases: `citypack publish` / `pull`, verze v `packs.lock`).
 Potřebuje `duckdb` (CLI, s rozšířením spatial) a pro změnu schématu `protoc`.
 
 ```sh
@@ -42,8 +48,13 @@ Podrobnosti: [docs/citypack.md](docs/citypack.md).
 | `app/` | Flutter aplikace: herní smyčka (Flame), HUD, ladicí panel, lokalizace (ARB cs/en) |
 | `packages/world_engine/` | načtení citypacku, streaming chunků, 2,5D renderer, kamera |
 | `packages/drive_core/` | čistá logika bez UI: fyzika auta (Box2D v3 přes forge2d), ovládání A/B/C, vrstvy mostů a tunelů, mobiliář |
+| `packages/shared_gen/` | generovaný kód ze sdílené vrstvy (`metro gen`) |
+| `packages/rules_core/` | čistá deterministická pravidla: PRNG, tvar modulu P0, přehrávání vektorů |
+| `web/` | webový klient: TypeScript, Vite, Babylon.js |
 | `tools/citypack/` | Go pipeline map, schéma `proto/citypack.proto` |
-| `content/` | `tuning.yaml` (jediný zdroj herních čísel, čte ho aplikace i `citypack`), auta, konfigurace měst |
+| `tools/metro/` | Go CLI sdílené vrstvy: gen, sync, validate, guard, vectors, parity |
+| `content/` | `tuning.yaml` (jediný zdroj herních čísel), auta, města, katalog miniher |
+| `i18n/`, `design/`, `schema/`, `specs/`, `vectors/`, `scenarios/`, `assets/` | sdílená vrstva, viz `docs/metro.md` |
 | `plans/` | pod-plány dalších milníků |
 
 ## Referenční telefony

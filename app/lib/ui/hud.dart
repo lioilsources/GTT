@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../game/metropole_game.dart';
 import '../l10n/app_localizations.dart';
+import 'package:shared_gen/shared_gen.dart';
 
 /// Street · district on top, speed bottom-left, FPS overlay, day/night and tuning buttons.
 class Hud extends StatelessWidget {
@@ -26,8 +27,8 @@ class Hud extends StatelessWidget {
             final tag = s.layer > 0
                 ? ' · ${l.bridgeTag}'
                 : s.layer < 0
-                    ? ' · ${l.tunnelTag}'
-                    : '';
+                ? ' · ${l.tunnelTag}'
+                : '';
             final speed = game.city.imperial
                 ? l.speedMph((s.speedMps * 2.23694).round())
                 : l.speedKmh((s.speedMps * 3.6).round());
@@ -44,7 +45,11 @@ class Hud extends StatelessWidget {
                           [street + tag, ?s.district].join('  ·  '),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.w600),
+                          style: const TextStyle(
+                            color: Color(Tokens.colorUiText),
+                            fontSize: Tokens.fontHud,
+                            fontWeight: FontWeight.w600,
+                          ),
                         ),
                       ),
                     ),
@@ -58,8 +63,11 @@ class Hud extends StatelessWidget {
                     child: IgnorePointer(
                       child: Center(
                         child: _Pill(
-                          color: const Color(0xDDFF7A00),
-                          child: Text(l.borderNotice, style: const TextStyle(color: Colors.white, fontSize: 14)),
+                          color: const Color(Tokens.colorUiNotice),
+                          child: Text(
+                            l.borderNotice,
+                            style: const TextStyle(color: Color(Tokens.colorUiText), fontSize: Tokens.fontNotice),
+                          ),
                         ),
                       ),
                     ),
@@ -69,12 +77,15 @@ class Hud extends StatelessWidget {
                   bottom: 12,
                   child: IgnorePointer(
                     child: _Pill(
-                      child: Text(speed,
-                          style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 22,
-                              fontWeight: FontWeight.w800,
-                              fontFeatures: [FontFeature.tabularFigures()])),
+                      child: Text(
+                        speed,
+                        style: const TextStyle(
+                          color: Color(Tokens.colorUiText),
+                          fontSize: Tokens.fontSpeed,
+                          fontWeight: FontWeight.w800,
+                          fontFeatures: [FontFeature.tabularFigures()],
+                        ),
+                      ),
                     ),
                   ),
                 ),
@@ -88,8 +99,8 @@ class Hud extends StatelessWidget {
                       'chunks ${s.chunks}  ${scheme.name.toUpperCase()}',
                       textAlign: TextAlign.right,
                       style: TextStyle(
-                        color: s.fps >= 57 ? const Color(0xFF9CFF9C) : const Color(0xFFFF9C9C),
-                        fontSize: 10,
+                        color: s.fps >= 57 ? const Color(Tokens.colorUiFpsOk) : const Color(Tokens.colorUiFpsBad),
+                        fontSize: Tokens.fontHudSmall,
                         fontFeatures: const [FontFeature.tabularFigures()],
                         shadows: const [Shadow(blurRadius: 2)],
                       ),
@@ -117,16 +128,16 @@ class Hud extends StatelessWidget {
 }
 
 class _Pill extends StatelessWidget {
-  const _Pill({required this.child, this.color = const Color(0xAA15151B)});
+  const _Pill({required this.child, this.color = const Color(Tokens.colorUiPill)});
   final Widget child;
   final Color color;
 
   @override
   Widget build(BuildContext context) => Container(
-        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 7),
-        decoration: BoxDecoration(color: color, borderRadius: BorderRadius.circular(20)),
-        child: child,
-      );
+    padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 7),
+    decoration: BoxDecoration(color: color, borderRadius: BorderRadius.circular(Tokens.radiusPill)),
+    child: child,
+  );
 }
 
 class _RoundButton extends StatelessWidget {
@@ -137,15 +148,18 @@ class _RoundButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Tooltip(
-        message: tooltip,
-        child: Material(
-          color: const Color(0xAA15151B),
-          shape: const CircleBorder(),
-          child: InkWell(
-            customBorder: const CircleBorder(),
-            onTap: onTap,
-            child: Padding(padding: const EdgeInsets.all(8), child: Icon(icon, color: Colors.white, size: 20)),
-          ),
+    message: tooltip,
+    child: Material(
+      color: const Color(Tokens.colorUiPill),
+      shape: const CircleBorder(),
+      child: InkWell(
+        customBorder: const CircleBorder(),
+        onTap: onTap,
+        child: Padding(
+          padding: const EdgeInsets.all(8),
+          child: Icon(icon, color: const Color(Tokens.colorUiText), size: 20),
         ),
-      );
+      ),
+    ),
+  );
 }

@@ -4,7 +4,6 @@ import 'package:forge2d/forge2d.dart';
 import 'package:world_engine/core.dart';
 
 import 'car.dart';
-import 'car_spec.dart';
 import 'controls.dart';
 import 'props.dart';
 
@@ -16,7 +15,7 @@ import 'props.dart';
 class LayerTracker {
   LayerTracker(this.graph, this.t);
   final RoadGraph graph;
-  final LayerTuning t;
+  final TuningLayers t;
   RoadEdge? edge;
   EdgeHit? hit;
 
@@ -89,7 +88,7 @@ class DriveWorld {
   final List<double> skids = [];
   (double, double, double, double)? _lastSkid;
 
-  DriveTuning get _d => tuning.drive;
+  TuningDrive get _d => tuning.drive;
 
   void spawn(double x, double y, double heading) {
     if (_spawned) car.destroy();
@@ -145,7 +144,7 @@ class DriveWorld {
 
   /// Advances with a fixed step (`drive.step_hz`).
   void update(double dt) {
-    final step = _d.step;
+    final step = 1 / _d.stepHz;
     _acc = math.min(_acc + dt, step * 6);
     while (_acc >= step) {
       _acc -= step;
@@ -155,7 +154,7 @@ class DriveWorld {
 
   void _fixedStep(double step) {
     time += step;
-    car.drive(input, step, cruise: tuning.cruiseMps, top: tuning.topMps);
+    car.drive(input, step, cruise: tuning.speedMps.cruise, top: tuning.speedMps.topDefault);
     world.step(step, subStepCount: _d.substeps);
     layers.update(car.x, car.y);
     car.setLayer(layers.layer);

@@ -1,6 +1,9 @@
 package steps
 
 import (
+	"bytes"
+	"os"
+	"path/filepath"
 	"testing"
 
 	"citypack/internal/geo"
@@ -97,5 +100,33 @@ func TestReachableRespectsOneway(t *testing.T) {
 	r := reachable(g, 0)
 	if !r[1] || r[2] {
 		t.Fatalf("reach %v", r)
+	}
+}
+
+func TestTarballIsDeterministicAndRoundTrips(t *testing.T) {
+	dir := t.TempDir()
+	for name, body := range map[string]string{"manifest.pb": "m", "chunks/0_0.pb": "c"} {
+		p := dir + "/" + name
+		if err := os.MkdirAll(filepath.Dir(p), 0o755); err != nil {
+			t.Fatal(err)
+		}
+		if err := os.WriteFile(p, []byte(body), 0o644); err != nil {
+			t.Fatal(err)
+		}
+	}
+	a, err := Tarball(dir)
+	if err != nil {
+		t.Fatal(err)
+	}
+	b, _ := Tarball(dir)
+	if !bytes.Equal(a, b) {
+		t.Fatal("tarball must be byte-identical for the same input")
+	}
+	out := t.TempDir()
+	if err := Untar(a, out); err != nil {
+		t.Fatal(err)
+	}
+	if got, _ := os.ReadFile(out + "/chunks/0_0.pb"); string(got) != "c" {
+		t.Fatalf("round trip: %q", got)
 	}
 }

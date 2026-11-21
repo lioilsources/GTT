@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "car.schema.json",
+  "title": "CarSpec",
+  "description": "content/cars/<id>.json (METROPOLE_PLAN 7.2, 10). Sizes are real-world; the game multiplies them by car_scale.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "name", "class", "length_m", "width_m", "mass", "power", "brake", "grip_front", "grip_rear", "drift_bias", "steer_speed", "top_speed", "seats", "tags", "price", "rarity", "tuning_slots", "paint"],
+  "properties": {
+    "id": {"type": "string", "pattern": "^[a-z0-9_]+$"},
+    "name": {"type": "string", "description": "Fictional make and model (R10)."},
+    "class": {"enum": ["mini", "hatchback", "sedan", "kombi", "coupe", "muscle", "supersport", "veteran", "offroad", "pickup", "van", "taxi", "limo", "bus", "micro", "special"]},
+    "length_m": {"type": "number", "exclusiveMinimum": 0},
+    "width_m": {"type": "number", "exclusiveMinimum": 0},
+    "mass": {"type": "number", "exclusiveMinimum": 0, "description": "kg"},
+    "power": {"type": "number", "exclusiveMinimum": 0, "description": "Peak acceleration, m/s²."},
+    "brake": {"type": "number", "exclusiveMinimum": 0, "description": "Deceleration, m/s²."},
+    "grip_front": {"type": "number", "exclusiveMinimum": 0, "description": "Max lateral acceleration of the front axle, m/s²."},
+    "grip_rear": {"type": "number", "exclusiveMinimum": 0},
+    "drift_bias": {"type": "number", "exclusiveMinimum": 0, "maximum": 1, "description": "Rear grip factor under handbrake."},
+    "steer_speed": {"type": "number", "exclusiveMinimum": 0, "description": "rad/s"},
+    "top_speed": {"type": "number", "exclusiveMinimum": 0, "description": "m/s"},
+    "seats": {"type": "integer", "minimum": 1},
+    "tags": {"type": "array", "items": {"type": "string"}},
+    "price": {"type": "integer", "minimum": 0},
+    "rarity": {"enum": ["common", "rare", "epic", "legendary"]},
+    "tuning_slots": {"type": "array", "items": {"enum": ["engine", "tyres", "brakes", "weight", "drift"]}},
+    "paint": {"type": "string", "pattern": "^#[0-9A-Fa-f]{6}$"}
+  }
+}

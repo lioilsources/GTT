@@ -1,0 +1,66 @@
+name: flutter
+# Client F: app/ + packages/ (DUALSTACK 7).
+on:
+  pull_request:
+    paths:
+      - 'app/**'
+      - 'packages/**'
+      - 'content/**'
+      - 'i18n/**'
+      - 'design/**'
+      - 'schema/**'
+      - 'specs/**'
+      - 'vectors/**'
+      - 'scenarios/**'
+      - 'assets/**'
+      - 'parity.yaml'
+      - 'metro.yaml'
+      - 'packs.lock'
+      - 'tools/**'
+      - 'packages/shared_gen/**'
+      - 'web/src/gen/**'
+      - '.github/**'
+  push:
+    branches: [main]
+    paths:
+      - 'app/**'
+      - 'packages/**'
+      - 'content/**'
+      - 'i18n/**'
+      - 'design/**'
+      - 'schema/**'
+      - 'specs/**'
+      - 'vectors/**'
+      - 'scenarios/**'
+      - 'assets/**'
+      - 'parity.yaml'
+      - 'metro.yaml'
+      - 'packs.lock'
+      - 'tools/**'
+      - 'packages/shared_gen/**'
+      - 'web/src/gen/**'
+      - '.github/**'
+
+jobs:
+  flutter:
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - uses: ./.github/actions/setup-shared
+      - name: Path ownership
+        if: github.event_name == 'pull_request'
+        run: metro guard --base origin/${{ github.base_ref }}
+      - run: metro gen --check
+      - run: citypack pull all
+      - run: metro sync
+      - run: flutter pub get
+      - run: flutter analyze app packages
+      - name: Tests (vectors and scenarios included)
+        run: |
+          for p in packages/rules_core packages/world_engine packages/drive_core app; do
+            (cd "$p" && flutter test)
+          done

@@ -1,16 +1,17 @@
 import 'dart:math' as math;
 import 'dart:ui' as ui;
 
+import 'package:shared_gen/shared_gen.dart';
+
 import 'camera.dart';
 import 'chunk.dart';
 import 'extrusion.dart';
 import 'model.dart';
 import 'palette.dart';
-import 'pb/citypack.pbenum.dart';
+import 'package:shared_gen/citypack_pb.dart';
 import 'roads.dart';
 import 'streaming.dart';
 import 'textures.dart';
-import 'tuning.dart';
 
 /// Per-frame numbers for the FPS overlay.
 class RenderStats {
@@ -96,7 +97,7 @@ class WorldRenderer {
     // 3. tunnel layer, only while the player is inside (the ceiling is hidden)
     final inTunnel = playerLayer < 0;
     if (inTunnel) {
-      canvas.drawPaint(_paint..color = const ui.Color(0x99000000));
+      canvas.drawPaint(_paint..color = const ui.Color(Tokens.colorWorldTunnelShade));
       _roadPasses(canvas, roadKeys, tunnelPasses);
       drawDynamic(canvas, -1);
     }
@@ -164,7 +165,7 @@ class WorldRenderer {
         final hw = e.width / 2;
         const stripes = 8;
         for (var i = 0; i < stripes; i++) {
-          _paint.color = i.isEven ? const ui.Color(0xFFFF7A00) : const ui.Color(0xFFFFFFFF);
+          _paint.color = i.isEven ? const ui.Color(Tokens.colorWorldRoadblockA) : const ui.Color(Tokens.colorWorldRoadblockB);
           canvas.drawRect(ui.Rect.fromLTWH(1, -hw + i * 2 * hw / stripes, 2.5, 2 * hw / stripes), _paint);
         }
         canvas.restore();

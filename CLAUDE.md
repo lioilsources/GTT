@@ -1,43 +1,52 @@
 # Metropole (GTT)
 
 ## Účel
-Mobilní hra na výšku: volné ježdění po skutečných metropolích + minihry z feedu. Zadání a uzavřená
-rozhodnutí R1–R13 jsou v `Prompts/00-METROPOLE_PLAN.md`; neotvírej je. Stav milníku: `docs/m0.md`.
+Mobilní hra na výšku: volné ježdění po skutečných metropolích + minihry z feedu. Dva klienti:
+F (Flutter, story) a W (TypeScript + Babylon.js, GitHub Pages) nad jednou sdílenou vrstvou.
+Zadání: `Prompts/00-METROPOLE_PLAN.md`, `Prompts/01-METROPOLE_DUALSTACK_PLAN.md` (při rozporu platí 01);
+uzavřená rozhodnutí neotvírej. Stav: `docs/m0.md`, postup: `plans/PROGRESS.md`.
 
 ## Build a test
 ```
-flutter pub get                                   # Dart workspace (app, packages/*)
-flutter analyze app packages/world_engine packages/drive_core
-(cd packages/world_engine && flutter test); (cd packages/drive_core && flutter test); (cd app && flutter test)
-(cd tools/citypack && go vet ./... && go test ./...)
-(cd app && flutter run --profile)                 # lokálně vždy --profile
-run/bin/citypack build nyc                            # postav nejdřív: go build -o ../../run/bin/citypack ./cmd/citypack
+(cd tools/metro && go build -o ../../run/bin/metro ./cmd/metro)
+(cd tools/citypack && go build -o ../../run/bin/citypack ./cmd/citypack)
+run/bin/citypack pull all  # nebo: run/bin/citypack build nyc
+run/bin/metro gen && run/bin/metro sync
+flutter pub get && flutter analyze app packages
+for p in packages/rules_core packages/world_engine packages/drive_core app; do (cd $p && flutter test); done
+(cd web && npm ci && npm run typecheck && npm test && npm run build)
+(cd tools/metro && go test ./...); (cd tools/citypack && go test ./...)
+run/bin/metro validate && run/bin/metro vectors check && run/bin/metro gen --check && run/bin/metro parity report
+run/bin/metro progress --tests   # po každé dokončené položce plans/progress.yaml (pravidla v PROGRESS.md)
+(cd app && flutter run --profile)  # lokálně vždy --profile
 ```
 
 ## Mapa
-- `app/` – Flutter shell, Flame smyčka (`lib/game`), HUD a ladicí panel (`lib/ui`), ARB cs/en (`lib/l10n`).
-- `packages/world_engine/` – citypack loader, streaming, renderer, kamera; `lib/src/pb` je generované.
-- `packages/drive_core/` – čistá logika (bez Flutteru, `dart:ui`): auto, ovládání A/B/C, vrstvy, mobiliář.
-- `packages/world_engine/lib/core.dart` – čistá část enginu (graf, chunky, okno streamingu, `Tuning`).
-- `tools/citypack/` – Go pipeline, schéma `proto/citypack.proto`.
-- `content/` – jediný zdroj laditelných hodnot a obsahu (`tuning.yaml`, `cars/`, `cities/<id>/`).
-- `app/assets/cities/<id>/` – výstup `citypack pack` (commitovaný, ODbL).
+- `app/` – Flutter shell, Flame smyčka, HUD, ladicí panel, kreslení (`lib/game/paint`).
+- `packages/world_engine/` – citypack, streaming, renderer; čistá část v `lib/core.dart`.
+- `packages/drive_core/` – čistá logika jízdy (bez Flutteru, `dart:ui`).
+- `packages/rules_core/` – PRNG, tvar modulu P0, přehrávání vektorů (čistý Dart).
+- `packages/shared_gen/`, `web/src/gen/` – generované `metro gen`, needitovat.
+- `web/` – klient W (Vite, Babylon.js 9, Vitest).
+- `tools/citypack/` – pipeline map; `tools/metro/` – sdílená vrstva (docs/metro.md).
+- `content/`, `i18n/`, `design/`, `schema/`, `specs/`, `vectors/`, `scenarios/`, `assets/`, `parity.yaml`.
 
 ## Invarianty
-- Herní čísla jen v `content/tuning.yaml` (parser je přísný, výchozí hodnoty v kódu nejsou);
-  do `app/assets` je symlinkovaný stejně jako `content/cars/*.json`, nekopíruj je.
-- Pravidla a logika v čistých modulech; test v `drive_core` hlídá, že neimportují Flutter ani `dart:ui`.
-- Změna `citypack.proto`: přegeneruj Go i Dart (`protoc --go_out=… --dart_out=packages/world_engine/lib/src/pb`)
-  a při nekompatibilní změně zvyš `FormatVersion` v `pack.go` i kontrolu v `model.dart`.
-- Souřadnice: metry lokální rovinné projekce od `origin`, y na sever; v protobufu decimetry.
-- Ponechaná hrana (`kept`) = silnice s provozem a GPS; ostatní hrany jsou průjezdné uličky.
+- Herní čísla jen v `content/tuning.yaml`, texty jen v `i18n/`, barvy jen v `design/tokens.json`;
+  klienti je čtou přes generovaný kód (`Tuning`, `Tokens`, ARB / `i18n.ts`). Natvrdo nic.
+- Typ pole v `Tuning` určuje literál v YAML: `25` int, `25.0` double.
+- Pravidla a logika v čistých modulech; test v `drive_core` hlídá importy Flutteru a `dart:ui`.
+- Kód bez specifikace v `specs/` se nepíše; změna chování = vyšší `version` + nové vektory.
+- P0 kód: jen celá čísla a řetězce, PRNG ze `specs/prng.md`, AI rozpočet v iteracích.
+- Balíčky měst nejsou v gitu (`build/packs/`); `app/assets/shared/`, `web/public/shared/` plní `metro sync`.
+- Větve `shared/…`, `flutter/…`, `web/…` smí měnit jen své cesty (`metro.yaml`, `metro guard`).
+- Souřadnice: metry lokální projekce od `origin`, y na sever; v protobufu decimetry.
 - Budovy kolidují jen ve vrstvě 0; vrstvu auta mění jen sousední hrana grafu.
-- Overture release je připnutý v `city.yaml`; `-refetch` stahuje znovu.
-- Žádné reálné značky (R10), žádné LLM za běhu (R9), uživatelský text jen přes ARB.
+- Žádné reálné značky (R10), žádné LLM za běhu (R9).
 
 ## Odchylky
-Žádné. (Lokální složka je GTT, projekt a Dart balíčky se jmenují `metropole`.)
+Žádné. (Lokální složka je GTT, projekt a balíčky se jmenují `metropole`.)
 
 ## Kam dál
-`docs/m0.md` (stav, akceptace), `docs/m0-test.md` (testy na telefonu), `docs/citypack.md` (pipeline),
-`Prompts/01-METROPOLE_DUALSTACK_PLAN.md` (druhý klient ve `web/`, další fáze D0).
+`docs/metro.md` (sdílená vrstva), `docs/m0.md`, `docs/m0-test.md`, `docs/citypack.md`,
+`plans/PROGRESS.md` (pravidla měření postupu), `specs/`.

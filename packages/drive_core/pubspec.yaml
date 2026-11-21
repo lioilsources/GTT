@@ -9,6 +9,8 @@ environment:
   flutter: ">=3.44.0"
 
 dependencies:
+  shared_gen:
+    path: ../shared_gen
   forge2d: ">=0.14.0 <0.15.2"
   vector_math: ^2.2.0
   world_engine:

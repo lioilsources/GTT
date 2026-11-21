@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 
 import '../game/metropole_game.dart';
 import '../l10n/app_localizations.dart';
+import 'package:shared_gen/shared_gen.dart';
 
 /// Live editor for tuning.yaml and the car parameters (M0 dogfooding).
 /// Slider labels are the YAML keys on purpose: they are what gets pasted back into the repo.
@@ -11,7 +12,7 @@ void showTuningPanel(BuildContext context, MetropoleGame game, {required void Fu
   showModalBottomSheet<void>(
     context: context,
     isScrollControlled: true,
-    backgroundColor: const Color(0xF01C1C22),
+    backgroundColor: const Color(Tokens.colorUiSheet),
     barrierColor: Colors.transparent,
     builder: (_) => _TuningPanel(game: game, onScheme: onScheme),
   );
@@ -38,7 +39,14 @@ class _TuningPanelState extends State<_TuningPanel> {
         children: [
           SizedBox(
             width: 150,
-            child: Text(key, style: const TextStyle(color: Colors.white70, fontSize: 12, fontFamily: 'monospace')),
+            child: Text(
+              key,
+              style: const TextStyle(
+                color: Color(Tokens.colorUiTextMuted),
+                fontSize: Tokens.fontPanel,
+                fontFamily: 'monospace',
+              ),
+            ),
           ),
           Expanded(
             child: Slider(
@@ -53,17 +61,23 @@ class _TuningPanelState extends State<_TuningPanel> {
           ),
           SizedBox(
             width: 56,
-            child: Text(v.toStringAsFixed(digits),
-                textAlign: TextAlign.right, style: const TextStyle(color: Colors.white, fontSize: 12)),
+            child: Text(
+              v.toStringAsFixed(digits),
+              textAlign: TextAlign.right,
+              style: const TextStyle(color: Color(Tokens.colorUiText), fontSize: Tokens.fontPanel),
+            ),
           ),
         ],
       );
     }
 
     Widget header(String s) => Padding(
-          padding: const EdgeInsets.only(top: 14, bottom: 4),
-          child: Text(s, style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w700)),
-        );
+      padding: const EdgeInsets.only(top: 14, bottom: 4),
+      child: Text(
+        s,
+        style: const TextStyle(color: Color(Tokens.colorUiText), fontWeight: FontWeight.w700),
+      ),
+    );
 
     return DraggableScrollableSheet(
       expand: false,
@@ -76,9 +90,18 @@ class _TuningPanelState extends State<_TuningPanel> {
           header(l.controlScheme),
           SegmentedButton<ControlSchemeId>(
             segments: [
-              ButtonSegment(value: ControlSchemeId.a, label: Text(l.schemeA, style: const TextStyle(fontSize: 11))),
-              ButtonSegment(value: ControlSchemeId.b, label: Text(l.schemeB, style: const TextStyle(fontSize: 11))),
-              ButtonSegment(value: ControlSchemeId.c, label: Text(l.schemeC, style: const TextStyle(fontSize: 11))),
+              ButtonSegment(
+                value: ControlSchemeId.a,
+                label: Text(l.schemeA, style: const TextStyle(fontSize: Tokens.fontFaint)),
+              ),
+              ButtonSegment(
+                value: ControlSchemeId.b,
+                label: Text(l.schemeB, style: const TextStyle(fontSize: Tokens.fontFaint)),
+              ),
+              ButtonSegment(
+                value: ControlSchemeId.c,
+                label: Text(l.schemeC, style: const TextStyle(fontSize: Tokens.fontFaint)),
+              ),
             ],
             selected: {g.scheme.id},
             onSelectionChanged: (s) => setState(() => widget.onScheme(s.first)),
@@ -88,15 +111,15 @@ class _TuningPanelState extends State<_TuningPanel> {
             t.carScale = v;
             g.drive.rescaleCar();
           }),
-          slider('view_width_m.slow', t.viewWidthSlow, 25, 150, (v) => t.viewWidthSlow = v, digits: 0),
-          slider('view_width_m.fast', t.viewWidthFast, 40, 250, (v) => t.viewWidthFast = v, digits: 0),
-          slider('car_anchor.y', t.anchorY, 0.4, 0.9, (v) => t.anchorY = v),
-          slider('extrusion.k', t.extrusionK, 0, 0.02, (v) => t.extrusionK = v, digits: 4),
-          slider('extrusion.knee_m', t.extrusionKnee, 0, 200, (v) => t.extrusionKnee = v, digits: 0),
-          slider('extrusion.exp', t.extrusionExp, 0.3, 1, (v) => t.extrusionExp = v),
-          slider('extrusion.max_scale', t.extrusionMaxScale, 1, 4, (v) => t.extrusionMaxScale = v),
-          slider('speed_mps.cruise', t.cruiseMps, 5, 60, (v) => t.cruiseMps = v, digits: 0),
-          slider('speed_mps.top_default', t.topMps, 10, 80, (v) => t.topMps = v, digits: 0),
+          slider('view_width_m.slow', t.viewWidthM.slow, 25, 150, (v) => t.viewWidthM.slow = v, digits: 0),
+          slider('view_width_m.fast', t.viewWidthM.fast, 40, 250, (v) => t.viewWidthM.fast = v, digits: 0),
+          slider('car_anchor.y', t.carAnchor.y, 0.4, 0.9, (v) => t.carAnchor.y = v),
+          slider('extrusion.k', t.extrusion.k, 0, 0.02, (v) => t.extrusion.k = v, digits: 4),
+          slider('extrusion.knee_m', t.extrusion.kneeM, 0, 200, (v) => t.extrusion.kneeM = v, digits: 0),
+          slider('extrusion.exp', t.extrusion.exp, 0.3, 1, (v) => t.extrusion.exp = v),
+          slider('extrusion.max_scale', t.extrusion.maxScale, 1, 4, (v) => t.extrusion.maxScale = v),
+          slider('speed_mps.cruise', t.speedMps.cruise, 5, 60, (v) => t.speedMps.cruise = v, digits: 0),
+          slider('speed_mps.top_default', t.speedMps.topDefault, 10, 80, (v) => t.speedMps.topDefault = v, digits: 0),
           header(l.carSection),
           slider('power', c.power, 2, 25, (v) => c.power = v, digits: 1),
           slider('brake', c.brake, 4, 40, (v) => c.brake = v, digits: 1),
@@ -114,10 +137,23 @@ class _TuningPanelState extends State<_TuningPanel> {
                 icon: const Icon(Icons.copy, size: 16),
                 label: Text(l.copyYaml),
                 onPressed: () async {
-                  final car = 'power: ${c.power}\nbrake: ${c.brake}\ngrip_front: ${c.gripFront}\n'
-                      'grip_rear: ${c.gripRear}\ndrift_bias: ${c.driftBias}\nsteer_speed: ${c.steerSpeed}\n'
-                      'top_speed: ${c.topSpeed}\n';
-                  await Clipboard.setData(ClipboardData(text: '${t.panelYaml()}\n# ${c.id}\n$car'));
+                  // Only the values changed since loading, as `yaml.path: value` lines.
+                  final base = g.data.tuningBaseline, carBase = g.data.carBaseline;
+                  final changed = [
+                    for (final e in t.flatten().entries)
+                      if (base[e.key] != e.value) '${e.key}: ${e.value}',
+                  ];
+                  final carChanged = [
+                    for (final e in c.toJson().entries)
+                      if (carBase[e.key] != e.value) '${e.key}: ${e.value}',
+                  ];
+                  final text = [
+                    '# content/tuning.yaml',
+                    ...changed,
+                    '# content/cars/${c.id}.json',
+                    ...carChanged,
+                  ].join('\n');
+                  await Clipboard.setData(ClipboardData(text: text));
                   if (context.mounted) {
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(l.copied)));
                   }
@@ -131,7 +167,10 @@ class _TuningPanelState extends State<_TuningPanel> {
             ],
           ),
           const SizedBox(height: 16),
-          Text(l.aboutMaps, style: const TextStyle(color: Colors.white38, fontSize: 11)),
+          Text(
+            l.aboutMaps,
+            style: const TextStyle(color: Color(Tokens.colorUiTextFaint), fontSize: Tokens.fontFaint),
+          ),
         ],
       ),
     );

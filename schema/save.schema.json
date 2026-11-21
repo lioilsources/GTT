@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "save.schema.json",
+  "title": "Save",
+  "description": "Local save, the same format in both clients (SQLite in F, IndexedDB in W). Version 1 is the M1 skeleton.",
+  "$defs": {
+    "Save": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["version", "cityId", "cash", "stamps", "cars", "best"],
+      "properties": {
+        "version": {"type": "integer", "const": 1},
+        "cityId": {"type": "string"},
+        "cash": {"type": "integer", "minimum": 0},
+        "stamps": {"type": "array", "items": {"type": "string"}, "description": "Passport stamps (landmark, district or minigame ids)."},
+        "cars": {"type": "array", "items": {"type": "string"}},
+        "best": {"type": "object", "additionalProperties": {"$ref": "#/$defs/BestResult"}, "description": "Per minigame id."}
+      }
+    },
+    "BestResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["stars", "score"],
+      "properties": {
+        "stars": {"type": "integer", "minimum": 0, "maximum": 3},
+        "score": {"type": "integer"}
+      }
+    }
+  }
+}

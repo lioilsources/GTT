@@ -1,7 +1,8 @@
 import 'dart:math' as math;
 
+import 'package:shared_gen/shared_gen.dart';
+
 import 'model.dart';
-import 'tuning.dart';
 
 /// Which chunks to keep loaded around the player (METROPOLE_PLAN 6.4). Pure logic.
 ///

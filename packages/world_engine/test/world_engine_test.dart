@@ -5,7 +5,7 @@ import 'dart:ui';
 
 import 'package:archive/archive.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:world_engine/src/pb/citypack.pb.dart' as pb;
+import 'package:shared_gen/citypack_pb.dart' as pb;
 import 'package:world_engine/world_engine.dart';
 
 class FilePackSource implements PackSource {
@@ -48,31 +48,26 @@ Tuning loadTuning() => Tuning.fromYaml(tuningSrc);
 void main() {
   test('extrusion scale follows the knee curve and caps at max_scale', () {
     final t = loadTuning();
-    final k = t.extrusionK, knee = t.extrusionKnee;
+    final k = t.extrusion.k, knee = t.extrusion.kneeM;
     expect(extrusionScale(0, t), 1);
     expect(extrusionScale(knee, t), closeTo(1 + k * knee, 1e-9));
-    expect(extrusionScale(knee + 100, t), closeTo(1 + k * (knee + math.pow(100, t.extrusionExp)), 1e-9));
-    expect(extrusionScale(1e6, t), t.extrusionMaxScale);
+    expect(extrusionScale(knee + 100, t), closeTo(1 + k * (knee + math.pow(100, t.extrusion.exp)), 1e-9));
+    expect(extrusionScale(1e6, t), t.extrusion.maxScale);
   });
 
-  test('tuning is strict and the panel yaml round-trips', () {
+  test('generated tuning is strict and flattens to YAML paths', () {
     final t = loadTuning();
     expect(() => Tuning.fromYaml(tuningSrc.replaceFirst(RegExp(r'^car_scale:.*$', multiLine: true), '')),
         throwsFormatException);
-    t.carScale = 3.25;
-    final merged = tuningSrc
-        .split('\n')
-        .where((l) => !RegExp(r'^(car_scale|view_width_m|car_anchor|extrusion|speed_mps):').hasMatch(l))
-        .join('\n');
-    final again = Tuning.fromYaml('$merged\n${t.panelYaml()}');
-    expect(again.carScale, 3.25);
-    expect(again.viewWidthFast, t.viewWidthFast);
-    expect(again.extrusionK, t.extrusionK);
-    expect(again.drive.stepHz, t.drive.stepHz);
+    expect(() => Tuning.fromYaml(tuningSrc.replaceFirst('step_hz: 60', 'step_hz: 60.5')), throwsFormatException);
+    final flat = t.flatten();
+    expect(flat['view_width_m.fast'], t.viewWidthM.fast);
+    expect(flat['drive.step_hz'], t.drive.stepHz);
+    expect(t.props.mix['lamp'], t.props.mix.lamp);
   });
 
   test('chunk window covers the 3×3 ring and looks ahead', () async {
-    const root = '../../app/assets/cities/nyc/';
+    const root = '../../build/packs/nyc/';
     if (!File('${root}manifest.pb').existsSync()) return;
     final t = loadTuning();
     final city = await City.load(FilePackSource(root));
@@ -130,14 +125,14 @@ void main() {
     const size = Size(400, 800);
     final car = cam.toScreen(100, 200, size, t);
     expect(car.dx, closeTo(200, 1e-6));
-    expect(car.dy, closeTo(800 * t.anchorY, 1e-6));
+    expect(car.dy, closeTo(800 * t.carAnchor.y, 1e-6));
     final ahead = cam.toScreen(110, 200, size, t);
     expect(ahead.dx, closeTo(200, 1e-6));
     expect(ahead.dy, lessThan(car.dy));
   });
 
   test('NYC citypack loads, every chunk decodes, start is on a kept road', () async {
-    const root = '../../app/assets/cities/nyc/';
+    const root = '../../build/packs/nyc/';
     if (!File('${root}manifest.pb').existsSync()) return; // pack not built
     final city = await City.load(FilePackSource(root));
     expect(city.id, 'nyc');

@@ -1,0 +1,40 @@
+# Parity matrix (DUALSTACK 5.6). One row per feature F-###; `metro parity report` renders PARITY.md.
+# status: todo | wip | done; checks: pass | fail | pending (test runs overwrite them via build/parity/).
+- id: F-001
+  name: PRNG (xorshift32, nextInt, shuffle)
+  level: P0
+  spec: specs/prng.md@1
+  vectors: vectors/prng.json
+  lead: flutter
+  flutter: done
+  web: done
+  checks: {flutter: pass, web: pass}
+- id: F-002
+  name: Citypack decoding (manifest, graph, chunks)
+  level: P0
+  spec: specs/citypack.md@1
+  lead: flutter
+  flutter: done
+  web: todo
+  checks: {flutter: pass}
+- id: F-003
+  name: M0 world view (2.5D extrusion, camera, day/night)
+  level: P2
+  lead: flutter
+  flutter: wip
+  web: todo
+- id: F-004
+  name: M0 drive physics (tyre model, handbrake, layers)
+  level: P1
+  spec: specs/drive.md@1
+  scenarios: scenarios/drive
+  lead: flutter
+  flutter: wip
+  web: todo
+- id: F-005
+  name: M0 controls A/B/C
+  level: P1
+  spec: specs/controls.md@1
+  lead: flutter
+  flutter: wip
+  web: todo

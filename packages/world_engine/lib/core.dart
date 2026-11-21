@@ -6,6 +6,6 @@ export 'src/chunk.dart';
 export 'src/chunk_window.dart';
 export 'src/citypack.dart';
 export 'src/model.dart';
-export 'src/pb/citypack.pb.dart' show Manifest, Graph, Landmark, Landmarks, Spot, Spots;
-export 'src/pb/citypack.pbenum.dart';
+export 'package:shared_gen/citypack_pb.dart' show Manifest, Graph, Landmark, Landmarks, Spot, Spots, GroundKind, RoadClass;
+export 'package:shared_gen/shared_gen.dart';
 export 'src/tuning.dart';

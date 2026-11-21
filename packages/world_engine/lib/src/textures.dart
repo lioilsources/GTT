@@ -2,6 +2,8 @@ import 'dart:math' as math;
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 
+import 'package:shared_gen/shared_gen.dart';
+
 /// Procedural facade textures: a 4×4 grid of 64 px window cells, tiled over every wall.
 /// White wall pixels keep the vertex colour (modulate), windows darken it; at night some
 /// windows glow.
@@ -30,7 +32,7 @@ class FacadeTextures {
     final c = ui.Canvas(rec);
     final rnd = math.Random(night ? 7 : 3);
     c.drawRect(const ui.Rect.fromLTWH(0, 0, 256, 256),
-        ui.Paint()..color = night ? const ui.Color(0xFF4A4A58) : const ui.Color(0xFFFFFFFF));
+        ui.Paint()..color = night ? const ui.Color(Tokens.colorFacadeNightWall) : const ui.Color(Tokens.colorFacadeDayWall));
     for (var i = 0; i < 4; i++) {
       for (var j = 0; j < 4; j++) {
         final r = ui.Rect.fromLTWH(i * cell + 12, j * cell + 14, cell - 24, cell - 26);
@@ -38,15 +40,15 @@ class FacadeTextures {
         if (night) {
           final lit = rnd.nextDouble() < 0.45;
           col = lit
-              ? ui.Color.lerp(const ui.Color(0xFFFFE6A0), const ui.Color(0xFFBFE3FF), rnd.nextDouble() * 0.4)!
-              : const ui.Color(0xFF22222C);
+              ? ui.Color.lerp(const ui.Color(Tokens.colorFacadeNightLitA), const ui.Color(Tokens.colorFacadeNightLitB), rnd.nextDouble() * 0.4)!
+              : const ui.Color(Tokens.colorFacadeNightDark);
         } else {
-          col = ui.Color.lerp(const ui.Color(0xFF7D8DA0), const ui.Color(0xFFA6B4C4), rnd.nextDouble())!;
+          col = ui.Color.lerp(const ui.Color(Tokens.colorFacadeDayGlassA), const ui.Color(Tokens.colorFacadeDayGlassB), rnd.nextDouble())!;
         }
         c.drawRect(r, ui.Paint()..color = col);
         if (!night) {
           // Mullion.
-          c.drawRect(ui.Rect.fromLTWH(r.center.dx - 1.5, r.top, 3, r.height), ui.Paint()..color = const ui.Color(0xFFE6E6E6));
+          c.drawRect(ui.Rect.fromLTWH(r.center.dx - 1.5, r.top, 3, r.height), ui.Paint()..color = const ui.Color(Tokens.colorFacadeDayMullion));
         }
       }
     }

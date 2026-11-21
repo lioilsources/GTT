@@ -1,0 +1,13 @@
+# metro configuration (DUALSTACK 3, 5.2). Shared path; changes go through a shared/* branch.
+
+# Path ownership for `metro guard`: a branch may only touch paths of its own session.
+# Everything not listed belongs to SHARED; generated folders belong to SHARED too.
+owners:
+  flutter: [app/, packages/]
+  web: [web/]
+  shared_generated: [packages/shared_gen/, web/src/gen/]
+# One-off branches allowed to touch every path (the D0 bootstrap that wires both clients up).
+bootstrap_branches: [shared/d0]
+
+# Cities whose packs `metro sync` bundles into the app (the first city ships with the install).
+bundle_cities: [nyc]

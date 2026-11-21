@@ -1,0 +1,62 @@
+name: shared
+# Shared layer: schemas, generated code, vectors, parity (DUALSTACK 5).
+on:
+  pull_request:
+    paths:
+      - 'content/**'
+      - 'i18n/**'
+      - 'design/**'
+      - 'schema/**'
+      - 'specs/**'
+      - 'vectors/**'
+      - 'scenarios/**'
+      - 'assets/**'
+      - 'parity.yaml'
+      - 'metro.yaml'
+      - 'packs.lock'
+      - 'tools/**'
+      - 'packages/shared_gen/**'
+      - 'web/src/gen/**'
+      - '.github/**'
+  push:
+    branches: [main]
+    paths:
+      - 'content/**'
+      - 'i18n/**'
+      - 'design/**'
+      - 'schema/**'
+      - 'specs/**'
+      - 'vectors/**'
+      - 'scenarios/**'
+      - 'assets/**'
+      - 'parity.yaml'
+      - 'metro.yaml'
+      - 'packs.lock'
+      - 'tools/**'
+      - 'packages/shared_gen/**'
+      - 'web/src/gen/**'
+      - '.github/**'
+
+jobs:
+  shared:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - uses: ./.github/actions/setup-shared
+      - name: Path ownership
+        if: github.event_name == 'pull_request'
+        run: metro guard --base origin/${{ github.base_ref }}
+      - run: metro validate
+      - run: metro vectors check
+      - run: metro gen --check
+      - name: Go tools
+        run: |
+          (cd tools/metro && go vet ./... && go test ./...)
+          (cd tools/citypack && go vet ./... && go test ./...)
+      - run: metro parity report
+      - uses: actions/upload-artifact@v7
+        with:
+          name: parity
+          path: PARITY.md

@@ -1,0 +1,15 @@
+name: shared_gen
+description: Generated from the shared layer by `metro gen` (tuning, tokens, ids, schema types, protobuf, ARB). Do not edit.
+version: 0.1.0
+publish_to: none
+resolution: workspace
+
+environment:
+  sdk: ^3.12.2
+
+dependencies:
+  protobuf: ^6.1.0
+  yaml: ^3.1.4
+
+dev_dependencies:
+  test: ^1.26.0

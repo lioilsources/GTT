@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "parity.schema.json",
+  "title": "Parity matrix",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": ["id", "name", "level", "lead", "web", "flutter"],
+    "properties": {
+      "id": {"type": "string", "pattern": "^F-[0-9]{3}$"},
+      "name": {"type": "string"},
+      "level": {"enum": ["P0", "P1", "P2"]},
+      "spec": {"type": "string", "pattern": "^specs/.+\\.md@[0-9]+$"},
+      "vectors": {"type": "string"},
+      "scenarios": {"type": "string"},
+      "lead": {"enum": ["web", "flutter"]},
+      "web": {"enum": ["todo", "wip", "done"]},
+      "flutter": {"enum": ["todo", "wip", "done"]},
+      "checks": {"type": "object", "additionalProperties": false, "properties": {"web": {"enum": ["pass", "fail", "pending"]}, "flutter": {"enum": ["pass", "fail", "pending"]}}}
+    }
+  }
+}

@@ -2,6 +2,8 @@ import 'dart:math' as math;
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 
+import 'package:shared_gen/shared_gen.dart';
+
 import 'chunk.dart';
 import 'palette.dart';
 import 'tuning.dart';

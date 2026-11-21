@@ -1,7 +1,7 @@
 import 'package:archive/archive.dart';
 import 'dart:typed_data';
 
-import 'pb/citypack.pb.dart' as pb;
+import 'package:shared_gen/citypack_pb.dart' as pb;
 
 /// Where citypack files come from (app assets now, a CDN download later).
 abstract class PackSource {

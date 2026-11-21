@@ -1,0 +1,12 @@
+# Minigame engines and minigames (METROPOLE_PLAN 9.3–9.5). `metro gen` turns ids into enums.
+# D0 lists the engines and the eight M1 minigames; the rest of the 100 arrive with their specs.
+engines: [cards, board, dice, tiles, flick, rhythm, arcade, puzzle, drive, service, sport]
+minigames:
+  - {id: sirky, engine: puzzle, target_min: 5, casino_like: false}
+  - {id: oko, engine: cards, target_min: 7, casino_like: true}
+  - {id: dama, engine: board, target_min: 8, casino_like: false}
+  - {id: desetitisic, engine: dice, target_min: 7, casino_like: false}
+  - {id: sipky, engine: flick, target_min: 6, casino_like: false}
+  - {id: strelnice, engine: flick, target_min: 5, casino_like: false}
+  - {id: taxi, engine: drive, target_min: 4, casino_like: false}
+  - {id: koulena, engine: flick, target_min: 6, cities: [nyc], casino_like: false}

@@ -2,7 +2,7 @@ import 'dart:math' as math;
 import 'dart:typed_data';
 
 import 'citypack.dart';
-import 'pb/citypack.pb.dart' as pb;
+import 'package:shared_gen/citypack_pb.dart' as pb;
 
 /// A drivable road edge in world metres.
 class RoadEdge {

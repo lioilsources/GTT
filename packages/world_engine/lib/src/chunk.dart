@@ -2,7 +2,7 @@ import 'dart:math' as math;
 import 'dart:typed_data';
 
 import 'citypack.dart';
-import 'pb/citypack.pbenum.dart';
+import 'package:shared_gen/citypack_pb.dart';
 
 /// Render- and physics-ready building mass, in world metres.
 class BuildingData {
