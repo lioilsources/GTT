@@ -37,6 +37,8 @@ dependencies:
     path: ../packages/mg_koulena
   mg_strelnice:
     path: ../packages/mg_strelnice
+  feed_hub:
+    path: ../packages/feed_hub
 
 dev_dependencies:
   flutter_test:

@@ -9,6 +9,9 @@ import 'package:shared_gen/shared_gen.dart';
 import '../game/metropole_game.dart';
 import '../l10n/app_localizations.dart';
 import '../main.dart' show appClock;
+import '../phone/nav_hud.dart';
+import '../phone/phone_controller.dart';
+import '../phone/phone_sheet.dart';
 import 'hud.dart';
 import 'tuning_panel.dart';
 
@@ -25,6 +28,13 @@ class GameScreen extends StatefulWidget {
 class _GameScreenState extends State<GameScreen> {
   late final Future<MetropoleGame> _game = _load();
   ControlSchemeId _scheme = ControlSchemeId.a;
+  PhoneController? _phone;
+
+  @override
+  void dispose() {
+    _phone?.dispose();
+    super.dispose();
+  }
 
   Future<MetropoleGame> _load() async {
     final assets = await GameAssets.load(widget.city, widget.car);
@@ -60,6 +70,7 @@ class _GameScreenState extends State<GameScreen> {
               child: Text(l.loading(widget.city.name), style: const TextStyle(color: Color(Tokens.colorUiTextMuted))),
             );
           }
+          final phone = _phone ??= PhoneController(game);
           return Stack(
             fit: StackFit.expand,
             children: [
@@ -75,6 +86,7 @@ class _GameScreenState extends State<GameScreen> {
                 game: game,
                 scheme: _scheme,
                 onNight: () => setState(() => game.setNight(!game.night)),
+                onPhone: phone.toggle,
                 onTuning: () => showTuningPanel(
                   context,
                   game,
@@ -85,6 +97,8 @@ class _GameScreenState extends State<GameScreen> {
                   onBench: game.startBench,
                 ),
               ),
+              NavHud(phone: phone),
+              PhoneLayer(phone: phone),
               _BenchOverlay(game: game),
             ],
           );

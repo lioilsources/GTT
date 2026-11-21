@@ -134,6 +134,13 @@ class MetropoleGame extends Game {
   /// Milliseconds from `main` to the first frame with the car's surroundings loaded.
   int firstFrameMs = 0;
 
+  /// Feature hooks (the phone, specs/phone.md): driving time scale, per-frame update with the
+  /// real dt, drawing in world metres on layer 0 and on top of the screen.
+  double Function() timeScale = () => 1;
+  void Function(double dt)? afterUpdate;
+  void Function(ui.Canvas canvas)? paintWorld;
+  void Function(ui.Canvas canvas, ui.Size size)? paintScreen;
+
   ui.Size _size = ui.Size.zero;
   double _hudTimer = 0;
   int _frames = 0;
@@ -223,7 +230,8 @@ class MetropoleGame extends Game {
       scheme.update(input);
       _keyboard(input);
     }
-    drive.update(dt);
+    drive.update(dt * timeScale());
+    afterUpdate?.call(dt);
     _benchFrame(dt);
     final car = drive.car;
     camera.follow(car.x, car.y, car.heading, car.speed, dt, tuning, reversing: car.forwardSpeed < -0.5);
@@ -290,11 +298,13 @@ class MetropoleGame extends Game {
           paintSkids(c, drive.skids, car.halfWidth * 0.32);
           paintProps(c, drive.propsNear(car.x, car.y, camera.visibleRadius(_size, tuning)), night: night);
           paintPedestrians(c, peds);
+          paintWorld?.call(c);
         }
         if (layer == car.layer) paintCar(c, car, night: night);
       },
     );
     _streetLabels(canvas);
+    paintScreen?.call(canvas, _size);
     _pedBubbles.paint(canvas, _size, peds, camera, tuning);
     paintControls(canvas, _size, scheme);
   }
