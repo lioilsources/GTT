@@ -44,8 +44,10 @@ permissions:
   pages: write
   id-token: write
 
+# One Pages deploy at a time on main; pull requests get their own group so a deploy never
+# cancels a PR check.
 concurrency:
-  group: pages
+  group: ${{ github.event_name == 'pull_request' && format('web-pr-{0}', github.ref) || 'pages' }}
   cancel-in-progress: false
 
 jobs:

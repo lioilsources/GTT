@@ -61,6 +61,8 @@ jobs:
       - run: flutter analyze app packages
       - name: Tests (vectors and scenarios included)
         run: |
-          for p in packages/rules_core packages/world_engine packages/drive_core app; do
+          # Every package with tests (minigames add packages/mg_<id>), then the app.
+          for p in packages/*/ app; do
+            [ -d "$p/test" ] || continue
             (cd "$p" && flutter test)
           done

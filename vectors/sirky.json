@@ -1,0 +1,5864 @@
+{
+ "module": "sirky",
+ "specVersion": 1,
+ "$comment": "Player moves are written out; AI moves are {by: ai, level} and decided by aiAction (specs/minigames/README.md). States recorded by the lead client (web).",
+ "cases": [
+  {
+   "name": "random-player-vs-level-1",
+   "config": {
+    "start": 15,
+    "minStart": 12,
+    "maxStart": 25,
+    "maxTake": 3,
+    "roundsToWin": 5,
+    "aiErrorPct": [
+     60,
+     45,
+     30,
+     15,
+     0
+    ]
+   },
+   "seed": 42,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "take": 2
+     },
+     "state": {
+      "left": 13,
+      "turn": "ai",
+      "starter": "player",
+      "round": 1,
+      "player": 0,
+      "ai": 0,
+      "over": false,
+      "rng": 42
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "left": 12,
+      "turn": "player",
+      "starter": "player",
+      "round": 1,
+      "player": 0,
+      "ai": 0,
+      "over": false,
+      "rng": 42
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 2
+     },
+     "state": {
+      "left": 10,
+      "turn": "ai",
+      "starter": "player",
+      "round": 1,
+      "player": 0,
+      "ai": 0,
+      "over": false,
+      "rng": 42
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "left": 8,
+      "turn": "player",
+      "starter": "player",
+      "round": 1,
+      "player": 0,
+      "ai": 0,
+      "over": false,
+      "rng": 42
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 1
+     },
+     "state": {
+      "left": 7,
+      "turn": "ai",
+      "starter": "player",
+      "round": 1,
+      "player": 0,
+      "ai": 0,
+      "over": false,
+      "rng": 42
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "left": 5,
+      "turn": "player",
+      "starter": "player",
+      "round": 1,
+      "player": 0,
+      "ai": 0,
+      "over": false,
+      "rng": 42
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 2
+     },
+     "state": {
+      "left": 3,
+      "turn": "ai",
+      "starter": "player",
+      "round": 1,
+      "player": 0,
+      "ai": 0,
+      "over": false,
+      "rng": 42
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "left": 2,
+      "turn": "player",
+      "starter": "player",
+      "round": 1,
+      "player": 0,
+      "ai": 0,
+      "over": false,
+      "rng": 42
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 1
+     },
+     "state": {
+      "left": 1,
+      "turn": "ai",
+      "starter": "player",
+      "round": 1,
+      "player": 0,
+      "ai": 0,
+      "over": false,
+      "rng": 42
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "left": 16,
+      "turn": "ai",
+      "starter": "ai",
+      "round": 2,
+      "player": 1,
+      "ai": 0,
+      "over": false,
+      "rng": 11355432
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "left": 15,
+      "turn": "player",
+      "starter": "ai",
+      "round": 2,
+      "player": 1,
+      "ai": 0,
+      "over": false,
+      "rng": 11355432
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 2
+     },
+     "state": {
+      "left": 13,
+      "turn": "ai",
+      "starter": "ai",
+      "round": 2,
+      "player": 1,
+      "ai": 0,
+      "over": false,
+      "rng": 11355432
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "left": 10,
+      "turn": "player",
+      "starter": "ai",
+      "round": 2,
+      "player": 1,
+      "ai": 0,
+      "over": false,
+      "rng": 11355432
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 1
+     },
+     "state": {
+      "left": 9,
+      "turn": "ai",
+      "starter": "ai",
+      "round": 2,
+      "player": 1,
+      "ai": 0,
+      "over": false,
+      "rng": 11355432
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "left": 7,
+      "turn": "player",
+      "starter": "ai",
+      "round": 2,
+      "player": 1,
+      "ai": 0,
+      "over": false,
+      "rng": 11355432
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 3
+     },
+     "state": {
+      "left": 4,
+      "turn": "ai",
+      "starter": "ai",
+      "round": 2,
+      "player": 1,
+      "ai": 0,
+      "over": false,
+      "rng": 11355432
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "left": 1,
+      "turn": "player",
+      "starter": "ai",
+      "round": 2,
+      "player": 1,
+      "ai": 0,
+      "over": false,
+      "rng": 11355432
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 1
+     },
+     "state": {
+      "left": 14,
+      "turn": "player",
+      "starter": "player",
+      "round": 3,
+      "player": 1,
+      "ai": 1,
+      "over": false,
+      "rng": 2836018348
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 3
+     },
+     "state": {
+      "left": 11,
+      "turn": "ai",
+      "starter": "player",
+      "round": 3,
+      "player": 1,
+      "ai": 1,
+      "over": false,
+      "rng": 2836018348
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "left": 8,
+      "turn": "player",
+      "starter": "player",
+      "round": 3,
+      "player": 1,
+      "ai": 1,
+      "over": false,
+      "rng": 2836018348
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 2
+     },
+     "state": {
+      "left": 6,
+      "turn": "ai",
+      "starter": "player",
+      "round": 3,
+      "player": 1,
+      "ai": 1,
+      "over": false,
+      "rng": 2836018348
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "left": 5,
+      "turn": "player",
+      "starter": "player",
+      "round": 3,
+      "player": 1,
+      "ai": 1,
+      "over": false,
+      "rng": 2836018348
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 3
+     },
+     "state": {
+      "left": 2,
+      "turn": "ai",
+      "starter": "player",
+      "round": 3,
+      "player": 1,
+      "ai": 1,
+      "over": false,
+      "rng": 2836018348
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "left": 1,
+      "turn": "player",
+      "starter": "player",
+      "round": 3,
+      "player": 1,
+      "ai": 1,
+      "over": false,
+      "rng": 2836018348
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 1
+     },
+     "state": {
+      "left": 25,
+      "turn": "ai",
+      "starter": "ai",
+      "round": 4,
+      "player": 1,
+      "ai": 2,
+      "over": false,
+      "rng": 476557059
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "left": 24,
+      "turn": "player",
+      "starter": "ai",
+      "round": 4,
+      "player": 1,
+      "ai": 2,
+      "over": false,
+      "rng": 476557059
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 2
+     },
+     "state": {
+      "left": 22,
+      "turn": "ai",
+      "starter": "ai",
+      "round": 4,
+      "player": 1,
+      "ai": 2,
+      "over": false,
+      "rng": 476557059
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "left": 20,
+      "turn": "player",
+      "starter": "ai",
+      "round": 4,
+      "player": 1,
+      "ai": 2,
+      "over": false,
+      "rng": 476557059
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 2
+     },
+     "state": {
+      "left": 18,
+      "turn": "ai",
+      "starter": "ai",
+      "round": 4,
+      "player": 1,
+      "ai": 2,
+      "over": false,
+      "rng": 476557059
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "left": 17,
+      "turn": "player",
+      "starter": "ai",
+      "round": 4,
+      "player": 1,
+      "ai": 2,
+      "over": false,
+      "rng": 476557059
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 1
+     },
+     "state": {
+      "left": 16,
+      "turn": "ai",
+      "starter": "ai",
+      "round": 4,
+      "player": 1,
+      "ai": 2,
+      "over": false,
+      "rng": 476557059
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "left": 15,
+      "turn": "player",
+      "starter": "ai",
+      "round": 4,
+      "player": 1,
+      "ai": 2,
+      "over": false,
+      "rng": 476557059
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 3
+     },
+     "state": {
+      "left": 12,
+      "turn": "ai",
+      "starter": "ai",
+      "round": 4,
+      "player": 1,
+      "ai": 2,
+      "over": false,
+      "rng": 476557059
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "left": 9,
+      "turn": "player",
+      "starter": "ai",
+      "round": 4,
+      "player": 1,
+      "ai": 2,
+      "over": false,
+      "rng": 476557059
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 1
+     },
+     "state": {
+      "left": 8,
+      "turn": "ai",
+      "starter": "ai",
+      "round": 4,
+      "player": 1,
+      "ai": 2,
+      "over": false,
+      "rng": 476557059
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "left": 5,
+      "turn": "player",
+      "starter": "ai",
+      "round": 4,
+      "player": 1,
+      "ai": 2,
+      "over": false,
+      "rng": 476557059
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 3
+     },
+     "state": {
+      "left": 2,
+      "turn": "ai",
+      "starter": "ai",
+      "round": 4,
+      "player": 1,
+      "ai": 2,
+      "over": false,
+      "rng": 476557059
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "left": 1,
+      "turn": "player",
+      "starter": "ai",
+      "round": 4,
+      "player": 1,
+      "ai": 2,
+      "over": false,
+      "rng": 476557059
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 1
+     },
+     "state": {
+      "left": 18,
+      "turn": "player",
+      "starter": "player",
+      "round": 5,
+      "player": 1,
+      "ai": 3,
+      "over": false,
+      "rng": 3648046016
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 3
+     },
+     "state": {
+      "left": 15,
+      "turn": "ai",
+      "starter": "player",
+      "round": 5,
+      "player": 1,
+      "ai": 3,
+      "over": false,
+      "rng": 3648046016
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "left": 12,
+      "turn": "player",
+      "starter": "player",
+      "round": 5,
+      "player": 1,
+      "ai": 3,
+      "over": false,
+      "rng": 3648046016
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 3
+     },
+     "state": {
+      "left": 9,
+      "turn": "ai",
+      "starter": "player",
+      "round": 5,
+      "player": 1,
+      "ai": 3,
+      "over": false,
+      "rng": 3648046016
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "left": 6,
+      "turn": "player",
+      "starter": "player",
+      "round": 5,
+      "player": 1,
+      "ai": 3,
+      "over": false,
+      "rng": 3648046016
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 1
+     },
+     "state": {
+      "left": 5,
+      "turn": "ai",
+      "starter": "player",
+      "round": 5,
+      "player": 1,
+      "ai": 3,
+      "over": false,
+      "rng": 3648046016
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "left": 4,
+      "turn": "player",
+      "starter": "player",
+      "round": 5,
+      "player": 1,
+      "ai": 3,
+      "over": false,
+      "rng": 3648046016
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 3
+     },
+     "state": {
+      "left": 1,
+      "turn": "ai",
+      "starter": "player",
+      "round": 5,
+      "player": 1,
+      "ai": 3,
+      "over": false,
+      "rng": 3648046016
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "left": 12,
+      "turn": "ai",
+      "starter": "ai",
+      "round": 6,
+      "player": 2,
+      "ai": 3,
+      "over": false,
+      "rng": 3759983556
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "left": 9,
+      "turn": "player",
+      "starter": "ai",
+      "round": 6,
+      "player": 2,
+      "ai": 3,
+      "over": false,
+      "rng": 3759983556
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 1
+     },
+     "state": {
+      "left": 8,
+      "turn": "ai",
+      "starter": "ai",
+      "round": 6,
+      "player": 2,
+      "ai": 3,
+      "over": false,
+      "rng": 3759983556
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "left": 5,
+      "turn": "player",
+      "starter": "ai",
+      "round": 6,
+      "player": 2,
+      "ai": 3,
+      "over": false,
+      "rng": 3759983556
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 3
+     },
+     "state": {
+      "left": 2,
+      "turn": "ai",
+      "starter": "ai",
+      "round": 6,
+      "player": 2,
+      "ai": 3,
+      "over": false,
+      "rng": 3759983556
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "left": 1,
+      "turn": "player",
+      "starter": "ai",
+      "round": 6,
+      "player": 2,
+      "ai": 3,
+      "over": false,
+      "rng": 3759983556
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 1
+     },
+     "state": {
+      "left": 22,
+      "turn": "player",
+      "starter": "player",
+      "round": 7,
+      "player": 2,
+      "ai": 4,
+      "over": false,
+      "rng": 1441438134
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 1
+     },
+     "state": {
+      "left": 21,
+      "turn": "ai",
+      "starter": "player",
+      "round": 7,
+      "player": 2,
+      "ai": 4,
+      "over": false,
+      "rng": 1441438134
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "left": 20,
+      "turn": "player",
+      "starter": "player",
+      "round": 7,
+      "player": 2,
+      "ai": 4,
+      "over": false,
+      "rng": 1441438134
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 2
+     },
+     "state": {
+      "left": 18,
+      "turn": "ai",
+      "starter": "player",
+      "round": 7,
+      "player": 2,
+      "ai": 4,
+      "over": false,
+      "rng": 1441438134
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "left": 17,
+      "turn": "player",
+      "starter": "player",
+      "round": 7,
+      "player": 2,
+      "ai": 4,
+      "over": false,
+      "rng": 1441438134
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 2
+     },
+     "state": {
+      "left": 15,
+      "turn": "ai",
+      "starter": "player",
+      "round": 7,
+      "player": 2,
+      "ai": 4,
+      "over": false,
+      "rng": 1441438134
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "left": 13,
+      "turn": "player",
+      "starter": "player",
+      "round": 7,
+      "player": 2,
+      "ai": 4,
+      "over": false,
+      "rng": 1441438134
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 2
+     },
+     "state": {
+      "left": 11,
+      "turn": "ai",
+      "starter": "player",
+      "round": 7,
+      "player": 2,
+      "ai": 4,
+      "over": false,
+      "rng": 1441438134
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "left": 9,
+      "turn": "player",
+      "starter": "player",
+      "round": 7,
+      "player": 2,
+      "ai": 4,
+      "over": false,
+      "rng": 1441438134
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 2
+     },
+     "state": {
+      "left": 7,
+      "turn": "ai",
+      "starter": "player",
+      "round": 7,
+      "player": 2,
+      "ai": 4,
+      "over": false,
+      "rng": 1441438134
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "left": 5,
+      "turn": "player",
+      "starter": "player",
+      "round": 7,
+      "player": 2,
+      "ai": 4,
+      "over": false,
+      "rng": 1441438134
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 2
+     },
+     "state": {
+      "left": 3,
+      "turn": "ai",
+      "starter": "player",
+      "round": 7,
+      "player": 2,
+      "ai": 4,
+      "over": false,
+      "rng": 1441438134
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "left": 1,
+      "turn": "player",
+      "starter": "player",
+      "round": 7,
+      "player": 2,
+      "ai": 4,
+      "over": false,
+      "rng": 1441438134
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 1
+     },
+     "state": {
+      "left": 0,
+      "turn": "player",
+      "starter": "player",
+      "round": 7,
+      "player": 2,
+      "ai": 5,
+      "over": true,
+      "rng": 1441438134
+     }
+    }
+   ],
+   "result": {
+    "winner": "ai",
+    "stars": 0,
+    "score": 200,
+    "player": 2,
+    "ai": 5
+   }
+  },
+  {
+   "name": "random-player-vs-level-3",
+   "config": {
+    "start": 15,
+    "minStart": 12,
+    "maxStart": 25,
+    "maxTake": 3,
+    "roundsToWin": 5,
+    "aiErrorPct": [
+     60,
+     45,
+     30,
+     15,
+     0
+    ]
+   },
+   "seed": 7,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "take": 3
+     },
+     "state": {
+      "left": 12,
+      "turn": "ai",
+      "starter": "player",
+      "round": 1,
+      "player": 0,
+      "ai": 0,
+      "over": false,
+      "rng": 7
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "left": 9,
+      "turn": "player",
+      "starter": "player",
+      "round": 1,
+      "player": 0,
+      "ai": 0,
+      "over": false,
+      "rng": 7
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 3
+     },
+     "state": {
+      "left": 6,
+      "turn": "ai",
+      "starter": "player",
+      "round": 1,
+      "player": 0,
+      "ai": 0,
+      "over": false,
+      "rng": 7
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "left": 5,
+      "turn": "player",
+      "starter": "player",
+      "round": 1,
+      "player": 0,
+      "ai": 0,
+      "over": false,
+      "rng": 7
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 2
+     },
+     "state": {
+      "left": 3,
+      "turn": "ai",
+      "starter": "player",
+      "round": 1,
+      "player": 0,
+      "ai": 0,
+      "over": false,
+      "rng": 7
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "left": 1,
+      "turn": "player",
+      "starter": "player",
+      "round": 1,
+      "player": 0,
+      "ai": 0,
+      "over": false,
+      "rng": 7
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 1
+     },
+     "state": {
+      "left": 19,
+      "turn": "ai",
+      "starter": "ai",
+      "round": 2,
+      "player": 0,
+      "ai": 1,
+      "over": false,
+      "rng": 1892583
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "left": 17,
+      "turn": "player",
+      "starter": "ai",
+      "round": 2,
+      "player": 0,
+      "ai": 1,
+      "over": false,
+      "rng": 1892583
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 2
+     },
+     "state": {
+      "left": 15,
+      "turn": "ai",
+      "starter": "ai",
+      "round": 2,
+      "player": 0,
+      "ai": 1,
+      "over": false,
+      "rng": 1892583
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "left": 13,
+      "turn": "player",
+      "starter": "ai",
+      "round": 2,
+      "player": 0,
+      "ai": 1,
+      "over": false,
+      "rng": 1892583
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 1
+     },
+     "state": {
+      "left": 12,
+      "turn": "ai",
+      "starter": "ai",
+      "round": 2,
+      "player": 0,
+      "ai": 1,
+      "over": false,
+      "rng": 1892583
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "left": 9,
+      "turn": "player",
+      "starter": "ai",
+      "round": 2,
+      "player": 0,
+      "ai": 1,
+      "over": false,
+      "rng": 1892583
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 1
+     },
+     "state": {
+      "left": 8,
+      "turn": "ai",
+      "starter": "ai",
+      "round": 2,
+      "player": 0,
+      "ai": 1,
+      "over": false,
+      "rng": 1892583
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "left": 7,
+      "turn": "player",
+      "starter": "ai",
+      "round": 2,
+      "player": 0,
+      "ai": 1,
+      "over": false,
+      "rng": 1892583
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 3
+     },
+     "state": {
+      "left": 4,
+      "turn": "ai",
+      "starter": "ai",
+      "round": 2,
+      "player": 0,
+      "ai": 1,
+      "over": false,
+      "rng": 1892583
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "left": 1,
+      "turn": "player",
+      "starter": "ai",
+      "round": 2,
+      "player": 0,
+      "ai": 1,
+      "over": false,
+      "rng": 1892583
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 1
+     },
+     "state": {
+      "left": 19,
+      "turn": "player",
+      "starter": "player",
+      "round": 3,
+      "player": 0,
+      "ai": 2,
+      "over": false,
+      "rng": 470389255
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 3
+     },
+     "state": {
+      "left": 16,
+      "turn": "ai",
+      "starter": "player",
+      "round": 3,
+      "player": 0,
+      "ai": 2,
+      "over": false,
+      "rng": 470389255
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "left": 13,
+      "turn": "player",
+      "starter": "player",
+      "round": 3,
+      "player": 0,
+      "ai": 2,
+      "over": false,
+      "rng": 470389255
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 1
+     },
+     "state": {
+      "left": 12,
+      "turn": "ai",
+      "starter": "player",
+      "round": 3,
+      "player": 0,
+      "ai": 2,
+      "over": false,
+      "rng": 470389255
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "left": 9,
+      "turn": "player",
+      "starter": "player",
+      "round": 3,
+      "player": 0,
+      "ai": 2,
+      "over": false,
+      "rng": 470389255
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 3
+     },
+     "state": {
+      "left": 6,
+      "turn": "ai",
+      "starter": "player",
+      "round": 3,
+      "player": 0,
+      "ai": 2,
+      "over": false,
+      "rng": 470389255
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "left": 4,
+      "turn": "player",
+      "starter": "player",
+      "round": 3,
+      "player": 0,
+      "ai": 2,
+      "over": false,
+      "rng": 470389255
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 1
+     },
+     "state": {
+      "left": 3,
+      "turn": "ai",
+      "starter": "player",
+      "round": 3,
+      "player": 0,
+      "ai": 2,
+      "over": false,
+      "rng": 470389255
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "left": 1,
+      "turn": "player",
+      "starter": "player",
+      "round": 3,
+      "player": 0,
+      "ai": 2,
+      "over": false,
+      "rng": 470389255
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 1
+     },
+     "state": {
+      "left": 17,
+      "turn": "ai",
+      "starter": "ai",
+      "round": 4,
+      "player": 0,
+      "ai": 3,
+      "over": false,
+      "rng": 3882205507
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "left": 16,
+      "turn": "player",
+      "starter": "ai",
+      "round": 4,
+      "player": 0,
+      "ai": 3,
+      "over": false,
+      "rng": 3882205507
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 2
+     },
+     "state": {
+      "left": 14,
+      "turn": "ai",
+      "starter": "ai",
+      "round": 4,
+      "player": 0,
+      "ai": 3,
+      "over": false,
+      "rng": 3882205507
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "left": 13,
+      "turn": "player",
+      "starter": "ai",
+      "round": 4,
+      "player": 0,
+      "ai": 3,
+      "over": false,
+      "rng": 3882205507
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 2
+     },
+     "state": {
+      "left": 11,
+      "turn": "ai",
+      "starter": "ai",
+      "round": 4,
+      "player": 0,
+      "ai": 3,
+      "over": false,
+      "rng": 3882205507
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "left": 9,
+      "turn": "player",
+      "starter": "ai",
+      "round": 4,
+      "player": 0,
+      "ai": 3,
+      "over": false,
+      "rng": 3882205507
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 3
+     },
+     "state": {
+      "left": 6,
+      "turn": "ai",
+      "starter": "ai",
+      "round": 4,
+      "player": 0,
+      "ai": 3,
+      "over": false,
+      "rng": 3882205507
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "left": 4,
+      "turn": "player",
+      "starter": "ai",
+      "round": 4,
+      "player": 0,
+      "ai": 3,
+      "over": false,
+      "rng": 3882205507
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 3
+     },
+     "state": {
+      "left": 1,
+      "turn": "ai",
+      "starter": "ai",
+      "round": 4,
+      "player": 0,
+      "ai": 3,
+      "over": false,
+      "rng": 3882205507
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "left": 17,
+      "turn": "player",
+      "starter": "player",
+      "round": 5,
+      "player": 1,
+      "ai": 3,
+      "over": false,
+      "rng": 3069989445
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 1
+     },
+     "state": {
+      "left": 16,
+      "turn": "ai",
+      "starter": "player",
+      "round": 5,
+      "player": 1,
+      "ai": 3,
+      "over": false,
+      "rng": 3069989445
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "left": 14,
+      "turn": "player",
+      "starter": "player",
+      "round": 5,
+      "player": 1,
+      "ai": 3,
+      "over": false,
+      "rng": 3069989445
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 3
+     },
+     "state": {
+      "left": 11,
+      "turn": "ai",
+      "starter": "player",
+      "round": 5,
+      "player": 1,
+      "ai": 3,
+      "over": false,
+      "rng": 3069989445
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "left": 10,
+      "turn": "player",
+      "starter": "player",
+      "round": 5,
+      "player": 1,
+      "ai": 3,
+      "over": false,
+      "rng": 3069989445
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 2
+     },
+     "state": {
+      "left": 8,
+      "turn": "ai",
+      "starter": "player",
+      "round": 5,
+      "player": 1,
+      "ai": 3,
+      "over": false,
+      "rng": 3069989445
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "left": 5,
+      "turn": "player",
+      "starter": "player",
+      "round": 5,
+      "player": 1,
+      "ai": 3,
+      "over": false,
+      "rng": 3069989445
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 3
+     },
+     "state": {
+      "left": 2,
+      "turn": "ai",
+      "starter": "player",
+      "round": 5,
+      "player": 1,
+      "ai": 3,
+      "over": false,
+      "rng": 3069989445
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "left": 1,
+      "turn": "player",
+      "starter": "player",
+      "round": 5,
+      "player": 1,
+      "ai": 3,
+      "over": false,
+      "rng": 3069989445
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 1
+     },
+     "state": {
+      "left": 25,
+      "turn": "ai",
+      "starter": "ai",
+      "round": 6,
+      "player": 1,
+      "ai": 4,
+      "over": false,
+      "rng": 2854842367
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "left": 24,
+      "turn": "player",
+      "starter": "ai",
+      "round": 6,
+      "player": 1,
+      "ai": 4,
+      "over": false,
+      "rng": 2854842367
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 2
+     },
+     "state": {
+      "left": 22,
+      "turn": "ai",
+      "starter": "ai",
+      "round": 6,
+      "player": 1,
+      "ai": 4,
+      "over": false,
+      "rng": 2854842367
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "left": 21,
+      "turn": "player",
+      "starter": "ai",
+      "round": 6,
+      "player": 1,
+      "ai": 4,
+      "over": false,
+      "rng": 2854842367
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 1
+     },
+     "state": {
+      "left": 20,
+      "turn": "ai",
+      "starter": "ai",
+      "round": 6,
+      "player": 1,
+      "ai": 4,
+      "over": false,
+      "rng": 2854842367
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "left": 17,
+      "turn": "player",
+      "starter": "ai",
+      "round": 6,
+      "player": 1,
+      "ai": 4,
+      "over": false,
+      "rng": 2854842367
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 3
+     },
+     "state": {
+      "left": 14,
+      "turn": "ai",
+      "starter": "ai",
+      "round": 6,
+      "player": 1,
+      "ai": 4,
+      "over": false,
+      "rng": 2854842367
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "left": 13,
+      "turn": "player",
+      "starter": "ai",
+      "round": 6,
+      "player": 1,
+      "ai": 4,
+      "over": false,
+      "rng": 2854842367
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 1
+     },
+     "state": {
+      "left": 12,
+      "turn": "ai",
+      "starter": "ai",
+      "round": 6,
+      "player": 1,
+      "ai": 4,
+      "over": false,
+      "rng": 2854842367
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "left": 9,
+      "turn": "player",
+      "starter": "ai",
+      "round": 6,
+      "player": 1,
+      "ai": 4,
+      "over": false,
+      "rng": 2854842367
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 3
+     },
+     "state": {
+      "left": 6,
+      "turn": "ai",
+      "starter": "ai",
+      "round": 6,
+      "player": 1,
+      "ai": 4,
+      "over": false,
+      "rng": 2854842367
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "left": 5,
+      "turn": "player",
+      "starter": "ai",
+      "round": 6,
+      "player": 1,
+      "ai": 4,
+      "over": false,
+      "rng": 2854842367
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 3
+     },
+     "state": {
+      "left": 2,
+      "turn": "ai",
+      "starter": "ai",
+      "round": 6,
+      "player": 1,
+      "ai": 4,
+      "over": false,
+      "rng": 2854842367
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "left": 18,
+      "turn": "player",
+      "starter": "player",
+      "round": 7,
+      "player": 2,
+      "ai": 4,
+      "over": false,
+      "rng": 2098155156
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 2
+     },
+     "state": {
+      "left": 16,
+      "turn": "ai",
+      "starter": "player",
+      "round": 7,
+      "player": 2,
+      "ai": 4,
+      "over": false,
+      "rng": 2098155156
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "left": 15,
+      "turn": "player",
+      "starter": "player",
+      "round": 7,
+      "player": 2,
+      "ai": 4,
+      "over": false,
+      "rng": 2098155156
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 3
+     },
+     "state": {
+      "left": 12,
+      "turn": "ai",
+      "starter": "player",
+      "round": 7,
+      "player": 2,
+      "ai": 4,
+      "over": false,
+      "rng": 2098155156
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "left": 9,
+      "turn": "player",
+      "starter": "player",
+      "round": 7,
+      "player": 2,
+      "ai": 4,
+      "over": false,
+      "rng": 2098155156
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 2
+     },
+     "state": {
+      "left": 7,
+      "turn": "ai",
+      "starter": "player",
+      "round": 7,
+      "player": 2,
+      "ai": 4,
+      "over": false,
+      "rng": 2098155156
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "left": 5,
+      "turn": "player",
+      "starter": "player",
+      "round": 7,
+      "player": 2,
+      "ai": 4,
+      "over": false,
+      "rng": 2098155156
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 1
+     },
+     "state": {
+      "left": 4,
+      "turn": "ai",
+      "starter": "player",
+      "round": 7,
+      "player": 2,
+      "ai": 4,
+      "over": false,
+      "rng": 2098155156
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "left": 3,
+      "turn": "player",
+      "starter": "player",
+      "round": 7,
+      "player": 2,
+      "ai": 4,
+      "over": false,
+      "rng": 2098155156
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 1
+     },
+     "state": {
+      "left": 2,
+      "turn": "ai",
+      "starter": "player",
+      "round": 7,
+      "player": 2,
+      "ai": 4,
+      "over": false,
+      "rng": 2098155156
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "left": 14,
+      "turn": "ai",
+      "starter": "ai",
+      "round": 8,
+      "player": 3,
+      "ai": 4,
+      "over": false,
+      "rng": 258808762
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "left": 13,
+      "turn": "player",
+      "starter": "ai",
+      "round": 8,
+      "player": 3,
+      "ai": 4,
+      "over": false,
+      "rng": 258808762
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 3
+     },
+     "state": {
+      "left": 10,
+      "turn": "ai",
+      "starter": "ai",
+      "round": 8,
+      "player": 3,
+      "ai": 4,
+      "over": false,
+      "rng": 258808762
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "left": 9,
+      "turn": "player",
+      "starter": "ai",
+      "round": 8,
+      "player": 3,
+      "ai": 4,
+      "over": false,
+      "rng": 258808762
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 1
+     },
+     "state": {
+      "left": 8,
+      "turn": "ai",
+      "starter": "ai",
+      "round": 8,
+      "player": 3,
+      "ai": 4,
+      "over": false,
+      "rng": 258808762
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "left": 5,
+      "turn": "player",
+      "starter": "ai",
+      "round": 8,
+      "player": 3,
+      "ai": 4,
+      "over": false,
+      "rng": 258808762
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 1
+     },
+     "state": {
+      "left": 4,
+      "turn": "ai",
+      "starter": "ai",
+      "round": 8,
+      "player": 3,
+      "ai": 4,
+      "over": false,
+      "rng": 258808762
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "left": 1,
+      "turn": "player",
+      "starter": "ai",
+      "round": 8,
+      "player": 3,
+      "ai": 4,
+      "over": false,
+      "rng": 258808762
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 1
+     },
+     "state": {
+      "left": 0,
+      "turn": "player",
+      "starter": "ai",
+      "round": 8,
+      "player": 3,
+      "ai": 5,
+      "over": true,
+      "rng": 258808762
+     }
+    }
+   ],
+   "result": {
+    "winner": "ai",
+    "stars": 0,
+    "score": 300,
+    "player": 3,
+    "ai": 5
+   }
+  },
+  {
+   "name": "optimal-player-vs-level-5",
+   "config": {
+    "start": 15,
+    "minStart": 12,
+    "maxStart": 25,
+    "maxTake": 3,
+    "roundsToWin": 5,
+    "aiErrorPct": [
+     60,
+     45,
+     30,
+     15,
+     0
+    ]
+   },
+   "seed": 1234,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "take": 2
+     },
+     "state": {
+      "left": 13,
+      "turn": "ai",
+      "starter": "player",
+      "round": 1,
+      "player": 0,
+      "ai": 0,
+      "over": false,
+      "rng": 1234
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "left": 12,
+      "turn": "player",
+      "starter": "player",
+      "round": 1,
+      "player": 0,
+      "ai": 0,
+      "over": false,
+      "rng": 1234
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 3
+     },
+     "state": {
+      "left": 9,
+      "turn": "ai",
+      "starter": "player",
+      "round": 1,
+      "player": 0,
+      "ai": 0,
+      "over": false,
+      "rng": 1234
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "left": 8,
+      "turn": "player",
+      "starter": "player",
+      "round": 1,
+      "player": 0,
+      "ai": 0,
+      "over": false,
+      "rng": 1234
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 3
+     },
+     "state": {
+      "left": 5,
+      "turn": "ai",
+      "starter": "player",
+      "round": 1,
+      "player": 0,
+      "ai": 0,
+      "over": false,
+      "rng": 1234
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "left": 4,
+      "turn": "player",
+      "starter": "player",
+      "round": 1,
+      "player": 0,
+      "ai": 0,
+      "over": false,
+      "rng": 1234
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 3
+     },
+     "state": {
+      "left": 1,
+      "turn": "ai",
+      "starter": "player",
+      "round": 1,
+      "player": 0,
+      "ai": 0,
+      "over": false,
+      "rng": 1234
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "left": 17,
+      "turn": "ai",
+      "starter": "ai",
+      "round": 2,
+      "player": 1,
+      "ai": 0,
+      "over": false,
+      "rng": 332584831
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "left": 16,
+      "turn": "player",
+      "starter": "ai",
+      "round": 2,
+      "player": 1,
+      "ai": 0,
+      "over": false,
+      "rng": 332584831
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 3
+     },
+     "state": {
+      "left": 13,
+      "turn": "ai",
+      "starter": "ai",
+      "round": 2,
+      "player": 1,
+      "ai": 0,
+      "over": false,
+      "rng": 332584831
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "left": 12,
+      "turn": "player",
+      "starter": "ai",
+      "round": 2,
+      "player": 1,
+      "ai": 0,
+      "over": false,
+      "rng": 332584831
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 3
+     },
+     "state": {
+      "left": 9,
+      "turn": "ai",
+      "starter": "ai",
+      "round": 2,
+      "player": 1,
+      "ai": 0,
+      "over": false,
+      "rng": 332584831
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "left": 8,
+      "turn": "player",
+      "starter": "ai",
+      "round": 2,
+      "player": 1,
+      "ai": 0,
+      "over": false,
+      "rng": 332584831
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 3
+     },
+     "state": {
+      "left": 5,
+      "turn": "ai",
+      "starter": "ai",
+      "round": 2,
+      "player": 1,
+      "ai": 0,
+      "over": false,
+      "rng": 332584831
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "left": 4,
+      "turn": "player",
+      "starter": "ai",
+      "round": 2,
+      "player": 1,
+      "ai": 0,
+      "over": false,
+      "rng": 332584831
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 3
+     },
+     "state": {
+      "left": 1,
+      "turn": "ai",
+      "starter": "ai",
+      "round": 2,
+      "player": 1,
+      "ai": 0,
+      "over": false,
+      "rng": 332584831
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "left": 13,
+      "turn": "player",
+      "starter": "player",
+      "round": 3,
+      "player": 2,
+      "ai": 0,
+      "over": false,
+      "rng": 1855942593
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 1
+     },
+     "state": {
+      "left": 12,
+      "turn": "ai",
+      "starter": "player",
+      "round": 3,
+      "player": 2,
+      "ai": 0,
+      "over": false,
+      "rng": 1855942593
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "left": 9,
+      "turn": "player",
+      "starter": "player",
+      "round": 3,
+      "player": 2,
+      "ai": 0,
+      "over": false,
+      "rng": 1855942593
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 3
+     },
+     "state": {
+      "left": 6,
+      "turn": "ai",
+      "starter": "player",
+      "round": 3,
+      "player": 2,
+      "ai": 0,
+      "over": false,
+      "rng": 1855942593
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "left": 5,
+      "turn": "player",
+      "starter": "player",
+      "round": 3,
+      "player": 2,
+      "ai": 0,
+      "over": false,
+      "rng": 1855942593
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 2
+     },
+     "state": {
+      "left": 3,
+      "turn": "ai",
+      "starter": "player",
+      "round": 3,
+      "player": 2,
+      "ai": 0,
+      "over": false,
+      "rng": 1855942593
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "left": 1,
+      "turn": "player",
+      "starter": "player",
+      "round": 3,
+      "player": 2,
+      "ai": 0,
+      "over": false,
+      "rng": 1855942593
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 1
+     },
+     "state": {
+      "left": 14,
+      "turn": "ai",
+      "starter": "ai",
+      "round": 4,
+      "player": 2,
+      "ai": 1,
+      "over": false,
+      "rng": 4018585650
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "left": 13,
+      "turn": "player",
+      "starter": "ai",
+      "round": 4,
+      "player": 2,
+      "ai": 1,
+      "over": false,
+      "rng": 4018585650
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 3
+     },
+     "state": {
+      "left": 10,
+      "turn": "ai",
+      "starter": "ai",
+      "round": 4,
+      "player": 2,
+      "ai": 1,
+      "over": false,
+      "rng": 4018585650
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "left": 9,
+      "turn": "player",
+      "starter": "ai",
+      "round": 4,
+      "player": 2,
+      "ai": 1,
+      "over": false,
+      "rng": 4018585650
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 2
+     },
+     "state": {
+      "left": 7,
+      "turn": "ai",
+      "starter": "ai",
+      "round": 4,
+      "player": 2,
+      "ai": 1,
+      "over": false,
+      "rng": 4018585650
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "left": 5,
+      "turn": "player",
+      "starter": "ai",
+      "round": 4,
+      "player": 2,
+      "ai": 1,
+      "over": false,
+      "rng": 4018585650
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 2
+     },
+     "state": {
+      "left": 3,
+      "turn": "ai",
+      "starter": "ai",
+      "round": 4,
+      "player": 2,
+      "ai": 1,
+      "over": false,
+      "rng": 4018585650
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "left": 1,
+      "turn": "player",
+      "starter": "ai",
+      "round": 4,
+      "player": 2,
+      "ai": 1,
+      "over": false,
+      "rng": 4018585650
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 1
+     },
+     "state": {
+      "left": 24,
+      "turn": "player",
+      "starter": "player",
+      "round": 5,
+      "player": 2,
+      "ai": 2,
+      "over": false,
+      "rng": 3348358578
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 3
+     },
+     "state": {
+      "left": 21,
+      "turn": "ai",
+      "starter": "player",
+      "round": 5,
+      "player": 2,
+      "ai": 2,
+      "over": false,
+      "rng": 3348358578
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "left": 20,
+      "turn": "player",
+      "starter": "player",
+      "round": 5,
+      "player": 2,
+      "ai": 2,
+      "over": false,
+      "rng": 3348358578
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 3
+     },
+     "state": {
+      "left": 17,
+      "turn": "ai",
+      "starter": "player",
+      "round": 5,
+      "player": 2,
+      "ai": 2,
+      "over": false,
+      "rng": 3348358578
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "left": 16,
+      "turn": "player",
+      "starter": "player",
+      "round": 5,
+      "player": 2,
+      "ai": 2,
+      "over": false,
+      "rng": 3348358578
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 3
+     },
+     "state": {
+      "left": 13,
+      "turn": "ai",
+      "starter": "player",
+      "round": 5,
+      "player": 2,
+      "ai": 2,
+      "over": false,
+      "rng": 3348358578
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "left": 12,
+      "turn": "player",
+      "starter": "player",
+      "round": 5,
+      "player": 2,
+      "ai": 2,
+      "over": false,
+      "rng": 3348358578
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 3
+     },
+     "state": {
+      "left": 9,
+      "turn": "ai",
+      "starter": "player",
+      "round": 5,
+      "player": 2,
+      "ai": 2,
+      "over": false,
+      "rng": 3348358578
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "left": 8,
+      "turn": "player",
+      "starter": "player",
+      "round": 5,
+      "player": 2,
+      "ai": 2,
+      "over": false,
+      "rng": 3348358578
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 3
+     },
+     "state": {
+      "left": 5,
+      "turn": "ai",
+      "starter": "player",
+      "round": 5,
+      "player": 2,
+      "ai": 2,
+      "over": false,
+      "rng": 3348358578
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "left": 4,
+      "turn": "player",
+      "starter": "player",
+      "round": 5,
+      "player": 2,
+      "ai": 2,
+      "over": false,
+      "rng": 3348358578
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 3
+     },
+     "state": {
+      "left": 1,
+      "turn": "ai",
+      "starter": "player",
+      "round": 5,
+      "player": 2,
+      "ai": 2,
+      "over": false,
+      "rng": 3348358578
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "left": 22,
+      "turn": "ai",
+      "starter": "ai",
+      "round": 6,
+      "player": 3,
+      "ai": 2,
+      "over": false,
+      "rng": 3751476256
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "left": 21,
+      "turn": "player",
+      "starter": "ai",
+      "round": 6,
+      "player": 3,
+      "ai": 2,
+      "over": false,
+      "rng": 3751476256
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 2
+     },
+     "state": {
+      "left": 19,
+      "turn": "ai",
+      "starter": "ai",
+      "round": 6,
+      "player": 3,
+      "ai": 2,
+      "over": false,
+      "rng": 3751476256
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "left": 17,
+      "turn": "player",
+      "starter": "ai",
+      "round": 6,
+      "player": 3,
+      "ai": 2,
+      "over": false,
+      "rng": 3751476256
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 3
+     },
+     "state": {
+      "left": 14,
+      "turn": "ai",
+      "starter": "ai",
+      "round": 6,
+      "player": 3,
+      "ai": 2,
+      "over": false,
+      "rng": 3751476256
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "left": 13,
+      "turn": "player",
+      "starter": "ai",
+      "round": 6,
+      "player": 3,
+      "ai": 2,
+      "over": false,
+      "rng": 3751476256
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 3
+     },
+     "state": {
+      "left": 10,
+      "turn": "ai",
+      "starter": "ai",
+      "round": 6,
+      "player": 3,
+      "ai": 2,
+      "over": false,
+      "rng": 3751476256
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "left": 9,
+      "turn": "player",
+      "starter": "ai",
+      "round": 6,
+      "player": 3,
+      "ai": 2,
+      "over": false,
+      "rng": 3751476256
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 2
+     },
+     "state": {
+      "left": 7,
+      "turn": "ai",
+      "starter": "ai",
+      "round": 6,
+      "player": 3,
+      "ai": 2,
+      "over": false,
+      "rng": 3751476256
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "left": 5,
+      "turn": "player",
+      "starter": "ai",
+      "round": 6,
+      "player": 3,
+      "ai": 2,
+      "over": false,
+      "rng": 3751476256
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 2
+     },
+     "state": {
+      "left": 3,
+      "turn": "ai",
+      "starter": "ai",
+      "round": 6,
+      "player": 3,
+      "ai": 2,
+      "over": false,
+      "rng": 3751476256
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "left": 1,
+      "turn": "player",
+      "starter": "ai",
+      "round": 6,
+      "player": 3,
+      "ai": 2,
+      "over": false,
+      "rng": 3751476256
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 1
+     },
+     "state": {
+      "left": 21,
+      "turn": "player",
+      "starter": "player",
+      "round": 7,
+      "player": 3,
+      "ai": 3,
+      "over": false,
+      "rng": 2211002831
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 2
+     },
+     "state": {
+      "left": 19,
+      "turn": "ai",
+      "starter": "player",
+      "round": 7,
+      "player": 3,
+      "ai": 3,
+      "over": false,
+      "rng": 2211002831
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "left": 17,
+      "turn": "player",
+      "starter": "player",
+      "round": 7,
+      "player": 3,
+      "ai": 3,
+      "over": false,
+      "rng": 2211002831
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 1
+     },
+     "state": {
+      "left": 16,
+      "turn": "ai",
+      "starter": "player",
+      "round": 7,
+      "player": 3,
+      "ai": 3,
+      "over": false,
+      "rng": 2211002831
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "left": 13,
+      "turn": "player",
+      "starter": "player",
+      "round": 7,
+      "player": 3,
+      "ai": 3,
+      "over": false,
+      "rng": 2211002831
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 1
+     },
+     "state": {
+      "left": 12,
+      "turn": "ai",
+      "starter": "player",
+      "round": 7,
+      "player": 3,
+      "ai": 3,
+      "over": false,
+      "rng": 2211002831
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "left": 9,
+      "turn": "player",
+      "starter": "player",
+      "round": 7,
+      "player": 3,
+      "ai": 3,
+      "over": false,
+      "rng": 2211002831
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 2
+     },
+     "state": {
+      "left": 7,
+      "turn": "ai",
+      "starter": "player",
+      "round": 7,
+      "player": 3,
+      "ai": 3,
+      "over": false,
+      "rng": 2211002831
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "left": 5,
+      "turn": "player",
+      "starter": "player",
+      "round": 7,
+      "player": 3,
+      "ai": 3,
+      "over": false,
+      "rng": 2211002831
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 1
+     },
+     "state": {
+      "left": 4,
+      "turn": "ai",
+      "starter": "player",
+      "round": 7,
+      "player": 3,
+      "ai": 3,
+      "over": false,
+      "rng": 2211002831
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "left": 1,
+      "turn": "player",
+      "starter": "player",
+      "round": 7,
+      "player": 3,
+      "ai": 3,
+      "over": false,
+      "rng": 2211002831
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 1
+     },
+     "state": {
+      "left": 23,
+      "turn": "ai",
+      "starter": "ai",
+      "round": 8,
+      "player": 3,
+      "ai": 4,
+      "over": false,
+      "rng": 987888983
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "left": 21,
+      "turn": "player",
+      "starter": "ai",
+      "round": 8,
+      "player": 3,
+      "ai": 4,
+      "over": false,
+      "rng": 987888983
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 2
+     },
+     "state": {
+      "left": 19,
+      "turn": "ai",
+      "starter": "ai",
+      "round": 8,
+      "player": 3,
+      "ai": 4,
+      "over": false,
+      "rng": 987888983
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "left": 17,
+      "turn": "player",
+      "starter": "ai",
+      "round": 8,
+      "player": 3,
+      "ai": 4,
+      "over": false,
+      "rng": 987888983
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 3
+     },
+     "state": {
+      "left": 14,
+      "turn": "ai",
+      "starter": "ai",
+      "round": 8,
+      "player": 3,
+      "ai": 4,
+      "over": false,
+      "rng": 987888983
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "left": 13,
+      "turn": "player",
+      "starter": "ai",
+      "round": 8,
+      "player": 3,
+      "ai": 4,
+      "over": false,
+      "rng": 987888983
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 1
+     },
+     "state": {
+      "left": 12,
+      "turn": "ai",
+      "starter": "ai",
+      "round": 8,
+      "player": 3,
+      "ai": 4,
+      "over": false,
+      "rng": 987888983
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "left": 9,
+      "turn": "player",
+      "starter": "ai",
+      "round": 8,
+      "player": 3,
+      "ai": 4,
+      "over": false,
+      "rng": 987888983
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 1
+     },
+     "state": {
+      "left": 8,
+      "turn": "ai",
+      "starter": "ai",
+      "round": 8,
+      "player": 3,
+      "ai": 4,
+      "over": false,
+      "rng": 987888983
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "left": 5,
+      "turn": "player",
+      "starter": "ai",
+      "round": 8,
+      "player": 3,
+      "ai": 4,
+      "over": false,
+      "rng": 987888983
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 2
+     },
+     "state": {
+      "left": 3,
+      "turn": "ai",
+      "starter": "ai",
+      "round": 8,
+      "player": 3,
+      "ai": 4,
+      "over": false,
+      "rng": 987888983
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "left": 1,
+      "turn": "player",
+      "starter": "ai",
+      "round": 8,
+      "player": 3,
+      "ai": 4,
+      "over": false,
+      "rng": 987888983
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 1
+     },
+     "state": {
+      "left": 0,
+      "turn": "player",
+      "starter": "ai",
+      "round": 8,
+      "player": 3,
+      "ai": 5,
+      "over": true,
+      "rng": 987888983
+     }
+    }
+   ],
+   "result": {
+    "winner": "ai",
+    "stars": 0,
+    "score": 300,
+    "player": 3,
+    "ai": 5
+   }
+  },
+  {
+   "name": "greedy-player-vs-level-2",
+   "config": {
+    "start": 15,
+    "minStart": 12,
+    "maxStart": 25,
+    "maxTake": 3,
+    "roundsToWin": 5,
+    "aiErrorPct": [
+     60,
+     45,
+     30,
+     15,
+     0
+    ]
+   },
+   "seed": 2026,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "take": 3
+     },
+     "state": {
+      "left": 12,
+      "turn": "ai",
+      "starter": "player",
+      "round": 1,
+      "player": 0,
+      "ai": 0,
+      "over": false,
+      "rng": 2026
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "left": 9,
+      "turn": "player",
+      "starter": "player",
+      "round": 1,
+      "player": 0,
+      "ai": 0,
+      "over": false,
+      "rng": 2026
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 3
+     },
+     "state": {
+      "left": 6,
+      "turn": "ai",
+      "starter": "player",
+      "round": 1,
+      "player": 0,
+      "ai": 0,
+      "over": false,
+      "rng": 2026
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "left": 5,
+      "turn": "player",
+      "starter": "player",
+      "round": 1,
+      "player": 0,
+      "ai": 0,
+      "over": false,
+      "rng": 2026
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 3
+     },
+     "state": {
+      "left": 2,
+      "turn": "ai",
+      "starter": "player",
+      "round": 1,
+      "player": 0,
+      "ai": 0,
+      "over": false,
+      "rng": 2026
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "left": 12,
+      "turn": "ai",
+      "starter": "ai",
+      "round": 2,
+      "player": 1,
+      "ai": 0,
+      "over": false,
+      "rng": 525710612
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "left": 11,
+      "turn": "player",
+      "starter": "ai",
+      "round": 2,
+      "player": 1,
+      "ai": 0,
+      "over": false,
+      "rng": 525710612
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 3
+     },
+     "state": {
+      "left": 8,
+      "turn": "ai",
+      "starter": "ai",
+      "round": 2,
+      "player": 1,
+      "ai": 0,
+      "over": false,
+      "rng": 525710612
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "left": 5,
+      "turn": "player",
+      "starter": "ai",
+      "round": 2,
+      "player": 1,
+      "ai": 0,
+      "over": false,
+      "rng": 525710612
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 3
+     },
+     "state": {
+      "left": 2,
+      "turn": "ai",
+      "starter": "ai",
+      "round": 2,
+      "player": 1,
+      "ai": 0,
+      "over": false,
+      "rng": 525710612
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "left": 1,
+      "turn": "player",
+      "starter": "ai",
+      "round": 2,
+      "player": 1,
+      "ai": 0,
+      "over": false,
+      "rng": 525710612
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 1
+     },
+     "state": {
+      "left": 19,
+      "turn": "player",
+      "starter": "player",
+      "round": 3,
+      "player": 1,
+      "ai": 1,
+      "over": false,
+      "rng": 2535152655
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 3
+     },
+     "state": {
+      "left": 16,
+      "turn": "ai",
+      "starter": "player",
+      "round": 3,
+      "player": 1,
+      "ai": 1,
+      "over": false,
+      "rng": 2535152655
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "left": 13,
+      "turn": "player",
+      "starter": "player",
+      "round": 3,
+      "player": 1,
+      "ai": 1,
+      "over": false,
+      "rng": 2535152655
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 3
+     },
+     "state": {
+      "left": 10,
+      "turn": "ai",
+      "starter": "player",
+      "round": 3,
+      "player": 1,
+      "ai": 1,
+      "over": false,
+      "rng": 2535152655
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "left": 9,
+      "turn": "player",
+      "starter": "player",
+      "round": 3,
+      "player": 1,
+      "ai": 1,
+      "over": false,
+      "rng": 2535152655
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 3
+     },
+     "state": {
+      "left": 6,
+      "turn": "ai",
+      "starter": "player",
+      "round": 3,
+      "player": 1,
+      "ai": 1,
+      "over": false,
+      "rng": 2535152655
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "left": 3,
+      "turn": "player",
+      "starter": "player",
+      "round": 3,
+      "player": 1,
+      "ai": 1,
+      "over": false,
+      "rng": 2535152655
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 3
+     },
+     "state": {
+      "left": 22,
+      "turn": "ai",
+      "starter": "ai",
+      "round": 4,
+      "player": 1,
+      "ai": 2,
+      "over": false,
+      "rng": 1875020290
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "left": 21,
+      "turn": "player",
+      "starter": "ai",
+      "round": 4,
+      "player": 1,
+      "ai": 2,
+      "over": false,
+      "rng": 1875020290
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 3
+     },
+     "state": {
+      "left": 18,
+      "turn": "ai",
+      "starter": "ai",
+      "round": 4,
+      "player": 1,
+      "ai": 2,
+      "over": false,
+      "rng": 1875020290
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "left": 17,
+      "turn": "player",
+      "starter": "ai",
+      "round": 4,
+      "player": 1,
+      "ai": 2,
+      "over": false,
+      "rng": 1875020290
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 3
+     },
+     "state": {
+      "left": 14,
+      "turn": "ai",
+      "starter": "ai",
+      "round": 4,
+      "player": 1,
+      "ai": 2,
+      "over": false,
+      "rng": 1875020290
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "left": 11,
+      "turn": "player",
+      "starter": "ai",
+      "round": 4,
+      "player": 1,
+      "ai": 2,
+      "over": false,
+      "rng": 1875020290
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 3
+     },
+     "state": {
+      "left": 8,
+      "turn": "ai",
+      "starter": "ai",
+      "round": 4,
+      "player": 1,
+      "ai": 2,
+      "over": false,
+      "rng": 1875020290
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "left": 5,
+      "turn": "player",
+      "starter": "ai",
+      "round": 4,
+      "player": 1,
+      "ai": 2,
+      "over": false,
+      "rng": 1875020290
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 3
+     },
+     "state": {
+      "left": 2,
+      "turn": "ai",
+      "starter": "ai",
+      "round": 4,
+      "player": 1,
+      "ai": 2,
+      "over": false,
+      "rng": 1875020290
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "left": 13,
+      "turn": "player",
+      "starter": "player",
+      "round": 5,
+      "player": 2,
+      "ai": 2,
+      "over": false,
+      "rng": 4007165219
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 3
+     },
+     "state": {
+      "left": 10,
+      "turn": "ai",
+      "starter": "player",
+      "round": 5,
+      "player": 2,
+      "ai": 2,
+      "over": false,
+      "rng": 4007165219
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "left": 9,
+      "turn": "player",
+      "starter": "player",
+      "round": 5,
+      "player": 2,
+      "ai": 2,
+      "over": false,
+      "rng": 4007165219
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 3
+     },
+     "state": {
+      "left": 6,
+      "turn": "ai",
+      "starter": "player",
+      "round": 5,
+      "player": 2,
+      "ai": 2,
+      "over": false,
+      "rng": 4007165219
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "left": 4,
+      "turn": "player",
+      "starter": "player",
+      "round": 5,
+      "player": 2,
+      "ai": 2,
+      "over": false,
+      "rng": 4007165219
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 3
+     },
+     "state": {
+      "left": 1,
+      "turn": "ai",
+      "starter": "player",
+      "round": 5,
+      "player": 2,
+      "ai": 2,
+      "over": false,
+      "rng": 4007165219
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "left": 25,
+      "turn": "ai",
+      "starter": "ai",
+      "round": 6,
+      "player": 3,
+      "ai": 2,
+      "over": false,
+      "rng": 3471957565
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "left": 22,
+      "turn": "player",
+      "starter": "ai",
+      "round": 6,
+      "player": 3,
+      "ai": 2,
+      "over": false,
+      "rng": 3471957565
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 3
+     },
+     "state": {
+      "left": 19,
+      "turn": "ai",
+      "starter": "ai",
+      "round": 6,
+      "player": 3,
+      "ai": 2,
+      "over": false,
+      "rng": 3471957565
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "left": 18,
+      "turn": "player",
+      "starter": "ai",
+      "round": 6,
+      "player": 3,
+      "ai": 2,
+      "over": false,
+      "rng": 3471957565
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 3
+     },
+     "state": {
+      "left": 15,
+      "turn": "ai",
+      "starter": "ai",
+      "round": 6,
+      "player": 3,
+      "ai": 2,
+      "over": false,
+      "rng": 3471957565
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "left": 13,
+      "turn": "player",
+      "starter": "ai",
+      "round": 6,
+      "player": 3,
+      "ai": 2,
+      "over": false,
+      "rng": 3471957565
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 3
+     },
+     "state": {
+      "left": 10,
+      "turn": "ai",
+      "starter": "ai",
+      "round": 6,
+      "player": 3,
+      "ai": 2,
+      "over": false,
+      "rng": 3471957565
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "left": 9,
+      "turn": "player",
+      "starter": "ai",
+      "round": 6,
+      "player": 3,
+      "ai": 2,
+      "over": false,
+      "rng": 3471957565
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 3
+     },
+     "state": {
+      "left": 6,
+      "turn": "ai",
+      "starter": "ai",
+      "round": 6,
+      "player": 3,
+      "ai": 2,
+      "over": false,
+      "rng": 3471957565
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "left": 3,
+      "turn": "player",
+      "starter": "ai",
+      "round": 6,
+      "player": 3,
+      "ai": 2,
+      "over": false,
+      "rng": 3471957565
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 3
+     },
+     "state": {
+      "left": 12,
+      "turn": "player",
+      "starter": "player",
+      "round": 7,
+      "player": 3,
+      "ai": 3,
+      "over": false,
+      "rng": 1408667750
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 3
+     },
+     "state": {
+      "left": 9,
+      "turn": "ai",
+      "starter": "player",
+      "round": 7,
+      "player": 3,
+      "ai": 3,
+      "over": false,
+      "rng": 1408667750
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "left": 7,
+      "turn": "player",
+      "starter": "player",
+      "round": 7,
+      "player": 3,
+      "ai": 3,
+      "over": false,
+      "rng": 1408667750
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 3
+     },
+     "state": {
+      "left": 4,
+      "turn": "ai",
+      "starter": "player",
+      "round": 7,
+      "player": 3,
+      "ai": 3,
+      "over": false,
+      "rng": 1408667750
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "left": 1,
+      "turn": "player",
+      "starter": "player",
+      "round": 7,
+      "player": 3,
+      "ai": 3,
+      "over": false,
+      "rng": 1408667750
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 1
+     },
+     "state": {
+      "left": 21,
+      "turn": "ai",
+      "starter": "ai",
+      "round": 8,
+      "player": 3,
+      "ai": 4,
+      "over": false,
+      "rng": 3199730683
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "left": 20,
+      "turn": "player",
+      "starter": "ai",
+      "round": 8,
+      "player": 3,
+      "ai": 4,
+      "over": false,
+      "rng": 3199730683
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 3
+     },
+     "state": {
+      "left": 17,
+      "turn": "ai",
+      "starter": "ai",
+      "round": 8,
+      "player": 3,
+      "ai": 4,
+      "over": false,
+      "rng": 3199730683
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "left": 15,
+      "turn": "player",
+      "starter": "ai",
+      "round": 8,
+      "player": 3,
+      "ai": 4,
+      "over": false,
+      "rng": 3199730683
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 3
+     },
+     "state": {
+      "left": 12,
+      "turn": "ai",
+      "starter": "ai",
+      "round": 8,
+      "player": 3,
+      "ai": 4,
+      "over": false,
+      "rng": 3199730683
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "left": 9,
+      "turn": "player",
+      "starter": "ai",
+      "round": 8,
+      "player": 3,
+      "ai": 4,
+      "over": false,
+      "rng": 3199730683
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 3
+     },
+     "state": {
+      "left": 6,
+      "turn": "ai",
+      "starter": "ai",
+      "round": 8,
+      "player": 3,
+      "ai": 4,
+      "over": false,
+      "rng": 3199730683
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "left": 5,
+      "turn": "player",
+      "starter": "ai",
+      "round": 8,
+      "player": 3,
+      "ai": 4,
+      "over": false,
+      "rng": 3199730683
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 3
+     },
+     "state": {
+      "left": 2,
+      "turn": "ai",
+      "starter": "ai",
+      "round": 8,
+      "player": 3,
+      "ai": 4,
+      "over": false,
+      "rng": 3199730683
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "left": 1,
+      "turn": "player",
+      "starter": "ai",
+      "round": 8,
+      "player": 3,
+      "ai": 4,
+      "over": false,
+      "rng": 3199730683
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 1
+     },
+     "state": {
+      "left": 0,
+      "turn": "player",
+      "starter": "ai",
+      "round": 8,
+      "player": 3,
+      "ai": 5,
+      "over": true,
+      "rng": 3199730683
+     }
+    }
+   ],
+   "result": {
+    "winner": "ai",
+    "stars": 0,
+    "score": 300,
+    "player": 3,
+    "ai": 5
+   }
+  },
+  {
+   "name": "optimal-player-vs-level-4",
+   "config": {
+    "start": 15,
+    "minStart": 12,
+    "maxStart": 25,
+    "maxTake": 3,
+    "roundsToWin": 5,
+    "aiErrorPct": [
+     60,
+     45,
+     30,
+     15,
+     0
+    ]
+   },
+   "seed": 0,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "take": 2
+     },
+     "state": {
+      "left": 13,
+      "turn": "ai",
+      "starter": "player",
+      "round": 1,
+      "player": 0,
+      "ai": 0,
+      "over": false,
+      "rng": 2654435769
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "left": 12,
+      "turn": "player",
+      "starter": "player",
+      "round": 1,
+      "player": 0,
+      "ai": 0,
+      "over": false,
+      "rng": 2654435769
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 3
+     },
+     "state": {
+      "left": 9,
+      "turn": "ai",
+      "starter": "player",
+      "round": 1,
+      "player": 0,
+      "ai": 0,
+      "over": false,
+      "rng": 2654435769
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "left": 8,
+      "turn": "player",
+      "starter": "player",
+      "round": 1,
+      "player": 0,
+      "ai": 0,
+      "over": false,
+      "rng": 2654435769
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 3
+     },
+     "state": {
+      "left": 5,
+      "turn": "ai",
+      "starter": "player",
+      "round": 1,
+      "player": 0,
+      "ai": 0,
+      "over": false,
+      "rng": 2654435769
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "left": 4,
+      "turn": "player",
+      "starter": "player",
+      "round": 1,
+      "player": 0,
+      "ai": 0,
+      "over": false,
+      "rng": 2654435769
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 3
+     },
+     "state": {
+      "left": 1,
+      "turn": "ai",
+      "starter": "player",
+      "round": 1,
+      "player": 0,
+      "ai": 0,
+      "over": false,
+      "rng": 2654435769
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "left": 23,
+      "turn": "ai",
+      "starter": "ai",
+      "round": 2,
+      "player": 1,
+      "ai": 0,
+      "over": false,
+      "rng": 1359758873
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "left": 21,
+      "turn": "player",
+      "starter": "ai",
+      "round": 2,
+      "player": 1,
+      "ai": 0,
+      "over": false,
+      "rng": 1359758873
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 2
+     },
+     "state": {
+      "left": 19,
+      "turn": "ai",
+      "starter": "ai",
+      "round": 2,
+      "player": 1,
+      "ai": 0,
+      "over": false,
+      "rng": 1359758873
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "left": 17,
+      "turn": "player",
+      "starter": "ai",
+      "round": 2,
+      "player": 1,
+      "ai": 0,
+      "over": false,
+      "rng": 1359758873
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 1
+     },
+     "state": {
+      "left": 16,
+      "turn": "ai",
+      "starter": "ai",
+      "round": 2,
+      "player": 1,
+      "ai": 0,
+      "over": false,
+      "rng": 1359758873
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "left": 13,
+      "turn": "player",
+      "starter": "ai",
+      "round": 2,
+      "player": 1,
+      "ai": 0,
+      "over": false,
+      "rng": 1359758873
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 2
+     },
+     "state": {
+      "left": 11,
+      "turn": "ai",
+      "starter": "ai",
+      "round": 2,
+      "player": 1,
+      "ai": 0,
+      "over": false,
+      "rng": 1359758873
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "left": 9,
+      "turn": "player",
+      "starter": "ai",
+      "round": 2,
+      "player": 1,
+      "ai": 0,
+      "over": false,
+      "rng": 1359758873
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 1
+     },
+     "state": {
+      "left": 8,
+      "turn": "ai",
+      "starter": "ai",
+      "round": 2,
+      "player": 1,
+      "ai": 0,
+      "over": false,
+      "rng": 1359758873
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "left": 5,
+      "turn": "player",
+      "starter": "ai",
+      "round": 2,
+      "player": 1,
+      "ai": 0,
+      "over": false,
+      "rng": 1359758873
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 1
+     },
+     "state": {
+      "left": 4,
+      "turn": "ai",
+      "starter": "ai",
+      "round": 2,
+      "player": 1,
+      "ai": 0,
+      "over": false,
+      "rng": 1359758873
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "left": 1,
+      "turn": "player",
+      "starter": "ai",
+      "round": 2,
+      "player": 1,
+      "ai": 0,
+      "over": false,
+      "rng": 1359758873
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 1
+     },
+     "state": {
+      "left": 16,
+      "turn": "player",
+      "starter": "player",
+      "round": 3,
+      "player": 1,
+      "ai": 1,
+      "over": false,
+      "rng": 3761132862
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 3
+     },
+     "state": {
+      "left": 13,
+      "turn": "ai",
+      "starter": "player",
+      "round": 3,
+      "player": 1,
+      "ai": 1,
+      "over": false,
+      "rng": 3761132862
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "left": 12,
+      "turn": "player",
+      "starter": "player",
+      "round": 3,
+      "player": 1,
+      "ai": 1,
+      "over": false,
+      "rng": 3761132862
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 3
+     },
+     "state": {
+      "left": 9,
+      "turn": "ai",
+      "starter": "player",
+      "round": 3,
+      "player": 1,
+      "ai": 1,
+      "over": false,
+      "rng": 3761132862
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "left": 8,
+      "turn": "player",
+      "starter": "player",
+      "round": 3,
+      "player": 1,
+      "ai": 1,
+      "over": false,
+      "rng": 3761132862
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 3
+     },
+     "state": {
+      "left": 5,
+      "turn": "ai",
+      "starter": "player",
+      "round": 3,
+      "player": 1,
+      "ai": 1,
+      "over": false,
+      "rng": 3761132862
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "left": 3,
+      "turn": "player",
+      "starter": "player",
+      "round": 3,
+      "player": 1,
+      "ai": 1,
+      "over": false,
+      "rng": 3761132862
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 2
+     },
+     "state": {
+      "left": 1,
+      "turn": "ai",
+      "starter": "player",
+      "round": 3,
+      "player": 1,
+      "ai": 1,
+      "over": false,
+      "rng": 3761132862
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "left": 22,
+      "turn": "ai",
+      "starter": "ai",
+      "round": 4,
+      "player": 2,
+      "ai": 1,
+      "over": false,
+      "rng": 2075758394
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "left": 21,
+      "turn": "player",
+      "starter": "ai",
+      "round": 4,
+      "player": 2,
+      "ai": 1,
+      "over": false,
+      "rng": 2075758394
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 3
+     },
+     "state": {
+      "left": 18,
+      "turn": "ai",
+      "starter": "ai",
+      "round": 4,
+      "player": 2,
+      "ai": 1,
+      "over": false,
+      "rng": 2075758394
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "left": 17,
+      "turn": "player",
+      "starter": "ai",
+      "round": 4,
+      "player": 2,
+      "ai": 1,
+      "over": false,
+      "rng": 2075758394
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 3
+     },
+     "state": {
+      "left": 14,
+      "turn": "ai",
+      "starter": "ai",
+      "round": 4,
+      "player": 2,
+      "ai": 1,
+      "over": false,
+      "rng": 2075758394
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "left": 13,
+      "turn": "player",
+      "starter": "ai",
+      "round": 4,
+      "player": 2,
+      "ai": 1,
+      "over": false,
+      "rng": 2075758394
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 3
+     },
+     "state": {
+      "left": 10,
+      "turn": "ai",
+      "starter": "ai",
+      "round": 4,
+      "player": 2,
+      "ai": 1,
+      "over": false,
+      "rng": 2075758394
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "left": 9,
+      "turn": "player",
+      "starter": "ai",
+      "round": 4,
+      "player": 2,
+      "ai": 1,
+      "over": false,
+      "rng": 2075758394
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 3
+     },
+     "state": {
+      "left": 6,
+      "turn": "ai",
+      "starter": "ai",
+      "round": 4,
+      "player": 2,
+      "ai": 1,
+      "over": false,
+      "rng": 2075758394
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "left": 5,
+      "turn": "player",
+      "starter": "ai",
+      "round": 4,
+      "player": 2,
+      "ai": 1,
+      "over": false,
+      "rng": 2075758394
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 2
+     },
+     "state": {
+      "left": 3,
+      "turn": "ai",
+      "starter": "ai",
+      "round": 4,
+      "player": 2,
+      "ai": 1,
+      "over": false,
+      "rng": 2075758394
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "left": 1,
+      "turn": "player",
+      "starter": "ai",
+      "round": 4,
+      "player": 2,
+      "ai": 1,
+      "over": false,
+      "rng": 2075758394
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 1
+     },
+     "state": {
+      "left": 15,
+      "turn": "player",
+      "starter": "player",
+      "round": 5,
+      "player": 2,
+      "ai": 2,
+      "over": false,
+      "rng": 25405621
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 2
+     },
+     "state": {
+      "left": 13,
+      "turn": "ai",
+      "starter": "player",
+      "round": 5,
+      "player": 2,
+      "ai": 2,
+      "over": false,
+      "rng": 25405621
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "left": 12,
+      "turn": "player",
+      "starter": "player",
+      "round": 5,
+      "player": 2,
+      "ai": 2,
+      "over": false,
+      "rng": 25405621
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 3
+     },
+     "state": {
+      "left": 9,
+      "turn": "ai",
+      "starter": "player",
+      "round": 5,
+      "player": 2,
+      "ai": 2,
+      "over": false,
+      "rng": 25405621
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "left": 8,
+      "turn": "player",
+      "starter": "player",
+      "round": 5,
+      "player": 2,
+      "ai": 2,
+      "over": false,
+      "rng": 25405621
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 3
+     },
+     "state": {
+      "left": 5,
+      "turn": "ai",
+      "starter": "player",
+      "round": 5,
+      "player": 2,
+      "ai": 2,
+      "over": false,
+      "rng": 25405621
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "left": 4,
+      "turn": "player",
+      "starter": "player",
+      "round": 5,
+      "player": 2,
+      "ai": 2,
+      "over": false,
+      "rng": 25405621
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 3
+     },
+     "state": {
+      "left": 1,
+      "turn": "ai",
+      "starter": "player",
+      "round": 5,
+      "player": 2,
+      "ai": 2,
+      "over": false,
+      "rng": 25405621
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "left": 13,
+      "turn": "ai",
+      "starter": "ai",
+      "round": 6,
+      "player": 3,
+      "ai": 2,
+      "over": false,
+      "rng": 3862129951
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "left": 12,
+      "turn": "player",
+      "starter": "ai",
+      "round": 6,
+      "player": 3,
+      "ai": 2,
+      "over": false,
+      "rng": 3862129951
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 3
+     },
+     "state": {
+      "left": 9,
+      "turn": "ai",
+      "starter": "ai",
+      "round": 6,
+      "player": 3,
+      "ai": 2,
+      "over": false,
+      "rng": 3862129951
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "left": 8,
+      "turn": "player",
+      "starter": "ai",
+      "round": 6,
+      "player": 3,
+      "ai": 2,
+      "over": false,
+      "rng": 3862129951
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 3
+     },
+     "state": {
+      "left": 5,
+      "turn": "ai",
+      "starter": "ai",
+      "round": 6,
+      "player": 3,
+      "ai": 2,
+      "over": false,
+      "rng": 3862129951
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "left": 4,
+      "turn": "player",
+      "starter": "ai",
+      "round": 6,
+      "player": 3,
+      "ai": 2,
+      "over": false,
+      "rng": 3862129951
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 3
+     },
+     "state": {
+      "left": 1,
+      "turn": "ai",
+      "starter": "ai",
+      "round": 6,
+      "player": 3,
+      "ai": 2,
+      "over": false,
+      "rng": 3862129951
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "left": 23,
+      "turn": "player",
+      "starter": "player",
+      "round": 7,
+      "player": 4,
+      "ai": 2,
+      "over": false,
+      "rng": 4186559031
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 2
+     },
+     "state": {
+      "left": 21,
+      "turn": "ai",
+      "starter": "player",
+      "round": 7,
+      "player": 4,
+      "ai": 2,
+      "over": false,
+      "rng": 4186559031
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "left": 20,
+      "turn": "player",
+      "starter": "player",
+      "round": 7,
+      "player": 4,
+      "ai": 2,
+      "over": false,
+      "rng": 4186559031
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 3
+     },
+     "state": {
+      "left": 17,
+      "turn": "ai",
+      "starter": "player",
+      "round": 7,
+      "player": 4,
+      "ai": 2,
+      "over": false,
+      "rng": 4186559031
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "left": 16,
+      "turn": "player",
+      "starter": "player",
+      "round": 7,
+      "player": 4,
+      "ai": 2,
+      "over": false,
+      "rng": 4186559031
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 3
+     },
+     "state": {
+      "left": 13,
+      "turn": "ai",
+      "starter": "player",
+      "round": 7,
+      "player": 4,
+      "ai": 2,
+      "over": false,
+      "rng": 4186559031
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "left": 12,
+      "turn": "player",
+      "starter": "player",
+      "round": 7,
+      "player": 4,
+      "ai": 2,
+      "over": false,
+      "rng": 4186559031
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 3
+     },
+     "state": {
+      "left": 9,
+      "turn": "ai",
+      "starter": "player",
+      "round": 7,
+      "player": 4,
+      "ai": 2,
+      "over": false,
+      "rng": 4186559031
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "left": 7,
+      "turn": "player",
+      "starter": "player",
+      "round": 7,
+      "player": 4,
+      "ai": 2,
+      "over": false,
+      "rng": 4186559031
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 2
+     },
+     "state": {
+      "left": 5,
+      "turn": "ai",
+      "starter": "player",
+      "round": 7,
+      "player": 4,
+      "ai": 2,
+      "over": false,
+      "rng": 4186559031
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "left": 4,
+      "turn": "player",
+      "starter": "player",
+      "round": 7,
+      "player": 4,
+      "ai": 2,
+      "over": false,
+      "rng": 4186559031
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 3
+     },
+     "state": {
+      "left": 1,
+      "turn": "ai",
+      "starter": "player",
+      "round": 7,
+      "player": 4,
+      "ai": 2,
+      "over": false,
+      "rng": 4186559031
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "left": 0,
+      "turn": "ai",
+      "starter": "player",
+      "round": 7,
+      "player": 5,
+      "ai": 2,
+      "over": true,
+      "rng": 4186559031
+     }
+    }
+   ],
+   "result": {
+    "winner": "player",
+    "stars": 3,
+    "score": 500,
+    "player": 5,
+    "ai": 2
+   }
+  },
+  {
+   "name": "timeout-mid-game",
+   "config": {
+    "start": 15,
+    "minStart": 12,
+    "maxStart": 25,
+    "maxTake": 3,
+    "roundsToWin": 5,
+    "aiErrorPct": [
+     60,
+     45,
+     30,
+     15,
+     0
+    ]
+   },
+   "seed": 99,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "take": 3
+     },
+     "state": {
+      "left": 12,
+      "turn": "ai",
+      "starter": "player",
+      "round": 1,
+      "player": 0,
+      "ai": 0,
+      "over": false,
+      "rng": 99
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "left": 9,
+      "turn": "player",
+      "starter": "player",
+      "round": 1,
+      "player": 0,
+      "ai": 0,
+      "over": false,
+      "rng": 99
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 3
+     },
+     "state": {
+      "left": 6,
+      "turn": "ai",
+      "starter": "player",
+      "round": 1,
+      "player": 0,
+      "ai": 0,
+      "over": false,
+      "rng": 99
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "left": 5,
+      "turn": "player",
+      "starter": "player",
+      "round": 1,
+      "player": 0,
+      "ai": 0,
+      "over": false,
+      "rng": 99
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 1
+     },
+     "state": {
+      "left": 4,
+      "turn": "ai",
+      "starter": "player",
+      "round": 1,
+      "player": 0,
+      "ai": 0,
+      "over": false,
+      "rng": 99
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "left": 1,
+      "turn": "player",
+      "starter": "player",
+      "round": 1,
+      "player": 0,
+      "ai": 0,
+      "over": false,
+      "rng": 99
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 1
+     },
+     "state": {
+      "left": 23,
+      "turn": "ai",
+      "starter": "ai",
+      "round": 2,
+      "player": 0,
+      "ai": 1,
+      "over": false,
+      "rng": 25193669
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "left": 20,
+      "turn": "player",
+      "starter": "ai",
+      "round": 2,
+      "player": 0,
+      "ai": 1,
+      "over": false,
+      "rng": 25193669
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "take": 2
+     },
+     "state": {
+      "left": 18,
+      "turn": "ai",
+      "starter": "ai",
+      "round": 2,
+      "player": 0,
+      "ai": 1,
+      "over": false,
+      "rng": 25193669
+     }
+    },
+    {
+     "action": {
+      "by": "timeout"
+     },
+     "state": {
+      "left": 18,
+      "turn": "ai",
+      "starter": "ai",
+      "round": 2,
+      "player": 0,
+      "ai": 1,
+      "over": true,
+      "rng": 25193669
+     }
+    }
+   ],
+   "result": {
+    "winner": "ai",
+    "stars": 0,
+    "score": 0,
+    "player": 0,
+    "ai": 1
+   }
+  }
+ ]
+}
