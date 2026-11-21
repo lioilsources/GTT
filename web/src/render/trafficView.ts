@@ -114,7 +114,8 @@ export class TrafficView {
     const inTunnel = playerLayer < 0;
     let n = 0, nb = 0;
     for (const c of tr.cars) {
-      if (c.layer < 0 !== inTunnel) continue;
+      // Patrols are drawn by police/view.ts.
+      if (c.layer < 0 !== inTunnel || c.police) continue;
       const h = (c.layer > 0 ? lift * c.layer : 0) + Z.car;
       // Babylon rotates about +Y clockwise seen from above; world headings are CCW.
       Matrix.RotationYToRef(-c.heading, this.m);

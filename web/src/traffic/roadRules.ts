@@ -216,3 +216,26 @@ export function chooseNext(g: RoadGraph, node: number, from: number, rng: Prng, 
   if (scratch.length === 0) return canLeave(g.edges[from]!, node) ? from : -1;
   return scratch[rng.nextInt(scratch.length)]!;
 }
+
+/**
+ * Pursuit: the edge at `node` that heads most towards the goal (gx, gy) (specs/police.md
+ * "chooseToward"). Any kept edge counts in either direction (sirens), including `from` (U-turn);
+ * ties keep the lowest index. −1 at a border node or when there is no edge at all.
+ */
+export function chooseToward(g: RoadGraph, node: number, from: number, gx: number, gy: number): number {
+  if (g.border[node]) return -1;
+  const nx = g.nodeXY[2 * node]!, ny = g.nodeXY[2 * node + 1]!;
+  const tl = Math.hypot(gx - nx, gy - ny);
+  const tx = tl > 0 ? (gx - nx) / tl : 0, ty = tl > 0 ? (gy - ny) / tl : 0;
+  let best = -1, bestDot = -Infinity;
+  for (const ei of keptEdgesAt(g, node)) {
+    const [dx, dy] = dirFromNode(g, g.edges[ei]!, node);
+    const l = Math.hypot(dx, dy);
+    const d = l > 0 ? (dx * tx + dy * ty) / l : -1;
+    if (d > bestDot) {
+      bestDot = d;
+      best = ei;
+    }
+  }
+  return best < 0 && g.edges[from]?.kept ? from : best;
+}

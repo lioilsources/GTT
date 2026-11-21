@@ -20,6 +20,7 @@ import { TrafficView } from './render/trafficView';
 import { installPassport } from './passport/hud';
 import { WorldView } from './render/worldView';
 import { installPhone } from './phone';
+import { installPolice } from './police';
 import { HttpPackSource } from './world/citypack';
 import { City } from './world/model';
 import { ChunkStreamer } from './world/streaming';
@@ -101,12 +102,16 @@ async function main(): Promise<void> {
   const peds = new PedestrianWorld(city, tuning);
   const pedView = new PedView(view.scene);
   const trafficView = drive.traffic ? new TrafficView(view.scene, drive.traffic, tuning) : null;
+  // Police and wanted level (specs/police.md).
+  const police = installPolice({ drive, cars: fleet, tuning, t, hud: $('hud'), scene: view.scene });
   const streamer = new ChunkStreamer(city, source, tuning, (c) => {
     drive.addChunk(c);
     fleet.addChunk(c);
+    police.addChunk(c);
     view.addChunk(c);
   }, (c) => {
     fleet.removeChunk(c);
+    police.removeChunk(c);
     drive.removeChunk(c);
     view.removeChunk(c);
   });
@@ -205,7 +210,9 @@ async function main(): Promise<void> {
       scheme.update(input);
       applyKeys(keys, input);
     }
-    if (!carsHud.busy) drive.update(dt * phone.timeScale());
+    const stepDt = carsHud.busy ? 0 : dt * phone.timeScale();
+    if (!carsHud.busy) drive.update(stepDt);
+    police.update(stepDt, dt);
     phone.update(dt);
     const c = drive.car;
     view.rig.follow(c.x, c.y, c.heading, c.speed, dt, tuning, c.forwardSpeed < -0.5);
@@ -393,7 +400,7 @@ async function main(): Promise<void> {
 
   if (import.meta.env.DEV || params.has('debug')) {
     (window as unknown as Record<string, unknown>)['metro'] = {
-      engine, view, drive, fleet, city, tuning, frameTimes, pilot, bench, peds, phone, passport,
+      engine, view, drive, fleet, city, tuning, frameTimes, pilot, bench, peds, phone, passport, police: police.police,
       timing: () => ({ firstFrameMs, loadMs }),
     };
   }
