@@ -41,12 +41,12 @@ items:
      started: 2026-11-21T13:30, done: 2026-11-21T14:26, commit: f7b3206, evidence: "run/bin/metro validate"}
   - {id: D0-5, milestone: D0, name: "PRNG se specifikací a vektory v obou klientech", size: S, status: hotovo,
      started: 2026-11-21T13:30, done: 2026-11-21T14:26, commit: f7b3206, evidence: "flutter test v packages/rules_core; npm test ve web/; metro vectors record --client flutter|web dá shodný soubor"}
-  - {id: D0-6, milestone: D0, name: "workflowy shared.yml, flutter.yml, web.yml", size: M, status: "čeká na Ol1na",
-     started: 2026-11-21T13:30, done: 2026-11-21T14:26, commit: f7b3206, evidence: "běží až v GitHub repu: chybí rozhodnutí o repu (public/private)"}
+  - {id: D0-6, milestone: D0, name: "workflowy shared.yml, flutter.yml, web.yml", size: M, status: hotovo,
+     started: 2026-11-21T13:30, done: 2026-11-21T16:50, commit: f7b3206, evidence: "CI na PR #1 zelené: shared, flutter, web (runy 44920997315, 44920997254, 44920997267)"}
   - {id: D0-7, milestone: D0, name: "web/ s prázdnou scénou Babylonu nasazenou na Pages", size: M, status: "čeká na Ol1na",
-     started: 2026-11-21T13:30, done: 2026-11-21T14:26, commit: f7b3206, evidence: "npm run build ve web/ (scéna ověřená v Chrome); nasazení čeká na repo"}
-  - {id: D0-8, milestone: D0, name: "citypack publish/pull přes GitHub Releases, packs.lock", size: S, status: "čeká na Ol1na",
-     started: 2026-11-21T13:30, done: 2026-11-21T14:26, commit: f7b3206, evidence: "go test (Tarball/Untar); první publish čeká na repo"}
+     started: 2026-11-21T13:30, done: 2026-11-21T14:26, commit: f7b3206, evidence: "npm run build ve web/ (scéna ověřená v Chrome); Pages zapnuté, nasazení proběhne po merge PR #1"}
+  - {id: D0-8, milestone: D0, name: "citypack publish/pull přes GitHub Releases, packs.lock", size: S, status: hotovo,
+     started: 2026-11-21T13:30, done: 2026-11-21T16:46, commit: be519ae, evidence: "citypack publish nyc → release pack-nyc-5a8c6e78d95e; citypack pull nyc + validate; CI citypack pull all"}
 
   # ---------- D1 – Souboj M0
   - {id: D1-1, milestone: D1, name: "hračka M0 ve webovém klientovi ze stejného citypacku a tuning.yaml", size: L, status: todo}
