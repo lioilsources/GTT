@@ -7,6 +7,7 @@ import { SipkyRules } from '../minigames/sipky/rules';
 import { KoulenaRules } from '../minigames/koulena/rules';
 import { StrelniceRules } from '../minigames/strelnice/rules';
 import { RouteRules } from '../drive/gps';
+import { FeedRules } from '../phone/feed';
 import { Prng } from './prng';
 
 /** One step of a P0 vector: an action and the state after it (DUALSTACK 5.4). */
@@ -37,6 +38,7 @@ type AnyRules = Parameters<typeof replay>[0];
 /** Minigame rules modules by vector module id (specs/minigames/README.md "Vektory"). */
 export const rulesModules: Record<string, () => AnyRules> = {
   route: () => new RouteRules() as unknown as AnyRules,
+  feed: () => new FeedRules() as unknown as AnyRules,
   sirky: () => new SirkyRules() as unknown as AnyRules,
   oko: () => new OkoRules() as unknown as AnyRules,
   dama: () => new DamaRules() as unknown as AnyRules,
