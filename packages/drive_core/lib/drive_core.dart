@@ -12,4 +12,5 @@ export 'package:shared_gen/shared_gen.dart' show CarSpec;
 export 'src/car_spec.dart';
 export 'src/controls.dart';
 export 'src/drive_world.dart';
+export 'src/gps.dart';
 export 'src/props.dart';

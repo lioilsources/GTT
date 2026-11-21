@@ -9,6 +9,8 @@ environment:
   flutter: ">=3.44.0"
 
 dependencies:
+  rules_core:
+    path: ../rules_core
   shared_gen:
     path: ../shared_gen
   forge2d: ">=0.14.0 <0.15.2"
