@@ -1,0 +1,72 @@
+/* Loop glue (specs/loop.md): minigame host over the paused world, result card, cash pill, play button. */
+.loop-host {
+  z-index: 30;
+  background: var(--color-ui-background);
+}
+.loop-result {
+  position: fixed;
+  z-index: 31;
+}
+.loop-result .mg-card {
+  max-height: calc(100% - 32px);
+  overflow: auto;
+}
+.loop-game {
+  margin: 0 0 var(--space-sm);
+  font-weight: 700;
+}
+.loop-cash {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--color-loop-cash);
+}
+.loop-part {
+  margin: 2px 0;
+  color: var(--color-loop-muted);
+}
+.loop-stamp {
+  font-weight: 700;
+  color: var(--color-loop-stamp);
+}
+.loop-best {
+  font-weight: 700;
+  color: var(--color-loop-best);
+}
+.loop-muted {
+  color: var(--color-loop-muted);
+}
+#loop-cash {
+  position: absolute;
+  left: calc(env(safe-area-inset-left) + 12px);
+  top: calc(env(safe-area-inset-top) + 56px);
+  font-size: var(--font-hud-small);
+  font-weight: 700;
+  color: var(--color-loop-cash);
+}
+#loop-play {
+  position: absolute;
+  left: 50%;
+  bottom: calc(env(safe-area-inset-bottom) + 148px);
+  transform: translateX(-50%);
+  padding: 0 var(--space-lg);
+  background: var(--color-loop-play);
+  color: var(--color-ui-text);
+  pointer-events: auto;
+}
+#loop-play[hidden] {
+  display: none;
+}
+.loop-toast {
+  position: fixed;
+  left: 50%;
+  bottom: calc(env(safe-area-inset-bottom) + 200px);
+  transform: translateX(-50%);
+  z-index: 25;
+}
+.loop-toast[hidden] {
+  display: none;
+}
+#garage .mg-card {
+  max-height: calc(100% - 32px);
+  overflow: auto;
+}

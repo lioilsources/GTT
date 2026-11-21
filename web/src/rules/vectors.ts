@@ -12,6 +12,8 @@ import { PassportRules } from '../passport/rules';
 import { DialogueRules } from '../dialogue/rules';
 import { CarsRules } from '../cars/rules';
 import { PoliceRules } from '../police/rules';
+import { EconomyRules } from '../loop/economy';
+import { SaveRules } from '../loop/save';
 import { Prng } from './prng';
 
 /** One step of a P0 vector: an action and the state after it (DUALSTACK 5.4). */
@@ -54,6 +56,8 @@ export const rulesModules: Record<string, () => AnyRules> = {
   dialogue: () => new DialogueRules() as unknown as AnyRules,
   cars: () => new CarsRules() as unknown as AnyRules,
   police: () => new PoliceRules() as unknown as AnyRules,
+  economy: () => new EconomyRules() as unknown as AnyRules,
+  save: () => new SaveRules() as unknown as AnyRules,
 };
 
 /** Final result of a rules case (compared with case.result). */

@@ -28,6 +28,22 @@ export interface PhoneEnv {
   /** Container of the round HUD buttons. */
   buttons: HTMLElement;
   params: URLSearchParams;
+  /** Landmarks the player has discovered (passport stamps), for the feed's landmark bonus. */
+  discovered?: () => ReadonlySet<string>;
+}
+
+/** The feed state the save keeps (specs/save.md `feed`). */
+export interface FeedSave {
+  prefs: Record<string, number>;
+  visits: Record<string, number>;
+  districts: string[];
+}
+
+/** The card the player accepted; the loop reads its distance and difficulty on arrival. */
+export interface AcceptedCard {
+  spot: string;
+  distDm: number;
+  difficulty: number;
 }
 
 export interface PhoneApi {
@@ -40,6 +56,10 @@ export interface PhoneApi {
   navigate(spotId: string): boolean;
   /** arrived(spotId): the minigame launch hook for a later feature. */
   onArrived: Array<(spotId: string) => void>;
+  /** The last accepted feed card (cleared by the loop once used). */
+  accepted: AcceptedCard | null;
+  feedSave(): FeedSave;
+  feedRestore(f: FeedSave): void;
   phone: Phone;
   nav: Navigator;
 }
@@ -75,7 +95,7 @@ export function installPhone(env: PhoneEnv): PhoneApi {
       catalog: minigameCatalog,
       districtAt: (x, y) => city.districtAt(x / 10, y / 10) ?? '',
       landmarks: city.landmarks.items.map((l) => ({ id: l.id, x: l.x, y: l.y })),
-      discovered: new Set(),
+      discovered: env.discovered?.() ?? new Set(),
       visits,
       landmarkRadiusDm: tuning.feed.landmarkRadiusDm,
       distDm: (id) => feedDistDm(rg, lens, start, navGoal(g, target(id)), c.x, c.y, target(id), tuning.feed.straightPct),
@@ -109,6 +129,8 @@ export function installPhone(env: PhoneEnv): PhoneApi {
       },
       spotName: (id) => spotById.get(id)?.name ?? id,
       onAccept: (id) => {
+        const card = deck?.state.deck.find((c) => c.spot === id);
+        api.accepted = card ? { spot: id, distDm: card.distDm, difficulty: card.difficulty } : null;
         phone.close();
         navigate(id);
       },
@@ -157,6 +179,16 @@ export function installPhone(env: PhoneEnv): PhoneApi {
     phone,
     nav,
     onArrived: [],
+    accepted: null,
+    feedSave: () => ({ prefs: { ...prefs }, visits: Object.fromEntries(visits), districts: [...visitedDistricts] }),
+    feedRestore(f) {
+      prefs = { ...f.prefs };
+      visits.clear();
+      for (const [k, v] of Object.entries(f.visits)) visits.set(k, v);
+      visitedDistricts.clear();
+      for (const d of f.districts) visitedDistricts.add(d);
+      deck = null;
+    },
     navigate,
     update(dt) {
       const c = drive.car;

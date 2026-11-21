@@ -95,8 +95,27 @@ export class CarsHud {
         `${spec.name}${ck ? ' · ' + t(ck) : ''} — ${driving ? t('garageDriving') : t('garageTakeOut')}`,
       );
     });
+    // For sale (specs/economy.md "Nákup auta"): every car not owned, with its price.
+    const buyable = new Set(f.buyable());
+    const sale = [...f.specs.values()]
+      .filter((s) => !f.owned.includes(s.id))
+      .sort((a, b) => a.price - b.price || (a.id < b.id ? -1 : 1))
+      .map((spec) => {
+        const ck = classKeys[spec.class];
+        return h('button.mg-btn.ghost', {
+          type: 'button',
+          disabled: !buyable.has(spec.id),
+          onclick: () => {
+            f.buy(spec.id);
+            this.openGarage();
+          },
+        }, `${spec.name}${ck ? ' · ' + t(ck) : ''} — ${t('garageBuy', { price: spec.price })}`);
+      });
     this.sheet.replaceChildren(
-      h('div.mg-card', {}, h('h2', {}, t('garageTitle')), ...rows, h('button.mg-btn.ghost', { type: 'button', onclick: close }, t('close'))),
+      h('div.mg-card', {}, h('h2', {}, t('garageTitle')), ...rows,
+        sale.length ? h('h2', {}, t('garageForSale')) : null, ...sale,
+        h('p', {}, t('cashHud', { cash: f.state.cash })),
+        h('button.mg-btn.ghost', { type: 'button', onclick: close }, t('close'))),
     );
     this.sheet.hidden = false;
   }
