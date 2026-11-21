@@ -93,7 +93,8 @@ class Tuning {
         pedestrians = TuningPedestrians._(r.sub('pedestrians')),
         phone = TuningPhone._(r.sub('phone')),
         feed = TuningFeed._(r.sub('feed')),
-        nav = TuningNav._(r.sub('nav'));
+        nav = TuningNav._(r.sub('nav')),
+        traffic = TuningTraffic._(r.sub('traffic'));
 
   factory Tuning.fromYaml(String src) {
     final y = loadYaml(src);
@@ -172,6 +173,10 @@ class Tuning {
   /// GPS navigation UI (specs/phone.md "Navigace"); route search numbers are in `route`.
   final TuningNav nav;
 
+  /// Traffic and traffic lights (specs/traffic.md). Per-class lists are indexed by RoadClass
+  /// (unknown, motorway, trunk, primary, secondary, tertiary, residential, service).
+  final TuningTraffic traffic;
+
   Map<String, Object> toJson() => {
         'car_scale': carScale,
         'lane_width_m': laneWidthM,
@@ -199,6 +204,7 @@ class Tuning {
         'phone': phone.toJson(),
         'feed': feed.toJson(),
         'nav': nav.toJson(),
+        'traffic': traffic.toJson(),
       };
 
   /// Dotted YAML path → value, for diffs against the loaded file.
@@ -1739,5 +1745,186 @@ class TuningNav {
         'round_m': roundM,
         'mi_from': miFrom,
         'round_ft': roundFt,
+      };
+}
+
+/// Traffic and traffic lights (specs/traffic.md). Per-class lists are indexed by RoadClass
+/// (unknown, motorway, trunk, primary, secondary, tertiary, residential, service).
+class TuningTraffic {
+  TuningTraffic._(_R r)
+      : enabled = r.b('enabled'),
+        maxCars = r.i('max_cars'),
+        nightFactor = r.d('night_factor'),
+        classWeight = r.dl('class_weight'),
+        classSpeedMps = r.dl('class_speed_mps'),
+        carLengthM = r.d('car_length_m'),
+        carWidthM = r.d('car_width_m'),
+        spawnMinM = r.d('spawn_min_m'),
+        spawnMaxM = r.d('spawn_max_m'),
+        despawnM = r.d('despawn_m'),
+        initialMinM = r.d('initial_min_m'),
+        teleportM = r.d('teleport_m'),
+        spawnIntervalS = r.d('spawn_interval_s'),
+        spawnTries = r.i('spawn_tries'),
+        initialTries = r.i('initial_tries'),
+        spawnClearM = r.d('spawn_clear_m'),
+        searchM = r.d('search_m'),
+        seed = r.i('seed'),
+        accelMps2 = r.d('accel_mps2'),
+        brakeMps2 = r.d('brake_mps2'),
+        minGapM = r.d('min_gap_m'),
+        headwayS = r.d('headway_s'),
+        lookAheadM = r.d('look_ahead_m'),
+        corridor = r.d('corridor'),
+        followRate = r.d('follow_rate'),
+        hitStopS = r.d('hit_stop_s'),
+        hitMinMps = r.d('hit_min_mps'),
+        hitMarginM = r.d('hit_margin_m'),
+        amberCommitM = r.d('amber_commit_m'),
+        stopMarginM = r.d('stop_margin_m'),
+        signalClasses = r.il('signal_classes'),
+        signalMinMain = r.i('signal_min_main'),
+        signalMinEdges = r.i('signal_min_edges'),
+        signalSeed = r.i('signal_seed'),
+        greenMs = r.i('green_ms'),
+        amberMs = r.i('amber_ms'),
+        allRedMs = r.i('all_red_ms'),
+        lightSideM = r.d('light_side_m'),
+        lightRadiusM = r.d('light_radius_m'),
+        lightDrawMax = r.i('light_draw_max');
+
+  bool enabled;
+
+  /// dynamic bodies for traffic in total (METROPOLE_PLAN 7.3)
+  int maxCars;
+
+  /// fraction of max_cars at night
+  double nightFactor;
+
+  /// spawn acceptance per class
+  List<double> classWeight;
+
+  List<double> classSpeedMps;
+
+  /// before car_scale
+  double carLengthM;
+
+  double carWidthM;
+
+  /// spawn ring around the player, outside the view
+  double spawnMinM;
+
+  double spawnMaxM;
+
+  double despawnM;
+
+  /// inner radius of the first fill (start, respawn)
+  double initialMinM;
+
+  /// a player jump longer than this refills like a start
+  double teleportM;
+
+  double spawnIntervalS;
+
+  int spawnTries;
+
+  int initialTries;
+
+  double spawnClearM;
+
+  double searchM;
+
+  int seed;
+
+  double accelMps2;
+
+  double brakeMps2;
+
+  double minGapM;
+
+  double headwayS;
+
+  double lookAheadM;
+
+  /// lateral reach for the car ahead, × sum of half widths
+  double corridor;
+
+  /// 1/s, smoothing of position and heading towards the lane
+  double followRate;
+
+  double hitStopS;
+
+  double hitMinMps;
+
+  double hitMarginM;
+
+  /// on amber, cars closer than this to the stop line go on
+  double amberCommitM;
+
+  double stopMarginM;
+
+  /// trunk, primary, secondary
+  List<int> signalClasses;
+
+  int signalMinMain;
+
+  int signalMinEdges;
+
+  int signalSeed;
+
+  int greenMs;
+
+  int amberMs;
+
+  int allRedMs;
+
+  /// indicator outside the carriageway edge
+  double lightSideM;
+
+  double lightRadiusM;
+
+  int lightDrawMax;
+
+  Map<String, Object> toJson() => {
+        'enabled': enabled,
+        'max_cars': maxCars,
+        'night_factor': nightFactor,
+        'class_weight': classWeight,
+        'class_speed_mps': classSpeedMps,
+        'car_length_m': carLengthM,
+        'car_width_m': carWidthM,
+        'spawn_min_m': spawnMinM,
+        'spawn_max_m': spawnMaxM,
+        'despawn_m': despawnM,
+        'initial_min_m': initialMinM,
+        'teleport_m': teleportM,
+        'spawn_interval_s': spawnIntervalS,
+        'spawn_tries': spawnTries,
+        'initial_tries': initialTries,
+        'spawn_clear_m': spawnClearM,
+        'search_m': searchM,
+        'seed': seed,
+        'accel_mps2': accelMps2,
+        'brake_mps2': brakeMps2,
+        'min_gap_m': minGapM,
+        'headway_s': headwayS,
+        'look_ahead_m': lookAheadM,
+        'corridor': corridor,
+        'follow_rate': followRate,
+        'hit_stop_s': hitStopS,
+        'hit_min_mps': hitMinMps,
+        'hit_margin_m': hitMarginM,
+        'amber_commit_m': amberCommitM,
+        'stop_margin_m': stopMarginM,
+        'signal_classes': signalClasses,
+        'signal_min_main': signalMinMain,
+        'signal_min_edges': signalMinEdges,
+        'signal_seed': signalSeed,
+        'green_ms': greenMs,
+        'amber_ms': amberMs,
+        'all_red_ms': allRedMs,
+        'light_side_m': lightSideM,
+        'light_radius_m': lightRadiusM,
+        'light_draw_max': lightDrawMax,
       };
 }

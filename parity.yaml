@@ -147,3 +147,10 @@
   lead: web
   flutter: todo
   web: todo
+- id: F-016
+  name: Traffic and two-phase traffic lights
+  level: P1
+  spec: specs/traffic.md@1
+  lead: web
+  flutter: todo
+  web: todo

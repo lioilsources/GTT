@@ -110,6 +110,11 @@ abstract final class Tokens {
   static const int colorPhoneMapGame = 0xFFF4C430;
   static const int colorPhoneMapPlayer = 0xFFFF2A2A;
   static const int colorPhoneToast = 0xEE2E9E5B;
+  static const List<int> colorTrafficBodies = [0xFF3A6EA5, 0xFFE8E4DA, 0xFF2F2F36, 0xFF8C9AA6, 0xFFB5482F, 0xFF4F7F52, 0xFFD9A441, 0xFF6B4E8C];
+  static const int colorTrafficLightHousing = 0xFF1E1F24;
+  static const int colorTrafficLightRed = 0xFFFF3B30;
+  static const int colorTrafficLightAmber = 0xFFFFB020;
+  static const int colorTrafficLightGreen = 0xFF34D058;
   static const double lightDayRoofLight = 1.12;
   static const double lightDaySunX = -0.6;
   static const double lightDaySunY = 0.8;
