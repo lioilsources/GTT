@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ochrana soukromí — Metropole</title>
+  <style>
+    /* Colours mirror design/tokens.json (ui.background, ui.text, brand.accent); static page, no build step. */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: #1C1C22; color: #FFFFFF; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      max-width: 720px; margin: 0 auto; padding: 56px 16px; line-height: 1.7; }
+    h1 { font-size: 2rem; color: #F4C430; margin-bottom: 8px; }
+    .updated, .subtitle { color: rgba(255,255,255,.62); font-size: .9rem; margin-bottom: 36px; }
+    h2 { font-size: 1.1rem; color: #F4C430; margin: 28px 0 10px; }
+    p, li { color: rgba(255,255,255,.82); margin-bottom: 12px; }
+    ul { padding-left: 20px; }
+    a { color: #F4C430; }
+    .box { background: #26262E; border: 1px solid #3A3A44; border-radius: 8px; padding: 18px 22px; margin: 16px 0; }
+    footer { margin-top: 48px; padding-top: 24px; border-top: 1px solid #3A3A44; }
+    footer a { color: rgba(255,255,255,.62); text-decoration: none; }
+  </style>
+</head>
+<body>
+  <h1>Zásady ochrany soukromí</h1>
+  <p class="updated">Aktualizováno: 21. listopadu 2026</p>
+
+  <p>Tyto zásady platí pro hru <em>Metropole</em> od Oldřicha Vořechovského (ol1n): appku pro iOS a Android
+    (<code>com.ol1n.metropole</code>) a webovou verzi na této adrese.
+    <strong>Metropole nesbírá žádné osobní údaje.</strong></p>
+
+  <h2>Appka (iOS, Android)</h2>
+  <ul>
+    <li>Nemá účet, reklamy, analytiku, sledování ani hlášení pádů.</li>
+    <li>Nepřipojuje se k internetu: mapa města je součástí instalace.</li>
+    <li>Nic neodesílá vývojáři ani nikomu jinému.</li>
+    <li>Nastavení z ladicího panelu se drží jen v paměti po dobu běhu appky.</li>
+  </ul>
+
+  <h2>Webová verze</h2>
+  <ul>
+    <li>Stránka i mapová data se stahují z GitHub Pages. GitHub při tom jako každý web server vidí vaši IP adresu;
+      řídí se <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement">zásadami GitHubu</a>.
+      Vývojář tato data nedostává.</li>
+    <li>Hra nepoužívá cookies ani analytiku. Výsledek benchmarku (<code>?bench</code>) se jen zobrazí na obrazovce;
+      odešle se, jen když ho sami zkopírujete a pošlete.</li>
+  </ul>
+
+  <h2>Mapová data</h2>
+  <p>Mapy pocházejí z © OpenStreetMap contributors (licence ODbL) a Overture Maps Foundation.
+    Ve hře nejsou žádné údaje o vás ani o vaší poloze.</p>
+
+  <h2>Děti</h2>
+  <p>Hra od nikoho, tedy ani od dětí, nesbírá osobní údaje.</p>
+
+  <h2>Změny</h2>
+  <p>Pokud se zásady změní (například s novou funkcí, která potřebuje internet), nová verze bude na této adrese
+    s novým datem dřív, než změna vyjde.</p>
+
+  <h2>Kontakt</h2>
+  <p><a href="mailto:business@olin.now">business@olin.now</a></p>
+
+  <h1 style="margin-top:64px" lang="en">Privacy Policy</h1>
+  <div lang="en">
+  <p class="updated">Last updated: November 21, 2026</p>
+  <p>This policy covers <em>Metropole</em>, a game by Oldřich Vořechovský (ol1n): the iOS and Android app
+    (<code>com.ol1n.metropole</code>) and the web version at this address.
+    <strong>Metropole collects no personal data.</strong></p>
+  <ul>
+    <li><strong>App.</strong> No account, ads, analytics, tracking or crash reporting. It makes no internet
+      connection: the city map ships with the install. It sends nothing to the developer or anyone else.
+      Debug-panel settings live in memory only while the app runs.</li>
+    <li><strong>Web version.</strong> The page and map data are served by GitHub Pages, which sees your IP address
+      like any web server, under <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement">GitHub's privacy statement</a>.
+      The developer does not receive it. No cookies, no analytics. A benchmark result (<code>?bench</code>) is only
+      shown on screen; it leaves your device only if you copy and send it yourself.</li>
+    <li><strong>Map data.</strong> © OpenStreetMap contributors (ODbL) and Overture Maps Foundation.
+      The game holds no data about you or your location.</li>
+    <li><strong>Children.</strong> The game collects no personal information from anyone, children included.</li>
+    <li><strong>Changes.</strong> An updated policy will be posted here with a new date before a change ships.</li>
+    <li><strong>Contact.</strong> <a href="mailto:business@olin.now">business@olin.now</a></li>
+  </ul>
+  </div>
+
+  <footer>
+    <a href="./">← Metropole</a> &nbsp;·&nbsp; <a href="support.html">Podpora</a>
+  </footer>
+</body>
+</html>
