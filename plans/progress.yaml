@@ -1,0 +1,98 @@
+# Progress of Metropole. Rules: plans/PROGRESS.md (top). Regenerate: run/bin/metro progress [--tests].
+# One item = one scope point or acceptance criterion of METROPOLE_PLAN ch. 15 (M0, M1) and
+# METROPOLE_DUALSTACK_PLAN ch. 10 (D0–D3). size: S = 1, M = 2, L = 4 points, set once, never changed.
+# status: todo | wip | hotovo | čeká na Ol1na | ověřeno   (ověřeno is set by Ol1n only)
+# started / done: local time YYYY-MM-DDTHH:MM; done = the moment the item left wip.
+# reopened: list of {date, reason} when an item went back from hotovo/ověřeno (regression).
+# Dropped scope: M0 point 5 (Flutter web build) – replaced by D1, see docs/m0.md.
+
+milestones: [M0, D0, D1, D2, M1, D3]
+
+items:
+  # ---------- M0 – Hračka (scope)
+  - {id: M0-S1, milestone: M0, name: "citypack pro Midtown: fetch → pack → validate → preview", size: L, status: hotovo,
+     started: 2026-11-21T10:51, done: 2026-11-21T11:50, commit: 83fcb14, evidence: "run/bin/citypack validate nyc; go test ./... v tools/citypack"}
+  - {id: M0-S2, milestone: M0, name: "world_engine: načtení, streaming, renderer 6.x, den/noc", size: L, status: hotovo,
+     started: 2026-11-21T10:51, done: 2026-11-21T11:50, commit: 83fcb14, evidence: "flutter test v packages/world_engine (načte a dekóduje celý NYC balíček)"}
+  - {id: M0-S3, milestone: M0, name: "drive_core: auto, fyzika 7.2, schémata A/B/C, kolize, mosty a tunely", size: L, status: hotovo,
+     started: 2026-11-21T10:51, done: 2026-11-21T11:50, commit: 83fcb14, evidence: "flutter test v packages/drive_core (fyzika, ovládání, vrstvy, mobiliář)"}
+  - {id: M0-S4, milestone: M0, name: "HUD (ulice · čtvrť, rychlost, FPS) a ladicí panel tuning.yaml", size: M, status: "čeká na Ol1na",
+     started: 2026-11-21T10:51, done: 2026-11-21T11:50, commit: 83fcb14, evidence: "profile build na Pixel 8a; docs/m0-test.md §1–3 (bez automatického testu UI)"}
+  # ---------- M0 – Hračka (acceptance)
+  - {id: M0-A1, milestone: M0, name: "60 fps na Pixel 8a a iPhone 12 mini: Times Square a 42nd St", size: M, status: "čeká na Ol1na",
+     started: 2026-11-21T12:10, done: 2026-11-21T12:10, commit: a7a6947, evidence: "FPS overlay v profile buildu; docs/m0-test.md §1"}
+  - {id: M0-A2, milestone: M0, name: "citypack validate nyc projde", size: S, status: hotovo,
+     started: 2026-11-21T10:51, done: 2026-11-21T11:50, commit: 83fcb14, evidence: "run/bin/citypack validate nyc"}
+  - {id: M0-A3, milestone: M0, name: "slepý test památek na 3 lidech", size: S, status: "čeká na Ol1na",
+     started: 2026-11-21T12:10, done: 2026-11-21T12:10, commit: a7a6947, evidence: "docs/m0-test.md, Slepý test"}
+  - {id: M0-A4, milestone: M0, name: "týden dogfoodingu: výběr schématu ovládání, potvrzení tuning.yaml", size: S, status: "čeká na Ol1na",
+     started: 2026-11-21T12:10, done: 2026-11-21T12:10, commit: a7a6947, evidence: "ladicí panel → Kopírovat tuning.yaml"}
+  - {id: M0-A5, milestone: M0, name: "rozhodnutí R3 / brána G1: Flutter, nebo záložní žebřík", size: S, status: "čeká na Ol1na",
+     started: 2026-11-21T12:10, done: 2026-11-21T12:10, commit: a7a6947, evidence: "po měření M0-A1 a D1-2"}
+
+  # ---------- D0 – Sdílený základ
+  - {id: D0-1, milestone: D0, name: "nové sdílené složky (i18n, design, schema, specs, vectors, scenarios, assets, parity.yaml)", size: S, status: hotovo,
+     started: 2026-11-21T13:30, done: 2026-11-21T14:26, commit: f7b3206, evidence: "run/bin/metro validate"}
+  - {id: D0-2, milestone: D0, name: "tools/metro: gen, sync, guard, kostra vectors a parity", size: L, status: hotovo,
+     started: 2026-11-21T13:30, done: 2026-11-21T14:26, commit: f7b3206, evidence: "go test ./... v tools/metro; metro gen --check; metro guard"}
+  - {id: D0-3, milestone: D0, name: "packages/shared_gen, herní čísla/texty/barvy přepojené na generovaný kód", size: M, status: hotovo,
+     started: 2026-11-21T13:30, done: 2026-11-21T14:26, commit: f7b3206, evidence: "metro gen --check; flutter analyze; flutter test (4 balíčky)"}
+  - {id: D0-4, milestone: D0, name: "JSON Schemata (obsah, uložení, meta minihry, vektory, scénáře, parita)", size: S, status: hotovo,
+     started: 2026-11-21T13:30, done: 2026-11-21T14:26, commit: f7b3206, evidence: "run/bin/metro validate"}
+  - {id: D0-5, milestone: D0, name: "PRNG se specifikací a vektory v obou klientech", size: S, status: hotovo,
+     started: 2026-11-21T13:30, done: 2026-11-21T14:26, commit: f7b3206, evidence: "flutter test v packages/rules_core; npm test ve web/; metro vectors record --client flutter|web dá shodný soubor"}
+  - {id: D0-6, milestone: D0, name: "workflowy shared.yml, flutter.yml, web.yml", size: M, status: "čeká na Ol1na",
+     started: 2026-11-21T13:30, done: 2026-11-21T14:26, commit: f7b3206, evidence: "běží až v GitHub repu: chybí rozhodnutí o repu (public/private)"}
+  - {id: D0-7, milestone: D0, name: "web/ s prázdnou scénou Babylonu nasazenou na Pages", size: M, status: "čeká na Ol1na",
+     started: 2026-11-21T13:30, done: 2026-11-21T14:26, commit: f7b3206, evidence: "npm run build ve web/ (scéna ověřená v Chrome); nasazení čeká na repo"}
+  - {id: D0-8, milestone: D0, name: "citypack publish/pull přes GitHub Releases, packs.lock", size: S, status: "čeká na Ol1na",
+     started: 2026-11-21T13:30, done: 2026-11-21T14:26, commit: f7b3206, evidence: "go test (Tarball/Untar); první publish čeká na repo"}
+
+  # ---------- D1 – Souboj M0
+  - {id: D1-1, milestone: D1, name: "hračka M0 ve webovém klientovi ze stejného citypacku a tuning.yaml", size: L, status: todo}
+  - {id: D1-2, milestone: D1, name: "měření obou klientů na obou telefonech (fps, start, paměť, baterie)", size: M, status: todo}
+  - {id: D1-3, milestone: D1, name: "plans/BAKEOFF_REPORT.md", size: S, status: todo}
+  - {id: D1-4, milestone: D1, name: "brána G1 (rozhoduje Ol1n)", size: S, status: todo}
+
+  # ---------- D2 – První minihry
+  - {id: D2-1, milestone: D2, name: "kontrakt miniher a Galerie v obou klientech", size: M, status: todo}
+  - {id: D2-2, milestone: D2, name: "Sirky v obou klientech", size: S, status: todo}
+  - {id: D2-3, milestone: D2, name: "Oko bere v obou klientech", size: M, status: todo}
+  - {id: D2-4, milestone: D2, name: "Dáma v obou klientech", size: M, status: todo}
+  - {id: D2-5, milestone: D2, name: "Desetitisíc v obou klientech", size: M, status: todo}
+  - {id: D2-6, milestone: D2, name: "Šipky 301 v obou klientech", size: M, status: todo}
+  - {id: D2-7, milestone: D2, name: "Koulená v obou klientech", size: M, status: todo}
+  - {id: D2-8, milestone: D2, name: "Střelnice v obou klientech", size: M, status: todo}
+  - {id: D2-9, milestone: D2, name: "Taxi v obou klientech", size: L, status: todo}
+
+  # ---------- M1 – Vertikální řez (scope)
+  - {id: M1-S1, milestone: M1, name: "oblast M1, graf, GPS trasa, mosty", size: L, status: todo}
+  - {id: M1-S2, milestone: M1, name: "provoz a semafory", size: L, status: todo}
+  - {id: M1-S3, milestone: M1, name: "chodci s uskakováním", size: M, status: todo}
+  - {id: M1-S4, milestone: M1, name: "policie, hledanost 1–2", size: M, status: todo}
+  - {id: M1-S5, milestone: M1, name: "mg_api, Galerie, enginy puzzle/cards/board/dice/flick/drive", size: L, status: todo}
+  - {id: M1-S6, milestone: M1, name: "osm miniher z 9.5 se spoty", size: L, status: todo}
+  - {id: M1-S7, milestone: M1, name: "telefon s Feedem (6 karet) a Mapou", size: L, status: todo}
+  - {id: M1-S8, milestone: M1, name: "5 aut, přesedání, 1 garáž", size: M, status: todo}
+  - {id: M1-S9, milestone: M1, name: "20 památek s kartou pohlednice, Pas s razítky", size: M, status: todo}
+  - {id: M1-S10, milestone: M1, name: "npc_dialogue: 6 postav, 30 skitů", size: L, status: todo}
+  - {id: M1-S11, milestone: M1, name: "výsledková obrazovka, hotovost, ukládání", size: M, status: todo}
+  - {id: M1-S12, milestone: M1, name: "obrazovka O mapách", size: S, status: todo}
+  # ---------- M1 – Vertikální řez (acceptance)
+  - {id: M1-A1, milestone: M1, name: "10 smyček za sebou bez pádu a zaseknutí", size: S, status: todo}
+  - {id: M1-A2, milestone: M1, name: "každá minihra projde unit testy a jde spustit z Galerie", size: S, status: todo}
+  - {id: M1-A3, milestone: M1, name: "dogfooding: seance ≥ 10 min, návrat tři dny po sobě", size: S, status: todo}
+  - {id: M1-A4, milestone: M1, name: "interní build v TestFlightu a Play internal testing", size: M, status: todo}
+
+  # ---------- D3 – M1 v obou
+  - {id: D3-1, milestone: D3, name: "celá smyčka M1 v obou klientech", size: L, status: todo}
+  - {id: D3-2, milestone: D3, name: "matice parity pro rozsah M1 zelená", size: M, status: todo}
+  - {id: D3-3, milestone: D3, name: "W veřejně na odkazu", size: S, status: todo}
+  - {id: D3-4, milestone: D3, name: "F v TestFlightu a Play internal", size: M, status: todo}
+
+# Content counters with targets. tests and fps are measured; the rest metro progress counts itself.
+counters:
+  tests: {total: 54, passing: 54, measured: 2026-11-21T14:31}   # metro progress --tests
+  fps:                                            # filled from phone measurements (D1-2, M0-A1)
+    pixel_8a: {app: null, web: null, measured: null}
+    iphone_12_mini: {app: null, web: null, measured: null}

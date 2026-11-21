@@ -7,6 +7,7 @@
 //	metro vectors check                 validate vector files
 //	metro vectors record --client C --module M
 //	metro parity report [--release]     write PARITY.md, fail on red rows
+//	metro progress [--tests]            write plans/PROGRESS.md from plans/progress.yaml
 package main
 
 import (
@@ -15,12 +16,15 @@ import (
 	"fmt"
 	"log/slog"
 	"os"
+	"path/filepath"
 	"strings"
+	"time"
 
 	"metro/internal/gen"
 	"metro/internal/guard"
 	"metro/internal/msync"
 	"metro/internal/parity"
+	"metro/internal/progress"
 	"metro/internal/repo"
 	"metro/internal/validate"
 	"metro/internal/vectors"
@@ -81,9 +85,38 @@ func main() {
 			fail(fmt.Errorf("red rows:\n  %s", strings.Join(red, "\n  ")))
 		}
 		slog.Info("parity green", "report", "PARITY.md")
+	case "progress":
+		fs := flag.NewFlagSet("progress", flag.ExitOnError)
+		tests := fs.Bool("tests", false, "run every test suite and record the counts")
+		_ = fs.Parse(args)
+		fail(runProgress(root, *tests))
 	default:
 		usage()
 	}
+}
+
+func runProgress(root string, tests bool) error {
+	now := time.Now()
+	if tests {
+		total, pass, err := progress.RunTests(root)
+		if err != nil {
+			return err
+		}
+		if err := progress.SetTests(root, total, pass, now); err != nil {
+			return err
+		}
+		slog.Info("tests", "total", total, "passing", pass)
+	}
+	f, err := progress.Load(root)
+	if err != nil {
+		return err
+	}
+	md, err := progress.Render(root, f, now)
+	if err != nil {
+		return err
+	}
+	slog.Info("progress", "file", "plans/PROGRESS.md")
+	return os.WriteFile(filepath.Join(root, "plans", "PROGRESS.md"), []byte(md), 0o644)
 }
 
 func runGen(root string, check bool) error {
@@ -146,7 +179,7 @@ func runGuard(root, base string) error {
 }
 
 func usage() {
-	fmt.Fprintln(os.Stderr, "usage: metro gen [--check] | sync | validate | guard [--base B] | vectors check | vectors record --client C --module M | parity report [--release]")
+	fmt.Fprintln(os.Stderr, "usage: metro gen [--check] | sync | validate | guard [--base B] | vectors check | vectors record --client C --module M | parity report [--release] | progress [--tests]")
 	os.Exit(2)
 }
 

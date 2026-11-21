@@ -1,0 +1,2 @@
+# date | session length | what was added (one line per session)
+2026-11-21 | 10:50–14:35 (3 h 45 min) | M0 implementováno (citypack, world_engine, drive_core, app, HUD, tuning panel), čísla do tuning.yaml, čistá logika; D0 (metro, shared_gen, rules_core, web/, schémata, PRNG vektory, CI); zavedeno měření postupu – +34 bodů, 54/54 testů

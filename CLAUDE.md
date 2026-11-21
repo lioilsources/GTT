@@ -17,6 +17,7 @@ for p in packages/rules_core packages/world_engine packages/drive_core app; do (
 (cd web && npm ci && npm run typecheck && npm test && npm run build)
 (cd tools/metro && go test ./...); (cd tools/citypack && go test ./...)
 run/bin/metro validate && run/bin/metro vectors check && run/bin/metro gen --check && run/bin/metro parity report
+run/bin/metro progress --tests   # po každé dokončené položce plans/progress.yaml (pravidla v PROGRESS.md)
 (cd app && flutter run --profile)  # lokálně vždy --profile
 ```
 
