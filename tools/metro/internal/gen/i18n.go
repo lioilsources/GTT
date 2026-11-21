@@ -150,7 +150,49 @@ export function t(locale: Locale, key: MessageKey, args: Record<string, string |
 }
 `)
 	o.Add("web/src/gen/i18n.ts", []byte(ts.String()))
+
+	// Dart message table for pure packages (minigames) that cannot use the app's generated
+	// AppLocalizations; same lookup and {placeholder} rule as the web table.
+	var d strings.Builder
+	d.WriteString(Header("//", dir+"/*.json"))
+	d.WriteString("\n/// Locales with an i18n/<locale>.json.\nconst List<String> messageLocales = [")
+	for i, loc := range names {
+		if i > 0 {
+			d.WriteString(", ")
+		}
+		d.WriteString("'" + loc + "'")
+	}
+	d.WriteString("];\n\n/// Every message key of i18n/en.json.\nenum MessageKey {\n")
+	for _, m := range tmpl {
+		fmt.Fprintf(&d, "  %s('%s'),\n", Camel(m.key), m.key)
+	}
+	d.WriteString("  ;\n\n  const MessageKey(this.key);\n\n  /// The key as written in i18n/*.json.\n  final String key;\n}\n\n")
+	d.WriteString("const Map<String, Map<String, String>> _messages = {\n")
+	for _, loc := range names {
+		fmt.Fprintf(&d, "  '%s': {\n", loc)
+		for _, m := range locales[loc] {
+			fmt.Fprintf(&d, "    %s: %s,\n", dartStr(m.key), dartStr(m.text))
+		}
+		d.WriteString("  },\n")
+	}
+	d.WriteString(`};
+
+final RegExp _placeholder = RegExp(r'\{([a-zA-Z_][a-zA-Z0-9_]*)\}');
+
+/// Formats a message; {name} placeholders are replaced from args. Unknown locales fall back to en.
+String tr(String locale, MessageKey key, [Map<String, Object> args = const {}]) {
+  final table = _messages[locale] ?? _messages['en']!;
+  return table[key.key]!.replaceAllMapped(_placeholder, (m) => '${args[m[1]] ?? m[0]}');
+}
+`)
+	o.Add("packages/shared_gen/lib/src/i18n.g.dart", []byte(d.String()))
 	return nil
+}
+
+// dartStr quotes s as a Dart string literal (single quotes, $ and \\ escaped).
+func dartStr(s string) string {
+	r := strings.NewReplacer(`\`, `\\`, `'`, `\'`, `$`, `\$`, "\n", `\n`)
+	return "'" + r.Replace(s) + "'"
 }
 
 func jsonStr(s string) string {
