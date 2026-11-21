@@ -120,6 +120,8 @@
   name: GPS route (Dijkstra on the kept graph)
   level: P0
   spec: specs/route.md@1
+  vectors: vectors/route.json
   lead: web
-  flutter: todo
-  web: todo
+  flutter: done
+  web: done
+  checks: {flutter: pass, web: pass}
