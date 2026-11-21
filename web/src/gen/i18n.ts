@@ -26,6 +26,10 @@ export type MessageKey =
   | "worldSection"
   | "carSection"
   | "aboutMaps"
+  | "benchRunning"
+  | "benchDone"
+  | "copy"
+  | "benchStart"
 ;
 
 export const messages: Record<Locale, Record<MessageKey, string>> = {
@@ -52,6 +56,10 @@ export const messages: Record<Locale, Record<MessageKey, string>> = {
     worldSection: "Svět (content/tuning.yaml)",
     carSection: "Auto (content/cars)",
     aboutMaps: "© OpenStreetMap contributors · Overture Maps Foundation",
+    benchRunning: "Benchmark {percent} %",
+    benchDone: "Benchmark dokončen",
+    copy: "Kopírovat",
+    benchStart: "Benchmark",
   },
   "en": {
     appTitle: "Metropole",
@@ -76,6 +84,10 @@ export const messages: Record<Locale, Record<MessageKey, string>> = {
     worldSection: "World (content/tuning.yaml)",
     carSection: "Car (content/cars)",
     aboutMaps: "© OpenStreetMap contributors · Overture Maps Foundation",
+    benchRunning: "Benchmark {percent} %",
+    benchDone: "Benchmark finished",
+    copy: "Copy",
+    benchStart: "Benchmark",
   },
 };
 

@@ -48,5 +48,16 @@
   "close": "Close",
   "worldSection": "World (content/tuning.yaml)",
   "carSection": "Car (content/cars)",
-  "aboutMaps": "© OpenStreetMap contributors · Overture Maps Foundation"
+  "aboutMaps": "© OpenStreetMap contributors · Overture Maps Foundation",
+  "benchRunning": "Benchmark {percent} %",
+  "@benchRunning": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      }
+    }
+  },
+  "benchDone": "Benchmark finished",
+  "copy": "Copy",
+  "benchStart": "Benchmark"
 }
