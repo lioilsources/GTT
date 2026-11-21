@@ -17,5 +17,6 @@ workspace:
   - packages/mg_koulena
   - packages/mg_strelnice
   - packages/feed_hub
+  - packages/meta_progress
 dev_dependencies:
   flutter_lints: ^6.0.0

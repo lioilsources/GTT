@@ -8,6 +8,7 @@ import 'package:flame/game.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/services.dart';
+import 'package:meta_progress/meta_progress.dart';
 import 'package:world_engine/world_engine.dart';
 
 import 'paint/car_painter.dart';
@@ -15,6 +16,7 @@ import 'paint/controls_painter.dart';
 import 'paint/pedestrians_painter.dart';
 import 'paint/props_painter.dart';
 import 'paint/traffic_painter.dart';
+import '../ui/passport.dart' show passportCityOf;
 
 /// Everything loaded before the first frame.
 class GameAssets {
@@ -111,6 +113,7 @@ class MetropoleGame extends Game {
     peds = PedestrianWorld(city, tuning);
     _pedBubbles = PedBubblePainter(
         tr(ui.PlatformDispatcher.instance.locale.languageCode, MessageKey.pedestrianBubble), tuning.pedestrians.bubblePx);
+    passport = PassportTracker(passportCityOf(city), tuning.passport)..onStamp((e) => passportEvent.value = e);
   }
 
   final GameAssets data;
@@ -124,6 +127,10 @@ class MetropoleGame extends Game {
   late ControlScheme scheme;
   final hud = ValueNotifier<HudState>(const HudState());
   bool night = false;
+
+  /// Tourist passport (specs/passport.md); the save feature will pass stamps in and read them out.
+  late final PassportTracker passport;
+  final passportEvent = ValueNotifier<StampEvent?>(null);
 
   /// Benchmark (specs/bench.md): progress 0..1 while running, then the result.
   Autopilot? pilot;
@@ -268,6 +275,7 @@ class MetropoleGame extends Game {
       );
       _prepAcc = 0;
       _prepN = 0;
+      if (pilot == null) passport.update(car.x, car.y, hud.value.district);
     }
   }
 
