@@ -43,13 +43,14 @@ items:
      started: 2026-11-21T13:30, done: 2026-11-21T14:26, commit: f7b3206, evidence: "flutter test v packages/rules_core; npm test ve web/; metro vectors record --client flutter|web dá shodný soubor"}
   - {id: D0-6, milestone: D0, name: "workflowy shared.yml, flutter.yml, web.yml", size: M, status: hotovo,
      started: 2026-11-21T13:30, done: 2026-11-21T16:50, commit: f7b3206, evidence: "CI na PR #1 zelené: shared, flutter, web (runy 44920997315, 44920997254, 44920997267)"}
-  - {id: D0-7, milestone: D0, name: "web/ s prázdnou scénou Babylonu nasazenou na Pages", size: M, status: "čeká na Ol1na",
-     started: 2026-11-21T13:30, done: 2026-11-21T14:26, commit: f7b3206, evidence: "npm run build ve web/ (scéna ověřená v Chrome); Pages zapnuté, nasazení proběhne po merge PR #1"}
+  - {id: D0-7, milestone: D0, name: "web/ s prázdnou scénou Babylonu nasazenou na Pages", size: M, status: hotovo,
+     started: 2026-11-21T13:30, done: 2026-11-21T17:15, commit: 2104e36, evidence: "web.yml po merge PR #1 nasadil https://lioilsources.github.io/GTT/ (HTTP 200, shared/packs/nyc/current.json)"}
   - {id: D0-8, milestone: D0, name: "citypack publish/pull přes GitHub Releases, packs.lock", size: S, status: hotovo,
      started: 2026-11-21T13:30, done: 2026-11-21T16:46, commit: be519ae, evidence: "citypack publish nyc → release pack-nyc-5a8c6e78d95e; citypack pull nyc + validate; CI citypack pull all"}
 
   # ---------- D1 – Souboj M0
-  - {id: D1-1, milestone: D1, name: "hračka M0 ve webovém klientovi ze stejného citypacku a tuning.yaml", size: L, status: todo}
+  - {id: D1-1, milestone: D1, name: "hračka M0 ve webovém klientovi ze stejného citypacku a tuning.yaml", size: L, status: wip,
+     started: 2026-11-21T17:10}
   - {id: D1-2, milestone: D1, name: "měření obou klientů na obou telefonech (fps, start, paměť, baterie)", size: M, status: todo}
   - {id: D1-3, milestone: D1, name: "plans/BAKEOFF_REPORT.md", size: S, status: todo}
   - {id: D1-4, milestone: D1, name: "brána G1 (rozhoduje Ol1n)", size: S, status: todo}

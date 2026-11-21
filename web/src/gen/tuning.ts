@@ -511,8 +511,11 @@ export class TuningCamera {
 /** Tyre model and car handling (METROPOLE_PLAN 7.2). Per-car values live in content/cars/. */
 export class TuningDrive {
   stepHz: number;
-  /** Box2D v3 sub-steps per step */
+  /** Box2D v3 sub-steps per step (client F) */
   substeps: number;
+  /** planck.js solver iterations per step (client W, DUALSTACK 6.4) */
+  velocityIterations: number;
+  positionIterations: number;
   /** axle distance from the centre, fraction of half length */
   axleOffset: number;
   /** wheel lock at standstill */
@@ -556,6 +559,8 @@ export class TuningDrive {
   constructor(r: R) {
     this.stepHz = r.i('step_hz');
     this.substeps = r.i('substeps');
+    this.velocityIterations = r.i('velocity_iterations');
+    this.positionIterations = r.i('position_iterations');
     this.axleOffset = r.d('axle_offset');
     this.steerLockRad = r.d('steer_lock_rad');
     this.steerLockDropRad = r.d('steer_lock_drop_rad');
@@ -589,6 +594,8 @@ export class TuningDrive {
     return {
       step_hz: this.stepHz,
       substeps: this.substeps,
+      velocity_iterations: this.velocityIterations,
+      position_iterations: this.positionIterations,
       axle_offset: this.axleOffset,
       steer_lock_rad: this.steerLockRad,
       steer_lock_drop_rad: this.steerLockDropRad,
@@ -630,6 +637,8 @@ export class TuningLayers {
   /** outward velocity removed (1 = stop, >1 = bounce back) */
   railBounce: number;
   spawnSearchM: number;
+  /** bridge deck height per layer in the 3D client W (DUALSTACK 6.2) */
+  deckLiftM: number;
 
   constructor(r: R) {
     this.searchM = r.d('search_m');
@@ -637,6 +646,7 @@ export class TuningLayers {
     this.railMargin = r.d('rail_margin');
     this.railBounce = r.d('rail_bounce');
     this.spawnSearchM = r.d('spawn_search_m');
+    this.deckLiftM = r.d('deck_lift_m');
   }
 
   toJson(): Record<string, unknown> {
@@ -646,6 +656,7 @@ export class TuningLayers {
       rail_margin: this.railMargin,
       rail_bounce: this.railBounce,
       spawn_search_m: this.spawnSearchM,
+      deck_lift_m: this.deckLiftM,
     };
   }
 
@@ -662,12 +673,14 @@ export class TuningLayers {
         return this.railBounce;
       case 'spawn_search_m':
         return this.spawnSearchM;
+      case 'deck_lift_m':
+        return this.deckLiftM;
       default:
         return undefined;
     }
   }
 
-  static readonly keys = ['search_m', 'switch_margin_m', 'rail_margin', 'rail_bounce', 'spawn_search_m'] as const;
+  static readonly keys = ['search_m', 'switch_margin_m', 'rail_margin', 'rail_bounce', 'spawn_search_m', 'deck_lift_m'] as const;
 }
 
 export class TuningControls {
