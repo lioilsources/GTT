@@ -50,12 +50,13 @@
   level: P2
   spec: specs/minigames/README.md@1
   lead: web
-  flutter: todo
-  web: todo
+  flutter: wip
+  web: done
 - id: F-008
   name: Sirky (duel)
   level: P0
   spec: specs/minigames/sirky.md@1
+  vectors: vectors/sirky.json
   lead: web
-  flutter: todo
-  web: todo
+  flutter: wip
+  web: done

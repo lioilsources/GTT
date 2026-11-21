@@ -13,7 +13,7 @@ uzavřená rozhodnutí neotvírej. Stav: `docs/m0.md`, postup: `plans/PROGRESS.m
 run/bin/citypack pull all  # nebo: run/bin/citypack build nyc
 run/bin/metro gen && run/bin/metro sync
 flutter pub get && flutter analyze app packages
-for p in packages/rules_core packages/world_engine packages/drive_core app; do (cd $p && flutter test); done
+for p in packages/*/ app; do [ -d $p/test ] && (cd $p && flutter test); done
 (cd web && npm ci && npm run typecheck && npm test && npm run build)
 (cd tools/metro && go test ./...); (cd tools/citypack && go test ./...)
 run/bin/metro validate && run/bin/metro vectors check && run/bin/metro gen --check && run/bin/metro parity report
