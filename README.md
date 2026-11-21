@@ -48,8 +48,8 @@ Podrobnosti: [docs/citypack.md](docs/citypack.md).
 
 ## Referenční telefony
 
-Návrh pro bránu M0 (60 fps, příprava bufferu budov ≤ 4 ms, RAM < 600 MB) – potvrdí Olin:
-**Samsung Galaxy A55** (Android, střední třída) a **iPhone 13**.
+Brána M0 (60 fps, příprava bufferu budov ≤ 4 ms, RAM < 600 MB) se měří na:
+**Google Pixel 8a** (Android) a **iPhone 12 mini** (iOS).
 
 ## Mapová data a licence
 
