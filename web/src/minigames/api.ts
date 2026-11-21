@@ -14,4 +14,16 @@ export interface MinigameEnv {
   tuning: Tuning;
   locale: Locale;
   t: (k: MessageKey, a?: Record<string, string | number>) => string;
+  /** The NPC opponent (MinigameContext.opponentId) resolved by the launcher; its line shows on the result screen. */
+  opponent?: MinigameOpponent;
+}
+
+/** An NPC opponent as the shell needs it (specs/dialogue.md "Hláška soupeře"). */
+export interface MinigameOpponent {
+  id: string;
+  name: string;
+  /** Index into tokens colorNpcPortraits (placeholder portrait). */
+  portrait: number;
+  /** The quip for the player's outcome, in the env locale. */
+  line(winner: 'player' | 'ai' | 'draw'): string;
 }

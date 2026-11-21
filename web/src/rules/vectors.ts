@@ -9,6 +9,7 @@ import { StrelniceRules } from '../minigames/strelnice/rules';
 import { RouteRules } from '../drive/gps';
 import { FeedRules } from '../phone/feed';
 import { PassportRules } from '../passport/rules';
+import { DialogueRules } from '../dialogue/rules';
 import { Prng } from './prng';
 
 /** One step of a P0 vector: an action and the state after it (DUALSTACK 5.4). */
@@ -48,6 +49,7 @@ export const rulesModules: Record<string, () => AnyRules> = {
   koulena: () => new KoulenaRules() as unknown as AnyRules,
   strelnice: () => new StrelniceRules() as unknown as AnyRules,
   passport: () => new PassportRules() as unknown as AnyRules,
+  dialogue: () => new DialogueRules() as unknown as AnyRules,
 };
 
 /** Final result of a rules case (compared with case.result). */
