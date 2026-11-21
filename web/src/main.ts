@@ -15,6 +15,7 @@ import { carPose, PedestrianWorld } from './peds/pedestrians';
 import { drawPedBubbles, PedView } from './render/pedView';
 import { Tuning } from './gen/tuning';
 import { TrafficView } from './render/trafficView';
+import { installPassport } from './passport/hud';
 import { WorldView } from './render/worldView';
 import { installPhone } from './phone';
 import { HttpPackSource } from './world/citypack';
@@ -73,6 +74,10 @@ async function main(): Promise<void> {
   const city = await City.load(source);
   const engine = await createEngine();
   const drive = new DriveWorld(city, car, tuning);
+  // Passport (specs/passport.md); ?passport / ?about open its screens.
+  const passport = installPassport(city, tuning.passport, { t }, { root: $('hud'), about: $('about') });
+  if (params.has('passport')) passport.openPassport();
+  if (params.has('about')) passport.openAbout();
 
   // ?spot=<id> puts the player on a spot (DUALSTACK 6.6).
   const spot = city.spots.items.find((s) => s.id === params.get('spot'));
@@ -232,6 +237,7 @@ async function main(): Promise<void> {
     perfEl.style.color = perf.fps >= 57 ? tokens.colorUiFpsOk : tokens.colorUiFpsBad;
     const d = drive.borderDistance();
     noticeEl.hidden = !(d !== null && d < tuning.hud.borderNoticeM);
+    if (!pilot) passport.update(c.x, c.y);
   }
 
   // ---------- benchmark (specs/bench.md)
@@ -365,7 +371,7 @@ async function main(): Promise<void> {
 
   if (import.meta.env.DEV || params.has('debug')) {
     (window as unknown as Record<string, unknown>)['metro'] = {
-      engine, view, drive, city, tuning, frameTimes, pilot, bench, peds, phone,
+      engine, view, drive, city, tuning, frameTimes, pilot, bench, peds, phone, passport,
       timing: () => ({ firstFrameMs, loadMs }),
     };
   }
