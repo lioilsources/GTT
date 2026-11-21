@@ -1,0 +1,163 @@
+// Citypack: the per-city world package produced by `citypack pack` and read by world_engine.
+//
+// Every file is a gzip-compressed protobuf message.
+// Coordinates are local equirectangular metres from the manifest origin
+// (x = Δlon·cos(lat0)·R, y = Δlat·R, y points north), stored as decimetres in sint32.
+// Flat coordinate lists are interleaved: x0, y0, x1, y1, ...
+syntax = "proto3";
+
+package citypack;
+
+option go_package = "citypack/internal/pb";
+
+// manifest.pb
+message Manifest {
+  uint32 format_version = 1;
+  string city_id = 2;
+  string name = 3;
+  double origin_lat = 4;
+  double origin_lon = 5;
+  string drive_side = 6;  // "right" | "left"
+  string units = 7;       // "metric" | "imperial"
+  string overture_release = 8;
+  uint32 chunk_m = 9;
+  Rect bounds = 10;               // dm
+  repeated sint32 area = 11;      // playable area outer ring, dm
+  repeated ChunkRef chunks = 12;
+  Spawn start = 13;
+  repeated District districts = 14;
+  repeated string attribution = 15;
+  string built_at = 16;
+}
+
+message Rect {
+  sint32 min_x = 1;
+  sint32 min_y = 2;
+  sint32 max_x = 3;
+  sint32 max_y = 4;
+}
+
+// Chunk (x, y) covers [x*chunk_m, (x+1)*chunk_m) × [y*chunk_m, (y+1)*chunk_m) in metres.
+message ChunkRef {
+  sint32 x = 1;
+  sint32 y = 2;
+  uint32 bytes = 3;
+  uint32 buildings = 4;
+}
+
+message Spawn {
+  sint32 x = 1;
+  sint32 y = 2;
+  float heading_rad = 3;  // 0 = east, counter-clockwise
+}
+
+message District {
+  string name = 1;
+  repeated sint32 ring = 2;  // dm
+}
+
+enum RoadClass {
+  ROAD_UNKNOWN = 0;
+  MOTORWAY = 1;
+  TRUNK = 2;
+  PRIMARY = 3;
+  SECONDARY = 4;
+  TERTIARY = 5;
+  RESIDENTIAL = 6;
+  SERVICE = 7;
+}
+
+// graph.pb
+message Graph {
+  repeated Node nodes = 1;
+  repeated Edge edges = 2;
+  repeated string names = 3;  // names[0] is always ""
+}
+
+message Node {
+  sint32 x = 1;
+  sint32 y = 2;
+  bool border = 3;  // road leaves the playable area here: draw a roadblock
+}
+
+message Edge {
+  uint32 from = 1;
+  uint32 to = 2;
+  repeated sint32 points = 3;  // full polyline incl. both end nodes, dm
+  RoadClass class = 4;
+  uint32 name = 5;             // index into Graph.names
+  uint32 lanes = 6;            // total, both directions
+  sint32 oneway = 7;           // 0 two-way, 1 from→to only, -1 to→from only
+  sint32 layer_from = 8;       // -1 tunnel, 0 ground, +1 bridge/overpass
+  sint32 layer_to = 9;
+  bool bridge = 10;
+  bool tunnel = 11;
+  bool kept = 12;              // false = alley: drivable, no traffic, no GPS
+  float width_m = 13;          // lanes*lane_width + 2*sidewalk (alleys: no sidewalk)
+}
+
+// chunks/{x}_{y}.pb
+message Chunk {
+  sint32 x = 1;
+  sint32 y = 2;
+  repeated Building buildings = 3;
+  repeated Mesh ground = 4;
+}
+
+message Building {
+  repeated sint32 rings = 1;      // all rings concatenated, dm
+  repeated uint32 ring_ends = 2;  // exclusive end vertex index per ring; ring 0 outer (CCW), rest holes (CW)
+  repeated uint32 roof = 3;       // triangle indices into the ring vertices
+  float height_m = 4;
+  float min_height_m = 5;         // > 0 for stacked building parts
+  uint32 landmark = 6;            // 1-based index into Landmarks.items, 0 = none
+  bool collide = 7;               // ground-touching masses get static colliders
+  uint32 wall_seed = 8;           // seeds the facade tint and window scale
+}
+
+enum GroundKind {
+  GROUND_UNKNOWN = 0;
+  LAND = 1;
+  WATER = 2;
+  PARK = 3;
+  RAIL = 4;
+  PLAZA = 5;
+}
+
+message Mesh {
+  GroundKind kind = 1;
+  repeated sint32 vertices = 2;  // dm
+  repeated uint32 indices = 3;
+}
+
+// landmarks.pb
+message Landmarks {
+  repeated Landmark items = 1;
+}
+
+message Landmark {
+  string id = 1;
+  string name = 2;
+  sint32 x = 3;  // label anchor, dm
+  sint32 y = 4;
+  float height_m = 5;
+  bool hero = 6;
+  string blurb = 7;
+}
+
+// spots.pb
+message Spots {
+  repeated Spot items = 1;
+}
+
+message Spot {
+  string id = 1;
+  string kind = 2;
+  string name = 3;
+  sint32 x = 4;
+  sint32 y = 5;
+  uint32 edge = 6;           // nearest kept edge
+  sint32 park_x = 7;         // parking point on that edge, dm
+  sint32 park_y = 8;
+  float park_heading = 9;
+}

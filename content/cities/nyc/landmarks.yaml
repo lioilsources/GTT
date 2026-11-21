@@ -1,0 +1,27 @@
+# Hand-curated landmarks. The point picks the building that contains it (or overture_id when set).
+# height_m is the real roof/spire height and overrides Overture. kind: plaza|park = open space, no building.
+# Commercial towers go by address (R10), public institutions and monuments by their real name.
+landmarks:
+  - {id: empire_state, name: Empire State Building, lat: 40.74844, lon: -73.98566, height_m: 381, hero: true}
+  - {id: chrysler, name: Chrysler Building, lat: 40.75162, lon: -73.97545, height_m: 319, hero: true}
+  - {id: grand_central, name: Grand Central Terminal, lat: 40.75272, lon: -73.97722, height_m: 36, hero: true}
+  - {id: times_square, name: Times Square, lat: 40.75800, lon: -73.98557, kind: plaza, hero: true}
+  - {id: central_park, name: Central Park, lat: 40.76660, lon: -73.97600, kind: park, hero: true}
+  - {id: one_vanderbilt, name: One Vanderbilt, lat: 40.75302, lon: -73.97853, height_m: 427, hero: true}
+  - {id: rockefeller, name: 30 Rockefeller Plaza, lat: 40.75897, lon: -73.97929, height_m: 259, hero: true}
+  - {id: one_bryant_park, name: One Bryant Park, lat: 40.75556, lon: -73.98444, height_m: 366, hero: true}
+  - {id: park_432, name: 432 Park Avenue, lat: 40.76156, lon: -73.97182, height_m: 426, hero: true}
+  - {id: central_park_tower, name: Central Park Tower, lat: 40.76658, lon: -73.98094, height_m: 472, hero: true}
+  - {id: one57, name: One57, lat: 40.76530, lon: -73.97890, height_m: 306, hero: true}
+  - {id: park_200, name: 200 Park Avenue, lat: 40.75335, lon: -73.97646, height_m: 246, hero: true}
+  - {id: eighth_620, name: 620 Eighth Avenue, lat: 40.75633, lon: -73.98980, height_m: 319, hero: true}
+  - {id: hudson_yards_30, name: 30 Hudson Yards, lat: 40.75391, lon: -74.00098, height_m: 387, hero: true}
+  - {id: msg, name: Madison Square Garden, lat: 40.75052, lon: -73.99345, height_m: 46, hero: true}
+  - {id: farley, name: Moynihan Train Hall, lat: 40.75203, lon: -73.99633, height_m: 32, hero: true}
+  - {id: un_hq, name: United Nations Headquarters, lat: 40.74894, lon: -73.96808, height_m: 155, hero: true}
+  - {id: st_patricks, name: St. Patrick's Cathedral, lat: 40.75846, lon: -73.97600, height_m: 100, hero: true}
+  - {id: nypl, name: New York Public Library, lat: 40.75318, lon: -73.98225, height_m: 30, hero: true}
+  - {id: carnegie_hall, name: Carnegie Hall, lat: 40.76504, lon: -73.97996, height_m: 46, hero: true}
+  - {id: bryant_park, name: Bryant Park, lat: 40.75363, lon: -73.98393, kind: park}
+  - {id: port_authority, name: Port Authority Bus Terminal, lat: 40.75688, lon: -73.99069, height_m: 25}
+  - {id: javits, name: Javits Center, lat: 40.75735, lon: -74.00243, height_m: 30}

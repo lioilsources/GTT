@@ -1,0 +1,16 @@
+id: nyc
+name: New York
+origin: {lat: 40.7580, lon: -73.9855}
+drive_side: right            # london, tokyo, hongkong, mumbai: left
+units: imperial
+area: area.geojson           # M0: Midtown, 30th–60th St, river to river
+overture_release: "2026-11-18.0"
+# Overture carries heights for ~98 % of Midtown buildings; nyc_footprints and ghsl are not wired yet.
+height_sources: [overture]
+road_keep_classes: [motorway, trunk, primary, secondary, tertiary]
+road_keep_names: [Broadway, Wall Street, Bleecker Street, Canal Street]
+style: style.yaml            # palette, facades, paving, furniture, weather, sound
+start: {lat: 40.76040, lon: -73.98360, heading_deg: 209, street: 7th Avenue}   # heading downtown into Times Square
+default_height_m: 12
+max_chunk_kb: 512
+districts: districts.yaml

@@ -1,0 +1,22 @@
+name: drive_core
+description: Car physics, controls, layers and street furniture.
+version: 0.1.0
+publish_to: none
+resolution: workspace
+
+environment:
+  sdk: ^3.12.2
+  flutter: ">=3.44.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  forge2d: ">=0.14.0 <0.15.2"
+  vector_math: ^2.2.0
+  world_engine:
+    path: ../world_engine
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0

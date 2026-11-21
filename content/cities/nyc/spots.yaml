@@ -1,0 +1,9 @@
+# Curated points snapped to the nearest kept road; M0 uses them only for the reachability check.
+spots:
+  - {id: times_square, kind: plaza, name: Times Square, lat: 40.75800, lon: -73.98557}
+  - {id: grand_central, kind: station, name: Grand Central Terminal, lat: 40.75272, lon: -73.97722}
+  - {id: bryant_park, kind: park, name: Bryant Park, lat: 40.75363, lon: -73.98393}
+  - {id: columbus_circle, kind: plaza, name: Columbus Circle, lat: 40.76810, lon: -73.98190}
+  - {id: hudson_yards, kind: plaza, name: Hudson Yards, lat: 40.75380, lon: -74.00200}
+  - {id: un_plaza, kind: plaza, name: United Nations Plaza, lat: 40.74990, lon: -73.96880}
+  - {id: empire_state, kind: landmark, name: Empire State Building, lat: 40.74844, lon: -73.98566}

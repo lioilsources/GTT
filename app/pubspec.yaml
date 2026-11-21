@@ -1,0 +1,35 @@
+name: metropole
+description: "Metropole – free driving through real world cities, one thumb, portrait."
+publish_to: 'none'
+version: 0.1.0+1
+resolution: workspace
+
+environment:
+  sdk: ^3.12.2
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  intl: any
+  flame: ^1.38.2
+  yaml: ^3.1.4
+  world_engine:
+    path: ../packages/world_engine
+  drive_core:
+    path: ../packages/drive_core
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+
+flutter:
+  uses-material-design: true
+  generate: true
+  assets:
+    - assets/tuning.yaml
+    - assets/cars/
+    - assets/cities/nyc/
+    - assets/cities/nyc/chunks/

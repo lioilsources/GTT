@@ -1,0 +1,23 @@
+# Neighbourhoods for the HUD. Overture divisions cover Midtown only with community boards,
+# so districts are drawn here on the Manhattan street grid (approximate, first match wins).
+grid:
+  anchor: {lat: 40.7533, lon: -73.9800}   # 5th Ave & 42nd St
+  anchor_street: 42
+  bearing_deg: 29                          # compass bearing of the avenues going uptown
+  street_m: 80.4
+  avenues_m: {river_w: -2600, 12th: -1960, 11th: -1680, 10th: -1400, 9th: -1120, 8th: -840,
+              7th: -560, 6th: -280, 5th: 0, madison: 128, park: 256, lex: 384, 3rd: 512,
+              2nd: 712, 1st: 912, river_e: 2200}
+districts:
+  - {name: Hudson Yards, streets: [26, 34], avenues: [river_w, 8th]}
+  - {name: Hell's Kitchen, streets: [34, 62], avenues: [river_w, 8th]}
+  - {name: Garment District, streets: [26, 42], avenues: [8th, 5th]}
+  - {name: Theater District, streets: [42, 54], avenues: [8th, 6th]}
+  - {name: Central Park South, streets: [54, 62], avenues: [8th, 6th]}
+  - {name: Midtown, streets: [42, 62], avenues: [6th, park]}
+  - {name: Murray Hill, streets: [26, 42], avenues: [5th, 3rd]}
+  - {name: Kips Bay, streets: [26, 38], avenues: [3rd, river_e]}
+  - {name: Tudor City, streets: [38, 43], avenues: [3rd, river_e]}
+  - {name: Midtown East, streets: [42, 62], avenues: [park, 3rd]}
+  - {name: Turtle Bay, streets: [43, 53], avenues: [3rd, river_e]}
+  - {name: Sutton Place, streets: [53, 62], avenues: [3rd, river_e]}

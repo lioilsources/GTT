@@ -1,0 +1,22 @@
+name: world_engine
+description: Citypack loading, chunk streaming, 2.5D renderer and camera.
+version: 0.1.0
+publish_to: none
+resolution: workspace
+
+environment:
+  sdk: ^3.12.2
+  flutter: ">=3.44.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  archive: ^4.0.0
+  protobuf: ^6.1.0
+  yaml: ^3.1.4
+  vector_math: ^2.2.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0

@@ -1,0 +1,21 @@
+{
+  "id": "m0_coupe",
+  "name": "Varga Comet",
+  "class": "coupe",
+  "length_m": 4.5,
+  "width_m": 1.9,
+  "mass": 1300,
+  "power": 9.0,
+  "brake": 16.0,
+  "grip_front": 24.0,
+  "grip_rear": 22.0,
+  "drift_bias": 0.32,
+  "steer_speed": 4.5,
+  "top_speed": 40.0,
+  "seats": 2,
+  "tags": ["nyc"],
+  "price": 0,
+  "rarity": "common",
+  "tuning_slots": ["engine", "tyres", "brakes", "weight", "drift"],
+  "paint": "#D7263D"
+}

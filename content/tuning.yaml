@@ -1,0 +1,9 @@
+# Shared tuning values. Tuned during M0 dogfooding; edit live in the debug panel.
+car_scale: 2.5
+lane_width_m: 8.0
+sidewalk_width_m: 5.0
+view_width_m: {slow: 50, fast: 85}     # zoom by speed
+car_anchor: {x: 0.5, y: 0.72}          # car position on screen
+extrusion: {k: 0.004, knee_m: 50, exp: 0.85, max_scale: 2.2}
+chunk_m: 256
+speed_mps: {cruise: 25, top_default: 40}
