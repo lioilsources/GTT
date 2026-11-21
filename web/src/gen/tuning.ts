@@ -94,6 +94,8 @@ export class Tuning {
   /** Street furniture (procedural per chunk, never stored). */
   readonly props: TuningProps;
   readonly skids: TuningSkids;
+  /** D1 measurement autopilot (specs/bench.md); route in content/bench/<city>.json. */
+  readonly bench: TuningBench;
   readonly hud: TuningHud;
 
   private constructor(r: R) {
@@ -115,6 +117,7 @@ export class Tuning {
     this.controls = new TuningControls(r.sub('controls'));
     this.props = new TuningProps(r.sub('props'));
     this.skids = new TuningSkids(r.sub('skids'));
+    this.bench = new TuningBench(r.sub('bench'));
     this.hud = new TuningHud(r.sub('hud'));
   }
 
@@ -138,6 +141,7 @@ export class Tuning {
       controls: this.controls.toJson(),
       props: this.props.toJson(),
       skids: this.skids.toJson(),
+      bench: this.bench.toJson(),
       hud: this.hud.toJson(),
     };
   }
@@ -904,6 +908,107 @@ export class TuningSkids {
       max_segments: this.maxSegments,
     };
   }
+}
+
+/** D1 measurement autopilot (specs/bench.md); route in content/bench/<city>.json. */
+export class TuningBench {
+  /** pure pursuit target distance ahead on the route */
+  lookaheadM: number;
+  /** plus this × speed */
+  lookaheadPerMps: number;
+  /** steer per radian of heading error */
+  steerGain: number;
+  /** route ahead checked for turns */
+  cornerLookaheadM: number;
+  /** a turn sharper than this within the lookahead slows the car */
+  cornerTurnRad: number;
+  cornerSpeedMps: number;
+  /** brake per m/s above the wanted speed */
+  brakePerMps: number;
+  /** slower than stuck_mps for this long = put back on the route */
+  stuckS: number;
+  stuckMps: number;
+  respawnAheadM: number;
+  arriveM: number;
+  /** frames before this are left out of the fps numbers */
+  warmupS: number;
+  /** route progress is searched in [s − back, s + ahead] */
+  searchBackM: number;
+  searchAheadM: number;
+
+  constructor(r: R) {
+    this.lookaheadM = r.d('lookahead_m');
+    this.lookaheadPerMps = r.d('lookahead_per_mps');
+    this.steerGain = r.d('steer_gain');
+    this.cornerLookaheadM = r.d('corner_lookahead_m');
+    this.cornerTurnRad = r.d('corner_turn_rad');
+    this.cornerSpeedMps = r.d('corner_speed_mps');
+    this.brakePerMps = r.d('brake_per_mps');
+    this.stuckS = r.d('stuck_s');
+    this.stuckMps = r.d('stuck_mps');
+    this.respawnAheadM = r.d('respawn_ahead_m');
+    this.arriveM = r.d('arrive_m');
+    this.warmupS = r.d('warmup_s');
+    this.searchBackM = r.d('search_back_m');
+    this.searchAheadM = r.d('search_ahead_m');
+  }
+
+  toJson(): Record<string, unknown> {
+    return {
+      lookahead_m: this.lookaheadM,
+      lookahead_per_mps: this.lookaheadPerMps,
+      steer_gain: this.steerGain,
+      corner_lookahead_m: this.cornerLookaheadM,
+      corner_turn_rad: this.cornerTurnRad,
+      corner_speed_mps: this.cornerSpeedMps,
+      brake_per_mps: this.brakePerMps,
+      stuck_s: this.stuckS,
+      stuck_mps: this.stuckMps,
+      respawn_ahead_m: this.respawnAheadM,
+      arrive_m: this.arriveM,
+      warmup_s: this.warmupS,
+      search_back_m: this.searchBackM,
+      search_ahead_m: this.searchAheadM,
+    };
+  }
+
+  /** Value by YAML key, undefined when the key is unknown. */
+  get(key: string): number | undefined {
+    switch (key) {
+      case 'lookahead_m':
+        return this.lookaheadM;
+      case 'lookahead_per_mps':
+        return this.lookaheadPerMps;
+      case 'steer_gain':
+        return this.steerGain;
+      case 'corner_lookahead_m':
+        return this.cornerLookaheadM;
+      case 'corner_turn_rad':
+        return this.cornerTurnRad;
+      case 'corner_speed_mps':
+        return this.cornerSpeedMps;
+      case 'brake_per_mps':
+        return this.brakePerMps;
+      case 'stuck_s':
+        return this.stuckS;
+      case 'stuck_mps':
+        return this.stuckMps;
+      case 'respawn_ahead_m':
+        return this.respawnAheadM;
+      case 'arrive_m':
+        return this.arriveM;
+      case 'warmup_s':
+        return this.warmupS;
+      case 'search_back_m':
+        return this.searchBackM;
+      case 'search_ahead_m':
+        return this.searchAheadM;
+      default:
+        return undefined;
+    }
+  }
+
+  static readonly keys = ['lookahead_m', 'lookahead_per_mps', 'steer_gain', 'corner_lookahead_m', 'corner_turn_rad', 'corner_speed_mps', 'brake_per_mps', 'stuck_s', 'stuck_mps', 'respawn_ahead_m', 'arrive_m', 'warmup_s', 'search_back_m', 'search_ahead_m'] as const;
 }
 
 export class TuningHud {

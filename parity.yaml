@@ -15,14 +15,14 @@
   spec: specs/citypack.md@1
   lead: flutter
   flutter: done
-  web: todo
-  checks: {flutter: pass}
+  web: done
+  checks: {flutter: pass, web: pass}
 - id: F-003
   name: M0 world view (2.5D extrusion, camera, day/night)
   level: P2
   lead: flutter
   flutter: wip
-  web: todo
+  web: wip
 - id: F-004
   name: M0 drive physics (tyre model, handbrake, layers)
   level: P1
@@ -30,11 +30,18 @@
   scenarios: scenarios/drive
   lead: flutter
   flutter: wip
-  web: todo
+  web: wip
 - id: F-005
   name: M0 controls A/B/C
   level: P1
   spec: specs/controls.md@1
   lead: flutter
   flutter: wip
+  web: wip
+- id: F-006
+  name: D1 benchmark (route, autopilot, measurement)
+  level: P1
+  spec: specs/bench.md@1
+  lead: web
+  flutter: todo
   web: todo

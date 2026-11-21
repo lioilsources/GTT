@@ -112,6 +112,23 @@ skids:
   brake_min_mps: 12.0
   max_segments: 600
 
+# D1 measurement autopilot (specs/bench.md); route in content/bench/<city>.json.
+bench:
+  lookahead_m: 12.0             # pure pursuit target distance ahead on the route
+  lookahead_per_mps: 0.5        # plus this × speed
+  steer_gain: 2.5               # steer per radian of heading error
+  corner_lookahead_m: 40.0      # route ahead checked for turns
+  corner_turn_rad: 0.6          # a turn sharper than this within the lookahead slows the car
+  corner_speed_mps: 10.0
+  brake_per_mps: 0.25           # brake per m/s above the wanted speed
+  stuck_s: 3.0                  # slower than stuck_mps for this long = put back on the route
+  stuck_mps: 1.0
+  respawn_ahead_m: 15.0
+  arrive_m: 10.0
+  warmup_s: 3.0                 # frames before this are left out of the fps numbers
+  search_back_m: 10.0           # route progress is searched in [s − back, s + ahead]
+  search_ahead_m: 60.0
+
 hud:
   street_labels_below_mps: 9.0
   street_label_radius_m: 70.0

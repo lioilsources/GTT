@@ -51,11 +51,13 @@ func Sync(root string) error {
 	if err := writeJSON(filepath.Join(web, "content", "tuning.json"), tuning); err != nil {
 		return err
 	}
-	cars, _ := filepath.Glob(filepath.Join(root, repo.Cars, "*.json"))
-	for _, c := range cars {
-		for _, d := range []string{app, web} {
-			if err := copyFile(c, filepath.Join(d, "content", "cars", filepath.Base(c))); err != nil {
-				return err
+	for _, dir := range []string{repo.Cars, repo.Bench} {
+		files, _ := filepath.Glob(filepath.Join(root, dir, "*.json"))
+		for _, c := range files {
+			for _, d := range []string{app, web} {
+				if err := copyFile(c, filepath.Join(d, "content", filepath.Base(dir), filepath.Base(c))); err != nil {
+					return err
+				}
 			}
 		}
 	}

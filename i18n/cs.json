@@ -20,5 +20,9 @@
   "close": "Zavřít",
   "worldSection": "Svět (content/tuning.yaml)",
   "carSection": "Auto (content/cars)",
-  "aboutMaps": "© OpenStreetMap contributors · Overture Maps Foundation"
+  "aboutMaps": "© OpenStreetMap contributors · Overture Maps Foundation",
+  "benchRunning": "Benchmark {percent} %",
+  "benchDone": "Benchmark dokončen",
+  "copy": "Kopírovat",
+  "benchStart": "Benchmark"
 }
