@@ -90,6 +90,22 @@ export type MessageKey =
   | "desetBust"
   | "desetScores"
   | "desetRound"
+  | "sipkyRules1"
+  | "sipkyRules2"
+  | "sipkyRules3"
+  | "sipkyRemaining"
+  | "sipkyDart"
+  | "sipkyBust"
+  | "sipkyHit"
+  | "koulenaRules1"
+  | "koulenaRules2"
+  | "koulenaRules3"
+  | "koulenaSeries"
+  | "strelniceRules1"
+  | "strelniceRules2"
+  | "strelniceRules3"
+  | "strelniceRound"
+  | "strelniceReload"
 ;
 
 export const messages: Record<Locale, Record<MessageKey, string>> = {
@@ -180,6 +196,22 @@ export const messages: Record<Locale, Record<MessageKey, string>> = {
     desetBust: "Bez bodů – tah propadl",
     desetScores: "Ty {player} · Soupeř {ai}",
     desetRound: "Kolo {round}/{max}",
+    sipkyRules1: "Tahem miř, puštěním hoď. Zaměřovač se kolébá – trefuj se včas.",
+    sipkyRules2: "Odečítá se od 301, tři šipky na tah. Pod nulu = přehoz.",
+    sipkyRules3: "Dostaň se přesně na nulu dřív než soupeř.",
+    sipkyRemaining: "Ty {player} · Soupeř {ai}",
+    sipkyDart: "Šipka {n}/3",
+    sipkyBust: "Přehoz!",
+    sipkyHit: "{points}",
+    koulenaRules1: "Švihni koulí po dráze do kruhů.",
+    koulenaRules2: "Kruhy dávají 10–50, rohové kapsy 100.",
+    koulenaRules3: "Tři série po devíti koulích.",
+    koulenaSeries: "Série {series}/3 · koule {ball}/9",
+    strelniceRules1: "Klepni na terče, jak jedou kolem.",
+    strelniceRules2: "Malé terče dávají nejvíc. Šest ran, pak krátké přebití.",
+    strelniceRules3: "Tři kola po 90 sekundách.",
+    strelniceRound: "Kolo {round}/3 · {seconds} s",
+    strelniceReload: "Přebíjím…",
   },
   "en": {
     appTitle: "Metropole",
@@ -268,6 +300,22 @@ export const messages: Record<Locale, Record<MessageKey, string>> = {
     desetBust: "No points – turn lost",
     desetScores: "You {player} · Opponent {ai}",
     desetRound: "Round {round}/{max}",
+    sipkyRules1: "Drag to aim, release to throw. The sight sways – time it.",
+    sipkyRules2: "Count down from 301; three darts per turn. Going below zero is a bust.",
+    sipkyRules3: "Hit exactly zero before the opponent.",
+    sipkyRemaining: "You {player} · Opponent {ai}",
+    sipkyDart: "Dart {n}/3",
+    sipkyBust: "Bust!",
+    sipkyHit: "{points}",
+    koulenaRules1: "Flick the ball up the lane into the rings.",
+    koulenaRules2: "Rings score 10–50, the corner pockets 100.",
+    koulenaRules3: "Three series of nine balls.",
+    koulenaSeries: "Series {series}/3 · ball {ball}/9",
+    strelniceRules1: "Tap the targets as they glide by.",
+    strelniceRules2: "Small ones score most. Six shots, then a short reload.",
+    strelniceRules3: "Three rounds of 90 seconds.",
+    strelniceRound: "Round {round}/3 · {seconds} s",
+    strelniceReload: "Reloading…",
   },
 };
 

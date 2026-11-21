@@ -167,3 +167,38 @@ minigames:
     star_margins: [1500, 500]   # lead for 3 and 2 stars
     time_cap_s: 420
     ai_think_s: 0.8
+  sipky:
+    start: 301
+    max_rounds: 15
+    player_scatter: 60          # 0.1 mm
+    ai_scatter: [420, 300, 210, 150, 100]
+    star_darts: [18, 27]
+    player_wobble: 120          # crosshair sway amplitude, 0.1 mm (UI only)
+    wobble_hz: 0.9
+    time_cap_s: 360
+    ai_think_s: 0.7
+  koulena:
+    series: 3
+    balls: 9
+    ring_r: [80, 160, 240, 320, 400]   # mm
+    ring_points: [50, 40, 30, 20, 10]
+    pockets: [-300, 360, 300, 360]     # x, y pairs
+    pocket_r: 50
+    pocket_points: 100
+    scatter: [40, 55, 70, 85, 100]     # mm per difficulty 1..5
+    star_scores: [700, 520, 360]
+    flick_mm_per_px: 2.2               # swipe length to aim distance (UI only)
+    time_cap_s: 360
+  strelnice:
+    tick_hz: 30
+    rounds: 3
+    round_ticks: 2700
+    targets: 36
+    width: 1000
+    lanes: [250, 500, 750]
+    kinds: [40, 9, 50, 60, 6, 20, 80, 4, 10]   # (radius, speed per tick, points) small, medium, large
+    kind_pct: [15, 55]
+    magazine: 6
+    reload_ticks: 45
+    star_scores: [1500, 1000, 600]
+    time_cap_s: 360

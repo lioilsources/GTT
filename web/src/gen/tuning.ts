@@ -1046,6 +1046,9 @@ export class TuningMinigames {
   readonly oko: TuningMinigamesOko;
   readonly dama: TuningMinigamesDama;
   readonly desetitisic: TuningMinigamesDesetitisic;
+  readonly sipky: TuningMinigamesSipky;
+  readonly koulena: TuningMinigamesKoulena;
+  readonly strelnice: TuningMinigamesStrelnice;
 
   constructor(r: R) {
     this.timeCapS = r.i('time_cap_s');
@@ -1053,6 +1056,9 @@ export class TuningMinigames {
     this.oko = new TuningMinigamesOko(r.sub('oko'));
     this.dama = new TuningMinigamesDama(r.sub('dama'));
     this.desetitisic = new TuningMinigamesDesetitisic(r.sub('desetitisic'));
+    this.sipky = new TuningMinigamesSipky(r.sub('sipky'));
+    this.koulena = new TuningMinigamesKoulena(r.sub('koulena'));
+    this.strelnice = new TuningMinigamesStrelnice(r.sub('strelnice'));
   }
 
   toJson(): Record<string, unknown> {
@@ -1062,6 +1068,9 @@ export class TuningMinigames {
       oko: this.oko.toJson(),
       dama: this.dama.toJson(),
       desetitisic: this.desetitisic.toJson(),
+      sipky: this.sipky.toJson(),
+      koulena: this.koulena.toJson(),
+      strelnice: this.strelnice.toJson(),
     };
   }
 }
@@ -1188,6 +1197,142 @@ export class TuningMinigamesDesetitisic {
       star_margins: this.starMargins,
       time_cap_s: this.timeCapS,
       ai_think_s: this.aiThinkS,
+    };
+  }
+}
+
+export class TuningMinigamesSipky {
+  start: number;
+  maxRounds: number;
+  /** 0.1 mm */
+  playerScatter: number;
+  aiScatter: number[];
+  starDarts: number[];
+  /** crosshair sway amplitude, 0.1 mm (UI only) */
+  playerWobble: number;
+  wobbleHz: number;
+  timeCapS: number;
+  aiThinkS: number;
+
+  constructor(r: R) {
+    this.start = r.i('start');
+    this.maxRounds = r.i('max_rounds');
+    this.playerScatter = r.i('player_scatter');
+    this.aiScatter = r.il('ai_scatter');
+    this.starDarts = r.il('star_darts');
+    this.playerWobble = r.i('player_wobble');
+    this.wobbleHz = r.d('wobble_hz');
+    this.timeCapS = r.i('time_cap_s');
+    this.aiThinkS = r.d('ai_think_s');
+  }
+
+  toJson(): Record<string, unknown> {
+    return {
+      start: this.start,
+      max_rounds: this.maxRounds,
+      player_scatter: this.playerScatter,
+      ai_scatter: this.aiScatter,
+      star_darts: this.starDarts,
+      player_wobble: this.playerWobble,
+      wobble_hz: this.wobbleHz,
+      time_cap_s: this.timeCapS,
+      ai_think_s: this.aiThinkS,
+    };
+  }
+}
+
+export class TuningMinigamesKoulena {
+  series: number;
+  balls: number;
+  /** mm */
+  ringR: number[];
+  ringPoints: number[];
+  /** x, y pairs */
+  pockets: number[];
+  pocketR: number;
+  pocketPoints: number;
+  /** mm per difficulty 1..5 */
+  scatter: number[];
+  starScores: number[];
+  /** swipe length to aim distance (UI only) */
+  flickMmPerPx: number;
+  timeCapS: number;
+
+  constructor(r: R) {
+    this.series = r.i('series');
+    this.balls = r.i('balls');
+    this.ringR = r.il('ring_r');
+    this.ringPoints = r.il('ring_points');
+    this.pockets = r.il('pockets');
+    this.pocketR = r.i('pocket_r');
+    this.pocketPoints = r.i('pocket_points');
+    this.scatter = r.il('scatter');
+    this.starScores = r.il('star_scores');
+    this.flickMmPerPx = r.d('flick_mm_per_px');
+    this.timeCapS = r.i('time_cap_s');
+  }
+
+  toJson(): Record<string, unknown> {
+    return {
+      series: this.series,
+      balls: this.balls,
+      ring_r: this.ringR,
+      ring_points: this.ringPoints,
+      pockets: this.pockets,
+      pocket_r: this.pocketR,
+      pocket_points: this.pocketPoints,
+      scatter: this.scatter,
+      star_scores: this.starScores,
+      flick_mm_per_px: this.flickMmPerPx,
+      time_cap_s: this.timeCapS,
+    };
+  }
+}
+
+export class TuningMinigamesStrelnice {
+  tickHz: number;
+  rounds: number;
+  roundTicks: number;
+  targets: number;
+  width: number;
+  lanes: number[];
+  /** (radius, speed per tick, points) small, medium, large */
+  kinds: number[];
+  kindPct: number[];
+  magazine: number;
+  reloadTicks: number;
+  starScores: number[];
+  timeCapS: number;
+
+  constructor(r: R) {
+    this.tickHz = r.i('tick_hz');
+    this.rounds = r.i('rounds');
+    this.roundTicks = r.i('round_ticks');
+    this.targets = r.i('targets');
+    this.width = r.i('width');
+    this.lanes = r.il('lanes');
+    this.kinds = r.il('kinds');
+    this.kindPct = r.il('kind_pct');
+    this.magazine = r.i('magazine');
+    this.reloadTicks = r.i('reload_ticks');
+    this.starScores = r.il('star_scores');
+    this.timeCapS = r.i('time_cap_s');
+  }
+
+  toJson(): Record<string, unknown> {
+    return {
+      tick_hz: this.tickHz,
+      rounds: this.rounds,
+      round_ticks: this.roundTicks,
+      targets: this.targets,
+      width: this.width,
+      lanes: this.lanes,
+      kinds: this.kinds,
+      kind_pct: this.kindPct,
+      magazine: this.magazine,
+      reload_ticks: this.reloadTicks,
+      star_scores: this.starScores,
+      time_cap_s: this.timeCapS,
     };
   }
 }

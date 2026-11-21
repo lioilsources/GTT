@@ -84,5 +84,21 @@
   "desetTurn": "V tahu: {points}",
   "desetBust": "Bez bodů – tah propadl",
   "desetScores": "Ty {player} · Soupeř {ai}",
-  "desetRound": "Kolo {round}/{max}"
+  "desetRound": "Kolo {round}/{max}",
+  "sipkyRules1": "Tahem miř, puštěním hoď. Zaměřovač se kolébá – trefuj se včas.",
+  "sipkyRules2": "Odečítá se od 301, tři šipky na tah. Pod nulu = přehoz.",
+  "sipkyRules3": "Dostaň se přesně na nulu dřív než soupeř.",
+  "sipkyRemaining": "Ty {player} · Soupeř {ai}",
+  "sipkyDart": "Šipka {n}/3",
+  "sipkyBust": "Přehoz!",
+  "sipkyHit": "{points}",
+  "koulenaRules1": "Švihni koulí po dráze do kruhů.",
+  "koulenaRules2": "Kruhy dávají 10–50, rohové kapsy 100.",
+  "koulenaRules3": "Tři série po devíti koulích.",
+  "koulenaSeries": "Série {series}/3 · koule {ball}/9",
+  "strelniceRules1": "Klepni na terče, jak jedou kolem.",
+  "strelniceRules2": "Malé terče dávají nejvíc. Šest ran, pak krátké přebití.",
+  "strelniceRules3": "Tři kola po 90 sekundách.",
+  "strelniceRound": "Kolo {round}/3 · {seconds} s",
+  "strelniceReload": "Přebíjím…"
 }
