@@ -97,7 +97,8 @@ class Tuning {
         traffic = TuningTraffic._(r.sub('traffic')),
         passport = TuningPassport._(r.sub('passport')),
         npc = TuningNpc._(r.sub('npc')),
-        cars = TuningCars._(r.sub('cars'));
+        cars = TuningCars._(r.sub('cars')),
+        police = TuningPolice._(r.sub('police'));
 
   factory Tuning.fromYaml(String src) {
     final y = loadYaml(src);
@@ -190,6 +191,10 @@ class Tuning {
   /// Cars, switching and the garage (specs/cars.md). Distances in world metres (after car_scale).
   final TuningCars cars;
 
+  /// Police and wanted level (specs/police.md). P0 rules run in integer ticks: s → round(s · tick_hz).
+  /// Distances in world metres (after car_scale); patrols are traffic cars flagged as police.
+  final TuningPolice police;
+
   Map<String, Object> toJson() => {
         'car_scale': carScale,
         'lane_width_m': laneWidthM,
@@ -221,6 +226,7 @@ class Tuning {
         'passport': passport.toJson(),
         'npc': npc.toJson(),
         'cars': cars.toJson(),
+        'police': police.toJson(),
       };
 
   /// Dotted YAML path → value, for diffs against the loaded file.
@@ -2123,4 +2129,162 @@ class TuningCarsParked {
         'clear_player_m': clearPlayerM,
         'forget_m': forgetM,
       };
+}
+
+/// Police and wanted level (specs/police.md). P0 rules run in integer ticks: s → round(s · tick_hz).
+/// Distances in world metres (after car_scale); patrols are traffic cars flagged as police.
+class TuningPolice {
+  TuningPolice._(_R r)
+      : enabled = r.b('enabled'),
+        maxLevel = r.i('max_level'),
+        tickHz = r.i('tick_hz'),
+        escapeS = r.d('escape_s'),
+        captureS = r.d('capture_s'),
+        hitRunS = r.d('hit_run_s'),
+        hitRunM = r.d('hit_run_m'),
+        cooldownS = r.d('cooldown_s'),
+        offenceLevel = TuningPoliceOffenceLevel._(r.sub('offence_level')),
+        fines = r.il('fines'),
+        patrols = r.il('patrols'),
+        pickMinM = r.d('pick_min_m'),
+        pickIntervalS = r.d('pick_interval_s'),
+        viewM = r.d('view_m'),
+        pursuitM = r.d('pursuit_m'),
+        pursuitMps = r.dl('pursuit_mps'),
+        uturnS = r.d('uturn_s'),
+        uturnM = r.d('uturn_m'),
+        captureM = r.d('capture_m'),
+        captureMps = r.d('capture_mps'),
+        sidewalkS = r.d('sidewalk_s'),
+        sidewalkMinMps = r.d('sidewalk_min_mps'),
+        sidewalkMarginM = r.d('sidewalk_margin_m'),
+        toastS = r.d('toast_s'),
+        bustedS = r.d('busted_s'),
+        lightBlinkS = r.d('light_blink_s');
+
+  bool enabled;
+
+  /// M1: wanted 1–2 (3 comes in M2)
+  int maxLevel;
+
+  int tickHz;
+
+  /// out of sight of every patrol → level − 1
+  double escapeS;
+
+  /// a patrol next to a slow player this long → busted
+  double captureS;
+
+  /// leaving a crash site within this window = hit-and-run
+  double hitRunS;
+
+  /// "left" = this far from the crash point
+  double hitRunM;
+
+  /// the same offence counts again only after this
+  double cooldownS;
+
+  final TuningPoliceOffenceLevel offenceLevel;
+
+  /// cash per wanted level when busted (index = level)
+  List<int> fines;
+
+  /// police cars among traffic per wanted level
+  List<int> patrols;
+
+  /// a traffic car becomes a patrol only this far from the player
+  double pickMinM;
+
+  double pickIntervalS;
+
+  /// patrol line of sight radius
+  double viewM;
+
+  /// patrols closer than this chase while wanted
+  double pursuitM;
+
+  List<double> pursuitMps;
+
+  double uturnS;
+
+  double uturnM;
+
+  double captureM;
+
+  double captureMps;
+
+  double sidewalkS;
+
+  double sidewalkMinMps;
+
+  double sidewalkMarginM;
+
+  double toastS;
+
+  double bustedS;
+
+  double lightBlinkS;
+
+  Map<String, Object> toJson() => {
+        'enabled': enabled,
+        'max_level': maxLevel,
+        'tick_hz': tickHz,
+        'escape_s': escapeS,
+        'capture_s': captureS,
+        'hit_run_s': hitRunS,
+        'hit_run_m': hitRunM,
+        'cooldown_s': cooldownS,
+        'offence_level': offenceLevel.toJson(),
+        'fines': fines,
+        'patrols': patrols,
+        'pick_min_m': pickMinM,
+        'pick_interval_s': pickIntervalS,
+        'view_m': viewM,
+        'pursuit_m': pursuitM,
+        'pursuit_mps': pursuitMps,
+        'uturn_s': uturnS,
+        'uturn_m': uturnM,
+        'capture_m': captureM,
+        'capture_mps': captureMps,
+        'sidewalk_s': sidewalkS,
+        'sidewalk_min_mps': sidewalkMinMps,
+        'sidewalk_margin_m': sidewalkMarginM,
+        'toast_s': toastS,
+        'busted_s': bustedS,
+        'light_blink_s': lightBlinkS,
+      };
+}
+
+class TuningPoliceOffenceLevel {
+  TuningPoliceOffenceLevel._(_R r)
+      : crash = r.i('crash'),
+        hitrun = r.i('hitrun'),
+        sidewalk = r.i('sidewalk'),
+        theft = r.i('theft');
+
+  int crash;
+
+  int hitrun;
+
+  int sidewalk;
+
+  int theft;
+
+  Map<String, Object> toJson() => {
+        'crash': crash,
+        'hitrun': hitrun,
+        'sidewalk': sidewalk,
+        'theft': theft,
+      };
+
+  /// Value by YAML key, null when the key is unknown.
+  int? operator [](String key) => switch (key) {
+        'crash' => crash,
+        'hitrun' => hitrun,
+        'sidewalk' => sidewalk,
+        'theft' => theft,
+        _ => null,
+      };
+
+  static const keys = ['crash', 'hitrun', 'sidewalk', 'theft'];
 }

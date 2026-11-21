@@ -1,0 +1,2322 @@
+{
+ "module": "police",
+ "specVersion": 1,
+ "cases": [
+  {
+   "name": "unseen offences change nothing",
+   "config": {
+    "maxLevel": 2,
+    "escapeTicks": 3,
+    "captureTicks": 2,
+    "hitRunTicks": 3,
+    "cooldownTicks": 2,
+    "levels": {
+     "crash": 1,
+     "hitrun": 2,
+     "sidewalk": 1,
+     "theft": 1
+    },
+    "fines": [
+     0,
+     100,
+     250,
+     500
+    ]
+   },
+   "seed": 1,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "offence",
+      "kind": "sidewalk",
+      "seen": false
+     },
+     "state": {
+      "level": 0,
+      "unseen": 0,
+      "capture": 0,
+      "hitRun": 0,
+      "hitRunSeen": false,
+      "cool": {
+       "crash": 0,
+       "hitrun": 0,
+       "sidewalk": 0,
+       "theft": 0
+      },
+      "offences": 0,
+      "last": "",
+      "busted": 0,
+      "fined": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "offence",
+      "kind": "theft",
+      "seen": false
+     },
+     "state": {
+      "level": 0,
+      "unseen": 0,
+      "capture": 0,
+      "hitRun": 0,
+      "hitRunSeen": false,
+      "cool": {
+       "crash": 0,
+       "hitrun": 0,
+       "sidewalk": 0,
+       "theft": 0
+      },
+      "offences": 0,
+      "last": "",
+      "busted": 0,
+      "fined": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "seen": false,
+      "near": false,
+      "away": false
+     },
+     "state": {
+      "level": 0,
+      "unseen": 0,
+      "capture": 0,
+      "hitRun": 0,
+      "hitRunSeen": false,
+      "cool": {
+       "crash": 0,
+       "hitrun": 0,
+       "sidewalk": 0,
+       "theft": 0
+      },
+      "offences": 0,
+      "last": "",
+      "busted": 0,
+      "fined": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "seen": false,
+      "near": false,
+      "away": false
+     },
+     "state": {
+      "level": 0,
+      "unseen": 0,
+      "capture": 0,
+      "hitRun": 0,
+      "hitRunSeen": false,
+      "cool": {
+       "crash": 0,
+       "hitrun": 0,
+       "sidewalk": 0,
+       "theft": 0
+      },
+      "offences": 0,
+      "last": "",
+      "busted": 0,
+      "fined": 0
+     }
+    }
+   ],
+   "result": null
+  },
+  {
+   "name": "seen theft gives level 1, escape after escapeTicks out of sight",
+   "config": {
+    "maxLevel": 2,
+    "escapeTicks": 3,
+    "captureTicks": 2,
+    "hitRunTicks": 3,
+    "cooldownTicks": 2,
+    "levels": {
+     "crash": 1,
+     "hitrun": 2,
+     "sidewalk": 1,
+     "theft": 1
+    },
+    "fines": [
+     0,
+     100,
+     250,
+     500
+    ]
+   },
+   "seed": 1,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "offence",
+      "kind": "theft",
+      "seen": true
+     },
+     "state": {
+      "level": 1,
+      "unseen": 0,
+      "capture": 0,
+      "hitRun": 0,
+      "hitRunSeen": false,
+      "cool": {
+       "crash": 0,
+       "hitrun": 0,
+       "sidewalk": 0,
+       "theft": 2
+      },
+      "offences": 1,
+      "last": "theft",
+      "busted": 0,
+      "fined": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "seen": true,
+      "near": false,
+      "away": false
+     },
+     "state": {
+      "level": 1,
+      "unseen": 0,
+      "capture": 0,
+      "hitRun": 0,
+      "hitRunSeen": false,
+      "cool": {
+       "crash": 0,
+       "hitrun": 0,
+       "sidewalk": 0,
+       "theft": 1
+      },
+      "offences": 1,
+      "last": "theft",
+      "busted": 0,
+      "fined": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "seen": false,
+      "near": false,
+      "away": false
+     },
+     "state": {
+      "level": 1,
+      "unseen": 1,
+      "capture": 0,
+      "hitRun": 0,
+      "hitRunSeen": false,
+      "cool": {
+       "crash": 0,
+       "hitrun": 0,
+       "sidewalk": 0,
+       "theft": 0
+      },
+      "offences": 1,
+      "last": "theft",
+      "busted": 0,
+      "fined": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "seen": false,
+      "near": false,
+      "away": false
+     },
+     "state": {
+      "level": 1,
+      "unseen": 2,
+      "capture": 0,
+      "hitRun": 0,
+      "hitRunSeen": false,
+      "cool": {
+       "crash": 0,
+       "hitrun": 0,
+       "sidewalk": 0,
+       "theft": 0
+      },
+      "offences": 1,
+      "last": "theft",
+      "busted": 0,
+      "fined": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "seen": false,
+      "near": false,
+      "away": false
+     },
+     "state": {
+      "level": 0,
+      "unseen": 0,
+      "capture": 0,
+      "hitRun": 0,
+      "hitRunSeen": false,
+      "cool": {
+       "crash": 0,
+       "hitrun": 0,
+       "sidewalk": 0,
+       "theft": 0
+      },
+      "offences": 1,
+      "last": "theft",
+      "busted": 0,
+      "fined": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "seen": false,
+      "near": false,
+      "away": false
+     },
+     "state": {
+      "level": 0,
+      "unseen": 0,
+      "capture": 0,
+      "hitRun": 0,
+      "hitRunSeen": false,
+      "cool": {
+       "crash": 0,
+       "hitrun": 0,
+       "sidewalk": 0,
+       "theft": 0
+      },
+      "offences": 1,
+      "last": "theft",
+      "busted": 0,
+      "fined": 0
+     }
+    }
+   ],
+   "result": null
+  },
+  {
+   "name": "seen again while wanted escalates to the cap",
+   "config": {
+    "maxLevel": 2,
+    "escapeTicks": 3,
+    "captureTicks": 2,
+    "hitRunTicks": 3,
+    "cooldownTicks": 2,
+    "levels": {
+     "crash": 1,
+     "hitrun": 2,
+     "sidewalk": 1,
+     "theft": 1
+    },
+    "fines": [
+     0,
+     100,
+     250,
+     500
+    ]
+   },
+   "seed": 1,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "offence",
+      "kind": "sidewalk",
+      "seen": true
+     },
+     "state": {
+      "level": 1,
+      "unseen": 0,
+      "capture": 0,
+      "hitRun": 0,
+      "hitRunSeen": false,
+      "cool": {
+       "crash": 0,
+       "hitrun": 0,
+       "sidewalk": 2,
+       "theft": 0
+      },
+      "offences": 1,
+      "last": "sidewalk",
+      "busted": 0,
+      "fined": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "seen": true,
+      "near": false,
+      "away": false
+     },
+     "state": {
+      "level": 1,
+      "unseen": 0,
+      "capture": 0,
+      "hitRun": 0,
+      "hitRunSeen": false,
+      "cool": {
+       "crash": 0,
+       "hitrun": 0,
+       "sidewalk": 1,
+       "theft": 0
+      },
+      "offences": 1,
+      "last": "sidewalk",
+      "busted": 0,
+      "fined": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "seen": true,
+      "near": false,
+      "away": false
+     },
+     "state": {
+      "level": 1,
+      "unseen": 0,
+      "capture": 0,
+      "hitRun": 0,
+      "hitRunSeen": false,
+      "cool": {
+       "crash": 0,
+       "hitrun": 0,
+       "sidewalk": 0,
+       "theft": 0
+      },
+      "offences": 1,
+      "last": "sidewalk",
+      "busted": 0,
+      "fined": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "offence",
+      "kind": "crash",
+      "seen": true
+     },
+     "state": {
+      "level": 2,
+      "unseen": 0,
+      "capture": 0,
+      "hitRun": 3,
+      "hitRunSeen": true,
+      "cool": {
+       "crash": 2,
+       "hitrun": 0,
+       "sidewalk": 0,
+       "theft": 0
+      },
+      "offences": 2,
+      "last": "crash",
+      "busted": 0,
+      "fined": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "seen": true,
+      "near": false,
+      "away": false
+     },
+     "state": {
+      "level": 2,
+      "unseen": 0,
+      "capture": 0,
+      "hitRun": 2,
+      "hitRunSeen": true,
+      "cool": {
+       "crash": 1,
+       "hitrun": 0,
+       "sidewalk": 0,
+       "theft": 0
+      },
+      "offences": 2,
+      "last": "crash",
+      "busted": 0,
+      "fined": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "seen": true,
+      "near": false,
+      "away": false
+     },
+     "state": {
+      "level": 2,
+      "unseen": 0,
+      "capture": 0,
+      "hitRun": 1,
+      "hitRunSeen": true,
+      "cool": {
+       "crash": 0,
+       "hitrun": 0,
+       "sidewalk": 0,
+       "theft": 0
+      },
+      "offences": 2,
+      "last": "crash",
+      "busted": 0,
+      "fined": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "offence",
+      "kind": "sidewalk",
+      "seen": true
+     },
+     "state": {
+      "level": 2,
+      "unseen": 0,
+      "capture": 0,
+      "hitRun": 1,
+      "hitRunSeen": true,
+      "cool": {
+       "crash": 0,
+       "hitrun": 0,
+       "sidewalk": 2,
+       "theft": 0
+      },
+      "offences": 3,
+      "last": "sidewalk",
+      "busted": 0,
+      "fined": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "offence",
+      "kind": "theft",
+      "seen": true
+     },
+     "state": {
+      "level": 2,
+      "unseen": 0,
+      "capture": 0,
+      "hitRun": 1,
+      "hitRunSeen": true,
+      "cool": {
+       "crash": 0,
+       "hitrun": 0,
+       "sidewalk": 2,
+       "theft": 2
+      },
+      "offences": 4,
+      "last": "theft",
+      "busted": 0,
+      "fined": 0
+     }
+    }
+   ],
+   "result": null
+  },
+  {
+   "name": "cooldown: the same offence does not count twice in a row",
+   "config": {
+    "maxLevel": 2,
+    "escapeTicks": 3,
+    "captureTicks": 2,
+    "hitRunTicks": 3,
+    "cooldownTicks": 2,
+    "levels": {
+     "crash": 1,
+     "hitrun": 2,
+     "sidewalk": 1,
+     "theft": 1
+    },
+    "fines": [
+     0,
+     100,
+     250,
+     500
+    ]
+   },
+   "seed": 1,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "offence",
+      "kind": "sidewalk",
+      "seen": true
+     },
+     "state": {
+      "level": 1,
+      "unseen": 0,
+      "capture": 0,
+      "hitRun": 0,
+      "hitRunSeen": false,
+      "cool": {
+       "crash": 0,
+       "hitrun": 0,
+       "sidewalk": 2,
+       "theft": 0
+      },
+      "offences": 1,
+      "last": "sidewalk",
+      "busted": 0,
+      "fined": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "offence",
+      "kind": "sidewalk",
+      "seen": true
+     },
+     "state": {
+      "level": 1,
+      "unseen": 0,
+      "capture": 0,
+      "hitRun": 0,
+      "hitRunSeen": false,
+      "cool": {
+       "crash": 0,
+       "hitrun": 0,
+       "sidewalk": 2,
+       "theft": 0
+      },
+      "offences": 1,
+      "last": "sidewalk",
+      "busted": 0,
+      "fined": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "seen": true,
+      "near": false,
+      "away": false
+     },
+     "state": {
+      "level": 1,
+      "unseen": 0,
+      "capture": 0,
+      "hitRun": 0,
+      "hitRunSeen": false,
+      "cool": {
+       "crash": 0,
+       "hitrun": 0,
+       "sidewalk": 1,
+       "theft": 0
+      },
+      "offences": 1,
+      "last": "sidewalk",
+      "busted": 0,
+      "fined": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "offence",
+      "kind": "sidewalk",
+      "seen": true
+     },
+     "state": {
+      "level": 1,
+      "unseen": 0,
+      "capture": 0,
+      "hitRun": 0,
+      "hitRunSeen": false,
+      "cool": {
+       "crash": 0,
+       "hitrun": 0,
+       "sidewalk": 1,
+       "theft": 0
+      },
+      "offences": 1,
+      "last": "sidewalk",
+      "busted": 0,
+      "fined": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "seen": true,
+      "near": false,
+      "away": false
+     },
+     "state": {
+      "level": 1,
+      "unseen": 0,
+      "capture": 0,
+      "hitRun": 0,
+      "hitRunSeen": false,
+      "cool": {
+       "crash": 0,
+       "hitrun": 0,
+       "sidewalk": 0,
+       "theft": 0
+      },
+      "offences": 1,
+      "last": "sidewalk",
+      "busted": 0,
+      "fined": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "offence",
+      "kind": "sidewalk",
+      "seen": true
+     },
+     "state": {
+      "level": 2,
+      "unseen": 0,
+      "capture": 0,
+      "hitRun": 0,
+      "hitRunSeen": false,
+      "cool": {
+       "crash": 0,
+       "hitrun": 0,
+       "sidewalk": 2,
+       "theft": 0
+      },
+      "offences": 2,
+      "last": "sidewalk",
+      "busted": 0,
+      "fined": 0
+     }
+    }
+   ],
+   "result": null
+  },
+  {
+   "name": "hit-and-run: seen crash, then leaving within the window",
+   "config": {
+    "maxLevel": 2,
+    "escapeTicks": 3,
+    "captureTicks": 2,
+    "hitRunTicks": 3,
+    "cooldownTicks": 2,
+    "levels": {
+     "crash": 1,
+     "hitrun": 2,
+     "sidewalk": 1,
+     "theft": 1
+    },
+    "fines": [
+     0,
+     100,
+     250,
+     500
+    ]
+   },
+   "seed": 1,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "offence",
+      "kind": "crash",
+      "seen": true
+     },
+     "state": {
+      "level": 1,
+      "unseen": 0,
+      "capture": 0,
+      "hitRun": 3,
+      "hitRunSeen": true,
+      "cool": {
+       "crash": 2,
+       "hitrun": 0,
+       "sidewalk": 0,
+       "theft": 0
+      },
+      "offences": 1,
+      "last": "crash",
+      "busted": 0,
+      "fined": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "seen": true,
+      "near": false,
+      "away": false
+     },
+     "state": {
+      "level": 1,
+      "unseen": 0,
+      "capture": 0,
+      "hitRun": 2,
+      "hitRunSeen": true,
+      "cool": {
+       "crash": 1,
+       "hitrun": 0,
+       "sidewalk": 0,
+       "theft": 0
+      },
+      "offences": 1,
+      "last": "crash",
+      "busted": 0,
+      "fined": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "seen": true,
+      "near": false,
+      "away": true
+     },
+     "state": {
+      "level": 2,
+      "unseen": 0,
+      "capture": 0,
+      "hitRun": 0,
+      "hitRunSeen": false,
+      "cool": {
+       "crash": 0,
+       "hitrun": 2,
+       "sidewalk": 0,
+       "theft": 0
+      },
+      "offences": 2,
+      "last": "hitrun",
+      "busted": 0,
+      "fined": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "seen": true,
+      "near": false,
+      "away": false
+     },
+     "state": {
+      "level": 2,
+      "unseen": 0,
+      "capture": 0,
+      "hitRun": 0,
+      "hitRunSeen": false,
+      "cool": {
+       "crash": 0,
+       "hitrun": 1,
+       "sidewalk": 0,
+       "theft": 0
+      },
+      "offences": 2,
+      "last": "hitrun",
+      "busted": 0,
+      "fined": 0
+     }
+    }
+   ],
+   "result": null
+  },
+  {
+   "name": "hit-and-run: unseen crash, leaving seen counts",
+   "config": {
+    "maxLevel": 2,
+    "escapeTicks": 3,
+    "captureTicks": 2,
+    "hitRunTicks": 3,
+    "cooldownTicks": 2,
+    "levels": {
+     "crash": 1,
+     "hitrun": 2,
+     "sidewalk": 1,
+     "theft": 1
+    },
+    "fines": [
+     0,
+     100,
+     250,
+     500
+    ]
+   },
+   "seed": 1,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "offence",
+      "kind": "crash",
+      "seen": false
+     },
+     "state": {
+      "level": 0,
+      "unseen": 0,
+      "capture": 0,
+      "hitRun": 3,
+      "hitRunSeen": false,
+      "cool": {
+       "crash": 0,
+       "hitrun": 0,
+       "sidewalk": 0,
+       "theft": 0
+      },
+      "offences": 0,
+      "last": "",
+      "busted": 0,
+      "fined": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "seen": false,
+      "near": false,
+      "away": false
+     },
+     "state": {
+      "level": 0,
+      "unseen": 0,
+      "capture": 0,
+      "hitRun": 2,
+      "hitRunSeen": false,
+      "cool": {
+       "crash": 0,
+       "hitrun": 0,
+       "sidewalk": 0,
+       "theft": 0
+      },
+      "offences": 0,
+      "last": "",
+      "busted": 0,
+      "fined": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "seen": true,
+      "near": false,
+      "away": true
+     },
+     "state": {
+      "level": 2,
+      "unseen": 0,
+      "capture": 0,
+      "hitRun": 0,
+      "hitRunSeen": false,
+      "cool": {
+       "crash": 0,
+       "hitrun": 2,
+       "sidewalk": 0,
+       "theft": 0
+      },
+      "offences": 1,
+      "last": "hitrun",
+      "busted": 0,
+      "fined": 0
+     }
+    }
+   ],
+   "result": null
+  },
+  {
+   "name": "staying after a crash: the window closes, no hit-and-run",
+   "config": {
+    "maxLevel": 2,
+    "escapeTicks": 3,
+    "captureTicks": 2,
+    "hitRunTicks": 3,
+    "cooldownTicks": 2,
+    "levels": {
+     "crash": 1,
+     "hitrun": 2,
+     "sidewalk": 1,
+     "theft": 1
+    },
+    "fines": [
+     0,
+     100,
+     250,
+     500
+    ]
+   },
+   "seed": 1,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "offence",
+      "kind": "crash",
+      "seen": false
+     },
+     "state": {
+      "level": 0,
+      "unseen": 0,
+      "capture": 0,
+      "hitRun": 3,
+      "hitRunSeen": false,
+      "cool": {
+       "crash": 0,
+       "hitrun": 0,
+       "sidewalk": 0,
+       "theft": 0
+      },
+      "offences": 0,
+      "last": "",
+      "busted": 0,
+      "fined": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "seen": false,
+      "near": false,
+      "away": false
+     },
+     "state": {
+      "level": 0,
+      "unseen": 0,
+      "capture": 0,
+      "hitRun": 2,
+      "hitRunSeen": false,
+      "cool": {
+       "crash": 0,
+       "hitrun": 0,
+       "sidewalk": 0,
+       "theft": 0
+      },
+      "offences": 0,
+      "last": "",
+      "busted": 0,
+      "fined": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "seen": false,
+      "near": false,
+      "away": false
+     },
+     "state": {
+      "level": 0,
+      "unseen": 0,
+      "capture": 0,
+      "hitRun": 1,
+      "hitRunSeen": false,
+      "cool": {
+       "crash": 0,
+       "hitrun": 0,
+       "sidewalk": 0,
+       "theft": 0
+      },
+      "offences": 0,
+      "last": "",
+      "busted": 0,
+      "fined": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "seen": false,
+      "near": false,
+      "away": false
+     },
+     "state": {
+      "level": 0,
+      "unseen": 0,
+      "capture": 0,
+      "hitRun": 0,
+      "hitRunSeen": false,
+      "cool": {
+       "crash": 0,
+       "hitrun": 0,
+       "sidewalk": 0,
+       "theft": 0
+      },
+      "offences": 0,
+      "last": "",
+      "busted": 0,
+      "fined": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "seen": false,
+      "near": false,
+      "away": true
+     },
+     "state": {
+      "level": 0,
+      "unseen": 0,
+      "capture": 0,
+      "hitRun": 0,
+      "hitRunSeen": false,
+      "cool": {
+       "crash": 0,
+       "hitrun": 0,
+       "sidewalk": 0,
+       "theft": 0
+      },
+      "offences": 0,
+      "last": "",
+      "busted": 0,
+      "fined": 0
+     }
+    }
+   ],
+   "result": null
+  },
+  {
+   "name": "hit-and-run: unseen crash and unseen leaving",
+   "config": {
+    "maxLevel": 2,
+    "escapeTicks": 3,
+    "captureTicks": 2,
+    "hitRunTicks": 3,
+    "cooldownTicks": 2,
+    "levels": {
+     "crash": 1,
+     "hitrun": 2,
+     "sidewalk": 1,
+     "theft": 1
+    },
+    "fines": [
+     0,
+     100,
+     250,
+     500
+    ]
+   },
+   "seed": 1,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "offence",
+      "kind": "crash",
+      "seen": false
+     },
+     "state": {
+      "level": 0,
+      "unseen": 0,
+      "capture": 0,
+      "hitRun": 3,
+      "hitRunSeen": false,
+      "cool": {
+       "crash": 0,
+       "hitrun": 0,
+       "sidewalk": 0,
+       "theft": 0
+      },
+      "offences": 0,
+      "last": "",
+      "busted": 0,
+      "fined": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "seen": false,
+      "near": false,
+      "away": true
+     },
+     "state": {
+      "level": 0,
+      "unseen": 0,
+      "capture": 0,
+      "hitRun": 0,
+      "hitRunSeen": false,
+      "cool": {
+       "crash": 0,
+       "hitrun": 0,
+       "sidewalk": 0,
+       "theft": 0
+      },
+      "offences": 0,
+      "last": "",
+      "busted": 0,
+      "fined": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "seen": true,
+      "near": false,
+      "away": false
+     },
+     "state": {
+      "level": 0,
+      "unseen": 0,
+      "capture": 0,
+      "hitRun": 0,
+      "hitRunSeen": false,
+      "cool": {
+       "crash": 0,
+       "hitrun": 0,
+       "sidewalk": 0,
+       "theft": 0
+      },
+      "offences": 0,
+      "last": "",
+      "busted": 0,
+      "fined": 0
+     }
+    }
+   ],
+   "result": null
+  },
+  {
+   "name": "capture: near for captureTicks, fine and quiet period",
+   "config": {
+    "maxLevel": 2,
+    "escapeTicks": 3,
+    "captureTicks": 2,
+    "hitRunTicks": 3,
+    "cooldownTicks": 2,
+    "levels": {
+     "crash": 1,
+     "hitrun": 2,
+     "sidewalk": 1,
+     "theft": 1
+    },
+    "fines": [
+     0,
+     100,
+     250,
+     500
+    ]
+   },
+   "seed": 1,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "offence",
+      "kind": "theft",
+      "seen": true
+     },
+     "state": {
+      "level": 1,
+      "unseen": 0,
+      "capture": 0,
+      "hitRun": 0,
+      "hitRunSeen": false,
+      "cool": {
+       "crash": 0,
+       "hitrun": 0,
+       "sidewalk": 0,
+       "theft": 2
+      },
+      "offences": 1,
+      "last": "theft",
+      "busted": 0,
+      "fined": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "seen": true,
+      "near": true,
+      "away": false
+     },
+     "state": {
+      "level": 1,
+      "unseen": 0,
+      "capture": 1,
+      "hitRun": 0,
+      "hitRunSeen": false,
+      "cool": {
+       "crash": 0,
+       "hitrun": 0,
+       "sidewalk": 0,
+       "theft": 1
+      },
+      "offences": 1,
+      "last": "theft",
+      "busted": 0,
+      "fined": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "seen": true,
+      "near": true,
+      "away": false
+     },
+     "state": {
+      "level": 0,
+      "unseen": 0,
+      "capture": 0,
+      "hitRun": 0,
+      "hitRunSeen": false,
+      "cool": {
+       "crash": 2,
+       "hitrun": 2,
+       "sidewalk": 2,
+       "theft": 2
+      },
+      "offences": 1,
+      "last": "theft",
+      "busted": 1,
+      "fined": 100
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "offence",
+      "kind": "theft",
+      "seen": true
+     },
+     "state": {
+      "level": 0,
+      "unseen": 0,
+      "capture": 0,
+      "hitRun": 0,
+      "hitRunSeen": false,
+      "cool": {
+       "crash": 2,
+       "hitrun": 2,
+       "sidewalk": 2,
+       "theft": 2
+      },
+      "offences": 1,
+      "last": "theft",
+      "busted": 1,
+      "fined": 100
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "seen": false,
+      "near": false,
+      "away": false
+     },
+     "state": {
+      "level": 0,
+      "unseen": 0,
+      "capture": 0,
+      "hitRun": 0,
+      "hitRunSeen": false,
+      "cool": {
+       "crash": 1,
+       "hitrun": 1,
+       "sidewalk": 1,
+       "theft": 1
+      },
+      "offences": 1,
+      "last": "theft",
+      "busted": 1,
+      "fined": 100
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "seen": false,
+      "near": false,
+      "away": false
+     },
+     "state": {
+      "level": 0,
+      "unseen": 0,
+      "capture": 0,
+      "hitRun": 0,
+      "hitRunSeen": false,
+      "cool": {
+       "crash": 0,
+       "hitrun": 0,
+       "sidewalk": 0,
+       "theft": 0
+      },
+      "offences": 1,
+      "last": "theft",
+      "busted": 1,
+      "fined": 100
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "offence",
+      "kind": "crash",
+      "seen": true
+     },
+     "state": {
+      "level": 1,
+      "unseen": 0,
+      "capture": 0,
+      "hitRun": 3,
+      "hitRunSeen": true,
+      "cool": {
+       "crash": 2,
+       "hitrun": 0,
+       "sidewalk": 0,
+       "theft": 0
+      },
+      "offences": 2,
+      "last": "crash",
+      "busted": 1,
+      "fined": 100
+     }
+    }
+   ],
+   "result": null
+  },
+  {
+   "name": "capture resets when the patrol falls behind",
+   "config": {
+    "maxLevel": 2,
+    "escapeTicks": 3,
+    "captureTicks": 2,
+    "hitRunTicks": 3,
+    "cooldownTicks": 2,
+    "levels": {
+     "crash": 1,
+     "hitrun": 2,
+     "sidewalk": 1,
+     "theft": 1
+    },
+    "fines": [
+     0,
+     100,
+     250,
+     500
+    ]
+   },
+   "seed": 1,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "offence",
+      "kind": "theft",
+      "seen": true
+     },
+     "state": {
+      "level": 1,
+      "unseen": 0,
+      "capture": 0,
+      "hitRun": 0,
+      "hitRunSeen": false,
+      "cool": {
+       "crash": 0,
+       "hitrun": 0,
+       "sidewalk": 0,
+       "theft": 2
+      },
+      "offences": 1,
+      "last": "theft",
+      "busted": 0,
+      "fined": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "seen": true,
+      "near": true,
+      "away": false
+     },
+     "state": {
+      "level": 1,
+      "unseen": 0,
+      "capture": 1,
+      "hitRun": 0,
+      "hitRunSeen": false,
+      "cool": {
+       "crash": 0,
+       "hitrun": 0,
+       "sidewalk": 0,
+       "theft": 1
+      },
+      "offences": 1,
+      "last": "theft",
+      "busted": 0,
+      "fined": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "seen": true,
+      "near": false,
+      "away": false
+     },
+     "state": {
+      "level": 1,
+      "unseen": 0,
+      "capture": 0,
+      "hitRun": 0,
+      "hitRunSeen": false,
+      "cool": {
+       "crash": 0,
+       "hitrun": 0,
+       "sidewalk": 0,
+       "theft": 0
+      },
+      "offences": 1,
+      "last": "theft",
+      "busted": 0,
+      "fined": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "seen": true,
+      "near": true,
+      "away": false
+     },
+     "state": {
+      "level": 1,
+      "unseen": 0,
+      "capture": 1,
+      "hitRun": 0,
+      "hitRunSeen": false,
+      "cool": {
+       "crash": 0,
+       "hitrun": 0,
+       "sidewalk": 0,
+       "theft": 0
+      },
+      "offences": 1,
+      "last": "theft",
+      "busted": 0,
+      "fined": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "seen": true,
+      "near": true,
+      "away": false
+     },
+     "state": {
+      "level": 0,
+      "unseen": 0,
+      "capture": 0,
+      "hitRun": 0,
+      "hitRunSeen": false,
+      "cool": {
+       "crash": 2,
+       "hitrun": 2,
+       "sidewalk": 2,
+       "theft": 2
+      },
+      "offences": 1,
+      "last": "theft",
+      "busted": 1,
+      "fined": 100
+     }
+    }
+   ],
+   "result": null
+  },
+  {
+   "name": "busted at level 2 pays the level-2 fine",
+   "config": {
+    "maxLevel": 2,
+    "escapeTicks": 3,
+    "captureTicks": 2,
+    "hitRunTicks": 3,
+    "cooldownTicks": 2,
+    "levels": {
+     "crash": 1,
+     "hitrun": 2,
+     "sidewalk": 1,
+     "theft": 1
+    },
+    "fines": [
+     0,
+     100,
+     250,
+     500
+    ]
+   },
+   "seed": 1,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "offence",
+      "kind": "crash",
+      "seen": true
+     },
+     "state": {
+      "level": 1,
+      "unseen": 0,
+      "capture": 0,
+      "hitRun": 3,
+      "hitRunSeen": true,
+      "cool": {
+       "crash": 2,
+       "hitrun": 0,
+       "sidewalk": 0,
+       "theft": 0
+      },
+      "offences": 1,
+      "last": "crash",
+      "busted": 0,
+      "fined": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "seen": true,
+      "near": false,
+      "away": true
+     },
+     "state": {
+      "level": 2,
+      "unseen": 0,
+      "capture": 0,
+      "hitRun": 0,
+      "hitRunSeen": false,
+      "cool": {
+       "crash": 1,
+       "hitrun": 2,
+       "sidewalk": 0,
+       "theft": 0
+      },
+      "offences": 2,
+      "last": "hitrun",
+      "busted": 0,
+      "fined": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "seen": true,
+      "near": true,
+      "away": false
+     },
+     "state": {
+      "level": 2,
+      "unseen": 0,
+      "capture": 1,
+      "hitRun": 0,
+      "hitRunSeen": false,
+      "cool": {
+       "crash": 0,
+       "hitrun": 1,
+       "sidewalk": 0,
+       "theft": 0
+      },
+      "offences": 2,
+      "last": "hitrun",
+      "busted": 0,
+      "fined": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "seen": true,
+      "near": true,
+      "away": false
+     },
+     "state": {
+      "level": 0,
+      "unseen": 0,
+      "capture": 0,
+      "hitRun": 0,
+      "hitRunSeen": false,
+      "cool": {
+       "crash": 2,
+       "hitrun": 2,
+       "sidewalk": 2,
+       "theft": 2
+      },
+      "offences": 2,
+      "last": "hitrun",
+      "busted": 1,
+      "fined": 250
+     }
+    }
+   ],
+   "result": null
+  },
+  {
+   "name": "near without wanted level does nothing",
+   "config": {
+    "maxLevel": 2,
+    "escapeTicks": 3,
+    "captureTicks": 2,
+    "hitRunTicks": 3,
+    "cooldownTicks": 2,
+    "levels": {
+     "crash": 1,
+     "hitrun": 2,
+     "sidewalk": 1,
+     "theft": 1
+    },
+    "fines": [
+     0,
+     100,
+     250,
+     500
+    ]
+   },
+   "seed": 1,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "seen": true,
+      "near": true,
+      "away": false
+     },
+     "state": {
+      "level": 0,
+      "unseen": 0,
+      "capture": 0,
+      "hitRun": 0,
+      "hitRunSeen": false,
+      "cool": {
+       "crash": 0,
+       "hitrun": 0,
+       "sidewalk": 0,
+       "theft": 0
+      },
+      "offences": 0,
+      "last": "",
+      "busted": 0,
+      "fined": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "seen": true,
+      "near": true,
+      "away": false
+     },
+     "state": {
+      "level": 0,
+      "unseen": 0,
+      "capture": 0,
+      "hitRun": 0,
+      "hitRunSeen": false,
+      "cool": {
+       "crash": 0,
+       "hitrun": 0,
+       "sidewalk": 0,
+       "theft": 0
+      },
+      "offences": 0,
+      "last": "",
+      "busted": 0,
+      "fined": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "seen": true,
+      "near": true,
+      "away": false
+     },
+     "state": {
+      "level": 0,
+      "unseen": 0,
+      "capture": 0,
+      "hitRun": 0,
+      "hitRunSeen": false,
+      "cool": {
+       "crash": 0,
+       "hitrun": 0,
+       "sidewalk": 0,
+       "theft": 0
+      },
+      "offences": 0,
+      "last": "",
+      "busted": 0,
+      "fined": 0
+     }
+    }
+   ],
+   "result": null
+  },
+  {
+   "name": "escape lowers one level at a time",
+   "config": {
+    "maxLevel": 2,
+    "escapeTicks": 3,
+    "captureTicks": 2,
+    "hitRunTicks": 3,
+    "cooldownTicks": 2,
+    "levels": {
+     "crash": 1,
+     "hitrun": 2,
+     "sidewalk": 1,
+     "theft": 1
+    },
+    "fines": [
+     0,
+     100,
+     250,
+     500
+    ]
+   },
+   "seed": 1,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "offence",
+      "kind": "hitrun",
+      "seen": true
+     },
+     "state": {
+      "level": 2,
+      "unseen": 0,
+      "capture": 0,
+      "hitRun": 0,
+      "hitRunSeen": false,
+      "cool": {
+       "crash": 0,
+       "hitrun": 2,
+       "sidewalk": 0,
+       "theft": 0
+      },
+      "offences": 1,
+      "last": "hitrun",
+      "busted": 0,
+      "fined": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "seen": false,
+      "near": false,
+      "away": false
+     },
+     "state": {
+      "level": 2,
+      "unseen": 1,
+      "capture": 0,
+      "hitRun": 0,
+      "hitRunSeen": false,
+      "cool": {
+       "crash": 0,
+       "hitrun": 1,
+       "sidewalk": 0,
+       "theft": 0
+      },
+      "offences": 1,
+      "last": "hitrun",
+      "busted": 0,
+      "fined": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "seen": false,
+      "near": false,
+      "away": false
+     },
+     "state": {
+      "level": 2,
+      "unseen": 2,
+      "capture": 0,
+      "hitRun": 0,
+      "hitRunSeen": false,
+      "cool": {
+       "crash": 0,
+       "hitrun": 0,
+       "sidewalk": 0,
+       "theft": 0
+      },
+      "offences": 1,
+      "last": "hitrun",
+      "busted": 0,
+      "fined": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "seen": false,
+      "near": false,
+      "away": false
+     },
+     "state": {
+      "level": 1,
+      "unseen": 0,
+      "capture": 0,
+      "hitRun": 0,
+      "hitRunSeen": false,
+      "cool": {
+       "crash": 0,
+       "hitrun": 0,
+       "sidewalk": 0,
+       "theft": 0
+      },
+      "offences": 1,
+      "last": "hitrun",
+      "busted": 0,
+      "fined": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "seen": false,
+      "near": false,
+      "away": false
+     },
+     "state": {
+      "level": 1,
+      "unseen": 1,
+      "capture": 0,
+      "hitRun": 0,
+      "hitRunSeen": false,
+      "cool": {
+       "crash": 0,
+       "hitrun": 0,
+       "sidewalk": 0,
+       "theft": 0
+      },
+      "offences": 1,
+      "last": "hitrun",
+      "busted": 0,
+      "fined": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "seen": true,
+      "near": false,
+      "away": false
+     },
+     "state": {
+      "level": 1,
+      "unseen": 0,
+      "capture": 0,
+      "hitRun": 0,
+      "hitRunSeen": false,
+      "cool": {
+       "crash": 0,
+       "hitrun": 0,
+       "sidewalk": 0,
+       "theft": 0
+      },
+      "offences": 1,
+      "last": "hitrun",
+      "busted": 0,
+      "fined": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "seen": false,
+      "near": false,
+      "away": false
+     },
+     "state": {
+      "level": 1,
+      "unseen": 1,
+      "capture": 0,
+      "hitRun": 0,
+      "hitRunSeen": false,
+      "cool": {
+       "crash": 0,
+       "hitrun": 0,
+       "sidewalk": 0,
+       "theft": 0
+      },
+      "offences": 1,
+      "last": "hitrun",
+      "busted": 0,
+      "fined": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "seen": false,
+      "near": false,
+      "away": false
+     },
+     "state": {
+      "level": 1,
+      "unseen": 2,
+      "capture": 0,
+      "hitRun": 0,
+      "hitRunSeen": false,
+      "cool": {
+       "crash": 0,
+       "hitrun": 0,
+       "sidewalk": 0,
+       "theft": 0
+      },
+      "offences": 1,
+      "last": "hitrun",
+      "busted": 0,
+      "fined": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "seen": false,
+      "near": false,
+      "away": false
+     },
+     "state": {
+      "level": 0,
+      "unseen": 0,
+      "capture": 0,
+      "hitRun": 0,
+      "hitRunSeen": false,
+      "cool": {
+       "crash": 0,
+       "hitrun": 0,
+       "sidewalk": 0,
+       "theft": 0
+      },
+      "offences": 1,
+      "last": "hitrun",
+      "busted": 0,
+      "fined": 0
+     }
+    }
+   ],
+   "result": null
+  },
+  {
+   "name": "level 3 when the cap allows it (M2)",
+   "config": {
+    "maxLevel": 3,
+    "escapeTicks": 3,
+    "captureTicks": 2,
+    "hitRunTicks": 3,
+    "cooldownTicks": 2,
+    "levels": {
+     "crash": 1,
+     "hitrun": 2,
+     "sidewalk": 1,
+     "theft": 1
+    },
+    "fines": [
+     0,
+     100,
+     250,
+     500
+    ]
+   },
+   "seed": 1,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "offence",
+      "kind": "theft",
+      "seen": true
+     },
+     "state": {
+      "level": 1,
+      "unseen": 0,
+      "capture": 0,
+      "hitRun": 0,
+      "hitRunSeen": false,
+      "cool": {
+       "crash": 0,
+       "hitrun": 0,
+       "sidewalk": 0,
+       "theft": 2
+      },
+      "offences": 1,
+      "last": "theft",
+      "busted": 0,
+      "fined": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "seen": true,
+      "near": false,
+      "away": false
+     },
+     "state": {
+      "level": 1,
+      "unseen": 0,
+      "capture": 0,
+      "hitRun": 0,
+      "hitRunSeen": false,
+      "cool": {
+       "crash": 0,
+       "hitrun": 0,
+       "sidewalk": 0,
+       "theft": 1
+      },
+      "offences": 1,
+      "last": "theft",
+      "busted": 0,
+      "fined": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "seen": true,
+      "near": false,
+      "away": false
+     },
+     "state": {
+      "level": 1,
+      "unseen": 0,
+      "capture": 0,
+      "hitRun": 0,
+      "hitRunSeen": false,
+      "cool": {
+       "crash": 0,
+       "hitrun": 0,
+       "sidewalk": 0,
+       "theft": 0
+      },
+      "offences": 1,
+      "last": "theft",
+      "busted": 0,
+      "fined": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "offence",
+      "kind": "crash",
+      "seen": true
+     },
+     "state": {
+      "level": 2,
+      "unseen": 0,
+      "capture": 0,
+      "hitRun": 3,
+      "hitRunSeen": true,
+      "cool": {
+       "crash": 2,
+       "hitrun": 0,
+       "sidewalk": 0,
+       "theft": 0
+      },
+      "offences": 2,
+      "last": "crash",
+      "busted": 0,
+      "fined": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "seen": true,
+      "near": false,
+      "away": false
+     },
+     "state": {
+      "level": 2,
+      "unseen": 0,
+      "capture": 0,
+      "hitRun": 2,
+      "hitRunSeen": true,
+      "cool": {
+       "crash": 1,
+       "hitrun": 0,
+       "sidewalk": 0,
+       "theft": 0
+      },
+      "offences": 2,
+      "last": "crash",
+      "busted": 0,
+      "fined": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "seen": true,
+      "near": false,
+      "away": false
+     },
+     "state": {
+      "level": 2,
+      "unseen": 0,
+      "capture": 0,
+      "hitRun": 1,
+      "hitRunSeen": true,
+      "cool": {
+       "crash": 0,
+       "hitrun": 0,
+       "sidewalk": 0,
+       "theft": 0
+      },
+      "offences": 2,
+      "last": "crash",
+      "busted": 0,
+      "fined": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "offence",
+      "kind": "sidewalk",
+      "seen": true
+     },
+     "state": {
+      "level": 3,
+      "unseen": 0,
+      "capture": 0,
+      "hitRun": 1,
+      "hitRunSeen": true,
+      "cool": {
+       "crash": 0,
+       "hitrun": 0,
+       "sidewalk": 2,
+       "theft": 0
+      },
+      "offences": 3,
+      "last": "sidewalk",
+      "busted": 0,
+      "fined": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "seen": true,
+      "near": true,
+      "away": false
+     },
+     "state": {
+      "level": 3,
+      "unseen": 0,
+      "capture": 1,
+      "hitRun": 0,
+      "hitRunSeen": false,
+      "cool": {
+       "crash": 0,
+       "hitrun": 0,
+       "sidewalk": 1,
+       "theft": 0
+      },
+      "offences": 3,
+      "last": "sidewalk",
+      "busted": 0,
+      "fined": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "seen": true,
+      "near": true,
+      "away": false
+     },
+     "state": {
+      "level": 0,
+      "unseen": 0,
+      "capture": 0,
+      "hitRun": 0,
+      "hitRunSeen": false,
+      "cool": {
+       "crash": 2,
+       "hitrun": 2,
+       "sidewalk": 2,
+       "theft": 2
+      },
+      "offences": 3,
+      "last": "sidewalk",
+      "busted": 1,
+      "fined": 500
+     }
+    }
+   ],
+   "result": null
+  }
+ ]
+}

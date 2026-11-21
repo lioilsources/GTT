@@ -244,6 +244,14 @@ export type MessageKey =
   | "carClassMuscle"
   | "carClassTaxi"
   | "carClassPickup"
+  | "policeWanted"
+  | "policeReason_crash"
+  | "policeReason_sidewalk"
+  | "policeReason_theft"
+  | "policeReason_hitrun"
+  | "policeEscaped"
+  | "policeBusted"
+  | "policeFine"
 ;
 
 export const messages: Record<Locale, Record<MessageKey, string>> = {
@@ -488,6 +496,14 @@ export const messages: Record<Locale, Record<MessageKey, string>> = {
     carClassMuscle: "Muscle car",
     carClassTaxi: "Taxi",
     carClassPickup: "Pick-up",
+    policeWanted: "Hledanost {level}",
+    policeReason_crash: "Hlídka viděla, jak jsi narazil do auta",
+    policeReason_sidewalk: "Viděl tě, jak jedeš po chodníku",
+    policeReason_theft: "Hlídka viděla, jak bereš cizí auto",
+    policeReason_hitrun: "Hlídka viděla, jak ujíždíš od nehody",
+    policeEscaped: "Hlídka tě ztratila",
+    policeBusted: "Dopaden!",
+    policeFine: "Pokuta: {amount}",
   },
   "en": {
     appTitle: "Metropole",
@@ -730,6 +746,14 @@ export const messages: Record<Locale, Record<MessageKey, string>> = {
     carClassMuscle: "Muscle car",
     carClassTaxi: "Taxi",
     carClassPickup: "Pick-up",
+    policeWanted: "Wanted level {level}",
+    policeReason_crash: "A patrol saw you crash into a car",
+    policeReason_sidewalk: "A patrol saw you driving on the sidewalk",
+    policeReason_theft: "A patrol saw you take someone else's car",
+    policeReason_hitrun: "A patrol saw you drive off after a crash",
+    policeEscaped: "You lost the patrol",
+    policeBusted: "Busted!",
+    policeFine: "Fine: {amount}",
   },
 };
 

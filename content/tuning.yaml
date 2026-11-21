@@ -375,3 +375,32 @@ cars:
     min_spacing_m: 16.0
     clear_player_m: 20.0
     forget_m: 600.0
+# Police and wanted level (specs/police.md). P0 rules run in integer ticks: s → round(s · tick_hz).
+# Distances in world metres (after car_scale); patrols are traffic cars flagged as police.
+police:
+  enabled: true
+  max_level: 2                # M1: wanted 1–2 (3 comes in M2)
+  tick_hz: 10
+  escape_s: 10.0              # out of sight of every patrol → level − 1
+  capture_s: 3.0              # a patrol next to a slow player this long → busted
+  hit_run_s: 6.0              # leaving a crash site within this window = hit-and-run
+  hit_run_m: 40.0             # "left" = this far from the crash point
+  cooldown_s: 4.0             # the same offence counts again only after this
+  offence_level: {crash: 1, hitrun: 2, sidewalk: 1, theft: 1}
+  fines: [0, 100, 250, 500]   # cash per wanted level when busted (index = level)
+  patrols: [2, 3, 4, 5]       # police cars among traffic per wanted level
+  pick_min_m: 160.0           # a traffic car becomes a patrol only this far from the player
+  pick_interval_s: 1.0
+  view_m: 70.0                # patrol line of sight radius
+  pursuit_m: 320.0            # patrols closer than this chase while wanted
+  pursuit_mps: [0.0, 24.0, 28.0, 32.0]
+  uturn_s: 3.0
+  uturn_m: 25.0
+  capture_m: 24.0
+  capture_mps: 3.0
+  sidewalk_s: 0.5
+  sidewalk_min_mps: 3.0
+  sidewalk_margin_m: 1.0
+  toast_s: 3.0
+  busted_s: 2.5
+  light_blink_s: 0.25

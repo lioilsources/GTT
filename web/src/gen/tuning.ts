@@ -130,6 +130,11 @@ export class Tuning {
   readonly npc: TuningNpc;
   /** Cars, switching and the garage (specs/cars.md). Distances in world metres (after car_scale). */
   readonly cars: TuningCars;
+  /**
+   * Police and wanted level (specs/police.md). P0 rules run in integer ticks: s → round(s · tick_hz).
+   * Distances in world metres (after car_scale); patrols are traffic cars flagged as police.
+   */
+  readonly police: TuningPolice;
 
   private constructor(r: R) {
     this.carScale = r.d('car_scale');
@@ -162,6 +167,7 @@ export class Tuning {
     this.passport = new TuningPassport(r.sub('passport'));
     this.npc = new TuningNpc(r.sub('npc'));
     this.cars = new TuningCars(r.sub('cars'));
+    this.police = new TuningPolice(r.sub('police'));
   }
 
   toJson(): Record<string, unknown> {
@@ -196,6 +202,7 @@ export class Tuning {
       passport: this.passport.toJson(),
       npc: this.npc.toJson(),
       cars: this.cars.toJson(),
+      police: this.police.toJson(),
     };
   }
 
@@ -2016,4 +2023,149 @@ export class TuningCarsParked {
       forget_m: this.forgetM,
     };
   }
+}
+
+/**
+ * Police and wanted level (specs/police.md). P0 rules run in integer ticks: s → round(s · tick_hz).
+ * Distances in world metres (after car_scale); patrols are traffic cars flagged as police.
+ */
+export class TuningPolice {
+  enabled: boolean;
+  /** M1: wanted 1–2 (3 comes in M2) */
+  maxLevel: number;
+  tickHz: number;
+  /** out of sight of every patrol → level − 1 */
+  escapeS: number;
+  /** a patrol next to a slow player this long → busted */
+  captureS: number;
+  /** leaving a crash site within this window = hit-and-run */
+  hitRunS: number;
+  /** "left" = this far from the crash point */
+  hitRunM: number;
+  /** the same offence counts again only after this */
+  cooldownS: number;
+  readonly offenceLevel: TuningPoliceOffenceLevel;
+  /** cash per wanted level when busted (index = level) */
+  fines: number[];
+  /** police cars among traffic per wanted level */
+  patrols: number[];
+  /** a traffic car becomes a patrol only this far from the player */
+  pickMinM: number;
+  pickIntervalS: number;
+  /** patrol line of sight radius */
+  viewM: number;
+  /** patrols closer than this chase while wanted */
+  pursuitM: number;
+  pursuitMps: number[];
+  uturnS: number;
+  uturnM: number;
+  captureM: number;
+  captureMps: number;
+  sidewalkS: number;
+  sidewalkMinMps: number;
+  sidewalkMarginM: number;
+  toastS: number;
+  bustedS: number;
+  lightBlinkS: number;
+
+  constructor(r: R) {
+    this.enabled = r.b('enabled');
+    this.maxLevel = r.i('max_level');
+    this.tickHz = r.i('tick_hz');
+    this.escapeS = r.d('escape_s');
+    this.captureS = r.d('capture_s');
+    this.hitRunS = r.d('hit_run_s');
+    this.hitRunM = r.d('hit_run_m');
+    this.cooldownS = r.d('cooldown_s');
+    this.offenceLevel = new TuningPoliceOffenceLevel(r.sub('offence_level'));
+    this.fines = r.il('fines');
+    this.patrols = r.il('patrols');
+    this.pickMinM = r.d('pick_min_m');
+    this.pickIntervalS = r.d('pick_interval_s');
+    this.viewM = r.d('view_m');
+    this.pursuitM = r.d('pursuit_m');
+    this.pursuitMps = r.dl('pursuit_mps');
+    this.uturnS = r.d('uturn_s');
+    this.uturnM = r.d('uturn_m');
+    this.captureM = r.d('capture_m');
+    this.captureMps = r.d('capture_mps');
+    this.sidewalkS = r.d('sidewalk_s');
+    this.sidewalkMinMps = r.d('sidewalk_min_mps');
+    this.sidewalkMarginM = r.d('sidewalk_margin_m');
+    this.toastS = r.d('toast_s');
+    this.bustedS = r.d('busted_s');
+    this.lightBlinkS = r.d('light_blink_s');
+  }
+
+  toJson(): Record<string, unknown> {
+    return {
+      enabled: this.enabled,
+      max_level: this.maxLevel,
+      tick_hz: this.tickHz,
+      escape_s: this.escapeS,
+      capture_s: this.captureS,
+      hit_run_s: this.hitRunS,
+      hit_run_m: this.hitRunM,
+      cooldown_s: this.cooldownS,
+      offence_level: this.offenceLevel.toJson(),
+      fines: this.fines,
+      patrols: this.patrols,
+      pick_min_m: this.pickMinM,
+      pick_interval_s: this.pickIntervalS,
+      view_m: this.viewM,
+      pursuit_m: this.pursuitM,
+      pursuit_mps: this.pursuitMps,
+      uturn_s: this.uturnS,
+      uturn_m: this.uturnM,
+      capture_m: this.captureM,
+      capture_mps: this.captureMps,
+      sidewalk_s: this.sidewalkS,
+      sidewalk_min_mps: this.sidewalkMinMps,
+      sidewalk_margin_m: this.sidewalkMarginM,
+      toast_s: this.toastS,
+      busted_s: this.bustedS,
+      light_blink_s: this.lightBlinkS,
+    };
+  }
+}
+
+export class TuningPoliceOffenceLevel {
+  crash: number;
+  hitrun: number;
+  sidewalk: number;
+  theft: number;
+
+  constructor(r: R) {
+    this.crash = r.i('crash');
+    this.hitrun = r.i('hitrun');
+    this.sidewalk = r.i('sidewalk');
+    this.theft = r.i('theft');
+  }
+
+  toJson(): Record<string, unknown> {
+    return {
+      crash: this.crash,
+      hitrun: this.hitrun,
+      sidewalk: this.sidewalk,
+      theft: this.theft,
+    };
+  }
+
+  /** Value by YAML key, undefined when the key is unknown. */
+  get(key: string): number | undefined {
+    switch (key) {
+      case 'crash':
+        return this.crash;
+      case 'hitrun':
+        return this.hitrun;
+      case 'sidewalk':
+        return this.sidewalk;
+      case 'theft':
+        return this.theft;
+      default:
+        return undefined;
+    }
+  }
+
+  static readonly keys = ['crash', 'hitrun', 'sidewalk', 'theft'] as const;
 }

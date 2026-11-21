@@ -145,6 +145,17 @@ abstract final class Tokens {
   static const int colorCarDetailTaxiChecker = 0xFF1B1B1F;
   static const int colorCarDetailBed = 0xFF2F3A28;
   static const int colorCarDetailBedRim = 0xFF1B1B1F;
+  static const int colorPoliceBody = 0xFF1F2A44;
+  static const int colorPoliceDoor = 0xFFF2F2F2;
+  static const int colorPoliceBar = 0xFF2B2B33;
+  static const int colorPoliceLightRed = 0xFFFF3B30;
+  static const int colorPoliceLightBlue = 0xFF2F7BFF;
+  static const int colorPoliceLightOff = 0xFF5A5F6B;
+  static const int colorPoliceStar = 0xFFF4C430;
+  static const int colorPoliceStarEmpty = 0x40FFFFFF;
+  static const int colorPoliceToast = 0xE61F2A44;
+  static const int colorPoliceBusted = 0xF21F2A44;
+  static const int colorPoliceBustedEdge = 0xFF2F7BFF;
   static const double lightDayRoofLight = 1.12;
   static const double lightDaySunX = -0.6;
   static const double lightDaySunY = 0.8;
