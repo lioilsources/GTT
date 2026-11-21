@@ -77,19 +77,26 @@ items:
   - {id: D2-9, milestone: D2, name: "Taxi v obou klientech", size: L, status: todo}
 
   # ---------- M1 – Vertikální řez (scope)
-  - {id: M1-S1, milestone: M1, name: "oblast M1, graf, GPS trasa, mosty", size: L, status: wip,
-     started: 2026-11-21T21:00}
-  - {id: M1-S2, milestone: M1, name: "provoz a semafory", size: L, status: todo}
-  - {id: M1-S3, milestone: M1, name: "chodci s uskakováním", size: M, status: todo}
+  - {id: M1-S1, milestone: M1, name: "oblast M1, graf, GPS trasa, mosty", size: L, status: "čeká na Ol1na",
+     started: 2026-11-21T21:00, done: 2026-11-22T00:15, commit: 7ce1e0e, evidence: "Manhattan po 110th St + 4 mosty (pack 6c0b1b7b84ec, citypack validate), GPS trasa P0 (vectors/route.json, oba klienti), navigace v UI (PR #17, #21–#23, #27–#29); chybí telefon"}
+  - {id: M1-S2, milestone: M1, name: "provoz a semafory", size: L, status: "čeká na Ol1na",
+     started: 2026-11-21T22:05, done: 2026-11-21T23:35, commit: 7ce1e0e, evidence: "provoz a dvoufázové semafory v obou klientech, stejné syntetické testy (F-016, PR #30–#32); chybí telefon"}
+  - {id: M1-S3, milestone: M1, name: "chodci s uskakováním", size: M, status: "čeká na Ol1na",
+     started: 2026-11-21T22:05, done: 2026-11-21T23:15, commit: 7ce1e0e, evidence: "chodci s uskakováním, 400 náhodných průjezdů bez dotyku v obou klientech (F-017, PR #24–#26); chybí telefon"}
   - {id: M1-S4, milestone: M1, name: "policie, hledanost 1–2", size: M, status: todo}
   - {id: M1-S5, milestone: M1, name: "mg_api, Galerie, enginy puzzle/cards/board/dice/flick/drive", size: L, status: todo}
   - {id: M1-S6, milestone: M1, name: "osm miniher z 9.5 se spoty", size: L, status: todo}
-  - {id: M1-S7, milestone: M1, name: "telefon s Feedem (6 karet) a Mapou", size: L, status: todo}
-  - {id: M1-S8, milestone: M1, name: "5 aut, přesedání, 1 garáž", size: M, status: todo}
-  - {id: M1-S9, milestone: M1, name: "20 památek s kartou pohlednice, Pas s razítky", size: M, status: todo}
-  - {id: M1-S10, milestone: M1, name: "npc_dialogue: 6 postav, 30 skitů", size: L, status: todo}
+  - {id: M1-S7, milestone: M1, name: "telefon s Feedem (6 karet) a Mapou", size: L, status: "čeká na Ol1na",
+     started: 2026-11-21T22:05, done: 2026-11-21T23:25, commit: 7ce1e0e, evidence: "telefon, Feed (6 karet, vectors/feed.json) a Mapa v obou klientech (F-022/F-023, PR #27–#29); chybí telefon"}
+  - {id: M1-S8, milestone: M1, name: "5 aut, přesedání, 1 garáž", size: M, status: "čeká na Ol1na",
+     started: 2026-11-21T22:05, done: 2026-11-22T00:15, commit: 7ce1e0e, evidence: "5 aut, přesedání, garáž; vectors/cars.json; zaparkovaná auta shodná v obou klientech (F-018, PR #39–#41); chybí telefon"}
+  - {id: M1-S9, milestone: M1, name: "20 památek s kartou pohlednice, Pas s razítky", size: M, status: "čeká na Ol1na",
+     started: 2026-11-21T22:05, done: 2026-11-21T23:45, commit: 7ce1e0e, evidence: "20 památek s pohlednicí, Pas s razítky (vectors/passport.json, F-019, PR #33–#35); chybí telefon"}
+  - {id: M1-S10, milestone: M1, name: "npc_dialogue: 6 postav, 30 skitů", size: L, status: "čeká na Ol1na",
+     started: 2026-11-21T22:05, done: 2026-11-21T23:55, commit: 7ce1e0e, evidence: "6 postav, 30 skitů (návrh k revizi), dialogy a hláška soupeře (vectors/dialogue.json, F-021, PR #36–#38); chybí revize obsahu a telefon"}
   - {id: M1-S11, milestone: M1, name: "výsledková obrazovka, hotovost, ukládání", size: M, status: todo}
-  - {id: M1-S12, milestone: M1, name: "obrazovka O mapách", size: S, status: todo}
+  - {id: M1-S12, milestone: M1, name: "obrazovka O mapách", size: S, status: "čeká na Ol1na",
+     started: 2026-11-21T22:05, done: 2026-11-21T23:45, commit: 7ce1e0e, evidence: "obrazovka O mapách se zdroji a licencemi (F-020, PR #33–#35); chybí potvrzení textu o ODbL"}
   # ---------- M1 – Vertikální řez (acceptance)
   - {id: M1-A1, milestone: M1, name: "10 smyček za sebou bez pádu a zaseknutí", size: S, status: todo}
   - {id: M1-A2, milestone: M1, name: "každá minihra projde unit testy a jde spustit z Galerie", size: S, status: todo}
