@@ -114,6 +114,43 @@ export type MessageKey =
   | "arrived"
   | "routeCancel"
   | "pedestrianBubble"
+  | "phone"
+  | "app_feed"
+  | "app_map"
+  | "app_garage"
+  | "app_passport"
+  | "app_camera"
+  | "app_contacts"
+  | "app_wallet"
+  | "app_settings"
+  | "feedGo"
+  | "feedDone"
+  | "feedDoneHint"
+  | "feedHost1"
+  | "feedHost2"
+  | "feedHost3"
+  | "feedHost4"
+  | "feedHost5"
+  | "feedHost6"
+  | "feedLocal"
+  | "feedChallenge"
+  | "feedDriveMin"
+  | "feedReward"
+  | "feedLiked"
+  | "feedHint"
+  | "feedCount"
+  | "noRoute"
+  | "engine_cards"
+  | "engine_board"
+  | "engine_dice"
+  | "engine_tiles"
+  | "engine_flick"
+  | "engine_rhythm"
+  | "engine_arcade"
+  | "engine_puzzle"
+  | "engine_drive"
+  | "engine_service"
+  | "engine_sport"
 ;
 
 export const messages: Record<Locale, Record<MessageKey, string>> = {
@@ -228,6 +265,43 @@ export const messages: Record<Locale, Record<MessageKey, string>> = {
     arrived: "Jsi v cíli",
     routeCancel: "Zrušit trasu",
     pedestrianBubble: "!!",
+    phone: "Telefon",
+    app_feed: "Feed",
+    app_map: "Mapa",
+    app_garage: "Garáž",
+    app_passport: "Pas",
+    app_camera: "Foťák",
+    app_contacts: "Kontakty",
+    app_wallet: "Peněženka",
+    app_settings: "Nastavení",
+    feedGo: "Jedu",
+    feedDone: "Běž si zajezdit",
+    feedDoneHint: "Nové tipy po projížďce.",
+    feedHost1: "Mám pro tebe partii. Přijedeš?",
+    feedHost2: "Tady se hraje o čest. Troufneš si?",
+    feedHost3: "Stav se, stůl je volný.",
+    feedHost4: "Prý jsi dobrý. Ukaž to.",
+    feedHost5: "Krátká jízda, dlouhá zábava.",
+    feedHost6: "Dneska mám šťastný den. A ty?",
+    feedLocal: "Místní",
+    feedChallenge: "Jízdní výzva",
+    feedDriveMin: "{min} min jízdy",
+    feedReward: "Odměna {cash}",
+    feedLiked: "Líbí se",
+    feedHint: "Nahoru: další · vpravo: jedu · vlevo: míň · 2× klep: líbí",
+    feedCount: "{n} / {total}",
+    noRoute: "Trasa nenalezena, jeď podle šipky",
+    engine_cards: "Karty",
+    engine_board: "Desková hra",
+    engine_dice: "Kostky",
+    engine_tiles: "Kameny",
+    engine_flick: "Házení",
+    engine_rhythm: "Rytmus",
+    engine_arcade: "Arkáda",
+    engine_puzzle: "Hlavolam",
+    engine_drive: "Jízda",
+    engine_service: "Obsluha",
+    engine_sport: "Sport",
   },
   "en": {
     appTitle: "Metropole",
@@ -340,6 +414,43 @@ export const messages: Record<Locale, Record<MessageKey, string>> = {
     arrived: "You have arrived",
     routeCancel: "Cancel route",
     pedestrianBubble: "!!",
+    phone: "Phone",
+    app_feed: "Feed",
+    app_map: "Map",
+    app_garage: "Garage",
+    app_passport: "Passport",
+    app_camera: "Camera",
+    app_contacts: "Contacts",
+    app_wallet: "Wallet",
+    app_settings: "Settings",
+    feedGo: "Go",
+    feedDone: "Go for a drive",
+    feedDoneHint: "New tips after a ride.",
+    feedHost1: "I have a game for you. Coming?",
+    feedHost2: "We play for honour here. Dare you?",
+    feedHost3: "Drop by, the table is free.",
+    feedHost4: "Heard you are good. Prove it.",
+    feedHost5: "Short drive, long fun.",
+    feedHost6: "Feeling lucky today. You?",
+    feedLocal: "Local",
+    feedChallenge: "Driving challenge",
+    feedDriveMin: "{min} min drive",
+    feedReward: "Reward {cash}",
+    feedLiked: "Liked",
+    feedHint: "Up: next · right: go · left: less · double tap: like",
+    feedCount: "{n} / {total}",
+    noRoute: "No road route, follow the arrow",
+    engine_cards: "Cards",
+    engine_board: "Board game",
+    engine_dice: "Dice",
+    engine_tiles: "Tiles",
+    engine_flick: "Throwing",
+    engine_rhythm: "Rhythm",
+    engine_arcade: "Arcade",
+    engine_puzzle: "Puzzle",
+    engine_drive: "Driving",
+    engine_service: "Service",
+    engine_sport: "Sport",
   },
 };
 

@@ -90,7 +90,10 @@ class Tuning {
         hud = TuningHud._(r.sub('hud')),
         minigames = TuningMinigames._(r.sub('minigames')),
         route = TuningRoute._(r.sub('route')),
-        pedestrians = TuningPedestrians._(r.sub('pedestrians'));
+        pedestrians = TuningPedestrians._(r.sub('pedestrians')),
+        phone = TuningPhone._(r.sub('phone')),
+        feed = TuningFeed._(r.sub('feed')),
+        nav = TuningNav._(r.sub('nav'));
 
   factory Tuning.fromYaml(String src) {
     final y = loadYaml(src);
@@ -160,6 +163,15 @@ class Tuning {
   /// secondary, tertiary, residential, service).
   final TuningPedestrians pedestrians;
 
+  /// In-game phone (specs/phone.md): opening gesture, slowed driving, feed gestures, map.
+  final TuningPhone phone;
+
+  /// Feed deck selection (specs/feed.md, P0, integers only).
+  final TuningFeed feed;
+
+  /// GPS navigation UI (specs/phone.md "Navigace"); route search numbers are in `route`.
+  final TuningNav nav;
+
   Map<String, Object> toJson() => {
         'car_scale': carScale,
         'lane_width_m': laneWidthM,
@@ -184,6 +196,9 @@ class Tuning {
         'minigames': minigames.toJson(),
         'route': route.toJson(),
         'pedestrians': pedestrians.toJson(),
+        'phone': phone.toJson(),
+        'feed': feed.toJson(),
+        'nav': nav.toJson(),
       };
 
   /// Dotted YAML path → value, for diffs against the loaded file.
@@ -1530,5 +1545,199 @@ class TuningPedestrians {
         'bubble_s': bubbleS,
         'bubble_px': bubblePx,
         'bubble_lift_px': bubbleLiftPx,
+      };
+}
+
+/// In-game phone (specs/phone.md): opening gesture, slowed driving, feed gestures, map.
+class TuningPhone {
+  TuningPhone._(_R r)
+      : timeScale = r.d('time_scale'),
+        heightPct = r.i('height_pct'),
+        edgePx = r.d('edge_px'),
+        pullPx = r.d('pull_px'),
+        swipePx = r.d('swipe_px'),
+        doubleTapMs = r.i('double_tap_ms'),
+        mapPaddingPx = r.d('map_padding_px'),
+        mapSpotPx = r.d('map_spot_px'),
+        mapPlayerPx = r.d('map_player_px'),
+        mapRoutePx = r.d('map_route_px');
+
+  /// driving runs this much slower while the phone is open
+  double timeScale;
+
+  /// phone height, % of the screen
+  int heightPct;
+
+  /// bottom-edge grab zone
+  double edgePx;
+
+  /// swipe up this far to open
+  double pullPx;
+
+  /// feed card swipe threshold
+  double swipePx;
+
+  int doubleTapMs;
+
+  double mapPaddingPx;
+
+  double mapSpotPx;
+
+  double mapPlayerPx;
+
+  double mapRoutePx;
+
+  Map<String, Object> toJson() => {
+        'time_scale': timeScale,
+        'height_pct': heightPct,
+        'edge_px': edgePx,
+        'pull_px': pullPx,
+        'swipe_px': swipePx,
+        'double_tap_ms': doubleTapMs,
+        'map_padding_px': mapPaddingPx,
+        'map_spot_px': mapSpotPx,
+        'map_player_px': mapPlayerPx,
+        'map_route_px': mapRoutePx,
+      };
+}
+
+/// Feed deck selection (specs/feed.md, P0, integers only).
+class TuningFeed {
+  TuningFeed._(_R r)
+      : deckSize = r.i('deck_size'),
+        novelty = r.i('novelty'),
+        prefStep = r.i('pref_step'),
+        prefMin = r.i('pref_min'),
+        prefMax = r.i('pref_max'),
+        driveDmPerS = r.i('drive_dm_per_s'),
+        straightPct = r.i('straight_pct'),
+        bandMinS = r.i('band_min_s'),
+        bandMaxS = r.i('band_max_s'),
+        bandPoints = r.i('band_points'),
+        nearPoints = r.i('near_points'),
+        bandFalloffS = r.i('band_falloff_s'),
+        districtBonus = r.i('district_bonus'),
+        landmarkBonus = r.i('landmark_bonus'),
+        landmarkRadiusDm = r.i('landmark_radius_dm'),
+        jitter = r.i('jitter'),
+        hostLines = r.i('host_lines'),
+        rewardBase = r.i('reward_base'),
+        rewardPerMin = r.i('reward_per_min'),
+        difficultyBase = r.i('difficulty_base'),
+        difficultyMax = r.i('difficulty_max'),
+        redealM = r.d('redeal_m');
+
+  int deckSize;
+
+  int novelty;
+
+  int prefStep;
+
+  int prefMin;
+
+  int prefMax;
+
+  /// average city speed for the drive time (11 m/s)
+  int driveDmPerS;
+
+  /// unreachable: straight line × this / 100
+  int straightPct;
+
+  /// the 1–3 min drive band
+  int bandMinS;
+
+  int bandMaxS;
+
+  int bandPoints;
+
+  int nearPoints;
+
+  int bandFalloffS;
+
+  int districtBonus;
+
+  int landmarkBonus;
+
+  int landmarkRadiusDm;
+
+  int jitter;
+
+  int hostLines;
+
+  int rewardBase;
+
+  int rewardPerMin;
+
+  int difficultyBase;
+
+  int difficultyMax;
+
+  /// a new deck after driving this far since the last one (or arriving)
+  double redealM;
+
+  Map<String, Object> toJson() => {
+        'deck_size': deckSize,
+        'novelty': novelty,
+        'pref_step': prefStep,
+        'pref_min': prefMin,
+        'pref_max': prefMax,
+        'drive_dm_per_s': driveDmPerS,
+        'straight_pct': straightPct,
+        'band_min_s': bandMinS,
+        'band_max_s': bandMaxS,
+        'band_points': bandPoints,
+        'near_points': nearPoints,
+        'band_falloff_s': bandFalloffS,
+        'district_bonus': districtBonus,
+        'landmark_bonus': landmarkBonus,
+        'landmark_radius_dm': landmarkRadiusDm,
+        'jitter': jitter,
+        'host_lines': hostLines,
+        'reward_base': rewardBase,
+        'reward_per_min': rewardPerMin,
+        'difficulty_base': difficultyBase,
+        'difficulty_max': difficultyMax,
+        'redeal_m': redealM,
+      };
+}
+
+/// GPS navigation UI (specs/phone.md "Navigace"); route search numbers are in `route`.
+class TuningNav {
+  TuningNav._(_R r)
+      : searchM = r.d('search_m'),
+        arrowMarginPx = r.d('arrow_margin_px'),
+        arrowPx = r.d('arrow_px'),
+        toastS = r.d('toast_s'),
+        kmFromM = r.d('km_from_m'),
+        roundM = r.i('round_m'),
+        miFrom = r.d('mi_from'),
+        roundFt = r.i('round_ft');
+
+  /// nearest kept edge when the car is in an alley
+  double searchM;
+
+  double arrowMarginPx;
+
+  double arrowPx;
+
+  double toastS;
+
+  double kmFromM;
+
+  int roundM;
+
+  double miFrom;
+
+  int roundFt;
+
+  Map<String, Object> toJson() => {
+        'search_m': searchM,
+        'arrow_margin_px': arrowMarginPx,
+        'arrow_px': arrowPx,
+        'toast_s': toastS,
+        'km_from_m': kmFromM,
+        'round_m': roundM,
+        'mi_from': miFrom,
+        'round_ft': roundFt,
       };
 }

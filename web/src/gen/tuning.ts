@@ -110,6 +110,12 @@ export class Tuning {
    * secondary, tertiary, residential, service).
    */
   readonly pedestrians: TuningPedestrians;
+  /** In-game phone (specs/phone.md): opening gesture, slowed driving, feed gestures, map. */
+  readonly phone: TuningPhone;
+  /** Feed deck selection (specs/feed.md, P0, integers only). */
+  readonly feed: TuningFeed;
+  /** GPS navigation UI (specs/phone.md "Navigace"); route search numbers are in `route`. */
+  readonly nav: TuningNav;
 
   private constructor(r: R) {
     this.carScale = r.d('car_scale');
@@ -135,6 +141,9 @@ export class Tuning {
     this.minigames = new TuningMinigames(r.sub('minigames'));
     this.route = new TuningRoute(r.sub('route'));
     this.pedestrians = new TuningPedestrians(r.sub('pedestrians'));
+    this.phone = new TuningPhone(r.sub('phone'));
+    this.feed = new TuningFeed(r.sub('feed'));
+    this.nav = new TuningNav(r.sub('nav'));
   }
 
   toJson(): Record<string, unknown> {
@@ -162,6 +171,9 @@ export class Tuning {
       minigames: this.minigames.toJson(),
       route: this.route.toJson(),
       pedestrians: this.pedestrians.toJson(),
+      phone: this.phone.toJson(),
+      feed: this.feed.toJson(),
+      nav: this.nav.toJson(),
     };
   }
 
@@ -1490,6 +1502,172 @@ export class TuningPedestrians {
       bubble_s: this.bubbleS,
       bubble_px: this.bubblePx,
       bubble_lift_px: this.bubbleLiftPx,
+    };
+  }
+}
+
+/** In-game phone (specs/phone.md): opening gesture, slowed driving, feed gestures, map. */
+export class TuningPhone {
+  /** driving runs this much slower while the phone is open */
+  timeScale: number;
+  /** phone height, % of the screen */
+  heightPct: number;
+  /** bottom-edge grab zone */
+  edgePx: number;
+  /** swipe up this far to open */
+  pullPx: number;
+  /** feed card swipe threshold */
+  swipePx: number;
+  doubleTapMs: number;
+  mapPaddingPx: number;
+  mapSpotPx: number;
+  mapPlayerPx: number;
+  mapRoutePx: number;
+
+  constructor(r: R) {
+    this.timeScale = r.d('time_scale');
+    this.heightPct = r.i('height_pct');
+    this.edgePx = r.d('edge_px');
+    this.pullPx = r.d('pull_px');
+    this.swipePx = r.d('swipe_px');
+    this.doubleTapMs = r.i('double_tap_ms');
+    this.mapPaddingPx = r.d('map_padding_px');
+    this.mapSpotPx = r.d('map_spot_px');
+    this.mapPlayerPx = r.d('map_player_px');
+    this.mapRoutePx = r.d('map_route_px');
+  }
+
+  toJson(): Record<string, unknown> {
+    return {
+      time_scale: this.timeScale,
+      height_pct: this.heightPct,
+      edge_px: this.edgePx,
+      pull_px: this.pullPx,
+      swipe_px: this.swipePx,
+      double_tap_ms: this.doubleTapMs,
+      map_padding_px: this.mapPaddingPx,
+      map_spot_px: this.mapSpotPx,
+      map_player_px: this.mapPlayerPx,
+      map_route_px: this.mapRoutePx,
+    };
+  }
+}
+
+/** Feed deck selection (specs/feed.md, P0, integers only). */
+export class TuningFeed {
+  deckSize: number;
+  novelty: number;
+  prefStep: number;
+  prefMin: number;
+  prefMax: number;
+  /** average city speed for the drive time (11 m/s) */
+  driveDmPerS: number;
+  /** unreachable: straight line × this / 100 */
+  straightPct: number;
+  /** the 1–3 min drive band */
+  bandMinS: number;
+  bandMaxS: number;
+  bandPoints: number;
+  nearPoints: number;
+  bandFalloffS: number;
+  districtBonus: number;
+  landmarkBonus: number;
+  landmarkRadiusDm: number;
+  jitter: number;
+  hostLines: number;
+  rewardBase: number;
+  rewardPerMin: number;
+  difficultyBase: number;
+  difficultyMax: number;
+  /** a new deck after driving this far since the last one (or arriving) */
+  redealM: number;
+
+  constructor(r: R) {
+    this.deckSize = r.i('deck_size');
+    this.novelty = r.i('novelty');
+    this.prefStep = r.i('pref_step');
+    this.prefMin = r.i('pref_min');
+    this.prefMax = r.i('pref_max');
+    this.driveDmPerS = r.i('drive_dm_per_s');
+    this.straightPct = r.i('straight_pct');
+    this.bandMinS = r.i('band_min_s');
+    this.bandMaxS = r.i('band_max_s');
+    this.bandPoints = r.i('band_points');
+    this.nearPoints = r.i('near_points');
+    this.bandFalloffS = r.i('band_falloff_s');
+    this.districtBonus = r.i('district_bonus');
+    this.landmarkBonus = r.i('landmark_bonus');
+    this.landmarkRadiusDm = r.i('landmark_radius_dm');
+    this.jitter = r.i('jitter');
+    this.hostLines = r.i('host_lines');
+    this.rewardBase = r.i('reward_base');
+    this.rewardPerMin = r.i('reward_per_min');
+    this.difficultyBase = r.i('difficulty_base');
+    this.difficultyMax = r.i('difficulty_max');
+    this.redealM = r.d('redeal_m');
+  }
+
+  toJson(): Record<string, unknown> {
+    return {
+      deck_size: this.deckSize,
+      novelty: this.novelty,
+      pref_step: this.prefStep,
+      pref_min: this.prefMin,
+      pref_max: this.prefMax,
+      drive_dm_per_s: this.driveDmPerS,
+      straight_pct: this.straightPct,
+      band_min_s: this.bandMinS,
+      band_max_s: this.bandMaxS,
+      band_points: this.bandPoints,
+      near_points: this.nearPoints,
+      band_falloff_s: this.bandFalloffS,
+      district_bonus: this.districtBonus,
+      landmark_bonus: this.landmarkBonus,
+      landmark_radius_dm: this.landmarkRadiusDm,
+      jitter: this.jitter,
+      host_lines: this.hostLines,
+      reward_base: this.rewardBase,
+      reward_per_min: this.rewardPerMin,
+      difficulty_base: this.difficultyBase,
+      difficulty_max: this.difficultyMax,
+      redeal_m: this.redealM,
+    };
+  }
+}
+
+/** GPS navigation UI (specs/phone.md "Navigace"); route search numbers are in `route`. */
+export class TuningNav {
+  /** nearest kept edge when the car is in an alley */
+  searchM: number;
+  arrowMarginPx: number;
+  arrowPx: number;
+  toastS: number;
+  kmFromM: number;
+  roundM: number;
+  miFrom: number;
+  roundFt: number;
+
+  constructor(r: R) {
+    this.searchM = r.d('search_m');
+    this.arrowMarginPx = r.d('arrow_margin_px');
+    this.arrowPx = r.d('arrow_px');
+    this.toastS = r.d('toast_s');
+    this.kmFromM = r.d('km_from_m');
+    this.roundM = r.i('round_m');
+    this.miFrom = r.d('mi_from');
+    this.roundFt = r.i('round_ft');
+  }
+
+  toJson(): Record<string, unknown> {
+    return {
+      search_m: this.searchM,
+      arrow_margin_px: this.arrowMarginPx,
+      arrow_px: this.arrowPx,
+      toast_s: this.toastS,
+      km_from_m: this.kmFromM,
+      round_m: this.roundM,
+      mi_from: this.miFrom,
+      round_ft: this.roundFt,
     };
   }
 }

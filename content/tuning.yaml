@@ -245,3 +245,52 @@ pedestrians:
   bubble_s: 1.3
   bubble_px: 13.0
   bubble_lift_px: 20.0
+
+# In-game phone (specs/phone.md): opening gesture, slowed driving, feed gestures, map.
+phone:
+  time_scale: 0.35          # driving runs this much slower while the phone is open
+  height_pct: 88            # phone height, % of the screen
+  edge_px: 28.0             # bottom-edge grab zone
+  pull_px: 48.0             # swipe up this far to open
+  swipe_px: 60.0            # feed card swipe threshold
+  double_tap_ms: 300
+  map_padding_px: 14.0
+  map_spot_px: 5.0
+  map_player_px: 7.0
+  map_route_px: 3.0
+
+# Feed deck selection (specs/feed.md, P0, integers only).
+feed:
+  deck_size: 6
+  novelty: 30
+  pref_step: 10
+  pref_min: -3
+  pref_max: 3
+  drive_dm_per_s: 110       # average city speed for the drive time (11 m/s)
+  straight_pct: 140         # unreachable: straight line × this / 100
+  band_min_s: 60            # the 1–3 min drive band
+  band_max_s: 180
+  band_points: 40
+  near_points: 15
+  band_falloff_s: 120
+  district_bonus: 20
+  landmark_bonus: 15
+  landmark_radius_dm: 2500
+  jitter: 12
+  host_lines: 6
+  reward_base: 50
+  reward_per_min: 20
+  difficulty_base: 2
+  difficulty_max: 5
+  redeal_m: 300.0           # a new deck after driving this far since the last one (or arriving)
+
+# GPS navigation UI (specs/phone.md "Navigace"); route search numbers are in `route`.
+nav:
+  search_m: 60.0            # nearest kept edge when the car is in an alley
+  arrow_margin_px: 28.0
+  arrow_px: 16.0
+  toast_s: 2.5
+  km_from_m: 1000.0
+  round_m: 10
+  mi_from: 0.1
+  round_ft: 50
