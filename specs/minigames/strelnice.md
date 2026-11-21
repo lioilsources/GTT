@@ -80,3 +80,11 @@ Bez soupeře; `aiAction` vrací `tick 1`.
 ## Časový strop
 
 Hra sama trvá 4,5 min; strop 6 min (`minigames.strelnice.time_cap_s`).
+
+## Upřesnění v1 (podle implementace, vektory je pokrývají)
+
+- Vektorový config obsahuje i `kindPct`.
+- Když `tick` dosáhne `roundTicks` v posledním kole: `over = true`, `round` a `tick` zůstanou,
+  terče se negenerují, `rng` se nevolá; přebíjení v tom tiku ještě proběhne.
+- `winner = "ai"` při 0★. `aiAction` vrací `{by: "player", op: "tick", n: 1}`.
+- Výstřel s prázdným zásobníkem nebo při přebíjení vrací stav beze změny (legální akce).

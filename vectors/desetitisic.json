@@ -1,0 +1,11118 @@
+{
+ "module": "desetitisic",
+ "specVersion": 1,
+ "$comment": "Player moves are written out; AI moves are {by: ai, level} and decided by aiAction (specs/minigames/README.md). States recorded by the lead client (web).",
+ "cases": [
+  {
+   "name": "cautious-banker-vs-level-1",
+   "config": {
+    "target": 5000,
+    "maxRounds": 10,
+    "aiBankAt": [
+     250,
+     300,
+     350,
+     400,
+     450
+    ],
+    "aiErrorPct": [
+     40,
+     25,
+     10,
+     5,
+     0
+    ],
+    "starMargins": [
+     1500,
+     500
+    ]
+   },
+   "seed": 42,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 0,
+      "ai": 0,
+      "turn": "player",
+      "phase": "keep",
+      "roll": [
+       1,
+       5,
+       4,
+       3,
+       1,
+       1
+      ],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 1,
+      "lastBust": false,
+      "over": false,
+      "rng": 1441438134
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "keep",
+      "dice": [
+       0,
+       1,
+       4,
+       5
+      ]
+     },
+     "state": {
+      "player": 0,
+      "ai": 0,
+      "turn": "player",
+      "phase": "decide",
+      "roll": [
+       1,
+       5,
+       4,
+       3,
+       1,
+       1
+      ],
+      "dice": 2,
+      "turnScore": 1050,
+      "round": 1,
+      "lastBust": false,
+      "over": false,
+      "rng": 1441438134
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "bank"
+     },
+     "state": {
+      "player": 1050,
+      "ai": 0,
+      "turn": "ai",
+      "phase": "roll",
+      "roll": [],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 1,
+      "lastBust": false,
+      "over": false,
+      "rng": 1441438134
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "player": 1050,
+      "ai": 0,
+      "turn": "ai",
+      "phase": "keep",
+      "roll": [
+       1,
+       5,
+       2,
+       6,
+       5,
+       2
+      ],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 1,
+      "lastBust": false,
+      "over": false,
+      "rng": 3379058227
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "player": 1050,
+      "ai": 0,
+      "turn": "ai",
+      "phase": "decide",
+      "roll": [
+       1,
+       5,
+       2,
+       6,
+       5,
+       2
+      ],
+      "dice": 3,
+      "turnScore": 200,
+      "round": 1,
+      "lastBust": false,
+      "over": false,
+      "rng": 3379058227
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "player": 1050,
+      "ai": 0,
+      "turn": "ai",
+      "phase": "keep",
+      "roll": [
+       5,
+       3,
+       2
+      ],
+      "dice": 3,
+      "turnScore": 200,
+      "round": 1,
+      "lastBust": false,
+      "over": false,
+      "rng": 1958019241
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "player": 1050,
+      "ai": 0,
+      "turn": "ai",
+      "phase": "decide",
+      "roll": [
+       5,
+       3,
+       2
+      ],
+      "dice": 2,
+      "turnScore": 250,
+      "round": 1,
+      "lastBust": false,
+      "over": false,
+      "rng": 1958019241
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "player": 1050,
+      "ai": 250,
+      "turn": "player",
+      "phase": "roll",
+      "roll": [],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 2,
+      "lastBust": false,
+      "over": false,
+      "rng": 1958019241
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 1050,
+      "ai": 250,
+      "turn": "player",
+      "phase": "keep",
+      "roll": [
+       4,
+       1,
+       1,
+       2,
+       1,
+       4
+      ],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 2,
+      "lastBust": false,
+      "over": false,
+      "rng": 3235419753
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "keep",
+      "dice": [
+       1,
+       2,
+       4
+      ]
+     },
+     "state": {
+      "player": 1050,
+      "ai": 250,
+      "turn": "player",
+      "phase": "decide",
+      "roll": [
+       4,
+       1,
+       1,
+       2,
+       1,
+       4
+      ],
+      "dice": 3,
+      "turnScore": 1000,
+      "round": 2,
+      "lastBust": false,
+      "over": false,
+      "rng": 3235419753
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "bank"
+     },
+     "state": {
+      "player": 2050,
+      "ai": 250,
+      "turn": "ai",
+      "phase": "roll",
+      "roll": [],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 2,
+      "lastBust": false,
+      "over": false,
+      "rng": 3235419753
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "player": 2050,
+      "ai": 250,
+      "turn": "ai",
+      "phase": "keep",
+      "roll": [
+       4,
+       3,
+       3,
+       5,
+       6,
+       1
+      ],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 2,
+      "lastBust": false,
+      "over": false,
+      "rng": 3245049828
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "player": 2050,
+      "ai": 250,
+      "turn": "ai",
+      "phase": "decide",
+      "roll": [
+       4,
+       3,
+       3,
+       5,
+       6,
+       1
+      ],
+      "dice": 4,
+      "turnScore": 150,
+      "round": 2,
+      "lastBust": false,
+      "over": false,
+      "rng": 3245049828
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "player": 2050,
+      "ai": 250,
+      "turn": "ai",
+      "phase": "keep",
+      "roll": [
+       4,
+       2,
+       4,
+       1
+      ],
+      "dice": 4,
+      "turnScore": 150,
+      "round": 2,
+      "lastBust": false,
+      "over": false,
+      "rng": 651120882
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "player": 2050,
+      "ai": 250,
+      "turn": "ai",
+      "phase": "decide",
+      "roll": [
+       4,
+       2,
+       4,
+       1
+      ],
+      "dice": 3,
+      "turnScore": 250,
+      "round": 2,
+      "lastBust": false,
+      "over": false,
+      "rng": 651120882
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "player": 2050,
+      "ai": 500,
+      "turn": "player",
+      "phase": "roll",
+      "roll": [],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 3,
+      "lastBust": false,
+      "over": false,
+      "rng": 651120882
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 2050,
+      "ai": 500,
+      "turn": "player",
+      "phase": "keep",
+      "roll": [
+       5,
+       1,
+       1,
+       2,
+       1,
+       2
+      ],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 3,
+      "lastBust": false,
+      "over": false,
+      "rng": 2430388501
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "keep",
+      "dice": [
+       0,
+       1,
+       2,
+       4
+      ]
+     },
+     "state": {
+      "player": 2050,
+      "ai": 500,
+      "turn": "player",
+      "phase": "decide",
+      "roll": [
+       5,
+       1,
+       1,
+       2,
+       1,
+       2
+      ],
+      "dice": 2,
+      "turnScore": 1050,
+      "round": 3,
+      "lastBust": false,
+      "over": false,
+      "rng": 2430388501
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "bank"
+     },
+     "state": {
+      "player": 3100,
+      "ai": 500,
+      "turn": "ai",
+      "phase": "roll",
+      "roll": [],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 3,
+      "lastBust": false,
+      "over": false,
+      "rng": 2430388501
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "player": 3100,
+      "ai": 500,
+      "turn": "ai",
+      "phase": "keep",
+      "roll": [
+       1,
+       4,
+       3,
+       3,
+       3,
+       3
+      ],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 3,
+      "lastBust": false,
+      "over": false,
+      "rng": 1994141240
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "player": 3100,
+      "ai": 500,
+      "turn": "ai",
+      "phase": "decide",
+      "roll": [
+       1,
+       4,
+       3,
+       3,
+       3,
+       3
+      ],
+      "dice": 2,
+      "turnScore": 400,
+      "round": 3,
+      "lastBust": false,
+      "over": false,
+      "rng": 1994141240
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "player": 3100,
+      "ai": 900,
+      "turn": "player",
+      "phase": "roll",
+      "roll": [],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 4,
+      "lastBust": false,
+      "over": false,
+      "rng": 1994141240
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 3100,
+      "ai": 900,
+      "turn": "player",
+      "phase": "keep",
+      "roll": [
+       2,
+       5,
+       6,
+       4,
+       2,
+       2
+      ],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 4,
+      "lastBust": false,
+      "over": false,
+      "rng": 851556043
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "keep",
+      "dice": [
+       0,
+       1,
+       4,
+       5
+      ]
+     },
+     "state": {
+      "player": 3100,
+      "ai": 900,
+      "turn": "player",
+      "phase": "decide",
+      "roll": [
+       2,
+       5,
+       6,
+       4,
+       2,
+       2
+      ],
+      "dice": 2,
+      "turnScore": 250,
+      "round": 4,
+      "lastBust": false,
+      "over": false,
+      "rng": 851556043
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "bank"
+     },
+     "state": {
+      "player": 3350,
+      "ai": 900,
+      "turn": "ai",
+      "phase": "roll",
+      "roll": [],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 4,
+      "lastBust": false,
+      "over": false,
+      "rng": 851556043
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "player": 3350,
+      "ai": 900,
+      "turn": "ai",
+      "phase": "keep",
+      "roll": [
+       4,
+       5,
+       6,
+       1,
+       1,
+       2
+      ],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 4,
+      "lastBust": false,
+      "over": false,
+      "rng": 3764477515
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "player": 3350,
+      "ai": 900,
+      "turn": "ai",
+      "phase": "decide",
+      "roll": [
+       4,
+       5,
+       6,
+       1,
+       1,
+       2
+      ],
+      "dice": 5,
+      "turnScore": 50,
+      "round": 4,
+      "lastBust": false,
+      "over": false,
+      "rng": 3764477515
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "player": 3350,
+      "ai": 900,
+      "turn": "player",
+      "phase": "roll",
+      "roll": [],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 5,
+      "lastBust": true,
+      "over": false,
+      "rng": 730922798
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 3350,
+      "ai": 900,
+      "turn": "player",
+      "phase": "keep",
+      "roll": [
+       1,
+       4,
+       3,
+       4,
+       6,
+       1
+      ],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 5,
+      "lastBust": false,
+      "over": false,
+      "rng": 3768789312
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "keep",
+      "dice": [
+       0,
+       5
+      ]
+     },
+     "state": {
+      "player": 3350,
+      "ai": 900,
+      "turn": "player",
+      "phase": "decide",
+      "roll": [
+       1,
+       4,
+       3,
+       4,
+       6,
+       1
+      ],
+      "dice": 4,
+      "turnScore": 200,
+      "round": 5,
+      "lastBust": false,
+      "over": false,
+      "rng": 3768789312
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 3350,
+      "ai": 900,
+      "turn": "ai",
+      "phase": "roll",
+      "roll": [],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 5,
+      "lastBust": true,
+      "over": false,
+      "rng": 3965442169
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "player": 3350,
+      "ai": 900,
+      "turn": "ai",
+      "phase": "keep",
+      "roll": [
+       4,
+       2,
+       1,
+       5,
+       1,
+       5
+      ],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 5,
+      "lastBust": false,
+      "over": false,
+      "rng": 918055324
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "player": 3350,
+      "ai": 900,
+      "turn": "ai",
+      "phase": "decide",
+      "roll": [
+       4,
+       2,
+       1,
+       5,
+       1,
+       5
+      ],
+      "dice": 2,
+      "turnScore": 300,
+      "round": 5,
+      "lastBust": false,
+      "over": false,
+      "rng": 918055324
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "player": 3350,
+      "ai": 1200,
+      "turn": "player",
+      "phase": "roll",
+      "roll": [],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 6,
+      "lastBust": false,
+      "over": false,
+      "rng": 918055324
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 3350,
+      "ai": 1200,
+      "turn": "player",
+      "phase": "keep",
+      "roll": [
+       4,
+       3,
+       3,
+       3,
+       4,
+       5
+      ],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 6,
+      "lastBust": false,
+      "over": false,
+      "rng": 1259192332
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "keep",
+      "dice": [
+       1,
+       2,
+       3,
+       5
+      ]
+     },
+     "state": {
+      "player": 3350,
+      "ai": 1200,
+      "turn": "player",
+      "phase": "decide",
+      "roll": [
+       4,
+       3,
+       3,
+       3,
+       4,
+       5
+      ],
+      "dice": 2,
+      "turnScore": 350,
+      "round": 6,
+      "lastBust": false,
+      "over": false,
+      "rng": 1259192332
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "bank"
+     },
+     "state": {
+      "player": 3700,
+      "ai": 1200,
+      "turn": "ai",
+      "phase": "roll",
+      "roll": [],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 6,
+      "lastBust": false,
+      "over": false,
+      "rng": 1259192332
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "player": 3700,
+      "ai": 1200,
+      "turn": "ai",
+      "phase": "keep",
+      "roll": [
+       1,
+       2,
+       6,
+       4,
+       4,
+       5
+      ],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 6,
+      "lastBust": false,
+      "over": false,
+      "rng": 1777381282
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "player": 3700,
+      "ai": 1200,
+      "turn": "ai",
+      "phase": "decide",
+      "roll": [
+       1,
+       2,
+       6,
+       4,
+       4,
+       5
+      ],
+      "dice": 4,
+      "turnScore": 150,
+      "round": 6,
+      "lastBust": false,
+      "over": false,
+      "rng": 1777381282
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "player": 3700,
+      "ai": 1200,
+      "turn": "ai",
+      "phase": "keep",
+      "roll": [
+       5,
+       2,
+       5,
+       2
+      ],
+      "dice": 4,
+      "turnScore": 150,
+      "round": 6,
+      "lastBust": false,
+      "over": false,
+      "rng": 4000578235
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "player": 3700,
+      "ai": 1200,
+      "turn": "ai",
+      "phase": "decide",
+      "roll": [
+       5,
+       2,
+       5,
+       2
+      ],
+      "dice": 2,
+      "turnScore": 250,
+      "round": 6,
+      "lastBust": false,
+      "over": false,
+      "rng": 4000578235
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "player": 3700,
+      "ai": 1450,
+      "turn": "player",
+      "phase": "roll",
+      "roll": [],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 7,
+      "lastBust": false,
+      "over": false,
+      "rng": 4000578235
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 3700,
+      "ai": 1450,
+      "turn": "player",
+      "phase": "keep",
+      "roll": [
+       4,
+       5,
+       2,
+       6,
+       6,
+       3
+      ],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 7,
+      "lastBust": false,
+      "over": false,
+      "rng": 1039658066
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "keep",
+      "dice": [
+       1
+      ]
+     },
+     "state": {
+      "player": 3700,
+      "ai": 1450,
+      "turn": "player",
+      "phase": "decide",
+      "roll": [
+       4,
+       5,
+       2,
+       6,
+       6,
+       3
+      ],
+      "dice": 5,
+      "turnScore": 50,
+      "round": 7,
+      "lastBust": false,
+      "over": false,
+      "rng": 1039658066
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 3700,
+      "ai": 1450,
+      "turn": "player",
+      "phase": "keep",
+      "roll": [
+       3,
+       3,
+       2,
+       2,
+       1
+      ],
+      "dice": 5,
+      "turnScore": 50,
+      "round": 7,
+      "lastBust": false,
+      "over": false,
+      "rng": 1475351418
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "keep",
+      "dice": [
+       4
+      ]
+     },
+     "state": {
+      "player": 3700,
+      "ai": 1450,
+      "turn": "player",
+      "phase": "decide",
+      "roll": [
+       3,
+       3,
+       2,
+       2,
+       1
+      ],
+      "dice": 4,
+      "turnScore": 150,
+      "round": 7,
+      "lastBust": false,
+      "over": false,
+      "rng": 1475351418
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 3700,
+      "ai": 1450,
+      "turn": "player",
+      "phase": "keep",
+      "roll": [
+       2,
+       5,
+       4,
+       2
+      ],
+      "dice": 4,
+      "turnScore": 150,
+      "round": 7,
+      "lastBust": false,
+      "over": false,
+      "rng": 63279223
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "keep",
+      "dice": [
+       1
+      ]
+     },
+     "state": {
+      "player": 3700,
+      "ai": 1450,
+      "turn": "player",
+      "phase": "decide",
+      "roll": [
+       2,
+       5,
+       4,
+       2
+      ],
+      "dice": 3,
+      "turnScore": 200,
+      "round": 7,
+      "lastBust": false,
+      "over": false,
+      "rng": 63279223
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 3700,
+      "ai": 1450,
+      "turn": "player",
+      "phase": "keep",
+      "roll": [
+       3,
+       5,
+       6
+      ],
+      "dice": 3,
+      "turnScore": 200,
+      "round": 7,
+      "lastBust": false,
+      "over": false,
+      "rng": 2166439349
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "keep",
+      "dice": [
+       1
+      ]
+     },
+     "state": {
+      "player": 3700,
+      "ai": 1450,
+      "turn": "player",
+      "phase": "decide",
+      "roll": [
+       3,
+       5,
+       6
+      ],
+      "dice": 2,
+      "turnScore": 250,
+      "round": 7,
+      "lastBust": false,
+      "over": false,
+      "rng": 2166439349
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "bank"
+     },
+     "state": {
+      "player": 3950,
+      "ai": 1450,
+      "turn": "ai",
+      "phase": "roll",
+      "roll": [],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 7,
+      "lastBust": false,
+      "over": false,
+      "rng": 2166439349
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "player": 3950,
+      "ai": 1450,
+      "turn": "ai",
+      "phase": "keep",
+      "roll": [
+       3,
+       5,
+       4,
+       5,
+       2,
+       5
+      ],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 7,
+      "lastBust": false,
+      "over": false,
+      "rng": 71318026
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "player": 3950,
+      "ai": 1450,
+      "turn": "ai",
+      "phase": "decide",
+      "roll": [
+       3,
+       5,
+       4,
+       5,
+       2,
+       5
+      ],
+      "dice": 4,
+      "turnScore": 100,
+      "round": 7,
+      "lastBust": false,
+      "over": false,
+      "rng": 71318026
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "player": 3950,
+      "ai": 1450,
+      "turn": "ai",
+      "phase": "keep",
+      "roll": [
+       1,
+       2,
+       3,
+       5
+      ],
+      "dice": 4,
+      "turnScore": 100,
+      "round": 7,
+      "lastBust": false,
+      "over": false,
+      "rng": 4098250726
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "player": 3950,
+      "ai": 1450,
+      "turn": "ai",
+      "phase": "decide",
+      "roll": [
+       1,
+       2,
+       3,
+       5
+      ],
+      "dice": 2,
+      "turnScore": 250,
+      "round": 7,
+      "lastBust": false,
+      "over": false,
+      "rng": 4098250726
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "player": 3950,
+      "ai": 1700,
+      "turn": "player",
+      "phase": "roll",
+      "roll": [],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 8,
+      "lastBust": false,
+      "over": false,
+      "rng": 4098250726
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 3950,
+      "ai": 1700,
+      "turn": "player",
+      "phase": "keep",
+      "roll": [
+       4,
+       4,
+       6,
+       1,
+       2,
+       3
+      ],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 8,
+      "lastBust": false,
+      "over": false,
+      "rng": 1111329038
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "keep",
+      "dice": [
+       3
+      ]
+     },
+     "state": {
+      "player": 3950,
+      "ai": 1700,
+      "turn": "player",
+      "phase": "decide",
+      "roll": [
+       4,
+       4,
+       6,
+       1,
+       2,
+       3
+      ],
+      "dice": 5,
+      "turnScore": 100,
+      "round": 8,
+      "lastBust": false,
+      "over": false,
+      "rng": 1111329038
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 3950,
+      "ai": 1700,
+      "turn": "player",
+      "phase": "keep",
+      "roll": [
+       3,
+       6,
+       5,
+       6,
+       5
+      ],
+      "dice": 5,
+      "turnScore": 100,
+      "round": 8,
+      "lastBust": false,
+      "over": false,
+      "rng": 2326062784
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "keep",
+      "dice": [
+       2,
+       4
+      ]
+     },
+     "state": {
+      "player": 3950,
+      "ai": 1700,
+      "turn": "player",
+      "phase": "decide",
+      "roll": [
+       3,
+       6,
+       5,
+       6,
+       5
+      ],
+      "dice": 3,
+      "turnScore": 200,
+      "round": 8,
+      "lastBust": false,
+      "over": false,
+      "rng": 2326062784
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 3950,
+      "ai": 1700,
+      "turn": "player",
+      "phase": "keep",
+      "roll": [
+       5,
+       6,
+       3
+      ],
+      "dice": 3,
+      "turnScore": 200,
+      "round": 8,
+      "lastBust": false,
+      "over": false,
+      "rng": 1140579860
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "keep",
+      "dice": [
+       0
+      ]
+     },
+     "state": {
+      "player": 3950,
+      "ai": 1700,
+      "turn": "player",
+      "phase": "decide",
+      "roll": [
+       5,
+       6,
+       3
+      ],
+      "dice": 2,
+      "turnScore": 250,
+      "round": 8,
+      "lastBust": false,
+      "over": false,
+      "rng": 1140579860
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "bank"
+     },
+     "state": {
+      "player": 4200,
+      "ai": 1700,
+      "turn": "ai",
+      "phase": "roll",
+      "roll": [],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 8,
+      "lastBust": false,
+      "over": false,
+      "rng": 1140579860
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "player": 4200,
+      "ai": 1700,
+      "turn": "ai",
+      "phase": "keep",
+      "roll": [
+       5,
+       1,
+       2,
+       4,
+       3,
+       3
+      ],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 8,
+      "lastBust": false,
+      "over": false,
+      "rng": 3716526992
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "player": 4200,
+      "ai": 1700,
+      "turn": "ai",
+      "phase": "decide",
+      "roll": [
+       5,
+       1,
+       2,
+       4,
+       3,
+       3
+      ],
+      "dice": 4,
+      "turnScore": 150,
+      "round": 8,
+      "lastBust": false,
+      "over": false,
+      "rng": 3716526992
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "player": 4200,
+      "ai": 1700,
+      "turn": "ai",
+      "phase": "keep",
+      "roll": [
+       4,
+       1,
+       2,
+       5
+      ],
+      "dice": 4,
+      "turnScore": 150,
+      "round": 8,
+      "lastBust": false,
+      "over": false,
+      "rng": 2530368046
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "player": 4200,
+      "ai": 1700,
+      "turn": "ai",
+      "phase": "decide",
+      "roll": [
+       4,
+       1,
+       2,
+       5
+      ],
+      "dice": 2,
+      "turnScore": 300,
+      "round": 8,
+      "lastBust": false,
+      "over": false,
+      "rng": 2530368046
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "player": 4200,
+      "ai": 2000,
+      "turn": "player",
+      "phase": "roll",
+      "roll": [],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 9,
+      "lastBust": false,
+      "over": false,
+      "rng": 2530368046
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 4200,
+      "ai": 2000,
+      "turn": "player",
+      "phase": "keep",
+      "roll": [
+       6,
+       6,
+       1,
+       2,
+       4,
+       5
+      ],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 9,
+      "lastBust": false,
+      "over": false,
+      "rng": 2052753070
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "keep",
+      "dice": [
+       2,
+       5
+      ]
+     },
+     "state": {
+      "player": 4200,
+      "ai": 2000,
+      "turn": "player",
+      "phase": "decide",
+      "roll": [
+       6,
+       6,
+       1,
+       2,
+       4,
+       5
+      ],
+      "dice": 4,
+      "turnScore": 150,
+      "round": 9,
+      "lastBust": false,
+      "over": false,
+      "rng": 2052753070
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 4200,
+      "ai": 2000,
+      "turn": "ai",
+      "phase": "roll",
+      "roll": [],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 9,
+      "lastBust": true,
+      "over": false,
+      "rng": 3284775713
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "player": 4200,
+      "ai": 2000,
+      "turn": "ai",
+      "phase": "keep",
+      "roll": [
+       4,
+       5,
+       3,
+       5,
+       6,
+       2
+      ],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 9,
+      "lastBust": false,
+      "over": false,
+      "rng": 3307610719
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "player": 4200,
+      "ai": 2000,
+      "turn": "ai",
+      "phase": "decide",
+      "roll": [
+       4,
+       5,
+       3,
+       5,
+       6,
+       2
+      ],
+      "dice": 4,
+      "turnScore": 100,
+      "round": 9,
+      "lastBust": false,
+      "over": false,
+      "rng": 3307610719
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "player": 4200,
+      "ai": 2000,
+      "turn": "ai",
+      "phase": "keep",
+      "roll": [
+       6,
+       2,
+       2,
+       5
+      ],
+      "dice": 4,
+      "turnScore": 100,
+      "round": 9,
+      "lastBust": false,
+      "over": false,
+      "rng": 1045054048
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "player": 4200,
+      "ai": 2000,
+      "turn": "ai",
+      "phase": "decide",
+      "roll": [
+       6,
+       2,
+       2,
+       5
+      ],
+      "dice": 3,
+      "turnScore": 150,
+      "round": 9,
+      "lastBust": false,
+      "over": false,
+      "rng": 1045054048
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "player": 4200,
+      "ai": 2000,
+      "turn": "player",
+      "phase": "roll",
+      "roll": [],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 10,
+      "lastBust": true,
+      "over": false,
+      "rng": 2372796809
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 4200,
+      "ai": 2000,
+      "turn": "player",
+      "phase": "keep",
+      "roll": [
+       3,
+       2,
+       1,
+       4,
+       6,
+       3
+      ],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 10,
+      "lastBust": false,
+      "over": false,
+      "rng": 2931203744
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "keep",
+      "dice": [
+       2
+      ]
+     },
+     "state": {
+      "player": 4200,
+      "ai": 2000,
+      "turn": "player",
+      "phase": "decide",
+      "roll": [
+       3,
+       2,
+       1,
+       4,
+       6,
+       3
+      ],
+      "dice": 5,
+      "turnScore": 100,
+      "round": 10,
+      "lastBust": false,
+      "over": false,
+      "rng": 2931203744
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 4200,
+      "ai": 2000,
+      "turn": "player",
+      "phase": "keep",
+      "roll": [
+       4,
+       6,
+       4,
+       6,
+       6
+      ],
+      "dice": 5,
+      "turnScore": 100,
+      "round": 10,
+      "lastBust": false,
+      "over": false,
+      "rng": 658560995
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "keep",
+      "dice": [
+       1,
+       3,
+       4
+      ]
+     },
+     "state": {
+      "player": 4200,
+      "ai": 2000,
+      "turn": "player",
+      "phase": "decide",
+      "roll": [
+       4,
+       6,
+       4,
+       6,
+       6
+      ],
+      "dice": 2,
+      "turnScore": 700,
+      "round": 10,
+      "lastBust": false,
+      "over": false,
+      "rng": 658560995
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "bank"
+     },
+     "state": {
+      "player": 4900,
+      "ai": 2000,
+      "turn": "ai",
+      "phase": "roll",
+      "roll": [],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 10,
+      "lastBust": false,
+      "over": false,
+      "rng": 658560995
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "player": 4900,
+      "ai": 2000,
+      "turn": "ai",
+      "phase": "keep",
+      "roll": [
+       2,
+       3,
+       5,
+       4,
+       6,
+       2
+      ],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 10,
+      "lastBust": false,
+      "over": false,
+      "rng": 1056073039
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "player": 4900,
+      "ai": 2000,
+      "turn": "ai",
+      "phase": "decide",
+      "roll": [
+       2,
+       3,
+       5,
+       4,
+       6,
+       2
+      ],
+      "dice": 5,
+      "turnScore": 50,
+      "round": 10,
+      "lastBust": false,
+      "over": false,
+      "rng": 1056073039
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "player": 4900,
+      "ai": 2000,
+      "turn": "ai",
+      "phase": "keep",
+      "roll": [
+       1,
+       3,
+       6,
+       4,
+       4
+      ],
+      "dice": 5,
+      "turnScore": 50,
+      "round": 10,
+      "lastBust": false,
+      "over": false,
+      "rng": 3349132563
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "player": 4900,
+      "ai": 2000,
+      "turn": "ai",
+      "phase": "decide",
+      "roll": [
+       1,
+       3,
+       6,
+       4,
+       4
+      ],
+      "dice": 4,
+      "turnScore": 150,
+      "round": 10,
+      "lastBust": false,
+      "over": false,
+      "rng": 3349132563
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "player": 4900,
+      "ai": 2000,
+      "turn": "ai",
+      "phase": "keep",
+      "roll": [
+       6,
+       2,
+       5,
+       4
+      ],
+      "dice": 4,
+      "turnScore": 150,
+      "round": 10,
+      "lastBust": false,
+      "over": false,
+      "rng": 715572381
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "player": 4900,
+      "ai": 2000,
+      "turn": "ai",
+      "phase": "decide",
+      "roll": [
+       6,
+       2,
+       5,
+       4
+      ],
+      "dice": 3,
+      "turnScore": 200,
+      "round": 10,
+      "lastBust": false,
+      "over": false,
+      "rng": 715572381
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "player": 4900,
+      "ai": 2000,
+      "turn": "ai",
+      "phase": "keep",
+      "roll": [
+       4,
+       1,
+       6
+      ],
+      "dice": 3,
+      "turnScore": 200,
+      "round": 10,
+      "lastBust": false,
+      "over": false,
+      "rng": 981289163
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "player": 4900,
+      "ai": 2000,
+      "turn": "ai",
+      "phase": "decide",
+      "roll": [
+       4,
+       1,
+       6
+      ],
+      "dice": 2,
+      "turnScore": 300,
+      "round": 10,
+      "lastBust": false,
+      "over": false,
+      "rng": 981289163
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "player": 4900,
+      "ai": 2300,
+      "turn": "player",
+      "phase": "over",
+      "roll": [],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 11,
+      "lastBust": false,
+      "over": true,
+      "rng": 981289163
+     }
+    }
+   ],
+   "result": {
+    "winner": "player",
+    "stars": 3,
+    "score": 4900,
+    "player": 4900,
+    "ai": 2300
+   }
+  },
+  {
+   "name": "greedy-roller-vs-level-2",
+   "config": {
+    "target": 5000,
+    "maxRounds": 10,
+    "aiBankAt": [
+     250,
+     300,
+     350,
+     400,
+     450
+    ],
+    "aiErrorPct": [
+     40,
+     25,
+     10,
+     5,
+     0
+    ],
+    "starMargins": [
+     1500,
+     500
+    ]
+   },
+   "seed": 7,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 0,
+      "ai": 0,
+      "turn": "player",
+      "phase": "keep",
+      "roll": [
+       4,
+       2,
+       2,
+       4,
+       2,
+       1
+      ],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 1,
+      "lastBust": false,
+      "over": false,
+      "rng": 2098155156
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "keep",
+      "dice": [
+       1,
+       2,
+       4,
+       5
+      ]
+     },
+     "state": {
+      "player": 0,
+      "ai": 0,
+      "turn": "player",
+      "phase": "decide",
+      "roll": [
+       4,
+       2,
+       2,
+       4,
+       2,
+       1
+      ],
+      "dice": 2,
+      "turnScore": 300,
+      "round": 1,
+      "lastBust": false,
+      "over": false,
+      "rng": 2098155156
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 0,
+      "ai": 0,
+      "turn": "player",
+      "phase": "keep",
+      "roll": [
+       5,
+       2
+      ],
+      "dice": 2,
+      "turnScore": 300,
+      "round": 1,
+      "lastBust": false,
+      "over": false,
+      "rng": 794540887
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "keep",
+      "dice": [
+       0
+      ]
+     },
+     "state": {
+      "player": 0,
+      "ai": 0,
+      "turn": "player",
+      "phase": "decide",
+      "roll": [
+       5,
+       2
+      ],
+      "dice": 1,
+      "turnScore": 350,
+      "round": 1,
+      "lastBust": false,
+      "over": false,
+      "rng": 794540887
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 0,
+      "ai": 0,
+      "turn": "ai",
+      "phase": "roll",
+      "roll": [],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 1,
+      "lastBust": true,
+      "over": false,
+      "rng": 1579130543
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "player": 0,
+      "ai": 0,
+      "turn": "ai",
+      "phase": "keep",
+      "roll": [
+       3,
+       6,
+       1,
+       1,
+       1,
+       2
+      ],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 1,
+      "lastBust": false,
+      "over": false,
+      "rng": 1625827909
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "player": 0,
+      "ai": 0,
+      "turn": "ai",
+      "phase": "decide",
+      "roll": [
+       3,
+       6,
+       1,
+       1,
+       1,
+       2
+      ],
+      "dice": 3,
+      "turnScore": 1000,
+      "round": 1,
+      "lastBust": false,
+      "over": false,
+      "rng": 1625827909
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "player": 0,
+      "ai": 1000,
+      "turn": "player",
+      "phase": "roll",
+      "roll": [],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 2,
+      "lastBust": false,
+      "over": false,
+      "rng": 1625827909
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 0,
+      "ai": 1000,
+      "turn": "player",
+      "phase": "keep",
+      "roll": [
+       4,
+       6,
+       5,
+       3,
+       4,
+       5
+      ],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 2,
+      "lastBust": false,
+      "over": false,
+      "rng": 518398768
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "keep",
+      "dice": [
+       2,
+       5
+      ]
+     },
+     "state": {
+      "player": 0,
+      "ai": 1000,
+      "turn": "player",
+      "phase": "decide",
+      "roll": [
+       4,
+       6,
+       5,
+       3,
+       4,
+       5
+      ],
+      "dice": 4,
+      "turnScore": 100,
+      "round": 2,
+      "lastBust": false,
+      "over": false,
+      "rng": 518398768
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 0,
+      "ai": 1000,
+      "turn": "player",
+      "phase": "keep",
+      "roll": [
+       3,
+       4,
+       3,
+       3
+      ],
+      "dice": 4,
+      "turnScore": 100,
+      "round": 2,
+      "lastBust": false,
+      "over": false,
+      "rng": 343950236
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "keep",
+      "dice": [
+       0,
+       2,
+       3
+      ]
+     },
+     "state": {
+      "player": 0,
+      "ai": 1000,
+      "turn": "player",
+      "phase": "decide",
+      "roll": [
+       3,
+       4,
+       3,
+       3
+      ],
+      "dice": 1,
+      "turnScore": 400,
+      "round": 2,
+      "lastBust": false,
+      "over": false,
+      "rng": 343950236
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 0,
+      "ai": 1000,
+      "turn": "ai",
+      "phase": "roll",
+      "roll": [],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 2,
+      "lastBust": true,
+      "over": false,
+      "rng": 2190111045
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "player": 0,
+      "ai": 1000,
+      "turn": "ai",
+      "phase": "keep",
+      "roll": [
+       5,
+       6,
+       3,
+       2,
+       2,
+       2
+      ],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 2,
+      "lastBust": false,
+      "over": false,
+      "rng": 2653447831
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "player": 0,
+      "ai": 1000,
+      "turn": "ai",
+      "phase": "decide",
+      "roll": [
+       5,
+       6,
+       3,
+       2,
+       2,
+       2
+      ],
+      "dice": 2,
+      "turnScore": 250,
+      "round": 2,
+      "lastBust": false,
+      "over": false,
+      "rng": 2653447831
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "player": 0,
+      "ai": 1250,
+      "turn": "player",
+      "phase": "roll",
+      "roll": [],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 3,
+      "lastBust": false,
+      "over": false,
+      "rng": 2653447831
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 0,
+      "ai": 1250,
+      "turn": "player",
+      "phase": "keep",
+      "roll": [
+       1,
+       6,
+       6,
+       5,
+       2,
+       1
+      ],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 3,
+      "lastBust": false,
+      "over": false,
+      "rng": 2686943208
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "keep",
+      "dice": [
+       0,
+       3,
+       5
+      ]
+     },
+     "state": {
+      "player": 0,
+      "ai": 1250,
+      "turn": "player",
+      "phase": "decide",
+      "roll": [
+       1,
+       6,
+       6,
+       5,
+       2,
+       1
+      ],
+      "dice": 3,
+      "turnScore": 250,
+      "round": 3,
+      "lastBust": false,
+      "over": false,
+      "rng": 2686943208
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 0,
+      "ai": 1250,
+      "turn": "player",
+      "phase": "keep",
+      "roll": [
+       6,
+       2,
+       1
+      ],
+      "dice": 3,
+      "turnScore": 250,
+      "round": 3,
+      "lastBust": false,
+      "over": false,
+      "rng": 2352254310
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "keep",
+      "dice": [
+       2
+      ]
+     },
+     "state": {
+      "player": 0,
+      "ai": 1250,
+      "turn": "player",
+      "phase": "decide",
+      "roll": [
+       6,
+       2,
+       1
+      ],
+      "dice": 2,
+      "turnScore": 350,
+      "round": 3,
+      "lastBust": false,
+      "over": false,
+      "rng": 2352254310
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 0,
+      "ai": 1250,
+      "turn": "player",
+      "phase": "keep",
+      "roll": [
+       1,
+       3
+      ],
+      "dice": 2,
+      "turnScore": 350,
+      "round": 3,
+      "lastBust": false,
+      "over": false,
+      "rng": 2716433228
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "keep",
+      "dice": [
+       0
+      ]
+     },
+     "state": {
+      "player": 0,
+      "ai": 1250,
+      "turn": "player",
+      "phase": "decide",
+      "roll": [
+       1,
+       3
+      ],
+      "dice": 1,
+      "turnScore": 450,
+      "round": 3,
+      "lastBust": false,
+      "over": false,
+      "rng": 2716433228
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 0,
+      "ai": 1250,
+      "turn": "ai",
+      "phase": "roll",
+      "roll": [],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 3,
+      "lastBust": true,
+      "over": false,
+      "rng": 1586969996
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "player": 0,
+      "ai": 1250,
+      "turn": "ai",
+      "phase": "keep",
+      "roll": [
+       2,
+       4,
+       6,
+       5,
+       5,
+       1
+      ],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 3,
+      "lastBust": false,
+      "over": false,
+      "rng": 877272486
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "player": 0,
+      "ai": 1250,
+      "turn": "ai",
+      "phase": "decide",
+      "roll": [
+       2,
+       4,
+       6,
+       5,
+       5,
+       1
+      ],
+      "dice": 3,
+      "turnScore": 200,
+      "round": 3,
+      "lastBust": false,
+      "over": false,
+      "rng": 877272486
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "player": 0,
+      "ai": 1250,
+      "turn": "ai",
+      "phase": "keep",
+      "roll": [
+       4,
+       4,
+       1
+      ],
+      "dice": 3,
+      "turnScore": 200,
+      "round": 3,
+      "lastBust": false,
+      "over": false,
+      "rng": 2329129674
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "player": 0,
+      "ai": 1250,
+      "turn": "ai",
+      "phase": "decide",
+      "roll": [
+       4,
+       4,
+       1
+      ],
+      "dice": 2,
+      "turnScore": 300,
+      "round": 3,
+      "lastBust": false,
+      "over": false,
+      "rng": 2329129674
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "player": 0,
+      "ai": 1550,
+      "turn": "player",
+      "phase": "roll",
+      "roll": [],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 4,
+      "lastBust": false,
+      "over": false,
+      "rng": 2329129674
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 0,
+      "ai": 1550,
+      "turn": "player",
+      "phase": "keep",
+      "roll": [
+       4,
+       3,
+       6,
+       5,
+       6,
+       4
+      ],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 4,
+      "lastBust": false,
+      "over": false,
+      "rng": 207430911
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "keep",
+      "dice": [
+       3
+      ]
+     },
+     "state": {
+      "player": 0,
+      "ai": 1550,
+      "turn": "player",
+      "phase": "decide",
+      "roll": [
+       4,
+       3,
+       6,
+       5,
+       6,
+       4
+      ],
+      "dice": 5,
+      "turnScore": 50,
+      "round": 4,
+      "lastBust": false,
+      "over": false,
+      "rng": 207430911
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 0,
+      "ai": 1550,
+      "turn": "ai",
+      "phase": "roll",
+      "roll": [],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 4,
+      "lastBust": true,
+      "over": false,
+      "rng": 1690082157
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "player": 0,
+      "ai": 1550,
+      "turn": "ai",
+      "phase": "keep",
+      "roll": [
+       2,
+       6,
+       1,
+       3,
+       2,
+       6
+      ],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 4,
+      "lastBust": false,
+      "over": false,
+      "rng": 2200050443
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "player": 0,
+      "ai": 1550,
+      "turn": "ai",
+      "phase": "decide",
+      "roll": [
+       2,
+       6,
+       1,
+       3,
+       2,
+       6
+      ],
+      "dice": 5,
+      "turnScore": 100,
+      "round": 4,
+      "lastBust": false,
+      "over": false,
+      "rng": 2200050443
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "player": 0,
+      "ai": 1550,
+      "turn": "ai",
+      "phase": "keep",
+      "roll": [
+       3,
+       5,
+       3,
+       1,
+       3
+      ],
+      "dice": 5,
+      "turnScore": 100,
+      "round": 4,
+      "lastBust": false,
+      "over": false,
+      "rng": 17250152
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "player": 0,
+      "ai": 1550,
+      "turn": "ai",
+      "phase": "decide",
+      "roll": [
+       3,
+       5,
+       3,
+       1,
+       3
+      ],
+      "dice": 6,
+      "turnScore": 550,
+      "round": 4,
+      "lastBust": false,
+      "over": false,
+      "rng": 17250152
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "player": 0,
+      "ai": 1550,
+      "turn": "ai",
+      "phase": "keep",
+      "roll": [
+       6,
+       6,
+       2,
+       4,
+       1,
+       3
+      ],
+      "dice": 6,
+      "turnScore": 550,
+      "round": 4,
+      "lastBust": false,
+      "over": false,
+      "rng": 3368681534
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "player": 0,
+      "ai": 1550,
+      "turn": "ai",
+      "phase": "decide",
+      "roll": [
+       6,
+       6,
+       2,
+       4,
+       1,
+       3
+      ],
+      "dice": 5,
+      "turnScore": 650,
+      "round": 4,
+      "lastBust": false,
+      "over": false,
+      "rng": 3368681534
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "player": 0,
+      "ai": 2200,
+      "turn": "player",
+      "phase": "roll",
+      "roll": [],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 5,
+      "lastBust": false,
+      "over": false,
+      "rng": 3368681534
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 0,
+      "ai": 2200,
+      "turn": "player",
+      "phase": "keep",
+      "roll": [
+       5,
+       2,
+       5,
+       4,
+       2,
+       4
+      ],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 5,
+      "lastBust": false,
+      "over": false,
+      "rng": 3549962685
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "keep",
+      "dice": [
+       0,
+       2
+      ]
+     },
+     "state": {
+      "player": 0,
+      "ai": 2200,
+      "turn": "player",
+      "phase": "decide",
+      "roll": [
+       5,
+       2,
+       5,
+       4,
+       2,
+       4
+      ],
+      "dice": 4,
+      "turnScore": 100,
+      "round": 5,
+      "lastBust": false,
+      "over": false,
+      "rng": 3549962685
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 0,
+      "ai": 2200,
+      "turn": "player",
+      "phase": "keep",
+      "roll": [
+       5,
+       4,
+       3,
+       1
+      ],
+      "dice": 4,
+      "turnScore": 100,
+      "round": 5,
+      "lastBust": false,
+      "over": false,
+      "rng": 1450361958
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "keep",
+      "dice": [
+       0,
+       3
+      ]
+     },
+     "state": {
+      "player": 0,
+      "ai": 2200,
+      "turn": "player",
+      "phase": "decide",
+      "roll": [
+       5,
+       4,
+       3,
+       1
+      ],
+      "dice": 2,
+      "turnScore": 250,
+      "round": 5,
+      "lastBust": false,
+      "over": false,
+      "rng": 1450361958
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 0,
+      "ai": 2200,
+      "turn": "ai",
+      "phase": "roll",
+      "roll": [],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 5,
+      "lastBust": true,
+      "over": false,
+      "rng": 3121650181
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "player": 0,
+      "ai": 2200,
+      "turn": "ai",
+      "phase": "keep",
+      "roll": [
+       2,
+       2,
+       1,
+       6,
+       2,
+       1
+      ],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 5,
+      "lastBust": false,
+      "over": false,
+      "rng": 2687103048
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "player": 0,
+      "ai": 2200,
+      "turn": "ai",
+      "phase": "decide",
+      "roll": [
+       2,
+       2,
+       1,
+       6,
+       2,
+       1
+      ],
+      "dice": 1,
+      "turnScore": 400,
+      "round": 5,
+      "lastBust": false,
+      "over": false,
+      "rng": 2687103048
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "player": 0,
+      "ai": 2600,
+      "turn": "player",
+      "phase": "roll",
+      "roll": [],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 6,
+      "lastBust": false,
+      "over": false,
+      "rng": 2687103048
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 0,
+      "ai": 2600,
+      "turn": "player",
+      "phase": "keep",
+      "roll": [
+       3,
+       3,
+       1,
+       6,
+       1,
+       4
+      ],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 6,
+      "lastBust": false,
+      "over": false,
+      "rng": 1073225241
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "keep",
+      "dice": [
+       2,
+       4
+      ]
+     },
+     "state": {
+      "player": 0,
+      "ai": 2600,
+      "turn": "player",
+      "phase": "decide",
+      "roll": [
+       3,
+       3,
+       1,
+       6,
+       1,
+       4
+      ],
+      "dice": 4,
+      "turnScore": 200,
+      "round": 6,
+      "lastBust": false,
+      "over": false,
+      "rng": 1073225241
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 0,
+      "ai": 2600,
+      "turn": "player",
+      "phase": "keep",
+      "roll": [
+       3,
+       4,
+       5,
+       1
+      ],
+      "dice": 4,
+      "turnScore": 200,
+      "round": 6,
+      "lastBust": false,
+      "over": false,
+      "rng": 2983743066
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "keep",
+      "dice": [
+       2,
+       3
+      ]
+     },
+     "state": {
+      "player": 0,
+      "ai": 2600,
+      "turn": "player",
+      "phase": "decide",
+      "roll": [
+       3,
+       4,
+       5,
+       1
+      ],
+      "dice": 2,
+      "turnScore": 350,
+      "round": 6,
+      "lastBust": false,
+      "over": false,
+      "rng": 2983743066
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 0,
+      "ai": 2600,
+      "turn": "ai",
+      "phase": "roll",
+      "roll": [],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 6,
+      "lastBust": true,
+      "over": false,
+      "rng": 3063522572
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "player": 0,
+      "ai": 2600,
+      "turn": "ai",
+      "phase": "keep",
+      "roll": [
+       1,
+       6,
+       1,
+       5,
+       1,
+       1
+      ],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 6,
+      "lastBust": false,
+      "over": false,
+      "rng": 2308859700
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "player": 0,
+      "ai": 2600,
+      "turn": "ai",
+      "phase": "decide",
+      "roll": [
+       1,
+       6,
+       1,
+       5,
+       1,
+       1
+      ],
+      "dice": 1,
+      "turnScore": 1150,
+      "round": 6,
+      "lastBust": false,
+      "over": false,
+      "rng": 2308859700
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "player": 0,
+      "ai": 3750,
+      "turn": "player",
+      "phase": "roll",
+      "roll": [],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 7,
+      "lastBust": false,
+      "over": false,
+      "rng": 2308859700
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 0,
+      "ai": 3750,
+      "turn": "player",
+      "phase": "keep",
+      "roll": [
+       1,
+       5,
+       6,
+       3,
+       2,
+       2
+      ],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 7,
+      "lastBust": false,
+      "over": false,
+      "rng": 2303923381
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "keep",
+      "dice": [
+       0,
+       1
+      ]
+     },
+     "state": {
+      "player": 0,
+      "ai": 3750,
+      "turn": "player",
+      "phase": "decide",
+      "roll": [
+       1,
+       5,
+       6,
+       3,
+       2,
+       2
+      ],
+      "dice": 4,
+      "turnScore": 150,
+      "round": 7,
+      "lastBust": false,
+      "over": false,
+      "rng": 2303923381
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 0,
+      "ai": 3750,
+      "turn": "player",
+      "phase": "keep",
+      "roll": [
+       4,
+       1,
+       4,
+       2
+      ],
+      "dice": 4,
+      "turnScore": 150,
+      "round": 7,
+      "lastBust": false,
+      "over": false,
+      "rng": 115323541
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "keep",
+      "dice": [
+       1
+      ]
+     },
+     "state": {
+      "player": 0,
+      "ai": 3750,
+      "turn": "player",
+      "phase": "decide",
+      "roll": [
+       4,
+       1,
+       4,
+       2
+      ],
+      "dice": 3,
+      "turnScore": 250,
+      "round": 7,
+      "lastBust": false,
+      "over": false,
+      "rng": 115323541
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 0,
+      "ai": 3750,
+      "turn": "ai",
+      "phase": "roll",
+      "roll": [],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 7,
+      "lastBust": true,
+      "over": false,
+      "rng": 1876636883
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "player": 0,
+      "ai": 3750,
+      "turn": "ai",
+      "phase": "keep",
+      "roll": [
+       2,
+       2,
+       1,
+       6,
+       4,
+       6
+      ],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 7,
+      "lastBust": false,
+      "over": false,
+      "rng": 1967207
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "player": 0,
+      "ai": 3750,
+      "turn": "ai",
+      "phase": "decide",
+      "roll": [
+       2,
+       2,
+       1,
+       6,
+       4,
+       6
+      ],
+      "dice": 5,
+      "turnScore": 100,
+      "round": 7,
+      "lastBust": false,
+      "over": false,
+      "rng": 1967207
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "player": 0,
+      "ai": 3750,
+      "turn": "ai",
+      "phase": "keep",
+      "roll": [
+       5,
+       2,
+       2,
+       6,
+       5
+      ],
+      "dice": 5,
+      "turnScore": 100,
+      "round": 7,
+      "lastBust": false,
+      "over": false,
+      "rng": 2049398266
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "player": 0,
+      "ai": 3750,
+      "turn": "ai",
+      "phase": "decide",
+      "roll": [
+       5,
+       2,
+       2,
+       6,
+       5
+      ],
+      "dice": 4,
+      "turnScore": 150,
+      "round": 7,
+      "lastBust": false,
+      "over": false,
+      "rng": 2049398266
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "player": 0,
+      "ai": 3750,
+      "turn": "ai",
+      "phase": "keep",
+      "roll": [
+       5,
+       3,
+       2,
+       1
+      ],
+      "dice": 4,
+      "turnScore": 150,
+      "round": 7,
+      "lastBust": false,
+      "over": false,
+      "rng": 2944549674
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "player": 0,
+      "ai": 3750,
+      "turn": "ai",
+      "phase": "decide",
+      "roll": [
+       5,
+       3,
+       2,
+       1
+      ],
+      "dice": 2,
+      "turnScore": 300,
+      "round": 7,
+      "lastBust": false,
+      "over": false,
+      "rng": 2944549674
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "player": 0,
+      "ai": 4050,
+      "turn": "player",
+      "phase": "roll",
+      "roll": [],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 8,
+      "lastBust": false,
+      "over": false,
+      "rng": 2944549674
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 0,
+      "ai": 4050,
+      "turn": "player",
+      "phase": "keep",
+      "roll": [
+       6,
+       3,
+       3,
+       3,
+       4,
+       5
+      ],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 8,
+      "lastBust": false,
+      "over": false,
+      "rng": 2767039324
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "keep",
+      "dice": [
+       1,
+       2,
+       3,
+       5
+      ]
+     },
+     "state": {
+      "player": 0,
+      "ai": 4050,
+      "turn": "player",
+      "phase": "decide",
+      "roll": [
+       6,
+       3,
+       3,
+       3,
+       4,
+       5
+      ],
+      "dice": 2,
+      "turnScore": 350,
+      "round": 8,
+      "lastBust": false,
+      "over": false,
+      "rng": 2767039324
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 0,
+      "ai": 4050,
+      "turn": "ai",
+      "phase": "roll",
+      "roll": [],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 8,
+      "lastBust": true,
+      "over": false,
+      "rng": 50151161
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "player": 0,
+      "ai": 4050,
+      "turn": "ai",
+      "phase": "keep",
+      "roll": [
+       1,
+       6,
+       6,
+       5,
+       3,
+       1
+      ],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 8,
+      "lastBust": false,
+      "over": false,
+      "rng": 1012933680
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "player": 0,
+      "ai": 4050,
+      "turn": "ai",
+      "phase": "decide",
+      "roll": [
+       1,
+       6,
+       6,
+       5,
+       3,
+       1
+      ],
+      "dice": 4,
+      "turnScore": 150,
+      "round": 8,
+      "lastBust": false,
+      "over": false,
+      "rng": 1012933680
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "player": 0,
+      "ai": 4050,
+      "turn": "player",
+      "phase": "roll",
+      "roll": [],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 9,
+      "lastBust": true,
+      "over": false,
+      "rng": 797305085
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 0,
+      "ai": 4050,
+      "turn": "player",
+      "phase": "keep",
+      "roll": [
+       1,
+       5,
+       4,
+       2,
+       6,
+       5
+      ],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 9,
+      "lastBust": false,
+      "over": false,
+      "rng": 739810534
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "keep",
+      "dice": [
+       0,
+       1,
+       5
+      ]
+     },
+     "state": {
+      "player": 0,
+      "ai": 4050,
+      "turn": "player",
+      "phase": "decide",
+      "roll": [
+       1,
+       5,
+       4,
+       2,
+       6,
+       5
+      ],
+      "dice": 3,
+      "turnScore": 200,
+      "round": 9,
+      "lastBust": false,
+      "over": false,
+      "rng": 739810534
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 0,
+      "ai": 4050,
+      "turn": "player",
+      "phase": "keep",
+      "roll": [
+       3,
+       1,
+       2
+      ],
+      "dice": 3,
+      "turnScore": 200,
+      "round": 9,
+      "lastBust": false,
+      "over": false,
+      "rng": 2511874201
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "keep",
+      "dice": [
+       1
+      ]
+     },
+     "state": {
+      "player": 0,
+      "ai": 4050,
+      "turn": "player",
+      "phase": "decide",
+      "roll": [
+       3,
+       1,
+       2
+      ],
+      "dice": 2,
+      "turnScore": 300,
+      "round": 9,
+      "lastBust": false,
+      "over": false,
+      "rng": 2511874201
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 0,
+      "ai": 4050,
+      "turn": "player",
+      "phase": "keep",
+      "roll": [
+       5,
+       4
+      ],
+      "dice": 2,
+      "turnScore": 300,
+      "round": 9,
+      "lastBust": false,
+      "over": false,
+      "rng": 868182297
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "keep",
+      "dice": [
+       0
+      ]
+     },
+     "state": {
+      "player": 0,
+      "ai": 4050,
+      "turn": "player",
+      "phase": "decide",
+      "roll": [
+       5,
+       4
+      ],
+      "dice": 1,
+      "turnScore": 350,
+      "round": 9,
+      "lastBust": false,
+      "over": false,
+      "rng": 868182297
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 0,
+      "ai": 4050,
+      "turn": "ai",
+      "phase": "roll",
+      "roll": [],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 9,
+      "lastBust": true,
+      "over": false,
+      "rng": 219737271
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "player": 0,
+      "ai": 4050,
+      "turn": "ai",
+      "phase": "keep",
+      "roll": [
+       3,
+       1,
+       1,
+       6,
+       4,
+       2
+      ],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 9,
+      "lastBust": false,
+      "over": false,
+      "rng": 1818071449
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "player": 0,
+      "ai": 4050,
+      "turn": "ai",
+      "phase": "decide",
+      "roll": [
+       3,
+       1,
+       1,
+       6,
+       4,
+       2
+      ],
+      "dice": 4,
+      "turnScore": 200,
+      "round": 9,
+      "lastBust": false,
+      "over": false,
+      "rng": 1818071449
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "player": 0,
+      "ai": 4050,
+      "turn": "ai",
+      "phase": "keep",
+      "roll": [
+       1,
+       1,
+       4,
+       5
+      ],
+      "dice": 4,
+      "turnScore": 200,
+      "round": 9,
+      "lastBust": false,
+      "over": false,
+      "rng": 542619568
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "player": 0,
+      "ai": 4050,
+      "turn": "ai",
+      "phase": "decide",
+      "roll": [
+       1,
+       1,
+       4,
+       5
+      ],
+      "dice": 1,
+      "turnScore": 450,
+      "round": 9,
+      "lastBust": false,
+      "over": false,
+      "rng": 542619568
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "player": 0,
+      "ai": 4500,
+      "turn": "player",
+      "phase": "roll",
+      "roll": [],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 10,
+      "lastBust": false,
+      "over": false,
+      "rng": 542619568
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 0,
+      "ai": 4500,
+      "turn": "player",
+      "phase": "keep",
+      "roll": [
+       1,
+       4,
+       3,
+       6,
+       1,
+       1
+      ],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 10,
+      "lastBust": false,
+      "over": false,
+      "rng": 2340841098
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "keep",
+      "dice": [
+       0,
+       4,
+       5
+      ]
+     },
+     "state": {
+      "player": 0,
+      "ai": 4500,
+      "turn": "player",
+      "phase": "decide",
+      "roll": [
+       1,
+       4,
+       3,
+       6,
+       1,
+       1
+      ],
+      "dice": 3,
+      "turnScore": 1000,
+      "round": 10,
+      "lastBust": false,
+      "over": false,
+      "rng": 2340841098
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "bank"
+     },
+     "state": {
+      "player": 1000,
+      "ai": 4500,
+      "turn": "ai",
+      "phase": "roll",
+      "roll": [],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 10,
+      "lastBust": false,
+      "over": false,
+      "rng": 2340841098
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "player": 1000,
+      "ai": 4500,
+      "turn": "ai",
+      "phase": "keep",
+      "roll": [
+       6,
+       1,
+       6,
+       6,
+       6,
+       5
+      ],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 10,
+      "lastBust": false,
+      "over": false,
+      "rng": 3241771930
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "player": 1000,
+      "ai": 4500,
+      "turn": "ai",
+      "phase": "decide",
+      "roll": [
+       6,
+       1,
+       6,
+       6,
+       6,
+       5
+      ],
+      "dice": 2,
+      "turnScore": 700,
+      "round": 10,
+      "lastBust": false,
+      "over": false,
+      "rng": 3241771930
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "player": 1000,
+      "ai": 5200,
+      "turn": "player",
+      "phase": "over",
+      "roll": [],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 11,
+      "lastBust": false,
+      "over": true,
+      "rng": 3241771930
+     }
+    }
+   ],
+   "result": {
+    "winner": "ai",
+    "stars": 0,
+    "score": 1000,
+    "player": 1000,
+    "ai": 5200
+   }
+  },
+  {
+   "name": "random-keep-vs-level-3",
+   "config": {
+    "target": 5000,
+    "maxRounds": 10,
+    "aiBankAt": [
+     250,
+     300,
+     350,
+     400,
+     450
+    ],
+    "aiErrorPct": [
+     40,
+     25,
+     10,
+     5,
+     0
+    ],
+    "starMargins": [
+     1500,
+     500
+    ]
+   },
+   "seed": 1234,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 0,
+      "ai": 0,
+      "turn": "player",
+      "phase": "keep",
+      "roll": [
+       2,
+       4,
+       1,
+       1,
+       5,
+       6
+      ],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 1,
+      "lastBust": false,
+      "over": false,
+      "rng": 2211002831
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "keep",
+      "dice": [
+       2,
+       4
+      ]
+     },
+     "state": {
+      "player": 0,
+      "ai": 0,
+      "turn": "player",
+      "phase": "decide",
+      "roll": [
+       2,
+       4,
+       1,
+       1,
+       5,
+       6
+      ],
+      "dice": 4,
+      "turnScore": 150,
+      "round": 1,
+      "lastBust": false,
+      "over": false,
+      "rng": 2211002831
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "bank"
+     },
+     "state": {
+      "player": 150,
+      "ai": 0,
+      "turn": "ai",
+      "phase": "roll",
+      "roll": [],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 1,
+      "lastBust": false,
+      "over": false,
+      "rng": 2211002831
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 150,
+      "ai": 0,
+      "turn": "ai",
+      "phase": "keep",
+      "roll": [
+       6,
+       1,
+       2,
+       1,
+       5,
+       5
+      ],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 1,
+      "lastBust": false,
+      "over": false,
+      "rng": 1881012526
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 150,
+      "ai": 0,
+      "turn": "ai",
+      "phase": "decide",
+      "roll": [
+       6,
+       1,
+       2,
+       1,
+       5,
+       5
+      ],
+      "dice": 2,
+      "turnScore": 300,
+      "round": 1,
+      "lastBust": false,
+      "over": false,
+      "rng": 1881012526
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 150,
+      "ai": 300,
+      "turn": "player",
+      "phase": "roll",
+      "roll": [],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 2,
+      "lastBust": false,
+      "over": false,
+      "rng": 1881012526
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 150,
+      "ai": 300,
+      "turn": "player",
+      "phase": "keep",
+      "roll": [
+       5,
+       5,
+       3,
+       5,
+       4,
+       3
+      ],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 2,
+      "lastBust": false,
+      "over": false,
+      "rng": 3208525124
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "keep",
+      "dice": [
+       1,
+       3
+      ]
+     },
+     "state": {
+      "player": 150,
+      "ai": 300,
+      "turn": "player",
+      "phase": "decide",
+      "roll": [
+       5,
+       5,
+       3,
+       5,
+       4,
+       3
+      ],
+      "dice": 4,
+      "turnScore": 100,
+      "round": 2,
+      "lastBust": false,
+      "over": false,
+      "rng": 3208525124
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 150,
+      "ai": 300,
+      "turn": "player",
+      "phase": "keep",
+      "roll": [
+       4,
+       5,
+       2,
+       1
+      ],
+      "dice": 4,
+      "turnScore": 100,
+      "round": 2,
+      "lastBust": false,
+      "over": false,
+      "rng": 178757688
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "keep",
+      "dice": [
+       1,
+       3
+      ]
+     },
+     "state": {
+      "player": 150,
+      "ai": 300,
+      "turn": "player",
+      "phase": "decide",
+      "roll": [
+       4,
+       5,
+       2,
+       1
+      ],
+      "dice": 2,
+      "turnScore": 250,
+      "round": 2,
+      "lastBust": false,
+      "over": false,
+      "rng": 178757688
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 150,
+      "ai": 300,
+      "turn": "ai",
+      "phase": "roll",
+      "roll": [],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 2,
+      "lastBust": true,
+      "over": false,
+      "rng": 3526661747
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 150,
+      "ai": 300,
+      "turn": "ai",
+      "phase": "keep",
+      "roll": [
+       5,
+       5,
+       6,
+       3,
+       6,
+       2
+      ],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 2,
+      "lastBust": false,
+      "over": false,
+      "rng": 4045742989
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 150,
+      "ai": 300,
+      "turn": "ai",
+      "phase": "decide",
+      "roll": [
+       5,
+       5,
+       6,
+       3,
+       6,
+       2
+      ],
+      "dice": 4,
+      "turnScore": 100,
+      "round": 2,
+      "lastBust": false,
+      "over": false,
+      "rng": 4045742989
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 150,
+      "ai": 300,
+      "turn": "ai",
+      "phase": "keep",
+      "roll": [
+       6,
+       6,
+       3,
+       1
+      ],
+      "dice": 4,
+      "turnScore": 100,
+      "round": 2,
+      "lastBust": false,
+      "over": false,
+      "rng": 4129960818
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 150,
+      "ai": 300,
+      "turn": "ai",
+      "phase": "decide",
+      "roll": [
+       6,
+       6,
+       3,
+       1
+      ],
+      "dice": 3,
+      "turnScore": 200,
+      "round": 2,
+      "lastBust": false,
+      "over": false,
+      "rng": 4129960818
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 150,
+      "ai": 300,
+      "turn": "ai",
+      "phase": "keep",
+      "roll": [
+       1,
+       2,
+       3
+      ],
+      "dice": 3,
+      "turnScore": 200,
+      "round": 2,
+      "lastBust": false,
+      "over": false,
+      "rng": 3479689880
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 150,
+      "ai": 300,
+      "turn": "ai",
+      "phase": "decide",
+      "roll": [
+       1,
+       2,
+       3
+      ],
+      "dice": 2,
+      "turnScore": 300,
+      "round": 2,
+      "lastBust": false,
+      "over": false,
+      "rng": 3479689880
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 150,
+      "ai": 600,
+      "turn": "player",
+      "phase": "roll",
+      "roll": [],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 3,
+      "lastBust": false,
+      "over": false,
+      "rng": 3479689880
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 150,
+      "ai": 600,
+      "turn": "player",
+      "phase": "keep",
+      "roll": [
+       3,
+       1,
+       4,
+       6,
+       3,
+       4
+      ],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 3,
+      "lastBust": false,
+      "over": false,
+      "rng": 292572315
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "keep",
+      "dice": [
+       1
+      ]
+     },
+     "state": {
+      "player": 150,
+      "ai": 600,
+      "turn": "player",
+      "phase": "decide",
+      "roll": [
+       3,
+       1,
+       4,
+       6,
+       3,
+       4
+      ],
+      "dice": 5,
+      "turnScore": 100,
+      "round": 3,
+      "lastBust": false,
+      "over": false,
+      "rng": 292572315
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "bank"
+     },
+     "state": {
+      "player": 250,
+      "ai": 600,
+      "turn": "ai",
+      "phase": "roll",
+      "roll": [],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 3,
+      "lastBust": false,
+      "over": false,
+      "rng": 292572315
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 250,
+      "ai": 600,
+      "turn": "ai",
+      "phase": "keep",
+      "roll": [
+       5,
+       2,
+       2,
+       3,
+       2,
+       3
+      ],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 3,
+      "lastBust": false,
+      "over": false,
+      "rng": 2180363336
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 250,
+      "ai": 600,
+      "turn": "ai",
+      "phase": "decide",
+      "roll": [
+       5,
+       2,
+       2,
+       3,
+       2,
+       3
+      ],
+      "dice": 5,
+      "turnScore": 50,
+      "round": 3,
+      "lastBust": false,
+      "over": false,
+      "rng": 2180363336
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 250,
+      "ai": 600,
+      "turn": "player",
+      "phase": "roll",
+      "roll": [],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 4,
+      "lastBust": true,
+      "over": false,
+      "rng": 926592991
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 250,
+      "ai": 600,
+      "turn": "player",
+      "phase": "keep",
+      "roll": [
+       6,
+       6,
+       2,
+       5,
+       5,
+       3
+      ],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 4,
+      "lastBust": false,
+      "over": false,
+      "rng": 3459663710
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "keep",
+      "dice": [
+       4
+      ]
+     },
+     "state": {
+      "player": 250,
+      "ai": 600,
+      "turn": "player",
+      "phase": "decide",
+      "roll": [
+       6,
+       6,
+       2,
+       5,
+       5,
+       3
+      ],
+      "dice": 5,
+      "turnScore": 50,
+      "round": 4,
+      "lastBust": false,
+      "over": false,
+      "rng": 3459663710
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "bank"
+     },
+     "state": {
+      "player": 300,
+      "ai": 600,
+      "turn": "ai",
+      "phase": "roll",
+      "roll": [],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 4,
+      "lastBust": false,
+      "over": false,
+      "rng": 3459663710
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 300,
+      "ai": 600,
+      "turn": "ai",
+      "phase": "keep",
+      "roll": [
+       3,
+       4,
+       2,
+       6,
+       1,
+       2
+      ],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 4,
+      "lastBust": false,
+      "over": false,
+      "rng": 1700022631
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 300,
+      "ai": 600,
+      "turn": "ai",
+      "phase": "decide",
+      "roll": [
+       3,
+       4,
+       2,
+       6,
+       1,
+       2
+      ],
+      "dice": 5,
+      "turnScore": 100,
+      "round": 4,
+      "lastBust": false,
+      "over": false,
+      "rng": 1700022631
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 300,
+      "ai": 600,
+      "turn": "ai",
+      "phase": "keep",
+      "roll": [
+       4,
+       6,
+       5,
+       1,
+       4
+      ],
+      "dice": 5,
+      "turnScore": 100,
+      "round": 4,
+      "lastBust": false,
+      "over": false,
+      "rng": 3135760731
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 300,
+      "ai": 600,
+      "turn": "ai",
+      "phase": "decide",
+      "roll": [
+       4,
+       6,
+       5,
+       1,
+       4
+      ],
+      "dice": 3,
+      "turnScore": 250,
+      "round": 4,
+      "lastBust": false,
+      "over": false,
+      "rng": 3135760731
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 300,
+      "ai": 600,
+      "turn": "ai",
+      "phase": "keep",
+      "roll": [
+       4,
+       5,
+       5
+      ],
+      "dice": 3,
+      "turnScore": 250,
+      "round": 4,
+      "lastBust": false,
+      "over": false,
+      "rng": 3661197538
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 300,
+      "ai": 600,
+      "turn": "ai",
+      "phase": "decide",
+      "roll": [
+       4,
+       5,
+       5
+      ],
+      "dice": 1,
+      "turnScore": 350,
+      "round": 4,
+      "lastBust": false,
+      "over": false,
+      "rng": 3661197538
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 300,
+      "ai": 950,
+      "turn": "player",
+      "phase": "roll",
+      "roll": [],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 5,
+      "lastBust": false,
+      "over": false,
+      "rng": 3661197538
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 300,
+      "ai": 950,
+      "turn": "player",
+      "phase": "keep",
+      "roll": [
+       3,
+       6,
+       4,
+       6,
+       5,
+       1
+      ],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 5,
+      "lastBust": false,
+      "over": false,
+      "rng": 95317464
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "keep",
+      "dice": [
+       4,
+       5
+      ]
+     },
+     "state": {
+      "player": 300,
+      "ai": 950,
+      "turn": "player",
+      "phase": "decide",
+      "roll": [
+       3,
+       6,
+       4,
+       6,
+       5,
+       1
+      ],
+      "dice": 4,
+      "turnScore": 150,
+      "round": 5,
+      "lastBust": false,
+      "over": false,
+      "rng": 95317464
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 300,
+      "ai": 950,
+      "turn": "player",
+      "phase": "keep",
+      "roll": [
+       1,
+       6,
+       1,
+       2
+      ],
+      "dice": 4,
+      "turnScore": 150,
+      "round": 5,
+      "lastBust": false,
+      "over": false,
+      "rng": 4196825725
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "keep",
+      "dice": [
+       2
+      ]
+     },
+     "state": {
+      "player": 300,
+      "ai": 950,
+      "turn": "player",
+      "phase": "decide",
+      "roll": [
+       1,
+       6,
+       1,
+       2
+      ],
+      "dice": 3,
+      "turnScore": 250,
+      "round": 5,
+      "lastBust": false,
+      "over": false,
+      "rng": 4196825725
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "bank"
+     },
+     "state": {
+      "player": 550,
+      "ai": 950,
+      "turn": "ai",
+      "phase": "roll",
+      "roll": [],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 5,
+      "lastBust": false,
+      "over": false,
+      "rng": 4196825725
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 550,
+      "ai": 950,
+      "turn": "ai",
+      "phase": "keep",
+      "roll": [
+       6,
+       6,
+       1,
+       6,
+       1,
+       1
+      ],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 5,
+      "lastBust": false,
+      "over": false,
+      "rng": 66732342
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 550,
+      "ai": 950,
+      "turn": "ai",
+      "phase": "decide",
+      "roll": [
+       6,
+       6,
+       1,
+       6,
+       1,
+       1
+      ],
+      "dice": 6,
+      "turnScore": 1600,
+      "round": 5,
+      "lastBust": false,
+      "over": false,
+      "rng": 66732342
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 550,
+      "ai": 950,
+      "turn": "ai",
+      "phase": "keep",
+      "roll": [
+       1,
+       6,
+       5,
+       1,
+       5,
+       4
+      ],
+      "dice": 6,
+      "turnScore": 1600,
+      "round": 5,
+      "lastBust": false,
+      "over": false,
+      "rng": 4137272391
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 550,
+      "ai": 950,
+      "turn": "ai",
+      "phase": "decide",
+      "roll": [
+       1,
+       6,
+       5,
+       1,
+       5,
+       4
+      ],
+      "dice": 2,
+      "turnScore": 1900,
+      "round": 5,
+      "lastBust": false,
+      "over": false,
+      "rng": 4137272391
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 550,
+      "ai": 2850,
+      "turn": "player",
+      "phase": "roll",
+      "roll": [],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 6,
+      "lastBust": false,
+      "over": false,
+      "rng": 4137272391
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 550,
+      "ai": 2850,
+      "turn": "player",
+      "phase": "keep",
+      "roll": [
+       2,
+       2,
+       4,
+       5,
+       5,
+       5
+      ],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 6,
+      "lastBust": false,
+      "over": false,
+      "rng": 1587597382
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "keep",
+      "dice": [
+       3,
+       5
+      ]
+     },
+     "state": {
+      "player": 550,
+      "ai": 2850,
+      "turn": "player",
+      "phase": "decide",
+      "roll": [
+       2,
+       2,
+       4,
+       5,
+       5,
+       5
+      ],
+      "dice": 4,
+      "turnScore": 100,
+      "round": 6,
+      "lastBust": false,
+      "over": false,
+      "rng": 1587597382
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 550,
+      "ai": 2850,
+      "turn": "player",
+      "phase": "keep",
+      "roll": [
+       5,
+       3,
+       2,
+       5
+      ],
+      "dice": 4,
+      "turnScore": 100,
+      "round": 6,
+      "lastBust": false,
+      "over": false,
+      "rng": 3634327204
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "keep",
+      "dice": [
+       0
+      ]
+     },
+     "state": {
+      "player": 550,
+      "ai": 2850,
+      "turn": "player",
+      "phase": "decide",
+      "roll": [
+       5,
+       3,
+       2,
+       5
+      ],
+      "dice": 3,
+      "turnScore": 150,
+      "round": 6,
+      "lastBust": false,
+      "over": false,
+      "rng": 3634327204
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 550,
+      "ai": 2850,
+      "turn": "ai",
+      "phase": "roll",
+      "roll": [],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 6,
+      "lastBust": true,
+      "over": false,
+      "rng": 1655453744
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 550,
+      "ai": 2850,
+      "turn": "ai",
+      "phase": "keep",
+      "roll": [
+       6,
+       3,
+       3,
+       6,
+       6,
+       6
+      ],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 6,
+      "lastBust": false,
+      "over": false,
+      "rng": 2340424085
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 550,
+      "ai": 2850,
+      "turn": "ai",
+      "phase": "decide",
+      "roll": [
+       6,
+       3,
+       3,
+       6,
+       6,
+       6
+      ],
+      "dice": 3,
+      "turnScore": 600,
+      "round": 6,
+      "lastBust": false,
+      "over": false,
+      "rng": 2340424085
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 550,
+      "ai": 3450,
+      "turn": "player",
+      "phase": "roll",
+      "roll": [],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 7,
+      "lastBust": false,
+      "over": false,
+      "rng": 2340424085
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 550,
+      "ai": 3450,
+      "turn": "player",
+      "phase": "keep",
+      "roll": [
+       5,
+       2,
+       3,
+       5,
+       4,
+       3
+      ],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 7,
+      "lastBust": false,
+      "over": false,
+      "rng": 390703940
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "keep",
+      "dice": [
+       0
+      ]
+     },
+     "state": {
+      "player": 550,
+      "ai": 3450,
+      "turn": "player",
+      "phase": "decide",
+      "roll": [
+       5,
+       2,
+       3,
+       5,
+       4,
+       3
+      ],
+      "dice": 5,
+      "turnScore": 50,
+      "round": 7,
+      "lastBust": false,
+      "over": false,
+      "rng": 390703940
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 550,
+      "ai": 3450,
+      "turn": "player",
+      "phase": "keep",
+      "roll": [
+       1,
+       3,
+       4,
+       3,
+       5
+      ],
+      "dice": 5,
+      "turnScore": 50,
+      "round": 7,
+      "lastBust": false,
+      "over": false,
+      "rng": 1696616326
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "keep",
+      "dice": [
+       4
+      ]
+     },
+     "state": {
+      "player": 550,
+      "ai": 3450,
+      "turn": "player",
+      "phase": "decide",
+      "roll": [
+       1,
+       3,
+       4,
+       3,
+       5
+      ],
+      "dice": 4,
+      "turnScore": 100,
+      "round": 7,
+      "lastBust": false,
+      "over": false,
+      "rng": 1696616326
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 550,
+      "ai": 3450,
+      "turn": "player",
+      "phase": "keep",
+      "roll": [
+       3,
+       4,
+       5,
+       2
+      ],
+      "dice": 4,
+      "turnScore": 100,
+      "round": 7,
+      "lastBust": false,
+      "over": false,
+      "rng": 3850987855
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "keep",
+      "dice": [
+       2
+      ]
+     },
+     "state": {
+      "player": 550,
+      "ai": 3450,
+      "turn": "player",
+      "phase": "decide",
+      "roll": [
+       3,
+       4,
+       5,
+       2
+      ],
+      "dice": 3,
+      "turnScore": 150,
+      "round": 7,
+      "lastBust": false,
+      "over": false,
+      "rng": 3850987855
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "bank"
+     },
+     "state": {
+      "player": 700,
+      "ai": 3450,
+      "turn": "ai",
+      "phase": "roll",
+      "roll": [],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 7,
+      "lastBust": false,
+      "over": false,
+      "rng": 3850987855
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 700,
+      "ai": 3450,
+      "turn": "ai",
+      "phase": "keep",
+      "roll": [
+       2,
+       5,
+       1,
+       6,
+       4,
+       4
+      ],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 7,
+      "lastBust": false,
+      "over": false,
+      "rng": 1318425471
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 700,
+      "ai": 3450,
+      "turn": "ai",
+      "phase": "decide",
+      "roll": [
+       2,
+       5,
+       1,
+       6,
+       4,
+       4
+      ],
+      "dice": 4,
+      "turnScore": 150,
+      "round": 7,
+      "lastBust": false,
+      "over": false,
+      "rng": 1318425471
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 700,
+      "ai": 3450,
+      "turn": "ai",
+      "phase": "keep",
+      "roll": [
+       1,
+       6,
+       1,
+       5
+      ],
+      "dice": 4,
+      "turnScore": 150,
+      "round": 7,
+      "lastBust": false,
+      "over": false,
+      "rng": 2770959724
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 700,
+      "ai": 3450,
+      "turn": "ai",
+      "phase": "decide",
+      "roll": [
+       1,
+       6,
+       1,
+       5
+      ],
+      "dice": 1,
+      "turnScore": 400,
+      "round": 7,
+      "lastBust": false,
+      "over": false,
+      "rng": 2770959724
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 700,
+      "ai": 3850,
+      "turn": "player",
+      "phase": "roll",
+      "roll": [],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 8,
+      "lastBust": false,
+      "over": false,
+      "rng": 2770959724
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 700,
+      "ai": 3850,
+      "turn": "player",
+      "phase": "keep",
+      "roll": [
+       5,
+       2,
+       2,
+       5,
+       4,
+       3
+      ],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 8,
+      "lastBust": false,
+      "over": false,
+      "rng": 134631824
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "keep",
+      "dice": [
+       3
+      ]
+     },
+     "state": {
+      "player": 700,
+      "ai": 3850,
+      "turn": "player",
+      "phase": "decide",
+      "roll": [
+       5,
+       2,
+       2,
+       5,
+       4,
+       3
+      ],
+      "dice": 5,
+      "turnScore": 50,
+      "round": 8,
+      "lastBust": false,
+      "over": false,
+      "rng": 134631824
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "bank"
+     },
+     "state": {
+      "player": 750,
+      "ai": 3850,
+      "turn": "ai",
+      "phase": "roll",
+      "roll": [],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 8,
+      "lastBust": false,
+      "over": false,
+      "rng": 134631824
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 750,
+      "ai": 3850,
+      "turn": "ai",
+      "phase": "keep",
+      "roll": [
+       3,
+       4,
+       5,
+       1,
+       1,
+       5
+      ],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 8,
+      "lastBust": false,
+      "over": false,
+      "rng": 1386749170
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 750,
+      "ai": 3850,
+      "turn": "ai",
+      "phase": "decide",
+      "roll": [
+       3,
+       4,
+       5,
+       1,
+       1,
+       5
+      ],
+      "dice": 2,
+      "turnScore": 300,
+      "round": 8,
+      "lastBust": false,
+      "over": false,
+      "rng": 1386749170
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 750,
+      "ai": 4150,
+      "turn": "player",
+      "phase": "roll",
+      "roll": [],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 9,
+      "lastBust": false,
+      "over": false,
+      "rng": 1386749170
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 750,
+      "ai": 4150,
+      "turn": "player",
+      "phase": "keep",
+      "roll": [
+       6,
+       2,
+       4,
+       5,
+       4,
+       6
+      ],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 9,
+      "lastBust": false,
+      "over": false,
+      "rng": 2709199625
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "keep",
+      "dice": [
+       3
+      ]
+     },
+     "state": {
+      "player": 750,
+      "ai": 4150,
+      "turn": "player",
+      "phase": "decide",
+      "roll": [
+       6,
+       2,
+       4,
+       5,
+       4,
+       6
+      ],
+      "dice": 5,
+      "turnScore": 50,
+      "round": 9,
+      "lastBust": false,
+      "over": false,
+      "rng": 2709199625
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 750,
+      "ai": 4150,
+      "turn": "player",
+      "phase": "keep",
+      "roll": [
+       3,
+       3,
+       3,
+       5,
+       6
+      ],
+      "dice": 5,
+      "turnScore": 50,
+      "round": 9,
+      "lastBust": false,
+      "over": false,
+      "rng": 2334552389
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "keep",
+      "dice": [
+       0,
+       1,
+       2,
+       3
+      ]
+     },
+     "state": {
+      "player": 750,
+      "ai": 4150,
+      "turn": "player",
+      "phase": "decide",
+      "roll": [
+       3,
+       3,
+       3,
+       5,
+       6
+      ],
+      "dice": 1,
+      "turnScore": 400,
+      "round": 9,
+      "lastBust": false,
+      "over": false,
+      "rng": 2334552389
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "bank"
+     },
+     "state": {
+      "player": 1150,
+      "ai": 4150,
+      "turn": "ai",
+      "phase": "roll",
+      "roll": [],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 9,
+      "lastBust": false,
+      "over": false,
+      "rng": 2334552389
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 1150,
+      "ai": 4150,
+      "turn": "ai",
+      "phase": "keep",
+      "roll": [
+       1,
+       1,
+       3,
+       1,
+       2,
+       4
+      ],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 9,
+      "lastBust": false,
+      "over": false,
+      "rng": 2401531305
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 1150,
+      "ai": 4150,
+      "turn": "ai",
+      "phase": "decide",
+      "roll": [
+       1,
+       1,
+       3,
+       1,
+       2,
+       4
+      ],
+      "dice": 3,
+      "turnScore": 1000,
+      "round": 9,
+      "lastBust": false,
+      "over": false,
+      "rng": 2401531305
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 1150,
+      "ai": 5150,
+      "turn": "player",
+      "phase": "over",
+      "roll": [],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 10,
+      "lastBust": false,
+      "over": true,
+      "rng": 2401531305
+     }
+    }
+   ],
+   "result": {
+    "winner": "ai",
+    "stars": 0,
+    "score": 1150,
+    "player": 1150,
+    "ai": 5150
+   }
+  },
+  {
+   "name": "cautious-banker-vs-level-4",
+   "config": {
+    "target": 5000,
+    "maxRounds": 10,
+    "aiBankAt": [
+     250,
+     300,
+     350,
+     400,
+     450
+    ],
+    "aiErrorPct": [
+     40,
+     25,
+     10,
+     5,
+     0
+    ],
+    "starMargins": [
+     1500,
+     500
+    ]
+   },
+   "seed": 2026,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 0,
+      "ai": 0,
+      "turn": "player",
+      "phase": "keep",
+      "roll": [
+       3,
+       4,
+       5,
+       6,
+       2,
+       3
+      ],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 1,
+      "lastBust": false,
+      "over": false,
+      "rng": 1408667750
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "keep",
+      "dice": [
+       2
+      ]
+     },
+     "state": {
+      "player": 0,
+      "ai": 0,
+      "turn": "player",
+      "phase": "decide",
+      "roll": [
+       3,
+       4,
+       5,
+       6,
+       2,
+       3
+      ],
+      "dice": 5,
+      "turnScore": 50,
+      "round": 1,
+      "lastBust": false,
+      "over": false,
+      "rng": 1408667750
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 0,
+      "ai": 0,
+      "turn": "player",
+      "phase": "keep",
+      "roll": [
+       2,
+       3,
+       4,
+       1,
+       6
+      ],
+      "dice": 5,
+      "turnScore": 50,
+      "round": 1,
+      "lastBust": false,
+      "over": false,
+      "rng": 1612990751
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "keep",
+      "dice": [
+       3
+      ]
+     },
+     "state": {
+      "player": 0,
+      "ai": 0,
+      "turn": "player",
+      "phase": "decide",
+      "roll": [
+       2,
+       3,
+       4,
+       1,
+       6
+      ],
+      "dice": 4,
+      "turnScore": 150,
+      "round": 1,
+      "lastBust": false,
+      "over": false,
+      "rng": 1612990751
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 0,
+      "ai": 0,
+      "turn": "player",
+      "phase": "keep",
+      "roll": [
+       1,
+       2,
+       5,
+       6
+      ],
+      "dice": 4,
+      "turnScore": 150,
+      "round": 1,
+      "lastBust": false,
+      "over": false,
+      "rng": 3301806905
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "keep",
+      "dice": [
+       0,
+       2
+      ]
+     },
+     "state": {
+      "player": 0,
+      "ai": 0,
+      "turn": "player",
+      "phase": "decide",
+      "roll": [
+       1,
+       2,
+       5,
+       6
+      ],
+      "dice": 2,
+      "turnScore": 300,
+      "round": 1,
+      "lastBust": false,
+      "over": false,
+      "rng": 3301806905
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "bank"
+     },
+     "state": {
+      "player": 300,
+      "ai": 0,
+      "turn": "ai",
+      "phase": "roll",
+      "roll": [],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 1,
+      "lastBust": false,
+      "over": false,
+      "rng": 3301806905
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "player": 300,
+      "ai": 0,
+      "turn": "ai",
+      "phase": "keep",
+      "roll": [
+       1,
+       2,
+       3,
+       1,
+       2,
+       6
+      ],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 1,
+      "lastBust": false,
+      "over": false,
+      "rng": 1568747969
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "player": 300,
+      "ai": 0,
+      "turn": "ai",
+      "phase": "decide",
+      "roll": [
+       1,
+       2,
+       3,
+       1,
+       2,
+       6
+      ],
+      "dice": 4,
+      "turnScore": 200,
+      "round": 1,
+      "lastBust": false,
+      "over": false,
+      "rng": 1568747969
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "player": 300,
+      "ai": 0,
+      "turn": "ai",
+      "phase": "keep",
+      "roll": [
+       2,
+       1,
+       6,
+       1
+      ],
+      "dice": 4,
+      "turnScore": 200,
+      "round": 1,
+      "lastBust": false,
+      "over": false,
+      "rng": 2225343612
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "player": 300,
+      "ai": 0,
+      "turn": "ai",
+      "phase": "decide",
+      "roll": [
+       2,
+       1,
+       6,
+       1
+      ],
+      "dice": 2,
+      "turnScore": 400,
+      "round": 1,
+      "lastBust": false,
+      "over": false,
+      "rng": 2225343612
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "player": 300,
+      "ai": 400,
+      "turn": "player",
+      "phase": "roll",
+      "roll": [],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 2,
+      "lastBust": false,
+      "over": false,
+      "rng": 2225343612
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 300,
+      "ai": 400,
+      "turn": "player",
+      "phase": "keep",
+      "roll": [
+       4,
+       1,
+       1,
+       6,
+       5,
+       4
+      ],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 2,
+      "lastBust": false,
+      "over": false,
+      "rng": 3080942367
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "keep",
+      "dice": [
+       1,
+       2,
+       4
+      ]
+     },
+     "state": {
+      "player": 300,
+      "ai": 400,
+      "turn": "player",
+      "phase": "decide",
+      "roll": [
+       4,
+       1,
+       1,
+       6,
+       5,
+       4
+      ],
+      "dice": 3,
+      "turnScore": 250,
+      "round": 2,
+      "lastBust": false,
+      "over": false,
+      "rng": 3080942367
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 300,
+      "ai": 400,
+      "turn": "player",
+      "phase": "keep",
+      "roll": [
+       6,
+       4,
+       5
+      ],
+      "dice": 3,
+      "turnScore": 250,
+      "round": 2,
+      "lastBust": false,
+      "over": false,
+      "rng": 2529382300
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "keep",
+      "dice": [
+       2
+      ]
+     },
+     "state": {
+      "player": 300,
+      "ai": 400,
+      "turn": "player",
+      "phase": "decide",
+      "roll": [
+       6,
+       4,
+       5
+      ],
+      "dice": 2,
+      "turnScore": 300,
+      "round": 2,
+      "lastBust": false,
+      "over": false,
+      "rng": 2529382300
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "bank"
+     },
+     "state": {
+      "player": 600,
+      "ai": 400,
+      "turn": "ai",
+      "phase": "roll",
+      "roll": [],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 2,
+      "lastBust": false,
+      "over": false,
+      "rng": 2529382300
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "player": 600,
+      "ai": 400,
+      "turn": "ai",
+      "phase": "keep",
+      "roll": [
+       3,
+       6,
+       5,
+       6,
+       3,
+       1
+      ],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 2,
+      "lastBust": false,
+      "over": false,
+      "rng": 1973610756
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "player": 600,
+      "ai": 400,
+      "turn": "ai",
+      "phase": "decide",
+      "roll": [
+       3,
+       6,
+       5,
+       6,
+       3,
+       1
+      ],
+      "dice": 4,
+      "turnScore": 150,
+      "round": 2,
+      "lastBust": false,
+      "over": false,
+      "rng": 1973610756
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "player": 600,
+      "ai": 400,
+      "turn": "ai",
+      "phase": "keep",
+      "roll": [
+       2,
+       4,
+       4,
+       1
+      ],
+      "dice": 4,
+      "turnScore": 150,
+      "round": 2,
+      "lastBust": false,
+      "over": false,
+      "rng": 184988196
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "player": 600,
+      "ai": 400,
+      "turn": "ai",
+      "phase": "decide",
+      "roll": [
+       2,
+       4,
+       4,
+       1
+      ],
+      "dice": 3,
+      "turnScore": 250,
+      "round": 2,
+      "lastBust": false,
+      "over": false,
+      "rng": 184988196
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "player": 600,
+      "ai": 400,
+      "turn": "player",
+      "phase": "roll",
+      "roll": [],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 3,
+      "lastBust": true,
+      "over": false,
+      "rng": 3782039249
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 600,
+      "ai": 400,
+      "turn": "player",
+      "phase": "keep",
+      "roll": [
+       3,
+       5,
+       2,
+       2,
+       6,
+       2
+      ],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 3,
+      "lastBust": false,
+      "over": false,
+      "rng": 1855998001
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "keep",
+      "dice": [
+       1,
+       2,
+       3,
+       5
+      ]
+     },
+     "state": {
+      "player": 600,
+      "ai": 400,
+      "turn": "player",
+      "phase": "decide",
+      "roll": [
+       3,
+       5,
+       2,
+       2,
+       6,
+       2
+      ],
+      "dice": 2,
+      "turnScore": 250,
+      "round": 3,
+      "lastBust": false,
+      "over": false,
+      "rng": 1855998001
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "bank"
+     },
+     "state": {
+      "player": 850,
+      "ai": 400,
+      "turn": "ai",
+      "phase": "roll",
+      "roll": [],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 3,
+      "lastBust": false,
+      "over": false,
+      "rng": 1855998001
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "player": 850,
+      "ai": 400,
+      "turn": "ai",
+      "phase": "keep",
+      "roll": [
+       5,
+       5,
+       2,
+       4,
+       6,
+       6
+      ],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 3,
+      "lastBust": false,
+      "over": false,
+      "rng": 914289143
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "player": 850,
+      "ai": 400,
+      "turn": "ai",
+      "phase": "decide",
+      "roll": [
+       5,
+       5,
+       2,
+       4,
+       6,
+       6
+      ],
+      "dice": 4,
+      "turnScore": 100,
+      "round": 3,
+      "lastBust": false,
+      "over": false,
+      "rng": 914289143
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "player": 850,
+      "ai": 400,
+      "turn": "ai",
+      "phase": "keep",
+      "roll": [
+       6,
+       1,
+       4,
+       1
+      ],
+      "dice": 4,
+      "turnScore": 100,
+      "round": 3,
+      "lastBust": false,
+      "over": false,
+      "rng": 1690589784
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "player": 850,
+      "ai": 400,
+      "turn": "ai",
+      "phase": "decide",
+      "roll": [
+       6,
+       1,
+       4,
+       1
+      ],
+      "dice": 2,
+      "turnScore": 300,
+      "round": 3,
+      "lastBust": false,
+      "over": false,
+      "rng": 1690589784
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "player": 850,
+      "ai": 700,
+      "turn": "player",
+      "phase": "roll",
+      "roll": [],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 4,
+      "lastBust": false,
+      "over": false,
+      "rng": 1690589784
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 850,
+      "ai": 700,
+      "turn": "player",
+      "phase": "keep",
+      "roll": [
+       2,
+       6,
+       5,
+       4,
+       1,
+       2
+      ],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 4,
+      "lastBust": false,
+      "over": false,
+      "rng": 4157404567
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "keep",
+      "dice": [
+       2,
+       4
+      ]
+     },
+     "state": {
+      "player": 850,
+      "ai": 700,
+      "turn": "player",
+      "phase": "decide",
+      "roll": [
+       2,
+       6,
+       5,
+       4,
+       1,
+       2
+      ],
+      "dice": 4,
+      "turnScore": 150,
+      "round": 4,
+      "lastBust": false,
+      "over": false,
+      "rng": 4157404567
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 850,
+      "ai": 700,
+      "turn": "player",
+      "phase": "keep",
+      "roll": [
+       1,
+       2,
+       2,
+       3
+      ],
+      "dice": 4,
+      "turnScore": 150,
+      "round": 4,
+      "lastBust": false,
+      "over": false,
+      "rng": 2566448990
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "keep",
+      "dice": [
+       0
+      ]
+     },
+     "state": {
+      "player": 850,
+      "ai": 700,
+      "turn": "player",
+      "phase": "decide",
+      "roll": [
+       1,
+       2,
+       2,
+       3
+      ],
+      "dice": 3,
+      "turnScore": 250,
+      "round": 4,
+      "lastBust": false,
+      "over": false,
+      "rng": 2566448990
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 850,
+      "ai": 700,
+      "turn": "ai",
+      "phase": "roll",
+      "roll": [],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 4,
+      "lastBust": true,
+      "over": false,
+      "rng": 3376453827
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "player": 850,
+      "ai": 700,
+      "turn": "ai",
+      "phase": "keep",
+      "roll": [
+       2,
+       5,
+       2,
+       2,
+       5,
+       5
+      ],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 4,
+      "lastBust": false,
+      "over": false,
+      "rng": 936323692
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "player": 850,
+      "ai": 700,
+      "turn": "ai",
+      "phase": "decide",
+      "roll": [
+       2,
+       5,
+       2,
+       2,
+       5,
+       5
+      ],
+      "dice": 4,
+      "turnScore": 100,
+      "round": 4,
+      "lastBust": false,
+      "over": false,
+      "rng": 936323692
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "player": 850,
+      "ai": 700,
+      "turn": "ai",
+      "phase": "keep",
+      "roll": [
+       2,
+       5,
+       2,
+       5
+      ],
+      "dice": 4,
+      "turnScore": 100,
+      "round": 4,
+      "lastBust": false,
+      "over": false,
+      "rng": 2630277274
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "player": 850,
+      "ai": 700,
+      "turn": "ai",
+      "phase": "decide",
+      "roll": [
+       2,
+       5,
+       2,
+       5
+      ],
+      "dice": 2,
+      "turnScore": 200,
+      "round": 4,
+      "lastBust": false,
+      "over": false,
+      "rng": 2630277274
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "player": 850,
+      "ai": 900,
+      "turn": "player",
+      "phase": "roll",
+      "roll": [],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 5,
+      "lastBust": false,
+      "over": false,
+      "rng": 2630277274
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 850,
+      "ai": 900,
+      "turn": "player",
+      "phase": "keep",
+      "roll": [
+       1,
+       3,
+       6,
+       1,
+       2,
+       6
+      ],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 5,
+      "lastBust": false,
+      "over": false,
+      "rng": 3801487349
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "keep",
+      "dice": [
+       0,
+       3
+      ]
+     },
+     "state": {
+      "player": 850,
+      "ai": 900,
+      "turn": "player",
+      "phase": "decide",
+      "roll": [
+       1,
+       3,
+       6,
+       1,
+       2,
+       6
+      ],
+      "dice": 4,
+      "turnScore": 200,
+      "round": 5,
+      "lastBust": false,
+      "over": false,
+      "rng": 3801487349
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 850,
+      "ai": 900,
+      "turn": "ai",
+      "phase": "roll",
+      "roll": [],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 5,
+      "lastBust": true,
+      "over": false,
+      "rng": 217526828
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "player": 850,
+      "ai": 900,
+      "turn": "ai",
+      "phase": "keep",
+      "roll": [
+       2,
+       2,
+       4,
+       4,
+       5,
+       2
+      ],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 5,
+      "lastBust": false,
+      "over": false,
+      "rng": 4242609871
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "player": 850,
+      "ai": 900,
+      "turn": "ai",
+      "phase": "decide",
+      "roll": [
+       2,
+       2,
+       4,
+       4,
+       5,
+       2
+      ],
+      "dice": 2,
+      "turnScore": 250,
+      "round": 5,
+      "lastBust": false,
+      "over": false,
+      "rng": 4242609871
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "player": 850,
+      "ai": 1150,
+      "turn": "player",
+      "phase": "roll",
+      "roll": [],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 6,
+      "lastBust": false,
+      "over": false,
+      "rng": 4242609871
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 850,
+      "ai": 1150,
+      "turn": "player",
+      "phase": "keep",
+      "roll": [
+       6,
+       2,
+       4,
+       6,
+       5,
+       2
+      ],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 6,
+      "lastBust": false,
+      "over": false,
+      "rng": 2953802923
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "keep",
+      "dice": [
+       4
+      ]
+     },
+     "state": {
+      "player": 850,
+      "ai": 1150,
+      "turn": "player",
+      "phase": "decide",
+      "roll": [
+       6,
+       2,
+       4,
+       6,
+       5,
+       2
+      ],
+      "dice": 5,
+      "turnScore": 50,
+      "round": 6,
+      "lastBust": false,
+      "over": false,
+      "rng": 2953802923
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 850,
+      "ai": 1150,
+      "turn": "player",
+      "phase": "keep",
+      "roll": [
+       1,
+       3,
+       3,
+       1,
+       4
+      ],
+      "dice": 5,
+      "turnScore": 50,
+      "round": 6,
+      "lastBust": false,
+      "over": false,
+      "rng": 1345466121
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "keep",
+      "dice": [
+       0,
+       3
+      ]
+     },
+     "state": {
+      "player": 850,
+      "ai": 1150,
+      "turn": "player",
+      "phase": "decide",
+      "roll": [
+       1,
+       3,
+       3,
+       1,
+       4
+      ],
+      "dice": 3,
+      "turnScore": 250,
+      "round": 6,
+      "lastBust": false,
+      "over": false,
+      "rng": 1345466121
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 850,
+      "ai": 1150,
+      "turn": "player",
+      "phase": "keep",
+      "roll": [
+       5,
+       4,
+       6
+      ],
+      "dice": 3,
+      "turnScore": 250,
+      "round": 6,
+      "lastBust": false,
+      "over": false,
+      "rng": 3471560393
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "keep",
+      "dice": [
+       0
+      ]
+     },
+     "state": {
+      "player": 850,
+      "ai": 1150,
+      "turn": "player",
+      "phase": "decide",
+      "roll": [
+       5,
+       4,
+       6
+      ],
+      "dice": 2,
+      "turnScore": 300,
+      "round": 6,
+      "lastBust": false,
+      "over": false,
+      "rng": 3471560393
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "bank"
+     },
+     "state": {
+      "player": 1150,
+      "ai": 1150,
+      "turn": "ai",
+      "phase": "roll",
+      "roll": [],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 6,
+      "lastBust": false,
+      "over": false,
+      "rng": 3471560393
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "player": 1150,
+      "ai": 1150,
+      "turn": "ai",
+      "phase": "keep",
+      "roll": [
+       5,
+       2,
+       3,
+       2,
+       2,
+       1
+      ],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 6,
+      "lastBust": false,
+      "over": false,
+      "rng": 3866445762
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "player": 1150,
+      "ai": 1150,
+      "turn": "ai",
+      "phase": "decide",
+      "roll": [
+       5,
+       2,
+       3,
+       2,
+       2,
+       1
+      ],
+      "dice": 1,
+      "turnScore": 350,
+      "round": 6,
+      "lastBust": false,
+      "over": false,
+      "rng": 3866445762
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "player": 1150,
+      "ai": 1500,
+      "turn": "player",
+      "phase": "roll",
+      "roll": [],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 7,
+      "lastBust": false,
+      "over": false,
+      "rng": 3866445762
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 1150,
+      "ai": 1500,
+      "turn": "player",
+      "phase": "keep",
+      "roll": [
+       1,
+       3,
+       6,
+       5,
+       6,
+       2
+      ],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 7,
+      "lastBust": false,
+      "over": false,
+      "rng": 3708862393
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "keep",
+      "dice": [
+       0,
+       3
+      ]
+     },
+     "state": {
+      "player": 1150,
+      "ai": 1500,
+      "turn": "player",
+      "phase": "decide",
+      "roll": [
+       1,
+       3,
+       6,
+       5,
+       6,
+       2
+      ],
+      "dice": 4,
+      "turnScore": 150,
+      "round": 7,
+      "lastBust": false,
+      "over": false,
+      "rng": 3708862393
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 1150,
+      "ai": 1500,
+      "turn": "player",
+      "phase": "keep",
+      "roll": [
+       5,
+       3,
+       2,
+       3
+      ],
+      "dice": 4,
+      "turnScore": 150,
+      "round": 7,
+      "lastBust": false,
+      "over": false,
+      "rng": 1006070888
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "keep",
+      "dice": [
+       0
+      ]
+     },
+     "state": {
+      "player": 1150,
+      "ai": 1500,
+      "turn": "player",
+      "phase": "decide",
+      "roll": [
+       5,
+       3,
+       2,
+       3
+      ],
+      "dice": 3,
+      "turnScore": 200,
+      "round": 7,
+      "lastBust": false,
+      "over": false,
+      "rng": 1006070888
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 1150,
+      "ai": 1500,
+      "turn": "player",
+      "phase": "keep",
+      "roll": [
+       2,
+       6,
+       5
+      ],
+      "dice": 3,
+      "turnScore": 200,
+      "round": 7,
+      "lastBust": false,
+      "over": false,
+      "rng": 54678022
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "keep",
+      "dice": [
+       2
+      ]
+     },
+     "state": {
+      "player": 1150,
+      "ai": 1500,
+      "turn": "player",
+      "phase": "decide",
+      "roll": [
+       2,
+       6,
+       5
+      ],
+      "dice": 2,
+      "turnScore": 250,
+      "round": 7,
+      "lastBust": false,
+      "over": false,
+      "rng": 54678022
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "bank"
+     },
+     "state": {
+      "player": 1400,
+      "ai": 1500,
+      "turn": "ai",
+      "phase": "roll",
+      "roll": [],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 7,
+      "lastBust": false,
+      "over": false,
+      "rng": 54678022
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "player": 1400,
+      "ai": 1500,
+      "turn": "ai",
+      "phase": "keep",
+      "roll": [
+       2,
+       2,
+       3,
+       3,
+       1,
+       5
+      ],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 7,
+      "lastBust": false,
+      "over": false,
+      "rng": 896485834
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "player": 1400,
+      "ai": 1500,
+      "turn": "ai",
+      "phase": "decide",
+      "roll": [
+       2,
+       2,
+       3,
+       3,
+       1,
+       5
+      ],
+      "dice": 4,
+      "turnScore": 150,
+      "round": 7,
+      "lastBust": false,
+      "over": false,
+      "rng": 896485834
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "player": 1400,
+      "ai": 1500,
+      "turn": "ai",
+      "phase": "keep",
+      "roll": [
+       4,
+       1,
+       2,
+       3
+      ],
+      "dice": 4,
+      "turnScore": 150,
+      "round": 7,
+      "lastBust": false,
+      "over": false,
+      "rng": 1006453754
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "player": 1400,
+      "ai": 1500,
+      "turn": "ai",
+      "phase": "decide",
+      "roll": [
+       4,
+       1,
+       2,
+       3
+      ],
+      "dice": 3,
+      "turnScore": 250,
+      "round": 7,
+      "lastBust": false,
+      "over": false,
+      "rng": 1006453754
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "player": 1400,
+      "ai": 1500,
+      "turn": "player",
+      "phase": "roll",
+      "roll": [],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 8,
+      "lastBust": true,
+      "over": false,
+      "rng": 853244169
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 1400,
+      "ai": 1500,
+      "turn": "player",
+      "phase": "keep",
+      "roll": [
+       3,
+       2,
+       1,
+       2,
+       3,
+       6
+      ],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 8,
+      "lastBust": false,
+      "over": false,
+      "rng": 926002541
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "keep",
+      "dice": [
+       2
+      ]
+     },
+     "state": {
+      "player": 1400,
+      "ai": 1500,
+      "turn": "player",
+      "phase": "decide",
+      "roll": [
+       3,
+       2,
+       1,
+       2,
+       3,
+       6
+      ],
+      "dice": 5,
+      "turnScore": 100,
+      "round": 8,
+      "lastBust": false,
+      "over": false,
+      "rng": 926002541
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 1400,
+      "ai": 1500,
+      "turn": "ai",
+      "phase": "roll",
+      "roll": [],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 8,
+      "lastBust": true,
+      "over": false,
+      "rng": 2142113600
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "player": 1400,
+      "ai": 1500,
+      "turn": "ai",
+      "phase": "keep",
+      "roll": [
+       6,
+       4,
+       2,
+       5,
+       1,
+       4
+      ],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 8,
+      "lastBust": false,
+      "over": false,
+      "rng": 2889788157
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "player": 1400,
+      "ai": 1500,
+      "turn": "ai",
+      "phase": "decide",
+      "roll": [
+       6,
+       4,
+       2,
+       5,
+       1,
+       4
+      ],
+      "dice": 4,
+      "turnScore": 150,
+      "round": 8,
+      "lastBust": false,
+      "over": false,
+      "rng": 2889788157
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "player": 1400,
+      "ai": 1500,
+      "turn": "ai",
+      "phase": "keep",
+      "roll": [
+       4,
+       5,
+       3,
+       6
+      ],
+      "dice": 4,
+      "turnScore": 150,
+      "round": 8,
+      "lastBust": false,
+      "over": false,
+      "rng": 1137307253
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "player": 1400,
+      "ai": 1500,
+      "turn": "ai",
+      "phase": "decide",
+      "roll": [
+       4,
+       5,
+       3,
+       6
+      ],
+      "dice": 3,
+      "turnScore": 200,
+      "round": 8,
+      "lastBust": false,
+      "over": false,
+      "rng": 1137307253
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "player": 1400,
+      "ai": 1500,
+      "turn": "ai",
+      "phase": "keep",
+      "roll": [
+       5,
+       6,
+       5
+      ],
+      "dice": 3,
+      "turnScore": 200,
+      "round": 8,
+      "lastBust": false,
+      "over": false,
+      "rng": 2355484426
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "player": 1400,
+      "ai": 1500,
+      "turn": "ai",
+      "phase": "decide",
+      "roll": [
+       5,
+       6,
+       5
+      ],
+      "dice": 1,
+      "turnScore": 300,
+      "round": 8,
+      "lastBust": false,
+      "over": false,
+      "rng": 2355484426
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "player": 1400,
+      "ai": 1800,
+      "turn": "player",
+      "phase": "roll",
+      "roll": [],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 9,
+      "lastBust": false,
+      "over": false,
+      "rng": 2355484426
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 1400,
+      "ai": 1800,
+      "turn": "player",
+      "phase": "keep",
+      "roll": [
+       5,
+       5,
+       6,
+       3,
+       4,
+       4
+      ],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 9,
+      "lastBust": false,
+      "over": false,
+      "rng": 245081835
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "keep",
+      "dice": [
+       0,
+       1
+      ]
+     },
+     "state": {
+      "player": 1400,
+      "ai": 1800,
+      "turn": "player",
+      "phase": "decide",
+      "roll": [
+       5,
+       5,
+       6,
+       3,
+       4,
+       4
+      ],
+      "dice": 4,
+      "turnScore": 100,
+      "round": 9,
+      "lastBust": false,
+      "over": false,
+      "rng": 245081835
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 1400,
+      "ai": 1800,
+      "turn": "player",
+      "phase": "keep",
+      "roll": [
+       3,
+       5,
+       3,
+       6
+      ],
+      "dice": 4,
+      "turnScore": 100,
+      "round": 9,
+      "lastBust": false,
+      "over": false,
+      "rng": 3166757579
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "keep",
+      "dice": [
+       1
+      ]
+     },
+     "state": {
+      "player": 1400,
+      "ai": 1800,
+      "turn": "player",
+      "phase": "decide",
+      "roll": [
+       3,
+       5,
+       3,
+       6
+      ],
+      "dice": 3,
+      "turnScore": 150,
+      "round": 9,
+      "lastBust": false,
+      "over": false,
+      "rng": 3166757579
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 1400,
+      "ai": 1800,
+      "turn": "player",
+      "phase": "keep",
+      "roll": [
+       6,
+       1,
+       3
+      ],
+      "dice": 3,
+      "turnScore": 150,
+      "round": 9,
+      "lastBust": false,
+      "over": false,
+      "rng": 1469474894
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "keep",
+      "dice": [
+       1
+      ]
+     },
+     "state": {
+      "player": 1400,
+      "ai": 1800,
+      "turn": "player",
+      "phase": "decide",
+      "roll": [
+       6,
+       1,
+       3
+      ],
+      "dice": 2,
+      "turnScore": 250,
+      "round": 9,
+      "lastBust": false,
+      "over": false,
+      "rng": 1469474894
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "bank"
+     },
+     "state": {
+      "player": 1650,
+      "ai": 1800,
+      "turn": "ai",
+      "phase": "roll",
+      "roll": [],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 9,
+      "lastBust": false,
+      "over": false,
+      "rng": 1469474894
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "player": 1650,
+      "ai": 1800,
+      "turn": "ai",
+      "phase": "keep",
+      "roll": [
+       4,
+       5,
+       5,
+       4,
+       1,
+       6
+      ],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 9,
+      "lastBust": false,
+      "over": false,
+      "rng": 2911793603
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "player": 1650,
+      "ai": 1800,
+      "turn": "ai",
+      "phase": "decide",
+      "roll": [
+       4,
+       5,
+       5,
+       4,
+       1,
+       6
+      ],
+      "dice": 3,
+      "turnScore": 200,
+      "round": 9,
+      "lastBust": false,
+      "over": false,
+      "rng": 2911793603
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "player": 1650,
+      "ai": 1800,
+      "turn": "player",
+      "phase": "roll",
+      "roll": [],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 10,
+      "lastBust": true,
+      "over": false,
+      "rng": 4232754609
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 1650,
+      "ai": 1800,
+      "turn": "player",
+      "phase": "keep",
+      "roll": [
+       4,
+       4,
+       2,
+       5,
+       3,
+       6
+      ],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 10,
+      "lastBust": false,
+      "over": false,
+      "rng": 1072182587
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "keep",
+      "dice": [
+       3
+      ]
+     },
+     "state": {
+      "player": 1650,
+      "ai": 1800,
+      "turn": "player",
+      "phase": "decide",
+      "roll": [
+       4,
+       4,
+       2,
+       5,
+       3,
+       6
+      ],
+      "dice": 5,
+      "turnScore": 50,
+      "round": 10,
+      "lastBust": false,
+      "over": false,
+      "rng": 1072182587
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 1650,
+      "ai": 1800,
+      "turn": "player",
+      "phase": "keep",
+      "roll": [
+       3,
+       5,
+       2,
+       1,
+       2
+      ],
+      "dice": 5,
+      "turnScore": 50,
+      "round": 10,
+      "lastBust": false,
+      "over": false,
+      "rng": 3353227441
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "keep",
+      "dice": [
+       1,
+       3
+      ]
+     },
+     "state": {
+      "player": 1650,
+      "ai": 1800,
+      "turn": "player",
+      "phase": "decide",
+      "roll": [
+       3,
+       5,
+       2,
+       1,
+       2
+      ],
+      "dice": 3,
+      "turnScore": 200,
+      "round": 10,
+      "lastBust": false,
+      "over": false,
+      "rng": 3353227441
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 1650,
+      "ai": 1800,
+      "turn": "ai",
+      "phase": "roll",
+      "roll": [],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 10,
+      "lastBust": true,
+      "over": false,
+      "rng": 652707920
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "player": 1650,
+      "ai": 1800,
+      "turn": "ai",
+      "phase": "keep",
+      "roll": [
+       5,
+       1,
+       3,
+       1,
+       4,
+       3
+      ],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 10,
+      "lastBust": false,
+      "over": false,
+      "rng": 1789441106
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "player": 1650,
+      "ai": 1800,
+      "turn": "ai",
+      "phase": "decide",
+      "roll": [
+       5,
+       1,
+       3,
+       1,
+       4,
+       3
+      ],
+      "dice": 3,
+      "turnScore": 250,
+      "round": 10,
+      "lastBust": false,
+      "over": false,
+      "rng": 1789441106
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "player": 1650,
+      "ai": 1800,
+      "turn": "ai",
+      "phase": "keep",
+      "roll": [
+       6,
+       5,
+       1
+      ],
+      "dice": 3,
+      "turnScore": 250,
+      "round": 10,
+      "lastBust": false,
+      "over": false,
+      "rng": 2624493570
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "player": 1650,
+      "ai": 1800,
+      "turn": "ai",
+      "phase": "decide",
+      "roll": [
+       6,
+       5,
+       1
+      ],
+      "dice": 1,
+      "turnScore": 400,
+      "round": 10,
+      "lastBust": false,
+      "over": false,
+      "rng": 2624493570
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "player": 1650,
+      "ai": 2200,
+      "turn": "player",
+      "phase": "over",
+      "roll": [],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 11,
+      "lastBust": false,
+      "over": true,
+      "rng": 2624493570
+     }
+    }
+   ],
+   "result": {
+    "winner": "ai",
+    "stars": 0,
+    "score": 1650,
+    "player": 1650,
+    "ai": 2200
+   }
+  },
+  {
+   "name": "greedy-roller-vs-level-5",
+   "config": {
+    "target": 5000,
+    "maxRounds": 10,
+    "aiBankAt": [
+     250,
+     300,
+     350,
+     400,
+     450
+    ],
+    "aiErrorPct": [
+     40,
+     25,
+     10,
+     5,
+     0
+    ],
+    "starMargins": [
+     1500,
+     500
+    ]
+   },
+   "seed": 0,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 0,
+      "ai": 0,
+      "turn": "player",
+      "phase": "keep",
+      "roll": [
+       6,
+       1,
+       3,
+       2,
+       2,
+       4
+      ],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 1,
+      "lastBust": false,
+      "over": false,
+      "rng": 4186559031
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "keep",
+      "dice": [
+       1
+      ]
+     },
+     "state": {
+      "player": 0,
+      "ai": 0,
+      "turn": "player",
+      "phase": "decide",
+      "roll": [
+       6,
+       1,
+       3,
+       2,
+       2,
+       4
+      ],
+      "dice": 5,
+      "turnScore": 100,
+      "round": 1,
+      "lastBust": false,
+      "over": false,
+      "rng": 4186559031
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 0,
+      "ai": 0,
+      "turn": "player",
+      "phase": "keep",
+      "roll": [
+       5,
+       2,
+       4,
+       5,
+       3
+      ],
+      "dice": 5,
+      "turnScore": 100,
+      "round": 1,
+      "lastBust": false,
+      "over": false,
+      "rng": 445164014
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "keep",
+      "dice": [
+       0,
+       3
+      ]
+     },
+     "state": {
+      "player": 0,
+      "ai": 0,
+      "turn": "player",
+      "phase": "decide",
+      "roll": [
+       5,
+       2,
+       4,
+       5,
+       3
+      ],
+      "dice": 3,
+      "turnScore": 200,
+      "round": 1,
+      "lastBust": false,
+      "over": false,
+      "rng": 445164014
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 0,
+      "ai": 0,
+      "turn": "player",
+      "phase": "keep",
+      "roll": [
+       1,
+       6,
+       5
+      ],
+      "dice": 3,
+      "turnScore": 200,
+      "round": 1,
+      "lastBust": false,
+      "over": false,
+      "rng": 1194283324
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "keep",
+      "dice": [
+       0,
+       2
+      ]
+     },
+     "state": {
+      "player": 0,
+      "ai": 0,
+      "turn": "player",
+      "phase": "decide",
+      "roll": [
+       1,
+       6,
+       5
+      ],
+      "dice": 1,
+      "turnScore": 350,
+      "round": 1,
+      "lastBust": false,
+      "over": false,
+      "rng": 1194283324
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 0,
+      "ai": 0,
+      "turn": "ai",
+      "phase": "roll",
+      "roll": [],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 1,
+      "lastBust": true,
+      "over": false,
+      "rng": 202928312
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "player": 0,
+      "ai": 0,
+      "turn": "ai",
+      "phase": "keep",
+      "roll": [
+       2,
+       3,
+       1,
+       6,
+       4,
+       6
+      ],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 1,
+      "lastBust": false,
+      "over": false,
+      "rng": 2228505791
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "player": 0,
+      "ai": 0,
+      "turn": "ai",
+      "phase": "decide",
+      "roll": [
+       2,
+       3,
+       1,
+       6,
+       4,
+       6
+      ],
+      "dice": 5,
+      "turnScore": 100,
+      "round": 1,
+      "lastBust": false,
+      "over": false,
+      "rng": 2228505791
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "player": 0,
+      "ai": 0,
+      "turn": "ai",
+      "phase": "keep",
+      "roll": [
+       3,
+       3,
+       3,
+       3,
+       6
+      ],
+      "dice": 5,
+      "turnScore": 100,
+      "round": 1,
+      "lastBust": false,
+      "over": false,
+      "rng": 831439433
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "player": 0,
+      "ai": 0,
+      "turn": "ai",
+      "phase": "decide",
+      "roll": [
+       3,
+       3,
+       3,
+       3,
+       6
+      ],
+      "dice": 2,
+      "turnScore": 400,
+      "round": 1,
+      "lastBust": false,
+      "over": false,
+      "rng": 831439433
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "player": 0,
+      "ai": 400,
+      "turn": "player",
+      "phase": "roll",
+      "roll": [],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 2,
+      "lastBust": false,
+      "over": false,
+      "rng": 831439433
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 0,
+      "ai": 400,
+      "turn": "player",
+      "phase": "keep",
+      "roll": [
+       3,
+       3,
+       2,
+       1,
+       3,
+       1
+      ],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 2,
+      "lastBust": false,
+      "over": false,
+      "rng": 2211501978
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "keep",
+      "dice": [
+       0,
+       1,
+       3,
+       4,
+       5
+      ]
+     },
+     "state": {
+      "player": 0,
+      "ai": 400,
+      "turn": "player",
+      "phase": "decide",
+      "roll": [
+       3,
+       3,
+       2,
+       1,
+       3,
+       1
+      ],
+      "dice": 1,
+      "turnScore": 500,
+      "round": 2,
+      "lastBust": false,
+      "over": false,
+      "rng": 2211501978
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 0,
+      "ai": 400,
+      "turn": "ai",
+      "phase": "roll",
+      "roll": [],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 2,
+      "lastBust": true,
+      "over": false,
+      "rng": 3176708715
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "player": 0,
+      "ai": 400,
+      "turn": "ai",
+      "phase": "keep",
+      "roll": [
+       6,
+       4,
+       1,
+       3,
+       1,
+       1
+      ],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 2,
+      "lastBust": false,
+      "over": false,
+      "rng": 3023444142
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "player": 0,
+      "ai": 400,
+      "turn": "ai",
+      "phase": "decide",
+      "roll": [
+       6,
+       4,
+       1,
+       3,
+       1,
+       1
+      ],
+      "dice": 3,
+      "turnScore": 1000,
+      "round": 2,
+      "lastBust": false,
+      "over": false,
+      "rng": 3023444142
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "player": 0,
+      "ai": 1400,
+      "turn": "player",
+      "phase": "roll",
+      "roll": [],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 3,
+      "lastBust": false,
+      "over": false,
+      "rng": 3023444142
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 0,
+      "ai": 1400,
+      "turn": "player",
+      "phase": "keep",
+      "roll": [
+       4,
+       4,
+       2,
+       6,
+       3,
+       5
+      ],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 3,
+      "lastBust": false,
+      "over": false,
+      "rng": 3332931190
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "keep",
+      "dice": [
+       5
+      ]
+     },
+     "state": {
+      "player": 0,
+      "ai": 1400,
+      "turn": "player",
+      "phase": "decide",
+      "roll": [
+       4,
+       4,
+       2,
+       6,
+       3,
+       5
+      ],
+      "dice": 5,
+      "turnScore": 50,
+      "round": 3,
+      "lastBust": false,
+      "over": false,
+      "rng": 3332931190
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 0,
+      "ai": 1400,
+      "turn": "player",
+      "phase": "keep",
+      "roll": [
+       2,
+       4,
+       3,
+       4,
+       1
+      ],
+      "dice": 5,
+      "turnScore": 50,
+      "round": 3,
+      "lastBust": false,
+      "over": false,
+      "rng": 3550124916
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "keep",
+      "dice": [
+       4
+      ]
+     },
+     "state": {
+      "player": 0,
+      "ai": 1400,
+      "turn": "player",
+      "phase": "decide",
+      "roll": [
+       2,
+       4,
+       3,
+       4,
+       1
+      ],
+      "dice": 4,
+      "turnScore": 150,
+      "round": 3,
+      "lastBust": false,
+      "over": false,
+      "rng": 3550124916
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 0,
+      "ai": 1400,
+      "turn": "player",
+      "phase": "keep",
+      "roll": [
+       1,
+       2,
+       6,
+       5
+      ],
+      "dice": 4,
+      "turnScore": 150,
+      "round": 3,
+      "lastBust": false,
+      "over": false,
+      "rng": 1228870468
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "keep",
+      "dice": [
+       0,
+       3
+      ]
+     },
+     "state": {
+      "player": 0,
+      "ai": 1400,
+      "turn": "player",
+      "phase": "decide",
+      "roll": [
+       1,
+       2,
+       6,
+       5
+      ],
+      "dice": 2,
+      "turnScore": 300,
+      "round": 3,
+      "lastBust": false,
+      "over": false,
+      "rng": 1228870468
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 0,
+      "ai": 1400,
+      "turn": "ai",
+      "phase": "roll",
+      "roll": [],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 3,
+      "lastBust": true,
+      "over": false,
+      "rng": 2064885608
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "player": 0,
+      "ai": 1400,
+      "turn": "ai",
+      "phase": "keep",
+      "roll": [
+       4,
+       2,
+       6,
+       5,
+       1,
+       3
+      ],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 3,
+      "lastBust": false,
+      "over": false,
+      "rng": 2671677080
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "player": 0,
+      "ai": 1400,
+      "turn": "ai",
+      "phase": "decide",
+      "roll": [
+       4,
+       2,
+       6,
+       5,
+       1,
+       3
+      ],
+      "dice": 6,
+      "turnScore": 1500,
+      "round": 3,
+      "lastBust": false,
+      "over": false,
+      "rng": 2671677080
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "player": 0,
+      "ai": 1400,
+      "turn": "ai",
+      "phase": "keep",
+      "roll": [
+       1,
+       1,
+       6,
+       4,
+       1,
+       1
+      ],
+      "dice": 6,
+      "turnScore": 1500,
+      "round": 3,
+      "lastBust": false,
+      "over": false,
+      "rng": 2995077612
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "player": 0,
+      "ai": 1400,
+      "turn": "ai",
+      "phase": "decide",
+      "roll": [
+       1,
+       1,
+       6,
+       4,
+       1,
+       1
+      ],
+      "dice": 2,
+      "turnScore": 2600,
+      "round": 3,
+      "lastBust": false,
+      "over": false,
+      "rng": 2995077612
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "player": 0,
+      "ai": 4000,
+      "turn": "player",
+      "phase": "roll",
+      "roll": [],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 4,
+      "lastBust": false,
+      "over": false,
+      "rng": 2995077612
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 0,
+      "ai": 4000,
+      "turn": "player",
+      "phase": "keep",
+      "roll": [
+       1,
+       6,
+       5,
+       4,
+       2,
+       6
+      ],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 4,
+      "lastBust": false,
+      "over": false,
+      "rng": 1746344375
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "keep",
+      "dice": [
+       0,
+       2
+      ]
+     },
+     "state": {
+      "player": 0,
+      "ai": 4000,
+      "turn": "player",
+      "phase": "decide",
+      "roll": [
+       1,
+       6,
+       5,
+       4,
+       2,
+       6
+      ],
+      "dice": 4,
+      "turnScore": 150,
+      "round": 4,
+      "lastBust": false,
+      "over": false,
+      "rng": 1746344375
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 0,
+      "ai": 4000,
+      "turn": "player",
+      "phase": "keep",
+      "roll": [
+       4,
+       5,
+       4,
+       6
+      ],
+      "dice": 4,
+      "turnScore": 150,
+      "round": 4,
+      "lastBust": false,
+      "over": false,
+      "rng": 2864684075
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "keep",
+      "dice": [
+       1
+      ]
+     },
+     "state": {
+      "player": 0,
+      "ai": 4000,
+      "turn": "player",
+      "phase": "decide",
+      "roll": [
+       4,
+       5,
+       4,
+       6
+      ],
+      "dice": 3,
+      "turnScore": 200,
+      "round": 4,
+      "lastBust": false,
+      "over": false,
+      "rng": 2864684075
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 0,
+      "ai": 4000,
+      "turn": "player",
+      "phase": "keep",
+      "roll": [
+       5,
+       4,
+       4
+      ],
+      "dice": 3,
+      "turnScore": 200,
+      "round": 4,
+      "lastBust": false,
+      "over": false,
+      "rng": 2287260933
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "keep",
+      "dice": [
+       0
+      ]
+     },
+     "state": {
+      "player": 0,
+      "ai": 4000,
+      "turn": "player",
+      "phase": "decide",
+      "roll": [
+       5,
+       4,
+       4
+      ],
+      "dice": 2,
+      "turnScore": 250,
+      "round": 4,
+      "lastBust": false,
+      "over": false,
+      "rng": 2287260933
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 0,
+      "ai": 4000,
+      "turn": "ai",
+      "phase": "roll",
+      "roll": [],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 4,
+      "lastBust": true,
+      "over": false,
+      "rng": 1929992699
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "player": 0,
+      "ai": 4000,
+      "turn": "ai",
+      "phase": "keep",
+      "roll": [
+       3,
+       5,
+       5,
+       5,
+       3,
+       2
+      ],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 4,
+      "lastBust": false,
+      "over": false,
+      "rng": 934081051
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "player": 0,
+      "ai": 4000,
+      "turn": "ai",
+      "phase": "decide",
+      "roll": [
+       3,
+       5,
+       5,
+       5,
+       3,
+       2
+      ],
+      "dice": 3,
+      "turnScore": 500,
+      "round": 4,
+      "lastBust": false,
+      "over": false,
+      "rng": 934081051
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "player": 0,
+      "ai": 4500,
+      "turn": "player",
+      "phase": "roll",
+      "roll": [],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 5,
+      "lastBust": false,
+      "over": false,
+      "rng": 934081051
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 0,
+      "ai": 4500,
+      "turn": "player",
+      "phase": "keep",
+      "roll": [
+       1,
+       2,
+       6,
+       5,
+       2,
+       4
+      ],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 5,
+      "lastBust": false,
+      "over": false,
+      "rng": 1951272207
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "keep",
+      "dice": [
+       0,
+       3
+      ]
+     },
+     "state": {
+      "player": 0,
+      "ai": 4500,
+      "turn": "player",
+      "phase": "decide",
+      "roll": [
+       1,
+       2,
+       6,
+       5,
+       2,
+       4
+      ],
+      "dice": 4,
+      "turnScore": 150,
+      "round": 5,
+      "lastBust": false,
+      "over": false,
+      "rng": 1951272207
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 0,
+      "ai": 4500,
+      "turn": "player",
+      "phase": "keep",
+      "roll": [
+       3,
+       6,
+       1,
+       4
+      ],
+      "dice": 4,
+      "turnScore": 150,
+      "round": 5,
+      "lastBust": false,
+      "over": false,
+      "rng": 2566725357
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "keep",
+      "dice": [
+       2
+      ]
+     },
+     "state": {
+      "player": 0,
+      "ai": 4500,
+      "turn": "player",
+      "phase": "decide",
+      "roll": [
+       3,
+       6,
+       1,
+       4
+      ],
+      "dice": 3,
+      "turnScore": 250,
+      "round": 5,
+      "lastBust": false,
+      "over": false,
+      "rng": 2566725357
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 0,
+      "ai": 4500,
+      "turn": "player",
+      "phase": "keep",
+      "roll": [
+       6,
+       5,
+       6
+      ],
+      "dice": 3,
+      "turnScore": 250,
+      "round": 5,
+      "lastBust": false,
+      "over": false,
+      "rng": 1584187553
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "keep",
+      "dice": [
+       1
+      ]
+     },
+     "state": {
+      "player": 0,
+      "ai": 4500,
+      "turn": "player",
+      "phase": "decide",
+      "roll": [
+       6,
+       5,
+       6
+      ],
+      "dice": 2,
+      "turnScore": 300,
+      "round": 5,
+      "lastBust": false,
+      "over": false,
+      "rng": 1584187553
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 0,
+      "ai": 4500,
+      "turn": "player",
+      "phase": "keep",
+      "roll": [
+       6,
+       5
+      ],
+      "dice": 2,
+      "turnScore": 300,
+      "round": 5,
+      "lastBust": false,
+      "over": false,
+      "rng": 3132490306
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "keep",
+      "dice": [
+       1
+      ]
+     },
+     "state": {
+      "player": 0,
+      "ai": 4500,
+      "turn": "player",
+      "phase": "decide",
+      "roll": [
+       6,
+       5
+      ],
+      "dice": 1,
+      "turnScore": 350,
+      "round": 5,
+      "lastBust": false,
+      "over": false,
+      "rng": 3132490306
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 0,
+      "ai": 4500,
+      "turn": "ai",
+      "phase": "roll",
+      "roll": [],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 5,
+      "lastBust": true,
+      "over": false,
+      "rng": 624007325
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "player": 0,
+      "ai": 4500,
+      "turn": "ai",
+      "phase": "keep",
+      "roll": [
+       5,
+       3,
+       6,
+       2,
+       4,
+       3
+      ],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 5,
+      "lastBust": false,
+      "over": false,
+      "rng": 3438786272
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "player": 0,
+      "ai": 4500,
+      "turn": "ai",
+      "phase": "decide",
+      "roll": [
+       5,
+       3,
+       6,
+       2,
+       4,
+       3
+      ],
+      "dice": 5,
+      "turnScore": 50,
+      "round": 5,
+      "lastBust": false,
+      "over": false,
+      "rng": 3438786272
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "player": 0,
+      "ai": 4500,
+      "turn": "player",
+      "phase": "roll",
+      "roll": [],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 6,
+      "lastBust": true,
+      "over": false,
+      "rng": 1486388600
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 0,
+      "ai": 4500,
+      "turn": "player",
+      "phase": "keep",
+      "roll": [
+       2,
+       6,
+       2,
+       2,
+       3,
+       2
+      ],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 6,
+      "lastBust": false,
+      "over": false,
+      "rng": 249647035
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "keep",
+      "dice": [
+       0,
+       2,
+       3
+      ]
+     },
+     "state": {
+      "player": 0,
+      "ai": 4500,
+      "turn": "player",
+      "phase": "decide",
+      "roll": [
+       2,
+       6,
+       2,
+       2,
+       3,
+       2
+      ],
+      "dice": 3,
+      "turnScore": 200,
+      "round": 6,
+      "lastBust": false,
+      "over": false,
+      "rng": 249647035
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 0,
+      "ai": 4500,
+      "turn": "player",
+      "phase": "keep",
+      "roll": [
+       5,
+       6,
+       4
+      ],
+      "dice": 3,
+      "turnScore": 200,
+      "round": 6,
+      "lastBust": false,
+      "over": false,
+      "rng": 3899669325
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "keep",
+      "dice": [
+       0
+      ]
+     },
+     "state": {
+      "player": 0,
+      "ai": 4500,
+      "turn": "player",
+      "phase": "decide",
+      "roll": [
+       5,
+       6,
+       4
+      ],
+      "dice": 2,
+      "turnScore": 250,
+      "round": 6,
+      "lastBust": false,
+      "over": false,
+      "rng": 3899669325
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 0,
+      "ai": 4500,
+      "turn": "ai",
+      "phase": "roll",
+      "roll": [],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 6,
+      "lastBust": true,
+      "over": false,
+      "rng": 3585778205
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "player": 0,
+      "ai": 4500,
+      "turn": "ai",
+      "phase": "keep",
+      "roll": [
+       2,
+       2,
+       5,
+       4,
+       1,
+       3
+      ],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 6,
+      "lastBust": false,
+      "over": false,
+      "rng": 2071084658
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "player": 0,
+      "ai": 4500,
+      "turn": "ai",
+      "phase": "decide",
+      "roll": [
+       2,
+       2,
+       5,
+       4,
+       1,
+       3
+      ],
+      "dice": 4,
+      "turnScore": 150,
+      "round": 6,
+      "lastBust": false,
+      "over": false,
+      "rng": 2071084658
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "player": 0,
+      "ai": 4500,
+      "turn": "ai",
+      "phase": "keep",
+      "roll": [
+       1,
+       1,
+       2,
+       1
+      ],
+      "dice": 4,
+      "turnScore": 150,
+      "round": 6,
+      "lastBust": false,
+      "over": false,
+      "rng": 816753606
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "player": 0,
+      "ai": 4500,
+      "turn": "ai",
+      "phase": "decide",
+      "roll": [
+       1,
+       1,
+       2,
+       1
+      ],
+      "dice": 1,
+      "turnScore": 1150,
+      "round": 6,
+      "lastBust": false,
+      "over": false,
+      "rng": 816753606
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "player": 0,
+      "ai": 5650,
+      "turn": "player",
+      "phase": "over",
+      "roll": [],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 7,
+      "lastBust": false,
+      "over": true,
+      "rng": 816753606
+     }
+    }
+   ],
+   "result": {
+    "winner": "ai",
+    "stars": 0,
+    "score": 0,
+    "player": 0,
+    "ai": 5650
+   }
+  },
+  {
+   "name": "timeout-mid-game",
+   "config": {
+    "target": 5000,
+    "maxRounds": 10,
+    "aiBankAt": [
+     250,
+     300,
+     350,
+     400,
+     450
+    ],
+    "aiErrorPct": [
+     40,
+     25,
+     10,
+     5,
+     0
+    ],
+    "starMargins": [
+     1500,
+     500
+    ]
+   },
+   "seed": 99,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 0,
+      "ai": 0,
+      "turn": "player",
+      "phase": "keep",
+      "roll": [
+       6,
+       6,
+       6,
+       3,
+       2,
+       5
+      ],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 1,
+      "lastBust": false,
+      "over": false,
+      "rng": 1548709294
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "keep",
+      "dice": [
+       0,
+       1,
+       2,
+       5
+      ]
+     },
+     "state": {
+      "player": 0,
+      "ai": 0,
+      "turn": "player",
+      "phase": "decide",
+      "roll": [
+       6,
+       6,
+       6,
+       3,
+       2,
+       5
+      ],
+      "dice": 2,
+      "turnScore": 650,
+      "round": 1,
+      "lastBust": false,
+      "over": false,
+      "rng": 1548709294
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "bank"
+     },
+     "state": {
+      "player": 650,
+      "ai": 0,
+      "turn": "ai",
+      "phase": "roll",
+      "roll": [],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 1,
+      "lastBust": false,
+      "over": false,
+      "rng": 1548709294
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 650,
+      "ai": 0,
+      "turn": "ai",
+      "phase": "keep",
+      "roll": [
+       6,
+       1,
+       6,
+       1,
+       2,
+       6
+      ],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 1,
+      "lastBust": false,
+      "over": false,
+      "rng": 417572603
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 650,
+      "ai": 0,
+      "turn": "ai",
+      "phase": "decide",
+      "roll": [
+       6,
+       1,
+       6,
+       1,
+       2,
+       6
+      ],
+      "dice": 1,
+      "turnScore": 800,
+      "round": 1,
+      "lastBust": false,
+      "over": false,
+      "rng": 417572603
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 650,
+      "ai": 800,
+      "turn": "player",
+      "phase": "roll",
+      "roll": [],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 2,
+      "lastBust": false,
+      "over": false,
+      "rng": 417572603
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 650,
+      "ai": 800,
+      "turn": "player",
+      "phase": "keep",
+      "roll": [
+       4,
+       1,
+       2,
+       6,
+       4,
+       2
+      ],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 2,
+      "lastBust": false,
+      "over": false,
+      "rng": 2033936485
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "keep",
+      "dice": [
+       1
+      ]
+     },
+     "state": {
+      "player": 650,
+      "ai": 800,
+      "turn": "player",
+      "phase": "decide",
+      "roll": [
+       4,
+       1,
+       2,
+       6,
+       4,
+       2
+      ],
+      "dice": 5,
+      "turnScore": 100,
+      "round": 2,
+      "lastBust": false,
+      "over": false,
+      "rng": 2033936485
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "bank"
+     },
+     "state": {
+      "player": 750,
+      "ai": 800,
+      "turn": "ai",
+      "phase": "roll",
+      "roll": [],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 2,
+      "lastBust": false,
+      "over": false,
+      "rng": 2033936485
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 750,
+      "ai": 800,
+      "turn": "ai",
+      "phase": "keep",
+      "roll": [
+       1,
+       3,
+       6,
+       2,
+       3,
+       4
+      ],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 2,
+      "lastBust": false,
+      "over": false,
+      "rng": 2811531819
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 750,
+      "ai": 800,
+      "turn": "ai",
+      "phase": "decide",
+      "roll": [
+       1,
+       3,
+       6,
+       2,
+       3,
+       4
+      ],
+      "dice": 5,
+      "turnScore": 100,
+      "round": 2,
+      "lastBust": false,
+      "over": false,
+      "rng": 2811531819
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 750,
+      "ai": 800,
+      "turn": "ai",
+      "phase": "keep",
+      "roll": [
+       6,
+       2,
+       4,
+       6,
+       1
+      ],
+      "dice": 5,
+      "turnScore": 100,
+      "round": 2,
+      "lastBust": false,
+      "over": false,
+      "rng": 213917700
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 750,
+      "ai": 800,
+      "turn": "ai",
+      "phase": "decide",
+      "roll": [
+       6,
+       2,
+       4,
+       6,
+       1
+      ],
+      "dice": 4,
+      "turnScore": 200,
+      "round": 2,
+      "lastBust": false,
+      "over": false,
+      "rng": 213917700
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 750,
+      "ai": 800,
+      "turn": "ai",
+      "phase": "keep",
+      "roll": [
+       5,
+       5,
+       1,
+       6
+      ],
+      "dice": 4,
+      "turnScore": 200,
+      "round": 2,
+      "lastBust": false,
+      "over": false,
+      "rng": 1369980575
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 750,
+      "ai": 800,
+      "turn": "ai",
+      "phase": "decide",
+      "roll": [
+       5,
+       5,
+       1,
+       6
+      ],
+      "dice": 1,
+      "turnScore": 400,
+      "round": 2,
+      "lastBust": false,
+      "over": false,
+      "rng": 1369980575
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 750,
+      "ai": 1200,
+      "turn": "player",
+      "phase": "roll",
+      "roll": [],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 3,
+      "lastBust": false,
+      "over": false,
+      "rng": 1369980575
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 750,
+      "ai": 1200,
+      "turn": "player",
+      "phase": "keep",
+      "roll": [
+       3,
+       5,
+       5,
+       1,
+       6,
+       3
+      ],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 3,
+      "lastBust": false,
+      "over": false,
+      "rng": 4069244408
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "keep",
+      "dice": [
+       2
+      ]
+     },
+     "state": {
+      "player": 750,
+      "ai": 1200,
+      "turn": "player",
+      "phase": "decide",
+      "roll": [
+       3,
+       5,
+       5,
+       1,
+       6,
+       3
+      ],
+      "dice": 5,
+      "turnScore": 50,
+      "round": 3,
+      "lastBust": false,
+      "over": false,
+      "rng": 4069244408
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 750,
+      "ai": 1200,
+      "turn": "player",
+      "phase": "keep",
+      "roll": [
+       5,
+       2,
+       2,
+       6,
+       5
+      ],
+      "dice": 5,
+      "turnScore": 50,
+      "round": 3,
+      "lastBust": false,
+      "over": false,
+      "rng": 3342888856
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "keep",
+      "dice": [
+       4
+      ]
+     },
+     "state": {
+      "player": 750,
+      "ai": 1200,
+      "turn": "player",
+      "phase": "decide",
+      "roll": [
+       5,
+       2,
+       2,
+       6,
+       5
+      ],
+      "dice": 4,
+      "turnScore": 100,
+      "round": 3,
+      "lastBust": false,
+      "over": false,
+      "rng": 3342888856
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "bank"
+     },
+     "state": {
+      "player": 850,
+      "ai": 1200,
+      "turn": "ai",
+      "phase": "roll",
+      "roll": [],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 3,
+      "lastBust": false,
+      "over": false,
+      "rng": 3342888856
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 850,
+      "ai": 1200,
+      "turn": "ai",
+      "phase": "keep",
+      "roll": [
+       2,
+       1,
+       1,
+       3,
+       2,
+       6
+      ],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 3,
+      "lastBust": false,
+      "over": false,
+      "rng": 2088125609
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 850,
+      "ai": 1200,
+      "turn": "ai",
+      "phase": "decide",
+      "roll": [
+       2,
+       1,
+       1,
+       3,
+       2,
+       6
+      ],
+      "dice": 4,
+      "turnScore": 200,
+      "round": 3,
+      "lastBust": false,
+      "over": false,
+      "rng": 2088125609
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 850,
+      "ai": 1200,
+      "turn": "player",
+      "phase": "roll",
+      "roll": [],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 4,
+      "lastBust": true,
+      "over": false,
+      "rng": 1175616933
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 850,
+      "ai": 1200,
+      "turn": "player",
+      "phase": "keep",
+      "roll": [
+       1,
+       6,
+       1,
+       1,
+       2,
+       2
+      ],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 4,
+      "lastBust": false,
+      "over": false,
+      "rng": 4202311363
+     }
+    },
+    {
+     "action": {
+      "by": "timeout"
+     },
+     "state": {
+      "player": 850,
+      "ai": 1200,
+      "turn": "player",
+      "phase": "over",
+      "roll": [
+       1,
+       6,
+       1,
+       1,
+       2,
+       2
+      ],
+      "dice": 6,
+      "turnScore": 0,
+      "round": 4,
+      "lastBust": false,
+      "over": true,
+      "rng": 4202311363
+     }
+    }
+   ],
+   "result": {
+    "winner": "ai",
+    "stars": 0,
+    "score": 850,
+    "player": 850,
+    "ai": 1200
+   }
+  }
+ ]
+}

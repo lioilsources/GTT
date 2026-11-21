@@ -76,3 +76,10 @@ Bankéř hraje podle pravidla výše; obtížnost hru nemění. `aiAction` vrac�
 - Balíček na kolo stačí vždy (nejvýš 21 karet na kolo).
 - Eso se přepočítá z 11 na 1 i opakovaně (A+A+9 = 21).
 - Bankéř dolízá i při měkké 16 (A+5) a stojí na měkké 17.
+
+## Upřesnění v1 (podle implementace, vektory je pokrývají)
+
+- Rozdání po dohraném kole může samo skončit okem; vyhodnotí se ve stejném `apply` a rozdá se znovu.
+  `last` drží jen naposledy dohrané kolo.
+- Shoda kol po `timeout`: `winner = "draw"`, 0★.
+- UI ukazuje u bankéře součet jen otočené karty, dokud je druhá lícem dolů.

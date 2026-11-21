@@ -1,0 +1,4382 @@
+{
+ "module": "koulena",
+ "specVersion": 1,
+ "$comment": "Whole games; player aims are written out (aiAction is unused). States recorded by the lead client (web).",
+ "cases": [
+  {
+   "name": "centre-level-1",
+   "config": {
+    "series": 3,
+    "balls": 9,
+    "ringR": [
+     80,
+     160,
+     240,
+     320,
+     400
+    ],
+    "ringPoints": [
+     50,
+     40,
+     30,
+     20,
+     10
+    ],
+    "pockets": [
+     -300,
+     360,
+     300,
+     360
+    ],
+    "pocketR": 50,
+    "pocketPoints": 100,
+    "scatter": [
+     40,
+     55,
+     70,
+     85,
+     100
+    ],
+    "starScores": [
+     700,
+     520,
+     360
+    ]
+   },
+   "seed": 42,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 0,
+      "level": 1
+     },
+     "state": {
+      "series": 1,
+      "ball": 1,
+      "score": 50,
+      "seriesScores": [],
+      "lastHit": {
+       "x": 2,
+       "y": -24,
+       "points": 50
+      },
+      "over": false,
+      "rng": 2836018348
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 0,
+      "level": 1
+     },
+     "state": {
+      "series": 1,
+      "ball": 2,
+      "score": 100,
+      "seriesScores": [],
+      "lastHit": {
+       "x": -1,
+       "y": -29,
+       "points": 50
+      },
+      "over": false,
+      "rng": 3648046016
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 0,
+      "level": 1
+     },
+     "state": {
+      "series": 1,
+      "ball": 3,
+      "score": 150,
+      "seriesScores": [],
+      "lastHit": {
+       "x": -34,
+       "y": 2,
+       "points": 50
+      },
+      "over": false,
+      "rng": 1441438134
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 0,
+      "level": 1
+     },
+     "state": {
+      "series": 1,
+      "ball": 4,
+      "score": 200,
+      "seriesScores": [],
+      "lastHit": {
+       "x": 11,
+       "y": -6,
+       "points": 50
+      },
+      "over": false,
+      "rng": 2431644334
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 0,
+      "level": 1
+     },
+     "state": {
+      "series": 1,
+      "ball": 5,
+      "score": 250,
+      "seriesScores": [],
+      "lastHit": {
+       "x": -18,
+       "y": 16,
+       "points": 50
+      },
+      "over": false,
+      "rng": 1067267639
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 0,
+      "level": 1
+     },
+     "state": {
+      "series": 1,
+      "ball": 6,
+      "score": 300,
+      "seriesScores": [],
+      "lastHit": {
+       "x": -9,
+       "y": -21,
+       "points": 50
+      },
+      "over": false,
+      "rng": 3379058227
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 0,
+      "level": 1
+     },
+     "state": {
+      "series": 1,
+      "ball": 7,
+      "score": 350,
+      "seriesScores": [],
+      "lastHit": {
+       "x": 24,
+       "y": 7,
+       "points": 50
+      },
+      "over": false,
+      "rng": 1108305632
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 0,
+      "level": 1
+     },
+     "state": {
+      "series": 1,
+      "ball": 8,
+      "score": 400,
+      "seriesScores": [],
+      "lastHit": {
+       "x": -36,
+       "y": 5,
+       "points": 50
+      },
+      "over": false,
+      "rng": 1084823001
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 0,
+      "level": 1
+     },
+     "state": {
+      "series": 2,
+      "ball": 0,
+      "score": 450,
+      "seriesScores": [
+       450
+      ],
+      "lastHit": {
+       "x": 38,
+       "y": 11,
+       "points": 50
+      },
+      "over": false,
+      "rng": 43795860
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 0,
+      "level": 1
+     },
+     "state": {
+      "series": 2,
+      "ball": 1,
+      "score": 500,
+      "seriesScores": [
+       450
+      ],
+      "lastHit": {
+       "x": -6,
+       "y": 29,
+       "points": 50
+      },
+      "over": false,
+      "rng": 2713533522
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 0,
+      "level": 1
+     },
+     "state": {
+      "series": 2,
+      "ball": 2,
+      "score": 550,
+      "seriesScores": [
+       450
+      ],
+      "lastHit": {
+       "x": 20,
+       "y": -37,
+       "points": 50
+      },
+      "over": false,
+      "rng": 2427335427
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 0,
+      "level": 1
+     },
+     "state": {
+      "series": 2,
+      "ball": 3,
+      "score": 600,
+      "seriesScores": [
+       450
+      ],
+      "lastHit": {
+       "x": -26,
+       "y": -26,
+       "points": 50
+      },
+      "over": false,
+      "rng": 2452169066
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 0,
+      "level": 1
+     },
+     "state": {
+      "series": 2,
+      "ball": 4,
+      "score": 650,
+      "seriesScores": [
+       450
+      ],
+      "lastHit": {
+       "x": -18,
+       "y": -5,
+       "points": 50
+      },
+      "over": false,
+      "rng": 362877119
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 0,
+      "level": 1
+     },
+     "state": {
+      "series": 2,
+      "ball": 5,
+      "score": 700,
+      "seriesScores": [
+       450
+      ],
+      "lastHit": {
+       "x": 5,
+       "y": -16,
+       "points": 50
+      },
+      "over": false,
+      "rng": 2205989583
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 0,
+      "level": 1
+     },
+     "state": {
+      "series": 2,
+      "ball": 6,
+      "score": 750,
+      "seriesScores": [
+       450
+      ],
+      "lastHit": {
+       "x": 18,
+       "y": 23,
+       "points": 50
+      },
+      "over": false,
+      "rng": 1174021677
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 0,
+      "level": 1
+     },
+     "state": {
+      "series": 2,
+      "ball": 7,
+      "score": 800,
+      "seriesScores": [
+       450
+      ],
+      "lastHit": {
+       "x": -7,
+       "y": 27,
+       "points": 50
+      },
+      "over": false,
+      "rng": 1459594714
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 0,
+      "level": 1
+     },
+     "state": {
+      "series": 2,
+      "ball": 8,
+      "score": 850,
+      "seriesScores": [
+       450
+      ],
+      "lastHit": {
+       "x": -40,
+       "y": -25,
+       "points": 50
+      },
+      "over": false,
+      "rng": 1510144494
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 0,
+      "level": 1
+     },
+     "state": {
+      "series": 3,
+      "ball": 0,
+      "score": 900,
+      "seriesScores": [
+       450,
+       450
+      ],
+      "lastHit": {
+       "x": -15,
+       "y": -10,
+       "points": 50
+      },
+      "over": false,
+      "rng": 2788559976
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 0,
+      "level": 1
+     },
+     "state": {
+      "series": 3,
+      "ball": 1,
+      "score": 950,
+      "seriesScores": [
+       450,
+       450
+      ],
+      "lastHit": {
+       "x": -15,
+       "y": 5,
+       "points": 50
+      },
+      "over": false,
+      "rng": 909365418
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 0,
+      "level": 1
+     },
+     "state": {
+      "series": 3,
+      "ball": 2,
+      "score": 1000,
+      "seriesScores": [
+       450,
+       450
+      ],
+      "lastHit": {
+       "x": 32,
+       "y": 10,
+       "points": 50
+      },
+      "over": false,
+      "rng": 1554472184
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 0,
+      "level": 1
+     },
+     "state": {
+      "series": 3,
+      "ball": 3,
+      "score": 1050,
+      "seriesScores": [
+       450,
+       450
+      ],
+      "lastHit": {
+       "x": -20,
+       "y": -8,
+       "points": 50
+      },
+      "over": false,
+      "rng": 3855476102
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 0,
+      "level": 1
+     },
+     "state": {
+      "series": 3,
+      "ball": 4,
+      "score": 1100,
+      "seriesScores": [
+       450,
+       450
+      ],
+      "lastHit": {
+       "x": 13,
+       "y": 12,
+       "points": 50
+      },
+      "over": false,
+      "rng": 2423365909
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 0,
+      "level": 1
+     },
+     "state": {
+      "series": 3,
+      "ball": 5,
+      "score": 1150,
+      "seriesScores": [
+       450,
+       450
+      ],
+      "lastHit": {
+       "x": -18,
+       "y": -5,
+       "points": 50
+      },
+      "over": false,
+      "rng": 494448011
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 0,
+      "level": 1
+     },
+     "state": {
+      "series": 3,
+      "ball": 6,
+      "score": 1200,
+      "seriesScores": [
+       450,
+       450
+      ],
+      "lastHit": {
+       "x": -25,
+       "y": -21,
+       "points": 50
+      },
+      "over": false,
+      "rng": 3780339031
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 0,
+      "level": 1
+     },
+     "state": {
+      "series": 3,
+      "ball": 7,
+      "score": 1250,
+      "seriesScores": [
+       450,
+       450
+      ],
+      "lastHit": {
+       "x": 6,
+       "y": 2,
+       "points": 50
+      },
+      "over": false,
+      "rng": 2265074727
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 0,
+      "level": 1
+     },
+     "state": {
+      "series": 3,
+      "ball": 8,
+      "score": 1300,
+      "seriesScores": [
+       450,
+       450
+      ],
+      "lastHit": {
+       "x": 3,
+       "y": 19,
+       "points": 50
+      },
+      "over": false,
+      "rng": 3200844821
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 0,
+      "level": 1
+     },
+     "state": {
+      "series": 4,
+      "ball": 0,
+      "score": 1350,
+      "seriesScores": [
+       450,
+       450,
+       450
+      ],
+      "lastHit": {
+       "x": 11,
+       "y": 29,
+       "points": 50
+      },
+      "over": true,
+      "rng": 1418264952
+     }
+    }
+   ],
+   "result": {
+    "winner": "player",
+    "stars": 3,
+    "score": 1350,
+    "seriesScores": [
+     450,
+     450,
+     450
+    ]
+   }
+  },
+  {
+   "name": "centre-level-5",
+   "config": {
+    "series": 3,
+    "balls": 9,
+    "ringR": [
+     80,
+     160,
+     240,
+     320,
+     400
+    ],
+    "ringPoints": [
+     50,
+     40,
+     30,
+     20,
+     10
+    ],
+    "pockets": [
+     -300,
+     360,
+     300,
+     360
+    ],
+    "pocketR": 50,
+    "pocketPoints": 100,
+    "scatter": [
+     40,
+     55,
+     70,
+     85,
+     100
+    ],
+    "starScores": [
+     700,
+     520,
+     360
+    ]
+   },
+   "seed": 7,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 0,
+      "level": 5
+     },
+     "state": {
+      "series": 1,
+      "ball": 1,
+      "score": 40,
+      "seriesScores": [],
+      "lastHit": {
+       "x": 68,
+       "y": -90,
+       "points": 40
+      },
+      "over": false,
+      "rng": 470389255
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 0,
+      "level": 5
+     },
+     "state": {
+      "series": 1,
+      "ball": 2,
+      "score": 90,
+      "seriesScores": [],
+      "lastHit": {
+       "x": -48,
+       "y": -34,
+       "points": 50
+      },
+      "over": false,
+      "rng": 3069989445
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 0,
+      "level": 5
+     },
+     "state": {
+      "series": 1,
+      "ball": 3,
+      "score": 130,
+      "seriesScores": [],
+      "lastHit": {
+       "x": 72,
+       "y": 74,
+       "points": 40
+      },
+      "over": false,
+      "rng": 2098155156
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 0,
+      "level": 5
+     },
+     "state": {
+      "series": 1,
+      "ball": 4,
+      "score": 180,
+      "seriesScores": [],
+      "lastHit": {
+       "x": 57,
+       "y": 48,
+       "points": 50
+      },
+      "over": false,
+      "rng": 794540887
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 0,
+      "level": 5
+     },
+     "state": {
+      "series": 1,
+      "ball": 5,
+      "score": 220,
+      "seriesScores": [],
+      "lastHit": {
+       "x": 73,
+       "y": 85,
+       "points": 40
+      },
+      "over": false,
+      "rng": 344924426
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 0,
+      "level": 5
+     },
+     "state": {
+      "series": 1,
+      "ball": 6,
+      "score": 260,
+      "seriesScores": [],
+      "lastHit": {
+       "x": 97,
+       "y": -25,
+       "points": 40
+      },
+      "over": false,
+      "rng": 627367908
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 0,
+      "level": 5
+     },
+     "state": {
+      "series": 1,
+      "ball": 7,
+      "score": 310,
+      "seriesScores": [],
+      "lastHit": {
+       "x": -19,
+       "y": -34,
+       "points": 50
+      },
+      "over": false,
+      "rng": 2324260350
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 0,
+      "level": 5
+     },
+     "state": {
+      "series": 1,
+      "ball": 8,
+      "score": 350,
+      "seriesScores": [],
+      "lastHit": {
+       "x": -87,
+       "y": 56,
+       "points": 40
+      },
+      "over": false,
+      "rng": 3518474805
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 0,
+      "level": 5
+     },
+     "state": {
+      "series": 2,
+      "ball": 0,
+      "score": 400,
+      "seriesScores": [
+       400
+      ],
+      "lastHit": {
+       "x": -53,
+       "y": -45,
+       "points": 50
+      },
+      "over": false,
+      "rng": 3843456730
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 0,
+      "level": 5
+     },
+     "state": {
+      "series": 2,
+      "ball": 1,
+      "score": 450,
+      "seriesScores": [
+       400
+      ],
+      "lastHit": {
+       "x": -35,
+       "y": -43,
+       "points": 50
+      },
+      "over": false,
+      "rng": 1695803691
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 0,
+      "level": 5
+     },
+     "state": {
+      "series": 2,
+      "ball": 2,
+      "score": 490,
+      "seriesScores": [
+       400
+      ],
+      "lastHit": {
+       "x": -30,
+       "y": -98,
+       "points": 40
+      },
+      "over": false,
+      "rng": 2324267120
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 0,
+      "level": 5
+     },
+     "state": {
+      "series": 2,
+      "ball": 3,
+      "score": 530,
+      "seriesScores": [
+       400
+      ],
+      "lastHit": {
+       "x": 8,
+       "y": -95,
+       "points": 40
+      },
+      "over": false,
+      "rng": 3352498904
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 0,
+      "level": 5
+     },
+     "state": {
+      "series": 2,
+      "ball": 4,
+      "score": 570,
+      "seriesScores": [
+       400
+      ],
+      "lastHit": {
+       "x": -59,
+       "y": 71,
+       "points": 40
+      },
+      "over": false,
+      "rng": 2190111045
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 0,
+      "level": 5
+     },
+     "state": {
+      "series": 2,
+      "ball": 5,
+      "score": 610,
+      "seriesScores": [
+       400
+      ],
+      "lastHit": {
+       "x": 87,
+       "y": 7,
+       "points": 40
+      },
+      "over": false,
+      "rng": 2593204823
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 0,
+      "level": 5
+     },
+     "state": {
+      "series": 2,
+      "ball": 6,
+      "score": 650,
+      "seriesScores": [
+       400
+      ],
+      "lastHit": {
+       "x": -95,
+       "y": -78,
+       "points": 40
+      },
+      "over": false,
+      "rng": 2117862049
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 0,
+      "level": 5
+     },
+     "state": {
+      "series": 2,
+      "ball": 7,
+      "score": 690,
+      "seriesScores": [
+       400
+      ],
+      "lastHit": {
+       "x": -72,
+       "y": 99,
+       "points": 40
+      },
+      "over": false,
+      "rng": 2653447831
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 0,
+      "level": 5
+     },
+     "state": {
+      "series": 2,
+      "ball": 8,
+      "score": 730,
+      "seriesScores": [
+       400
+      ],
+      "lastHit": {
+       "x": 17,
+       "y": 97,
+       "points": 40
+      },
+      "over": false,
+      "rng": 3576876401
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 0,
+      "level": 5
+     },
+     "state": {
+      "series": 3,
+      "ball": 0,
+      "score": 770,
+      "seriesScores": [
+       400,
+       370
+      ],
+      "lastHit": {
+       "x": -59,
+       "y": 57,
+       "points": 40
+      },
+      "over": false,
+      "rng": 4107652438
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 0,
+      "level": 5
+     },
+     "state": {
+      "series": 3,
+      "ball": 1,
+      "score": 820,
+      "seriesScores": [
+       400,
+       370
+      ],
+      "lastHit": {
+       "x": 21,
+       "y": 32,
+       "points": 50
+      },
+      "over": false,
+      "rng": 2686943208
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 0,
+      "level": 5
+     },
+     "state": {
+      "series": 3,
+      "ball": 2,
+      "score": 870,
+      "seriesScores": [
+       400,
+       370
+      ],
+      "lastHit": {
+       "x": 31,
+       "y": 69,
+       "points": 50
+      },
+      "over": false,
+      "rng": 1865636743
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 0,
+      "level": 5
+     },
+     "state": {
+      "series": 3,
+      "ball": 3,
+      "score": 920,
+      "seriesScores": [
+       400,
+       370
+      ],
+      "lastHit": {
+       "x": 53,
+       "y": -55,
+       "points": 50
+      },
+      "over": false,
+      "rng": 2928686826
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 0,
+      "level": 5
+     },
+     "state": {
+      "series": 3,
+      "ball": 4,
+      "score": 960,
+      "seriesScores": [
+       400,
+       370
+      ],
+      "lastHit": {
+       "x": -65,
+       "y": -77,
+       "points": 40
+      },
+      "over": false,
+      "rng": 1586969996
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 0,
+      "level": 5
+     },
+     "state": {
+      "series": 3,
+      "ball": 5,
+      "score": 1010,
+      "seriesScores": [
+       400,
+       370
+      ],
+      "lastHit": {
+       "x": -21,
+       "y": -13,
+       "points": 50
+      },
+      "over": false,
+      "rng": 1896695181
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 0,
+      "level": 5
+     },
+     "state": {
+      "series": 3,
+      "ball": 6,
+      "score": 1060,
+      "seriesScores": [
+       400,
+       370
+      ],
+      "lastHit": {
+       "x": -32,
+       "y": 57,
+       "points": 50
+      },
+      "over": false,
+      "rng": 322317526
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 0,
+      "level": 5
+     },
+     "state": {
+      "series": 3,
+      "ball": 7,
+      "score": 1110,
+      "seriesScores": [
+       400,
+       370
+      ],
+      "lastHit": {
+       "x": -21,
+       "y": 47,
+       "points": 50
+      },
+      "over": false,
+      "rng": 877272486
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 0,
+      "level": 5
+     },
+     "state": {
+      "series": 3,
+      "ball": 8,
+      "score": 1150,
+      "seriesScores": [
+       400,
+       370
+      ],
+      "lastHit": {
+       "x": 50,
+       "y": -94,
+       "points": 40
+      },
+      "over": false,
+      "rng": 2082479199
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 0,
+      "level": 5
+     },
+     "state": {
+      "series": 4,
+      "ball": 0,
+      "score": 1200,
+      "seriesScores": [
+       400,
+       370,
+       430
+      ],
+      "lastHit": {
+       "x": 65,
+       "y": 29,
+       "points": 50
+      },
+      "over": true,
+      "rng": 1843076463
+     }
+    }
+   ],
+   "result": {
+    "winner": "player",
+    "stars": 3,
+    "score": 1200,
+    "seriesScores": [
+     400,
+     370,
+     430
+    ]
+   }
+  },
+  {
+   "name": "pockets-level-2",
+   "config": {
+    "series": 3,
+    "balls": 9,
+    "ringR": [
+     80,
+     160,
+     240,
+     320,
+     400
+    ],
+    "ringPoints": [
+     50,
+     40,
+     30,
+     20,
+     10
+    ],
+    "pockets": [
+     -300,
+     360,
+     300,
+     360
+    ],
+    "pocketR": 50,
+    "pocketPoints": 100,
+    "scatter": [
+     40,
+     55,
+     70,
+     85,
+     100
+    ],
+    "starScores": [
+     700,
+     520,
+     360
+    ]
+   },
+   "seed": 2026,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "x": -300,
+      "y": 360,
+      "level": 2
+     },
+     "state": {
+      "series": 1,
+      "ball": 1,
+      "score": 100,
+      "seriesScores": [],
+      "lastHit": {
+       "x": -284,
+       "y": 317,
+       "points": 100
+      },
+      "over": false,
+      "rng": 2535152655
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 300,
+      "y": 360,
+      "level": 2
+     },
+     "state": {
+      "series": 1,
+      "ball": 2,
+      "score": 200,
+      "seriesScores": [],
+      "lastHit": {
+       "x": 321,
+       "y": 367,
+       "points": 100
+      },
+      "over": false,
+      "rng": 4007165219
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": -300,
+      "y": 360,
+      "level": 2
+     },
+     "state": {
+      "series": 1,
+      "ball": 3,
+      "score": 200,
+      "seriesScores": [],
+      "lastHit": {
+       "x": -246,
+       "y": 355,
+       "points": 0
+      },
+      "over": false,
+      "rng": 1408667750
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 300,
+      "y": 360,
+      "level": 2
+     },
+     "state": {
+      "series": 1,
+      "ball": 4,
+      "score": 300,
+      "seriesScores": [],
+      "lastHit": {
+       "x": 306,
+       "y": 352,
+       "points": 100
+      },
+      "over": false,
+      "rng": 1713418136
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": -300,
+      "y": 360,
+      "level": 2
+     },
+     "state": {
+      "series": 1,
+      "ball": 5,
+      "score": 400,
+      "seriesScores": [],
+      "lastHit": {
+       "x": -331,
+       "y": 341,
+       "points": 100
+      },
+      "over": false,
+      "rng": 2009483652
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 300,
+      "y": 360,
+      "level": 2
+     },
+     "state": {
+      "series": 1,
+      "ball": 6,
+      "score": 500,
+      "seriesScores": [],
+      "lastHit": {
+       "x": 268,
+       "y": 359,
+       "points": 100
+      },
+      "over": false,
+      "rng": 3388763676
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": -300,
+      "y": 360,
+      "level": 2
+     },
+     "state": {
+      "series": 1,
+      "ball": 7,
+      "score": 600,
+      "seriesScores": [],
+      "lastHit": {
+       "x": -267,
+       "y": 390,
+       "points": 100
+      },
+      "over": false,
+      "rng": 1125056902
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 300,
+      "y": 360,
+      "level": 2
+     },
+     "state": {
+      "series": 1,
+      "ball": 8,
+      "score": 700,
+      "seriesScores": [],
+      "lastHit": {
+       "x": 262,
+       "y": 368,
+       "points": 100
+      },
+      "over": false,
+      "rng": 2751170028
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": -300,
+      "y": 360,
+      "level": 2
+     },
+     "state": {
+      "series": 2,
+      "ball": 0,
+      "score": 800,
+      "seriesScores": [
+       800
+      ],
+      "lastHit": {
+       "x": -336,
+       "y": 373,
+       "points": 100
+      },
+      "over": false,
+      "rng": 552771632
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 300,
+      "y": 360,
+      "level": 2
+     },
+     "state": {
+      "series": 2,
+      "ball": 1,
+      "score": 900,
+      "seriesScores": [
+       800
+      ],
+      "lastHit": {
+       "x": 299,
+       "y": 378,
+       "points": 100
+      },
+      "over": false,
+      "rng": 282458665
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": -300,
+      "y": 360,
+      "level": 2
+     },
+     "state": {
+      "series": 2,
+      "ball": 2,
+      "score": 900,
+      "seriesScores": [
+       800
+      ],
+      "lastHit": {
+       "x": -290,
+       "y": 309,
+       "points": 0
+      },
+      "over": false,
+      "rng": 211595197
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 300,
+      "y": 360,
+      "level": 2
+     },
+     "state": {
+      "series": 2,
+      "ball": 3,
+      "score": 900,
+      "seriesScores": [
+       800
+      ],
+      "lastHit": {
+       "x": 350,
+       "y": 382,
+       "points": 0
+      },
+      "over": false,
+      "rng": 3624603401
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": -300,
+      "y": 360,
+      "level": 2
+     },
+     "state": {
+      "series": 2,
+      "ball": 4,
+      "score": 900,
+      "seriesScores": [
+       800
+      ],
+      "lastHit": {
+       "x": -283,
+       "y": 410,
+       "points": 0
+      },
+      "over": false,
+      "rng": 2690274249
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 300,
+      "y": 360,
+      "level": 2
+     },
+     "state": {
+      "series": 2,
+      "ball": 5,
+      "score": 900,
+      "seriesScores": [
+       800
+      ],
+      "lastHit": {
+       "x": 254,
+       "y": 314,
+       "points": 0
+      },
+      "over": false,
+      "rng": 1794003876
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": -300,
+      "y": 360,
+      "level": 2
+     },
+     "state": {
+      "series": 2,
+      "ball": 6,
+      "score": 1000,
+      "seriesScores": [
+       800
+      ],
+      "lastHit": {
+       "x": -305,
+       "y": 396,
+       "points": 100
+      },
+      "over": false,
+      "rng": 1852223680
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 300,
+      "y": 360,
+      "level": 2
+     },
+     "state": {
+      "series": 2,
+      "ball": 7,
+      "score": 1000,
+      "seriesScores": [
+       800
+      ],
+      "lastHit": {
+       "x": 305,
+       "y": 412,
+       "points": 0
+      },
+      "over": false,
+      "rng": 3789488159
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": -300,
+      "y": 360,
+      "level": 2
+     },
+     "state": {
+      "series": 2,
+      "ball": 8,
+      "score": 1100,
+      "seriesScores": [
+       800
+      ],
+      "lastHit": {
+       "x": -307,
+       "y": 408,
+       "points": 100
+      },
+      "over": false,
+      "rng": 2529382300
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 300,
+      "y": 360,
+      "level": 2
+     },
+     "state": {
+      "series": 3,
+      "ball": 0,
+      "score": 1200,
+      "seriesScores": [
+       800,
+       400
+      ],
+      "lastHit": {
+       "x": 256,
+       "y": 367,
+       "points": 100
+      },
+      "over": false,
+      "rng": 704427263
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": -300,
+      "y": 360,
+      "level": 2
+     },
+     "state": {
+      "series": 3,
+      "ball": 1,
+      "score": 1300,
+      "seriesScores": [
+       800,
+       400
+      ],
+      "lastHit": {
+       "x": -288,
+       "y": 346,
+       "points": 100
+      },
+      "over": false,
+      "rng": 4112910791
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 300,
+      "y": 360,
+      "level": 2
+     },
+     "state": {
+      "series": 3,
+      "ball": 2,
+      "score": 1300,
+      "seriesScores": [
+       800,
+       400
+      ],
+      "lastHit": {
+       "x": 259,
+       "y": 314,
+       "points": 0
+      },
+      "over": false,
+      "rng": 1973610756
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": -300,
+      "y": 360,
+      "level": 2
+     },
+     "state": {
+      "series": 3,
+      "ball": 3,
+      "score": 1400,
+      "seriesScores": [
+       800,
+       400
+      ],
+      "lastHit": {
+       "x": -321,
+       "y": 323,
+       "points": 100
+      },
+      "over": false,
+      "rng": 3428298621
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 300,
+      "y": 360,
+      "level": 2
+     },
+     "state": {
+      "series": 3,
+      "ball": 4,
+      "score": 1400,
+      "seriesScores": [
+       800,
+       400
+      ],
+      "lastHit": {
+       "x": 251,
+       "y": 341,
+       "points": 0
+      },
+      "over": false,
+      "rng": 184988196
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": -300,
+      "y": 360,
+      "level": 2
+     },
+     "state": {
+      "series": 3,
+      "ball": 5,
+      "score": 1400,
+      "seriesScores": [
+       800,
+       400
+      ],
+      "lastHit": {
+       "x": -345,
+       "y": 382,
+       "points": 0
+      },
+      "over": false,
+      "rng": 3710125571
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 300,
+      "y": 360,
+      "level": 2
+     },
+     "state": {
+      "series": 3,
+      "ball": 6,
+      "score": 1400,
+      "seriesScores": [
+       800,
+       400
+      ],
+      "lastHit": {
+       "x": 319,
+       "y": 307,
+       "points": 0
+      },
+      "over": false,
+      "rng": 1029517898
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": -300,
+      "y": 360,
+      "level": 2
+     },
+     "state": {
+      "series": 3,
+      "ball": 7,
+      "score": 1400,
+      "seriesScores": [
+       800,
+       400
+      ],
+      "lastHit": {
+       "x": -351,
+       "y": 390,
+       "points": 0
+      },
+      "over": false,
+      "rng": 2887477717
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 300,
+      "y": 360,
+      "level": 2
+     },
+     "state": {
+      "series": 3,
+      "ball": 8,
+      "score": 1500,
+      "seriesScores": [
+       800,
+       400
+      ],
+      "lastHit": {
+       "x": 300,
+       "y": 319,
+       "points": 100
+      },
+      "over": false,
+      "rng": 3492509009
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": -300,
+      "y": 360,
+      "level": 2
+     },
+     "state": {
+      "series": 4,
+      "ball": 0,
+      "score": 1600,
+      "seriesScores": [
+       800,
+       400,
+       400
+      ],
+      "lastHit": {
+       "x": -276,
+       "y": 396,
+       "points": 100
+      },
+      "over": true,
+      "rng": 2473404322
+     }
+    }
+   ],
+   "result": {
+    "winner": "player",
+    "stars": 3,
+    "score": 1600,
+    "seriesScores": [
+     800,
+     400,
+     400
+    ]
+   }
+  },
+  {
+   "name": "random-aims-random-levels",
+   "config": {
+    "series": 3,
+    "balls": 9,
+    "ringR": [
+     80,
+     160,
+     240,
+     320,
+     400
+    ],
+    "ringPoints": [
+     50,
+     40,
+     30,
+     20,
+     10
+    ],
+    "pockets": [
+     -300,
+     360,
+     300,
+     360
+    ],
+    "pocketR": 50,
+    "pocketPoints": 100,
+    "scatter": [
+     40,
+     55,
+     70,
+     85,
+     100
+    ],
+    "starScores": [
+     700,
+     520,
+     360
+    ]
+   },
+   "seed": 1234,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "x": -337,
+      "y": -302,
+      "level": 5
+     },
+     "state": {
+      "series": 1,
+      "ball": 1,
+      "score": 0,
+      "seriesScores": [],
+      "lastHit": {
+       "x": -256,
+       "y": -354,
+       "points": 0
+      },
+      "over": false,
+      "rng": 1855942593
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": -436,
+      "y": -350,
+      "level": 2
+     },
+     "state": {
+      "series": 1,
+      "ball": 2,
+      "score": 0,
+      "seriesScores": [],
+      "lastHit": {
+       "x": -455,
+       "y": -339,
+       "points": 0
+      },
+      "over": false,
+      "rng": 3348358578
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 312,
+      "y": 266,
+      "level": 5
+     },
+     "state": {
+      "series": 1,
+      "ball": 3,
+      "score": 0,
+      "seriesScores": [],
+      "lastHit": {
+       "x": 408,
+       "y": 183,
+       "points": 0
+      },
+      "over": false,
+      "rng": 2211002831
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": -431,
+      "y": 367,
+      "level": 4
+     },
+     "state": {
+      "series": 1,
+      "ball": 4,
+      "score": 0,
+      "seriesScores": [],
+      "lastHit": {
+       "x": -421,
+       "y": 336,
+       "points": 0
+      },
+      "over": false,
+      "rng": 2888360370
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 385,
+      "y": 137,
+      "level": 2
+     },
+     "state": {
+      "series": 1,
+      "ball": 5,
+      "score": 10,
+      "seriesScores": [],
+      "lastHit": {
+       "x": 382,
+       "y": 91,
+       "points": 10
+      },
+      "over": false,
+      "rng": 3393669276
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": -56,
+      "y": -186,
+      "level": 3
+     },
+     "state": {
+      "series": 1,
+      "ball": 6,
+      "score": 40,
+      "seriesScores": [],
+      "lastHit": {
+       "x": -53,
+       "y": -204,
+       "points": 30
+      },
+      "over": false,
+      "rng": 1881012526
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": -205,
+      "y": -142,
+      "level": 3
+     },
+     "state": {
+      "series": 1,
+      "ball": 7,
+      "score": 60,
+      "seriesScores": [],
+      "lastHit": {
+       "x": -268,
+       "y": -112,
+       "points": 20
+      },
+      "over": false,
+      "rng": 2089904356
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": -279,
+      "y": 269,
+      "level": 4
+     },
+     "state": {
+      "series": 1,
+      "ball": 8,
+      "score": 160,
+      "seriesScores": [],
+      "lastHit": {
+       "x": -320,
+       "y": 347,
+       "points": 100
+      },
+      "over": false,
+      "rng": 3481595902
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 211,
+      "y": 275,
+      "level": 1
+     },
+     "state": {
+      "series": 2,
+      "ball": 0,
+      "score": 170,
+      "seriesScores": [
+       170
+      ],
+      "lastHit": {
+       "x": 216,
+       "y": 258,
+       "points": 10
+      },
+      "over": false,
+      "rng": 3208525124
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": -414,
+      "y": -169,
+      "level": 5
+     },
+     "state": {
+      "series": 2,
+      "ball": 1,
+      "score": 170,
+      "seriesScores": [
+       170
+      ],
+      "lastHit": {
+       "x": -382,
+       "y": -226,
+       "points": 0
+      },
+      "over": false,
+      "rng": 889900810
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": -242,
+      "y": -92,
+      "level": 3
+     },
+     "state": {
+      "series": 2,
+      "ball": 2,
+      "score": 180,
+      "seriesScores": [
+       170
+      ],
+      "lastHit": {
+       "x": -293,
+       "y": -159,
+       "points": 10
+      },
+      "over": false,
+      "rng": 178757688
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": -234,
+      "y": -25,
+      "level": 2
+     },
+     "state": {
+      "series": 2,
+      "ball": 3,
+      "score": 210,
+      "seriesScores": [
+       170
+      ],
+      "lastHit": {
+       "x": -230,
+       "y": -30,
+       "points": 30
+      },
+      "over": false,
+      "rng": 3526661747
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 173,
+      "y": -85,
+      "level": 3
+     },
+     "state": {
+      "series": 2,
+      "ball": 4,
+      "score": 240,
+      "seriesScores": [
+       170
+      ],
+      "lastHit": {
+       "x": 149,
+       "y": -88,
+       "points": 30
+      },
+      "over": false,
+      "rng": 4133934370
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 135,
+      "y": -244,
+      "level": 5
+     },
+     "state": {
+      "series": 2,
+      "ball": 5,
+      "score": 260,
+      "seriesScores": [
+       170
+      ],
+      "lastHit": {
+       "x": 91,
+       "y": -240,
+       "points": 20
+      },
+      "over": false,
+      "rng": 3609789656
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": -162,
+      "y": -49,
+      "level": 3
+     },
+     "state": {
+      "series": 2,
+      "ball": 6,
+      "score": 290,
+      "seriesScores": [
+       170
+      ],
+      "lastHit": {
+       "x": -200,
+       "y": -22,
+       "points": 30
+      },
+      "over": false,
+      "rng": 4045742989
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": -71,
+      "y": -257,
+      "level": 1
+     },
+     "state": {
+      "series": 2,
+      "ball": 7,
+      "score": 310,
+      "seriesScores": [
+       170
+      ],
+      "lastHit": {
+       "x": -91,
+       "y": -274,
+       "points": 20
+      },
+      "over": false,
+      "rng": 22566299
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": -60,
+      "y": -313,
+      "level": 5
+     },
+     "state": {
+      "series": 2,
+      "ball": 8,
+      "score": 330,
+      "seriesScores": [
+       170
+      ],
+      "lastHit": {
+       "x": -68,
+       "y": -263,
+       "points": 20
+      },
+      "over": false,
+      "rng": 4129960818
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": -396,
+      "y": 130,
+      "level": 4
+     },
+     "state": {
+      "series": 3,
+      "ball": 0,
+      "score": 330,
+      "seriesScores": [
+       170,
+       160
+      ],
+      "lastHit": {
+       "x": -451,
+       "y": 151,
+       "points": 0
+      },
+      "over": false,
+      "rng": 2374643077
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 201,
+      "y": -243,
+      "level": 1
+     },
+     "state": {
+      "series": 3,
+      "ball": 1,
+      "score": 350,
+      "seriesScores": [
+       170,
+       160
+      ],
+      "lastHit": {
+       "x": 187,
+       "y": -233,
+       "points": 20
+      },
+      "over": false,
+      "rng": 2997670082
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": -42,
+      "y": 295,
+      "level": 5
+     },
+     "state": {
+      "series": 3,
+      "ball": 2,
+      "score": 370,
+      "seriesScores": [
+       170,
+       160
+      ],
+      "lastHit": {
+       "x": -43,
+       "y": 267,
+       "points": 20
+      },
+      "over": false,
+      "rng": 641628051
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 194,
+      "y": 444,
+      "level": 4
+     },
+     "state": {
+      "series": 3,
+      "ball": 3,
+      "score": 370,
+      "seriesScores": [
+       170,
+       160
+      ],
+      "lastHit": {
+       "x": 144,
+       "y": 403,
+       "points": 0
+      },
+      "over": false,
+      "rng": 2947694624
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": -400,
+      "y": -441,
+      "level": 4
+     },
+     "state": {
+      "series": 3,
+      "ball": 4,
+      "score": 370,
+      "seriesScores": [
+       170,
+       160
+      ],
+      "lastHit": {
+       "x": -449,
+       "y": -396,
+       "points": 0
+      },
+      "over": false,
+      "rng": 75972010
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 55,
+      "y": 248,
+      "level": 2
+     },
+     "state": {
+      "series": 3,
+      "ball": 5,
+      "score": 390,
+      "seriesScores": [
+       170,
+       160
+      ],
+      "lastHit": {
+       "x": 73,
+       "y": 233,
+       "points": 20
+      },
+      "over": false,
+      "rng": 1930140079
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 73,
+      "y": -310,
+      "level": 1
+     },
+     "state": {
+      "series": 3,
+      "ball": 6,
+      "score": 410,
+      "seriesScores": [
+       170,
+       160
+      ],
+      "lastHit": {
+       "x": 77,
+       "y": -277,
+       "points": 20
+      },
+      "over": false,
+      "rng": 4008464083
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": -405,
+      "y": 432,
+      "level": 2
+     },
+     "state": {
+      "series": 3,
+      "ball": 7,
+      "score": 410,
+      "seriesScores": [
+       170,
+       160
+      ],
+      "lastHit": {
+       "x": -356,
+       "y": 412,
+       "points": 0
+      },
+      "over": false,
+      "rng": 3639169334
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 414,
+      "y": -187,
+      "level": 5
+     },
+     "state": {
+      "series": 3,
+      "ball": 8,
+      "score": 410,
+      "seriesScores": [
+       170,
+       160
+      ],
+      "lastHit": {
+       "x": 475,
+       "y": -162,
+       "points": 0
+      },
+      "over": false,
+      "rng": 418086959
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": -257,
+      "y": -210,
+      "level": 1
+     },
+     "state": {
+      "series": 4,
+      "ball": 0,
+      "score": 420,
+      "seriesScores": [
+       170,
+       160,
+       90
+      ],
+      "lastHit": {
+       "x": -262,
+       "y": -198,
+       "points": 10
+      },
+      "over": true,
+      "rng": 926592991
+     }
+    }
+   ],
+   "result": {
+    "winner": "player",
+    "stars": 1,
+    "score": 420,
+    "seriesScores": [
+     170,
+     160,
+     90
+    ]
+   }
+  },
+  {
+   "name": "pockets-level-4",
+   "config": {
+    "series": 3,
+    "balls": 9,
+    "ringR": [
+     80,
+     160,
+     240,
+     320,
+     400
+    ],
+    "ringPoints": [
+     50,
+     40,
+     30,
+     20,
+     10
+    ],
+    "pockets": [
+     -300,
+     360,
+     300,
+     360
+    ],
+    "pocketR": 50,
+    "pocketPoints": 100,
+    "scatter": [
+     40,
+     55,
+     70,
+     85,
+     100
+    ],
+    "starScores": [
+     700,
+     520,
+     360
+    ]
+   },
+   "seed": 0,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "x": -300,
+      "y": 360,
+      "level": 4
+     },
+     "state": {
+      "series": 1,
+      "ball": 1,
+      "score": 0,
+      "seriesScores": [],
+      "lastHit": {
+       "x": -338,
+       "y": 278,
+       "points": 0
+      },
+      "over": false,
+      "rng": 3761132862
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 300,
+      "y": 360,
+      "level": 4
+     },
+     "state": {
+      "series": 1,
+      "ball": 2,
+      "score": 0,
+      "seriesScores": [],
+      "lastHit": {
+       "x": 382,
+       "y": 426,
+       "points": 0
+      },
+      "over": false,
+      "rng": 25405621
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": -300,
+      "y": 360,
+      "level": 4
+     },
+     "state": {
+      "series": 1,
+      "ball": 3,
+      "score": 100,
+      "seriesScores": [],
+      "lastHit": {
+       "x": -339,
+       "y": 335,
+       "points": 100
+      },
+      "over": false,
+      "rng": 4186559031
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 300,
+      "y": 360,
+      "level": 4
+     },
+     "state": {
+      "series": 1,
+      "ball": 4,
+      "score": 200,
+      "seriesScores": [],
+      "lastHit": {
+       "x": 303,
+       "y": 336,
+       "points": 100
+      },
+      "over": false,
+      "rng": 4244368831
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": -300,
+      "y": 360,
+      "level": 4
+     },
+     "state": {
+      "series": 1,
+      "ball": 5,
+      "score": 200,
+      "seriesScores": [],
+      "lastHit": {
+       "x": -376,
+       "y": 396,
+       "points": 0
+      },
+      "over": false,
+      "rng": 3042595768
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 300,
+      "y": 360,
+      "level": 4
+     },
+     "state": {
+      "series": 1,
+      "ball": 6,
+      "score": 200,
+      "seriesScores": [],
+      "lastHit": {
+       "x": 271,
+       "y": 410,
+       "points": 0
+      },
+      "over": false,
+      "rng": 4179142836
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": -300,
+      "y": 360,
+      "level": 4
+     },
+     "state": {
+      "series": 1,
+      "ball": 7,
+      "score": 200,
+      "seriesScores": [],
+      "lastHit": {
+       "x": -356,
+       "y": 276,
+       "points": 0
+      },
+      "over": false,
+      "rng": 1194283324
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 300,
+      "y": 360,
+      "level": 4
+     },
+     "state": {
+      "series": 1,
+      "ball": 8,
+      "score": 210,
+      "seriesScores": [],
+      "lastHit": {
+       "x": 262,
+       "y": 276,
+       "points": 10
+      },
+      "over": false,
+      "rng": 1138837087
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": -300,
+      "y": 360,
+      "level": 4
+     },
+     "state": {
+      "series": 2,
+      "ball": 0,
+      "score": 210,
+      "seriesScores": [
+       210
+      ],
+      "lastHit": {
+       "x": -293,
+       "y": 308,
+       "points": 0
+      },
+      "over": false,
+      "rng": 1981661406
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 300,
+      "y": 360,
+      "level": 4
+     },
+     "state": {
+      "series": 2,
+      "ball": 1,
+      "score": 310,
+      "seriesScores": [
+       210
+      ],
+      "lastHit": {
+       "x": 268,
+       "y": 350,
+       "points": 100
+      },
+      "over": false,
+      "rng": 4125575487
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": -300,
+      "y": 360,
+      "level": 4
+     },
+     "state": {
+      "series": 2,
+      "ball": 2,
+      "score": 410,
+      "seriesScores": [
+       210
+      ],
+      "lastHit": {
+       "x": -281,
+       "y": 352,
+       "points": 100
+      },
+      "over": false,
+      "rng": 2771839454
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 300,
+      "y": 360,
+      "level": 4
+     },
+     "state": {
+      "series": 2,
+      "ball": 3,
+      "score": 410,
+      "seriesScores": [
+       210
+      ],
+      "lastHit": {
+       "x": 223,
+       "y": 373,
+       "points": 0
+      },
+      "over": false,
+      "rng": 48886946
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": -300,
+      "y": 360,
+      "level": 4
+     },
+     "state": {
+      "series": 2,
+      "ball": 4,
+      "score": 410,
+      "seriesScores": [
+       210
+      ],
+      "lastHit": {
+       "x": -347,
+       "y": 430,
+       "points": 0
+      },
+      "over": false,
+      "rng": 831439433
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 300,
+      "y": 360,
+      "level": 4
+     },
+     "state": {
+      "series": 2,
+      "ball": 5,
+      "score": 420,
+      "seriesScores": [
+       210
+      ],
+      "lastHit": {
+       "x": 253,
+       "y": 277,
+       "points": 10
+      },
+      "over": false,
+      "rng": 1347409550
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": -300,
+      "y": 360,
+      "level": 4
+     },
+     "state": {
+      "series": 2,
+      "ball": 6,
+      "score": 420,
+      "seriesScores": [
+       210
+      ],
+      "lastHit": {
+       "x": -306,
+       "y": 416,
+       "points": 0
+      },
+      "over": false,
+      "rng": 4218067572
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 300,
+      "y": 360,
+      "level": 4
+     },
+     "state": {
+      "series": 2,
+      "ball": 7,
+      "score": 420,
+      "seriesScores": [
+       210
+      ],
+      "lastHit": {
+       "x": 295,
+       "y": 293,
+       "points": 0
+      },
+      "over": false,
+      "rng": 2211501978
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": -300,
+      "y": 360,
+      "level": 4
+     },
+     "state": {
+      "series": 2,
+      "ball": 8,
+      "score": 420,
+      "seriesScores": [
+       210
+      ],
+      "lastHit": {
+       "x": -223,
+       "y": 388,
+       "points": 0
+      },
+      "over": false,
+      "rng": 3903087425
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 300,
+      "y": 360,
+      "level": 4
+     },
+     "state": {
+      "series": 3,
+      "ball": 0,
+      "score": 420,
+      "seriesScores": [
+       210,
+       210
+      ],
+      "lastHit": {
+       "x": 335,
+       "y": 281,
+       "points": 0
+      },
+      "over": false,
+      "rng": 1218914682
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": -300,
+      "y": 360,
+      "level": 4
+     },
+     "state": {
+      "series": 3,
+      "ball": 1,
+      "score": 420,
+      "seriesScores": [
+       210,
+       210
+      ],
+      "lastHit": {
+       "x": -284,
+       "y": 425,
+       "points": 0
+      },
+      "over": false,
+      "rng": 1435446654
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 300,
+      "y": 360,
+      "level": 4
+     },
+     "state": {
+      "series": 3,
+      "ball": 2,
+      "score": 420,
+      "seriesScores": [
+       210,
+       210
+      ],
+      "lastHit": {
+       "x": 368,
+       "y": 416,
+       "points": 0
+      },
+      "over": false,
+      "rng": 2472510687
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": -300,
+      "y": 360,
+      "level": 4
+     },
+     "state": {
+      "series": 3,
+      "ball": 3,
+      "score": 420,
+      "seriesScores": [
+       210,
+       210
+      ],
+      "lastHit": {
+       "x": -226,
+       "y": 399,
+       "points": 0
+      },
+      "over": false,
+      "rng": 1723544179
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 300,
+      "y": 360,
+      "level": 4
+     },
+     "state": {
+      "series": 3,
+      "ball": 4,
+      "score": 420,
+      "seriesScores": [
+       210,
+       210
+      ],
+      "lastHit": {
+       "x": 352,
+       "y": 415,
+       "points": 0
+      },
+      "over": false,
+      "rng": 2071194548
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": -300,
+      "y": 360,
+      "level": 4
+     },
+     "state": {
+      "series": 3,
+      "ball": 5,
+      "score": 520,
+      "seriesScores": [
+       210,
+       210
+      ],
+      "lastHit": {
+       "x": -270,
+       "y": 351,
+       "points": 100
+      },
+      "over": false,
+      "rng": 3854402149
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 300,
+      "y": 360,
+      "level": 4
+     },
+     "state": {
+      "series": 3,
+      "ball": 6,
+      "score": 530,
+      "seriesScores": [
+       210,
+       210
+      ],
+      "lastHit": {
+       "x": 221,
+       "y": 283,
+       "points": 10
+      },
+      "over": false,
+      "rng": 4266533798
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": -300,
+      "y": 360,
+      "level": 4
+     },
+     "state": {
+      "series": 3,
+      "ball": 7,
+      "score": 530,
+      "seriesScores": [
+       210,
+       210
+      ],
+      "lastHit": {
+       "x": -241,
+       "y": 347,
+       "points": 0
+      },
+      "over": false,
+      "rng": 3550124916
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 300,
+      "y": 360,
+      "level": 4
+     },
+     "state": {
+      "series": 3,
+      "ball": 8,
+      "score": 530,
+      "seriesScores": [
+       210,
+       210
+      ],
+      "lastHit": {
+       "x": 233,
+       "y": 381,
+       "points": 0
+      },
+      "over": false,
+      "rng": 1576930813
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": -300,
+      "y": 360,
+      "level": 4
+     },
+     "state": {
+      "series": 4,
+      "ball": 0,
+      "score": 530,
+      "seriesScores": [
+       210,
+       210,
+       110
+      ],
+      "lastHit": {
+       "x": -350,
+       "y": 276,
+       "points": 0
+      },
+      "over": true,
+      "rng": 1228870468
+     }
+    }
+   ],
+   "result": {
+    "winner": "player",
+    "stars": 2,
+    "score": 530,
+    "seriesScores": [
+     210,
+     210,
+     110
+    ]
+   }
+  },
+  {
+   "name": "wild-aims-level-5-no-stars",
+   "config": {
+    "series": 3,
+    "balls": 9,
+    "ringR": [
+     80,
+     160,
+     240,
+     320,
+     400
+    ],
+    "ringPoints": [
+     50,
+     40,
+     30,
+     20,
+     10
+    ],
+    "pockets": [
+     -300,
+     360,
+     300,
+     360
+    ],
+    "pocketR": 50,
+    "pocketPoints": 100,
+    "scatter": [
+     40,
+     55,
+     70,
+     85,
+     100
+    ],
+    "starScores": [
+     700,
+     520,
+     360
+    ]
+   },
+   "seed": 31337,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "x": -636,
+      "y": -383,
+      "level": 5
+     },
+     "state": {
+      "series": 1,
+      "ball": 1,
+      "score": 0,
+      "seriesScores": [],
+      "lastHit": {
+       "x": -652,
+       "y": -310,
+       "points": 0
+      },
+      "over": false,
+      "rng": 1979726558
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": -734,
+      "y": -248,
+      "level": 5
+     },
+     "state": {
+      "series": 1,
+      "ball": 2,
+      "score": 0,
+      "seriesScores": [],
+      "lastHit": {
+       "x": -751,
+       "y": -261,
+       "points": 0
+      },
+      "over": false,
+      "rng": 1604239779
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 31,
+      "y": -132,
+      "level": 5
+     },
+     "state": {
+      "series": 1,
+      "ball": 3,
+      "score": 30,
+      "seriesScores": [],
+      "lastHit": {
+       "x": -39,
+       "y": -161,
+       "points": 30
+      },
+      "over": false,
+      "rng": 1265098694
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 685,
+      "y": -555,
+      "level": 5
+     },
+     "state": {
+      "series": 1,
+      "ball": 4,
+      "score": 30,
+      "seriesScores": [],
+      "lastHit": {
+       "x": 702,
+       "y": -572,
+       "points": 0
+      },
+      "over": false,
+      "rng": 3790943096
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": -88,
+      "y": 785,
+      "level": 5
+     },
+     "state": {
+      "series": 1,
+      "ball": 5,
+      "score": 30,
+      "seriesScores": [],
+      "lastHit": {
+       "x": -182,
+       "y": 846,
+       "points": 0
+      },
+      "over": false,
+      "rng": 927301400
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": -326,
+      "y": -713,
+      "level": 5
+     },
+     "state": {
+      "series": 1,
+      "ball": 6,
+      "score": 30,
+      "seriesScores": [],
+      "lastHit": {
+       "x": -285,
+       "y": -639,
+       "points": 0
+      },
+      "over": false,
+      "rng": 1670008473
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 191,
+      "y": 615,
+      "level": 5
+     },
+     "state": {
+      "series": 1,
+      "ball": 7,
+      "score": 30,
+      "seriesScores": [],
+      "lastHit": {
+       "x": 283,
+       "y": 699,
+       "points": 0
+      },
+      "over": false,
+      "rng": 3125498527
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 766,
+      "y": 369,
+      "level": 5
+     },
+     "state": {
+      "series": 1,
+      "ball": 8,
+      "score": 30,
+      "seriesScores": [],
+      "lastHit": {
+       "x": 854,
+       "y": 321,
+       "points": 0
+      },
+      "over": false,
+      "rng": 3786049117
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 400,
+      "y": 726,
+      "level": 5
+     },
+     "state": {
+      "series": 2,
+      "ball": 0,
+      "score": 30,
+      "seriesScores": [
+       30
+      ],
+      "lastHit": {
+       "x": 394,
+       "y": 688,
+       "points": 0
+      },
+      "over": false,
+      "rng": 1841552414
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": -491,
+      "y": 756,
+      "level": 5
+     },
+     "state": {
+      "series": 2,
+      "ball": 1,
+      "score": 30,
+      "seriesScores": [
+       30
+      ],
+      "lastHit": {
+       "x": -454,
+       "y": 752,
+       "points": 0
+      },
+      "over": false,
+      "rng": 2347985616
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": -447,
+      "y": 85,
+      "level": 5
+     },
+     "state": {
+      "series": 2,
+      "ball": 2,
+      "score": 30,
+      "seriesScores": [
+       30
+      ],
+      "lastHit": {
+       "x": -415,
+       "y": -10,
+       "points": 0
+      },
+      "over": false,
+      "rng": 2750994545
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 261,
+      "y": 73,
+      "level": 5
+     },
+     "state": {
+      "series": 2,
+      "ball": 3,
+      "score": 50,
+      "seriesScores": [
+       30
+      ],
+      "lastHit": {
+       "x": 244,
+       "y": 44,
+       "points": 20
+      },
+      "over": false,
+      "rng": 3018429935
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": -361,
+      "y": -246,
+      "level": 5
+     },
+     "state": {
+      "series": 2,
+      "ball": 4,
+      "score": 50,
+      "seriesScores": [
+       30
+      ],
+      "lastHit": {
+       "x": -369,
+       "y": -338,
+       "points": 0
+      },
+      "over": false,
+      "rng": 4121328530
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": -545,
+      "y": 184,
+      "level": 5
+     },
+     "state": {
+      "series": 2,
+      "ball": 5,
+      "score": 50,
+      "seriesScores": [
+       30
+      ],
+      "lastHit": {
+       "x": -638,
+       "y": 283,
+       "points": 0
+      },
+      "over": false,
+      "rng": 2459373487
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 288,
+      "y": 655,
+      "level": 5
+     },
+     "state": {
+      "series": 2,
+      "ball": 6,
+      "score": 50,
+      "seriesScores": [
+       30
+      ],
+      "lastHit": {
+       "x": 281,
+       "y": 623,
+       "points": 0
+      },
+      "over": false,
+      "rng": 2918758655
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 621,
+      "y": -2,
+      "level": 5
+     },
+     "state": {
+      "series": 2,
+      "ball": 7,
+      "score": 50,
+      "seriesScores": [
+       30
+      ],
+      "lastHit": {
+       "x": 524,
+       "y": 25,
+       "points": 0
+      },
+      "over": false,
+      "rng": 4306351
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": -539,
+      "y": 142,
+      "level": 5
+     },
+     "state": {
+      "series": 2,
+      "ball": 8,
+      "score": 50,
+      "seriesScores": [
+       30
+      ],
+      "lastHit": {
+       "x": -614,
+       "y": 68,
+       "points": 0
+      },
+      "over": false,
+      "rng": 76560524
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": -212,
+      "y": 99,
+      "level": 5
+     },
+     "state": {
+      "series": 3,
+      "ball": 0,
+      "score": 70,
+      "seriesScores": [
+       30,
+       40
+      ],
+      "lastHit": {
+       "x": -282,
+       "y": 90,
+       "points": 20
+      },
+      "over": false,
+      "rng": 2487698299
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": -516,
+      "y": -742,
+      "level": 5
+     },
+     "state": {
+      "series": 3,
+      "ball": 1,
+      "score": 70,
+      "seriesScores": [
+       30,
+       40
+      ],
+      "lastHit": {
+       "x": -545,
+       "y": -642,
+       "points": 0
+      },
+      "over": false,
+      "rng": 1752757586
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 663,
+      "y": 536,
+      "level": 5
+     },
+     "state": {
+      "series": 3,
+      "ball": 2,
+      "score": 70,
+      "seriesScores": [
+       30,
+       40
+      ],
+      "lastHit": {
+       "x": 682,
+       "y": 617,
+       "points": 0
+      },
+      "over": false,
+      "rng": 1889614447
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": -591,
+      "y": 605,
+      "level": 5
+     },
+     "state": {
+      "series": 3,
+      "ball": 3,
+      "score": 70,
+      "seriesScores": [
+       30,
+       40
+      ],
+      "lastHit": {
+       "x": -520,
+       "y": 627,
+       "points": 0
+      },
+      "over": false,
+      "rng": 3063344843
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 665,
+      "y": 641,
+      "level": 5
+     },
+     "state": {
+      "series": 3,
+      "ball": 4,
+      "score": 70,
+      "seriesScores": [
+       30,
+       40
+      ],
+      "lastHit": {
+       "x": 637,
+       "y": 621,
+       "points": 0
+      },
+      "over": false,
+      "rng": 349045022
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": -571,
+      "y": 327,
+      "level": 5
+     },
+     "state": {
+      "series": 3,
+      "ball": 5,
+      "score": 70,
+      "seriesScores": [
+       30,
+       40
+      ],
+      "lastHit": {
+       "x": -505,
+       "y": 404,
+       "points": 0
+      },
+      "over": false,
+      "rng": 1663580898
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 745,
+      "y": 383,
+      "level": 5
+     },
+     "state": {
+      "series": 3,
+      "ball": 6,
+      "score": 70,
+      "seriesScores": [
+       30,
+       40
+      ],
+      "lastHit": {
+       "x": 780,
+       "y": 431,
+       "points": 0
+      },
+      "over": false,
+      "rng": 1346896123
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 364,
+      "y": 270,
+      "level": 5
+     },
+     "state": {
+      "series": 3,
+      "ball": 7,
+      "score": 70,
+      "seriesScores": [
+       30,
+       40
+      ],
+      "lastHit": {
+       "x": 303,
+       "y": 306,
+       "points": 0
+      },
+      "over": false,
+      "rng": 2355580642
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": -139,
+      "y": 705,
+      "level": 5
+     },
+     "state": {
+      "series": 3,
+      "ball": 8,
+      "score": 70,
+      "seriesScores": [
+       30,
+       40
+      ],
+      "lastHit": {
+       "x": -68,
+       "y": 768,
+       "points": 0
+      },
+      "over": false,
+      "rng": 4048050316
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 344,
+      "y": -715,
+      "level": 5
+     },
+     "state": {
+      "series": 4,
+      "ball": 0,
+      "score": 70,
+      "seriesScores": [
+       30,
+       40,
+       0
+      ],
+      "lastHit": {
+       "x": 284,
+       "y": -621,
+       "points": 0
+      },
+      "over": true,
+      "rng": 2021267852
+     }
+    }
+   ],
+   "result": {
+    "winner": "ai",
+    "stars": 0,
+    "score": 70,
+    "seriesScores": [
+     30,
+     40,
+     0
+    ]
+   }
+  },
+  {
+   "name": "timeout-mid-series-2",
+   "config": {
+    "series": 3,
+    "balls": 9,
+    "ringR": [
+     80,
+     160,
+     240,
+     320,
+     400
+    ],
+    "ringPoints": [
+     50,
+     40,
+     30,
+     20,
+     10
+    ],
+    "pockets": [
+     -300,
+     360,
+     300,
+     360
+    ],
+    "pocketR": 50,
+    "pocketPoints": 100,
+    "scatter": [
+     40,
+     55,
+     70,
+     85,
+     100
+    ],
+    "starScores": [
+     700,
+     520,
+     360
+    ]
+   },
+   "seed": 99,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 0,
+      "level": 3
+     },
+     "state": {
+      "series": 1,
+      "ball": 1,
+      "score": 50,
+      "seriesScores": [],
+      "lastHit": {
+       "x": 1,
+       "y": -65,
+       "points": 50
+      },
+      "over": false,
+      "rng": 2399245289
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 0,
+      "level": 3
+     },
+     "state": {
+      "series": 1,
+      "ball": 2,
+      "score": 100,
+      "seriesScores": [],
+      "lastHit": {
+       "x": -44,
+       "y": -20,
+       "points": 50
+      },
+      "over": false,
+      "rng": 2028006716
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 0,
+      "level": 3
+     },
+     "state": {
+      "series": 1,
+      "ball": 3,
+      "score": 140,
+      "seriesScores": [],
+      "lastHit": {
+       "x": -63,
+       "y": 51,
+       "points": 40
+      },
+      "over": false,
+      "rng": 1548709294
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 0,
+      "level": 3
+     },
+     "state": {
+      "series": 1,
+      "ball": 4,
+      "score": 190,
+      "seriesScores": [],
+      "lastHit": {
+       "x": -5,
+       "y": -40,
+       "points": 50
+      },
+      "over": false,
+      "rng": 2902822866
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 0,
+      "level": 3
+     },
+     "state": {
+      "series": 1,
+      "ball": 5,
+      "score": 240,
+      "seriesScores": [],
+      "lastHit": {
+       "x": -44,
+       "y": 2,
+       "points": 50
+      },
+      "over": false,
+      "rng": 3444257550
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 0,
+      "level": 3
+     },
+     "state": {
+      "series": 1,
+      "ball": 6,
+      "score": 290,
+      "seriesScores": [],
+      "lastHit": {
+       "x": 54,
+       "y": 46,
+       "points": 50
+      },
+      "over": false,
+      "rng": 417572603
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 0,
+      "level": 3
+     },
+     "state": {
+      "series": 1,
+      "ball": 7,
+      "score": 340,
+      "seriesScores": [],
+      "lastHit": {
+       "x": -25,
+       "y": -1,
+       "points": 50
+      },
+      "over": false,
+      "rng": 1936260432
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 0,
+      "level": 3
+     },
+     "state": {
+      "series": 1,
+      "ball": 8,
+      "score": 390,
+      "seriesScores": [],
+      "lastHit": {
+       "x": -51,
+       "y": -50,
+       "points": 50
+      },
+      "over": false,
+      "rng": 2785049645
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 0,
+      "level": 3
+     },
+     "state": {
+      "series": 2,
+      "ball": 0,
+      "score": 440,
+      "seriesScores": [
+       440
+      ],
+      "lastHit": {
+       "x": -55,
+       "y": -6,
+       "points": 50
+      },
+      "over": false,
+      "rng": 2033936485
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 0,
+      "level": 3
+     },
+     "state": {
+      "series": 2,
+      "ball": 1,
+      "score": 490,
+      "seriesScores": [
+       440
+      ],
+      "lastHit": {
+       "x": 2,
+       "y": 28,
+       "points": 50
+      },
+      "over": false,
+      "rng": 209189954
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 0,
+      "level": 3
+     },
+     "state": {
+      "series": 2,
+      "ball": 2,
+      "score": 540,
+      "seriesScores": [
+       440
+      ],
+      "lastHit": {
+       "x": -14,
+       "y": -12,
+       "points": 50
+      },
+      "over": false,
+      "rng": 718832863
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 0,
+      "level": 3
+     },
+     "state": {
+      "series": 2,
+      "ball": 3,
+      "score": 580,
+      "seriesScores": [
+       440
+      ],
+      "lastHit": {
+       "x": -56,
+       "y": 68,
+       "points": 40
+      },
+      "over": false,
+      "rng": 2811531819
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 0,
+      "level": 3
+     },
+     "state": {
+      "series": 2,
+      "ball": 4,
+      "score": 620,
+      "seriesScores": [
+       440
+      ],
+      "lastHit": {
+       "x": -62,
+       "y": 57,
+       "points": 40
+      },
+      "over": false,
+      "rng": 787190719
+     }
+    },
+    {
+     "action": {
+      "by": "timeout"
+     },
+     "state": {
+      "series": 2,
+      "ball": 4,
+      "score": 620,
+      "seriesScores": [
+       440
+      ],
+      "lastHit": {
+       "x": -62,
+       "y": 57,
+       "points": 40
+      },
+      "over": true,
+      "rng": 787190719
+     }
+    }
+   ],
+   "result": {
+    "winner": "player",
+    "stars": 2,
+    "score": 620,
+    "seriesScores": [
+     440
+    ]
+   }
+  }
+ ]
+}

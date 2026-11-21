@@ -102,3 +102,9 @@ nižší zbývající skóre, shoda `"draw"`. Hráč vyhrál: `playerDarts ≤ s
 ## Časový strop
 
 6 min (`minigames.sipky.time_cap_s`).
+
+## Upřesnění v1 (podle implementace, vektory je pokrývají)
+
+- Šipka, která dá přesně nulu, nastaví `over`; `dart` ani `turn` se už nemění.
+- Úroveň AI mimo 1–5 se ořízne do rozsahu.
+- Hráč, který vyhraje po `timeout` nebo `maxRounds`, dostane hvězdy také podle `starDarts`.

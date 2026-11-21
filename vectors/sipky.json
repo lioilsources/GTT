@@ -1,0 +1,3310 @@
+{
+ "module": "sipky",
+ "specVersion": 1,
+ "$comment": "Player throws are written out; AI throws are {by: ai, level} and decided by aiAction (specs/minigames/README.md). States recorded by the lead client (web).",
+ "cases": [
+  {
+   "name": "t20-player-vs-level-1",
+   "config": {
+    "start": 301,
+    "maxRounds": 15,
+    "playerScatter": 60,
+    "aiScatter": [
+     420,
+     300,
+     210,
+     150,
+     100
+    ],
+    "starDarts": [
+     18,
+     27
+    ]
+   },
+   "seed": 42,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 1030
+     },
+     "state": {
+      "player": 241,
+      "ai": 301,
+      "turn": "player",
+      "dart": 1,
+      "turnStart": 301,
+      "playerDarts": 1,
+      "round": 1,
+      "lastHit": {
+       "x": 6,
+       "y": 990,
+       "points": 60,
+       "mult": 3
+      },
+      "over": false,
+      "rng": 2836018348
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 1030
+     },
+     "state": {
+      "player": 181,
+      "ai": 301,
+      "turn": "player",
+      "dart": 2,
+      "turnStart": 301,
+      "playerDarts": 2,
+      "round": 1,
+      "lastHit": {
+       "x": -49,
+       "y": 1046,
+       "points": 60,
+       "mult": 3
+      },
+      "over": false,
+      "rng": 3648046016
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 1030
+     },
+     "state": {
+      "player": 161,
+      "ai": 301,
+      "turn": "ai",
+      "dart": 0,
+      "turnStart": 301,
+      "playerDarts": 3,
+      "round": 1,
+      "lastHit": {
+       "x": -28,
+       "y": 1073,
+       "points": 20,
+       "mult": 1
+      },
+      "over": false,
+      "rng": 1441438134
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "player": 161,
+      "ai": 296,
+      "turn": "ai",
+      "dart": 1,
+      "turnStart": 301,
+      "playerDarts": 3,
+      "round": 1,
+      "lastHit": {
+       "x": -197,
+       "y": 1092,
+       "points": 5,
+       "mult": 1
+      },
+      "over": false,
+      "rng": 2431644334
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "player": 161,
+      "ai": 291,
+      "turn": "ai",
+      "dart": 2,
+      "turnStart": 301,
+      "playerDarts": 3,
+      "round": 1,
+      "lastHit": {
+       "x": -248,
+       "y": 1404,
+       "points": 5,
+       "mult": 1
+      },
+      "over": false,
+      "rng": 1067267639
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "player": 161,
+      "ai": 286,
+      "turn": "player",
+      "dart": 0,
+      "turnStart": 161,
+      "playerDarts": 3,
+      "round": 2,
+      "lastHit": {
+       "x": -301,
+       "y": 732,
+       "points": 5,
+       "mult": 1
+      },
+      "over": false,
+      "rng": 3379058227
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 1030
+     },
+     "state": {
+      "player": 101,
+      "ai": 286,
+      "turn": "player",
+      "dart": 1,
+      "turnStart": 161,
+      "playerDarts": 4,
+      "round": 2,
+      "lastHit": {
+       "x": 53,
+       "y": 1052,
+       "points": 60,
+       "mult": 3
+      },
+      "over": false,
+      "rng": 1108305632
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 1030
+     },
+     "state": {
+      "player": 41,
+      "ai": 286,
+      "turn": "player",
+      "dart": 2,
+      "turnStart": 161,
+      "playerDarts": 5,
+      "round": 2,
+      "lastHit": {
+       "x": -36,
+       "y": 1012,
+       "points": 60,
+       "mult": 3
+      },
+      "over": false,
+      "rng": 1084823001
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 1030
+     },
+     "state": {
+      "player": 161,
+      "ai": 286,
+      "turn": "ai",
+      "dart": 0,
+      "turnStart": 286,
+      "playerDarts": 6,
+      "round": 2,
+      "lastHit": {
+       "x": 2,
+       "y": 1001,
+       "points": 60,
+       "mult": 3
+      },
+      "over": false,
+      "rng": 43795860
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "player": 161,
+      "ai": 266,
+      "turn": "ai",
+      "dart": 1,
+      "turnStart": 286,
+      "playerDarts": 6,
+      "round": 2,
+      "lastHit": {
+       "x": 181,
+       "y": 1377,
+       "points": 20,
+       "mult": 1
+      },
+      "over": false,
+      "rng": 2713533522
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "player": 161,
+      "ai": 261,
+      "turn": "ai",
+      "dart": 2,
+      "turnStart": 286,
+      "playerDarts": 6,
+      "round": 2,
+      "lastHit": {
+       "x": -177,
+       "y": 628,
+       "points": 5,
+       "mult": 1
+      },
+      "over": false,
+      "rng": 2427335427
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "player": 161,
+      "ai": 241,
+      "turn": "player",
+      "dart": 0,
+      "turnStart": 161,
+      "playerDarts": 6,
+      "round": 3,
+      "lastHit": {
+       "x": 170,
+       "y": 1219,
+       "points": 20,
+       "mult": 1
+      },
+      "over": false,
+      "rng": 2452169066
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 1030
+     },
+     "state": {
+      "player": 101,
+      "ai": 241,
+      "turn": "player",
+      "dart": 1,
+      "turnStart": 161,
+      "playerDarts": 7,
+      "round": 3,
+      "lastHit": {
+       "x": 36,
+       "y": 1025,
+       "points": 60,
+       "mult": 3
+      },
+      "over": false,
+      "rng": 362877119
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 1030
+     },
+     "state": {
+      "player": 81,
+      "ai": 241,
+      "turn": "player",
+      "dart": 2,
+      "turnStart": 161,
+      "playerDarts": 8,
+      "round": 3,
+      "lastHit": {
+       "x": 15,
+       "y": 1075,
+       "points": 20,
+       "mult": 1
+      },
+      "over": false,
+      "rng": 2205989583
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 1030
+     },
+     "state": {
+      "player": 21,
+      "ai": 241,
+      "turn": "ai",
+      "dart": 0,
+      "turnStart": 241,
+      "playerDarts": 9,
+      "round": 3,
+      "lastHit": {
+       "x": 53,
+       "y": 1029,
+       "points": 60,
+       "mult": 3
+      },
+      "over": false,
+      "rng": 1174021677
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "player": 21,
+      "ai": 236,
+      "turn": "ai",
+      "dart": 1,
+      "turnStart": 241,
+      "playerDarts": 9,
+      "round": 3,
+      "lastHit": {
+       "x": -240,
+       "y": 1138,
+       "points": 5,
+       "mult": 1
+      },
+      "over": false,
+      "rng": 1459594714
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "player": 21,
+      "ai": 216,
+      "turn": "ai",
+      "dart": 2,
+      "turnStart": 241,
+      "playerDarts": 9,
+      "round": 3,
+      "lastHit": {
+       "x": 147,
+       "y": 931,
+       "points": 20,
+       "mult": 1
+      },
+      "over": false,
+      "rng": 1510144494
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "player": 21,
+      "ai": 196,
+      "turn": "player",
+      "dart": 0,
+      "turnStart": 21,
+      "playerDarts": 9,
+      "round": 4,
+      "lastHit": {
+       "x": 133,
+       "y": 1380,
+       "points": 20,
+       "mult": 1
+      },
+      "over": false,
+      "rng": 2788559976
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 1030
+     },
+     "state": {
+      "player": 21,
+      "ai": 196,
+      "turn": "ai",
+      "dart": 0,
+      "turnStart": 196,
+      "playerDarts": 10,
+      "round": 4,
+      "lastHit": {
+       "x": -14,
+       "y": 1052,
+       "points": 60,
+       "mult": 3
+      },
+      "over": false,
+      "rng": 909365418
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "player": 21,
+      "ai": 176,
+      "turn": "ai",
+      "dart": 1,
+      "turnStart": 196,
+      "playerDarts": 10,
+      "round": 4,
+      "lastHit": {
+       "x": -32,
+       "y": 1193,
+       "points": 20,
+       "mult": 1
+      },
+      "over": false,
+      "rng": 1554472184
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "player": 21,
+      "ai": 175,
+      "turn": "ai",
+      "dart": 2,
+      "turnStart": 196,
+      "playerDarts": 10,
+      "round": 4,
+      "lastHit": {
+       "x": 299,
+       "y": 1358,
+       "points": 1,
+       "mult": 1
+      },
+      "over": false,
+      "rng": 3855476102
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "player": 21,
+      "ai": 174,
+      "turn": "player",
+      "dart": 0,
+      "turnStart": 21,
+      "playerDarts": 10,
+      "round": 5,
+      "lastHit": {
+       "x": 306,
+       "y": 630,
+       "points": 1,
+       "mult": 1
+      },
+      "over": false,
+      "rng": 2423365909
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 1030
+     },
+     "state": {
+      "player": 21,
+      "ai": 174,
+      "turn": "ai",
+      "dart": 0,
+      "turnStart": 174,
+      "playerDarts": 11,
+      "round": 5,
+      "lastHit": {
+       "x": -51,
+       "y": 994,
+       "points": 60,
+       "mult": 3
+      },
+      "over": false,
+      "rng": 494448011
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "player": 21,
+      "ai": 173,
+      "turn": "ai",
+      "dart": 1,
+      "turnStart": 174,
+      "playerDarts": 11,
+      "round": 5,
+      "lastHit": {
+       "x": 220,
+       "y": 909,
+       "points": 1,
+       "mult": 1
+      },
+      "over": false,
+      "rng": 3780339031
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "player": 21,
+      "ai": 172,
+      "turn": "ai",
+      "dart": 2,
+      "turnStart": 174,
+      "playerDarts": 11,
+      "round": 5,
+      "lastHit": {
+       "x": 232,
+       "y": 786,
+       "points": 1,
+       "mult": 1
+      },
+      "over": false,
+      "rng": 2265074727
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "player": 21,
+      "ai": 171,
+      "turn": "player",
+      "dart": 0,
+      "turnStart": 21,
+      "playerDarts": 11,
+      "round": 6,
+      "lastHit": {
+       "x": 353,
+       "y": 1113,
+       "points": 1,
+       "mult": 1
+      },
+      "over": false,
+      "rng": 3200844821
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 1030
+     },
+     "state": {
+      "player": 1,
+      "ai": 171,
+      "turn": "player",
+      "dart": 1,
+      "turnStart": 21,
+      "playerDarts": 12,
+      "round": 6,
+      "lastHit": {
+       "x": -43,
+       "y": 1085,
+       "points": 20,
+       "mult": 1
+      },
+      "over": false,
+      "rng": 1418264952
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 1030
+     },
+     "state": {
+      "player": 21,
+      "ai": 171,
+      "turn": "ai",
+      "dart": 0,
+      "turnStart": 171,
+      "playerDarts": 13,
+      "round": 6,
+      "lastHit": {
+       "x": -9,
+       "y": 1027,
+       "points": 60,
+       "mult": 3
+      },
+      "over": false,
+      "rng": 3198363775
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "player": 21,
+      "ai": 159,
+      "turn": "ai",
+      "dart": 1,
+      "turnStart": 171,
+      "playerDarts": 13,
+      "round": 6,
+      "lastHit": {
+       "x": -384,
+       "y": 624,
+       "points": 12,
+       "mult": 1
+      },
+      "over": false,
+      "rng": 688239933
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "player": 21,
+      "ai": 99,
+      "turn": "ai",
+      "dart": 2,
+      "turnStart": 171,
+      "playerDarts": 13,
+      "round": 6,
+      "lastHit": {
+       "x": 165,
+       "y": 1057,
+       "points": 60,
+       "mult": 3
+      },
+      "over": false,
+      "rng": 730922798
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "player": 21,
+      "ai": 79,
+      "turn": "player",
+      "dart": 0,
+      "turnStart": 21,
+      "playerDarts": 13,
+      "round": 7,
+      "lastHit": {
+       "x": 23,
+       "y": 781,
+       "points": 20,
+       "mult": 1
+      },
+      "over": false,
+      "rng": 3461026341
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 1030
+     },
+     "state": {
+      "player": 21,
+      "ai": 79,
+      "turn": "ai",
+      "dart": 0,
+      "turnStart": 79,
+      "playerDarts": 14,
+      "round": 7,
+      "lastHit": {
+       "x": -56,
+       "y": 1007,
+       "points": 60,
+       "mult": 3
+      },
+      "over": false,
+      "rng": 2115965757
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "player": 21,
+      "ai": 74,
+      "turn": "ai",
+      "dart": 1,
+      "turnStart": 79,
+      "playerDarts": 14,
+      "round": 7,
+      "lastHit": {
+       "x": -275,
+       "y": 643,
+       "points": 5,
+       "mult": 1
+      },
+      "over": false,
+      "rng": 3768789312
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "player": 21,
+      "ai": 73,
+      "turn": "ai",
+      "dart": 2,
+      "turnStart": 79,
+      "playerDarts": 14,
+      "round": 7,
+      "lastHit": {
+       "x": 356,
+       "y": 1372,
+       "points": 1,
+       "mult": 1
+      },
+      "over": false,
+      "rng": 131783780
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "player": 21,
+      "ai": 68,
+      "turn": "player",
+      "dart": 0,
+      "turnStart": 21,
+      "playerDarts": 14,
+      "round": 8,
+      "lastHit": {
+       "x": -261,
+       "y": 788,
+       "points": 5,
+       "mult": 1
+      },
+      "over": false,
+      "rng": 3965442169
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 1030
+     },
+     "state": {
+      "player": 21,
+      "ai": 68,
+      "turn": "ai",
+      "dart": 0,
+      "turnStart": 68,
+      "playerDarts": 15,
+      "round": 8,
+      "lastHit": {
+       "x": 24,
+       "y": 1065,
+       "points": 60,
+       "mult": 3
+      },
+      "over": false,
+      "rng": 3127100137
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "player": 21,
+      "ai": 8,
+      "turn": "ai",
+      "dart": 1,
+      "turnStart": 68,
+      "playerDarts": 15,
+      "round": 8,
+      "lastHit": {
+       "x": -39,
+       "y": 1063,
+       "points": 60,
+       "mult": 3
+      },
+      "over": false,
+      "rng": 323621458
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "player": 21,
+      "ai": 0,
+      "turn": "ai",
+      "dart": 1,
+      "turnStart": 68,
+      "playerDarts": 15,
+      "round": 8,
+      "lastHit": {
+       "x": -810,
+       "y": -216,
+       "points": 8,
+       "mult": 1
+      },
+      "over": true,
+      "rng": 918055324
+     }
+    }
+   ],
+   "result": {
+    "winner": "ai",
+    "stars": 0,
+    "score": 280,
+    "player": 21,
+    "ai": 0,
+    "playerDarts": 15
+   }
+  },
+  {
+   "name": "smart-player-vs-level-5",
+   "config": {
+    "start": 301,
+    "maxRounds": 15,
+    "playerScatter": 60,
+    "aiScatter": [
+     420,
+     300,
+     210,
+     150,
+     100
+    ],
+    "starDarts": [
+     18,
+     27
+    ]
+   },
+   "seed": 7,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 1030
+     },
+     "state": {
+      "player": 241,
+      "ai": 301,
+      "turn": "player",
+      "dart": 1,
+      "turnStart": 301,
+      "playerDarts": 1,
+      "round": 1,
+      "lastHit": {
+       "x": -38,
+       "y": 1031,
+       "points": 60,
+       "mult": 3
+      },
+      "over": false,
+      "rng": 470389255
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 1030
+     },
+     "state": {
+      "player": 181,
+      "ai": 301,
+      "turn": "player",
+      "dart": 2,
+      "turnStart": 301,
+      "playerDarts": 2,
+      "round": 1,
+      "lastHit": {
+       "x": -56,
+       "y": 1042,
+       "points": 60,
+       "mult": 3
+      },
+      "over": false,
+      "rng": 3069989445
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 1030
+     },
+     "state": {
+      "player": 121,
+      "ai": 301,
+      "turn": "ai",
+      "dart": 0,
+      "turnStart": 301,
+      "playerDarts": 3,
+      "round": 1,
+      "lastHit": {
+       "x": 9,
+       "y": 1001,
+       "points": 60,
+       "mult": 3
+      },
+      "over": false,
+      "rng": 2098155156
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "player": 121,
+      "ai": 281,
+      "turn": "ai",
+      "dart": 1,
+      "turnStart": 301,
+      "playerDarts": 3,
+      "round": 1,
+      "lastHit": {
+       "x": 57,
+       "y": 1078,
+       "points": 20,
+       "mult": 1
+      },
+      "over": false,
+      "rng": 794540887
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "player": 121,
+      "ai": 261,
+      "turn": "ai",
+      "dart": 2,
+      "turnStart": 301,
+      "playerDarts": 3,
+      "round": 1,
+      "lastHit": {
+       "x": 73,
+       "y": 1115,
+       "points": 20,
+       "mult": 1
+      },
+      "over": false,
+      "rng": 344924426
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "player": 121,
+      "ai": 201,
+      "turn": "player",
+      "dart": 0,
+      "turnStart": 121,
+      "playerDarts": 3,
+      "round": 2,
+      "lastHit": {
+       "x": 97,
+       "y": 1005,
+       "points": 60,
+       "mult": 3
+      },
+      "over": false,
+      "rng": 627367908
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 1030
+     },
+     "state": {
+      "player": 61,
+      "ai": 201,
+      "turn": "player",
+      "dart": 1,
+      "turnStart": 121,
+      "playerDarts": 4,
+      "round": 2,
+      "lastHit": {
+       "x": 49,
+       "y": 997,
+       "points": 60,
+       "mult": 3
+      },
+      "over": false,
+      "rng": 2324260350
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 1030
+     },
+     "state": {
+      "player": 1,
+      "ai": 201,
+      "turn": "player",
+      "dart": 2,
+      "turnStart": 121,
+      "playerDarts": 5,
+      "round": 2,
+      "lastHit": {
+       "x": -25,
+       "y": 991,
+       "points": 60,
+       "mult": 3
+      },
+      "over": false,
+      "rng": 3518474805
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 177,
+      "y": 546
+     },
+     "state": {
+      "player": 0,
+      "ai": 201,
+      "turn": "player",
+      "dart": 2,
+      "turnStart": 121,
+      "playerDarts": 6,
+      "round": 2,
+      "lastHit": {
+       "x": 134,
+       "y": 511,
+       "points": 1,
+       "mult": 1
+      },
+      "over": true,
+      "rng": 3843456730
+     }
+    }
+   ],
+   "result": {
+    "winner": "player",
+    "stars": 3,
+    "score": 301,
+    "player": 0,
+    "ai": 201,
+    "playerDarts": 6
+   }
+  },
+  {
+   "name": "random-player-vs-level-3",
+   "config": {
+    "start": 301,
+    "maxRounds": 15,
+    "playerScatter": 60,
+    "aiScatter": [
+     420,
+     300,
+     210,
+     150,
+     100
+    ],
+    "starDarts": [
+     18,
+     27
+    ]
+   },
+   "seed": 1234,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "x": 795,
+      "y": -484
+     },
+     "state": {
+      "player": 286,
+      "ai": 301,
+      "turn": "player",
+      "dart": 1,
+      "turnStart": 301,
+      "playerDarts": 1,
+      "round": 1,
+      "lastHit": {
+       "x": 852,
+       "y": -479,
+       "points": 15,
+       "mult": 1
+      },
+      "over": false,
+      "rng": 1855942593
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 511,
+      "y": 1506
+     },
+     "state": {
+      "player": 284,
+      "ai": 301,
+      "turn": "player",
+      "dart": 2,
+      "turnStart": 301,
+      "playerDarts": 2,
+      "round": 1,
+      "lastHit": {
+       "x": 530,
+       "y": 1560,
+       "points": 2,
+       "mult": 2
+      },
+      "over": false,
+      "rng": 3348358578
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": -1367,
+      "y": 512
+     },
+     "state": {
+      "player": 270,
+      "ai": 301,
+      "turn": "ai",
+      "dart": 0,
+      "turnStart": 301,
+      "playerDarts": 3,
+      "round": 1,
+      "lastHit": {
+       "x": -1427,
+       "y": 533,
+       "points": 14,
+       "mult": 1
+      },
+      "over": false,
+      "rng": 2211002831
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 270,
+      "ai": 241,
+      "turn": "ai",
+      "dart": 1,
+      "turnStart": 301,
+      "playerDarts": 3,
+      "round": 1,
+      "lastHit": {
+       "x": 64,
+       "y": 1017,
+       "points": 60,
+       "mult": 3
+      },
+      "over": false,
+      "rng": 2888360370
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 270,
+      "ai": 221,
+      "turn": "ai",
+      "dart": 2,
+      "turnStart": 301,
+      "playerDarts": 3,
+      "round": 1,
+      "lastHit": {
+       "x": 113,
+       "y": 884,
+       "points": 20,
+       "mult": 1
+      },
+      "over": false,
+      "rng": 3393669276
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 270,
+      "ai": 201,
+      "turn": "player",
+      "dart": 0,
+      "turnStart": 270,
+      "playerDarts": 3,
+      "round": 2,
+      "lastHit": {
+       "x": -96,
+       "y": 923,
+       "points": 20,
+       "mult": 1
+      },
+      "over": false,
+      "rng": 1881012526
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": -1670,
+      "y": -1785
+     },
+     "state": {
+      "player": 270,
+      "ai": 201,
+      "turn": "player",
+      "dart": 1,
+      "turnStart": 270,
+      "playerDarts": 4,
+      "round": 2,
+      "lastHit": {
+       "x": -1675,
+       "y": -1745,
+       "points": 0,
+       "mult": 0
+      },
+      "over": false,
+      "rng": 2089904356
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": -352,
+      "y": 179
+     },
+     "state": {
+      "player": 261,
+      "ai": 201,
+      "turn": "player",
+      "dart": 2,
+      "turnStart": 270,
+      "playerDarts": 5,
+      "round": 2,
+      "lastHit": {
+       "x": -364,
+       "y": 222,
+       "points": 9,
+       "mult": 1
+      },
+      "over": false,
+      "rng": 3481595902
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": -355,
+      "y": -435
+     },
+     "state": {
+      "player": 254,
+      "ai": 201,
+      "turn": "ai",
+      "dart": 0,
+      "turnStart": 201,
+      "playerDarts": 6,
+      "round": 2,
+      "lastHit": {
+       "x": -364,
+       "y": -427,
+       "points": 7,
+       "mult": 1
+      },
+      "over": false,
+      "rng": 3208525124
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 254,
+      "ai": 181,
+      "turn": "ai",
+      "dart": 1,
+      "turnStart": 201,
+      "playerDarts": 6,
+      "round": 2,
+      "lastHit": {
+       "x": 102,
+       "y": 1092,
+       "points": 20,
+       "mult": 1
+      },
+      "over": false,
+      "rng": 889900810
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 254,
+      "ai": 161,
+      "turn": "ai",
+      "dart": 2,
+      "turnStart": 201,
+      "playerDarts": 6,
+      "round": 2,
+      "lastHit": {
+       "x": -114,
+       "y": 1066,
+       "points": 20,
+       "mult": 1
+      },
+      "over": false,
+      "rng": 178757688
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 254,
+      "ai": 160,
+      "turn": "player",
+      "dart": 0,
+      "turnStart": 254,
+      "playerDarts": 6,
+      "round": 3,
+      "lastHit": {
+       "x": 202,
+       "y": 1139,
+       "points": 1,
+       "mult": 1
+      },
+      "over": false,
+      "rng": 3526661747
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": -1445,
+      "y": 967
+     },
+     "state": {
+      "player": 254,
+      "ai": 160,
+      "turn": "player",
+      "dart": 1,
+      "turnStart": 254,
+      "playerDarts": 7,
+      "round": 3,
+      "lastHit": {
+       "x": -1394,
+       "y": 1011,
+       "points": 0,
+       "mult": 0
+      },
+      "over": false,
+      "rng": 4133934370
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 1200,
+      "y": 1102
+     },
+     "state": {
+      "player": 246,
+      "ai": 160,
+      "turn": "player",
+      "dart": 2,
+      "turnStart": 254,
+      "playerDarts": 8,
+      "round": 3,
+      "lastHit": {
+       "x": 1256,
+       "y": 1086,
+       "points": 8,
+       "mult": 2
+      },
+      "over": false,
+      "rng": 3609789656
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": -567,
+      "y": -283
+     },
+     "state": {
+      "player": 238,
+      "ai": 160,
+      "turn": "ai",
+      "dart": 0,
+      "turnStart": 160,
+      "playerDarts": 9,
+      "round": 3,
+      "lastHit": {
+       "x": -607,
+       "y": -286,
+       "points": 8,
+       "mult": 1
+      },
+      "over": false,
+      "rng": 4045742989
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 238,
+      "ai": 140,
+      "turn": "ai",
+      "dart": 1,
+      "turnStart": 160,
+      "playerDarts": 9,
+      "round": 3,
+      "lastHit": {
+       "x": 92,
+       "y": 1098,
+       "points": 20,
+       "mult": 1
+      },
+      "over": false,
+      "rng": 22566299
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 238,
+      "ai": 120,
+      "turn": "ai",
+      "dart": 2,
+      "turnStart": 160,
+      "playerDarts": 9,
+      "round": 3,
+      "lastHit": {
+       "x": -125,
+       "y": 895,
+       "points": 20,
+       "mult": 1
+      },
+      "over": false,
+      "rng": 4129960818
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 238,
+      "ai": 100,
+      "turn": "player",
+      "dart": 0,
+      "turnStart": 238,
+      "playerDarts": 9,
+      "round": 4,
+      "lastHit": {
+       "x": -1,
+       "y": 975,
+       "points": 20,
+       "mult": 1
+      },
+      "over": false,
+      "rng": 2374643077
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": -1296,
+      "y": 1033
+     },
+     "state": {
+      "player": 220,
+      "ai": 100,
+      "turn": "player",
+      "dart": 1,
+      "turnStart": 238,
+      "playerDarts": 10,
+      "round": 4,
+      "lastHit": {
+       "x": -1283,
+       "y": 1083,
+       "points": 18,
+       "mult": 2
+      },
+      "over": false,
+      "rng": 2997670082
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": -645,
+      "y": 1315
+     },
+     "state": {
+      "player": 208,
+      "ai": 100,
+      "turn": "player",
+      "dart": 2,
+      "turnStart": 238,
+      "playerDarts": 11,
+      "round": 4,
+      "lastHit": {
+       "x": -675,
+       "y": 1275,
+       "points": 12,
+       "mult": 1
+      },
+      "over": false,
+      "rng": 641628051
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 712,
+      "y": 1600
+     },
+     "state": {
+      "player": 208,
+      "ai": 100,
+      "turn": "ai",
+      "dart": 0,
+      "turnStart": 100,
+      "playerDarts": 12,
+      "round": 4,
+      "lastHit": {
+       "x": 658,
+       "y": 1612,
+       "points": 0,
+       "mult": 0
+      },
+      "over": false,
+      "rng": 2947694624
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 208,
+      "ai": 95,
+      "turn": "ai",
+      "dart": 1,
+      "turnStart": 100,
+      "playerDarts": 12,
+      "round": 4,
+      "lastHit": {
+       "x": -161,
+       "y": 854,
+       "points": 5,
+       "mult": 1
+      },
+      "over": false,
+      "rng": 75972010
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 208,
+      "ai": 75,
+      "turn": "ai",
+      "dart": 2,
+      "turnStart": 100,
+      "playerDarts": 12,
+      "round": 4,
+      "lastHit": {
+       "x": -2,
+       "y": 1144,
+       "points": 20,
+       "mult": 1
+      },
+      "over": false,
+      "rng": 1930140079
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 208,
+      "ai": 55,
+      "turn": "player",
+      "dart": 0,
+      "turnStart": 208,
+      "playerDarts": 12,
+      "round": 5,
+      "lastHit": {
+       "x": -42,
+       "y": 971,
+       "points": 20,
+       "mult": 1
+      },
+      "over": false,
+      "rng": 4008464083
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": -1369,
+      "y": 803
+     },
+     "state": {
+      "player": 199,
+      "ai": 55,
+      "turn": "player",
+      "dart": 1,
+      "turnStart": 208,
+      "playerDarts": 13,
+      "round": 5,
+      "lastHit": {
+       "x": -1344,
+       "y": 818,
+       "points": 9,
+       "mult": 1
+      },
+      "over": false,
+      "rng": 3639169334
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 311,
+      "y": -655
+     },
+     "state": {
+      "player": 197,
+      "ai": 55,
+      "turn": "player",
+      "dart": 2,
+      "turnStart": 208,
+      "playerDarts": 14,
+      "round": 5,
+      "lastHit": {
+       "x": 367,
+       "y": -700,
+       "points": 2,
+       "mult": 1
+      },
+      "over": false,
+      "rng": 418086959
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 1003,
+      "y": 814
+     },
+     "state": {
+      "player": 193,
+      "ai": 55,
+      "turn": "ai",
+      "dart": 0,
+      "turnStart": 55,
+      "playerDarts": 15,
+      "round": 5,
+      "lastHit": {
+       "x": 959,
+       "y": 792,
+       "points": 4,
+       "mult": 1
+      },
+      "over": false,
+      "rng": 926592991
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 193,
+      "ai": 35,
+      "turn": "ai",
+      "dart": 1,
+      "turnStart": 55,
+      "playerDarts": 15,
+      "round": 5,
+      "lastHit": {
+       "x": -97,
+       "y": 886,
+       "points": 20,
+       "mult": 1
+      },
+      "over": false,
+      "rng": 392358173
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 193,
+      "ai": 20,
+      "turn": "ai",
+      "dart": 2,
+      "turnStart": 55,
+      "playerDarts": 15,
+      "round": 5,
+      "lastHit": {
+       "x": 294,
+       "y": -261,
+       "points": 15,
+       "mult": 1
+      },
+      "over": false,
+      "rng": 2097120850
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 193,
+      "ai": 19,
+      "turn": "player",
+      "dart": 0,
+      "turnStart": 193,
+      "playerDarts": 15,
+      "round": 6,
+      "lastHit": {
+       "x": 187,
+       "y": 586,
+       "points": 1,
+       "mult": 1
+      },
+      "over": false,
+      "rng": 3459663710
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": -801,
+      "y": 539
+     },
+     "state": {
+      "player": 184,
+      "ai": 19,
+      "turn": "player",
+      "dart": 1,
+      "turnStart": 193,
+      "playerDarts": 16,
+      "round": 6,
+      "lastHit": {
+       "x": -745,
+       "y": 596,
+       "points": 9,
+       "mult": 1
+      },
+      "over": false,
+      "rng": 3628902405
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": -440,
+      "y": 416
+     },
+     "state": {
+      "player": 175,
+      "ai": 19,
+      "turn": "player",
+      "dart": 2,
+      "turnStart": 193,
+      "playerDarts": 17,
+      "round": 6,
+      "lastHit": {
+       "x": -423,
+       "y": 408,
+       "points": 9,
+       "mult": 1
+      },
+      "over": false,
+      "rng": 2846824043
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": -724,
+      "y": -82
+     },
+     "state": {
+      "player": 164,
+      "ai": 19,
+      "turn": "ai",
+      "dart": 0,
+      "turnStart": 19,
+      "playerDarts": 18,
+      "round": 6,
+      "lastHit": {
+       "x": -769,
+       "y": -44,
+       "points": 11,
+       "mult": 1
+      },
+      "over": false,
+      "rng": 1700022631
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 164,
+      "ai": 16,
+      "turn": "ai",
+      "dart": 1,
+      "turnStart": 19,
+      "playerDarts": 18,
+      "round": 6,
+      "lastHit": {
+       "x": -6,
+       "y": -436,
+       "points": 3,
+       "mult": 1
+      },
+      "over": false,
+      "rng": 3111030761
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 164,
+      "ai": 0,
+      "turn": "ai",
+      "dart": 1,
+      "turnStart": 19,
+      "playerDarts": 18,
+      "round": 6,
+      "lastHit": {
+       "x": -555,
+       "y": -361,
+       "points": 16,
+       "mult": 1
+      },
+      "over": true,
+      "rng": 2240764266
+     }
+    }
+   ],
+   "result": {
+    "winner": "ai",
+    "stars": 0,
+    "score": 137,
+    "player": 164,
+    "ai": 0,
+    "playerDarts": 18
+   }
+  },
+  {
+   "name": "smart-player-vs-level-2",
+   "config": {
+    "start": 301,
+    "maxRounds": 15,
+    "playerScatter": 60,
+    "aiScatter": [
+     420,
+     300,
+     210,
+     150,
+     100
+    ],
+    "starDarts": [
+     18,
+     27
+    ]
+   },
+   "seed": 2026,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 1030
+     },
+     "state": {
+      "player": 281,
+      "ai": 301,
+      "turn": "player",
+      "dart": 1,
+      "turnStart": 301,
+      "playerDarts": 1,
+      "round": 1,
+      "lastHit": {
+       "x": 37,
+       "y": 1071,
+       "points": 20,
+       "mult": 1
+      },
+      "over": false,
+      "rng": 2535152655
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 1030
+     },
+     "state": {
+      "player": 261,
+      "ai": 301,
+      "turn": "player",
+      "dart": 2,
+      "turnStart": 301,
+      "playerDarts": 2,
+      "round": 1,
+      "lastHit": {
+       "x": -5,
+       "y": 1082,
+       "points": 20,
+       "mult": 1
+      },
+      "over": false,
+      "rng": 4007165219
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 1030
+     },
+     "state": {
+      "player": 201,
+      "ai": 301,
+      "turn": "ai",
+      "dart": 0,
+      "turnStart": 301,
+      "playerDarts": 3,
+      "round": 1,
+      "lastHit": {
+       "x": -39,
+       "y": 998,
+       "points": 60,
+       "mult": 3
+      },
+      "over": false,
+      "rng": 1408667750
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "player": 201,
+      "ai": 296,
+      "turn": "ai",
+      "dart": 1,
+      "turnStart": 301,
+      "playerDarts": 3,
+      "round": 1,
+      "lastHit": {
+       "x": -228,
+       "y": 921,
+       "points": 5,
+       "mult": 1
+      },
+      "over": false,
+      "rng": 1713418136
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "player": 201,
+      "ai": 276,
+      "turn": "ai",
+      "dart": 2,
+      "turnStart": 301,
+      "playerDarts": 3,
+      "round": 1,
+      "lastHit": {
+       "x": -84,
+       "y": 1216,
+       "points": 20,
+       "mult": 1
+      },
+      "over": false,
+      "rng": 2009483652
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "player": 201,
+      "ai": 275,
+      "turn": "player",
+      "dart": 0,
+      "turnStart": 201,
+      "playerDarts": 3,
+      "round": 2,
+      "lastHit": {
+       "x": 207,
+       "y": 1265,
+       "points": 1,
+       "mult": 1
+      },
+      "over": false,
+      "rng": 3388763676
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 1030
+     },
+     "state": {
+      "player": 181,
+      "ai": 275,
+      "turn": "player",
+      "dart": 1,
+      "turnStart": 201,
+      "playerDarts": 4,
+      "round": 2,
+      "lastHit": {
+       "x": -1,
+       "y": 1082,
+       "points": 20,
+       "mult": 1
+      },
+      "over": false,
+      "rng": 1125056902
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 1030
+     },
+     "state": {
+      "player": 121,
+      "ai": 275,
+      "turn": "player",
+      "dart": 2,
+      "turnStart": 201,
+      "playerDarts": 5,
+      "round": 2,
+      "lastHit": {
+       "x": -15,
+       "y": 1016,
+       "points": 60,
+       "mult": 3
+      },
+      "over": false,
+      "rng": 2751170028
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 1030
+     },
+     "state": {
+      "player": 61,
+      "ai": 275,
+      "turn": "ai",
+      "dart": 0,
+      "turnStart": 275,
+      "playerDarts": 6,
+      "round": 2,
+      "lastHit": {
+       "x": 40,
+       "y": 1042,
+       "points": 60,
+       "mult": 3
+      },
+      "over": false,
+      "rng": 552771632
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "player": 61,
+      "ai": 274,
+      "turn": "ai",
+      "dart": 1,
+      "turnStart": 275,
+      "playerDarts": 6,
+      "round": 2,
+      "lastHit": {
+       "x": 130,
+       "y": 814,
+       "points": 1,
+       "mult": 1
+      },
+      "over": false,
+      "rng": 282458665
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "player": 61,
+      "ai": 254,
+      "turn": "ai",
+      "dart": 2,
+      "turnStart": 275,
+      "playerDarts": 6,
+      "round": 2,
+      "lastHit": {
+       "x": 40,
+       "y": 1256,
+       "points": 20,
+       "mult": 1
+      },
+      "over": false,
+      "rng": 211595197
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "player": 61,
+      "ai": 253,
+      "turn": "player",
+      "dart": 0,
+      "turnStart": 61,
+      "playerDarts": 6,
+      "round": 3,
+      "lastHit": {
+       "x": 169,
+       "y": 777,
+       "points": 1,
+       "mult": 1
+      },
+      "over": false,
+      "rng": 3624603401
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 1030
+     },
+     "state": {
+      "player": 1,
+      "ai": 253,
+      "turn": "player",
+      "dart": 1,
+      "turnStart": 61,
+      "playerDarts": 7,
+      "round": 3,
+      "lastHit": {
+       "x": 3,
+       "y": 1028,
+       "points": 60,
+       "mult": 3
+      },
+      "over": false,
+      "rng": 2690274249
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 177,
+      "y": 546
+     },
+     "state": {
+      "player": 0,
+      "ai": 253,
+      "turn": "player",
+      "dart": 1,
+      "turnStart": 61,
+      "playerDarts": 8,
+      "round": 3,
+      "lastHit": {
+       "x": 214,
+       "y": 524,
+       "points": 1,
+       "mult": 1
+      },
+      "over": true,
+      "rng": 1794003876
+     }
+    }
+   ],
+   "result": {
+    "winner": "player",
+    "stars": 3,
+    "score": 301,
+    "player": 0,
+    "ai": 253,
+    "playerDarts": 8
+   }
+  },
+  {
+   "name": "t20-player-vs-level-4-max-rounds",
+   "config": {
+    "start": 301,
+    "maxRounds": 3,
+    "playerScatter": 60,
+    "aiScatter": [
+     420,
+     300,
+     210,
+     150,
+     100
+    ],
+    "starDarts": [
+     18,
+     27
+    ]
+   },
+   "seed": 0,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 1030
+     },
+     "state": {
+      "player": 241,
+      "ai": 301,
+      "turn": "player",
+      "dart": 1,
+      "turnStart": 301,
+      "playerDarts": 1,
+      "round": 1,
+      "lastHit": {
+       "x": 17,
+       "y": 1050,
+       "points": 60,
+       "mult": 3
+      },
+      "over": false,
+      "rng": 3761132862
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 1030
+     },
+     "state": {
+      "player": 181,
+      "ai": 301,
+      "turn": "player",
+      "dart": 2,
+      "turnStart": 301,
+      "playerDarts": 2,
+      "round": 1,
+      "lastHit": {
+       "x": -54,
+       "y": 1068,
+       "points": 60,
+       "mult": 3
+      },
+      "over": false,
+      "rng": 25405621
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 1030
+     },
+     "state": {
+      "player": 121,
+      "ai": 301,
+      "turn": "ai",
+      "dart": 0,
+      "turnStart": 301,
+      "playerDarts": 3,
+      "round": 1,
+      "lastHit": {
+       "x": -18,
+       "y": 1020,
+       "points": 60,
+       "mult": 3
+      },
+      "over": false,
+      "rng": 4186559031
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "player": 121,
+      "ai": 281,
+      "turn": "ai",
+      "dart": 1,
+      "turnStart": 301,
+      "playerDarts": 3,
+      "round": 1,
+      "lastHit": {
+       "x": 55,
+       "y": 918,
+       "points": 20,
+       "mult": 1
+      },
+      "over": false,
+      "rng": 4244368831
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "player": 121,
+      "ai": 221,
+      "turn": "ai",
+      "dart": 2,
+      "turnStart": 301,
+      "playerDarts": 3,
+      "round": 1,
+      "lastHit": {
+       "x": -7,
+       "y": 1057,
+       "points": 60,
+       "mult": 3
+      },
+      "over": false,
+      "rng": 3042595768
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "player": 121,
+      "ai": 161,
+      "turn": "player",
+      "dart": 0,
+      "turnStart": 121,
+      "playerDarts": 3,
+      "round": 2,
+      "lastHit": {
+       "x": -86,
+       "y": 1021,
+       "points": 60,
+       "mult": 3
+      },
+      "over": false,
+      "rng": 4179142836
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 1030
+     },
+     "state": {
+      "player": 101,
+      "ai": 161,
+      "turn": "player",
+      "dart": 1,
+      "turnStart": 121,
+      "playerDarts": 4,
+      "round": 2,
+      "lastHit": {
+       "x": -5,
+       "y": 984,
+       "points": 20,
+       "mult": 1
+      },
+      "over": false,
+      "rng": 1194283324
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 1030
+     },
+     "state": {
+      "player": 41,
+      "ai": 161,
+      "turn": "player",
+      "dart": 2,
+      "turnStart": 121,
+      "playerDarts": 5,
+      "round": 2,
+      "lastHit": {
+       "x": -1,
+       "y": 1061,
+       "points": 60,
+       "mult": 3
+      },
+      "over": false,
+      "rng": 1138837087
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 1030
+     },
+     "state": {
+      "player": 21,
+      "ai": 161,
+      "turn": "ai",
+      "dart": 0,
+      "turnStart": 161,
+      "playerDarts": 6,
+      "round": 2,
+      "lastHit": {
+       "x": -50,
+       "y": 1090,
+       "points": 20,
+       "mult": 1
+      },
+      "over": false,
+      "rng": 1981661406
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "player": 21,
+      "ai": 141,
+      "turn": "ai",
+      "dart": 1,
+      "turnStart": 161,
+      "playerDarts": 6,
+      "round": 2,
+      "lastHit": {
+       "x": 58,
+       "y": 1137,
+       "points": 20,
+       "mult": 1
+      },
+      "over": false,
+      "rng": 4125575487
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "player": 21,
+      "ai": 121,
+      "turn": "ai",
+      "dart": 2,
+      "turnStart": 161,
+      "playerDarts": 6,
+      "round": 2,
+      "lastHit": {
+       "x": 68,
+       "y": 1166,
+       "points": 20,
+       "mult": 1
+      },
+      "over": false,
+      "rng": 2771839454
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "player": 21,
+      "ai": 101,
+      "turn": "player",
+      "dart": 0,
+      "turnStart": 21,
+      "playerDarts": 6,
+      "round": 3,
+      "lastHit": {
+       "x": -34,
+       "y": 911,
+       "points": 20,
+       "mult": 1
+      },
+      "over": false,
+      "rng": 48886946
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 1030
+     },
+     "state": {
+      "player": 21,
+      "ai": 101,
+      "turn": "ai",
+      "dart": 0,
+      "turnStart": 101,
+      "playerDarts": 7,
+      "round": 3,
+      "lastHit": {
+       "x": -22,
+       "y": 1003,
+       "points": 60,
+       "mult": 3
+      },
+      "over": false,
+      "rng": 831439433
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "player": 21,
+      "ai": 81,
+      "turn": "ai",
+      "dart": 1,
+      "turnStart": 101,
+      "playerDarts": 7,
+      "round": 3,
+      "lastHit": {
+       "x": -5,
+       "y": 1087,
+       "points": 20,
+       "mult": 1
+      },
+      "over": false,
+      "rng": 1347409550
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "player": 21,
+      "ai": 21,
+      "turn": "ai",
+      "dart": 2,
+      "turnStart": 101,
+      "playerDarts": 7,
+      "round": 3,
+      "lastHit": {
+       "x": -143,
+       "y": 1039,
+       "points": 60,
+       "mult": 3
+      },
+      "over": false,
+      "rng": 4218067572
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "player": 21,
+      "ai": 14,
+      "turn": "player",
+      "dart": 0,
+      "turnStart": 21,
+      "playerDarts": 7,
+      "round": 4,
+      "lastHit": {
+       "x": -587,
+       "y": -787,
+       "points": 7,
+       "mult": 1
+      },
+      "over": true,
+      "rng": 2211501978
+     }
+    }
+   ],
+   "result": {
+    "winner": "ai",
+    "stars": 0,
+    "score": 280,
+    "player": 21,
+    "ai": 14,
+    "playerDarts": 7
+   }
+  },
+  {
+   "name": "timeout-mid-game",
+   "config": {
+    "start": 301,
+    "maxRounds": 15,
+    "playerScatter": 60,
+    "aiScatter": [
+     420,
+     300,
+     210,
+     150,
+     100
+    ],
+    "starDarts": [
+     18,
+     27
+    ]
+   },
+   "seed": 99,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 1030
+     },
+     "state": {
+      "player": 241,
+      "ai": 301,
+      "turn": "player",
+      "dart": 1,
+      "turnStart": 301,
+      "playerDarts": 1,
+      "round": 1,
+      "lastHit": {
+       "x": -43,
+       "y": 1026,
+       "points": 60,
+       "mult": 3
+      },
+      "over": false,
+      "rng": 2399245289
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 1030
+     },
+     "state": {
+      "player": 221,
+      "ai": 301,
+      "turn": "player",
+      "dart": 2,
+      "turnStart": 301,
+      "playerDarts": 2,
+      "round": 1,
+      "lastHit": {
+       "x": -13,
+       "y": 980,
+       "points": 20,
+       "mult": 1
+      },
+      "over": false,
+      "rng": 2028006716
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 1030
+     },
+     "state": {
+      "player": 161,
+      "ai": 301,
+      "turn": "ai",
+      "dart": 0,
+      "turnStart": 301,
+      "playerDarts": 3,
+      "round": 1,
+      "lastHit": {
+       "x": -1,
+       "y": 1014,
+       "points": 60,
+       "mult": 3
+      },
+      "over": false,
+      "rng": 1548709294
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 161,
+      "ai": 281,
+      "turn": "ai",
+      "dart": 1,
+      "turnStart": 301,
+      "playerDarts": 3,
+      "round": 1,
+      "lastHit": {
+       "x": 127,
+       "y": 900,
+       "points": 20,
+       "mult": 1
+      },
+      "over": false,
+      "rng": 2902822866
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 161,
+      "ai": 280,
+      "turn": "ai",
+      "dart": 2,
+      "turnStart": 301,
+      "playerDarts": 3,
+      "round": 1,
+      "lastHit": {
+       "x": 194,
+       "y": 956,
+       "points": 1,
+       "mult": 1
+      },
+      "over": false,
+      "rng": 3444257550
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 161,
+      "ai": 260,
+      "turn": "player",
+      "dart": 0,
+      "turnStart": 161,
+      "playerDarts": 3,
+      "round": 2,
+      "lastHit": {
+       "x": 181,
+       "y": 1205,
+       "points": 20,
+       "mult": 1
+      },
+      "over": false,
+      "rng": 417572603
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 1030
+     },
+     "state": {
+      "player": 101,
+      "ai": 260,
+      "turn": "player",
+      "dart": 1,
+      "turnStart": 161,
+      "playerDarts": 4,
+      "round": 2,
+      "lastHit": {
+       "x": 6,
+       "y": 1010,
+       "points": 60,
+       "mult": 3
+      },
+      "over": false,
+      "rng": 1936260432
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 1030
+     },
+     "state": {
+      "player": 41,
+      "ai": 260,
+      "turn": "player",
+      "dart": 2,
+      "turnStart": 161,
+      "playerDarts": 5,
+      "round": 2,
+      "lastHit": {
+       "x": 11,
+       "y": 996,
+       "points": 60,
+       "mult": 3
+      },
+      "over": false,
+      "rng": 2785049645
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 1030
+     },
+     "state": {
+      "player": 161,
+      "ai": 260,
+      "turn": "ai",
+      "dart": 0,
+      "turnStart": 260,
+      "playerDarts": 6,
+      "round": 2,
+      "lastHit": {
+       "x": -26,
+       "y": 1023,
+       "points": 60,
+       "mult": 3
+      },
+      "over": false,
+      "rng": 2033936485
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 161,
+      "ai": 240,
+      "turn": "ai",
+      "dart": 1,
+      "turnStart": 260,
+      "playerDarts": 6,
+      "round": 2,
+      "lastHit": {
+       "x": -92,
+       "y": 926,
+       "points": 20,
+       "mult": 1
+      },
+      "over": false,
+      "rng": 209189954
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 161,
+      "ai": 180,
+      "turn": "ai",
+      "dart": 2,
+      "turnStart": 260,
+      "playerDarts": 6,
+      "round": 2,
+      "lastHit": {
+       "x": 115,
+       "y": 1022,
+       "points": 60,
+       "mult": 3
+      },
+      "over": false,
+      "rng": 718832863
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 161,
+      "ai": 160,
+      "turn": "player",
+      "dart": 0,
+      "turnStart": 161,
+      "playerDarts": 6,
+      "round": 3,
+      "lastHit": {
+       "x": -131,
+       "y": 1177,
+       "points": 20,
+       "mult": 1
+      },
+      "over": false,
+      "rng": 2811531819
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 1030
+     },
+     "state": {
+      "player": 101,
+      "ai": 160,
+      "turn": "player",
+      "dart": 1,
+      "turnStart": 161,
+      "playerDarts": 7,
+      "round": 3,
+      "lastHit": {
+       "x": -23,
+       "y": 1021,
+       "points": 60,
+       "mult": 3
+      },
+      "over": false,
+      "rng": 787190719
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 1030
+     },
+     "state": {
+      "player": 41,
+      "ai": 160,
+      "turn": "player",
+      "dart": 2,
+      "turnStart": 161,
+      "playerDarts": 8,
+      "round": 3,
+      "lastHit": {
+       "x": 4,
+       "y": 1069,
+       "points": 60,
+       "mult": 3
+      },
+      "over": false,
+      "rng": 1591121543
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 1030
+     },
+     "state": {
+      "player": 161,
+      "ai": 160,
+      "turn": "ai",
+      "dart": 0,
+      "turnStart": 160,
+      "playerDarts": 9,
+      "round": 3,
+      "lastHit": {
+       "x": 46,
+       "y": 1062,
+       "points": 60,
+       "mult": 3
+      },
+      "over": false,
+      "rng": 282339556
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 161,
+      "ai": 140,
+      "turn": "ai",
+      "dart": 1,
+      "turnStart": 160,
+      "playerDarts": 9,
+      "round": 3,
+      "lastHit": {
+       "x": -100,
+       "y": 1073,
+       "points": 20,
+       "mult": 1
+      },
+      "over": false,
+      "rng": 2852861706
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 161,
+      "ai": 80,
+      "turn": "ai",
+      "dart": 2,
+      "turnStart": 160,
+      "playerDarts": 9,
+      "round": 3,
+      "lastHit": {
+       "x": 55,
+       "y": 993,
+       "points": 60,
+       "mult": 3
+      },
+      "over": false,
+      "rng": 2567258594
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 161,
+      "ai": 60,
+      "turn": "player",
+      "dart": 0,
+      "turnStart": 161,
+      "playerDarts": 9,
+      "round": 4,
+      "lastHit": {
+       "x": 113,
+       "y": 1147,
+       "points": 20,
+       "mult": 1
+      },
+      "over": false,
+      "rng": 1232471512
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 1030
+     },
+     "state": {
+      "player": 101,
+      "ai": 60,
+      "turn": "player",
+      "dart": 1,
+      "turnStart": 161,
+      "playerDarts": 10,
+      "round": 4,
+      "lastHit": {
+       "x": 34,
+       "y": 1055,
+       "points": 60,
+       "mult": 3
+      },
+      "over": false,
+      "rng": 2347744451
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 1030
+     },
+     "state": {
+      "player": 41,
+      "ai": 60,
+      "turn": "player",
+      "dart": 2,
+      "turnStart": 161,
+      "playerDarts": 11,
+      "round": 4,
+      "lastHit": {
+       "x": -51,
+       "y": 993,
+       "points": 60,
+       "mult": 3
+      },
+      "over": false,
+      "rng": 598414114
+     }
+    },
+    {
+     "action": {
+      "by": "timeout"
+     },
+     "state": {
+      "player": 41,
+      "ai": 60,
+      "turn": "player",
+      "dart": 2,
+      "turnStart": 161,
+      "playerDarts": 11,
+      "round": 4,
+      "lastHit": {
+       "x": -51,
+       "y": 993,
+       "points": 60,
+       "mult": 3
+      },
+      "over": true,
+      "rng": 598414114
+     }
+    }
+   ],
+   "result": {
+    "winner": "player",
+    "stars": 3,
+    "score": 260,
+    "player": 41,
+    "ai": 60,
+    "playerDarts": 11
+   }
+  }
+ ]
+}

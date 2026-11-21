@@ -88,3 +88,13 @@ Hráč vyhrál s náskokem `≥ starMargins[0]` → 3★, `≥ starMargins[1]` �
 - 1-1-1-1 = trojice (1000) + jednička (100) = 1100; 2-2-2-2-2-2 = dvě trojice = 400.
 - Postupka i dvě trojice jsou jen při šesti kostkách.
 - Hod 2-3-4-6-6 je ztráta.
+
+## Upřesnění v1 (podle implementace, vektory je pokrývají)
+
+- Konec tahu se provede celý (předání tahu, u AI `round += 1`) a teprve potom se nastaví `over`;
+  konečný stav tak může mít `turn` druhé strany a `round = maxRounds + 1`.
+- Ztráta nastaví `roll = []`; UI si propadlý hod dopočítá ze stavu před akcí.
+- Fáze `decide` u AI v tomto pořadí: uložení dosáhne `target` → `bank`; `dice == 6` → `roll`;
+  `turnScore ≥ bankAt` nebo (`dice ≤ 2` a `turnScore ≥ 200`) → `bank`; jinak `roll`.
+  Proud `ai` se volá jen ve fázi `keep`.
+- Prázdný výběr je nelegální; indexy musí být ostře vzestupné. Hvězdy: náskok `≥` prahu.

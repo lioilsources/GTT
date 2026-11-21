@@ -63,3 +63,10 @@ Hra nemá soupeře; `aiAction` vrací míření do středu (0, 0) s `level` 3 (k
 ## Časový strop
 
 6 min (`minigames.koulena.time_cap_s`).
+
+## Upřesnění v1 (podle implementace, vektory je pokrývají)
+
+- Po poslední kouli proběhne `series += 1`, `ball = 0` a pak `over`; dohraná hra má `series = 4`
+  (UI zobrazuje nejvýš 3).
+- Po `timeout` drží `seriesScores` jen dohrané série, `score` obsahuje i rozehranou.
+- `aiAction` vrací akci hráče `{by: "player", x: 0, y: 0, level: 3}`; `by: "ai"` je nelegální.
