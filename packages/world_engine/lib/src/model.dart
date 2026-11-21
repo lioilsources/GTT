@@ -251,7 +251,7 @@ Float32List _ringM(List<int> dm) {
 
 /// The static, always-loaded part of a citypack.
 class City {
-  City._(this.manifest, this.graph, this.landmarks, this.spots, this.districts, this.area);
+  City._(this.manifest, this.graph, this.landmarks, this.spots, this.districts, this.area, this.graphPb);
 
   final pb.Manifest manifest;
   final RoadGraph graph;
@@ -259,6 +259,9 @@ class City {
   final pb.Spots spots;
   final List<District> districts;
   final Float32List area;
+
+  /// Raw graph (dm integers) for the GPS route (specs/route.md).
+  final pb.Graph graphPb;
   late final Set<int> chunkKeys = {for (final c in manifest.chunks) chunkKey(c.x, c.y)};
 
   String get id => manifest.cityId;
@@ -291,13 +294,15 @@ class City {
     if (m.formatVersion != 1) {
       throw StateError('citypack format ${m.formatVersion} is not supported');
     }
+    final graph = decodeGraph(files[1]);
     return City._(
       m,
-      RoadGraph.fromPb(decodeGraph(files[1])),
+      RoadGraph.fromPb(graph),
       decodeLandmarks(files[2]),
       decodeSpots(files[3]),
       [for (final d in m.districts) District(d.name, _ringM(d.ring))],
       _ringM(m.area),
+      graph,
     );
   }
 }
