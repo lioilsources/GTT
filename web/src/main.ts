@@ -8,7 +8,9 @@ import { resolveRoute } from './drive/route';
 import { applyKeys, createScheme, SchemeA, SchemeB, SchemeC, type ControlScheme, type ControlSchemeId } from './drive/controls';
 import { DriveWorld } from './drive/driveWorld';
 import { t as tr, type Locale, type MessageKey } from './gen/i18n';
-import { cityIdValues, type CityId } from './gen/ids';
+import { carIdValues, cityIdValues, type CityId } from './gen/ids';
+import { CarFleet } from './cars/fleet';
+import { CarsHud } from './cars/ui';
 import type { BenchResult, BenchRoute, CarSpec, NpcPack } from './gen/schema';
 import { tokens } from './gen/tokens';
 import { carPose, PedestrianWorld } from './peds/pedestrians';
@@ -73,14 +75,19 @@ async function main(): Promise<void> {
   $('about').textContent = t('aboutMaps');
   const tStart = performance.now();
 
-  const [tuning, car, source] = await Promise.all([
+  const [tuning, cars, source] = await Promise.all([
     json<unknown>('content/tuning.json').then((j) => Tuning.fromJson(j)),
-    json<CarSpec>('content/cars/m0_coupe.json'),
+    Promise.all(carIdValues.map(async (id) => [id, await json<CarSpec>(`content/cars/${id}.json`)] as const)).then((e) => new Map<string, CarSpec>(e)),
     HttpPackSource.open(ASSET_BASE_URL, cityId),
   ]);
   const city = await City.load(source);
   const engine = await createEngine();
-  const drive = new DriveWorld(city, car, tuning);
+  const drive = new DriveWorld(city, cars.get(tuning.cars.startCar)!, tuning);
+  // Cars, switching and the garage (specs/cars.md).
+  const garageSpot = city.spots.items.find((s) => s.kind === 'garage');
+  const fleet = new CarFleet(drive, cars, tuning, garageSpot
+    ? { id: garageSpot.id, x: garageSpot.parkX / 10, y: garageSpot.parkY / 10, heading: garageSpot.parkHeading }
+    : null);
   // Passport (specs/passport.md); ?passport / ?about open its screens.
   const passport = installPassport(city, tuning.passport, { t }, { root: $('hud'), about: $('about') });
   if (params.has('passport')) passport.openPassport();
@@ -96,8 +103,10 @@ async function main(): Promise<void> {
   const trafficView = drive.traffic ? new TrafficView(view.scene, drive.traffic, tuning) : null;
   const streamer = new ChunkStreamer(city, source, tuning, (c) => {
     drive.addChunk(c);
+    fleet.addChunk(c);
     view.addChunk(c);
   }, (c) => {
+    fleet.removeChunk(c);
     drive.removeChunk(c);
     view.removeChunk(c);
   });
@@ -110,6 +119,7 @@ async function main(): Promise<void> {
     view.carChanged();
     drive.beforeStep = (step) => pilot.step(drive, drive.input, step);
   }
+  view.setFleet(fleet);
   view.rig.snap(drive.car.x, drive.car.y, drive.car.heading, tuning);
   // Own chunk and its ring first (3×3 = 9); the rest streams in while driving.
   await streamer.preload(drive.car.x, drive.car.y, drive.car.heading, 9);
@@ -177,6 +187,9 @@ async function main(): Promise<void> {
   resize();
   window.addEventListener('resize', resize);
 
+  // Car name, "Přesednout" / garage button and the garage list (specs/cars.md).
+  const carsHud = new CarsHud(fleet, t, $('hud'), () => view.carChanged());
+
   // ---------- loop
   const perf = { frames: 0, acc: 0, fps: 0, frameMs: 0, worst: 0, worstAcc: 0, hudTimer: 0 };
   const frameTimes: number[] = [];
@@ -192,7 +205,7 @@ async function main(): Promise<void> {
       scheme.update(input);
       applyKeys(keys, input);
     }
-    drive.update(dt * phone.timeScale());
+    if (!carsHud.busy) drive.update(dt * phone.timeScale());
     phone.update(dt);
     const c = drive.car;
     view.rig.follow(c.x, c.y, c.heading, c.speed, dt, tuning, c.forwardSpeed < -0.5);
@@ -227,6 +240,8 @@ async function main(): Promise<void> {
   const streetEl = $('street'), speedEl = $('speed'), perfEl = $('perf'), noticeEl = $('notice');
   noticeEl.textContent = t('borderNotice');
   function hud(): void {
+    fleet.update();
+    carsHud.update();
     const c = drive.car;
     const edge = drive.layers.edge;
     const street = edge?.name ? edge.name : t('unnamedRoad');
@@ -378,7 +393,7 @@ async function main(): Promise<void> {
 
   if (import.meta.env.DEV || params.has('debug')) {
     (window as unknown as Record<string, unknown>)['metro'] = {
-      engine, view, drive, city, tuning, frameTimes, pilot, bench, peds, phone, passport,
+      engine, view, drive, fleet, city, tuning, frameTimes, pilot, bench, peds, phone, passport,
       timing: () => ({ firstFrameMs, loadMs }),
     };
   }
