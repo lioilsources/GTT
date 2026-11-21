@@ -45,7 +45,7 @@ protoc 36.2, protoc_plugin 25.1.0, protoc-gen-go 1.36.12, @bufbuild/protoc-gen-e
 |---|---|---|
 | `content/tuning.yaml` | `Tuning` (přísný parser, `flatten()`, posluchači) | `tuning.ts` (`Tuning.fromJson`) |
 | `design/tokens.json` | `Tokens` (barvy jako `0xAARRGGBB`) | `tokens.ts`, `tokens.css` |
-| `i18n/*.json` | `l10n/app_<locale>.arb` → `flutter gen-l10n` | `i18n.ts` (`t()`, typ `MessageKey`) |
+| `i18n/*.json` | `l10n/app_<locale>.arb` → `flutter gen-l10n`; `i18n.g.dart` (`tr()`, `MessageKey`) pro čisté balíčky | `i18n.ts` (`t()`, typ `MessageKey`) |
 | cities, cars, catalog | `CityId`, `CarId`, `EngineId`, `MinigameId` | `ids.ts` |
 | `schema/{car,minigame,save}` | `CarSpec`, `Minigame*`, `Save` | `schema.ts` |
 | `tools/citypack/proto` | `citypack_pb.dart` | `pb/citypack_pb.ts` (+ Go do citypacku) |
