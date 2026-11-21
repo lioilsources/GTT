@@ -36,6 +36,16 @@ class TrafficCar {
   /// Seconds left standing still after the player hit it.
   double hitTimer = 0;
 
+  /// Police hooks (specs/police.md), set by the police module: a patrol car, chasing a goal.
+  bool police = false;
+  bool pursuing = false;
+  double goalX = 0;
+  double goalY = 0;
+  double pursuitMps = 0;
+
+  /// A chasing patrol brakes to stop this far from its goal.
+  double goalStopM = 0;
+
   // Path state.
   RoadEdge edge;
   int dir;
@@ -319,7 +329,11 @@ class Traffic {
     } else {
       final gap = _gapAhead(c, player);
       final cls = c.edge.roadClass.value;
-      final vmax = cls < t.classSpeedMps.length ? t.classSpeedMps[cls] : t.classSpeedMps[0];
+      final vmax = c.pursuing
+          ? _pursuitSpeed(c)
+          : cls < t.classSpeedMps.length
+          ? t.classSpeedMps[cls]
+          : t.classSpeedMps[0];
       final free = math.max(0.0, gap - t.minGapM);
       final want = math.min(vmax, math.min(free / t.headwayS, math.sqrt(2 * t.brakeMps2 * free)));
       final dv = want - c.speed;
@@ -329,7 +343,9 @@ class Traffic {
     c.s += c.speed * dt;
     while (c.s >= c.edge.length) {
       final node = c.dir > 0 ? c.edge.to : c.edge.from;
-      final next = chooseNext(graph, node, c.edge.index, c.rng, _scratch);
+      final next = c.pursuing
+          ? chooseToward(graph, node, c.edge.index, c.goalX, c.goalY)
+          : chooseNext(graph, node, c.edge.index, c.rng, _scratch);
       if (next < 0) return false;
       c.s -= c.edge.length;
       final e = graph.edges[next];
@@ -345,6 +361,19 @@ class Traffic {
     c.body.linearVelocity = _v;
     c.body.angularVelocity = _wrap(c.heading - oh) / dt;
     return true;
+  }
+
+  /// Chase speed: pursuitMps, braking to a stop goalStopM from the goal (specs/police.md).
+  double _pursuitSpeed(TrafficCar c) {
+    final dx = c.goalX - c.x, dy = c.goalY - c.y;
+    final left = math.max(0.0, math.sqrt(dx * dx + dy * dy) - c.goalStopM);
+    return math.min(c.pursuitMps, math.sqrt(2 * _t.brakeMps2 * left));
+  }
+
+  /// Turns a car around on its edge (police U-turn): same point, opposite direction.
+  void turnAround(TrafficCar c) {
+    c.dir = -c.dir;
+    c.s = math.max(0, c.edge.length - c.s);
   }
 
   /// Moves the car's pose towards its lane point at s; k = 1 snaps.
@@ -398,6 +427,8 @@ class Traffic {
     if (solid && player.layer == c.layer) {
       gap = math.min(gap, _gapTo(c, hc, hs, player.x, player.y, player.halfLength, player.halfWidth, look));
     }
+    // A chasing patrol ignores other cars and the lights (sirens, specs/police.md).
+    if (c.pursuing) return gap;
     for (final o in cars) {
       if (identical(o, c) || o.layer != c.layer) continue;
       // Only cars going roughly our way (±60°); crossing traffic is ignored.

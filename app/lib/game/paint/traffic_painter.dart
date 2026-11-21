@@ -14,7 +14,8 @@ const _lights = [
 /// AI cars of [layer], top-down like the player's car (canvas in world metres, y north).
 void paintTraffic(Canvas canvas, Traffic traffic, int layer, {required bool night}) {
   for (final c in traffic.cars) {
-    if (c.layer != layer) continue;
+    // Patrols are drawn by police_painter.dart.
+    if (c.layer != layer || c.police) continue;
     final hl = c.halfLength, hw = c.halfWidth;
     canvas.save();
     canvas.translate(c.x, c.y);
