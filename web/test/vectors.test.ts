@@ -3,7 +3,7 @@ import { join } from 'node:path';
 import { parse } from 'yaml';
 import { describe, expect, it } from 'vitest';
 
-import { canonical, replayers, type VectorFile } from '../src/rules/vectors';
+import { canonical, replayers, replayResult, rulesModules, type VectorFile } from '../src/rules/vectors';
 
 const root = join(__dirname, '..', '..');
 const parity = parse(readFileSync(join(root, 'parity.yaml'), 'utf8')) as Array<{ vectors?: string; web: string }>;
@@ -21,6 +21,7 @@ describe('P0 vectors', () => {
         it(c.name, () => {
           const states = replay!(c);
           c.steps.forEach((s, i) => expect(canonical(states[i]), `step ${i}`).toBe(canonical(s.state)));
+          if (v.module in rulesModules) expect(canonical(replayResult(v.module, c) ?? null), 'result').toBe(canonical(c.result));
         });
       }
     });
