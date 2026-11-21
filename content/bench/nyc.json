@@ -1,0 +1,13 @@
+{
+  "id": "midtown-42nd",
+  "city": "nyc",
+  "description": "D1 measurement: 42nd Street river to river with a loop through Times Square (DUALSTACK 10).",
+  "start": {"a": "12th Avenue", "b": "West 42nd Street"},
+  "legs": [
+    {"via": ["West 42nd Street"], "to": {"a": "7th Avenue", "b": "West 42nd Street"}},
+    {"via": ["7th Avenue"], "to": {"a": "7th Avenue", "b": "West 47th Street"}},
+    {"via": ["West 47th Street"], "to": {"a": "6th Avenue", "b": "West 47th Street"}},
+    {"via": ["6th Avenue"], "to": {"a": "6th Avenue", "b": "West 42nd Street"}},
+    {"via": ["West 42nd Street", "East 42nd Street"], "to": {"a": "1st Avenue", "b": "East 42nd Street"}}
+  ]
+}

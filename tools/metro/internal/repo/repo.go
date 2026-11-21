@@ -29,6 +29,7 @@ func Root() (string, error) {
 const (
 	Tuning      = "content/tuning.yaml"
 	Cars        = "content/cars"
+	Bench       = "content/bench"
 	Cities      = "content/cities"
 	Catalog     = "content/minigames/catalog.yaml"
 	I18n        = "i18n"

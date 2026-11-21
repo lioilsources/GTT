@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "bench_result.schema.json",
+  "title": "BenchResult",
+  "description": "One run of the D1 measurement as both clients report it (specs/bench.md); pasted into plans/BAKEOFF_REPORT.md.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["client", "route", "device", "completed", "duration_s", "frames", "fps_avg", "fps_1low", "frame_ms_p50", "frame_ms_p99", "first_frame_ms", "respawns"],
+  "properties": {
+    "client": {"enum": ["flutter", "web"]},
+    "route": {"type": "string"},
+    "device": {"type": "string", "description": "User agent or OS + model."},
+    "renderer": {"type": "string", "description": "WebGL2, WebGPU, Impeller…"},
+    "completed": {"type": "boolean"},
+    "duration_s": {"type": "number"},
+    "frames": {"type": "integer"},
+    "fps_avg": {"type": "number"},
+    "fps_1low": {"type": "number", "description": "fps of the 99th percentile frame time."},
+    "frame_ms_p50": {"type": "number"},
+    "frame_ms_p99": {"type": "number"},
+    "first_frame_ms": {"type": "number", "description": "From app/page start to the first playable frame."},
+    "memory_mb": {"type": "number", "description": "JS heap (web, Chrome only) or process RSS (app); left out when unknown."},
+    "respawns": {"type": "integer", "description": "Times the autopilot got stuck and was put back on the route."},
+    "date": {"type": "string"}
+  }
+}

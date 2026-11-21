@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "bench.schema.json",
+  "title": "BenchRoute",
+  "description": "content/bench/<city>.json: the autopilot route of the D1 measurement (specs/bench.md). Intersections are named by two streets; each leg follows only the listed streets.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "city",
+    "start",
+    "legs"
+  ],
+  "$defs": {
+    "Crossing": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "a",
+        "b"
+      ],
+      "properties": {
+        "a": {
+          "type": "string"
+        },
+        "b": {
+          "type": "string"
+        }
+      },
+      "description": "An intersection named by two of its streets."
+    },
+    "BenchLeg": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "via",
+        "to"
+      ],
+      "properties": {
+        "via": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string"
+          }
+        },
+        "to": {
+          "$ref": "#/$defs/Crossing"
+        }
+      },
+      "description": "Shortest path to `to` over edges named in `via`."
+    }
+  },
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "city": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "start": {
+      "$ref": "#/$defs/Crossing"
+    },
+    "legs": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/BenchLeg"
+      }
+    }
+  }
+}

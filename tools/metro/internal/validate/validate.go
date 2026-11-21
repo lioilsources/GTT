@@ -26,6 +26,7 @@ var Targets = []Target{
 	{"parity.schema.json", repo.Parity},
 	{"vector.schema.json", repo.Vectors + "/*.json"},
 	{"scenario.schema.json", repo.Scenarios + "/*/*.json"},
+	{"bench.schema.json", repo.Bench + "/*.json"},
 }
 
 // Load reads JSON or YAML into the generic form jsonschema expects.

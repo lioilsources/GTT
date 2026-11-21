@@ -86,6 +86,7 @@ class Tuning {
         controls = TuningControls._(r.sub('controls')),
         props = TuningProps._(r.sub('props')),
         skids = TuningSkids._(r.sub('skids')),
+        bench = TuningBench._(r.sub('bench')),
         hud = TuningHud._(r.sub('hud'));
 
   factory Tuning.fromYaml(String src) {
@@ -139,6 +140,9 @@ class Tuning {
 
   final TuningSkids skids;
 
+  /// D1 measurement autopilot (specs/bench.md); route in content/bench/<city>.json.
+  final TuningBench bench;
+
   final TuningHud hud;
 
   Map<String, Object> toJson() => {
@@ -160,6 +164,7 @@ class Tuning {
         'controls': controls.toJson(),
         'props': props.toJson(),
         'skids': skids.toJson(),
+        'bench': bench.toJson(),
         'hud': hud.toJson(),
       };
 
@@ -895,6 +900,100 @@ class TuningSkids {
         'brake_min_mps': brakeMinMps,
         'max_segments': maxSegments,
       };
+}
+
+/// D1 measurement autopilot (specs/bench.md); route in content/bench/<city>.json.
+class TuningBench {
+  TuningBench._(_R r)
+      : lookaheadM = r.d('lookahead_m'),
+        lookaheadPerMps = r.d('lookahead_per_mps'),
+        steerGain = r.d('steer_gain'),
+        cornerLookaheadM = r.d('corner_lookahead_m'),
+        cornerTurnRad = r.d('corner_turn_rad'),
+        cornerSpeedMps = r.d('corner_speed_mps'),
+        brakePerMps = r.d('brake_per_mps'),
+        stuckS = r.d('stuck_s'),
+        stuckMps = r.d('stuck_mps'),
+        respawnAheadM = r.d('respawn_ahead_m'),
+        arriveM = r.d('arrive_m'),
+        warmupS = r.d('warmup_s'),
+        searchBackM = r.d('search_back_m'),
+        searchAheadM = r.d('search_ahead_m');
+
+  /// pure pursuit target distance ahead on the route
+  double lookaheadM;
+
+  /// plus this × speed
+  double lookaheadPerMps;
+
+  /// steer per radian of heading error
+  double steerGain;
+
+  /// route ahead checked for turns
+  double cornerLookaheadM;
+
+  /// a turn sharper than this within the lookahead slows the car
+  double cornerTurnRad;
+
+  double cornerSpeedMps;
+
+  /// brake per m/s above the wanted speed
+  double brakePerMps;
+
+  /// slower than stuck_mps for this long = put back on the route
+  double stuckS;
+
+  double stuckMps;
+
+  double respawnAheadM;
+
+  double arriveM;
+
+  /// frames before this are left out of the fps numbers
+  double warmupS;
+
+  /// route progress is searched in [s − back, s + ahead]
+  double searchBackM;
+
+  double searchAheadM;
+
+  Map<String, Object> toJson() => {
+        'lookahead_m': lookaheadM,
+        'lookahead_per_mps': lookaheadPerMps,
+        'steer_gain': steerGain,
+        'corner_lookahead_m': cornerLookaheadM,
+        'corner_turn_rad': cornerTurnRad,
+        'corner_speed_mps': cornerSpeedMps,
+        'brake_per_mps': brakePerMps,
+        'stuck_s': stuckS,
+        'stuck_mps': stuckMps,
+        'respawn_ahead_m': respawnAheadM,
+        'arrive_m': arriveM,
+        'warmup_s': warmupS,
+        'search_back_m': searchBackM,
+        'search_ahead_m': searchAheadM,
+      };
+
+  /// Value by YAML key, null when the key is unknown.
+  double? operator [](String key) => switch (key) {
+        'lookahead_m' => lookaheadM,
+        'lookahead_per_mps' => lookaheadPerMps,
+        'steer_gain' => steerGain,
+        'corner_lookahead_m' => cornerLookaheadM,
+        'corner_turn_rad' => cornerTurnRad,
+        'corner_speed_mps' => cornerSpeedMps,
+        'brake_per_mps' => brakePerMps,
+        'stuck_s' => stuckS,
+        'stuck_mps' => stuckMps,
+        'respawn_ahead_m' => respawnAheadM,
+        'arrive_m' => arriveM,
+        'warmup_s' => warmupS,
+        'search_back_m' => searchBackM,
+        'search_ahead_m' => searchAheadM,
+        _ => null,
+      };
+
+  static const keys = ['lookahead_m', 'lookahead_per_mps', 'steer_gain', 'corner_lookahead_m', 'corner_turn_rad', 'corner_speed_mps', 'brake_per_mps', 'stuck_s', 'stuck_mps', 'respawn_ahead_m', 'arrive_m', 'warmup_s', 'search_back_m', 'search_ahead_m'];
 }
 
 class TuningHud {
