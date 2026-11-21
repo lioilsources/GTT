@@ -1,0 +1,121 @@
+# DRAFT for Ol1n's review (specs/dialogue.md). Theo right after the player beat him.
+id: theo_minigame_win_1
+character: theo
+context: minigame_win
+city: nyc
+beats:
+  - npc:
+      en: "You won. Interesting. I've never lost this game in front of witnesses."
+      cs: "Výhra je tvoje. Zajímavé. Tuhle hru jsem ještě nikdy neprohrál před svědky."
+    replies:
+      flirt:
+        en: "I'll keep your secret. For a price."
+        cs: "Tvoje tajemství udržím. Za odměnu."
+      joke:
+        en: "I'll tell everyone. Loudly. From a car."
+        cs: "Řeknu to všem. Nahlas. Z auta."
+      dry:
+        en: "There's a first time for everything."
+        cs: "Všechno je jednou poprvé."
+    reactions:
+      flirt:
+        en: "Name it. If it's oat milk, we have a deal."
+        cs: "Řekni si. Jestli je to ovesné mléko, platí."
+      joke:
+        en: "From a car. With honking. Very on brand for you."
+        cs: "Z auta. S troubením. Úplně tvůj styl."
+      dry:
+        en: "There is. I just hoped it wasn't today."
+        cs: "Je. Jen jsem doufal, že ne dneska."
+  - npc:
+      en: "That move in the last round. Where's it from? Be honest, was it a tutorial?"
+      cs: "Odkud máš ten tah z posledního kola? Upřímně, z nějakého návodu?"
+    replies:
+      flirt:
+        en: "Improvised. You inspire me."
+        cs: "Improvizace. Inspiruješ mě."
+      joke:
+        en: "A tutorial? Insulting. It was two tutorials."
+        cs: "Z návodu? Urážka. Ze dvou návodů."
+      dry:
+        en: "Practice. Nothing fancy."
+        cs: "Cvik. Nic zvláštního."
+    reactions:
+      flirt:
+        en: "I inspire my own defeat. Great. Noted."
+        cs: "Inspiruju vlastní porážku. Skvělé. Beru na vědomí."
+      joke:
+        en: "Two. That's dedication. Almost artisanal."
+        cs: "Ze dvou. To je oddanost. Skoro řemeslná."
+      dry:
+        en: "Practice. The least glamorous answer. And the truest."
+        cs: "Cvik. Nejmíň okouzlující odpověď. A nejpravdivější."
+  - npc:
+      en: "For the record, I was playing ironically. Losing was part of the concept."
+      cs: "Pro pořádek, hrál jsem ironicky. Prohra byla součást konceptu."
+    replies:
+      flirt:
+        en: "Then the concept looks good on you."
+        cs: "Tak ten koncept ti sluší."
+      joke:
+        en: "Very conceptual. Is there a gallery opening?"
+        cs: "Hodně konceptuální. Bude i vernisáž?"
+      dry:
+        en: "Sure. The concept lost."
+        cs: "Jasně. Koncept prohrál."
+    reactions:
+      flirt:
+        en: "Thanks. The concept is wearing vintage."
+        cs: "Díky. Koncept nosí vintage."
+      joke:
+        en: "In a basement in Bushwick. Free wine. Questionable art."
+        cs: "Ve sklepě v Bushwicku. Víno zdarma. Umění sporné."
+      dry:
+        en: "Ouch. Clean, though. I respect clean."
+        cs: "Au. Ale čistě. Čistotu respektuju."
+  - npc:
+      en: "Next time we play on my turf. The café, Sunday morning, a record on, no phones."
+      cs: "Příště hrajeme na mém hřišti. Kavárna, neděle ráno, puštěná deska, žádné telefony."
+    replies:
+      flirt:
+        en: "Sounds like a date with extra steps."
+        cs: "Zní to jako rande, jen složitější."
+      joke:
+        en: "No phones? Then who'll know I won again?"
+        cs: "Bez telefonů? Kdo se pak dozví, že vyhrávám zase?"
+      dry:
+        en: "Sunday works. What time?"
+        cs: "Neděle se hodí. V kolik?"
+    reactions:
+      flirt:
+        en: "It's a rematch with good acoustics. Calm down."
+        cs: "Je to odveta s dobrou akustikou. Klid."
+      joke:
+        en: "Nobody. That's the point. Mystery."
+        cs: "Nikdo. O to jde. Tajemno."
+      dry:
+        en: "Ten. Before the brunch crowd. Good."
+        cs: "V deset. Před brunchovým davem. Dobře."
+  - npc:
+      en: "Fine. Congratulations. I'll be quietly processing this over a pour-over."
+      cs: "Fajn. Gratuluju. Půjdu to v klidu zpracovat u překapávané kávy."
+    replies:
+      flirt:
+        en: "Process it with me sometime."
+        cs: "Zpracuj to někdy se mnou."
+      joke:
+        en: "Add a sad song. For the full experience."
+        cs: "Pusť k tomu smutnou písničku. Pro úplný zážitek."
+      dry:
+        en: "Enjoy the pour-over."
+        cs: "Užij si překapávanou."
+    reactions:
+      flirt:
+        en: "I process alone. Mostly. We'll see. Bye."
+        cs: "Zpracovávám sám. Většinou. Uvidíme. Čau."
+      joke:
+        en: "Already queued. It's a B-side. Bye."
+        cs: "Už ji mám ve frontě. Je to béčko. Čau."
+      dry:
+        en: "I will. Slowly. Good game, really."
+        cs: "Užiju. Pomalu. Dobrá hra, fakt."

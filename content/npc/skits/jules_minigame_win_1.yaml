@@ -1,0 +1,121 @@
+# DRAFT for Ol1n's review (specs/dialogue.md). Jules right after the player beat him.
+id: jules_minigame_win_1
+character: jules
+context: minigame_win
+city: nyc
+beats:
+  - npc:
+      en: "You won! I demand a recount. Or at least a sad trombone. I only have a kazoo."
+      cs: "Výhra je tvoje! Žádám přepočítání. Nebo aspoň smutný trombon. Mám jen kazoo."
+    replies:
+      flirt:
+        en: "I'll make it up to you."
+        cs: "Vynahradím ti to."
+      joke:
+        en: "Kazoo it. Dramatically."
+        cs: "Tak to zahraj na kazoo. Dramaticky."
+      dry:
+        en: "No recount. It was clear."
+        cs: "Žádné přepočítání. Bylo to jasné."
+    reactions:
+      flirt:
+        en: "Careful, I'll hold you to that."
+        cs: "Pozor, beru tě za slovo."
+      joke:
+        en: "Bwaaa-waaa. That's the director's cut."
+        cs: "Bvaaa-vaaa. To je režisérská verze."
+      dry:
+        en: "Clear as a G chord. Ouch."
+        cs: "Jasné jako akord G. Au."
+  - npc:
+      en: "That last round was like busking at rush hour. Everyone's rushing and I'm still tuning."
+      cs: "To poslední kolo bylo jako hrát ve špičce. Všichni spěchají a já pořád ladím."
+    replies:
+      flirt:
+        en: "You tune beautifully, for the record."
+        cs: "Ladíš krásně, jen aby bylo jasno."
+      joke:
+        en: "You were flat. I was sharp. Music theory."
+        cs: "Ty podladěný, já s křížkem. Hudební teorie."
+      dry:
+        en: "Maybe tune before the game."
+        cs: "Možná ladit před hrou."
+    reactions:
+      flirt:
+        en: "Flattery! The good kind of flat. Thank you."
+        cs: "Lichotky! Ty beru všemi deseti. Díky."
+      joke:
+        en: "A music pun! You win twice today. I'm proud and hurt."
+        cs: "Hudební vtip! Dneska vyhráváš dvakrát. Jsem hrdý i raněný."
+      dry:
+        en: "Practical advice. I hate it. I'll use it."
+        cs: "Praktická rada. Nesnáším ji. Použiju ji."
+  - npc:
+      en: "I'm writing a song about this. 'Ode to My Defeat.' Working title."
+      cs: "Píšu o tom písničku. 'Óda na mou porážku.' Pracovní název."
+    replies:
+      flirt:
+        en: "Make it a love song."
+        cs: "Ať je to zamilovaná písnička."
+      joke:
+        en: "It needs a key change where I win."
+        cs: "Potřebuje změnu tóniny v místě, kde vyhrávám."
+      dry:
+        en: "Keep it short."
+        cs: "Hlavně krátkou."
+    reactions:
+      flirt:
+        en: "A love song about losing. That's basically all of them."
+        cs: "Zamilovaná o prohře. To jsou vlastně všechny."
+      joke:
+        en: "Up a whole step. Triumphant. I hate how good that is."
+        cs: "O celý tón nahoru. Triumfálně. Štve mě, jak je to dobré."
+      dry:
+        en: "Three chords and the truth. Mostly the truth hurts."
+        cs: "Tři akordy a pravda. Hlavně ta pravda bolí."
+  - npc:
+      en: "Rematch on the Union Square steps? Loser plays one request, any song, no complaining."
+      cs: "Odveta na schodech na Union Square? Kdo prohraje, zahraje jedno přání, jakoukoli písničku, bez remcání."
+    replies:
+      flirt:
+        en: "Deal. I'll pick something slow."
+        cs: "Platí. Vyberu něco pomalého."
+      joke:
+        en: "Any song? Even the one about parking tickets?"
+        cs: "Jakoukoli? I tu o pokutě za parkování?"
+      dry:
+        en: "You'll lose again. But fine."
+        cs: "Zase prohraješ. Ale fajn."
+    reactions:
+      flirt:
+        en: "Slow. Okay. I'll bring the good guitar."
+        cs: "Pomalou. Dobře. Vezmu tu lepší kytaru."
+      joke:
+        en: "Especially that one. It's my big hit."
+        cs: "Hlavně tu. To je můj hit."
+      dry:
+        en: "Confidence! I like it. A little. Mostly I'm scared."
+        cs: "Sebevědomí! To se mi líbí. Trochu. Hlavně se bojím."
+  - npc:
+      en: "Okay, go enjoy your victory lap. Mind the potholes, they're out of tune too."
+      cs: "Tak si běž užít vítězné kolečko. Pozor na výmoly, taky jsou rozladěné."
+    replies:
+      flirt:
+        en: "I'll hum your ode on the way."
+        cs: "Cestou si budu broukat tvoji ódu."
+      joke:
+        en: "Every pothole is a drum solo."
+        cs: "Každý výmol je sólo na bicí."
+      dry:
+        en: "Noted. See you at the rematch."
+        cs: "Beru na vědomí. Uvidíme se na odvetě."
+    reactions:
+      flirt:
+        en: "It's not finished, so hum quietly. Bye!"
+        cs: "Ještě není hotová, tak broukej potichu. Ahoj!"
+      joke:
+        en: "Ha! First Avenue is basically a drum kit. Bye!"
+        cs: "Cha! First Avenue je vlastně celá bicí souprava. Čau!"
+      dry:
+        en: "Bring your own applause. Bye!"
+        cs: "Potlesk si přines vlastní. Čau!"

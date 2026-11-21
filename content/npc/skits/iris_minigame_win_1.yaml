@@ -1,0 +1,121 @@
+# DRAFT for Ol1n's review (specs/dialogue.md). Iris right after the player beat her.
+id: iris_minigame_win_1
+character: iris
+context: minigame_win
+city: nyc
+beats:
+  - npc:
+      en: "You won? I had a whole plan. It was in my notebook. In three colours."
+      cs: "Výhra je tvoje? Měla jsem celý plán. V notýsku. Ve třech barvách."
+    replies:
+      flirt:
+        en: "You were distracting. In a nice way."
+        cs: "Rozptylovala jsi mě. Hezky."
+      joke:
+        en: "Three colours? All I had was luck."
+        cs: "Tři barvy? U mě jen štěstí."
+      dry:
+        en: "That last round didn't read your notebook."
+        cs: "To poslední kolo tvůj notýsek nečetlo."
+    reactions:
+      flirt:
+        en: "Distracting? Me? I was mostly chewing my pencil."
+        cs: "Rozptylovala? Já? Hlavně jsem okusovala tužku."
+      joke:
+        en: "Luck isn't a strategy. It's very annoying, though."
+        cs: "Štěstí není strategie. Ale je hodně otravné."
+      dry:
+        en: "Rude, but correct. It's illiterate."
+        cs: "Drzé, ale pravdivé. Je negramotné."
+  - npc:
+      en: "In books the quiet one always wins the last round. I thought I was the quiet one."
+      cs: "V knížkách poslední kolo vždycky vyhraje ten tichý. Myslela jsem, že ten tichý jsem já."
+    replies:
+      flirt:
+        en: "You're the interesting one. That's better."
+        cs: "Ty jsi ta zajímavá. To je lepší."
+      joke:
+        en: "Loud plus lucky. New genre."
+        cs: "Hlučnost plus štěstí. Nový žánr."
+      dry:
+        en: "Real life has worse writers."
+        cs: "Skutečný život má horší autory."
+    reactions:
+      flirt:
+        en: "Interesting. Okay. I'm keeping that one."
+        cs: "Zajímavá. Dobře. Tohle si nechám."
+      joke:
+        en: "I'd shelve it next to the sports memoirs."
+        cs: "Dala bych ho do regálu vedle sportovních memoárů."
+      dry:
+        en: "Much worse. Nobody edits it."
+        cs: "Mnohem horší. Nikdo ho nerediguje."
+  - npc:
+      en: "Can you tell me how that last move worked? I'd like to write it down. For science."
+      cs: "Prozradíš mi, jak to s tím posledním tahem šlo? Ráda bych si to zapsala. Pro vědu."
+    replies:
+      flirt:
+        en: "I'll tell you over coffee."
+        cs: "Řeknu ti to u kafe."
+      joke:
+        en: "Close eyes, hope. That's the whole secret."
+        cs: "Zavřít oči a doufat. Celé tajemství."
+      dry:
+        en: "I watch what you do. Then do the opposite."
+        cs: "Sleduju, co děláš, a dělám opak."
+    reactions:
+      flirt:
+        en: "Over coffee. That's... a plot development."
+        cs: "U kafe. To je... vývoj zápletky."
+      joke:
+        en: "That's not science. That's poetry."
+        cs: "To není věda. To je poezie."
+      dry:
+        en: "Oh no. I'm predictable. That's a terrible review."
+        cs: "Ale ne. Jsem předvídatelná. To je hrozná recenze."
+  - npc:
+      en: "Rematch next week? Loser picks a book, winner has to read it."
+      cs: "Odveta příští týden? Poražený vybírá knížku, vítěz ji musí přečíst."
+    replies:
+      flirt:
+        en: "Pick a romance. I'll read it slowly."
+        cs: "Vyber romantiku. Budu ji číst pomalu."
+      joke:
+        en: "Nothing over nine hundred pages, please."
+        cs: "Hlavně ne přes devět set stran, prosím."
+      dry:
+        en: "Fine. Pick something short."
+        cs: "Fajn. Vyber něco krátkého."
+    reactions:
+      flirt:
+        en: "Slowly. Okay. I'm definitely picking a romance now."
+        cs: "Pomalu. Dobře. Teď určitě vyberu romantiku."
+      joke:
+        en: "Eight hundred and ninety-nine. Deal."
+        cs: "Osm set devadesát devět. Platí."
+      dry:
+        en: "Short and very sad. That's my revenge."
+        cs: "Krátkou a hodně smutnou. To je moje pomsta."
+  - npc:
+      en: "Congratulations, really. I'll be practising in Bryant Park, under the trees."
+      cs: "Vážně gratuluju. Budu trénovat v Bryant Parku, pod stromy."
+    replies:
+      flirt:
+        en: "I'll find you. Bring the book."
+        cs: "Najdu tě. Vezmi tu knížku."
+      joke:
+        en: "Practise in the rain. Hard mode."
+        cs: "Trénuj v dešti. Těžší obtížnost."
+      dry:
+        en: "See you there. Bring the three colours."
+        cs: "Tak tam. Vezmi ty tři barvy."
+    reactions:
+      flirt:
+        en: "I'll bring it. And a better plan. Bye!"
+        cs: "Vezmu. A lepší plán. Ahoj!"
+      joke:
+        en: "I always practise in the rain. That's my secret. Bye!"
+        cs: "Já trénuju v dešti pořád. To je moje tajemství. Ahoj!"
+      dry:
+        en: "Four colours, next time. Bye!"
+        cs: "Příště čtyři barvy. Ahoj!"

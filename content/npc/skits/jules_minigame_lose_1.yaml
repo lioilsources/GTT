@@ -1,0 +1,121 @@
+# DRAFT for Ol1n's review (specs/dialogue.md). Jules right after he beat the player.
+id: jules_minigame_lose_1
+character: jules
+context: minigame_lose
+city: nyc
+beats:
+  - npc:
+      en: "I won! The crowd goes wild! The crowd is me and a pigeon. But still!"
+      cs: "Vyhrál jsem! Publikum šílí! Publikum jsem já a holub. Ale stejně!"
+    replies:
+      flirt:
+        en: "Your victory face is very cute."
+        cs: "Tvůj vítězný výraz je hrozně roztomilý."
+      joke:
+        en: "The pigeon was clearly on your side."
+        cs: "Ten holub ti jasně fandil."
+      dry:
+        en: "Congratulations."
+        cs: "Gratuluju."
+    reactions:
+      flirt:
+        en: "Cute? I'm going to be unbearable now. Thanks."
+        cs: "Roztomilý? Teď budu nesnesitelný. Díky."
+      joke:
+        en: "He's my manager. Takes fifteen percent of the crumbs."
+        cs: "To je můj manažer. Bere si patnáct procent drobků."
+      dry:
+        en: "Wow, such passion. I'll frame it."
+        cs: "Páni, tolik vášně. Dám si to do rámečku."
+  - npc:
+      en: "Don't worry, every encore starts with a miss. That last round was just your soundcheck."
+      cs: "Neboj, každý přídavek začíná přešlapem. To poslední kolo byla jen tvoje zvuková zkouška."
+    replies:
+      flirt:
+        en: "Then let's do the real show together."
+        cs: "Tak pojďme odehrát tu pravou show spolu."
+      joke:
+        en: "My soundcheck needs a sound engineer."
+        cs: "Moje zvuková zkouška potřebuje zvukaře."
+      dry:
+        en: "It was a loss, not a soundcheck."
+        cs: "Byla to prohra, ne zvuková zkouška."
+    reactions:
+      flirt:
+        en: "A duet? I'm in. You can even sing the chorus."
+        cs: "Duet? Jdu do toho. Refrén klidně zazpíváš ty."
+      joke:
+        en: "I know a guy. He's also a pigeon."
+        cs: "Znám jednoho. Je to taky holub."
+      dry:
+        en: "Tough crowd. Okay, a loss. A very musical one."
+        cs: "Náročné publikum. Dobře, prohra. Hodně hudební."
+  - npc:
+      en: "My secret? I count the beats. One, two, then strike. Works for songs, works for games."
+      cs: "Moje tajemství? Počítám doby. Raz, dva a pak úder. Funguje to v písničkách i ve hrách."
+    replies:
+      flirt:
+        en: "Teach me. Private lessons."
+        cs: "Nauč mě to. Soukromé hodiny."
+      joke:
+        en: "I count to three. That's where it goes wrong."
+        cs: "Já počítám do tří. Tam je asi chyba."
+      dry:
+        en: "That's just counting."
+        cs: "To je prostě počítání."
+    reactions:
+      flirt:
+        en: "First lesson's free. The second costs a hot dog."
+        cs: "První hodina zdarma. Druhá stojí párek v rohlíku."
+      joke:
+        en: "Three is a waltz! Wrong genre. Ha!"
+        cs: "Na tři je valčík! Špatný žánr. Cha!"
+      dry:
+        en: "Counting with feeling. Big difference. Trust me."
+        cs: "Počítání s citem. Velký rozdíl. Věř mi."
+  - npc:
+      en: "Winner buys the pizza, that's my rule. Plain slice? Or are you a pepperoni person?"
+      cs: "Vítěz platí pizzu, to je moje pravidlo. Obyčejný kousek? Nebo spíš pepperoni?"
+    replies:
+      flirt:
+        en: "Whatever you pick, I'll like it."
+        cs: "Cokoli vybereš, bude se mi to líbit."
+      joke:
+        en: "Pepperoni. Consolation needs grease."
+        cs: "Pepperoni. Útěcha potřebuje mastnotu."
+      dry:
+        en: "Plain. Thanks."
+        cs: "Obyčejný. Díky."
+    reactions:
+      flirt:
+        en: "Dangerous trust. I might pick pineapple. Kidding!"
+        cs: "Nebezpečná důvěra. Můžu vybrat ananas. Dělám si legraci!"
+      joke:
+        en: "Grease, the official sponsor of losing."
+        cs: "Mastnota, oficiální sponzor proher."
+      dry:
+        en: "Plain it is. Classic. Like C major."
+        cs: "Tak obyčejný. Klasika. Jako C dur."
+  - npc:
+      en: "Rematch whenever. You'll find me at the Union Square station, the echo's great on weekdays."
+      cs: "Odveta kdykoli. Najdeš mě na stanici Union Square, ve všední dny je tam skvělá ozvěna."
+    replies:
+      flirt:
+        en: "I'll come for the echo. And for you."
+        cs: "Přijdu kvůli ozvěně. A kvůli tobě."
+      joke:
+        en: "I'll bring the pigeon. Neutral referee."
+        cs: "Vezmu holuba. Nestranný rozhodčí."
+      dry:
+        en: "Weekdays. Got it."
+        cs: "Všední dny. Jasně."
+    reactions:
+      flirt:
+        en: "Then I'll play the good song. See you down there!"
+        cs: "Tak zahraju tu dobrou písničku. Uvidíme se dole!"
+      joke:
+        en: "He's never neutral. He loves me. Bye!"
+        cs: "Ten nikdy nestranný není. Miluje mě. Ahoj!"
+      dry:
+        en: "Short and sweet. Like my best songs. Bye!"
+        cs: "Krátké a sladké. Jako moje nejlepší písničky. Čau!"

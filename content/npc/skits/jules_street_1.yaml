@@ -1,0 +1,121 @@
+# DRAFT for Ol1n's review (specs/dialogue.md). Jules busking in Washington Square Park.
+id: jules_street_1
+character: jules
+context: street
+city: nyc
+beats:
+  - npc:
+      en: "Hey, someone stopped! That makes you my biggest audience today. Any requests?"
+      cs: "Hej, někdo zastavil! Jsi moje největší publikum za celý den. Nějaké přání?"
+    replies:
+      flirt:
+        en: "Play something that matches your smile."
+        cs: "Zahraj něco, co ladí s tvým úsměvem."
+      joke:
+        en: "Do you know the one about the parking ticket?"
+        cs: "Umíš tu o pokutě za parkování?"
+      dry:
+        en: "I'm stopped at a red light."
+        cs: "Stojím na červenou."
+    reactions:
+      flirt:
+        en: "Smooth. That's in G major. Very cheerful."
+        cs: "Hladké. To je G dur. Hodně veselé."
+      joke:
+        en: "Every musician knows it. It's mostly in minor."
+        cs: "Tu zná každý muzikant. Je skoro celá v moll."
+      dry:
+        en: "Still counts. Red lights are my best promoters."
+        cs: "I to se počítá. Červená je můj nejlepší promotér."
+  - npc:
+      en: "This guitar's older than me. I call her Bleecker, after the street where I found her."
+      cs: "Tahle kytara je starší než já. Říkám jí Bleecker, podle ulice, kde jsem ji našel."
+    replies:
+      flirt:
+        en: "Lucky guitar. She gets to travel with you."
+        cs: "Kytara má štěstí. Cestuje s tebou."
+      joke:
+        en: "Found her? Was she lost or just busking?"
+        cs: "Našel? Ztratila se, nebo taky hrála na ulici?"
+      dry:
+        en: "So you have a guitar from the street."
+        cs: "Takže máš kytaru z ulice."
+    reactions:
+      flirt:
+        en: "She agrees. She's blushing, it's the varnish."
+        cs: "Souhlasí. Červená se, to je ten lak."
+      joke:
+        en: "Ha! She was busking solo. We formed a duo."
+        cs: "Cha! Hrála sólo. Založili jsme duo."
+      dry:
+        en: "From a stoop sale. Very legal. Thanks for asking."
+        cs: "Z bazárku před domem. Úplně legálně. Díky za optání."
+  - npc:
+      en: "Best acoustics in town? The subway platform at Union Square. The trains do the drums."
+      cs: "Nejlepší akustika ve městě? Nástupiště metra na Union Square. Bubny obstarají vlaky."
+    replies:
+      flirt:
+        en: "I'd take the subway just to hear you."
+        cs: "Kvůli tobě klidně pojedu metrem."
+      joke:
+        en: "And the rats do backing vocals?"
+        cs: "A krysy dělají vokály?"
+      dry:
+        en: "The trains are also very loud."
+        cs: "Vlaky jsou taky hrozně hlasité."
+    reactions:
+      flirt:
+        en: "Careful, I'll start charging for front-row seats."
+        cs: "Opatrně, začnu účtovat první řadu."
+      joke:
+        en: "They're very talented. Bad at rhythm, though."
+        cs: "Jsou hodně talentované. Jen jim nejde rytmus."
+      dry:
+        en: "That's why it's a duet, not a solo. Moving on."
+        cs: "Proto je to duet, ne sólo. Jedeme dál."
+  - npc:
+      en: "I'm writing a song about cabs. So far I've got 'honk, honk, yellow' and a key change."
+      cs: "Píšu písničku o taxících. Zatím mám 'tú, tú, žlutá' a změnu tóniny."
+    replies:
+      flirt:
+        en: "Write me into the bridge."
+        cs: "Napiš mě do mezihry."
+      joke:
+        en: "Add a bridge. Like the Brooklyn Bridge."
+        cs: "Přidej bridge. Třeba Brooklynský most."
+      dry:
+        en: "That's two words and a sound."
+        cs: "To jsou dvě slova a zvuk."
+    reactions:
+      flirt:
+        en: "A whole verse, then. Rhymes with... I'll work on it."
+        cs: "Tak rovnou celou sloku. Rým na... na tom zapracuju."
+      joke:
+        en: "A bridge pun! You're in the band. Pay is zero."
+        cs: "Vtip s mostem! Jsi v kapele. Plat je nula."
+      dry:
+        en: "Three if you count the key change. Tough crowd."
+        cs: "Tři, když počítáš změnu tóniny. Náročné publikum."
+  - npc:
+      en: "Light's turning green, I can hear the honking already. Drive safe, and hum something!"
+      cs: "Naskakuje zelená, už slyším troubení. Jeď opatrně a něco si broukej!"
+    replies:
+      flirt:
+        en: "Only your song."
+        cs: "Jen tvoji písničku."
+      joke:
+        en: "Honk, honk, yellow. I'll practise."
+        cs: "Tú, tú, žlutá. Budu trénovat."
+      dry:
+        en: "I'll drive. Humming is optional."
+        cs: "Pojedu. Broukání je volitelné."
+    reactions:
+      flirt:
+        en: "Then I'd better finish it. See you around!"
+        cs: "Tak ji radši dopíšu. Tak zase!"
+      joke:
+        en: "In tune, please. Bleecker is listening. Bye!"
+        cs: "Hlavně čistě. Bleecker poslouchá. Ahoj!"
+      dry:
+        en: "Optional, but recommended. Bye!"
+        cs: "Volitelné, ale doporučené. Čau!"

@@ -1,0 +1,121 @@
+# DRAFT for Ol1n's review (specs/dialogue.md). Iris minding a small used-book shop.
+id: iris_shop_1
+character: iris
+context: shop
+city: nyc
+beats:
+  - npc:
+      en: "Oh, hi! Mind the stack by the door, it's load-bearing. Looking for anything in particular?"
+      cs: "Ahoj! Pozor na tu hromádku u dveří, je nosná. Hledáš něco konkrétního?"
+    replies:
+      flirt:
+        en: "A book. Now maybe the bookseller."
+        cs: "Knížku. Teď možná spíš knihkupkyni."
+      joke:
+        en: "Something short. My parking meter is judging me."
+        cs: "Něco krátkého. Parkovací automat mě soudí."
+      dry:
+        en: "Just browsing."
+        cs: "Jen se dívám."
+    reactions:
+      flirt:
+        en: "Oh. Um. The bookseller is mostly dust and tea. Hi."
+        cs: "Ach. Ehm. Knihkupkyně je hlavně prach a čaj. Ahoj."
+      joke:
+        en: "Short, got it. Poetry's on the left. Very efficient."
+        cs: "Krátké, jasně. Poezie je vlevo. Velmi efektivní."
+      dry:
+        en: "Browsing is allowed. Encouraged, even."
+        cs: "Dívat se smí. Dokonce se to doporučuje."
+  - npc:
+      en: "This one just came in. The Cartographer's Daughter. Someone mapped every bench in Central Park in it."
+      cs: "Tahle zrovna přišla. Dcera kartografa. Někdo v ní zmapoval každou lavičku v Central Parku."
+    replies:
+      flirt:
+        en: "Which bench would you pick?"
+        cs: "Kterou lavičku by sis vybrala?"
+      joke:
+        en: "Every bench? That's a lot of pigeons."
+        cs: "Každou lavičku? To je hodně holubů."
+      dry:
+        en: "There are thousands. That's a big book."
+        cs: "Těch jsou tisíce. To je velká knížka."
+    reactions:
+      flirt:
+        en: "The one by the turtle pond. Nobody finds you there. I mean, me."
+        cs: "Tu u želvího jezírka. Tam tě nikdo nenajde. Teda mě."
+      joke:
+        en: "The pigeons get their own appendix."
+        cs: "Holubi mají vlastní přílohu."
+      dry:
+        en: "Nine hundred pages. I read it in a week. Don't judge."
+        cs: "Devět set stran. Přečetla jsem ji za týden. Nesuď mě."
+  - npc:
+      en: "Oh, look, there's a note inside. 'Meet me under the clock at Grand Central.' Dated 1987."
+      cs: "Koukej, uvnitř je lístek. 'Sejdeme se pod hodinami na Grand Central.' Z roku 1987."
+    replies:
+      flirt:
+        en: "Romantic. Let's go and check."
+        cs: "Romantické. Pojďme se tam podívat."
+      joke:
+        en: "Thirty-nine years late. Classic subway delay."
+        cs: "S devětatřicetiletým zpožděním. Klasika metra."
+      dry:
+        en: "They probably met. Or didn't."
+        cs: "Asi se sešli. Nebo ne."
+    reactions:
+      flirt:
+        en: "Under the clock? With me? That's... a whole chapter."
+        cs: "Pod hodinami? Se mnou? To je... celá kapitola."
+      joke:
+        en: "Ha. The subway strikes again."
+        cs: "Cha. Metro zase zaúřadovalo."
+      dry:
+        en: "Or didn't. I prefer open endings, honestly."
+        cs: "Nebo ne. Já mám upřímně radši otevřené konce."
+  - npc:
+      en: "I'll leave the note in. Taking someone's story out of a book feels wrong. Want the book?"
+      cs: "Lístek tam nechám. Vytáhnout z knížky cizí příběh mi přijde špatné. Chceš ji?"
+    replies:
+      flirt:
+        en: "Only if you write something in the margin."
+        cs: "Jen když mi do ní něco napíšeš na okraj."
+      joke:
+        en: "Does it come with directions to the bench?"
+        cs: "Je k ní i navigace k té lavičce?"
+      dry:
+        en: "How much?"
+        cs: "Kolik stojí?"
+    reactions:
+      flirt:
+        en: "In pencil. Small. You'll have to find it."
+        cs: "Tužkou. Malým písmem. Budeš to muset najít."
+      joke:
+        en: "Chapter six. Just follow the pigeons."
+        cs: "Šestá kapitola. Prostě sleduj holuby."
+      dry:
+        en: "Four dollars. Three if you don't tell the owner."
+        cs: "Čtyři dolary. Tři, když to neřekneš majiteli."
+  - npc:
+      en: "Here you go. The door sticks, so push hard. Come back and tell me if they met."
+      cs: "Tady máš. Dveře se zasekávají, tak zatlač pořádně. Přijď mi říct, jestli se sešli."
+    replies:
+      flirt:
+        en: "I'll come back either way."
+        cs: "Vrátím se tak jako tak."
+      joke:
+        en: "If not, I'll write the sequel."
+        cs: "Jestli ne, napíšu pokračování."
+      dry:
+        en: "Push hard. Got it."
+        cs: "Zatlačit pořádně. Jasně."
+    reactions:
+      flirt:
+        en: "Then I'll keep the kettle warm. Bye!"
+        cs: "Tak budu mít připravený čaj. Ahoj!"
+      joke:
+        en: "I'd buy it. Used, for four dollars. Bye!"
+        cs: "Koupím si ho. Z druhé ruky, za čtyři dolary. Ahoj!"
+      dry:
+        en: "Exactly. The door respects confidence. Bye!"
+        cs: "Přesně. Dveře respektují sebevědomí. Ahoj!"

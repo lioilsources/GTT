@@ -498,5 +498,75 @@
   "lm_met_museum_title": "The Metropolitan Museum of Art",
   "lm_met_museum_text": "One of the largest art museums in the world, holding five thousand years of art. Its wide steps on Fifth Avenue are a favourite meeting spot.",
   "lm_brooklyn_bridge_title": "Brooklyn Bridge",
-  "lm_brooklyn_bridge_text": "Granite towers and a web of steel cables have carried this bridge across the East River since 1883. A wooden walkway runs above the traffic."
+  "lm_brooklyn_bridge_text": "Granite towers and a web of steel cables have carried this bridge across the East River since 1883. A wooden walkway runs above the traffic.",
+  "npcToneFlirt": "Flirt",
+  "npcToneJoke": "Joke",
+  "npcToneDry": "Deadpan",
+  "npcVibe": "Vibe {vibe}/{max}",
+  "@npcVibe": {
+    "placeholders": {
+      "vibe": {
+        "type": "int"
+      },
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "npcNameAge": "{name}, {age}",
+  "@npcNameAge": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "age": {
+        "type": "int"
+      }
+    }
+  },
+  "npcLeave": "Walk away",
+  "npcDone": "Done",
+  "npcNewContact": "New contact: {name}",
+  "@npcNewContact": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "npcNoContact": "No number this time.",
+  "npcIsContact": "{name} is in your contacts.",
+  "@npcIsContact": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "npcSkits": "Skits",
+  "npcSkitsHint": "Debug: every character and context. Portraits are placeholders until the ComfyUI manga portraits.",
+  "npcContacts": "Contacts: {n}",
+  "@npcContacts": {
+    "placeholders": {
+      "n": {
+        "type": "int"
+      }
+    }
+  },
+  "npcOpponent": "Opponent: {name}",
+  "@npcOpponent": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "npcNoOpponent": "Opponent: none",
+  "npcCtx_street": "Street",
+  "npcCtx_bar": "Bar",
+  "npcCtx_shop": "Shop",
+  "npcCtx_minigame_win": "After your win",
+  "npcCtx_minigame_lose": "After your loss",
+  "npcCtx_crash": "After a crash",
+  "npcCtx_car_owner": "Car owner"
 }

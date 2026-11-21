@@ -1,0 +1,121 @@
+# DRAFT for Ol1n's review (specs/dialogue.md). Theo on his break during a summer heat wave.
+id: theo_street_2
+character: theo
+context: street
+city: nyc
+beats:
+  - npc:
+      en: "It's ninety-five degrees and people still order hot lattes. I respect it. I don't understand it."
+      cs: "Je třicet pět stupňů a lidi pořád objednávají horké latté. Respektuju to. Nechápu to."
+    replies:
+      flirt:
+        en: "You look pretty cool in this heat."
+        cs: "Na takový hic vypadáš dost v pohodě."
+      joke:
+        en: "Hot latte, so the city feels cooler. Science."
+        cs: "Horké latté, aby se město zdálo chladnější. Věda."
+      dry:
+        en: "Some people just like hot drinks."
+        cs: "Někdo má prostě rád horké pití."
+    reactions:
+      flirt:
+        en: "It's the linen. Not me. Mostly the linen."
+        cs: "To dělá len. Ne já. Hlavně ten len."
+      joke:
+        en: "That's not science. But I'd read the zine."
+        cs: "To není věda. Ale ten fanzin bych si přečetl."
+      dry:
+        en: "They do. I'll defend them quietly."
+        cs: "Má. Potichu se jich zastanu."
+  - npc:
+      en: "Everyone's into cold brew now. I made it in a pickle jar back when it was just called cold coffee."
+      cs: "Teď všichni jedou cold brew. Já ho dělal ve sklenici od okurek, když se tomu říkalo studené kafe."
+    replies:
+      flirt:
+        en: "Sounds like you were cool before anything was."
+        cs: "Zní to, že jsi byl cool dřív než cokoliv jiného."
+      joke:
+        en: "Next you'll say you invented ice."
+        cs: "Ještě řekni, že jsi vymyslel led."
+      dry:
+        en: "Cold coffee is still cold coffee."
+        cs: "Studené kafe je pořád studené kafe."
+    reactions:
+      flirt:
+        en: "I was. It wasn't fun. Nobody noticed."
+        cs: "Byl. Žádná zábava to nebyla. Nikdo si toho nevšiml."
+      joke:
+        en: "No. But I used it ironically first."
+        cs: "Ne. Ale ironicky jsem ho používal první."
+      dry:
+        en: "Finally, someone who gets it."
+        cs: "Konečně někdo, kdo to chápe."
+  - npc:
+      en: "See that steam from the manhole? In summer it feels like the city is pulling espresso under our feet."
+      cs: "Vidíš tu páru z kanálu? V létě mám pocit, že město pod námi dělá espresso."
+    replies:
+      flirt:
+        en: "And you're the city's best barista."
+        cs: "A ty jsi jeho nejlepší barista."
+      joke:
+        en: "Double shot, notes of subway."
+        cs: "Dvojité, s tóny metra."
+      dry:
+        en: "It's steam. From pipes."
+        cs: "Je to pára. Z trubek."
+    reactions:
+      flirt:
+        en: "Second best. The manhole has more crema."
+        cs: "Druhý nejlepší. Kanál má víc cremy."
+      joke:
+        en: "Notes of subway. Honestly, that's my next blend."
+        cs: "Tóny metra. Upřímně, to je moje další směs."
+      dry:
+        en: "Yes. Pipes. You're right and it's still beautiful."
+        cs: "Ano. Trubky. Máš pravdu a stejně je to krásné."
+  - npc:
+      en: "My break is ten minutes. I'm spending it on a bodega sandwich. The real culture of this city."
+      cs: "Pauzu mám deset minut. Utratím je za sendvič z bodegy. Skutečná kultura tohohle města."
+    replies:
+      flirt:
+        en: "Can I steal a bite of your culture?"
+        cs: "Můžu ti ukousnout kousek kultury?"
+      joke:
+        en: "Bodega cat included?"
+        cs: "Kočka z bodegy v ceně?"
+      dry:
+        en: "A sandwich is a good use of ten minutes."
+        cs: "Sendvič je dobré využití deseti minut."
+    reactions:
+      flirt:
+        en: "Get your own. Culture is personal."
+        cs: "Kup si vlastní. Kultura je osobní věc."
+      joke:
+        en: "Always. The cat is the real manager."
+        cs: "Vždycky. Kočka je tam skutečná vedoucí."
+      dry:
+        en: "The best use. Glad we agree."
+        cs: "Nejlepší využití. Jsem rád, že se shodneme."
+  - npc:
+      en: "Okay, eight minutes left. Drive safe and keep your windows down. AC is so mainstream."
+      cs: "Dobře, zbývá osm minut. Jeď opatrně a nech stažená okna. Klimatizace je hrozně mainstream."
+    replies:
+      flirt:
+        en: "Only if you tell me your playlist."
+        cs: "Jen když mi prozradíš svůj playlist."
+      joke:
+        en: "Windows down, horn up."
+        cs: "Okna dolů, klakson nahoru."
+      dry:
+        en: "It's ninety-five degrees. The AC stays."
+        cs: "Je třicet pět stupňů. Klimatizace zůstává."
+    reactions:
+      flirt:
+        en: "No playlist. Records only. That's the whole point."
+        cs: "Žádný playlist. Jen desky. O to právě jde."
+      joke:
+        en: "That's terrible. Put it on a shirt. Bye."
+        cs: "To je strašné. Dej si to na tričko. Čau."
+      dry:
+        en: "Fair. Survival over principles. Later."
+        cs: "Fér. Přežití má přednost před zásadami. Zatím."

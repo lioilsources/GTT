@@ -12,6 +12,7 @@ import (
 	"github.com/santhosh-tekuri/jsonschema/v6"
 	"gopkg.in/yaml.v3"
 
+	"metro/internal/npc"
 	"metro/internal/repo"
 )
 
@@ -27,6 +28,8 @@ var Targets = []Target{
 	{"vector.schema.json", repo.Vectors + "/*.json"},
 	{"scenario.schema.json", repo.Scenarios + "/*/*.json"},
 	{"bench.schema.json", repo.Bench + "/*.json"},
+	{"npc.schema.json#/$defs/NpcCharacters", repo.NpcCharacters},
+	{"npc.schema.json#/$defs/NpcSkit", repo.NpcSkits + "/*.yaml"},
 }
 
 // Load reads JSON or YAML into the generic form jsonschema expects.
@@ -72,6 +75,9 @@ func Run(root string, only ...string) []error {
 				errs = append(errs, fmt.Errorf("%s: %v", rel, err))
 			}
 		}
+	}
+	if len(only) == 0 {
+		errs = append(errs, npc.Check(root)...)
 	}
 	return errs
 }

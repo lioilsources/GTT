@@ -1,0 +1,109 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "npc.schema.json",
+  "title": "NPC dialogue content",
+  "description": "content/npc/characters.yaml and content/npc/skits/<id>.yaml (METROPOLE_PLAN 11, specs/dialogue.md). Texts carry every locale inline; `metro sync` merges them into content/npc.json (NpcPack).",
+  "$defs": {
+    "NpcText": {
+      "type": "object",
+      "description": "One line in every locale of i18n/.",
+      "additionalProperties": false,
+      "required": ["en", "cs"],
+      "properties": {
+        "en": {"type": "string", "minLength": 1, "maxLength": 160},
+        "cs": {"type": "string", "minLength": 1, "maxLength": 160}
+      }
+    },
+    "NpcTones": {
+      "type": "object",
+      "description": "Vibe change per reply tone.",
+      "additionalProperties": false,
+      "required": ["flirt", "joke", "dry"],
+      "properties": {
+        "flirt": {"type": "integer", "minimum": -3, "maximum": 3},
+        "joke": {"type": "integer", "minimum": -3, "maximum": 3},
+        "dry": {"type": "integer", "minimum": -3, "maximum": 3}
+      }
+    },
+    "NpcToneTexts": {
+      "type": "object",
+      "description": "One text per reply tone.",
+      "additionalProperties": false,
+      "required": ["flirt", "joke", "dry"],
+      "properties": {
+        "flirt": {"$ref": "#/$defs/NpcText"},
+        "joke": {"$ref": "#/$defs/NpcText"},
+        "dry": {"$ref": "#/$defs/NpcText"}
+      }
+    },
+    "NpcQuips": {
+      "type": "object",
+      "description": "Opponent lines on the minigame result screen, by the player's outcome.",
+      "additionalProperties": false,
+      "required": ["win", "lose", "draw"],
+      "properties": {
+        "win": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/NpcText"}},
+        "lose": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/NpcText"}},
+        "draw": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/NpcText"}}
+      }
+    },
+    "NpcCharacter": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "name", "age", "archetype", "portrait", "tones", "bio", "quips"],
+      "properties": {
+        "id": {"type": "string", "pattern": "^[a-z0-9_]+$"},
+        "name": {"type": "string", "description": "Fictional first name, not translated."},
+        "age": {"type": "integer", "minimum": 21, "description": "Adults only (METROPOLE_PLAN 11)."},
+        "archetype": {"type": "string", "pattern": "^[a-z0-9_]+$"},
+        "portrait": {"type": "integer", "minimum": 0, "description": "Index into design tokens color.npc.portraits (placeholder portrait)."},
+        "tones": {"$ref": "#/$defs/NpcTones"},
+        "bio": {"$ref": "#/$defs/NpcText"},
+        "quips": {"$ref": "#/$defs/NpcQuips"}
+      }
+    },
+    "NpcCharacters": {
+      "type": "object",
+      "description": "content/npc/characters.yaml.",
+      "additionalProperties": false,
+      "required": ["characters"],
+      "properties": {
+        "characters": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/NpcCharacter"}}
+      }
+    },
+    "NpcBeat": {
+      "type": "object",
+      "description": "One NPC line, the three player replies and the NPC reaction to each.",
+      "additionalProperties": false,
+      "required": ["npc", "replies", "reactions"],
+      "properties": {
+        "npc": {"$ref": "#/$defs/NpcText"},
+        "replies": {"$ref": "#/$defs/NpcToneTexts"},
+        "reactions": {"$ref": "#/$defs/NpcToneTexts"}
+      }
+    },
+    "NpcSkit": {
+      "type": "object",
+      "description": "content/npc/skits/<id>.yaml.",
+      "additionalProperties": false,
+      "required": ["id", "character", "context", "beats"],
+      "properties": {
+        "id": {"type": "string", "pattern": "^[a-z0-9_]+$"},
+        "character": {"type": "string"},
+        "context": {"enum": ["street", "bar", "shop", "minigame_win", "minigame_lose", "crash", "car_owner"]},
+        "city": {"type": "string", "description": "Empty or missing = every city."},
+        "beats": {"type": "array", "minItems": 5, "maxItems": 5, "items": {"$ref": "#/$defs/NpcBeat"}}
+      }
+    },
+    "NpcPack": {
+      "type": "object",
+      "description": "content/npc.json written by `metro sync`: all characters and skits (sorted by id).",
+      "additionalProperties": false,
+      "required": ["characters", "skits"],
+      "properties": {
+        "characters": {"type": "array", "items": {"$ref": "#/$defs/NpcCharacter"}},
+        "skits": {"type": "array", "items": {"$ref": "#/$defs/NpcSkit"}}
+      }
+    }
+  }
+}

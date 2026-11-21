@@ -212,6 +212,28 @@ export type MessageKey =
   | "lm_met_museum_text"
   | "lm_brooklyn_bridge_title"
   | "lm_brooklyn_bridge_text"
+  | "npcToneFlirt"
+  | "npcToneJoke"
+  | "npcToneDry"
+  | "npcVibe"
+  | "npcNameAge"
+  | "npcLeave"
+  | "npcDone"
+  | "npcNewContact"
+  | "npcNoContact"
+  | "npcIsContact"
+  | "npcSkits"
+  | "npcSkitsHint"
+  | "npcContacts"
+  | "npcOpponent"
+  | "npcNoOpponent"
+  | "npcCtx_street"
+  | "npcCtx_bar"
+  | "npcCtx_shop"
+  | "npcCtx_minigame_win"
+  | "npcCtx_minigame_lose"
+  | "npcCtx_crash"
+  | "npcCtx_car_owner"
 ;
 
 export const messages: Record<Locale, Record<MessageKey, string>> = {
@@ -424,6 +446,28 @@ export const messages: Record<Locale, Record<MessageKey, string>> = {
     lm_met_museum_text: "Jedno z největších muzeí umění na světě s pěti tisíci lety umění. Jeho široké schody na Páté avenue jsou oblíbeným místem schůzek.",
     lm_brooklyn_bridge_title: "Brooklyn Bridge",
     lm_brooklyn_bridge_text: "Žulové pilíře a pavučina ocelových lan nesou tenhle most přes East River od roku 1883. Nad provozem vede dřevěná lávka pro pěší.",
+    npcToneFlirt: "Flirt",
+    npcToneJoke: "Vtip",
+    npcToneDry: "Suchar",
+    npcVibe: "Vibe {vibe}/{max}",
+    npcNameAge: "{name}, {age}",
+    npcLeave: "Odejít",
+    npcDone: "Hotovo",
+    npcNewContact: "Nový kontakt: {name}",
+    npcNoContact: "Číslo tentokrát nebude.",
+    npcIsContact: "{name} už máš v kontaktech.",
+    npcSkits: "Skity",
+    npcSkitsHint: "Ladění: všechny postavy a kontexty. Portréty jsou zástupné, manga portréty přijdou z ComfyUI.",
+    npcContacts: "Kontakty: {n}",
+    npcOpponent: "Soupeř: {name}",
+    npcNoOpponent: "Soupeř: žádný",
+    npcCtx_street: "Ulice",
+    npcCtx_bar: "Bar",
+    npcCtx_shop: "Obchod",
+    npcCtx_minigame_win: "Po tvé výhře",
+    npcCtx_minigame_lose: "Po tvé prohře",
+    npcCtx_crash: "Po nehodě",
+    npcCtx_car_owner: "Majitel auta",
   },
   "en": {
     appTitle: "Metropole",
@@ -634,6 +678,28 @@ export const messages: Record<Locale, Record<MessageKey, string>> = {
     lm_met_museum_text: "One of the largest art museums in the world, holding five thousand years of art. Its wide steps on Fifth Avenue are a favourite meeting spot.",
     lm_brooklyn_bridge_title: "Brooklyn Bridge",
     lm_brooklyn_bridge_text: "Granite towers and a web of steel cables have carried this bridge across the East River since 1883. A wooden walkway runs above the traffic.",
+    npcToneFlirt: "Flirt",
+    npcToneJoke: "Joke",
+    npcToneDry: "Deadpan",
+    npcVibe: "Vibe {vibe}/{max}",
+    npcNameAge: "{name}, {age}",
+    npcLeave: "Walk away",
+    npcDone: "Done",
+    npcNewContact: "New contact: {name}",
+    npcNoContact: "No number this time.",
+    npcIsContact: "{name} is in your contacts.",
+    npcSkits: "Skits",
+    npcSkitsHint: "Debug: every character and context. Portraits are placeholders until the ComfyUI manga portraits.",
+    npcContacts: "Contacts: {n}",
+    npcOpponent: "Opponent: {name}",
+    npcNoOpponent: "Opponent: none",
+    npcCtx_street: "Street",
+    npcCtx_bar: "Bar",
+    npcCtx_shop: "Shop",
+    npcCtx_minigame_win: "After your win",
+    npcCtx_minigame_lose: "After your loss",
+    npcCtx_crash: "After a crash",
+    npcCtx_car_owner: "Car owner",
   },
 };
 

@@ -1,0 +1,121 @@
+# DRAFT for Ol1n's review (specs/dialogue.md). Theo at a bar after his shift. Nobody drives after drinking.
+id: theo_bar_1
+character: theo
+context: bar
+city: nyc
+beats:
+  - npc:
+      en: "Long shift. Forty-two oat flat whites. Now I need a drink that has never seen a coffee bean."
+      cs: "Dlouhá směna. Čtyřicet dva ovesných flat white. Teď potřebuju drink, který nikdy neviděl kávové zrno."
+    replies:
+      flirt:
+        en: "Let me get this one. You've earned it."
+        cs: "Tenhle platím já. Zasloužíš si ho."
+      joke:
+        en: "Forty-two? That deserves a cup-shaped medal."
+        cs: "Čtyřicet dva? To chce medaili ve tvaru hrnku."
+      dry:
+        en: "Forty-two is a normal Tuesday."
+        cs: "Čtyřicet dva je normální úterý."
+    reactions:
+      flirt:
+        en: "Kind. I'll allow it. Once."
+        cs: "Milé. Nechám tě. Jednou."
+      joke:
+        en: "A cup-shaped medal. I'd pin it to my apron."
+        cs: "Medaile ve tvaru hrnku. Připnul bych si ji na zástěru."
+      dry:
+        en: "For a Tuesday, sure. It's Friday."
+        cs: "Na úterý jo. Je pátek."
+  - npc:
+      en: "They have a beer from a tiny brewery in Queens. Six people know it. Want to be number seven?"
+      cs: "Mají pivo z malinkatého pivovaru v Queensu. Zná ho šest lidí. Chceš se přidat jako číslo sedm?"
+    replies:
+      flirt:
+        en: "Being your number seven sounds nice."
+        cs: "Být tvoje číslo sedm zní dobře."
+      joke:
+        en: "Will it make me cool or just a bit bitter?"
+        cs: "Dodá mi coolness, nebo jen hořkost?"
+      dry:
+        en: "Just a soda. I'm driving."
+        cs: "Jen limonádu. Řídím."
+    reactions:
+      flirt:
+        en: "Number seven in the customer queue. Let's not get poetic."
+        cs: "Číslo sedm v pořadí zákazníků. Nebuďme poetičtí."
+      joke:
+        en: "Bitter. That's how you know it's good."
+        cs: "Hořkost. Podle ní se pozná dobré pivo."
+      dry:
+        en: "Soda. Responsible. Honestly, respect."
+        cs: "Limonáda. Zodpovědně. Upřímně, respekt."
+  - npc:
+      en: "Someone put a chart hit on the jukebox. I can feel my soul leaving. What would you put on?"
+      cs: "Někdo pustil v jukeboxu hitovku. Cítím, jak mě opouští duše. Co by hrálo, kdyby to bylo na tobě?"
+    replies:
+      flirt:
+        en: "Something slow. But you pick."
+        cs: "Něco pomalého. Ale vyber ty."
+      joke:
+        en: "Ten minutes of honking. A Manhattan classic."
+        cs: "Deset minut troubení. Manhattanská klasika."
+      dry:
+        en: "Nothing. Quiet would be nice."
+        cs: "Nic. Ticho by bylo fajn."
+    reactions:
+      flirt:
+        en: "My pick would empty the bar. Except you, maybe."
+        cs: "Můj výběr by vyklidil bar. Kromě tebe, možná."
+      joke:
+        en: "Ten minutes of honking would actually improve this."
+        cs: "Deset minut troubení by tohle fakt zlepšilo."
+      dry:
+        en: "Silence. The most underground choice there is."
+        cs: "Ticho. Nejvíc underground volba, co existuje."
+  - npc:
+      en: "Real talk. One day I want my own place. Records on the wall, no menu, just trust."
+      cs: "Vážně. Jednou chci vlastní podnik. Desky na zdi, žádné menu, jen důvěra."
+    replies:
+      flirt:
+        en: "I'd be there every day. For the coffee, sure."
+        cs: "Budu tam denně. Kvůli kafi, jasně."
+      joke:
+        en: "No menu? People will order oat milk by telepathy."
+        cs: "Žádné menu? Ovesné mléko si lidi objednají telepaticky."
+      dry:
+        en: "No menu is a bad business plan."
+        cs: "Žádné menu je špatný podnikatelský plán."
+    reactions:
+      flirt:
+        en: "For the coffee. Right. I'll pretend I believe you."
+        cs: "Kvůli kafi. Jasně. Budu dělat, že tomu věřím."
+      joke:
+        en: "Telepathy is the most sustainable ordering system."
+        cs: "Telepatie je nejudržitelnější objednávkový systém."
+      dry:
+        en: "It is. That's why I like it. But fine, a small menu."
+        cs: "Je. Proto se mi líbí. Ale dobře, malé menu."
+  - npc:
+      en: "Okay, last sip. I'm taking a cab home, my bike can stay locked up till morning. Good talk, honestly."
+      cs: "Dobře, poslední doušek. Domů jedu taxíkem, kolo počká zamčené do rána. Dobrý pokec, fakt."
+    replies:
+      flirt:
+        en: "Same time next Friday?"
+        cs: "Příští pátek ve stejnou dobu?"
+      joke:
+        en: "Tell the cab driver your vinyl theories."
+        cs: "Vylož taxikáři své teorie o deskách."
+      dry:
+        en: "Good call on the cab. Good night."
+        cs: "Taxík je dobrá volba. Dobrou."
+    reactions:
+      flirt:
+        en: "Maybe. If the jukebox behaves. Night."
+        cs: "Možná. Jestli se jukebox bude chovat slušně. Dobrou."
+      joke:
+        en: "He'll love them. They always do. Night."
+        cs: "Bude nadšený. Vždycky jsou. Dobrou."
+      dry:
+        en: "Good night. You're easy to talk to. That's rare."
+        cs: "Dobrou. S tebou se dobře mluví. To je vzácné."

@@ -95,7 +95,8 @@ class Tuning {
         feed = TuningFeed._(r.sub('feed')),
         nav = TuningNav._(r.sub('nav')),
         traffic = TuningTraffic._(r.sub('traffic')),
-        passport = TuningPassport._(r.sub('passport'));
+        passport = TuningPassport._(r.sub('passport')),
+        npc = TuningNpc._(r.sub('npc'));
 
   factory Tuning.fromYaml(String src) {
     final y = loadYaml(src);
@@ -182,6 +183,9 @@ class Tuning {
   /// minigame, photo); percent = floor(100 × points / all points).
   final TuningPassport passport;
 
+  /// NPC dialogue (specs/dialogue.md): skit queue, vibe meter, phone contact chance (integers, P0).
+  final TuningNpc npc;
+
   Map<String, Object> toJson() => {
         'car_scale': carScale,
         'lane_width_m': laneWidthM,
@@ -211,6 +215,7 @@ class Tuning {
         'nav': nav.toJson(),
         'traffic': traffic.toJson(),
         'passport': passport.toJson(),
+        'npc': npc.toJson(),
       };
 
   /// Dotted YAML path → value, for diffs against the loaded file.
@@ -1960,4 +1965,58 @@ class TuningPassport {
         'discover_radius_m': discoverRadiusM,
         'postcard_s': postcardS,
       };
+}
+
+/// NPC dialogue (specs/dialogue.md): skit queue, vibe meter, phone contact chance (integers, P0).
+class TuningNpc {
+  TuningNpc._(_R r)
+      : recentK = r.i('recent_k'),
+        vibeMax = r.i('vibe_max'),
+        vibeStart = r.i('vibe_start'),
+        contactMinVibe = r.i('contact_min_vibe'),
+        contactBasePct = r.i('contact_base_pct'),
+        contactStepPct = r.i('contact_step_pct'),
+        contactMaxPct = r.i('contact_max_pct');
+
+  /// last K skits that are not repeated while fresh ones exist
+  int recentK;
+
+  int vibeMax;
+
+  int vibeStart;
+
+  /// no contact roll below this vibe
+  int contactMinVibe;
+
+  /// chance at contact_min_vibe
+  int contactBasePct;
+
+  /// + per vibe point above it
+  int contactStepPct;
+
+  int contactMaxPct;
+
+  Map<String, Object> toJson() => {
+        'recent_k': recentK,
+        'vibe_max': vibeMax,
+        'vibe_start': vibeStart,
+        'contact_min_vibe': contactMinVibe,
+        'contact_base_pct': contactBasePct,
+        'contact_step_pct': contactStepPct,
+        'contact_max_pct': contactMaxPct,
+      };
+
+  /// Value by YAML key, null when the key is unknown.
+  int? operator [](String key) => switch (key) {
+        'recent_k' => recentK,
+        'vibe_max' => vibeMax,
+        'vibe_start' => vibeStart,
+        'contact_min_vibe' => contactMinVibe,
+        'contact_base_pct' => contactBasePct,
+        'contact_step_pct' => contactStepPct,
+        'contact_max_pct' => contactMaxPct,
+        _ => null,
+      };
+
+  static const keys = ['recent_k', 'vibe_max', 'vibe_start', 'contact_min_vibe', 'contact_base_pct', 'contact_step_pct', 'contact_max_pct'];
 }

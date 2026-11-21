@@ -1,0 +1,121 @@
+# DRAFT for Ol1n's review (specs/dialogue.md). Dana's twelve-minute lunch on a Midtown bench.
+id: dana_street_2
+character: dana
+context: street
+city: nyc
+beats:
+  - npc:
+      en: "Don't mind me. This is my lunch. It's scheduled for twelve minutes. I'm on minute four."
+      cs: "Nevšímej si mě. Tohle je můj oběd. Mám na něj v kalendáři dvanáct minut. Jsem ve čtvrté."
+    replies:
+      flirt:
+        en: "Mind if I steal minute five?"
+        cs: "Můžu si ukrást pátou minutu?"
+      joke:
+        en: "Twelve minutes? That's a luxury buffet."
+        cs: "Dvanáct minut? To je luxusní švédský stůl."
+      dry:
+        en: "A bagel. Good choice. Portable."
+        cs: "Bagel. Dobrá volba. Přenosná."
+    reactions:
+      flirt:
+        en: "Minute five is chewing. You can watch. Briefly."
+        cs: "Pátá minuta je žvýkání. Můžeš se dívat. Krátce."
+      joke:
+        en: "It is not. It's a bagel."
+        cs: "To teda není. Je to bagel."
+      dry:
+        en: "Exactly. One hand for the bagel, one for email."
+        cs: "Přesně. Jedna ruka na bagel, druhá na e-maily."
+  - npc:
+      en: "Everything bagel, scallion cream cheese. Same order for six years. Change is a risk."
+      cs: "Bagel se vším, sýr s jarní cibulkou. Šest let stejná objednávka. Změna je riziko."
+    replies:
+      flirt:
+        en: "You could risk a lunch with me sometime."
+        cs: "Mohla bys někdy riskovat oběd se mnou."
+      joke:
+        en: "Wild idea: a plain bagel. Just once."
+        cs: "Šílený nápad: obyčejný bagel. Jen jednou."
+      dry:
+        en: "Consistent. Low variance. Good."
+        cs: "Konzistentní. Malý rozptyl. Dobře."
+    reactions:
+      flirt:
+        en: "I'll check availability. Don't hold your breath."
+        cs: "Podívám se, kdy mám volno. Nedělej si naděje."
+      joke:
+        en: "That's not wild. That's a downgrade."
+        cs: "To není šílené. To je zhoršení."
+      dry:
+        en: "Low variance. Finally, someone gets it."
+        cs: "Malý rozptyl. Konečně to někdo chápe."
+  - npc:
+      en: "My assistant says I need a hobby. I told him my hobby is answering emails before they arrive."
+      cs: "Asistent mi říká, že potřebuju koníček. Řekla jsem mu, že můj koníček je odpovídat na e-maily dřív, než přijdou."
+    replies:
+      flirt:
+        en: "Try a hobby with good company."
+        cs: "Zkus koníček v dobré společnosti."
+      joke:
+        en: "Try juggling. Start with the bagel."
+        cs: "Zkus žonglování. Začni bagelem."
+      dry:
+        en: "That's not a hobby. That's a job."
+        cs: "To není koníček. To je práce."
+    reactions:
+      flirt:
+        en: "Smooth. My calendar isn't impressed. Neither am I. Mostly."
+        cs: "Hladké. Můj kalendář dojatý není. Já taky ne. Skoro."
+      joke:
+        en: "I'm not juggling my lunch. Minute seven, by the way."
+        cs: "S obědem žonglovat nebudu. Mimochodem, sedmá minuta."
+      dry:
+        en: "That's what my assistant said. Word for word."
+        cs: "To samé řekl asistent. Slovo od slova."
+  - npc:
+      en: "The honking on Sixth is in four-four time today. I find that weirdly calming."
+      cs: "Troubení na Šesté má dneska čtyřčtvrťový takt. Zvláštně mě to uklidňuje."
+    replies:
+      flirt:
+        en: "You're calming too. In a scary way."
+        cs: "Ty taky uklidňuješ. Takovým děsivým způsobem."
+      joke:
+        en: "Someone tell the cabs to play a waltz."
+        cs: "Ať taxíky zahrají valčík."
+      dry:
+        en: "It's the light cycle. Ninety seconds."
+        cs: "To je cyklus semaforů. Devadesát vteřin."
+    reactions:
+      flirt:
+        en: "Scary is a compliment in Midtown. I'll take it."
+        cs: "Děsivé je v Midtownu kompliment. Beru."
+      joke:
+        en: "Please don't. Four-four is efficient."
+        cs: "Prosím ne. Čtyři čtvrtě jsou efektivní."
+      dry:
+        en: "Ninety seconds. You time things too. Interesting."
+        cs: "Devadesát vteřin. Ty taky měříš čas. Zajímavé."
+  - npc:
+      en: "Minute twelve. Back to the tower. This was the most relaxing lunch I've had all quarter."
+      cs: "Dvanáctá minuta. Zpátky do věže. Tohle byl nejklidnější oběd za celé čtvrtletí."
+    replies:
+      flirt:
+        en: "Same bench next quarter?"
+        cs: "Stejná lavička příští čtvrtletí?"
+      joke:
+        en: "That's a low bar. A very low bar."
+        cs: "To není moc vysoká laťka."
+      dry:
+        en: "Twelve minutes. On the dot. Impressive."
+        cs: "Dvanáct minut. Na vteřinu. Působivé."
+    reactions:
+      flirt:
+        en: "I'll put it in the calendar. Tentatively. Bye."
+        cs: "Dám to do kalendáře. Předběžně. Ahoj."
+      joke:
+        en: "It's a bar. I cleared it. Bye."
+        cs: "Je to laťka. Přeskočila jsem ji. Ahoj."
+      dry:
+        en: "Eleven fifty-eight. But thank you. Bye."
+        cs: "Jedenáct minut padesát osm. Ale díky. Ahoj."

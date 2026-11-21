@@ -1,0 +1,121 @@
+# DRAFT for Ol1n's review (specs/dialogue.md). Jules on a break between sets in a small bar.
+id: jules_bar_1
+character: jules
+context: bar
+city: nyc
+beats:
+  - npc:
+      en: "Ten-minute break! The clapping in the back was you, right? Thanks, that carried the room."
+      cs: "Desetiminutová pauza! Ten potlesk vzadu patřil tobě, že jo? Díky, zachránil celý sál."
+    replies:
+      flirt:
+        en: "I clap for things I like."
+        cs: "Tleskám tomu, co se mi líbí."
+      joke:
+        en: "My hands are still recovering."
+        cs: "Ruce se mi ještě vzpamatovávají."
+      dry:
+        en: "It was polite clapping."
+        cs: "Byl to zdvořilý potlesk."
+    reactions:
+      flirt:
+        en: "Then I'll play more things you like. Noted."
+        cs: "Tak budu hrát víc věcí, co se ti líbí. Zapsáno."
+      joke:
+        en: "Ha! Ice for your hands, on the house."
+        cs: "Cha! Led na ruce, na účet podniku."
+      dry:
+        en: "Polite counts. Polite is basically a standing ovation here."
+        cs: "Zdvořilý se počítá. Tady je to skoro potlesk vestoje."
+  - npc:
+      en: "Can I get you something? The bartender owes me. I'm on ginger ale, I've got a long set."
+      cs: "Dáš si něco? Barman mi dluží. Já mám zázvorovou limonádu, čeká mě dlouhý set."
+    replies:
+      flirt:
+        en: "Whatever you're having. I'm driving."
+        cs: "To, co ty. Řídím."
+      joke:
+        en: "Soda with lime. I live dangerously."
+        cs: "Sodovku s limetkou. Žiju nebezpečně."
+      dry:
+        en: "Water. I'm driving."
+        cs: "Vodu. Řídím."
+    reactions:
+      flirt:
+        en: "Two ginger ales. We're basically a matching set now."
+        cs: "Dvě zázvorové. Teď jsme vlastně sladěný pár."
+      joke:
+        en: "Wild. Want a tiny umbrella in it too?"
+        cs: "Divočina. Chceš do toho i malý deštníček?"
+      dry:
+        en: "Responsible. I respect it. Mildly boring."
+        cs: "Zodpovědné. Respektuju. Lehce nuda."
+  - npc:
+      en: "Next song's new. 'Last Train to Nowhere Special.' I wrote it on a subway platform at 2 a.m."
+      cs: "Další písnička je nová. 'Poslední vlak nikam zvlášť.' Napsal jsem ji ve dvě ráno na nástupišti metra."
+    replies:
+      flirt:
+        en: "Dedicate it to me and I'll stay."
+        cs: "Věnuj mi ji a zůstanu."
+      joke:
+        en: "Does it stop at every station? Like the local?"
+        cs: "Staví na každé stanici? Jako osobák?"
+      dry:
+        en: "Long title."
+        cs: "Dlouhý název."
+    reactions:
+      flirt:
+        en: "Done. 'This one's for the back of the room.'"
+        cs: "Hotovo. 'Tahle je pro zadní řadu.'"
+      joke:
+        en: "Every station, and it's still on time. That's the fiction part."
+        cs: "Na každé, a stejně jede včas. To je ta vymyšlená část."
+      dry:
+        en: "Shorter than the train delays, at least."
+        cs: "Pořád kratší než zpoždění vlaků."
+  - npc:
+      en: "Confession: I always mess up the third chord. If you hear it, just nod like it was jazz."
+      cs: "Přiznání: třetí akord vždycky pokazím. Až to uslyšíš, kývni, jako že to byl jazz."
+    replies:
+      flirt:
+        en: "I'll be watching you, not the chords."
+        cs: "Budu koukat na tebe, ne na akordy."
+      joke:
+        en: "Jazz is just wrong notes with confidence."
+        cs: "Jazz jsou jen špatné tóny se sebevědomím."
+      dry:
+        en: "Or practise the third chord."
+        cs: "Nebo ten třetí akord natrénuj."
+    reactions:
+      flirt:
+        en: "Now I'm nervous in a good way. Thanks for that."
+        cs: "Teď jsem nervózní, ale tak příjemně. Díky."
+      joke:
+        en: "That's going on a T-shirt. Merch table, tomorrow."
+        cs: "To dám na tričko. Stánek s merchem, zítra."
+      dry:
+        en: "Wow. Okay. Taking it under advisement."
+        cs: "Páni. Dobře. Vezmu to na vědomí."
+  - npc:
+      en: "That's my cue, they're dimming the lights. Stay for the encore? The streets are empty after midnight."
+      cs: "To je moje znamení, ztlumují světla. Zůstaneš na přídavek? Po půlnoci jsou ulice krásně prázdné."
+    replies:
+      flirt:
+        en: "Front row. Third chord and all."
+        cs: "První řada. I s tím třetím akordem."
+      joke:
+        en: "Only if the encore is shorter than the title."
+        cs: "Jen když bude přídavek kratší než ten název."
+      dry:
+        en: "One song. Then I'm off."
+        cs: "Jedna písnička. Pak jedu."
+    reactions:
+      flirt:
+        en: "Then it's the best third chord I'll ever miss. Enjoy!"
+        cs: "Tak to bude nejlepší pokažený třetí akord v životě. Užij si to!"
+      joke:
+        en: "No promises. Thanks for coming, really!"
+        cs: "Nic neslibuju. Díky, že jsi tu!"
+      dry:
+        en: "Fair. One song, one nod, then drive safe!"
+        cs: "Beru. Jedna písnička, jedno kývnutí a pak opatrně za volantem!"

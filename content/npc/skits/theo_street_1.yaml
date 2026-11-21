@@ -1,0 +1,121 @@
+# DRAFT for Ol1n's review (specs/dialogue.md). Theo on the street with a crate of flea-market records.
+id: theo_street_1
+character: theo
+context: street
+city: nyc
+beats:
+  - npc:
+      en: "Careful, that's a crate of first pressings. Please don't splash me from that puddle."
+      cs: "Opatrně, to je bedna prvních lisování. Hlavně mě nepocákej z té kaluže, jo?"
+    replies:
+      flirt:
+        en: "I'd never splash a haircut like that."
+        cs: "Takový účes je pod mojí ochranou."
+      joke:
+        en: "Relax, my car only splashes digital music."
+        cs: "Klid, moje auto cáká jen na digitální hudbu."
+      dry:
+        en: "I see the puddle. I'm stopped."
+        cs: "Kaluž vidím. Stojím."
+    reactions:
+      flirt:
+        en: "Thanks. The haircut is a reference you wouldn't get."
+        cs: "Díky. Ten účes je odkaz, který ti nic neřekne."
+      joke:
+        en: "Ha. Digital music deserves it, honestly."
+        cs: "Cha. Digitální hudba si to upřímně zaslouží."
+      dry:
+        en: "Good. Stopping. An underrated life skill."
+        cs: "Dobře. Zastavit. Podceňovaná dovednost."
+  - npc:
+      en: "Found these at a flea market in Brooklyn. Nobody wanted them. Their loss. What do you listen to?"
+      cs: "Našel jsem je na bleším trhu v Brooklynu. Nikdo je nechtěl. Jejich chyba. Co posloucháš ty?"
+    replies:
+      flirt:
+        en: "Whatever you're playing tonight."
+        cs: "Cokoliv, co dneska pustíš ty."
+      joke:
+        en: "Mostly honking. Great rhythm section."
+        cs: "Hlavně troubení. Skvělá rytmika."
+      dry:
+        en: "The radio. Whatever's on."
+        cs: "Rádio. Co zrovna hraje."
+    reactions:
+      flirt:
+        en: "Nothing. Tonight I'm alphabetising. Nice try."
+        cs: "Nic. Dneska řadím desky podle abecedy. Hezký pokus."
+      joke:
+        en: "Car horns in Midtown. Very experimental. I'd go."
+        cs: "Klaksony v Midtownu. Hodně experimentální. Šel bych."
+      dry:
+        en: "The radio. Brave. Honest, but brave."
+        cs: "Rádio. Odvážné. Upřímné, ale odvážné."
+  - npc:
+      en: "This band? I saw them in a basement in 2014. Twelve people. Now they play arenas and it's ruined."
+      cs: "Tahle kapela? Viděl jsem je v roce 2014 ve sklepě. Dvanáct lidí. Teď hrajou v arénách a je to zničené."
+    replies:
+      flirt:
+        en: "Take me to their next basement show."
+        cs: "Na další sklepní koncert mě můžeš vzít."
+      joke:
+        en: "Twelve people. Counting the band?"
+        cs: "Dvanáct lidí. Počítáš i kapelu?"
+      dry:
+        en: "Bands get bigger. It happens."
+        cs: "Kapely rostou. Stává se."
+    reactions:
+      flirt:
+        en: "There won't be one. That's the tragedy."
+        cs: "Žádný nebude. V tom je ta tragédie."
+      joke:
+        en: "Four of them were the band. Respect the facts."
+        cs: "Čtyři z nich byla kapela. Fakta respektuj."
+      dry:
+        en: "It does. I hate how reasonable that is."
+        cs: "Stává. Štve mě, jak rozumně to zní."
+  - npc:
+      en: "Anyway. Do you take oat milk? Because if not, we have nothing more to talk about."
+      cs: "No nic. Piješ ovesné mléko? Protože jestli ne, nemáme si co říct."
+    replies:
+      flirt:
+        en: "For you, I'd switch sides."
+        cs: "Kvůli tobě klidně změním tábor."
+      joke:
+        en: "I take whatever the hot dog cart has."
+        cs: "Piju, co má zrovna stánek s párky."
+      dry:
+        en: "Black. No milk."
+        cs: "Černou. Bez mléka."
+    reactions:
+      flirt:
+        en: "Switching for someone isn't a personality. Pick oat for yourself."
+        cs: "Měnit tábor kvůli někomu není osobnost. Vyber si ovesné kvůli sobě."
+      joke:
+        en: "Hot dog cart coffee. Respect. That's real."
+        cs: "Kafe od stánku s párky. Respekt. To je opravdové."
+      dry:
+        en: "Black. Okay. That's actually the right answer."
+        cs: "Černou. Dobře. To je vlastně správná odpověď."
+  - npc:
+      en: "I should go before the rain warps these sleeves. If you're ever in the East Village, I make the flat white."
+      cs: "Měl bych jít, než déšť zničí obaly. Kdyby tě vítr zavál do East Village, flat white dělám já."
+    replies:
+      flirt:
+        en: "I'll come by just to watch you pour it."
+        cs: "Přijdu jen kvůli tomu, jak ho naléváš."
+      joke:
+        en: "I'll bring a crate of my honk recordings."
+        cs: "Přinesu bednu svých nahrávek troubení."
+      dry:
+        en: "Noted. East Village. Flat white."
+        cs: "Beru na vědomí. East Village. Flat white."
+    reactions:
+      flirt:
+        en: "Come for the coffee. I'm just the guy behind it."
+        cs: "Přijď kvůli kafi. Já jsem jen ten za pultem."
+      joke:
+        en: "Bring them. I'll pretend I heard them first."
+        cs: "Přines je. Budu dělat, že jsem je slyšel první."
+      dry:
+        en: "Good summary. See you, maybe."
+        cs: "Dobré shrnutí. Tak třeba zatím."

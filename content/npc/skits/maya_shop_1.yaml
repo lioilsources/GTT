@@ -1,0 +1,121 @@
+# DRAFT for Ol1n's review (specs/dialogue.md). Maya in a SoHo boutique, choosing a jacket.
+id: maya_shop_1
+character: maya
+context: shop
+city: nyc
+beats:
+  - npc:
+      en: "Emergency. Green jacket or the cream one? I have a brunch shoot tomorrow and I can't decide."
+      cs: "Krizová situace. Zelená bunda, nebo ta krémová? Zítra točím brunch a nemůžu se rozhodnout."
+    replies:
+      flirt:
+        en: "Both look great on you. Get the green."
+        cs: "Sluší ti obě. Ale vem zelenou."
+      joke:
+        en: "Buy both and wear them at once. Bold."
+        cs: "Kup obě a vem si je naráz. Odvaha."
+      dry:
+        en: "It's the same jacket in two colours."
+        cs: "Je to stejná bunda ve dvou barvách."
+    reactions:
+      flirt:
+        en: "Green it is. You have taste, I'll allow it."
+        cs: "Tak zelená. Vkus máš, to uznávám."
+      joke:
+        en: "Layering is in, so you're not even wrong."
+        cs: "Vrstvení je in, takže úplně mimo nejsi."
+      dry:
+        en: "That's like saying sunrise and sunset are the same."
+        cs: "To je jako říct, že východ a západ slunce jsou totéž."
+  - npc:
+      en: "Now a mirror selfie. This boutique has the best mirror in SoHo. Can you hold my bags?"
+      cs: "Teď selfie v zrcadle. Tenhle butik má nejlepší zrcadlo v SoHo. Podržíš mi tašky?"
+    replies:
+      flirt:
+        en: "Only if I can sneak into the reflection."
+        cs: "Jen když se vplížím do odrazu."
+      joke:
+        en: "Coat rack is my true calling."
+        cs: "Věšák je moje životní role."
+      dry:
+        en: "Fine. Where do you want them?"
+        cs: "Fajn. Kam s nimi?"
+    reactions:
+      flirt:
+        en: "Sneaky. Okay, stand behind me, a little to the left."
+        cs: "Mazané. Tak stoupni si za mě, kousek doleva."
+      joke:
+        en: "Most stylish coat rack in Manhattan, easily."
+        cs: "Nejstylovější věšák na Manhattanu, jasně."
+      dry:
+        en: "Anywhere. Wow, so much enthusiasm."
+        cs: "Kamkoliv. Páni, kolik nadšení."
+  - npc:
+      en: "Wait. Look at this price tag. Is that the price of a jacket or a month of rent?"
+      cs: "Počkej. Koukni na tu cenovku. To je cena bundy, nebo měsíčního nájmu?"
+    replies:
+      flirt:
+        en: "On you, it's worth every cent."
+        cs: "Na tobě to stojí za každý cent."
+      joke:
+        en: "Here? That's the rent for the mirror."
+        cs: "Tady? To je nájem za to zrcadlo."
+      dry:
+        en: "In SoHo, both."
+        cs: "V SoHo obojí."
+    reactions:
+      flirt:
+        en: "Okay, you're a danger to my wallet."
+        cs: "Dobře, jsi hrozba pro moji peněženku."
+      joke:
+        en: "Ha! Honestly, the mirror deserves it."
+        cs: "Cha! Upřímně, to zrcadlo si to zaslouží."
+      dry:
+        en: "Ugh, you're right and I hate it."
+        cs: "Fuj, máš pravdu a štve mě to."
+  - npc:
+      en: "Your turn. If I styled you for my feed, what's your vibe? Street, classic or full chaos?"
+      cs: "Teď ty. Kdybych tě stylovala pro feed, jaký máš styl? Ulice, klasika, nebo úplný chaos?"
+    replies:
+      flirt:
+        en: "Whatever matches you. Like a set."
+        cs: "Cokoliv, co ladí k tobě. Jako sada."
+      joke:
+        en: "Full chaos. I dress like the subway at rush hour."
+        cs: "Úplný chaos. Oblékám se jako metro ve špičce."
+      dry:
+        en: "Clean and comfortable. Nothing else."
+        cs: "Čistě a pohodlně. Nic víc."
+    reactions:
+      flirt:
+        en: "A matching set? Okay, that's actually cute."
+        cs: "Ladící sada? Dobře, to je vlastně roztomilé."
+      joke:
+        en: "Iconic. Chaos sells, trust me."
+        cs: "Ikonické. Chaos prodává, věř mi."
+      dry:
+        en: "Comfortable. The algorithm just fell asleep."
+        cs: "Pohodlně. Algoritmus právě usnul."
+  - npc:
+      en: "Okay, green jacket, paid and bagged. Thanks for the second opinion, it never hurts."
+      cs: "Tak zelená bunda, zaplacená a zabalená. Díky za druhý názor, nikdy neuškodí."
+    replies:
+      flirt:
+        en: "Wear it tomorrow and think of me."
+        cs: "Vem si ji zítra a vzpomeň si na mě."
+      joke:
+        en: "Send my consulting fee in likes."
+        cs: "Honorář za poradenství pošli v lajcích."
+      dry:
+        en: "Glad it's sorted."
+        cs: "Fajn, že je to vyřešené."
+    reactions:
+      flirt:
+        en: "Maybe. At brunch, between pancakes. Bye!"
+        cs: "Možná. Na brunchi, mezi palačinkami. Ahoj!"
+      joke:
+        en: "Ten likes, final offer. See you!"
+        cs: "Deset lajků, konečná nabídka. Tak zase!"
+      dry:
+        en: "Sorted. Very official. Bye, then."
+        cs: "Vyřešené. Hrozně úřední. Tak ahoj."

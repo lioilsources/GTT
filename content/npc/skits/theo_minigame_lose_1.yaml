@@ -1,0 +1,121 @@
+# DRAFT for Ol1n's review (specs/dialogue.md). Theo right after he beat the player.
+id: theo_minigame_lose_1
+character: theo
+context: minigame_lose
+city: nyc
+beats:
+  - npc:
+      en: "I won. Don't make it a thing. I don't make things things."
+      cs: "Vyhrál jsem. Nedělej z toho vědu. Já z věcí vědu nedělám."
+    replies:
+      flirt:
+        en: "You're kind of cute when you're smug."
+        cs: "Když se takhle vytahuješ, jsi docela roztomilý."
+      joke:
+        en: "Too late. I'm writing a ballad about my loss."
+        cs: "Pozdě. Skládám baladu o své porážce."
+      dry:
+        en: "Fine. It's not a thing."
+        cs: "Fajn. Žádná věda."
+    reactions:
+      flirt:
+        en: "I'm not smug. This is just my face."
+        cs: "Nevytahuju se. To je prostě můj obličej."
+      joke:
+        en: "A ballad. Acoustic, I hope. Not a remix."
+        cs: "Balada. Snad akustická. Žádný remix."
+      dry:
+        en: "Good. Thank you. That was very mature."
+        cs: "Dobře. Díky. To bylo hodně dospělé."
+  - npc:
+      en: "That was a good game from you, actually. Not mainstream good. More like a B-side nobody appreciates."
+      cs: "Vlastně to od tebe byla dobrá hra. Ne mainstreamově. Spíš jako béčko, kterého si nikdo neváží."
+    replies:
+      flirt:
+        en: "From you, that's practically a love song."
+        cs: "Od tebe je to skoro milostná píseň."
+      joke:
+        en: "So I'm a hidden gem. Put me on vinyl."
+        cs: "Takže skrytý poklad. Vydej mě na vinylu."
+      dry:
+        en: "Thanks. I'll take it."
+        cs: "Díky. Beru."
+    reactions:
+      flirt:
+        en: "It's a review. Don't read into it."
+        cs: "To je recenze. Nic v tom nehledej."
+      joke:
+        en: "Limited pressing. Two hundred copies. Maybe."
+        cs: "Limitovaný náklad. Dvě stě kusů. Možná."
+      dry:
+        en: "Take it. I don't give compliments twice."
+        cs: "Ber. Pochvaly dvakrát nerozdávám."
+  - npc:
+      en: "Can I tell you a secret? I practise this game during the dead hour at the café. Between two and three."
+      cs: "Prozradím ti tajemství? Tuhle hru trénuju v kavárně v mrtvé hodině. Mezi druhou a třetí."
+    replies:
+      flirt:
+        en: "Then I know where to find you."
+        cs: "Tak už vím, kde tě najdu."
+      joke:
+        en: "So that's why my coffee always takes forever."
+        cs: "Tak proto mi kafe vždycky trvá věčnost."
+      dry:
+        en: "That explains a lot."
+        cs: "To leccos vysvětluje."
+    reactions:
+      flirt:
+        en: "During the dead hour. Bring your own patience."
+        cs: "V mrtvé hodině. Trpělivost si přines vlastní."
+      joke:
+        en: "No. Your coffee takes forever because it's good."
+        cs: "Ne. Trvá věčnost, protože je dobré."
+      dry:
+        en: "It explains everything. Don't tell my manager."
+        cs: "Vysvětluje to všechno. Neříkej to vedoucí."
+  - npc:
+      en: "If you want a rematch, bring a record I don't own. Good luck. I own a lot."
+      cs: "Jestli chceš odvetu, přines desku, kterou nemám. Hodně štěstí. Mám jich hodně."
+    replies:
+      flirt:
+        en: "I'll bring a mixtape. Made for you."
+        cs: "Přinesu mixtape. Udělaný pro tebe."
+      joke:
+        en: "I'll bring a recording of the Staten Island Ferry horn."
+        cs: "Přinesu nahrávku houkačky trajektu na Staten Island."
+      dry:
+        en: "Fine. I'll go crate digging."
+        cs: "Fajn. Půjdu se přehrabovat v bednách."
+    reactions:
+      flirt:
+        en: "A mixtape. Okay, that's actually hard to say no to."
+        cs: "Mixtape. Dobře, tomu se fakt špatně odolává."
+      joke:
+        en: "The ferry horn. I don't own that. Damn."
+        cs: "Houkačku trajektu. Tu nemám. Sakra."
+      dry:
+        en: "Digging. Good. Crates are where the truth is."
+        cs: "Přehrabovat. Dobře. Pravda je v bednách."
+  - npc:
+      en: "Okay, I have a shift. Good game. Don't tell anyone I said that."
+      cs: "Dobře, mám směnu. Dobrá hra. Neříkej nikomu, že jsem to řekl."
+    replies:
+      flirt:
+        en: "Our little secret."
+        cs: "Naše malé tajemství."
+      joke:
+        en: "I'll only tell the whole feed."
+        cs: "Řeknu to jen celému feedu."
+      dry:
+        en: "My lips are sealed."
+        cs: "Budu mlčet jako hrob."
+    reactions:
+      flirt:
+        en: "We don't have secrets. We have a score. Bye."
+        cs: "Nemáme tajemství. Máme skóre. Čau."
+      joke:
+        en: "The feed doesn't count. Nobody reads it. Bye."
+        cs: "Feed se nepočítá. Nikdo ho nečte. Čau."
+      dry:
+        en: "Good. See you at the rematch."
+        cs: "Dobře. Uvidíme se u odvety."

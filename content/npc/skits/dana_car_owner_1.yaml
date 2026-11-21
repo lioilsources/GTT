@@ -1,0 +1,121 @@
+# DRAFT for Ol1n's review (specs/dialogue.md). Dana catches the player in her parked car.
+id: dana_car_owner_1
+character: dana
+context: car_owner
+city: nyc
+beats:
+  - npc:
+      en: "Hi. That's my car. You're in my car. I have a nine-thirty across town."
+      cs: "Ahoj. To je moje auto. Sedíš v mém autě. V půl desáté mám schůzku na druhém konci města."
+    replies:
+      flirt:
+        en: "It has great taste. Like its owner."
+        cs: "Má skvělý vkus. Jako jeho majitelka."
+      joke:
+        en: "Technically, it's a car-sharing experience."
+        cs: "Technicky vzato je to sdílený zážitek."
+      dry:
+        en: "Yes. I need it for ten minutes."
+        cs: "Ano. Potřebuju ho na deset minut."
+    reactions:
+      flirt:
+        en: "Flattery is not a parking permit. Keep going, though."
+        cs: "Lichotky nejsou parkovací povolení. Ale pokračuj."
+      joke:
+        en: "It's not. It's my car. With my coffee in it."
+        cs: "Není. Je to moje auto. A je v něm moje kafe."
+      dry:
+        en: "Ten minutes. Specific. I can work with specific."
+        cs: "Deset minut. Konkrétní. S konkrétním umím pracovat."
+  - npc:
+      en: "Also, my seat. It was set to exactly position four. I can see it's not four anymore."
+      cs: "A taky moje sedačka. Byla nastavená přesně na čtyřku. Vidím, že už to čtyřka není."
+    replies:
+      flirt:
+        en: "I'll put it back. Your settings are perfect."
+        cs: "Vrátím to. Tvoje nastavení je dokonalé."
+      joke:
+        en: "It's on seven now. Seven is luckier."
+        cs: "Teď je na sedmičce. Sedmička je šťastnější."
+      dry:
+        en: "Four. Noted. I'll reset it."
+        cs: "Čtyřka. Zapsáno. Vrátím to."
+    reactions:
+      flirt:
+        en: "They are. It took me a year. Don't touch the mirrors."
+        cs: "To je. Trvalo mi to rok. Na zrcátka nesahej."
+      joke:
+        en: "Seven is a crime against my lower back."
+        cs: "Sedmička je zločin proti mým zádům."
+      dry:
+        en: "Thank you. Mirrors too. They're also set to four."
+        cs: "Děkuju. Zrcátka taky. Ta jsou taky na čtyřce."
+  - npc:
+      en: "I could call someone about this. I'm not going to, I don't have a free slot. But I could."
+      cs: "Můžu kvůli tomu někomu zavolat. Neudělám to, nemám volný termín. Ale můžu."
+    replies:
+      flirt:
+        en: "Call me instead. I always have a slot for you."
+        cs: "Zavolej radši mně. Pro tebe mám termín vždycky."
+      joke:
+        en: "Call the car. It'll vouch for me."
+        cs: "Zavolej autu. Zaručí se za mě."
+      dry:
+        en: "Fair. Let me just drive you there."
+        cs: "Chápu. Radši tě tam rovnou odvezu."
+    reactions:
+      flirt:
+        en: "Cute. You don't have my number. 'Yet' is not implied."
+        cs: "Roztomilé. Moje číslo nemáš. A 'zatím' to neznamená."
+      joke:
+        en: "The car doesn't vouch. It's on my side."
+        cs: "Auto se za nikoho nezaručuje. Je na mojí straně."
+      dry:
+        en: "Drive me there. Now that's a solution."
+        cs: "Odvézt mě tam. To je řešení."
+  - npc:
+      en: "Fine. You drive, I take a call. Take Park Avenue, not Lex. Lex is chaos on Tuesdays."
+      cs: "Dobře. Ty řídíš, já mám call. Jeď po Park Avenue, ne po Lex. Lex je v úterý chaos."
+    replies:
+      flirt:
+        en: "Anything for my favourite passenger."
+        cs: "Cokoli pro moji oblíbenou spolujezdkyni."
+      joke:
+        en: "And on Wednesdays Lex is fine?"
+        cs: "A ve středu je Lex v pohodě?"
+      dry:
+        en: "Park Avenue. Got it."
+        cs: "Park Avenue. Jasně."
+    reactions:
+      flirt:
+        en: "I'm your only passenger. Eyes on the road."
+        cs: "Jsem tvoje jediná spolujezdkyně. Oči na silnici."
+      joke:
+        en: "Lex is chaos every day. On Tuesdays it's personal."
+        cs: "Lex je chaos každý den. V úterý osobně."
+      dry:
+        en: "Good. Short answers. My team would hire you."
+        cs: "Dobře. Krátké odpovědi. Můj tým by tě vzal."
+  - npc:
+      en: "Nine twenty-eight. Two minutes early. I'm still annoyed, but I'm annoyed on time. Seat back to four."
+      cs: "Devět dvacet osm. Dvě minuty předem. Pořád mě to štve, ale štve mě to včas. Sedačku zpátky na čtyřku."
+    replies:
+      flirt:
+        en: "Four. And a thank-you smile?"
+        cs: "Čtyřka. A úsměv na poděkování?"
+      joke:
+        en: "Five stars for the ride? Don't answer that."
+        cs: "Pět hvězdiček za jízdu? Neodpovídej."
+      dry:
+        en: "Four. Mirrors too. Have a good meeting."
+        cs: "Čtyřka. Zrcátka taky. Ať se schůzka daří."
+    reactions:
+      flirt:
+        en: "A small one. Don't tell my team. Bye."
+        cs: "Malý. Neříkej to mému týmu. Ahoj."
+      joke:
+        en: "Three. For the seat. Goodbye."
+        cs: "Tři. Za tu sedačku. Sbohem."
+      dry:
+        en: "Mirrors too. Okay, you're forgiven. Bye."
+        cs: "I zrcátka. Dobře, odpuštěno. Ahoj."

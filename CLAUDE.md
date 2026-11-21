@@ -26,13 +26,15 @@ run/bin/metro progress --tests   # po každé dokončené položce plans/progres
 - `packages/world_engine/` – citypack, streaming, renderer; čistá část v `lib/core.dart`.
 - `packages/drive_core/` – čistá logika jízdy (bez Flutteru, `dart:ui`).
 - `packages/rules_core/` – PRNG, tvar modulu P0, přehrávání vektorů (čistý Dart).
+- `packages/npc_dialogue/`, `web/src/dialogue/` – skity NPC, vibe, kontakty, overlay dialogu.
 - `packages/shared_gen/`, `web/src/gen/` – generované `metro gen`, needitovat.
 - `web/` – klient W (Vite, Babylon.js 9, Vitest).
 - `tools/citypack/` – pipeline map; `tools/metro/` – sdílená vrstva (docs/metro.md).
 - `content/`, `i18n/`, `design/`, `schema/`, `specs/`, `vectors/`, `scenarios/`, `assets/`, `parity.yaml`.
 
 ## Invarianty
-- Herní čísla jen v `content/tuning.yaml`, texty jen v `i18n/`, barvy jen v `design/tokens.json`;
+- Herní čísla jen v `content/tuning.yaml`, texty jen v `i18n/` (dialogy NPC v `content/npc/`,
+  docs/metro.md), barvy jen v `design/tokens.json`;
   klienti je čtou přes generovaný kód (`Tuning`, `Tokens`, ARB / `i18n.ts`). Natvrdo nic.
 - Typ pole v `Tuning` určuje literál v YAML: `25` int, `25.0` double.
 - Pravidla a logika v čistých modulech; test v `drive_core` hlídá importy Flutteru a `dart:ui`.

@@ -1,0 +1,121 @@
+# DRAFT for Ol1n's review (specs/dialogue.md). Maya right after she beat the player.
+id: maya_minigame_lose_1
+character: maya
+context: minigame_lose
+city: nyc
+beats:
+  - npc:
+      en: "I won! Don't move, I need a reaction shot. Look sad, but photogenic."
+      cs: "Vyhrála jsem! Nehýbej se, potřebuju záběr na reakci. Tvař se smutně, ale fotogenicky."
+    replies:
+      flirt:
+        en: "Hard to look sad when you're this happy."
+        cs: "Smutek nejde, když máš takovou radost."
+      joke:
+        en: "This is my photogenic sad face. It's my only face."
+        cs: "Tohle je můj fotogenický smutek. Jiný výraz nemám."
+      dry:
+        en: "I'm not doing a reaction shot."
+        cs: "Žádný záběr na reakci nebude."
+    reactions:
+      flirt:
+        en: "Aww. Okay, that one's going in."
+        cs: "Ááá. Dobře, tenhle tam dám."
+      joke:
+        en: "Perfect. Tragic and relatable. Hold it."
+        cs: "Dokonalé. Tragické a lidské. Vydrž."
+      dry:
+        en: "Too late, I already got it. Very grumpy."
+        cs: "Pozdě, už to mám. Hodně zamračené."
+  - npc:
+      en: "Be honest, was I amazing or was I amazing? There's only one right answer."
+      cs: "Upřímně, byla jsem úžasná, nebo úžasná? Správná odpověď je jen jedna."
+    replies:
+      flirt:
+        en: "Amazing. And very distracting."
+        cs: "Úžasná. A dost jsi mě rozptylovala."
+      joke:
+        en: "Amazing. I'm filing a complaint anyway."
+        cs: "Úžasná. Stejně si stěžuju."
+      dry:
+        en: "You were fine. Mostly my mistakes."
+        cs: "Ušlo to. Spíš to byly moje chyby."
+    reactions:
+      flirt:
+        en: "Distracting? I'll take that as a bonus point."
+        cs: "Rozptylovala? Beru to jako bonusový bod."
+      joke:
+        en: "Complaints go to my messages. I don't read them."
+        cs: "Stížnosti do zpráv. Nečtu je."
+      dry:
+        en: "Fine. Wow, just fine. Noted."
+        cs: "Ušlo to. Páni, jen ušlo. Beru na vědomí."
+  - npc:
+      en: "This is going on the feed, caption: undefeated. Unless you want a rematch right now?"
+      cs: "Jde to na feed s popiskem neporažená. Nebo chceš odvetu hned teď?"
+    replies:
+      flirt:
+        en: "Rematch. Loser buys brunch."
+        cs: "Odvetu. Kdo prohraje, platí brunch."
+      joke:
+        en: "I need a recovery period. Like a week."
+        cs: "Potřebuju čas na zotavení. Tak týden."
+      dry:
+        en: "Not now. Maybe another day."
+        cs: "Teď ne. Možná jindy."
+    reactions:
+      flirt:
+        en: "Brunch stakes? Now you're speaking my language."
+        cs: "Sázka o brunch? Teď mluvíš mou řečí."
+      joke:
+        en: "A week of recovery. Very dramatic. I respect it."
+        cs: "Týden zotavování. Hrozně dramatické. Respekt."
+      dry:
+        en: "Another day. So mysterious. Fine."
+        cs: "Jindy. Jak tajemné. Fajn."
+  - npc:
+      en: "Tip for next time: never play me at golden hour. I basically run on sunlight."
+      cs: "Rada na příště: nikdy se mnou nehraj za zlaté hodinky. Jedu v podstatě na sluneční světlo."
+    replies:
+      flirt:
+        en: "Noted. Then I'll challenge you at midnight."
+        cs: "Beru na vědomí. Tak tě vyzvu o půlnoci."
+      joke:
+        en: "Like a solar panel with eyelashes."
+        cs: "Jako solární panel s řasami."
+      dry:
+        en: "That's not how games work."
+        cs: "Tak hry nefungují."
+    reactions:
+      flirt:
+        en: "Midnight? Ooh. Bring a flashlight and good lines."
+        cs: "O půlnoci? Ó. Přines baterku a dobré hlášky."
+      joke:
+        en: "Solar panel with lashes. That's going in my bio."
+        cs: "Solární panel s řasami. To si dám do bia."
+      dry:
+        en: "It is when I'm playing."
+        cs: "Když hraju já, tak jo."
+  - npc:
+      en: "Okay, I have to post this before someone else wins something today. Good game, really."
+      cs: "Dobře, musím to dát ven, než dneska vyhraje něco někdo jiný. Dobrá hra, fakt."
+    replies:
+      flirt:
+        en: "Tag me. Losing to you looks good."
+        cs: "Označ mě. Prohra s tebou vypadá dobře."
+      joke:
+        en: "Spell my name right in the shame caption."
+        cs: "V popisku hanby napiš moje jméno správně."
+      dry:
+        en: "Good game. Enjoy your win."
+        cs: "Dobrá hra. Užij si výhru."
+    reactions:
+      flirt:
+        en: "Losing to me looks good? Cute. Bye!"
+        cs: "Prohra se mnou vypadá dobře? Roztomilé. Ahoj!"
+      joke:
+        en: "Your name, in bold, right under the word defeat. Byeee!"
+        cs: "Tvoje jméno, tučně, hned pod slovem prohra. Čauky!"
+      dry:
+        en: "Oh, I will. Every single like. Bye!"
+        cs: "Ale jo. Každý jeden lajk. Ahoj!"
