@@ -50,13 +50,36 @@
   level: P2
   spec: specs/minigames/README.md@1
   lead: web
-  flutter: wip
+  flutter: done
   web: done
+  checks: {flutter: pass, web: pass}
 - id: F-008
   name: Sirky (duel)
   level: P0
   spec: specs/minigames/sirky.md@1
   vectors: vectors/sirky.json
   lead: web
-  flutter: wip
+  flutter: done
   web: done
+  checks: {flutter: pass, web: pass}
+- id: F-009
+  name: Oko bere
+  level: P0
+  spec: specs/minigames/oko.md@1
+  lead: web
+  flutter: todo
+  web: todo
+- id: F-010
+  name: Dáma
+  level: P0
+  spec: specs/minigames/dama.md@1
+  lead: web
+  flutter: todo
+  web: todo
+- id: F-011
+  name: Desetitisíc
+  level: P0
+  spec: specs/minigames/desetitisic.md@1
+  lead: web
+  flutter: todo
+  web: todo

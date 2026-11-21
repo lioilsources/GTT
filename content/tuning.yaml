@@ -147,3 +147,23 @@ minigames:
     ai_error_pct: [60, 45, 30, 15, 0]   # per AI level 1..5
     time_cap_s: 300
     ai_think_s: 0.7             # pause before the opponent's move (UI only)
+  oko:
+    rounds_to_win: 5
+    dealer_stand: 17
+    time_cap_s: 420
+    dealer_draw_s: 0.6          # pause between the banker's cards (UI only)
+  dama:
+    ai_depth: [1, 2, 3, 4, 5]   # minimax plies per AI level 1..5
+    ai_error_pct: [35, 20, 10, 5, 0]
+    quiet_limit: 50             # plies without a capture or a man move = draw
+    fast_plies: 80              # a win within this many plies = 3 stars
+    time_cap_s: 480
+    ai_think_s: 0.6
+  desetitisic:
+    target: 5000
+    max_rounds: 10
+    ai_bank_at: [250, 300, 350, 400, 450]
+    ai_error_pct: [40, 25, 10, 5, 0]
+    star_margins: [1500, 500]   # lead for 3 and 2 stars
+    time_cap_s: 420
+    ai_think_s: 0.8

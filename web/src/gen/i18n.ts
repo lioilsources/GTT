@@ -64,6 +64,32 @@ export type MessageKey =
   | "sirkyLeft"
   | "sirkyTake"
   | "sirkyRound"
+  | "okoRules1"
+  | "okoRules2"
+  | "okoRules3"
+  | "okoHit"
+  | "okoStand"
+  | "okoBanker"
+  | "okoYou"
+  | "okoTotal"
+  | "okoBust"
+  | "okoPush"
+  | "okoNatural"
+  | "damaRules1"
+  | "damaRules2"
+  | "damaRules3"
+  | "damaMustCapture"
+  | "damaPieces"
+  | "desetRules1"
+  | "desetRules2"
+  | "desetRules3"
+  | "desetRoll"
+  | "desetKeep"
+  | "desetBank"
+  | "desetTurn"
+  | "desetBust"
+  | "desetScores"
+  | "desetRound"
 ;
 
 export const messages: Record<Locale, Record<MessageKey, string>> = {
@@ -128,6 +154,32 @@ export const messages: Record<Locale, Record<MessageKey, string>> = {
     sirkyLeft: "Zbývá {count}",
     sirkyTake: "Vzít {count}",
     sirkyRound: "{round}. kolo",
+    okoRules1: "Získej blíž k 21 než bankéř, ale nepřetáhni.",
+    okoRules2: "Líznout = další karta, Stát = konec. Bankéř líže do 17.",
+    okoRules3: "21 ze dvou karet vyhrává hned. Kdo první vyhraje 5 kol, vyhrál.",
+    okoHit: "Líznout",
+    okoStand: "Stát",
+    okoBanker: "Bankéř",
+    okoYou: "Ty",
+    okoTotal: "{total}",
+    okoBust: "Přes!",
+    okoPush: "Plichta",
+    okoNatural: "Oko!",
+    damaRules1: "Táhne se šikmo dopředu; dáma táhne o libovolný počet polí.",
+    damaRules2: "Braní je povinné a pokračuje, dokud jde brát.",
+    damaRules3: "Vyhraješ, když soupeř nemůže táhnout. Po 8 minutách rozhoduje materiál.",
+    damaMustCapture: "Musíš brát",
+    damaPieces: "Kameny {player} : {ai}",
+    desetRules1: "Hoď šesti kostkami a odlož bodující: 1 = 100, 5 = 50.",
+    desetRules2: "Trojice = 100 × hodnota (tři jedničky = 1000), postupka = 1500.",
+    desetRules3: "Ulož, nebo házej dál – hod bez bodů tah ztrácí. Hraje se do 5000.",
+    desetRoll: "Hodit",
+    desetKeep: "Odložit {points}",
+    desetBank: "Uložit {points}",
+    desetTurn: "V tahu: {points}",
+    desetBust: "Bez bodů – tah propadl",
+    desetScores: "Ty {player} · Soupeř {ai}",
+    desetRound: "Kolo {round}/{max}",
   },
   "en": {
     appTitle: "Metropole",
@@ -190,6 +242,32 @@ export const messages: Record<Locale, Record<MessageKey, string>> = {
     sirkyLeft: "{count} left",
     sirkyTake: "Take {count}",
     sirkyRound: "Round {round}",
+    okoRules1: "Get closer to 21 than the banker without going over.",
+    okoRules2: "Hit takes a card, Stand ends your turn. The banker draws to 17.",
+    okoRules3: "Two cards making 21 win at once. First to 5 rounds wins.",
+    okoHit: "Hit",
+    okoStand: "Stand",
+    okoBanker: "Banker",
+    okoYou: "You",
+    okoTotal: "{total}",
+    okoBust: "Bust!",
+    okoPush: "Push",
+    okoNatural: "Twenty-one!",
+    damaRules1: "Move diagonally forward; kings move any distance.",
+    damaRules2: "Capturing is compulsory and must continue while possible.",
+    damaRules3: "Win by leaving the opponent no move. After 8 minutes material decides.",
+    damaMustCapture: "You must capture",
+    damaPieces: "Pieces {player} : {ai}",
+    desetRules1: "Roll six dice and set aside scoring ones: 1 = 100, 5 = 50.",
+    desetRules2: "Three of a kind = 100 × value (three 1s = 1000), 1–6 = 1500.",
+    desetRules3: "Bank or roll on – a roll without points loses the turn. First to 5000.",
+    desetRoll: "Roll",
+    desetKeep: "Keep {points}",
+    desetBank: "Bank {points}",
+    desetTurn: "This turn: {points}",
+    desetBust: "No points – turn lost",
+    desetScores: "You {player} · Opponent {ai}",
+    desetRound: "Round {round}/{max}",
   },
 };
 
