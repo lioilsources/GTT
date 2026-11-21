@@ -15,6 +15,7 @@ import { carPose, PedestrianWorld } from './peds/pedestrians';
 import { drawPedBubbles, PedView } from './render/pedView';
 import { Tuning } from './gen/tuning';
 import { WorldView } from './render/worldView';
+import { installPhone } from './phone';
 import { HttpPackSource } from './world/citypack';
 import { City } from './world/model';
 import { ChunkStreamer } from './world/streaming';
@@ -100,6 +101,8 @@ async function main(): Promise<void> {
   await streamer.preload(drive.car.x, drive.car.y, drive.car.heading, 9);
   $('loading').hidden = true;
   let firstFrameMs = 0;
+  // In-game phone, feed, map and GPS navigation (specs/phone.md).
+  const phone = installPhone({ city, drive, tuning, t, rig: view.rig, parent: document.body, buttons: $('buttons'), params });
   const loadMs = performance.now() - tStart;
 
   // ---------- input
@@ -174,7 +177,8 @@ async function main(): Promise<void> {
       scheme.update(input);
       applyKeys(keys, input);
     }
-    drive.update(dt);
+    drive.update(dt * phone.timeScale());
+    phone.update(dt);
     const c = drive.car;
     view.rig.follow(c.x, c.y, c.heading, c.speed, dt, tuning, c.forwardSpeed < -0.5);
     streamer.update(c.x, c.y, c.heading, now);
@@ -304,6 +308,7 @@ async function main(): Promise<void> {
       }
       ctx.shadowBlur = 0;
     }
+    phone.draw(ctx, size.w, size.h);
     drawPedBubbles(ctx, peds, rig, size, tuning, t('pedestrianBubble'));
     controlHints();
   }
@@ -356,7 +361,7 @@ async function main(): Promise<void> {
 
   if (import.meta.env.DEV || params.has('debug')) {
     (window as unknown as Record<string, unknown>)['metro'] = {
-      engine, view, drive, city, tuning, frameTimes, pilot, bench, peds,
+      engine, view, drive, city, tuning, frameTimes, pilot, bench, peds, phone,
       timing: () => ({ firstFrameMs, loadMs }),
     };
   }
