@@ -121,6 +121,11 @@ export class Tuning {
    * (unknown, motorway, trunk, primary, secondary, tertiary, residential, service).
    */
   readonly traffic: TuningTraffic;
+  /**
+   * Tourist passport (specs/passport.md). weights: points per stamp kind (landmark, district,
+   * minigame, photo); percent = floor(100 × points / all points).
+   */
+  readonly passport: TuningPassport;
 
   private constructor(r: R) {
     this.carScale = r.d('car_scale');
@@ -150,6 +155,7 @@ export class Tuning {
     this.feed = new TuningFeed(r.sub('feed'));
     this.nav = new TuningNav(r.sub('nav'));
     this.traffic = new TuningTraffic(r.sub('traffic'));
+    this.passport = new TuningPassport(r.sub('passport'));
   }
 
   toJson(): Record<string, unknown> {
@@ -181,6 +187,7 @@ export class Tuning {
       feed: this.feed.toJson(),
       nav: this.nav.toJson(),
       traffic: this.traffic.toJson(),
+      passport: this.passport.toJson(),
     };
   }
 
@@ -1822,6 +1829,35 @@ export class TuningTraffic {
       light_side_m: this.lightSideM,
       light_radius_m: this.lightRadiusM,
       light_draw_max: this.lightDrawMax,
+    };
+  }
+}
+
+/**
+ * Tourist passport (specs/passport.md). weights: points per stamp kind (landmark, district,
+ * minigame, photo); percent = floor(100 × points / all points).
+ */
+export class TuningPassport {
+  weights: number[];
+  starsForStamp: number;
+  /** car to a landmark's label anchor (Met Museum is 95 m off the road) */
+  discoverRadiusM: number;
+  /** postcard / stamp label stays this long (UI) */
+  postcardS: number;
+
+  constructor(r: R) {
+    this.weights = r.il('weights');
+    this.starsForStamp = r.i('stars_for_stamp');
+    this.discoverRadiusM = r.d('discover_radius_m');
+    this.postcardS = r.d('postcard_s');
+  }
+
+  toJson(): Record<string, unknown> {
+    return {
+      weights: this.weights,
+      stars_for_stamp: this.starsForStamp,
+      discover_radius_m: this.discoverRadiusM,
+      postcard_s: this.postcardS,
     };
   }
 }

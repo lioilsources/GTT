@@ -1,0 +1,854 @@
+{
+ "module": "passport",
+ "specVersion": 1,
+ "cases": [
+  {
+   "name": "fresh passport, mixed stamps",
+   "config": {
+    "landmarks": [
+     "empire_state",
+     "chrysler",
+     "high_line"
+    ],
+    "districts": [
+     "midtown",
+     "soho",
+     "hells_kitchen"
+    ],
+    "minigames": [
+     "sirky",
+     "dama"
+    ],
+    "photos": [
+     "top_deck"
+    ],
+    "weights": [
+     3,
+     1,
+     3,
+     2
+    ],
+    "starsForStamp": 3,
+    "stamps": []
+   },
+   "seed": 0,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "visit",
+      "kind": "landmark",
+      "id": "chrysler"
+     },
+     "state": {
+      "catalog": {
+       "landmark": [
+        "empire_state",
+        "chrysler",
+        "high_line"
+       ],
+       "district": [
+        "midtown",
+        "soho",
+        "hells_kitchen"
+       ],
+       "minigame": [
+        "sirky",
+        "dama"
+       ],
+       "photo": [
+        "top_deck"
+       ]
+      },
+      "weights": [
+       3,
+       1,
+       3,
+       2
+      ],
+      "starsForStamp": 3,
+      "stamps": [
+       "landmark:chrysler"
+      ],
+      "points": 3,
+      "total": 20,
+      "last": "landmark:chrysler"
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "visit",
+      "kind": "district",
+      "id": "soho"
+     },
+     "state": {
+      "catalog": {
+       "landmark": [
+        "empire_state",
+        "chrysler",
+        "high_line"
+       ],
+       "district": [
+        "midtown",
+        "soho",
+        "hells_kitchen"
+       ],
+       "minigame": [
+        "sirky",
+        "dama"
+       ],
+       "photo": [
+        "top_deck"
+       ]
+      },
+      "weights": [
+       3,
+       1,
+       3,
+       2
+      ],
+      "starsForStamp": 3,
+      "stamps": [
+       "landmark:chrysler",
+       "district:soho"
+      ],
+      "points": 4,
+      "total": 20,
+      "last": "district:soho"
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "visit",
+      "kind": "district",
+      "id": "soho"
+     },
+     "state": {
+      "catalog": {
+       "landmark": [
+        "empire_state",
+        "chrysler",
+        "high_line"
+       ],
+       "district": [
+        "midtown",
+        "soho",
+        "hells_kitchen"
+       ],
+       "minigame": [
+        "sirky",
+        "dama"
+       ],
+       "photo": [
+        "top_deck"
+       ]
+      },
+      "weights": [
+       3,
+       1,
+       3,
+       2
+      ],
+      "starsForStamp": 3,
+      "stamps": [
+       "landmark:chrysler",
+       "district:soho"
+      ],
+      "points": 4,
+      "total": 20,
+      "last": ""
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "visit",
+      "kind": "minigame",
+      "id": "sirky",
+      "stars": 2
+     },
+     "state": {
+      "catalog": {
+       "landmark": [
+        "empire_state",
+        "chrysler",
+        "high_line"
+       ],
+       "district": [
+        "midtown",
+        "soho",
+        "hells_kitchen"
+       ],
+       "minigame": [
+        "sirky",
+        "dama"
+       ],
+       "photo": [
+        "top_deck"
+       ]
+      },
+      "weights": [
+       3,
+       1,
+       3,
+       2
+      ],
+      "starsForStamp": 3,
+      "stamps": [
+       "landmark:chrysler",
+       "district:soho"
+      ],
+      "points": 4,
+      "total": 20,
+      "last": ""
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "visit",
+      "kind": "minigame",
+      "id": "sirky",
+      "stars": 3
+     },
+     "state": {
+      "catalog": {
+       "landmark": [
+        "empire_state",
+        "chrysler",
+        "high_line"
+       ],
+       "district": [
+        "midtown",
+        "soho",
+        "hells_kitchen"
+       ],
+       "minigame": [
+        "sirky",
+        "dama"
+       ],
+       "photo": [
+        "top_deck"
+       ]
+      },
+      "weights": [
+       3,
+       1,
+       3,
+       2
+      ],
+      "starsForStamp": 3,
+      "stamps": [
+       "landmark:chrysler",
+       "district:soho",
+       "minigame:sirky"
+      ],
+      "points": 7,
+      "total": 20,
+      "last": "minigame:sirky"
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "visit",
+      "kind": "photo",
+      "id": "top_deck"
+     },
+     "state": {
+      "catalog": {
+       "landmark": [
+        "empire_state",
+        "chrysler",
+        "high_line"
+       ],
+       "district": [
+        "midtown",
+        "soho",
+        "hells_kitchen"
+       ],
+       "minigame": [
+        "sirky",
+        "dama"
+       ],
+       "photo": [
+        "top_deck"
+       ]
+      },
+      "weights": [
+       3,
+       1,
+       3,
+       2
+      ],
+      "starsForStamp": 3,
+      "stamps": [
+       "landmark:chrysler",
+       "district:soho",
+       "minigame:sirky",
+       "photo:top_deck"
+      ],
+      "points": 9,
+      "total": 20,
+      "last": "photo:top_deck"
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "visit",
+      "kind": "landmark",
+      "id": "empire_state"
+     },
+     "state": {
+      "catalog": {
+       "landmark": [
+        "empire_state",
+        "chrysler",
+        "high_line"
+       ],
+       "district": [
+        "midtown",
+        "soho",
+        "hells_kitchen"
+       ],
+       "minigame": [
+        "sirky",
+        "dama"
+       ],
+       "photo": [
+        "top_deck"
+       ]
+      },
+      "weights": [
+       3,
+       1,
+       3,
+       2
+      ],
+      "starsForStamp": 3,
+      "stamps": [
+       "landmark:chrysler",
+       "district:soho",
+       "minigame:sirky",
+       "photo:top_deck",
+       "landmark:empire_state"
+      ],
+      "points": 12,
+      "total": 20,
+      "last": "landmark:empire_state"
+     }
+    }
+   ],
+   "result": {
+    "percent": 60,
+    "points": 12,
+    "total": 20,
+    "stamps": 5,
+    "of": 9,
+    "kinds": {
+     "landmark": [
+      2,
+      3
+     ],
+     "district": [
+      1,
+      3
+     ],
+     "minigame": [
+      1,
+      2
+     ],
+     "photo": [
+      1,
+      1
+     ]
+    }
+   }
+  },
+  {
+   "name": "restore from save drops unknown and duplicates",
+   "config": {
+    "landmarks": [
+     "empire_state",
+     "chrysler",
+     "high_line"
+    ],
+    "districts": [
+     "midtown",
+     "soho",
+     "hells_kitchen"
+    ],
+    "minigames": [
+     "sirky",
+     "dama"
+    ],
+    "photos": [
+     "top_deck"
+    ],
+    "weights": [
+     3,
+     1,
+     3,
+     2
+    ],
+    "starsForStamp": 3,
+    "stamps": [
+     "district:midtown",
+     "landmark:gone",
+     "district:midtown",
+     "minigame:dama",
+     "bogus",
+     "photo:top_deck"
+    ]
+   },
+   "seed": 0,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "visit",
+      "kind": "district",
+      "id": "midtown"
+     },
+     "state": {
+      "catalog": {
+       "landmark": [
+        "empire_state",
+        "chrysler",
+        "high_line"
+       ],
+       "district": [
+        "midtown",
+        "soho",
+        "hells_kitchen"
+       ],
+       "minigame": [
+        "sirky",
+        "dama"
+       ],
+       "photo": [
+        "top_deck"
+       ]
+      },
+      "weights": [
+       3,
+       1,
+       3,
+       2
+      ],
+      "starsForStamp": 3,
+      "stamps": [
+       "district:midtown",
+       "minigame:dama",
+       "photo:top_deck"
+      ],
+      "points": 6,
+      "total": 20,
+      "last": ""
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "visit",
+      "kind": "landmark",
+      "id": "high_line"
+     },
+     "state": {
+      "catalog": {
+       "landmark": [
+        "empire_state",
+        "chrysler",
+        "high_line"
+       ],
+       "district": [
+        "midtown",
+        "soho",
+        "hells_kitchen"
+       ],
+       "minigame": [
+        "sirky",
+        "dama"
+       ],
+       "photo": [
+        "top_deck"
+       ]
+      },
+      "weights": [
+       3,
+       1,
+       3,
+       2
+      ],
+      "starsForStamp": 3,
+      "stamps": [
+       "district:midtown",
+       "minigame:dama",
+       "photo:top_deck",
+       "landmark:high_line"
+      ],
+      "points": 9,
+      "total": 20,
+      "last": "landmark:high_line"
+     }
+    }
+   ],
+   "result": {
+    "percent": 45,
+    "points": 9,
+    "total": 20,
+    "stamps": 4,
+    "of": 9,
+    "kinds": {
+     "landmark": [
+      1,
+      3
+     ],
+     "district": [
+      1,
+      3
+     ],
+     "minigame": [
+      1,
+      2
+     ],
+     "photo": [
+      1,
+      1
+     ]
+    }
+   }
+  },
+  {
+   "name": "complete city reaches 100",
+   "config": {
+    "landmarks": [
+     "a",
+     "b"
+    ],
+    "districts": [
+     "d",
+     "d"
+    ],
+    "minigames": [
+     "m"
+    ],
+    "photos": [],
+    "weights": [
+     3,
+     1,
+     3,
+     2
+    ],
+    "starsForStamp": 3,
+    "stamps": [
+     "landmark:a"
+    ]
+   },
+   "seed": 7,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "visit",
+      "kind": "landmark",
+      "id": "b"
+     },
+     "state": {
+      "catalog": {
+       "landmark": [
+        "a",
+        "b"
+       ],
+       "district": [
+        "d"
+       ],
+       "minigame": [
+        "m"
+       ],
+       "photo": []
+      },
+      "weights": [
+       3,
+       1,
+       3,
+       2
+      ],
+      "starsForStamp": 3,
+      "stamps": [
+       "landmark:a",
+       "landmark:b"
+      ],
+      "points": 6,
+      "total": 10,
+      "last": "landmark:b"
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "visit",
+      "kind": "district",
+      "id": "d"
+     },
+     "state": {
+      "catalog": {
+       "landmark": [
+        "a",
+        "b"
+       ],
+       "district": [
+        "d"
+       ],
+       "minigame": [
+        "m"
+       ],
+       "photo": []
+      },
+      "weights": [
+       3,
+       1,
+       3,
+       2
+      ],
+      "starsForStamp": 3,
+      "stamps": [
+       "landmark:a",
+       "landmark:b",
+       "district:d"
+      ],
+      "points": 7,
+      "total": 10,
+      "last": "district:d"
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "visit",
+      "kind": "minigame",
+      "id": "m",
+      "stars": 3
+     },
+     "state": {
+      "catalog": {
+       "landmark": [
+        "a",
+        "b"
+       ],
+       "district": [
+        "d"
+       ],
+       "minigame": [
+        "m"
+       ],
+       "photo": []
+      },
+      "weights": [
+       3,
+       1,
+       3,
+       2
+      ],
+      "starsForStamp": 3,
+      "stamps": [
+       "landmark:a",
+       "landmark:b",
+       "district:d",
+       "minigame:m"
+      ],
+      "points": 10,
+      "total": 10,
+      "last": "minigame:m"
+     }
+    }
+   ],
+   "result": {
+    "percent": 100,
+    "points": 10,
+    "total": 10,
+    "stamps": 4,
+    "of": 4,
+    "kinds": {
+     "landmark": [
+      2,
+      2
+     ],
+     "district": [
+      1,
+      1
+     ],
+     "minigame": [
+      1,
+      1
+     ],
+     "photo": [
+      0,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "name": "floor percent with odd total",
+   "config": {
+    "landmarks": [
+     "a",
+     "b",
+     "c"
+    ],
+    "districts": [],
+    "minigames": [],
+    "photos": [],
+    "weights": [
+     1,
+     1,
+     1,
+     1
+    ],
+    "starsForStamp": 3
+   },
+   "seed": 0,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "visit",
+      "kind": "landmark",
+      "id": "a"
+     },
+     "state": {
+      "catalog": {
+       "landmark": [
+        "a",
+        "b",
+        "c"
+       ],
+       "district": [],
+       "minigame": [],
+       "photo": []
+      },
+      "weights": [
+       1,
+       1,
+       1,
+       1
+      ],
+      "starsForStamp": 3,
+      "stamps": [
+       "landmark:a"
+      ],
+      "points": 1,
+      "total": 3,
+      "last": "landmark:a"
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "visit",
+      "kind": "landmark",
+      "id": "b"
+     },
+     "state": {
+      "catalog": {
+       "landmark": [
+        "a",
+        "b",
+        "c"
+       ],
+       "district": [],
+       "minigame": [],
+       "photo": []
+      },
+      "weights": [
+       1,
+       1,
+       1,
+       1
+      ],
+      "starsForStamp": 3,
+      "stamps": [
+       "landmark:a",
+       "landmark:b"
+      ],
+      "points": 2,
+      "total": 3,
+      "last": "landmark:b"
+     }
+    }
+   ],
+   "result": {
+    "percent": 66,
+    "points": 2,
+    "total": 3,
+    "stamps": 2,
+    "of": 3,
+    "kinds": {
+     "landmark": [
+      2,
+      3
+     ],
+     "district": [
+      0,
+      0
+     ],
+     "minigame": [
+      0,
+      0
+     ],
+     "photo": [
+      0,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "name": "empty catalog",
+   "config": {
+    "landmarks": [],
+    "districts": [],
+    "minigames": [],
+    "photos": [],
+    "weights": [
+     3,
+     1,
+     3,
+     2
+    ],
+    "starsForStamp": 3
+   },
+   "seed": 0,
+   "steps": [],
+   "result": {
+    "percent": 0,
+    "points": 0,
+    "total": 0,
+    "stamps": 0,
+    "of": 0,
+    "kinds": {
+     "landmark": [
+      0,
+      0
+     ],
+     "district": [
+      0,
+      0
+     ],
+     "minigame": [
+      0,
+      0
+     ],
+     "photo": [
+      0,
+      0
+     ]
+    }
+   }
+  }
+ ]
+}

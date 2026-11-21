@@ -151,6 +151,67 @@ export type MessageKey =
   | "engine_drive"
   | "engine_service"
   | "engine_sport"
+  | "passport"
+  | "passportProgress"
+  | "passportCount"
+  | "passportLandmarks"
+  | "passportDistricts"
+  | "passportMinigames"
+  | "passportPhotos"
+  | "passportPhotosLater"
+  | "passportStampNew"
+  | "postcardStamped"
+  | "aboutTitle"
+  | "aboutIntro"
+  | "aboutOsm"
+  | "aboutOverture"
+  | "aboutOverturePlaces"
+  | "aboutCityData"
+  | "aboutShareAlike"
+  | "aboutPostcards"
+  | "aboutPack"
+  | "aboutSource"
+  | "aboutRepoUrl"
+  | "lm_empire_state_title"
+  | "lm_empire_state_text"
+  | "lm_chrysler_title"
+  | "lm_chrysler_text"
+  | "lm_grand_central_title"
+  | "lm_grand_central_text"
+  | "lm_times_square_title"
+  | "lm_times_square_text"
+  | "lm_central_park_title"
+  | "lm_central_park_text"
+  | "lm_rockefeller_title"
+  | "lm_rockefeller_text"
+  | "lm_un_hq_title"
+  | "lm_un_hq_text"
+  | "lm_st_patricks_title"
+  | "lm_st_patricks_text"
+  | "lm_nypl_title"
+  | "lm_nypl_text"
+  | "lm_carnegie_hall_title"
+  | "lm_carnegie_hall_text"
+  | "lm_one_wtc_title"
+  | "lm_one_wtc_text"
+  | "lm_wtc_memorial_title"
+  | "lm_wtc_memorial_text"
+  | "lm_woolworth_title"
+  | "lm_woolworth_text"
+  | "lm_city_hall_title"
+  | "lm_city_hall_text"
+  | "lm_federal_hall_title"
+  | "lm_federal_hall_text"
+  | "lm_flatiron_title"
+  | "lm_flatiron_text"
+  | "lm_washington_arch_title"
+  | "lm_washington_arch_text"
+  | "lm_high_line_title"
+  | "lm_high_line_text"
+  | "lm_met_museum_title"
+  | "lm_met_museum_text"
+  | "lm_brooklyn_bridge_title"
+  | "lm_brooklyn_bridge_text"
 ;
 
 export const messages: Record<Locale, Record<MessageKey, string>> = {
@@ -302,6 +363,67 @@ export const messages: Record<Locale, Record<MessageKey, string>> = {
     engine_drive: "Jízda",
     engine_service: "Obsluha",
     engine_sport: "Sport",
+    passport: "Pas turisty",
+    passportProgress: "{city}: hotovo {percent} %",
+    passportCount: "{got} / {of}",
+    passportLandmarks: "Památky",
+    passportDistricts: "Čtvrti",
+    passportMinigames: "Minihry na 3★",
+    passportPhotos: "Fotomísta",
+    passportPhotosLater: "Fotomísta přijdou s foťákem.",
+    passportStampNew: "Razítko: {name}",
+    postcardStamped: "Razítko je v Pasu",
+    aboutTitle: "O mapách",
+    aboutIntro: "Metropole kreslí skutečná města z otevřených mapových dat. Díky všem, kdo je mapují.",
+    aboutOsm: "© OpenStreetMap contributors. K dispozici pod licencí Open Database License (ODbL 1.0).",
+    aboutOverture: "Overture Maps Foundation, overturemaps.org (vydání {release}). Silnice, budovy, voda, využití území a hranice: ODbL 1.0, obsahují data OpenStreetMap.",
+    aboutOverturePlaces: "Místa z Overture: většina zdrojů CDLA Permissive 2.0, data Foursquare Apache 2.0, AllThePlaces CC0 1.0. Místa slouží jen jako poloha a kategorie, jména ve hře jsou smyšlená.",
+    aboutCityData: "Městská open data ani výšky GHSL tento balíček města zatím nepoužívá; až je město přidá, objeví se tady.",
+    aboutShareAlike: "Balíčky měst i pipeline, která je staví, jsou veřejné ve zdrojovém repozitáři, takže odvozená mapová databáze je k dispozici pod ODbL.",
+    aboutPostcards: "Texty pohlednic jsou napsané pro hru; obrázky kreslí hra sama, žádné fotografie.",
+    aboutPack: "Balíček města sestaven {built}",
+    aboutSource: "Zdrojový kód",
+    aboutRepoUrl: "https://github.com/lioilsources/GTT",
+    lm_empire_state_title: "Empire State Building",
+    lm_empire_state_text: "Artdecový obr, který vyrostl za pouhých třináct měsíců a otevřel se v roce 1931. Jeho vrchol svítí skoro každou noc jinou barvou.",
+    lm_chrysler_title: "Chrysler Building",
+    lm_chrysler_text: "Nad sebou skládané ocelové oblouky s trojúhelníkovými okny tvoří nejlesklejší korunu panoramatu. Pár měsíců v roce 1930 to byla nejvyšší budova světa.",
+    lm_grand_central_title: "Grand Central Terminal",
+    lm_grand_central_text: "Velká nádražní hala se zeleným stropem pomalovaným souhvězdími. Schůzky se tu dávají pod kulatými mosaznými hodinami nad informacemi.",
+    lm_times_square_title: "Times Square",
+    lm_times_square_text: "Obrazovky a billboardy osvětlují tuhle křižovatku tak, že tu nikdy pořádně nepadne noc. Na Silvestra tu o půlnoci sjíždí zářící koule.",
+    lm_central_park_title: "Central Park",
+    lm_central_park_text: "Park dlouhý čtyři kilometry, ručně vymodelovaný z bažin a skal. Uvnitř uliční mřížky se skrývají jezera, louky a kamenné mosty.",
+    lm_rockefeller_title: "30 Rockefeller Plaza",
+    lm_rockefeller_text: "Štíhlá věž z vápence s vyhlídkovou terasou vysoko nad Midtownem. V zimě se zapuštěné náměstí u jejích nohou mění v kluziště pod obřím stromem.",
+    lm_un_hq_title: "United Nations Headquarters",
+    lm_un_hq_text: "Štíhlá deska ze zeleného skla u East River, kde se scházejí státy celého světa. Před budovou se táhne dlouhá řada vlajek členských zemí.",
+    lm_st_patricks_title: "St. Patrick's Cathedral",
+    lm_st_patricks_text: "Katedrála z bílého mramoru se dvěma gotickými věžemi, dokončená v roce 1878. Mezi mrakodrapy Páté avenue působí skoro drobně.",
+    lm_nypl_title: "New York Public Library",
+    lm_nypl_text: "Schody téhle mramorové knihovny na Páté avenue hlídají dva kamenní lvi. Hlavní čítárna je dlouhá skoro jako celý blok.",
+    lm_carnegie_hall_title: "Carnegie Hall",
+    lm_carnegie_hall_text: "Cihlový koncertní sál, který má od roku 1891 pověst skvělé akustiky. Zeptejte se na cestu a místní vám poradí: cvičit, cvičit, cvičit.",
+    lm_one_wtc_title: "One World Trade Center",
+    lm_one_wtc_text: "Nejvyšší věž západní polokoule měří i se stožárem přesně 1 776 stop. To číslo připomíná rok vyhlášení americké nezávislosti.",
+    lm_wtc_memorial_title: "9/11 Memorial",
+    lm_wtc_memorial_text: "Dvě čtvercové nádrže vyplňují půdorysy dvojčat. Voda do prázdna padá bez konce a lemují ji jména obětí.",
+    lm_woolworth_title: "233 Broadway",
+    lm_woolworth_text: "Věž z bílé terakoty, přezdívaná katedrála obchodu, dokončená v roce 1913. Její gotický vrchol byl kdysi výš než kterákoli jiná budova na světě.",
+    lm_city_hall_title: "New York City Hall",
+    lm_city_hall_text: "Jedna z nejstarších radnic v zemi, kde dodnes úřaduje vedení města. Před ní se rozkládá malý park s fontánou.",
+    lm_federal_hall_title: "Federal Hall",
+    lm_federal_hall_text: "Chrám se sloupy na Wall Street, kde první prezident skládal přísahu. Jeho bronzová socha dodnes hlídá schody.",
+    lm_flatiron_title: "175 Fifth Avenue",
+    lm_flatiron_text: "Úzký trojúhelník domu v místě, kde Broadway protíná Pátou avenue. Ve své ostré špičce je široký jen asi dva metry.",
+    lm_washington_arch_title: "Washington Square Arch",
+    lm_washington_arch_text: "Mramorový oblouk na začátku Páté avenue, postavený ke stému výročí první prezidentské inaugurace. Pod ním celý den hrají pouliční muzikanti.",
+    lm_high_line_title: "The High Line",
+    lm_high_line_text: "Stará nákladní dráha zvednutá nad ulice, dnes park ve vzduchu. Mezi zachovanými kolejemi rostou divoké trávy.",
+    lm_met_museum_title: "The Metropolitan Museum of Art",
+    lm_met_museum_text: "Jedno z největších muzeí umění na světě s pěti tisíci lety umění. Jeho široké schody na Páté avenue jsou oblíbeným místem schůzek.",
+    lm_brooklyn_bridge_title: "Brooklyn Bridge",
+    lm_brooklyn_bridge_text: "Žulové pilíře a pavučina ocelových lan nesou tenhle most přes East River od roku 1883. Nad provozem vede dřevěná lávka pro pěší.",
   },
   "en": {
     appTitle: "Metropole",
@@ -451,6 +573,67 @@ export const messages: Record<Locale, Record<MessageKey, string>> = {
     engine_drive: "Driving",
     engine_service: "Service",
     engine_sport: "Sport",
+    passport: "Passport",
+    passportProgress: "{city}: {percent} % complete",
+    passportCount: "{got} / {of}",
+    passportLandmarks: "Landmarks",
+    passportDistricts: "Districts",
+    passportMinigames: "Minigames at 3★",
+    passportPhotos: "Photo spots",
+    passportPhotosLater: "Photo spots come with the camera.",
+    passportStampNew: "Stamp: {name}",
+    postcardStamped: "Stamped in your Passport",
+    aboutTitle: "About the maps",
+    aboutIntro: "Metropole draws real cities from open map data. Thank you to everyone who maps them.",
+    aboutOsm: "© OpenStreetMap contributors. Available under the Open Database License (ODbL 1.0).",
+    aboutOverture: "Overture Maps Foundation, overturemaps.org (release {release}). Roads, buildings, water, land use and boundaries: ODbL 1.0, they contain OpenStreetMap data.",
+    aboutOverturePlaces: "Overture places: CDLA Permissive 2.0 for most sources; Foursquare data Apache 2.0, AllThePlaces CC0 1.0. Places are used only as positions and categories, names in the game are fictional.",
+    aboutCityData: "City open data and GHSL heights are not used in this city pack yet; when a city adds them, they are listed here.",
+    aboutShareAlike: "The city packs and the pipeline that builds them are public in the source repository, so the derived map database is available under ODbL.",
+    aboutPostcards: "Postcard texts are written for the game; postcard pictures are drawn by the game, no photos are used.",
+    aboutPack: "City pack built {built}",
+    aboutSource: "Source code",
+    aboutRepoUrl: "https://github.com/lioilsources/GTT",
+    lm_empire_state_title: "Empire State Building",
+    lm_empire_state_text: "An Art Deco giant that rose in just thirteen months and opened in 1931. Its crown is lit in different colours almost every night.",
+    lm_chrysler_title: "Chrysler Building",
+    lm_chrysler_text: "Stacked steel arches with triangular windows make this the shiniest crown on the skyline. For a few months in 1930 it was the tallest building in the world.",
+    lm_grand_central_title: "Grand Central Terminal",
+    lm_grand_central_text: "A great railway hall whose green ceiling is painted with the constellations. Meet under the round brass clock above the information booth.",
+    lm_times_square_title: "Times Square",
+    lm_times_square_text: "Screens and billboards light this crossing so brightly that night never quite falls. On New Year's Eve a glowing ball drops here at midnight.",
+    lm_central_park_title: "Central Park",
+    lm_central_park_text: "A park four kilometres long, shaped by hand out of swamps and rock. Lakes, meadows and stone bridges hide inside the street grid.",
+    lm_rockefeller_title: "30 Rockefeller Plaza",
+    lm_rockefeller_text: "A slender limestone tower with a lookout terrace high above Midtown. In winter the sunken plaza at its foot becomes an ice rink under a giant tree.",
+    lm_un_hq_title: "United Nations Headquarters",
+    lm_un_hq_text: "A slim slab of green glass by the East River, where the countries of the world meet. A long row of member flags lines the avenue outside.",
+    lm_st_patricks_title: "St. Patrick's Cathedral",
+    lm_st_patricks_text: "A white marble cathedral with twin Gothic spires, finished in 1878. Among the towers of Fifth Avenue it looks almost small.",
+    lm_nypl_title: "New York Public Library",
+    lm_nypl_text: "Two stone lions guard the steps of this marble library on Fifth Avenue. Its main reading room is nearly as long as a city block.",
+    lm_carnegie_hall_title: "Carnegie Hall",
+    lm_carnegie_hall_text: "A brick concert hall loved for its sound since 1891. Ask how to get here and a local will tell you: practise.",
+    lm_one_wtc_title: "One World Trade Center",
+    lm_one_wtc_text: "The tallest tower in the Western Hemisphere reaches exactly 1,776 feet with its spire. The number recalls the year of American independence.",
+    lm_wtc_memorial_title: "9/11 Memorial",
+    lm_wtc_memorial_text: "Two square pools fill the footprints of the twin towers. Water falls without end into the voids, framed by the names of the victims.",
+    lm_woolworth_title: "233 Broadway",
+    lm_woolworth_text: "A white terracotta tower nicknamed the Cathedral of Commerce, finished in 1913. Its Gothic top was once higher than any other building on Earth.",
+    lm_city_hall_title: "New York City Hall",
+    lm_city_hall_text: "One of the oldest city halls in the country that still houses its government. A small park with a fountain spreads out in front of it.",
+    lm_federal_hall_title: "Federal Hall",
+    lm_federal_hall_text: "A temple of columns on Wall Street, where the first president took his oath. His bronze statue still watches over the steps.",
+    lm_flatiron_title: "175 Fifth Avenue",
+    lm_flatiron_text: "A narrow triangle of a building where Broadway cuts across Fifth Avenue. At its sharp tip it is only about two metres wide.",
+    lm_washington_arch_title: "Washington Square Arch",
+    lm_washington_arch_text: "A marble arch at the foot of Fifth Avenue, built for the centenary of the first presidential inauguration. Street musicians play beneath it all day.",
+    lm_high_line_title: "The High Line",
+    lm_high_line_text: "An old freight railway lifted above the streets, now a park in the air. Wild grasses grow between the preserved rails.",
+    lm_met_museum_title: "The Metropolitan Museum of Art",
+    lm_met_museum_text: "One of the largest art museums in the world, holding five thousand years of art. Its wide steps on Fifth Avenue are a favourite meeting spot.",
+    lm_brooklyn_bridge_title: "Brooklyn Bridge",
+    lm_brooklyn_bridge_text: "Granite towers and a web of steel cables have carried this bridge across the East River since 1883. A wooden walkway runs above the traffic.",
   },
 };
 
