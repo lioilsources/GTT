@@ -1,0 +1,220 @@
+import { Body, Fixture, Polygon, World, type Vec2Value } from 'planck';
+
+import type { TuningDrive } from '../gen/tuning';
+import type { CarSpec } from '../gen/schema';
+import type { ControlInput } from './controls';
+
+/** Collision categories. */
+export const CAT_BUILDINGS = 1;
+export const CAT_CAR = 2;
+
+const clamp = (v: number, lo: number, hi: number): number => Math.min(hi, Math.max(lo, v));
+
+/**
+ * Player car on a planck.js body with the custom tyre model of specs/drive.md (port of
+ * drive_core car.dart): each step the lateral velocity at each axle is cancelled by an
+ * impulse capped by that axle's grip; past the cap the axle slides, which is the drift.
+ */
+export class Car {
+  readonly body: Body;
+  readonly halfLength: number;
+  readonly halfWidth: number;
+  private readonly fixture: Fixture;
+
+  /** Current front wheel angle (radians, + = left). */
+  wheelAngle = 0;
+  layer = 0;
+  /** Lateral slip left over at each axle in the last step, m/s (skid marks). */
+  rearSlip = 0;
+  frontSlip = 0;
+  braking = false;
+  reversing = false;
+
+  // Scratch vectors: no allocations in the step.
+  private readonly f: Vec2Value = { x: 0, y: 0 };
+  private readonly p: Vec2Value = { x: 0, y: 0 };
+
+  constructor(
+    readonly world: World,
+    readonly spec: CarSpec,
+    readonly t: TuningDrive,
+    x: number,
+    y: number,
+    heading: number,
+    readonly scale: number,
+  ) {
+    this.halfLength = (spec.length_m * scale) / 2;
+    this.halfWidth = (spec.width_m * scale) / 2;
+    this.body = world.createBody({
+      type: 'dynamic',
+      position: { x, y },
+      angle: heading,
+      angularDamping: t.angularDamping,
+      bullet: true,
+    });
+    // Box2D v3 (client F) uses a box rounded by body_round_m; planck has no rounded polygons,
+    // so the same outline is approximated by a box with chamfered corners.
+    const r = t.bodyRoundM, hl = this.halfLength + r, hw = this.halfWidth + r;
+    const outline = [
+      { x: hl, y: hw - r }, { x: hl - r, y: hw }, { x: -hl + r, y: hw }, { x: -hl, y: hw - r },
+      { x: -hl, y: -hw + r }, { x: -hl + r, y: -hw }, { x: hl - r, y: -hw }, { x: hl, y: -hw + r },
+    ];
+    this.fixture = this.body.createFixture({
+      shape: new Polygon(outline),
+      density: spec.mass / (4 * this.halfLength * this.halfWidth),
+      friction: t.carFriction,
+      restitution: t.carRestitution,
+      filterCategoryBits: CAT_CAR,
+      filterMaskBits: CAT_BUILDINGS,
+    });
+    // Same mass as client F: its density over the area of the rounded box, not of the chamfer.
+    const density = spec.mass / (4 * this.halfLength * this.halfWidth);
+    const mass = density * ((2 * this.halfLength + 2 * r) * (2 * this.halfWidth + 2 * r) - (4 - Math.PI) * r * r);
+    const k = mass / this.body.getMass();
+    this.body.setMassData({ mass, center: { x: 0, y: 0 }, I: this.body.getInertia() * k });
+  }
+
+  get x(): number {
+    return this.body.getPosition().x;
+  }
+  get y(): number {
+    return this.body.getPosition().y;
+  }
+  get heading(): number {
+    return this.body.getAngle();
+  }
+  get speed(): number {
+    const v = this.body.getLinearVelocity();
+    return Math.sqrt(v.x * v.x + v.y * v.y);
+  }
+  get axleOffset(): number {
+    return this.halfLength * this.t.axleOffset;
+  }
+
+  /** Signed speed along the car's nose. */
+  get forwardSpeed(): number {
+    const a = this.body.getAngle(), v = this.body.getLinearVelocity();
+    return v.x * Math.cos(a) + v.y * Math.sin(a);
+  }
+
+  /** Sideways slip angle of the whole car (radians), 0 when slow. */
+  get slipAngle(): number {
+    const a = this.body.getAngle(), v = this.body.getLinearVelocity();
+    if (Math.sqrt(v.x * v.x + v.y * v.y) < this.t.countersteerMinMps) return 0;
+    const c = Math.cos(a), s = Math.sin(a);
+    const f = v.x * c + v.y * s;
+    const l = -v.x * s + v.y * c;
+    return Math.atan2(l, Math.abs(f));
+  }
+
+  setLayer(l: number): void {
+    if (l === this.layer) return;
+    this.layer = l;
+    // Buildings only exist on the ground layer; bridges and tunnels use rails instead.
+    this.fixture.setFilterData({ groupIndex: 0, categoryBits: CAT_CAR, maskBits: l === 0 ? CAT_BUILDINGS : 0 });
+  }
+
+  /** Applies controls and tyre forces; call before world.step. */
+  drive(input: ControlInput, dt: number, cruise: number, top: number): void {
+    const t = this.t, spec = this.spec, body = this.body;
+    const ang = body.getAngle();
+    const fx = Math.cos(ang), fy = Math.sin(ang);
+    const v = body.getLinearVelocity();
+    const vx = v.x, vy = v.y;
+    const w = body.getAngularVelocity();
+    const m = body.getMass();
+    const speedF = vx * fx + vy * fy;
+    const speed = Math.sqrt(vx * vx + vy * vy);
+    const topSpeed = Math.min(top, spec.top_speed);
+    const px = this.x, py = this.y;
+
+    // Steering: wheels turn at steer_speed, less lock at speed.
+    const lock = t.steerLockRad - t.steerLockDropRad * clamp(speed / Math.max(topSpeed, 1), 0, 1);
+    let target = -input.steer * lock;
+    const slip = this.slipAngle;
+    if (speedF > t.countersteerMinMps && Math.abs(slip) > t.countersteerMinSlipRad && Math.abs(input.steer) < t.countersteerMaxInput) {
+      target += clamp(slip * t.countersteerGain, -lock, lock);
+    }
+    const maxStep = spec.steer_speed * dt;
+    this.wheelAngle += clamp(target - this.wheelAngle, -maxStep, maxStep);
+
+    // Longitudinal: auto-throttle to cruise (or top with boost), brake, reverse.
+    const wantSpeed = input.boost ? topSpeed : Math.min(cruise, topSpeed);
+    let accel = 0;
+    this.braking = false;
+    this.reversing = false;
+    if (input.brake > 0) {
+      if (speedF > t.brakeMinMps) {
+        accel = -spec.brake * input.brake;
+        this.braking = true;
+      } else {
+        this.reversing = true;
+        accel = speedF > -t.reverseMaxMps ? -spec.power * t.reversePower : 0;
+      }
+    } else {
+      const thr = input.throttle > 0 ? input.throttle : speedF < wantSpeed ? 1 : 0;
+      const k = 1 - clamp(speedF / topSpeed, 0, 1) ** 2;
+      accel = spec.power * thr * k;
+      if (speedF > wantSpeed + t.overspeedMps) accel = -t.engineBrakeMps2;
+    }
+    if (input.handbrake) {
+      accel = Math.min(accel, speedF > t.brakeMinMps ? -t.handbrakeDecelMps2 : 0);
+      // Kick the tail out: yaw towards the steer direction, stronger with speed.
+      if (speedF > t.handbrakeMinMps) {
+        const k = clamp(speedF / t.handbrakeYawRefMps, 0, t.handbrakeYawMax);
+        body.applyAngularImpulse(-input.steer * body.getInertia() * t.handbrakeYaw * k * dt, true);
+      }
+    }
+    const rearOff = -this.axleOffset;
+    this.f.x = fx * accel * m;
+    this.f.y = fy * accel * m;
+    this.p.x = px + fx * rearOff;
+    this.p.y = py + fy * rearOff;
+    body.applyForce(this.f, this.p, true);
+
+    // Drag: rolling + air.
+    const drag = m * (t.dragLinear + t.dragQuadratic * speed);
+    this.f.x = -vx * drag;
+    this.f.y = -vy * drag;
+    body.applyForceToCenter(this.f, true);
+
+    // Lateral tyre impulses.
+    this.frontSlip = this.axle(this.axleOffset, this.wheelAngle, spec.grip_front, dt, fx, fy, vx, vy, w, m, px, py);
+    const rearGrip = input.handbrake ? spec.grip_rear * spec.drift_bias : spec.grip_rear;
+    this.rearSlip = this.axle(rearOff, 0, rearGrip, dt, fx, fy, vx, vy, w, m, px, py);
+    if (speed < t.stopSpeedMps && input.brake === 0 && input.steer === 0) {
+      body.setAngularVelocity(w * t.stopSpinDamping);
+    }
+  }
+
+  /** Cancels lateral velocity at an axle up to its grip; returns the remaining slip (m/s). */
+  private axle(
+    offset: number, steerAngle: number, grip: number, dt: number, fx: number, fy: number,
+    vx: number, vy: number, w: number, m: number, px: number, py: number,
+  ): number {
+    const rx = fx * offset, ry = fy * offset;
+    const vpx = vx - w * ry, vpy = vy + w * rx;
+    const c = Math.cos(steerAngle), s = Math.sin(steerAngle);
+    const dx = fx * c - fy * s, dy = fx * s + fy * c; // wheel direction
+    const nx = -dy, ny = dx; // wheel lateral
+    const vlat = vpx * nx + vpy * ny;
+    const mAxle = m / 2;
+    let j = -vlat * mAxle;
+    const maxJ = grip * mAxle * dt;
+    let slip = 0;
+    if (Math.abs(j) > maxJ) {
+      slip = (Math.abs(j) - maxJ) / mAxle;
+      j = Math.sign(j) * maxJ;
+    }
+    this.f.x = nx * j;
+    this.f.y = ny * j;
+    this.p.x = px + rx;
+    this.p.y = py + ry;
+    this.body.applyLinearImpulse(this.f, this.p, true);
+    return slip;
+  }
+
+  destroy(): void {
+    this.world.destroyBody(this.body);
+  }
+}
