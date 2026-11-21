@@ -1,0 +1,20 @@
+name: game_loop
+description: Loop glue (specs/loop.md), economy (specs/economy.md) and the save format (specs/save.md) – pure rules, no Flutter.
+version: 0.1.0
+publish_to: none
+resolution: workspace
+
+environment:
+  sdk: ^3.12.2
+
+dependencies:
+  meta_progress:
+    path: ../meta_progress
+  rules_core:
+    path: ../rules_core
+  shared_gen:
+    path: ../shared_gen
+
+dev_dependencies:
+  lints: ^6.0.0
+  test: ^1.26.0

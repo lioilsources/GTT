@@ -15,21 +15,25 @@ void showTuningPanel(
   MetropoleGame game, {
   required void Function(ControlSchemeId) onScheme,
   required Future<void> Function() onBench,
+  Future<void> Function()? onResetSave,
 }) {
   showModalBottomSheet<void>(
     context: context,
     isScrollControlled: true,
     backgroundColor: const Color(Tokens.colorUiSheet),
     barrierColor: Colors.transparent,
-    builder: (_) => _TuningPanel(game: game, onScheme: onScheme, onBench: onBench),
+    builder: (_) => _TuningPanel(game: game, onScheme: onScheme, onBench: onBench, onResetSave: onResetSave),
   );
 }
 
 class _TuningPanel extends StatefulWidget {
-  const _TuningPanel({required this.game, required this.onScheme, required this.onBench});
+  const _TuningPanel({required this.game, required this.onScheme, required this.onBench, this.onResetSave});
   final MetropoleGame game;
   final void Function(ControlSchemeId) onScheme;
   final Future<void> Function() onBench;
+
+  /// Debug "reset save" (specs/save.md).
+  final Future<void> Function()? onResetSave;
 
   @override
   State<_TuningPanel> createState() => _TuningPanelState();
@@ -198,6 +202,15 @@ class _TuningPanelState extends State<_TuningPanel> {
                   widget.onBench();
                 },
               ),
+              if (widget.onResetSave case final reset?)
+                OutlinedButton.icon(
+                  icon: const Icon(Icons.delete_forever, size: 16),
+                  label: Text(l.saveReset),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    reset();
+                  },
+                ),
             ],
           ),
           const SizedBox(height: 16),
