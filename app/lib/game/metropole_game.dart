@@ -14,6 +14,7 @@ import 'paint/car_painter.dart';
 import 'paint/controls_painter.dart';
 import 'paint/pedestrians_painter.dart';
 import 'paint/props_painter.dart';
+import 'paint/traffic_painter.dart';
 
 /// Everything loaded before the first frame.
 class GameAssets {
@@ -156,6 +157,7 @@ class MetropoleGame extends Game {
 
   void setNight(bool v) {
     night = v;
+    drive.traffic?.night = v;
     renderer.palette = v ? Palette.nightPalette : Palette.day;
   }
 
@@ -299,7 +301,13 @@ class MetropoleGame extends Game {
           paintProps(c, drive.propsNear(car.x, car.y, camera.visibleRadius(_size, tuning)), night: night);
           paintPedestrians(c, peds);
           paintWorld?.call(c);
+          final tr = drive.traffic;
+          if (tr != null && car.layer >= 0) {
+            paintTrafficLights(c, tr, camera.x, camera.y, camera.visibleRadius(_size, tuning), tuning.traffic);
+          }
         }
+        final tr = drive.traffic;
+        if (tr != null) paintTraffic(c, tr, layer, night: night);
         if (layer == car.layer) paintCar(c, car, night: night);
       },
     );

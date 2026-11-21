@@ -6,6 +6,7 @@ import 'package:world_engine/core.dart';
 import 'car.dart';
 import 'controls.dart';
 import 'props.dart';
+import 'traffic/traffic.dart';
 
 /// Tracks which road edge the car is on, and with it the layer (−1 tunnel, 0, +1 bridge).
 ///
@@ -68,6 +69,7 @@ class DriveWorld {
     world = World(gravity: Vector2.zero());
     layers = LayerTracker(city.graph, tuning.layers);
     spawn(city.startX, city.startY, city.startHeading);
+    traffic = tuning.traffic.enabled ? Traffic(world, city, tuning) : null;
   }
 
   final City city;
@@ -76,6 +78,9 @@ class DriveWorld {
   late final World world;
   late Car car;
   late final LayerTracker layers;
+
+  /// AI traffic and lights (specs/traffic.md); null when `traffic.enabled` is off.
+  late final Traffic? traffic;
   final input = ControlInput();
   final Map<int, Body> _colliders = {};
   final Map<int, PropSet> props = {};
@@ -159,9 +164,11 @@ class DriveWorld {
     time += step;
     beforeStep?.call(step);
     car.drive(input, step, cruise: tuning.speedMps.cruise, top: tuning.speedMps.topDefault);
+    traffic?.preStep(step, car);
     world.step(step, subStepCount: _d.substeps);
     layers.update(car.x, car.y);
     car.setLayer(layers.layer);
+    traffic?.postStep(car);
     if (car.layer != 0) _rails();
     _props(step);
     _skidMarks();
@@ -277,5 +284,8 @@ class DriveWorld {
     return best;
   }
 
-  void dispose() => world.destroy();
+  void dispose() {
+    traffic?.dispose();
+    world.destroy();
+  }
 }

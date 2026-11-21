@@ -9,6 +9,9 @@ import 'controls.dart';
 const int catBuildings = 1;
 const int catCar = 2;
 
+/// AI traffic (specs/traffic.md): collides with the player's car only.
+const int catTraffic = 4;
+
 /// Player car on a Box2D body with a custom tyre model (METROPOLE_PLAN 7.2):
 /// each step the lateral velocity at each axle is cancelled by an impulse capped by
 /// that axle's grip; past the cap the axle slides, which is the drift.
@@ -29,7 +32,7 @@ class Car {
       ShapeDef(
         density: spec.mass / (4 * halfLength * halfWidth),
         material: SurfaceMaterial(friction: t.carFriction, restitution: t.carRestitution),
-        filter: Filter(categoryBits: catCar, maskBits: catBuildings),
+        filter: Filter(categoryBits: catCar, maskBits: catBuildings | catTraffic),
         enableContactEvents: true,
       ),
     );
@@ -81,8 +84,9 @@ class Car {
   void setLayer(int l) {
     if (l == layer) return;
     layer = l;
-    // Buildings only exist on the ground layer; bridges and tunnels use rails instead.
-    _shape.filter = Filter(categoryBits: catCar, maskBits: l == 0 ? catBuildings : 0);
+    // Buildings only exist on the ground layer; bridges and tunnels use rails instead. Traffic
+    // cars switch their own mask by layer (traffic.dart).
+    _shape.filter = Filter(categoryBits: catCar, maskBits: (l == 0 ? catBuildings : 0) | catTraffic);
   }
 
   /// Applies controls and tyre forces; call before `world.step`.
