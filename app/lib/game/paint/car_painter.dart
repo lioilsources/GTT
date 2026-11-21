@@ -3,69 +3,106 @@ import 'dart:ui';
 import 'package:drive_core/drive_core.dart';
 import 'package:shared_gen/shared_gen.dart';
 
+import 'car_shape.dart';
+
 /// Top-down car drawn in world space (canvas transformed to metres, y north).
 void paintCar(Canvas canvas, Car car, {required bool night}) {
-  final hl = car.halfLength, hw = car.halfWidth;
-  final p = Paint();
-  canvas.save();
-  canvas.translate(car.x, car.y);
-  canvas.rotate(car.heading);
-  // Shadow.
-  p.color = const Color(Tokens.colorCarShadow);
-  canvas.drawRRect(
-    RRect.fromRectAndRadius(Rect.fromLTRB(-hl + 0.6, -hw - 0.6, hl + 0.6, hw - 0.6), Radius.circular(hw * 0.5)),
-    p,
+  _paintShape(
+    canvas,
+    car.spec,
+    car.x,
+    car.y,
+    car.heading,
+    car.halfLength,
+    car.halfWidth,
+    car.axleOffset,
+    wheelAngle: car.wheelAngle,
+    night: night,
+    cone: night,
+    rear: car.braking || car.reversing
+        ? (car.reversing ? const Color(Tokens.colorCarReverse) : const Color(Tokens.colorCarBrake))
+        : null,
   );
-  if (night) {
-    // Headlight cones.
-    final cone = Path()
+}
+
+/// Parked cars (specs/cars.md): same shape, straight wheels, lights off.
+void paintParked(Canvas canvas, Iterable<ParkedCar> cars, Map<String, CarSpec> specs, Tuning t) {
+  for (final p in cars) {
+    final s = specs[p.carId];
+    if (s == null) continue;
+    final hl = s.lengthM * t.carScale / 2, hw = s.widthM * t.carScale / 2;
+    _paintShape(canvas, s, p.x, p.y, p.heading, hl, hw, hl * t.drive.axleOffset, wheelAngle: 0, night: false, cone: false);
+  }
+}
+
+void _paintShape(
+  Canvas canvas,
+  CarSpec spec,
+  double x,
+  double y,
+  double heading,
+  double hl,
+  double hw,
+  double axle, {
+  required double wheelAngle,
+  required bool night,
+  required bool cone,
+  Color? rear,
+}) {
+  final p = Paint();
+  final paint = Color(paintArgb(spec));
+  final shape = carShape(spec.class_, hl, hw);
+  canvas.save();
+  canvas.translate(x, y);
+  canvas.rotate(heading);
+  RRect rr(CarRect r, double radius) =>
+      RRect.fromRectAndRadius(Rect.fromLTRB(r.x0, r.y0, r.x1, r.y1), Radius.circular(radius));
+  // Shadow first, then the headlight cone and the wheels under the body.
+  p.color = const Color(Tokens.colorCarShadow);
+  canvas.drawRRect(rr(shape.first, hw * 0.5), p);
+  if (cone) {
+    final path = Path()
       ..moveTo(hl, hw * 0.6)
       ..lineTo(hl + 14 * hw, hw * 4)
       ..lineTo(hl + 14 * hw, -hw * 4)
       ..lineTo(hl, -hw * 0.6)
       ..close();
     p.color = const Color(Tokens.colorCarHeadlightCone);
-    canvas.drawPath(cone, p);
+    canvas.drawPath(path, p);
   }
-  // Wheels (front ones steer).
   p.color = const Color(Tokens.colorCarTyre);
   final ww = hl * 0.36, wt = hw * 0.32;
-  for (final fx in [car.axleOffset, -car.axleOffset]) {
+  for (final fx in [axle, -axle]) {
     for (final sy in [hw * 0.92, -hw * 0.92]) {
       canvas.save();
       canvas.translate(fx, sy);
-      if (fx > 0) canvas.rotate(car.wheelAngle);
+      if (fx > 0) canvas.rotate(wheelAngle);
       canvas.drawRect(Rect.fromCenter(center: Offset.zero, width: ww, height: wt), p);
       canvas.restore();
     }
   }
-  // Body.
-  p.color = Color(paintArgb(car.spec));
-  canvas.drawRRect(RRect.fromRectAndRadius(Rect.fromLTRB(-hl, -hw, hl, hw), Radius.circular(hw * 0.45)), p);
-  // Cabin and glass.
-  p.color = const Color(Tokens.colorCarCabin);
-  canvas.drawRRect(
-    RRect.fromRectAndRadius(Rect.fromLTRB(-hl * 0.42, -hw * 0.78, hl * 0.3, hw * 0.78), Radius.circular(hw * 0.25)),
-    p,
-  );
-  p.color = Color.lerp(Color(paintArgb(car.spec)), const Color(Tokens.colorUiText), 0.12)!;
-  canvas.drawRRect(
-    RRect.fromRectAndRadius(Rect.fromLTRB(-hl * 0.3, -hw * 0.66, hl * 0.12, hw * 0.66), Radius.circular(hw * 0.2)),
-    p,
-  );
-  // Racing stripe.
-  p.color = const Color(Tokens.colorCarStripe);
-  canvas.drawRect(Rect.fromLTRB(hl * 0.3, -hw * 0.12, hl * 0.98, hw * 0.12), p);
-  canvas.drawRect(Rect.fromLTRB(-hl * 0.98, -hw * 0.12, -hl * 0.42, hw * 0.12), p);
-  // Lights.
-  p.color = night ? const Color(Tokens.colorCarHeadlightNight) : const Color(Tokens.colorCarHeadlightDay);
-  canvas.drawRect(Rect.fromLTRB(hl * 0.9, hw * 0.5, hl, hw * 0.85), p);
-  canvas.drawRect(Rect.fromLTRB(hl * 0.9, -hw * 0.85, hl, -hw * 0.5), p);
-  p.color = car.braking || car.reversing
-      ? (car.reversing ? const Color(Tokens.colorCarReverse) : const Color(Tokens.colorCarBrake))
-      : const Color(Tokens.colorCarTail);
-  canvas.drawRect(Rect.fromLTRB(-hl, hw * 0.5, -hl * 0.92, hw * 0.85), p);
-  canvas.drawRect(Rect.fromLTRB(-hl, -hw * 0.85, -hl * 0.92, -hw * 0.5), p);
+  for (final r in shape.skip(1)) {
+    switch (r.part) {
+      case CarPart.body:
+        p.color = paint;
+        canvas.drawRRect(rr(r, hw * 0.45), p);
+      case CarPart.cabin:
+        p.color = const Color(Tokens.colorCarCabin);
+        canvas.drawRRect(rr(r, hw * 0.25), p);
+      case CarPart.glass:
+        p.color = Color.lerp(paint, const Color(Tokens.colorUiText), 0.12)!;
+        canvas.drawRRect(rr(r, hw * 0.2), p);
+      case CarPart.head:
+        p.color = night ? const Color(Tokens.colorCarHeadlightNight) : const Color(Tokens.colorCarHeadlightDay);
+        canvas.drawRect(Rect.fromLTRB(r.x0, r.y0, r.x1, r.y1), p);
+      case CarPart.tail:
+        p.color = rear ?? const Color(Tokens.colorCarTail);
+        canvas.drawRect(Rect.fromLTRB(r.x0, r.y0, r.x1, r.y1), p);
+      case CarPart.shadow || CarPart.stripe || CarPart.detail:
+        p.color = Color(r.color ?? Tokens.colorCarStripe);
+        canvas.drawRect(Rect.fromLTRB(r.x0, r.y0, r.x1, r.y1), p);
+    }
+  }
   canvas.restore();
 }
 

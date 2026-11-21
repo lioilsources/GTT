@@ -15,6 +15,7 @@ class Hud extends StatelessWidget {
     required this.onTuning,
     this.onPhone,
     this.onPassport,
+    this.onCarAction,
   });
 
   final MetropoleGame game;
@@ -23,6 +24,9 @@ class Hud extends StatelessWidget {
   final VoidCallback onTuning;
   final VoidCallback? onPhone;
   final VoidCallback? onPassport;
+
+  /// The context button next to a parked car or in the garage (specs/cars.md).
+  final void Function(CarAction action)? onCarAction;
 
   @override
   Widget build(BuildContext context) {
@@ -79,6 +83,39 @@ class Hud extends StatelessWidget {
                             style: const TextStyle(color: Color(Tokens.colorUiText), fontSize: Tokens.fontNotice),
                           ),
                         ),
+                      ),
+                    ),
+                  ),
+                if (s.carName.isNotEmpty)
+                  Positioned(
+                    left: 12,
+                    bottom: 60,
+                    child: IgnorePointer(
+                      child: _Pill(
+                        child: Text(
+                          s.carName,
+                          style: const TextStyle(
+                            color: Color(Tokens.colorUiText),
+                            fontSize: Tokens.fontHudSmall,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                if (s.carAction case final action?)
+                  Positioned(
+                    left: 0,
+                    right: 0,
+                    bottom: 96,
+                    child: Center(
+                      child: FilledButton(
+                        style: FilledButton.styleFrom(
+                          backgroundColor: const Color(Tokens.colorBrandAccent),
+                          foregroundColor: const Color(Tokens.colorUiBackground),
+                        ),
+                        onPressed: () => onCarAction?.call(action),
+                        child: Text(action == CarAction.board ? l.boardCar : l.garage),
                       ),
                     ),
                   ),

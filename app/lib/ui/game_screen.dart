@@ -12,6 +12,7 @@ import '../main.dart' show appClock;
 import '../phone/nav_hud.dart';
 import '../phone/phone_controller.dart';
 import '../phone/phone_sheet.dart';
+import 'garage_sheet.dart';
 import 'hud.dart';
 import 'passport.dart';
 import 'tuning_panel.dart';
@@ -88,6 +89,12 @@ class _GameScreenState extends State<GameScreen> {
                 scheme: _scheme,
                 onNight: () => setState(() => game.setNight(!game.night)),
                 onPhone: phone.toggle,
+                onCarAction: (a) async {
+                  if (a == CarAction.board) return game.boardCandidate();
+                  game.carsPaused = true;
+                  await showGarage(context, game.fleet);
+                  game.carsPaused = false;
+                },
                 onTuning: () => showTuningPanel(
                   context,
                   game,
