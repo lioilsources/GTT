@@ -167,6 +167,16 @@
   --color-npc-vibe: #FF6FA8;
   --color-npc-vibe-track: #FFFFFF26;
   --color-npc-contact: #7CE08A;
+  --color-car-paint-comet-red: #D7263D;
+  --color-car-paint-pip-teal: #2BA6A0;
+  --color-car-paint-brute-orange: #E8772E;
+  --color-car-paint-cab-yellow: #F2C12E;
+  --color-car-paint-hauler-green: #4E6B3A;
+  --color-car-detail-muscle-stripe: #1B1B1FDD;
+  --color-car-detail-taxi-sign: #FFF6D0;
+  --color-car-detail-taxi-checker: #1B1B1F;
+  --color-car-detail-bed: #2F3A28;
+  --color-car-detail-bed-rim: #1B1B1F;
   --light-day-roof-light: 1.12;
   --light-day-sun-x: -0.6;
   --light-day-sun-y: 0.8;

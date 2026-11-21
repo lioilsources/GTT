@@ -128,6 +128,8 @@ export class Tuning {
   readonly passport: TuningPassport;
   /** NPC dialogue (specs/dialogue.md): skit queue, vibe meter, phone contact chance (integers, P0). */
   readonly npc: TuningNpc;
+  /** Cars, switching and the garage (specs/cars.md). Distances in world metres (after car_scale). */
+  readonly cars: TuningCars;
 
   private constructor(r: R) {
     this.carScale = r.d('car_scale');
@@ -159,6 +161,7 @@ export class Tuning {
     this.traffic = new TuningTraffic(r.sub('traffic'));
     this.passport = new TuningPassport(r.sub('passport'));
     this.npc = new TuningNpc(r.sub('npc'));
+    this.cars = new TuningCars(r.sub('cars'));
   }
 
   toJson(): Record<string, unknown> {
@@ -192,6 +195,7 @@ export class Tuning {
       traffic: this.traffic.toJson(),
       passport: this.passport.toJson(),
       npc: this.npc.toJson(),
+      cars: this.cars.toJson(),
     };
   }
 
@@ -1925,4 +1929,91 @@ export class TuningNpc {
   }
 
   static readonly keys = ['recent_k', 'vibe_max', 'vibe_start', 'contact_min_vibe', 'contact_base_pct', 'contact_step_pct', 'contact_max_pct'] as const;
+}
+
+/** Cars, switching and the garage (specs/cars.md). Distances in world metres (after car_scale). */
+export class TuningCars {
+  startCar: string;
+  startOwned: string[];
+  startCash: number;
+  /** centre to centre, player car to a parked car */
+  boardDistanceM: number;
+  boardSpeedMps: number;
+  /** around the garage spot's parking point */
+  garageRadiusM: number;
+  garageSpeedMps: number;
+  /** the context button stays this long after the stop (auto-throttle moves on) */
+  actionHoldS: number;
+  readonly parked: TuningCarsParked;
+
+  constructor(r: R) {
+    this.startCar = r.s('start_car');
+    this.startOwned = r.sl('start_owned');
+    this.startCash = r.i('start_cash');
+    this.boardDistanceM = r.d('board_distance_m');
+    this.boardSpeedMps = r.d('board_speed_mps');
+    this.garageRadiusM = r.d('garage_radius_m');
+    this.garageSpeedMps = r.d('garage_speed_mps');
+    this.actionHoldS = r.d('action_hold_s');
+    this.parked = new TuningCarsParked(r.sub('parked'));
+  }
+
+  toJson(): Record<string, unknown> {
+    return {
+      start_car: this.startCar,
+      start_owned: this.startOwned,
+      start_cash: this.startCash,
+      board_distance_m: this.boardDistanceM,
+      board_speed_mps: this.boardSpeedMps,
+      garage_radius_m: this.garageRadiusM,
+      garage_speed_mps: this.garageSpeedMps,
+      action_hold_s: this.actionHoldS,
+      parked: this.parked.toJson(),
+    };
+  }
+}
+
+export class TuningCarsParked {
+  salt: number;
+  perChunk: number;
+  attempts: number;
+  /** RoadClass: primary, secondary, tertiary, residential */
+  classes: number[];
+  models: string[];
+  segmentMarginM: number;
+  curbGapM: number;
+  minInnerM: number;
+  minSpacingM: number;
+  clearPlayerM: number;
+  forgetM: number;
+
+  constructor(r: R) {
+    this.salt = r.i('salt');
+    this.perChunk = r.i('per_chunk');
+    this.attempts = r.i('attempts');
+    this.classes = r.il('classes');
+    this.models = r.sl('models');
+    this.segmentMarginM = r.d('segment_margin_m');
+    this.curbGapM = r.d('curb_gap_m');
+    this.minInnerM = r.d('min_inner_m');
+    this.minSpacingM = r.d('min_spacing_m');
+    this.clearPlayerM = r.d('clear_player_m');
+    this.forgetM = r.d('forget_m');
+  }
+
+  toJson(): Record<string, unknown> {
+    return {
+      salt: this.salt,
+      per_chunk: this.perChunk,
+      attempts: this.attempts,
+      classes: this.classes,
+      models: this.models,
+      segment_margin_m: this.segmentMarginM,
+      curb_gap_m: this.curbGapM,
+      min_inner_m: this.minInnerM,
+      min_spacing_m: this.minSpacingM,
+      clear_player_m: this.clearPlayerM,
+      forget_m: this.forgetM,
+    };
+  }
 }

@@ -28,6 +28,7 @@ export interface CarSpec {
   price: number;
   rarity: 'common' | 'rare' | 'epic' | 'legendary';
   tuning_slots: ('engine' | 'tyres' | 'brakes' | 'weight' | 'drift')[];
+  /** Key in design/tokens.json color.carPaint (body colour, tinted at runtime). */
   paint: string;
 }
 

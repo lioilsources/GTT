@@ -10,7 +10,7 @@ export const cityIdNames: Record<CityId, string> = {
 };
 
 /** Cars defined in content/cars/<id>.json. */
-export const carIdValues = ['m0_coupe'] as const;
+export const carIdValues = ['hatch_pip', 'm0_coupe', 'muscle_brute', 'pickup_hauler', 'taxi_metro'] as const;
 export type CarId = (typeof carIdValues)[number];
 
 /** Minigame engines (METROPOLE_PLAN 9.3). */

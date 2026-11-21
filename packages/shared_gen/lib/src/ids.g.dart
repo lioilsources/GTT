@@ -25,7 +25,11 @@ enum CityId {
 
 /// Cars defined in content/cars/<id>.json.
 enum CarId {
+  hatchPip('hatch_pip'),
   m0Coupe('m0_coupe'),
+  muscleBrute('muscle_brute'),
+  pickupHauler('pickup_hauler'),
+  taxiMetro('taxi_metro'),
   ;
 
   const CarId(this.id);

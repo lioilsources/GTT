@@ -1,0 +1,21 @@
+{
+  "id": "pickup_hauler",
+  "name": "Torvik Hauler",
+  "class": "pickup",
+  "length_m": 5.4,
+  "width_m": 2.0,
+  "mass": 2100,
+  "power": 7.2,
+  "brake": 12.5,
+  "grip_front": 19.5,
+  "grip_rear": 18.0,
+  "drift_bias": 0.36,
+  "steer_speed": 3.5,
+  "top_speed": 35.0,
+  "seats": 3,
+  "tags": ["nyc"],
+  "price": 18000,
+  "rarity": "common",
+  "tuning_slots": ["engine", "tyres", "brakes", "weight", "drift"],
+  "paint": "hauler_green"
+}

@@ -51,7 +51,9 @@ protoc 36.2, protoc_plugin 25.1.0, protoc-gen-go 1.36.12, @bufbuild/protoc-gen-e
 | `schema/npc.schema.json` | `Npc*` (v `schema.g.dart`) | `Npc*` (v `schema.ts`) |
 | `tools/citypack/proto` | `citypack_pb.dart` | `pb/citypack_pb.ts` (+ Go do citypacku) |
 
-Typy v `Tuning` se odvozují z literálů: `25` = int, `25.0` = double. Generované soubory se commitují
+Typy v `Tuning` se odvozují z literálů: `25` = int, `25.0` = double. Skupina barev v tokenech s `"$map": true` se
+generuje jako mapa klíč → barva (`Tokens.colorCarPaint[...]`, TS `tokens.colorCarPaint[...]`); auta na ni
+odkazují polem `paint` a `metro validate` hlídá, že klíč existuje. Generované soubory se commitují
 a needitují; `metro gen --check` v CI spadne, když nesedí.
 
 ## Postup jedné feature (DUALSTACK 8)

@@ -25,6 +25,6 @@
     "price": {"type": "integer", "minimum": 0},
     "rarity": {"enum": ["common", "rare", "epic", "legendary"]},
     "tuning_slots": {"type": "array", "items": {"enum": ["engine", "tyres", "brakes", "weight", "drift"]}},
-    "paint": {"type": "string", "pattern": "^#[0-9A-Fa-f]{6}$"}
+    "paint": {"type": "string", "pattern": "^[a-z0-9_]+$", "description": "Key in design/tokens.json color.carPaint (body colour, tinted at runtime)."}
   }
 }

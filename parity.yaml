@@ -177,3 +177,11 @@
   lead: web
   flutter: todo
   web: todo
+- id: F-018
+  name: Cars, switching and the garage (5 cars, parked cars, garage)
+  level: P0
+  spec: specs/cars.md@1
+  vectors: vectors/cars.json
+  lead: web
+  flutter: todo
+  web: todo
