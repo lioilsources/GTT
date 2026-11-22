@@ -2664,16 +2664,19 @@ export class TuningWeather {
 export class TuningWeatherCities {
   nyc: boolean;
   prague: boolean;
+  tokyo: boolean;
 
   constructor(r: R) {
     this.nyc = r.b('nyc');
     this.prague = r.b('prague');
+    this.tokyo = r.b('tokyo');
   }
 
   toJson(): Record<string, unknown> {
     return {
       nyc: this.nyc,
       prague: this.prague,
+      tokyo: this.tokyo,
     };
   }
 }
@@ -2728,16 +2731,19 @@ export class TuningShops {
 export class TuningShopsCities {
   nyc: boolean;
   prague: boolean;
+  tokyo: boolean;
 
   constructor(r: R) {
     this.nyc = r.b('nyc');
     this.prague = r.b('prague');
+    this.tokyo = r.b('tokyo');
   }
 
   toJson(): Record<string, unknown> {
     return {
       nyc: this.nyc,
       prague: this.prague,
+      tokyo: this.tokyo,
     };
   }
 }
@@ -2913,16 +2919,19 @@ export class TuningStyle {
 export class TuningStyleRisograph {
   nyc: boolean;
   prague: boolean;
+  tokyo: boolean;
 
   constructor(r: R) {
     this.nyc = r.b('nyc');
     this.prague = r.b('prague');
+    this.tokyo = r.b('tokyo');
   }
 
   toJson(): Record<string, unknown> {
     return {
       nyc: this.nyc,
       prague: this.prague,
+      tokyo: this.tokyo,
     };
   }
 }
@@ -2931,16 +2940,19 @@ export class TuningStyleRisograph {
 export class TuningStyleCastShadow {
   nyc: boolean;
   prague: boolean;
+  tokyo: boolean;
 
   constructor(r: R) {
     this.nyc = r.b('nyc');
     this.prague = r.b('prague');
+    this.tokyo = r.b('tokyo');
   }
 
   toJson(): Record<string, unknown> {
     return {
       nyc: this.nyc,
       prague: this.prague,
+      tokyo: this.tokyo,
     };
   }
 }
@@ -2948,16 +2960,19 @@ export class TuningStyleCastShadow {
 export class TuningStyleCrosswalks {
   nyc: boolean;
   prague: boolean;
+  tokyo: boolean;
 
   constructor(r: R) {
     this.nyc = r.b('nyc');
     this.prague = r.b('prague');
+    this.tokyo = r.b('tokyo');
   }
 
   toJson(): Record<string, unknown> {
     return {
       nyc: this.nyc,
       prague: this.prague,
+      tokyo: this.tokyo,
     };
   }
 }

@@ -1,0 +1,52 @@
+# Curated Tokyo spots (same rules as nyc/spots.yaml). Koulená is New York only, Kuličky, Čára, Nohejbal Prague only (catalog cities).
+# Commercial places keep a fictional name (R10); the point is a real location of that kind.
+spots:
+  - {id: marunouchi_plaza, kind: plaza, name: Marunouchi Station Plaza, lat: 35.68150, lon: 139.76550}
+  - {id: ginza_crossing, kind: plaza, name: Ginza 4-chōme Crossing, lat: 35.67150, lon: 139.76500}
+  - {id: hibiya_park, kind: park, name: Hibiya Park, lat: 35.67350, lon: 139.75600}
+  - {id: ueno_park, kind: park, name: Ueno Park, lat: 35.71450, lon: 139.77300}
+  # Minigames (9.5): each on a fitting place
+  - {id: shimbashi_izakaya, kind: bar, name: Izakaya Tōmei, lat: 35.66600, lon: 139.75800, minigame: sirky}
+  - {id: yurakucho_yakitori, kind: bar, name: Gādo-shita Yakitori, lat: 35.67480, lon: 139.76250, minigame: oko}
+  - {id: hibiya_go, kind: park, name: Hibiya Park Fountain, lat: 35.67250, lon: 139.75750, minigame: dama}
+  - {id: asakusa_dice, kind: plaza, name: Asakusa Rokku, lat: 35.71350, lon: 139.79300, minigame: desetitisic}
+  - {id: kanda_darts, kind: bar, name: Kanda Darts Bar Hachi, lat: 35.69350, lon: 139.77100, minigame: sipky}
+  - {id: ueno_shooting, kind: park, name: Shinobazu Pond Stalls, lat: 35.71150, lon: 139.77050, minigame: strelnice}
+  - {id: tokyo_station_taxi, kind: stand, name: Yaesu Taxi Rank, lat: 35.68000, lon: 139.76950, minigame: taxi}
+  # Player garage (specs/cars.md)
+  - {id: kanda_garage, kind: garage, name: Kanda Tower Parking, lat: 35.69100, lon: 139.76500}
+  # Ringing phone booths (specs/booths.md)
+  - {id: booth_ginza, kind: booth, name: Phone booth Ginza, lat: 35.67000, lon: 139.76300}
+  - {id: booth_akihabara, kind: booth, name: Phone booth Akihabara, lat: 35.69900, lon: 139.77150}
+  # Subway entrances (specs/travel.md): no official logos, line as a label only
+  - {id: subway_tokyo, kind: subway, name: Tōkyō, lat: 35.68200, lon: 139.76600}
+  - {id: subway_ginza, kind: subway, name: Ginza, lat: 35.67180, lon: 139.76420}
+  - {id: subway_nihombashi, kind: subway, name: Nihombashi, lat: 35.68230, lon: 139.77380}
+  - {id: subway_kasumigaseki, kind: subway, name: Kasumigaseki, lat: 35.67350, lon: 139.75050}
+  - {id: subway_akasaka_mitsuke, kind: subway, name: Akasaka-mitsuke, lat: 35.67700, lon: 139.73700}
+  - {id: subway_roppongi, kind: subway, name: Roppongi, lat: 35.66300, lon: 139.73200}
+  - {id: subway_kudanshita, kind: subway, name: Kudanshita, lat: 35.69560, lon: 139.75100}
+  - {id: subway_akihabara, kind: subway, name: Akihabara, lat: 35.69800, lon: 139.77450}
+  - {id: subway_ueno, kind: subway, name: Ueno, lat: 35.71150, lon: 139.77700}
+  - {id: subway_asakusa, kind: subway, name: Asakusa, lat: 35.71100, lon: 139.79800}
+  - {id: subway_tsukiji, kind: subway, name: Tsukiji, lat: 35.66800, lon: 139.77200}
+  # Photo spots (specs/photo.md): views, not landmarks
+  - {id: photo_tower_shiba, kind: photo, name: Tokyo Tower from Shiba Park, lat: 35.65550, lon: 139.74950, look: {lat: 35.65858, lon: 139.74543}, subject_m: 80}
+  - {id: photo_skytree_jikken, kind: photo, name: Skytree over the Sumida, lat: 35.71000, lon: 139.79900, look: {lat: 35.71006, lon: 139.81070}, subject_m: 120}
+  - {id: photo_nijubashi, kind: photo, name: Nijūbashi from the plaza, lat: 35.68000, lon: 139.75550, look: {lat: 35.68030, lon: 139.75280}, subject_m: 60}
+  - {id: photo_station_front, kind: photo, name: Station façade from Gyōkō-dōri, lat: 35.68100, lon: 139.76200, look: {lat: 35.68120, lon: 139.76710}, subject_m: 90}
+  - {id: photo_kachidoki, kind: photo, name: Kachidoki Bridge from Tsukiji, lat: 35.66450, lon: 139.77250, look: {lat: 35.66270, lon: 139.77450}, subject_m: 70}
+  - {id: photo_nihonbashi, kind: photo, name: Nihonbashi under the expressway, lat: 35.68300, lon: 139.77300, look: {lat: 35.68410, lon: 139.77460}, subject_m: 40}
+  - {id: photo_ginza_lights, kind: photo, name: Chūō-dōri canyon, lat: 35.67400, lon: 139.76800, look: {lat: 35.67050, lon: 139.76400}, subject_m: 60}
+  - {id: photo_moat_chidorigafuchi, kind: photo, name: Palace moat at Hanzōmon, lat: 35.68500, lon: 139.74400, look: {lat: 35.68750, lon: 139.74650}, subject_m: 70}
+  - {id: photo_kanda_river, kind: photo, name: Kanda River at Ochanomizu, lat: 35.70000, lon: 139.76300, look: {lat: 35.70050, lon: 139.76650}, subject_m: 50}
+  - {id: photo_akasaka_palace, kind: photo, name: Akasaka Palace gate, lat: 35.68200, lon: 139.73050, look: {lat: 35.68030, lon: 139.72820}, subject_m: 60}
+  # Shops and bars (specs/shops.md), fictional names
+  - {id: food_taiyaki_ningyocho, kind: food, name: Kame Taiyaki, lat: 35.68600, lon: 139.78200}
+  - {id: food_ramen_kanda, kind: food, name: Ramen Yokocho Kanda, lat: 35.69200, lon: 139.77000}
+  - {id: food_onigiri_ginza, kind: food, name: Hoshi Onigiri, lat: 35.67000, lon: 139.76800}
+  - {id: food_melonpan_asakusa, kind: food, name: Asakusa Melonpan Stand, lat: 35.71250, lon: 139.79450}
+  - {id: souvenir_nakamise, kind: souvenir, name: Kaminari Omiyage, lat: 35.71200, lon: 139.79550}
+  - {id: souvenir_akihabara, kind: souvenir, name: Denki Gacha Corner, lat: 35.69950, lon: 139.77250}
+  - {id: souvenir_tsukiji, kind: souvenir, name: Uogashi Knife Shop, lat: 35.66600, lon: 139.77000}
+  - {id: bar_yurakucho, kind: bar, name: Standing Bar Kōkashita, lat: 35.67550, lon: 139.76300}

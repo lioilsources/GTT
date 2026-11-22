@@ -2868,15 +2868,19 @@ class TuningWeather {
 class TuningWeatherCities {
   TuningWeatherCities._(_R r)
       : nyc = r.b('nyc'),
-        prague = r.b('prague');
+        prague = r.b('prague'),
+        tokyo = r.b('tokyo');
 
   bool nyc;
 
   bool prague;
 
+  bool tokyo;
+
   Map<String, Object> toJson() => {
         'nyc': nyc,
         'prague': prague,
+        'tokyo': tokyo,
       };
 }
 
@@ -2936,15 +2940,19 @@ class TuningShops {
 class TuningShopsCities {
   TuningShopsCities._(_R r)
       : nyc = r.b('nyc'),
-        prague = r.b('prague');
+        prague = r.b('prague'),
+        tokyo = r.b('tokyo');
 
   bool nyc;
 
   bool prague;
 
+  bool tokyo;
+
   Map<String, Object> toJson() => {
         'nyc': nyc,
         'prague': prague,
+        'tokyo': tokyo,
       };
 }
 
@@ -3140,15 +3148,19 @@ class TuningStyle {
 class TuningStyleRisograph {
   TuningStyleRisograph._(_R r)
       : nyc = r.b('nyc'),
-        prague = r.b('prague');
+        prague = r.b('prague'),
+        tokyo = r.b('tokyo');
 
   bool nyc;
 
   bool prague;
 
+  bool tokyo;
+
   Map<String, Object> toJson() => {
         'nyc': nyc,
         'prague': prague,
+        'tokyo': tokyo,
       };
 }
 
@@ -3156,30 +3168,38 @@ class TuningStyleRisograph {
 class TuningStyleCastShadow {
   TuningStyleCastShadow._(_R r)
       : nyc = r.b('nyc'),
-        prague = r.b('prague');
+        prague = r.b('prague'),
+        tokyo = r.b('tokyo');
 
   bool nyc;
 
   bool prague;
 
+  bool tokyo;
+
   Map<String, Object> toJson() => {
         'nyc': nyc,
         'prague': prague,
+        'tokyo': tokyo,
       };
 }
 
 class TuningStyleCrosswalks {
   TuningStyleCrosswalks._(_R r)
       : nyc = r.b('nyc'),
-        prague = r.b('prague');
+        prague = r.b('prague'),
+        tokyo = r.b('tokyo');
 
   bool nyc;
 
   bool prague;
 
+  bool tokyo;
+
   Map<String, Object> toJson() => {
         'nyc': nyc,
         'prague': prague,
+        'tokyo': tokyo,
       };
 }
 

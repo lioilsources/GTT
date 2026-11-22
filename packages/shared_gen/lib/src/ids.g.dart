@@ -6,6 +6,7 @@ import 'schema.g.dart';
 enum CityId {
   nyc('nyc', "New York"),
   prague('prague', "Praha"),
+  tokyo('tokyo', "Tokio"),
   ;
 
   const CityId(this.id, this.name);

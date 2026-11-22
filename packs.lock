@@ -12,3 +12,9 @@ packs:
         asset: prague-4aec3f7635c6.tar.gz
         sha256: 4aec3f7635c603737698842896c4acab94e65f982d4fa8ce846e5a610b75a046
         overture_release: 2026-11-18.0
+    tokyo:
+        version: 5af7637300d7
+        tag: pack-tokyo-5af7637300d7
+        asset: tokyo-5af7637300d7.tar.gz
+        sha256: 5af7637300d72b16b41193d659adf39441a56b95efa1d7f0a3caf239e9c5f596
+        overture_release: 2026-11-18.0

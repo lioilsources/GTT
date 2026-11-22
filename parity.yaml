@@ -232,7 +232,7 @@
 - id: F-028
   name: Cities and switching (Travel app, last city, per-city save)
   level: P2
-  spec: specs/cities.md@1
+  spec: specs/cities.md@2
   lead: web
   flutter: done
   web: done
@@ -384,6 +384,15 @@
   name: Car classes drawn by their own shape (40 NYC cars, garage sale list order)
   level: P2
   spec: specs/cars.md@2
+  lead: web
+  flutter: todo
+  web: todo
+  checks: {flutter: pass, web: pass}
+
+- id: F-046
+  name: Tokyo in the clients (left-hand parked cars and taxi fares, bundled pack, palette)
+  level: P2
+  spec: specs/cities.md@2
   lead: web
   flutter: todo
   web: todo

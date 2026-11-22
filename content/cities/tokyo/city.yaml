@@ -1,0 +1,17 @@
+id: tokyo
+name: Tokio
+origin: {lat: 35.6812, lon: 139.7671}   # Tokyo Station, Marunouchi side
+drive_side: left
+units: metric
+area: area.geojson           # M4: Chiyoda, Chūō, north Minato + Ueno, Akihabara, Asakusa, Ryōgoku, Skytree (plans/M4_TOKIO.md T1)
+overture_release: "2026-11-18.0"
+height_sources: [overture]
+# The Shuto expressways are motorway; elevated ones become layer +1 like NYC's bridges.
+road_keep_classes: [motorway, trunk, primary, secondary, tertiary]
+road_keep_names: []
+name_langs: [ja-Latn, en]   # Hepburn with macrons first (T6); Japanese-script names are dropped (no CJK font)
+style: style.yaml            # style D (anime cel), specs/style.md
+start: {lat: 35.68100, lon: 139.76450, heading_deg: 270, street: Gyōkō-dōri}   # from Tokyo Station towards the Imperial Palace
+default_height_m: 18
+max_chunk_kb: 512
+districts: districts.yaml
