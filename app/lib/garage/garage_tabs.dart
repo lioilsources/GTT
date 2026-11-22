@@ -74,26 +74,39 @@ class LevelBar extends StatelessWidget {
   );
 }
 
-/// The car from above, drawn like in the world with [look] (the live preview of the Vzhled tab).
+/// The car from above, drawn like in the world with [look] (the live preview of the Vzhled tab;
+/// [sideways] with the nose to the right, the small preview of the garage list).
 class CarPreview extends StatelessWidget {
-  const CarPreview({super.key, required this.spec, required this.look, required this.tuning, this.height = 160});
+  const CarPreview({
+    super.key,
+    required this.spec,
+    required this.look,
+    required this.tuning,
+    this.height = 160,
+    this.width,
+    this.sideways = false,
+  });
   final CarSpec spec;
   final CarLook look;
   final Tuning tuning;
   final double height;
+  final double? width;
+  final bool sideways;
 
   @override
   Widget build(BuildContext context) => SizedBox(
+    width: width,
     height: height,
-    child: CustomPaint(painter: _PreviewPainter(spec, look, tuning), size: Size.infinite),
+    child: CustomPaint(painter: _PreviewPainter(spec, look, tuning, sideways), size: Size.infinite),
   );
 }
 
 class _PreviewPainter extends CustomPainter {
-  _PreviewPainter(this.spec, this.look, this.tuning);
+  _PreviewPainter(this.spec, this.look, this.tuning, this.sideways);
   final CarSpec spec;
   final CarLook look;
   final Tuning tuning;
+  final bool sideways;
 
   @override
   void paint(Canvas canvas, Size size) => paintCarPreview(
@@ -103,11 +116,13 @@ class _PreviewPainter extends CustomPainter {
     tuning,
     // Indoors in the garage: the underglow at full strength.
     (look: look, glowMarginM: tuning.garage.glowMarginM, glow: 1.0),
+    sideways: sideways,
   );
 
   @override
   bool shouldRepaint(_PreviewPainter old) =>
       old.spec != spec ||
+      old.sideways != sideways ||
       old.look.paint != look.paint ||
       old.look.decal != look.decal ||
       old.look.rim != look.rim ||

@@ -59,12 +59,14 @@ void paintCar(
   );
 }
 
-/// A car from above for the garage preview (specs/garage.md "Vzhled"): drawn like in the world
-/// with [look], nose up, centred in [size] and scaled to fit; straight wheels, lights off.
-void paintCarPreview(Canvas canvas, Size size, CarSpec spec, Tuning t, LookPaint? look) {
+/// A car from above for the garage preview (specs/garage.md "Vzhled") and the garage list
+/// (specs/cars.md "Garáž"): drawn like in the world with [look], nose up ([sideways]: nose right),
+/// centred in [size] and scaled to fit; straight wheels, lights off.
+void paintCarPreview(Canvas canvas, Size size, CarSpec spec, Tuning t, LookPaint? look, {bool sideways = false}) {
   final hl = spec.lengthM * t.carScale / 2, hw = spec.widthM * t.carScale / 2;
   final margin = (look?.glowMarginM ?? 0) + 0.6;
-  final k = math.min(size.height / (2 * (hl + margin)), size.width / (2 * (hw + margin)));
+  final (along, across) = sideways ? (size.width, size.height) : (size.height, size.width);
+  final k = math.min(along / (2 * (hl + margin)), across / (2 * (hw + margin)));
   canvas.save();
   canvas.translate(size.width / 2, size.height / 2);
   // World space is y north: flip so the car's left is on the screen's left, then turn the nose up.
@@ -74,7 +76,7 @@ void paintCarPreview(Canvas canvas, Size size, CarSpec spec, Tuning t, LookPaint
     spec,
     0,
     0,
-    math.pi / 2,
+    sideways ? 0 : math.pi / 2,
     hl,
     hw,
     hl * t.drive.axleOffset,
@@ -156,7 +158,8 @@ void _paintShape(
   final lk = look?.look;
   final paint = Color(lk?.paint ?? paintArgb(spec));
   final micro = spec.class_ == 'micro';
-  final shape = carShape(spec.class_, hl, hw, lengthM: spec.lengthM);
+  final shape = carShape(spec.class_, hl, hw, lengthM: spec.lengthM, axle: axle);
+  final body = bodyBounds(shape, micro: micro);
   canvas.save();
   canvas.translate(x, y);
   canvas.rotate(heading);
@@ -167,7 +170,7 @@ void _paintShape(
     if (lift.flip < 0) {
       // Past the quarter turn the underside faces up: the body outline as a dark floor.
       p.color = const Color(Tokens.colorCarTyre);
-      canvas.drawRRect(rr(shape.firstWhere((r) => r.part == CarPart.body), hw * 0.45), p);
+      canvas.drawRRect(rr(body, hw * 0.45), p);
       canvas.restore();
       return;
     }
@@ -176,7 +179,6 @@ void _paintShape(
     // the wheels under the body.
     final glow = lk?.glow;
     if (glow != null && look!.glow > 0) {
-      final body = shape.firstWhere((r) => r.part == CarPart.body);
       final m = look.glowMarginM;
       final c = Color(glow);
       p.color = c.withValues(alpha: c.a * look.glow.clamp(0.0, 1.0));
@@ -202,31 +204,39 @@ void _paintShape(
     canvas.drawPath(path, p);
   }
   p.color = const Color(Tokens.colorCarTyre);
-  final ww = hl * 0.36, wt = hw * 0.32;
-  // Micro vehicles carry their two wheels in the shape.
-  for (final fx in micro ? const <double>[] : [axle, -axle]) {
-    for (final sy in [hw * 0.92, -hw * 0.92]) {
-      canvas.save();
-      canvas.translate(fx, sy);
-      if (fx > 0) canvas.rotate(wheelAngle);
-      canvas.drawRect(Rect.fromCenter(center: Offset.zero, width: ww, height: wt), p);
-      final rim = lk?.rim;
-      if (rim != null) {
-        p.color = Color(rim);
-        canvas.drawRect(Rect.fromCenter(center: Offset.zero, width: ww * 0.5, height: wt * 0.55), p);
-        p.color = const Color(Tokens.colorCarTyre);
-      }
-      canvas.restore();
+  // Long vehicles (limo, van, bus) keep car-sized wheels: at most hw long.
+  final ww = math.min(hl * 0.36, hw), wt = hw * 0.32;
+  // Micro vehicles carry their wheels in the shape, the trike and the rickshaw their front one.
+  for (final (fx, sy) in carWheels(spec.class_, hl, hw, axle, lengthM: spec.lengthM)) {
+    canvas.save();
+    canvas.translate(fx, sy);
+    if (fx > 0) canvas.rotate(wheelAngle);
+    canvas.drawRect(Rect.fromCenter(center: Offset.zero, width: ww, height: wt), p);
+    final rim = lk?.rim;
+    if (rim != null) {
+      p.color = Color(rim);
+      canvas.drawRect(Rect.fromCenter(center: Offset.zero, width: ww * 0.5, height: wt * 0.55), p);
+      p.color = const Color(Tokens.colorCarTyre);
     }
+    canvas.restore();
   }
   var decalDone = (lk?.decal ?? 0) == 0;
+  var bodyDrawn = false;
   for (final r in shape.skip(1)) {
     // The decal goes over the body, the cabin and the class details (muscle stripes, taxi checker),
-    // under the lights (and a micro rider), as client W.
-    if (!decalDone && (r.part == CarPart.head || r.part == CarPart.tail || r.part == CarPart.rider)) {
+    // under the lights, a rider and a wheel over the body (trike, rickshaw), as client W.
+    if (!decalDone &&
+        (r.part == CarPart.head ||
+            r.part == CarPart.tail ||
+            r.part == CarPart.rider ||
+            (r.part == CarPart.wheel && bodyDrawn))) {
       decalDone = true;
-      _paintDecal(canvas, lk!.decal, shape.firstWhere((q) => q.part == CarPart.body), hw);
+      _paintDecal(canvas, lk!.decal, body, [
+        for (final q in shape)
+          if (q.part == CarPart.body) q,
+      ], hw);
     }
+    if (r.part == CarPart.body) bodyDrawn = true;
     switch (r.part) {
       case CarPart.body:
         p.color = paint;
@@ -271,6 +281,9 @@ void _paintShape(
       case CarPart.rider:
         p.color = const Color(Tokens.colorCarCabin);
         canvas.drawOval(Rect.fromLTRB(r.x0, r.y0, r.x1, r.y1), p);
+      case CarPart.spare:
+        p.color = Color(r.color ?? Tokens.colorCarTyre);
+        canvas.drawOval(Rect.fromLTRB(r.x0, r.y0, r.x1, r.y1), p);
       case CarPart.shadow || CarPart.stripe || CarPart.detail:
         p.color = Color(r.color ?? Tokens.colorCarStripe);
         canvas.drawRect(Rect.fromLTRB(r.x0, r.y0, r.x1, r.y1), p);
@@ -279,16 +292,37 @@ void _paintShape(
   canvas.restore();
 }
 
-/// Procedural decal in `color.garage.decal`, clipped to the body (specs/garage.md "Kreslení"):
-/// 1 two lengthwise stripes at ±0.22 hw over the whole car, 2 three flames from the nose back to
-/// 0.35 hl, 3 a band of checker squares along both sides.
-void _paintDecal(Canvas canvas, int decal, CarRect body, double hw) {
+/// The outline the looks fit (specs/garage.md: underglow, decal): the bounds of all body parts
+/// (the trike's narrow nose, the rickshaw's frame), for micro its deck (the first body part).
+CarRect bodyBounds(List<CarRect> shape, {bool micro = false}) {
+  final bodies = shape.where((r) => r.part == CarPart.body);
+  if (micro) return bodies.first;
+  return bodies
+      .skip(1)
+      .fold(
+        bodies.first,
+        (a, r) => CarRect(
+          CarPart.body,
+          math.min(a.x0, r.x0),
+          math.min(a.y0, r.y0),
+          math.max(a.x1, r.x1),
+          math.max(a.y1, r.y1),
+        ),
+      );
+}
+
+/// Procedural decal in `color.garage.decal` laid out on [body] (the body bounds) and clipped to the
+/// [bodies] (specs/garage.md "Kreslení"): 1 two lengthwise stripes at ±0.22 hw over the whole car,
+/// 2 three flames from the nose back to 0.35 hl, 3 a band of checker squares along both sides.
+void _paintDecal(Canvas canvas, int decal, CarRect body, List<CarRect> bodies, double hw) {
   final hl = body.x1, w = body.y1 - body.y0;
   final p = Paint()..color = const Color(Tokens.colorGarageDecal);
   canvas.save();
-  canvas.clipRRect(
-    RRect.fromRectAndRadius(Rect.fromLTRB(body.x0, body.y0, body.x1, body.y1), Radius.circular(hw * 0.45)),
-  );
+  final clip = Path();
+  for (final b in bodies) {
+    clip.addRRect(RRect.fromRectAndRadius(Rect.fromLTRB(b.x0, b.y0, b.x1, b.y1), Radius.circular(hw * 0.45)));
+  }
+  canvas.clipPath(clip);
   switch (decal) {
     case 1:
       final half = w * 0.04;

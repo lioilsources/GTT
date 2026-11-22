@@ -329,6 +329,58 @@ void main() {
       tester.view.reset();
     }, skip: !has);
 
+    testWidgets('Cars: the sale list sorted (city, class, price, id) with class names and previews', (tester) async {
+      if (_png) await _loadFonts();
+      final w = (await tester.runAsync(
+        () => start(
+          saved: saveWith(
+            cash: 20000,
+            cars: const ['m0_coupe', 'hatch_pip'],
+            looks: const {
+              'm0_coupe': {'paint': 3, 'decal': 2, 'wheels': 1, 'glow': 1},
+            },
+          ),
+        ),
+      ))!;
+      final key = GlobalKey();
+      // Tall enough that the whole list is built (and on the PNG).
+      await pumpSheet(tester, w, key: key, size: const Size(420, 5600));
+      final sale = saleOrder(assets.cars.values, w.g.fleet.owned, 'nyc');
+      expect(sale.first.tags, contains('nyc'));
+      expect(sale.last.tags, isNot(contains('nyc')), reason: 'Prague-only cars at the end');
+      final tiles = find.byWidgetPredicate(
+        (wd) => wd.key is ValueKey<String> && (wd.key! as ValueKey<String>).value.startsWith('garageSale:'),
+      );
+      // The built tiles (all of them with the real font) in saleOrder order.
+      final built = [
+        for (final e in tiles.evaluate()) (e.widget.key! as ValueKey<String>).value.substring('garageSale:'.length),
+      ];
+      expect(built.length, greaterThan(10));
+      expect(built, [for (final s in sale.take(built.length)) s.id]);
+      if (_png) await _shot(tester, key, 'garage_sale.png');
+      for (final id in ['m0_coupe', 'hatch_pip']) {
+        expect(find.byKey(ValueKey('garageCarPreview:$id')), findsOneWidget, reason: id);
+      }
+      final list = find.descendant(of: find.byKey(const ValueKey('garageCars')), matching: find.byType(Scrollable));
+      for (final (id, cls) in [
+        ('kombi_fjord', 'Estate'),
+        ('vet_tourer', 'Classic'),
+        ('bus_city', 'Bus'),
+        ('spec_trike', 'Special'),
+      ]) {
+        final tile = find.byKey(ValueKey('garageSale:$id'));
+        await tester.scrollUntilVisible(tile, 200, scrollable: list);
+        expect(find.descendant(of: tile, matching: find.byKey(ValueKey('garageCarPreview:$id'))), findsOneWidget);
+        expect(
+          find.descendant(of: tile, matching: find.text(cls)),
+          findsOneWidget,
+          reason: id,
+        );
+      }
+      stop(w);
+      tester.view.reset();
+    }, skip: !has);
+
     testWidgets('Tuning: a row per slot, level bar, effect, price; grey with garageNoCash; upgrade; maxed', (
       tester,
     ) async {

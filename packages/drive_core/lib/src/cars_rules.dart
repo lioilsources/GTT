@@ -84,7 +84,7 @@ class CarsRules extends MgRules<CarsState, CarsAction, Map<String, Object?>> {
   @override
   String get id => 'cars';
   @override
-  int get specVersion => 1;
+  int get specVersion => 2;
 
   CarsConfig? _cfg;
   Map<String, int> get _prices => (_cfg ?? (throw StateError('cars: init first'))).prices;
