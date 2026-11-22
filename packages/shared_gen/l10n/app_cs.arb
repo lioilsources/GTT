@@ -313,6 +313,7 @@
   "policeEscaped": "Hlídka tě ztratila",
   "policeBusted": "Dopaden!",
   "policeFine": "Pokuta: {amount}",
+  "policeRoadblock": "Zátaras před tebou!",
   "loopPlay": "Hrát {name}",
   "loopSoon": "{name} už brzy",
   "loopTitle": "Výsledek",

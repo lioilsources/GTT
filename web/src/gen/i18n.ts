@@ -316,6 +316,7 @@ export type MessageKey =
   | "policeEscaped"
   | "policeBusted"
   | "policeFine"
+  | "policeRoadblock"
   | "loopPlay"
   | "loopSoon"
   | "loopTitle"
@@ -664,6 +665,7 @@ export const messages: Record<Locale, Record<MessageKey, string>> = {
     policeEscaped: "Hlídka tě ztratila",
     policeBusted: "Dopaden!",
     policeFine: "Pokuta: {amount}",
+    policeRoadblock: "Zátaras před tebou!",
     loopPlay: "Hrát {name}",
     loopSoon: "{name} už brzy",
     loopTitle: "Výsledek",
@@ -1010,6 +1012,7 @@ export const messages: Record<Locale, Record<MessageKey, string>> = {
     policeEscaped: "You lost the patrol",
     policeBusted: "Busted!",
     policeFine: "Fine: {amount}",
+    policeRoadblock: "Roadblock ahead!",
     loopPlay: "Play {name}",
     loopSoon: "{name}: coming soon",
     loopTitle: "Result",

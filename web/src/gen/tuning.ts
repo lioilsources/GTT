@@ -2558,6 +2558,8 @@ export class TuningPolice {
   toastS: number;
   bustedS: number;
   lightBlinkS: number;
+  /** two standing patrols across the road ahead (v2, M2) */
+  readonly roadblock: TuningPoliceRoadblock;
 
   constructor(r: R) {
     this.enabled = r.b('enabled');
@@ -2586,6 +2588,7 @@ export class TuningPolice {
     this.toastS = r.d('toast_s');
     this.bustedS = r.d('busted_s');
     this.lightBlinkS = r.d('light_blink_s');
+    this.roadblock = new TuningPoliceRoadblock(r.sub('roadblock'));
   }
 
   toJson(): Record<string, unknown> {
@@ -2616,6 +2619,7 @@ export class TuningPolice {
       toast_s: this.toastS,
       busted_s: this.bustedS,
       light_blink_s: this.lightBlinkS,
+      roadblock: this.roadblock.toJson(),
     };
   }
 }
@@ -2659,6 +2663,44 @@ export class TuningPoliceOffenceLevel {
   }
 
   static readonly keys = ['crash', 'hitrun', 'sidewalk', 'theft'] as const;
+}
+
+/** two standing patrols across the road ahead (v2, M2) */
+export class TuningPoliceRoadblock {
+  /** wanted level that sends a roadblock */
+  level: number;
+  /** along the road in the player's direction (past view_m) */
+  aheadM: number;
+  /** goal for choosing the next edge: this far along the heading */
+  probeM: number;
+  /** each patrol this far left and right of the edge centre */
+  lateralM: number;
+  /** removed when the player is farther than this */
+  clearM: number;
+  ttlS: number;
+  cooldownS: number;
+
+  constructor(r: R) {
+    this.level = r.i('level');
+    this.aheadM = r.d('ahead_m');
+    this.probeM = r.d('probe_m');
+    this.lateralM = r.d('lateral_m');
+    this.clearM = r.d('clear_m');
+    this.ttlS = r.d('ttl_s');
+    this.cooldownS = r.d('cooldown_s');
+  }
+
+  toJson(): Record<string, unknown> {
+    return {
+      level: this.level,
+      ahead_m: this.aheadM,
+      probe_m: this.probeM,
+      lateral_m: this.lateralM,
+      clear_m: this.clearM,
+      ttl_s: this.ttlS,
+      cooldown_s: this.cooldownS,
+    };
+  }
 }
 
 /**

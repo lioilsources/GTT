@@ -698,6 +698,7 @@
       }
     }
   },
+  "policeRoadblock": "Roadblock ahead!",
   "loopPlay": "Play {name}",
   "@loopPlay": {
     "placeholders": {
