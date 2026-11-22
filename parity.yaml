@@ -12,7 +12,7 @@
 - id: F-002
   name: Citypack decoding (manifest, graph, chunks)
   level: P0
-  spec: specs/citypack.md@2
+  spec: specs/citypack.md@3
   lead: flutter
   flutter: done
   web: done
@@ -153,7 +153,7 @@
 - id: F-016
   name: Traffic and two-phase traffic lights
   level: P1
-  spec: specs/traffic.md@2
+  spec: specs/traffic.md@3
   lead: web
   flutter: done
   web: done
@@ -240,6 +240,13 @@
   name: Pedestrian zones and micro vehicles (bollards, micro passes)
   level: P1
   spec: specs/zones.md@1
+  lead: web
+  flutter: todo
+  web: todo
+- id: F-030
+  name: Trams (tracks, generated stops, articulated cars, right of way)
+  level: P1
+  spec: specs/trams.md@1
   lead: web
   flutter: todo
   web: todo

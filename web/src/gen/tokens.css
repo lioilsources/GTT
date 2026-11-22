@@ -196,6 +196,12 @@
   --color-loop-best: #F4C430;
   --color-loop-muted: #FFFFFFA0;
   --color-loop-play: #2BA6A0;
+  --color-trams-body: #C8202F;
+  --color-trams-stripe: #F2E6C8;
+  --color-trams-window: #2B3440;
+  --color-trams-window-lit: #FFE6A0;
+  --color-trams-rail: #8A8A92;
+  --color-trams-stop: #BDB5A8;
   --color-taxi-pill: #F7C531;
   --color-taxi-pill-text: #1B1B1F;
   --color-taxi-passenger: #F7C531;

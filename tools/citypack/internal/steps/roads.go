@@ -193,7 +193,6 @@ func Roads(e *Env) error {
 }
 
 func (e *Env) loadSegments() ([]rawSegment, error) {
-	tmp := e.W("segments.jsonl")
 	classes := ""
 	for c := range drivableClasses {
 		if classes != "" {
@@ -201,15 +200,21 @@ func (e *Env) loadSegments() ([]rawSegment, error) {
 		}
 		classes += duck.Quote(c)
 	}
+	return e.exportSegments("roads export", e.W("segments.jsonl"), "road_flags", fmt.Sprintf(
+		"subtype = 'road' AND class IN (%s) AND coalesce(subclass, '') NOT IN ('driveway', 'parking_aisle')", classes))
+}
+
+// exportSegments reads Overture segments matching where (near the area) into rawSegments via tmp;
+// flags is the flag column (road_flags for roads, rail_flags for rail), read as road_flags.
+func (e *Env) exportSegments(label, tmp, flags, where string) ([]rawSegment, error) {
 	sql := fmt.Sprintf(`COPY (
-  SELECT id, class, subclass, names.primary AS name, connectors, road_flags, level_rules, access_restrictions,
+  SELECT id, class, subclass, names.primary AS name, connectors, %s AS road_flags, level_rules, access_restrictions,
          ST_AsGeoJSON(%s)::JSON AS geom
   FROM read_parquet(%s)
-  WHERE subtype = 'road' AND class IN (%s)
-    AND coalesce(subclass, '') NOT IN ('driveway', 'parking_aisle')
+  WHERE %s
     AND ST_Intersects(geometry, ST_Buffer(ST_GeomFromText(%s), 0.003))
-) TO %s (FORMAT json);`, e.projSQL("geometry"), duck.Quote(e.Raw("segment")), classes, duck.Quote(e.C.City.AreaWKT()), duck.Quote(tmp))
-	if _, err := duck.Exec("roads export", sql); err != nil {
+) TO %s (FORMAT json);`, flags, e.projSQL("geometry"), duck.Quote(e.Raw("segment")), where, duck.Quote(e.C.City.AreaWKT()), duck.Quote(tmp))
+	if _, err := duck.Exec(label, sql); err != nil {
 		return nil, err
 	}
 	f, err := os.Open(tmp)
@@ -223,7 +228,7 @@ func (e *Env) loadSegments() ([]rawSegment, error) {
 	for sc.Scan() {
 		var s rawSegment
 		if err := json.Unmarshal(sc.Bytes(), &s); err != nil {
-			return nil, fmt.Errorf("segments.jsonl: %w", err)
+			return nil, fmt.Errorf("%s: %w", tmp, err)
 		}
 		if len(s.Geom.Coordinates) >= 2 {
 			segs = append(segs, s)

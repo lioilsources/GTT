@@ -40,6 +40,38 @@ zones:
   bollard_radius_m: 0.6
   bollard_height_m: 2.0
 
+# Trams (specs/trams.md): citypack uses min_track_m and the stop_* pair, clients the rest.
+trams:
+  enabled: true
+  min_track_m: 120.0            # dead-end spurs shorter than this are dropped (depots, sidings)
+  stop_spacing_m: 450.0
+  stop_min_chain_m: 300.0       # only track runs between switches longer than this get stops
+  stop_commit_m: 4.0            # a stop closer than this ahead is skipped (already passing)
+  max_trams: 6
+  speed_mps: 12.0
+  accel_mps2: 1.2
+  brake_mps2: 2.5
+  min_gap_m: 4.0
+  look_ahead_m: 60.0
+  corridor_m: 4.0               # lateral half-width of the track corridor for obstacles
+  dwell_s: 6.0
+  cars_per_tram: 3
+  car_length_m: 14.0            # world metres (already scaled, no car_scale)
+  car_width_m: 5.5
+  joint_gap_m: 0.6
+  trail_points: 64
+  hit_min_mps: 3.0
+  hit_stop_s: 4.0
+  spawn_interval_s: 1.5
+  spawn_tries: 4
+  spawn_min_m: 220.0
+  spawn_max_m: 420.0
+  initial_min_m: 60.0
+  spawn_clear_m: 50.0
+  despawn_m: 520.0
+  seed: 20261122
+  rail_gauge_m: 3.6             # drawn distance between the two rails (world metres)
+
 # Chunk streaming (METROPOLE_PLAN 6.4): window in chunks around the player.
 streaming: {ahead: 3, behind: 1, side: 1, keep: 3, max_in_flight: 2, retry_s: 2.0}
 

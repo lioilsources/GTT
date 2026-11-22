@@ -1407,6 +1407,212 @@ func (x *Spot) GetMinigame() string {
 	return ""
 }
 
+// trams.pb (specs/trams.md): tram tracks as their own graph, always two-way, plus generated stops.
+// A city without trams has an empty TramGraph (the file always exists from citypack v2 on).
+type TramGraph struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Nodes         []*Node                `protobuf:"bytes,1,rep,name=nodes,proto3" json:"nodes,omitempty"` // border = the track leaves the playable area
+	Edges         []*TramEdge            `protobuf:"bytes,2,rep,name=edges,proto3" json:"edges,omitempty"`
+	Stops         []*TramStop            `protobuf:"bytes,3,rep,name=stops,proto3" json:"stops,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *TramGraph) Reset() {
+	*x = TramGraph{}
+	mi := &file_citypack_proto_msgTypes[16]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *TramGraph) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TramGraph) ProtoMessage() {}
+
+func (x *TramGraph) ProtoReflect() protoreflect.Message {
+	mi := &file_citypack_proto_msgTypes[16]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TramGraph.ProtoReflect.Descriptor instead.
+func (*TramGraph) Descriptor() ([]byte, []int) {
+	return file_citypack_proto_rawDescGZIP(), []int{16}
+}
+
+func (x *TramGraph) GetNodes() []*Node {
+	if x != nil {
+		return x.Nodes
+	}
+	return nil
+}
+
+func (x *TramGraph) GetEdges() []*TramEdge {
+	if x != nil {
+		return x.Edges
+	}
+	return nil
+}
+
+func (x *TramGraph) GetStops() []*TramStop {
+	if x != nil {
+		return x.Stops
+	}
+	return nil
+}
+
+type TramEdge struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	From          uint32                 `protobuf:"varint,1,opt,name=from,proto3" json:"from,omitempty"`
+	To            uint32                 `protobuf:"varint,2,opt,name=to,proto3" json:"to,omitempty"`
+	Points        []int32                `protobuf:"zigzag32,3,rep,packed,name=points,proto3" json:"points,omitempty"`                 // full polyline incl. both end nodes, dm
+	LayerFrom     int32                  `protobuf:"zigzag32,4,opt,name=layer_from,json=layerFrom,proto3" json:"layer_from,omitempty"` // -1 tunnel, 0 ground, +1 bridge
+	LayerTo       int32                  `protobuf:"zigzag32,5,opt,name=layer_to,json=layerTo,proto3" json:"layer_to,omitempty"`
+	Bridge        bool                   `protobuf:"varint,6,opt,name=bridge,proto3" json:"bridge,omitempty"`
+	Tunnel        bool                   `protobuf:"varint,7,opt,name=tunnel,proto3" json:"tunnel,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *TramEdge) Reset() {
+	*x = TramEdge{}
+	mi := &file_citypack_proto_msgTypes[17]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *TramEdge) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TramEdge) ProtoMessage() {}
+
+func (x *TramEdge) ProtoReflect() protoreflect.Message {
+	mi := &file_citypack_proto_msgTypes[17]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TramEdge.ProtoReflect.Descriptor instead.
+func (*TramEdge) Descriptor() ([]byte, []int) {
+	return file_citypack_proto_rawDescGZIP(), []int{17}
+}
+
+func (x *TramEdge) GetFrom() uint32 {
+	if x != nil {
+		return x.From
+	}
+	return 0
+}
+
+func (x *TramEdge) GetTo() uint32 {
+	if x != nil {
+		return x.To
+	}
+	return 0
+}
+
+func (x *TramEdge) GetPoints() []int32 {
+	if x != nil {
+		return x.Points
+	}
+	return nil
+}
+
+func (x *TramEdge) GetLayerFrom() int32 {
+	if x != nil {
+		return x.LayerFrom
+	}
+	return 0
+}
+
+func (x *TramEdge) GetLayerTo() int32 {
+	if x != nil {
+		return x.LayerTo
+	}
+	return 0
+}
+
+func (x *TramEdge) GetBridge() bool {
+	if x != nil {
+		return x.Bridge
+	}
+	return false
+}
+
+func (x *TramEdge) GetTunnel() bool {
+	if x != nil {
+		return x.Tunnel
+	}
+	return false
+}
+
+type TramStop struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Edge          uint32                 `protobuf:"varint,1,opt,name=edge,proto3" json:"edge,omitempty"`
+	SM            float32                `protobuf:"fixed32,2,opt,name=s_m,json=sM,proto3" json:"s_m,omitempty"` // distance from the edge's `from` end along its polyline
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *TramStop) Reset() {
+	*x = TramStop{}
+	mi := &file_citypack_proto_msgTypes[18]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *TramStop) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TramStop) ProtoMessage() {}
+
+func (x *TramStop) ProtoReflect() protoreflect.Message {
+	mi := &file_citypack_proto_msgTypes[18]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TramStop.ProtoReflect.Descriptor instead.
+func (*TramStop) Descriptor() ([]byte, []int) {
+	return file_citypack_proto_rawDescGZIP(), []int{18}
+}
+
+func (x *TramStop) GetEdge() uint32 {
+	if x != nil {
+		return x.Edge
+	}
+	return 0
+}
+
+func (x *TramStop) GetSM() float32 {
+	if x != nil {
+		return x.SM
+	}
+	return 0
+}
+
 var File_citypack_proto protoreflect.FileDescriptor
 
 const file_citypack_proto_rawDesc = "" +
@@ -1520,7 +1726,23 @@ const file_citypack_proto_rawDesc = "" +
 	"\x06park_y\x18\b \x01(\x11R\x05parkY\x12!\n" +
 	"\fpark_heading\x18\t \x01(\x02R\vparkHeading\x12\x1a\n" +
 	"\bminigame\x18\n" +
-	" \x01(\tR\bminigame*~\n" +
+	" \x01(\tR\bminigame\"\x85\x01\n" +
+	"\tTramGraph\x12$\n" +
+	"\x05nodes\x18\x01 \x03(\v2\x0e.citypack.NodeR\x05nodes\x12(\n" +
+	"\x05edges\x18\x02 \x03(\v2\x12.citypack.TramEdgeR\x05edges\x12(\n" +
+	"\x05stops\x18\x03 \x03(\v2\x12.citypack.TramStopR\x05stops\"\xb0\x01\n" +
+	"\bTramEdge\x12\x12\n" +
+	"\x04from\x18\x01 \x01(\rR\x04from\x12\x0e\n" +
+	"\x02to\x18\x02 \x01(\rR\x02to\x12\x16\n" +
+	"\x06points\x18\x03 \x03(\x11R\x06points\x12\x1d\n" +
+	"\n" +
+	"layer_from\x18\x04 \x01(\x11R\tlayerFrom\x12\x19\n" +
+	"\blayer_to\x18\x05 \x01(\x11R\alayerTo\x12\x16\n" +
+	"\x06bridge\x18\x06 \x01(\bR\x06bridge\x12\x16\n" +
+	"\x06tunnel\x18\a \x01(\bR\x06tunnel\"/\n" +
+	"\bTramStop\x12\x12\n" +
+	"\x04edge\x18\x01 \x01(\rR\x04edge\x12\x0f\n" +
+	"\x03s_m\x18\x02 \x01(\x02R\x02sM*~\n" +
 	"\tRoadClass\x12\x10\n" +
 	"\fROAD_UNKNOWN\x10\x00\x12\f\n" +
 	"\bMOTORWAY\x10\x01\x12\t\n" +
@@ -1554,7 +1776,7 @@ func file_citypack_proto_rawDescGZIP() []byte {
 }
 
 var file_citypack_proto_enumTypes = make([]protoimpl.EnumInfo, 2)
-var file_citypack_proto_msgTypes = make([]protoimpl.MessageInfo, 16)
+var file_citypack_proto_msgTypes = make([]protoimpl.MessageInfo, 19)
 var file_citypack_proto_goTypes = []any{
 	(RoadClass)(0),    // 0: citypack.RoadClass
 	(GroundKind)(0),   // 1: citypack.GroundKind
@@ -1574,6 +1796,9 @@ var file_citypack_proto_goTypes = []any{
 	(*Landmark)(nil),  // 15: citypack.Landmark
 	(*Spots)(nil),     // 16: citypack.Spots
 	(*Spot)(nil),      // 17: citypack.Spot
+	(*TramGraph)(nil), // 18: citypack.TramGraph
+	(*TramEdge)(nil),  // 19: citypack.TramEdge
+	(*TramStop)(nil),  // 20: citypack.TramStop
 }
 var file_citypack_proto_depIdxs = []int32{
 	3,  // 0: citypack.Manifest.bounds:type_name -> citypack.Rect
@@ -1589,11 +1814,14 @@ var file_citypack_proto_depIdxs = []int32{
 	1,  // 10: citypack.Mesh.kind:type_name -> citypack.GroundKind
 	15, // 11: citypack.Landmarks.items:type_name -> citypack.Landmark
 	17, // 12: citypack.Spots.items:type_name -> citypack.Spot
-	13, // [13:13] is the sub-list for method output_type
-	13, // [13:13] is the sub-list for method input_type
-	13, // [13:13] is the sub-list for extension type_name
-	13, // [13:13] is the sub-list for extension extendee
-	0,  // [0:13] is the sub-list for field type_name
+	8,  // 13: citypack.TramGraph.nodes:type_name -> citypack.Node
+	19, // 14: citypack.TramGraph.edges:type_name -> citypack.TramEdge
+	20, // 15: citypack.TramGraph.stops:type_name -> citypack.TramStop
+	16, // [16:16] is the sub-list for method output_type
+	16, // [16:16] is the sub-list for method input_type
+	16, // [16:16] is the sub-list for extension type_name
+	16, // [16:16] is the sub-list for extension extendee
+	0,  // [0:16] is the sub-list for field type_name
 }
 
 func init() { file_citypack_proto_init() }
@@ -1607,7 +1835,7 @@ func file_citypack_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_citypack_proto_rawDesc), len(file_citypack_proto_rawDesc)),
 			NumEnums:      2,
-			NumMessages:   16,
+			NumMessages:   19,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

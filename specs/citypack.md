@@ -1,12 +1,13 @@
 # Citypack – formát balíčku města
 
-**version: 2** · P0 · schéma `tools/citypack/proto/citypack.proto` (`format_version` 1)
+**version: 3** · P0 · schéma `tools/citypack/proto/citypack.proto` (`format_version` 1)
 
 ## Účel
 Jeden balíček města, který čtou oba klienti. Staví ho `citypack` (Go), čte F (`world_engine`) i W.
 
 ## Stav (soubory)
-`manifest.pb`, `graph.pb`, `chunks/{x}_{y}.pb`, `landmarks.pb`, `spots.pb` – každý gzip protobuf.
+`manifest.pb`, `graph.pb`, `chunks/{x}_{y}.pb`, `landmarks.pb`, `spots.pb`, od v3 `trams.pb`
+(`specs/trams.md`; starší balíček ho nemá, klient pak bere prázdný graf) – každý gzip protobuf.
 Souřadnice: metry lokální rovinné projekce od `origin` (x = Δlon·cos(lat0)·R, y = Δlat·R, y na sever,
 R = 6 371 008,8 m), v souborech decimetry `sint32`. Ploché seznamy `x0, y0, x1, y1, …`.
 
