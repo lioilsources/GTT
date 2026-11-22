@@ -50,8 +50,11 @@ stavbě geometrie chunku, za běhu nic navíc.
 - **Zebry** (`style.crosswalks.<city>`): v každém uzlu s aspoň třemi ponechanými hranami ve
   vrstvě 0 dostane každá taková hrana přechod. Vzdálenost od uzlu podél hrany
   `c = max(polovina šířky ostatních hran v uzlu) + style.crosswalk_gap_m`; přechod sahá od `c`
-  do `c + style.crosswalk_len_m`. Je-li hrana kratší než `2 × (c + crosswalk_len_m)`, přechod
-  na ní není. Pruhy jsou rovnoběžné s osou silnice, široké `style.crosswalk_stripe_m`, mezera
+  do `c + style.crosswalk_len_m`. „Podél hrany“ = po ulici: od uzlu po hraně a dál přes uzly
+  s právě dvěma ponechanými hranami ve vrstvě 0 (balíčky dělí silnice v každém konektoru),
+  až k dalšímu uzlu se ≥ 3 hranami nebo ke slepému konci. Je-li takto spojená ulice kratší
+  než `2 × (c + crosswalk_len_m)`, přechod na ní není. Šířka vozovky = vozovka výchozí hrany,
+  poslední pruh se ořízne okrajem vozovky. Pruhy jsou rovnoběžné s osou silnice, široké `style.crosswalk_stripe_m`, mezera
   stejná, přes celou vozovku (bez chodníků), první pruh u okraje vozovky; barva `marking`.
   Kreslí se nad značením pruhů (přerušované čáry a osa v místě zebry zůstávají pod ní).
 - Barvy jsou v `color.city.<city>` (`roof`, `roofEdge`, `castShadow`); chybějící klíč = daná
