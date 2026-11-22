@@ -630,3 +630,26 @@ loop:
   spot_radius_m: 22.0           # around the spot's parking point
   stop_speed_mps: 1.5
   action_hold_s: 1.5
+garage:                         # tuning and cosmetics (specs/garage.md); colours in design/tokens.json color.garage
+  enabled: true
+  max_level: 3
+  price_engine: [2000, 4500, 8000]   # price of level 1, 2, 3
+  price_tyres: [1500, 3500, 6500]
+  price_brakes: [1000, 2500, 5000]
+  price_weight: [1500, 3500, 6000]
+  price_drift: [1000, 2500, 4500]
+  engine_power_step: 0.08     # per level, multiplies power
+  engine_top_step: 0.05       # per level, multiplies top_speed
+  tyres_step: 0.07            # per level, multiplies grip_front and grip_rear
+  brakes_step: 0.12
+  weight_mass_step: 0.05      # per level, mass × (1 − step × level)
+  weight_power_step: 0.03
+  weight_steer_step: 0.04
+  drift_step: 0.15            # per level, drift_bias × (1 − step × level)
+  look_price_paint: 400
+  look_price_decal: 300
+  look_price_wheels: 600
+  look_price_glow: 800
+  look_price_smoke: 250
+  glow_margin_m: 0.35         # underglow reaches this far past the car outline
+  glow_day: 0.35              # underglow strength by day (full at night and in tunnels)

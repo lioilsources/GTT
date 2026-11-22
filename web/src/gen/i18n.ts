@@ -390,6 +390,41 @@ export type MessageKey =
   | "weatherClear"
   | "weatherRain"
   | "weatherFog"
+  | "garageTabCars"
+  | "garageTabTuning"
+  | "garageTabLooks"
+  | "garageTabShelf"
+  | "garageSlotEngine"
+  | "garageSlotTyres"
+  | "garageSlotBrakes"
+  | "garageSlotWeight"
+  | "garageSlotDrift"
+  | "garageEffectEngine"
+  | "garageEffectTyres"
+  | "garageEffectBrakes"
+  | "garageEffectWeight"
+  | "garageEffectDrift"
+  | "garageUpgrade"
+  | "garageMaxed"
+  | "garageNoCash"
+  | "garageNoSlots"
+  | "garagePartPaint"
+  | "garagePartDecal"
+  | "garagePartWheels"
+  | "garagePartGlow"
+  | "garagePartSmoke"
+  | "garageDecalNone"
+  | "garageDecalStripes"
+  | "garageDecalFlames"
+  | "garageDecalChecker"
+  | "garageWheelsStock"
+  | "garageWheelsSport"
+  | "garageWheelsWhite"
+  | "garageStock"
+  | "garageLookBuy"
+  | "garageFree"
+  | "garageCurrent"
+  | "garageBought"
 ;
 
 export const messages: Record<Locale, Record<MessageKey, string>> = {
@@ -780,6 +815,41 @@ export const messages: Record<Locale, Record<MessageKey, string>> = {
     weatherClear: "Vyjasnilo se",
     weatherRain: "Prší – silnice klouže",
     weatherFog: "Padla mlha",
+    garageTabCars: "Auta",
+    garageTabTuning: "Tuning",
+    garageTabLooks: "Vzhled",
+    garageTabShelf: "Polička",
+    garageSlotEngine: "Motor",
+    garageSlotTyres: "Pneumatiky",
+    garageSlotBrakes: "Brzdy",
+    garageSlotWeight: "Odlehčení",
+    garageSlotDrift: "Drift kit",
+    garageEffectEngine: "+{pct} % zrychlení",
+    garageEffectTyres: "+{pct} % přilnavosti",
+    garageEffectBrakes: "+{pct} % brzdění",
+    garageEffectWeight: "−{pct} % hmotnosti",
+    garageEffectDrift: "+{pct} % smyku",
+    garageUpgrade: "Vylepšit · {price}",
+    garageMaxed: "Na maximu",
+    garageNoCash: "Málo hotovosti",
+    garageNoSlots: "Tohle vylepšit nejde",
+    garagePartPaint: "Lak",
+    garagePartDecal: "Polep",
+    garagePartWheels: "Kola",
+    garagePartGlow: "Podsvícení",
+    garagePartSmoke: "Barva kouře",
+    garageDecalNone: "Bez polepu",
+    garageDecalStripes: "Pruhy",
+    garageDecalFlames: "Plameny",
+    garageDecalChecker: "Šachovnice",
+    garageWheelsStock: "Původní",
+    garageWheelsSport: "Sportovní",
+    garageWheelsWhite: "Bílé obruče",
+    garageStock: "Původní",
+    garageLookBuy: "Koupit · {price}",
+    garageFree: "Zdarma",
+    garageCurrent: "Současné",
+    garageBought: "Hotovo – sluší mu to",
   },
   "en": {
     appTitle: "Metropole",
@@ -1168,6 +1238,41 @@ export const messages: Record<Locale, Record<MessageKey, string>> = {
     weatherClear: "The sky clears up",
     weatherRain: "Rain – the road is slippery",
     weatherFog: "Fog rolls in",
+    garageTabCars: "Cars",
+    garageTabTuning: "Tuning",
+    garageTabLooks: "Looks",
+    garageTabShelf: "Shelf",
+    garageSlotEngine: "Engine",
+    garageSlotTyres: "Tyres",
+    garageSlotBrakes: "Brakes",
+    garageSlotWeight: "Weight reduction",
+    garageSlotDrift: "Drift kit",
+    garageEffectEngine: "+{pct} % acceleration",
+    garageEffectTyres: "+{pct} % grip",
+    garageEffectBrakes: "+{pct} % braking",
+    garageEffectWeight: "−{pct} % weight",
+    garageEffectDrift: "+{pct} % slide",
+    garageUpgrade: "Upgrade · {price}",
+    garageMaxed: "Maxed out",
+    garageNoCash: "Not enough cash",
+    garageNoSlots: "This one can't be tuned",
+    garagePartPaint: "Paint",
+    garagePartDecal: "Decal",
+    garagePartWheels: "Wheels",
+    garagePartGlow: "Underglow",
+    garagePartSmoke: "Smoke colour",
+    garageDecalNone: "None",
+    garageDecalStripes: "Stripes",
+    garageDecalFlames: "Flames",
+    garageDecalChecker: "Checker",
+    garageWheelsStock: "Stock",
+    garageWheelsSport: "Sport",
+    garageWheelsWhite: "White rims",
+    garageStock: "Stock",
+    garageLookBuy: "Buy · {price}",
+    garageFree: "Free",
+    garageCurrent: "Current",
+    garageBought: "Done – looking good",
   },
 };
 

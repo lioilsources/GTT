@@ -85,6 +85,10 @@ export interface Save {
   stations?: string[];
   /** Bought souvenirs (spot ids) in purchase order (specs/shops.md); missing = []. */
   souvenirs?: string[];
+  /** Tuning levels per owned car and slot (specs/garage.md); missing = {}. */
+  upgrades?: Record<string, Record<string, number>>;
+  /** Cosmetic choice per car and part (specs/garage.md); missing = {}. */
+  looks?: Record<string, Record<string, number>>;
 }
 
 export interface SaveFeed {

@@ -159,7 +159,7 @@ items:
      done: 2026-11-22T22:44, commit: b913bac, evidence: "specs/shops.md v1, save v4, 12 podniků v NYC (balíček 3ede62a37e4d), PR #135–#138, parita F-042 a F-026; web ověřený headless, Flutter widget testy, na telefonu nevyzkoušené"}
   - {id: M2-S6, milestone: M2, name: "počasí (jasno, déšť, mlha)", size: M, status: "čeká na Ol1na", started: 2026-11-22T22:53,
      done: 2026-11-22T23:20, commit: edd665b, evidence: "specs/weather.md v1, PR #140–#142, parita F-043; web headless (déšť +1 draw call), Flutter render testy, 60 fps v dešti na telefonu neměřeno"}
-  - {id: M2-S7, milestone: M2, name: "tuning a kosmetika", size: L, status: todo}
+  - {id: M2-S7, milestone: M2, name: "tuning a kosmetika", size: L, status: wip, started: 2026-11-22T23:29}
   - {id: M2-S8, milestone: M2, name: "40 aut v NYC", size: L, status: todo}
   - {id: M2-S9A, milestone: M2, name: "minihry dávka A: Piškvorky, Čtyři v řadě, Mlýn, Reversi, Lodě, Posuvné puzzle, Městský kvíz", size: L, status: todo}
   - {id: M2-S9B, milestone: M2, name: "minihry dávka B: Prší, Srdce, Kostkový poker, Prase", size: L, status: todo}

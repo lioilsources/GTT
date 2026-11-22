@@ -96,6 +96,9 @@ nemá, se jménem a cenou; tlačítko „Koupit“ je aktivní jen pro auta z `b
 Koupě = akce `cars` `buy`; koupené auto se přidá do vlastních (vyjet s ním jde hned v tomtéž
 seznamu). Po koupi se uloží (`specs/save.md`).
 
+Vylepšení a vzhled aut (M2-S7) kupuje hráč taky v garáži, ale přes modul `garage`
+(`specs/garage.md`), ne přes ekonomiku: ta zůstává u odměny, odtahu a pokuty a nemění se.
+
 ## Hraniční případy
 
 - 0★ nebo vzdaná hra → 0 hotovosti, ale výsledková obrazovka se ukáže.
