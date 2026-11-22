@@ -23,6 +23,8 @@ Future<void> showGarage(BuildContext context, CarFleet fleet) => showModalBottom
       'muscle' => l.carClassMuscle,
       'taxi' => l.carClassTaxi,
       'pickup' => l.carClassPickup,
+      'sedan' => l.carClassSedan,
+      'micro' => l.carClassMicro,
       _ => '',
     };
     return SafeArea(
