@@ -2,7 +2,8 @@ import type { Tuning } from '../gen/tuning';
 import type { DriveWorld } from '../drive/driveWorld';
 import type { TrafficCar } from '../traffic/traffic';
 import type { BuildingData, ChunkData } from '../world/chunk';
-import { chunkKey } from '../world/model';
+import { chooseToward } from '../traffic/roadRules';
+import { chunkKey, type RoadEdge, type RoadGraph } from '../world/model';
 import { policeConfig, PoliceRules, type OffenceKind, type PoliceAction, type PoliceState } from './rules';
 import { inView, onSidewalk, sightBlocked } from './sense';
 
@@ -12,6 +13,85 @@ export interface PoliceEventMap {
   wantedChanged: { level: number; prev: number; reason: string };
   offence: { kind: OffenceKind };
   fined: { amount: number };
+  /** A roadblock was put up at (x, y) (specs/roadblock.md). */
+  roadblock: { x: number; y: number };
+}
+
+/** Where a roadblock stands: a point on a ground edge and the edge's heading there. */
+export interface RoadblockSpot {
+  edge: RoadEdge;
+  x: number;
+  y: number;
+  /** Heading of the edge from → to at the point (the patrols stand at heading + π/2). */
+  heading: number;
+}
+
+/** A standing roadblock: its two patrols, its spot and its age in seconds. */
+export interface Roadblock {
+  readonly cars: [TrafficCar, TrafficCar];
+  readonly x: number;
+  readonly y: number;
+  age: number;
+}
+
+/**
+ * Point `d` metres from the `from` end of edge e, with the unit direction from → to of its segment.
+ */
+export function pointAlong(e: RoadEdge, d: number): { x: number; y: number; ux: number; uy: number } {
+  let left = Math.max(0, Math.min(d, e.length));
+  const last = e.pointCount - 2;
+  for (let seg = 0; seg <= last; seg++) {
+    const i = 2 * seg;
+    const ax = e.pts[i]!, ay = e.pts[i + 1]!, bx = e.pts[i + 2]!, by = e.pts[i + 3]!;
+    const l = Math.hypot(bx - ax, by - ay);
+    if (left <= l || seg === last) {
+      const f = l > 0 ? Math.min(1, left / l) : 0;
+      return { x: ax + (bx - ax) * f, y: ay + (by - ay) * f, ux: l > 0 ? (bx - ax) / l : 1, uy: l > 0 ? (by - ay) / l : 0 };
+    }
+    left -= l;
+  }
+  return { x: e.pts[0]!, y: e.pts[1]!, ux: 1, uy: 0 };
+}
+
+/**
+ * The roadblock spot ahead of the player (specs/roadblock.md "Kde"): from the player's
+ * projection on the nearest kept edge in its layer (graph.near within searchM), along the driving
+ * direction (sign of dot(edge, heading)), choosing each next edge with chooseToward towards
+ * player + probeM · heading, until aheadM is walked. Null = give up: no edge, a border node, a
+ * dead end (chooseToward turns back onto the same edge) or a final edge off the ground layer.
+ */
+export function roadblockSpot(
+  graph: RoadGraph, x: number, y: number, heading: number, layer: number, searchM: number, aheadM: number, probeM: number,
+): RoadblockSpot | null {
+  let best: { edge: RoadEdge; t: number; dirX: number; dirY: number; dist: number } | null = null;
+  for (const h of graph.near(x, y, searchM)) {
+    if (!h.edge.kept || h.edge.layerAt(h.t) !== layer) continue;
+    if (best === null || h.dist < best.dist) best = h;
+  }
+  if (best === null) return null;
+  const hc = Math.cos(heading), hs = Math.sin(heading);
+  const gx = x + probeM * hc, gy = y + probeM * hs;
+  let e = best.edge;
+  let dir = best.dirX * hc + best.dirY * hs >= 0 ? 1 : -1;
+  // Distance from the from-end and what is left of the edge in the driving direction.
+  let d0 = best.t * e.length;
+  let left = aheadM;
+  for (let guard = 0; guard <= graph.edges.length; guard++) {
+    const rest = dir > 0 ? e.length - d0 : d0;
+    if (rest >= left) {
+      if (!e.isGround) return null;
+      const p = pointAlong(e, dir > 0 ? d0 + left : d0 - left);
+      return { edge: e, x: p.x, y: p.y, heading: Math.atan2(p.uy, p.ux) };
+    }
+    left -= rest;
+    const node = dir > 0 ? e.to : e.from;
+    const next = chooseToward(graph, node, e.index, gx, gy);
+    if (next < 0 || next === e.index) return null;
+    e = graph.edges[next]!;
+    dir = e.from === node ? 1 : -1;
+    d0 = dir > 0 ? 0 : e.length;
+  }
+  return null;
 }
 export type PoliceEvent = keyof PoliceEventMap;
 
@@ -31,7 +111,7 @@ export class Police {
   /** True while some patrol sees the player (refreshed every tick). */
   seen = false;
   private readonly buildings = new Map<number, BuildingData[]>();
-  private readonly listeners: { [K in PoliceEvent]: Array<(e: PoliceEventMap[K]) => void> } = { wantedChanged: [], offence: [], fined: [] };
+  private readonly listeners: { [K in PoliceEvent]: Array<(e: PoliceEventMap[K]) => void> } = { wantedChanged: [], offence: [], fined: [], roadblock: [] };
   private readonly uturnAt = new WeakMap<TrafficCar, number>();
   private readonly unsub: Array<() => void> = [];
   private acc = 0;
@@ -41,6 +121,11 @@ export class Police {
   private sidewalkArmed = true;
   private crashX = 0;
   private crashY = 0;
+  private block: Roadblock | null = null;
+  /** Seconds left before the next roadblock may stand (0 at the start). */
+  private blockCool = 0;
+  /** Seconds since the last roadblock attempt (ready at the start). */
+  private blockTry = Infinity;
 
   constructor(
     readonly drive: DriveWorld,
@@ -161,6 +246,7 @@ export class Police {
   private tick(step: number): void {
     const t = this.tuning.police, c = this.drive.car;
     this.time += step;
+    this.roadblocks(step);
     this.patrols(step);
     this.seen = this.anySees();
 
@@ -192,6 +278,65 @@ export class Police {
     return false;
   }
 
+  // ---------- roadblock (specs/roadblock.md)
+
+  /** The standing roadblock, or null. */
+  get roadblock(): Readonly<Roadblock> | null {
+    return this.block;
+  }
+
+  /** Removes the roadblock (both cars) and starts cooldown_s; respawn calls it too. */
+  clearRoadblock(): void {
+    const b = this.block;
+    if (!b) return;
+    this.block = null;
+    this.blockCool = this.tuning.police.roadblock.cooldownS;
+    const tr = this.drive.traffic;
+    if (tr) for (const p of b.cars) tr.removeCar(p);
+  }
+
+  private roadblocks(step: number): void {
+    const rb = this.tuning.police.roadblock, tr = this.drive.traffic!, c = this.drive.car;
+    this.blockCool = Math.max(0, this.blockCool - step);
+    this.blockTry += step;
+    const b = this.block;
+    if (b) {
+      b.age += step;
+      // A traffic reset (teleport, respawn) took the cars: the roadblock is gone.
+      const gone = !tr.cars.includes(b.cars[0]) || !tr.cars.includes(b.cars[1]);
+      const far = (c.x - b.x) ** 2 + (c.y - b.y) ** 2 > rb.clearM * rb.clearM;
+      if (gone || far || this.state.level < rb.level || b.age > rb.ttlS) this.clearRoadblock();
+      return;
+    }
+    if (this.state.level < rb.level || this.blockCool > 0 || this.blockTry < this.tuning.police.pickIntervalS) return;
+    this.blockTry = 0;
+    this.block = this.buildRoadblock();
+    if (this.block) this.emit('roadblock', { x: this.block.x, y: this.block.y });
+  }
+
+  private buildRoadblock(): Roadblock | null {
+    const rb = this.tuning.police.roadblock, tr = this.drive.traffic!, c = this.drive.car;
+    const spot = roadblockSpot(this.drive.city.graph, c.x, c.y, c.heading, c.layer, this.tuning.layers.searchM, rb.aheadM, rb.probeM);
+    if (!spot || this.drive.zones.inside(spot.x, spot.y)) return null;
+    const e = spot.edge;
+    const s = e.length * 0.5;
+    const nx = -Math.sin(spot.heading), ny = Math.cos(spot.heading);
+    const across = spot.heading + Math.PI / 2;
+    const cars: TrafficCar[] = [];
+    for (const side of [1, -1]) {
+      const p = tr.addCar(e.index, 1, s, 0) ?? tr.addCar(e.index, -1, s, 0);
+      if (!p) {
+        for (const q of cars) tr.removeCar(q);
+        return null;
+      }
+      p.police = true;
+      p.blocking = true;
+      tr.setPose(p, spot.x + nx * rb.lateralM * side, spot.y + ny * rb.lateralM * side, across);
+      cars.push(p);
+    }
+    return { cars: [cars[0]!, cars[1]!], x: spot.x, y: spot.y, age: 0 };
+  }
+
   // ---------- patrols
 
   private patrols(step: number): void {
@@ -200,7 +345,7 @@ export class Police {
     const want = t.patrols[Math.min(level, t.patrols.length - 1)] ?? 0;
     let n = 0;
     for (const p of tr.cars) {
-      if (!p.police) continue;
+      if (!p.police || p.blocking) continue;
       n++;
       const dx = c.x - p.x, dy = c.y - p.y;
       const d2 = dx * dx + dy * dy;

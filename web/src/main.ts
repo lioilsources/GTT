@@ -189,6 +189,7 @@ async function main(): Promise<void> {
   $('btn-respawn').title = t('respawn');
   $('btn-respawn').addEventListener('click', () => {
     drive.spawn(city.startX, city.startY, city.startHeading);
+    police.police.clearRoadblock();
     view.carChanged();
     view.rig.snap(drive.car.x, drive.car.y, drive.car.heading, tuning);
   });
