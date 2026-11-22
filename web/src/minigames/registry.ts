@@ -8,6 +8,9 @@ import { sipky } from './sipky/game';
 import { koulena } from './koulena/game';
 import { strelnice } from './strelnice/game';
 import { taxi } from './taxi/game';
+import { kulicky } from './kulicky/game';
+import { cara } from './cara/game';
+import { nohejbal } from './nohejbal/game';
 
 /** Minigames this client implements; the Gallery greys out the rest. */
 export const minigames: Partial<Record<MinigameId, (env: MinigameEnv) => Minigame>> = {
@@ -19,4 +22,7 @@ export const minigames: Partial<Record<MinigameId, (env: MinigameEnv) => Minigam
   koulena,
   strelnice,
   taxi,
+  kulicky,
+  cara,
+  nohejbal,
 };
