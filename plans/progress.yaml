@@ -155,7 +155,8 @@ items:
      started: 2026-11-22T18:50, done: 2026-11-22T19:20, commit: 8b693ac, evidence: "specs/art.md v1, várka 1 (PR #113), PR #114, #118, #120, parita F-040; rozložení na telefonu nevyzkoušené"}
   - {id: M2-S4, milestone: M2, name: "fotomísta a Foťák", size: M, status: "čeká na Ol1na", started: 2026-11-22T19:00,
      done: 2026-11-22T19:50, commit: a53eb39, evidence: "specs/photo.md v1, 20 fotomíst v NYC (balíček 25d7bbedbb7e), vektory photo v obou klientech (PR #119, #122–#124), parita F-041; Foťák nevyzkoušený v prohlížeči ani na telefonu"}
-  - {id: M2-S5, milestone: M2, name: "obchody a bary", size: L, status: wip, started: 2026-11-22T22:05}
+  - {id: M2-S5, milestone: M2, name: "obchody a bary", size: L, status: "čeká na Ol1na", started: 2026-11-22T22:05,
+     done: 2026-11-22T22:44, commit: b913bac, evidence: "specs/shops.md v1, save v4, 12 podniků v NYC (balíček 3ede62a37e4d), PR #135–#138, parita F-042 a F-026; web ověřený headless, Flutter widget testy, na telefonu nevyzkoušené"}
   - {id: M2-S6, milestone: M2, name: "počasí (jasno, déšť, mlha)", size: M, status: todo}
   - {id: M2-S7, milestone: M2, name: "tuning a kosmetika", size: L, status: todo}
   - {id: M2-S8, milestone: M2, name: "40 aut v NYC", size: L, status: todo}

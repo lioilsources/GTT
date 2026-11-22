@@ -217,8 +217,8 @@
   spec: specs/save.md@3
   vectors: vectors/save.json
   lead: web
-  flutter: todo
-  web: todo
+  flutter: done
+  web: done
   checks: {flutter: pass, web: pass}
 - id: F-027
   name: Taxi (engine drive, 4-minute shift, real destinations, fare stars)
@@ -356,6 +356,6 @@
   spec: specs/shops.md@1
   vectors: vectors/shops.json
   lead: web
-  flutter: todo
-  web: todo
+  flutter: done
+  web: done
   checks: {flutter: pass, web: pass}
