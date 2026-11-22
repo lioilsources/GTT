@@ -1,0 +1,121 @@
+# DRAFT for Ol1n's review (specs/dialogue.md). Theo in a Žižkov pub after his shift. Nobody drives after drinking.
+id: theo_bar_2
+character: theo
+context: bar
+city: prague
+beats:
+  - npc:
+      en: "This is the Sleepy Badger. Best pub in Žižkov, according to me and four regulars. The tables are older than my record collection."
+      cs: "Tohle je U Ospalého jezevce. Nejlepší hospoda na Žižkově, podle mě a čtyř štamgastů. Stoly jsou starší než moje sbírka desek."
+    replies:
+      flirt:
+        en: "With good company, any pub is the best."
+        cs: "S dobrou společností je nejlepší každá hospoda."
+      joke:
+        en: "Do the regulars come with the furniture?"
+        cs: "Štamgasti se prodávají i s nábytkem?"
+      dry:
+        en: "Old tables, good sign. Sit down."
+        cs: "Staré stoly, dobré znamení. Sedni si."
+    reactions:
+      flirt:
+        en: "Nice line. Doesn't make the beer any colder."
+        cs: "Hezká věta. Pivo od ní studenější nebude."
+      joke:
+        en: "They are the furniture. The guy by the window hasn't moved since spring."
+        cs: "Oni jsou nábytek. Pán u okna se nehnul od jara."
+      dry:
+        en: "Exactly. New tables mean someone has a business plan."
+        cs: "Přesně. Nové stoly znamenají, že někdo má podnikatelský plán."
+  - npc:
+      en: "The waiter doesn't ask. He puts a beer down and draws a line on your paper slip. A tally system. Beautiful analogue design."
+      cs: "Číšník se neptá. Prostě položí pivo a udělá ti čárku na papírek. Čárkový systém. Krásný analogový design."
+    replies:
+      flirt:
+        en: "I like places where nobody asks questions."
+        cs: "Líbí se mi místa, kde se nikdo na nic neptá."
+      joke:
+        en: "That slip is the most honest accounting I'll ever do."
+        cs: "Ten papírek je moje nejupřímnější účetnictví."
+      dry:
+        en: "A soda for me. I'm driving."
+        cs: "Pro mě limonádu. Řídím."
+    reactions:
+      flirt:
+        en: "No questions, just beer. The ideal relationship."
+        cs: "Žádné otázky, jen pivo. Ideální vztah."
+      joke:
+        en: "Honest accounting. And no app."
+        cs: "Upřímné účetnictví. A žádná aplikace."
+      dry:
+        en: "He'll bring a soda. He'll judge you silently, but he'll bring it."
+        cs: "Limonádu přinese. Mlčky tě odsoudí, ale přinese ji."
+  - npc:
+      en: "Want the fried cheese? Smažák with tartar sauce. It's the only thing in here that isn't ironic."
+      cs: "Dáš si smažák? Smažený sýr s tatarkou. Jediná věc tady, která není ironická."
+    replies:
+      flirt:
+        en: "Only if we share."
+        cs: "Jen když se rozdělíme."
+      joke:
+        en: "Fried cheese. Finally, a dish with no backstory."
+        cs: "Smažák. Konečně jídlo bez příběhu."
+      dry:
+        en: "Yes. Large portion."
+        cs: "Ano. Velkou porci."
+    reactions:
+      flirt:
+        en: "Sharing fried cheese is a serious commitment. Okay."
+        cs: "Dělit se o smažák je vážný závazek. Dobře."
+      joke:
+        en: "Oh, it has a backstory. It's called Friday night."
+        cs: "Ale má. Jmenuje se pátek večer."
+      dry:
+        en: "Large. Direct. The waiter will respect you."
+        cs: "Velkou. Přímo. Číšník tě bude respektovat."
+  - npc:
+      en: "Someone's playing an old accordion in the corner. Nobody asked, nobody minds. Most underground thing I've seen this year."
+      cs: "V rohu někdo hraje na starou harmoniku. Nikdo o to nežádal, nikomu to nevadí. Nejvíc underground věc, co jsem letos viděl."
+    replies:
+      flirt:
+        en: "Ask him for something slow. For us."
+        cs: "Řekni mu o něco pomalého. Pro nás."
+      joke:
+        en: "Does he release on vinyl too?"
+        cs: "Vydává taky na vinylu?"
+      dry:
+        en: "He's not bad. Out of tune, but not bad."
+        cs: "Není špatný. Rozladěný, ale není špatný."
+    reactions:
+      flirt:
+        en: "He only knows one song. It's not slow. Sorry."
+        cs: "Umí jen jednu písničku. Pomalá není. Promiň."
+      joke:
+        en: "He releases on nothing. That's the point."
+        cs: "Nevydává na ničem. O to právě jde."
+      dry:
+        en: "Out of tune but honest. You get it."
+        cs: "Rozladěný, ale upřímný. Ty to chápeš."
+  - npc:
+      en: "Okay, last sip. I'm taking the night tram home, best place to think. You're driving, so go slow on the cobbles."
+      cs: "Dobře, poslední doušek. Domů jedu noční tramvají, tam se nejlíp přemýšlí. Ty řídíš, tak po kostkách pomalu."
+    replies:
+      flirt:
+        en: "Save me a seat on the tram next time."
+        cs: "Příště mi v tramvaji drž místo."
+      joke:
+        en: "The night tram. The most underground transport there is."
+        cs: "Noční tramvaj. Nejvíc underground doprava, co existuje."
+      dry:
+        en: "Slow on the cobbles. Got it. Good night."
+        cs: "Po kostkách pomalu. Jasně. Dobrou."
+    reactions:
+      flirt:
+        en: "Next time you're not driving, maybe. Night."
+        cs: "Až příště nebudeš řídit, možná. Dobrou."
+      joke:
+        en: "It runs above ground. Spiritually, though, underground. Night."
+        cs: "Jezdí po povrchu. Ale duchovně je underground. Dobrou."
+      dry:
+        en: "Good night. Same table next Friday, if you want."
+        cs: "Dobrou. Příští pátek stejný stůl, jestli chceš."

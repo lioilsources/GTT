@@ -1,0 +1,121 @@
+# DRAFT for Ol1n's review (specs/dialogue.md). Ray finds the player behind the wheel of his parked Prague taxi.
+id: ray_car_owner_1
+character: ray
+context: car_owner
+city: prague
+beats:
+  - npc:
+      en: "Hey, hey. That's my cab. Unless you've sat in that seat for thirty years, you're in the wrong seat."
+      cs: "Hej, hej. To je můj taxík. Jestli nesedíš na tom místě třicet let, sedíš na špatném místě."
+    replies:
+      flirt:
+        en: "Your seat's comfortable. Now I get why you stay."
+        cs: "Tvoje sedačka je pohodlná. Teď chápu, proč na ní vydržíš."
+      joke:
+        en: "I'm off duty. The meter's not running."
+        cs: "Mám volno. Taxametr neběží."
+      dry:
+        en: "I need a car. Ten minutes."
+        cs: "Potřebuju auto. Deset minut."
+    reactions:
+      flirt:
+        en: "It's shaped like me. Don't get used to it."
+        cs: "Je vytvarovaná podle mě. Nezvykej si."
+      joke:
+        en: "Ha! The meter's always running. The meter of life."
+        cs: "Cha! Taxametr běží vždycky. Taxametr života."
+      dry:
+        en: "Ten minutes. Everyone says ten. It's never ten."
+        cs: "Deset minut. Každý říká deset. Nikdy to není deset."
+  - npc:
+      en: "Is the radio still on the old-songs station? My cab only speaks in old songs."
+      cs: "Je rádio pořád na stanici se starými písničkami? Můj taxík mluví jen starými písničkami."
+    replies:
+      flirt:
+        en: "I'm leaving it. Romance suits this car."
+        cs: "Nechávám to. K tomuhle autu sedí romantika."
+      joke:
+        en: "It's on traffic news now. Thrilling."
+        cs: "Teď hrají dopravní zpravodajství. Napínavé."
+      dry:
+        en: "Old songs. Not touching it."
+        cs: "Staré písničky. Nesahám na to."
+    reactions:
+      flirt:
+        en: "Romance? It's mostly songs about trains. Easy."
+        cs: "Romantika? Jsou to hlavně písničky o vlacích. Pomalu."
+      joke:
+        en: "Traffic news! Put it back before the cab sulks."
+        cs: "Dopravní zpravodajství! Vrať to, než se taxík urazí."
+      dry:
+        en: "Good. You understand the cab. Rare."
+        cs: "Dobře. Rozumíš taxíku. Vzácné."
+  - npc:
+      en: "Look, I've got a fare waiting at the main station in fifteen minutes. So either you get out, or you drive me there."
+      cs: "Hele, za patnáct minut mě čeká zákazník na hlavním nádraží. Takže buď vystoupíš, nebo mě tam odvezeš."
+    replies:
+      flirt:
+        en: "I'll drive you anywhere."
+        cs: "Odvezu tě kamkoli."
+      joke:
+        en: "A taxi for the taxi driver. Very modern."
+        cs: "Taxík pro taxikáře. Hodně moderní."
+      dry:
+        en: "I'll drive you. Fastest route?"
+        cs: "Odvezu tě. Nejrychlejší cesta?"
+    reactions:
+      flirt:
+        en: "The station. Not anywhere. Seatbelt."
+        cs: "Na nádraží. Ne kamkoli. Pás."
+      joke:
+        en: "Ha! Modern. My cab is older than your phone. Go."
+        cs: "Cha! Moderní. Můj taxík je starší než tvůj telefon. Jeď."
+      dry:
+        en: "Through Karlín, then over the bridge. Not along the embankment, it's a parking lot at this hour."
+        cs: "Přes Karlín a pak přes most. Ne po nábřeží, tam je touhle dobou parkoviště."
+  - npc:
+      en: "Not bad. Letting the tram go first, no panic on the cobbles. Who taught you to drive?"
+      cs: "Nebylo to špatné. Pustit tramvaj napřed, nepanikařit na kostkách. Kdo tě učil řídit?"
+    replies:
+      flirt:
+        en: "Maybe it was all for you."
+        cs: "Možná to bylo kvůli tobě."
+      joke:
+        en: "Games. Lots of games."
+        cs: "Hry. Spousta her."
+      dry:
+        en: "A driving school. And patience."
+        cs: "Autoškola. A trpělivost."
+    reactions:
+      flirt:
+        en: "Flattering, but I'm married. And to this cab as well."
+        cs: "Lichotíš, ale jsem ženatý. A k tomu ještě s tímhle taxíkem."
+      joke:
+        en: "Ha! Games. That explains the drift into my parking spot."
+        cs: "Cha! Hry. To vysvětluje ten smyk do mého místa."
+      dry:
+        en: "Patience. The best teacher in this city."
+        cs: "Trpělivost. Nejlepší učitel v tomhle městě."
+  - npc:
+      en: "Here's the station, two minutes early. Okay, you're forgiven. But next time, ask. I say yes more often than it seems."
+      cs: "Nádraží, dvě minuty napřed. Dobře, odpuštěno. Ale příště se zeptej. Říkám ano častěji, než se zdá."
+    replies:
+      flirt:
+        en: "Then next time I'll ask for your number."
+        cs: "Tak příště se zeptám na tvoje číslo."
+      joke:
+        en: "Can I keep the old songs?"
+        cs: "Můžu si nechat ty staré písničky?"
+      dry:
+        en: "Next time I'll ask. Thanks, Ray."
+        cs: "Příště se zeptám. Díky, Rayi."
+    reactions:
+      flirt:
+        en: "Here's the number for the dispatch office. Ha."
+        cs: "Tady máš číslo na dispečink. Cha."
+      joke:
+        en: "They're in your head now. Forever. Bye!"
+        cs: "Ty už máš v hlavě. Navždy. Měj se!"
+      dry:
+        en: "Good. Go on, before I charge you for the ride."
+        cs: "Dobře. Běž, než ti tu jízdu naúčtuju."

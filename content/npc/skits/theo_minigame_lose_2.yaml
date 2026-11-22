@@ -1,0 +1,121 @@
+# DRAFT for Ol1n's review (specs/dialogue.md). Theo right after he beat the player at nohejbal on a riverside court.
+id: theo_minigame_lose_2
+character: theo
+context: minigame_lose
+city: prague
+beats:
+  - npc:
+      en: "Point, set, game. Nohejbal. I played it before it was retro. Which is never, because it was always retro."
+      cs: "Bod, set, konec. Nohejbal. Hrál jsem ho dřív, než byl retro. Což je nikdy, protože retro byl vždycky."
+    replies:
+      flirt:
+        en: "You looked good doing it."
+        cs: "Slušelo ti to."
+      joke:
+        en: "I'm blaming the net. The net looked shady."
+        cs: "Svedu to na síť. Ta síť vypadala podezřele."
+      dry:
+        en: "Good game. You were better."
+        cs: "Dobrá hra. Byl jsi lepší."
+    reactions:
+      flirt:
+        en: "I looked sweaty. But I'll take it."
+        cs: "Vypadal jsem zpoceně. Ale beru."
+      joke:
+        en: "The net is a hundred percent honest. It's also forty years old."
+        cs: "Síť je stoprocentně poctivá. Je jí taky čtyřicet let."
+      dry:
+        en: "I was. Thanks for saying it straight."
+        cs: "To jo. Díky, že to říkáš na rovinu."
+  - npc:
+      en: "Your serve was fine. Your header looked like a polite hello to the ball."
+      cs: "Podání ušlo. Tvoje hlavička vypadala jako zdvořilé pozdravení míče."
+    replies:
+      flirt:
+        en: "Something distracted me. You."
+        cs: "Něco mě rozptylovalo. Ty."
+      joke:
+        en: "The ball and I go way back. We're on greeting terms."
+        cs: "S míčem se známe dlouho. Zdravíme se."
+      dry:
+        en: "Headers aren't my thing."
+        cs: "Hlavičky mi nejdou."
+    reactions:
+      flirt:
+        en: "Me? I was on the other side of a net. Nice try."
+        cs: "Já? Byl jsem na druhé straně sítě. Pěkný pokus."
+      joke:
+        en: "Greeting terms. Next level is a high five. With your foot."
+        cs: "Zdravíte se. Další úroveň je plácnutí. Nohou."
+      dry:
+        en: "Honest self-assessment. Rare. Practise against a wall."
+        cs: "Upřímné sebehodnocení. Vzácné. Trénuj proti zdi."
+  - npc:
+      en: "This court by the river is the best in town. Crooked lines, no shade, and a tram rattles past every four minutes. Perfect."
+      cs: "Tohle hřiště u řeky je nejlepší ve městě. Křivé čáry, žádný stín a každé čtyři minuty kolem drnčí tramvaj. Dokonalé."
+    replies:
+      flirt:
+        en: "And perfect company."
+        cs: "A dokonalá společnost."
+      joke:
+        en: "The tram is the referee. One ding means out."
+        cs: "Tramvaj je rozhodčí. Jedno cinknutí znamená aut."
+      dry:
+        en: "Crooked lines. That explains a few of your points."
+        cs: "Křivé čáry. To vysvětluje pár tvých bodů."
+    reactions:
+      flirt:
+        en: "The company lost. Clearly. But fine."
+        cs: "Společnost prohrála. Jasně. Ale budiž."
+      joke:
+        en: "Then the tram called it for me too. Undisputed."
+        cs: "Tak to mi to tramvaj taky odpískala. Nesporně."
+      dry:
+        en: "Are you calling me a cheat? Okay, maybe one point."
+        cs: "Ty mě obviňuješ z podvádění? Dobře, možná jeden bod."
+  - npc:
+      en: "Want a lemonade? The kiosk makes it from real elderflower. The owner won't say where he picks it."
+      cs: "Dáš si limonádu? Ve stánku ji dělají z pravého bezu. Majitel odmítá prozradit, kde ho trhá."
+    replies:
+      flirt:
+        en: "If you're buying, yes."
+        cs: "Když zveš ty, tak jo."
+      joke:
+        en: "Secret elderflower. A true underground source."
+        cs: "Tajný bez. Pravý undergroundový zdroj."
+      dry:
+        en: "Yes. Large. I'm thirsty."
+        cs: "Jo. Velkou. Mám žízeň."
+    reactions:
+      flirt:
+        en: "The loser buys. Court rules. But I'll get the ice."
+        cs: "Platí poražený. Pravidlo hřiště. Ale led koupím já."
+      joke:
+        en: "Under Vyšehrad at dawn, allegedly. Don't spread it."
+        cs: "Trhá ho prý za úsvitu pod Vyšehradem. Nešiř to."
+      dry:
+        en: "Large. Thirsty. You make ordering look easy."
+        cs: "Velkou. Žízeň. Objednávání ti jde."
+  - npc:
+      en: "Rematch on Sunday. If you lose again, you listen to a whole album with me. No skipping."
+      cs: "Odveta v neděli. Když zase prohraješ, posloucháš se mnou celé album. Bez přeskakování."
+    replies:
+      flirt:
+        en: "Honestly, that sounds like winning."
+        cs: "Upřímně, to zní spíš jako výhra."
+      joke:
+        en: "Is it a double album? Then I'm faking an injury."
+        cs: "Je to dvojalbum? Tak předstírám zranění."
+      dry:
+        en: "Deal. I'll practise headers."
+        cs: "Platí. Natrénuju hlavičky."
+    reactions:
+      flirt:
+        en: "It's ambient. Forty minutes of rain. Still winning?"
+        cs: "Je to ambient. Čtyřicet minut deště. Pořád výhra?"
+      joke:
+        en: "Triple album. Bring snacks. See you Sunday."
+        cs: "Trojalbum. Vezmi svačinu. V neděli."
+      dry:
+        en: "Practise against the wall. The wall is a great listener."
+        cs: "Trénuj proti zdi. Zeď skvěle poslouchá."

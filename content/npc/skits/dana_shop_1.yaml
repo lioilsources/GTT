@@ -1,0 +1,121 @@
+# DRAFT for Ol1n's review (specs/dialogue.md). Dana ordering open sandwiches for her team at a small Vinohrady deli.
+id: dana_shop_1
+character: dana
+context: shop
+city: prague
+beats:
+  - npc:
+      en: "You're next after me, sorry. I'm ordering forty open sandwiches for a team meeting. The lady says ten minutes. I have eight."
+      cs: "Jdeš po mně, promiň. Objednávám čtyřicet chlebíčků na poradu týmu. Paní říká, že to bude deset minut. Já mám osm."
+    replies:
+      flirt:
+        en: "I'd happily wait an hour behind you."
+        cs: "Za tebou klidně počkám hodinu."
+      joke:
+        en: "Forty? Is the meeting about sandwiches?"
+        cs: "Čtyřicet? Je ta porada o chlebíčcích?"
+      dry:
+        en: "Order twenty now. Twenty later."
+        cs: "Objednej dvacet teď, dvacet potom."
+    reactions:
+      flirt:
+        en: "An hour is inefficient. Sweet, but inefficient."
+        cs: "Hodina je neefektivní. Milé, ale neefektivní."
+      joke:
+        en: "It's about quarterly targets. The sandwiches are the only good part."
+        cs: "Je o kvartálních cílech. Chlebíčky jsou jediná dobrá část."
+      dry:
+        en: "Split delivery. That's operations thinking."
+        cs: "Dělená dodávka. To je provozní myšlení."
+  - npc:
+      en: "Ham, egg salad, or the one with the little swirl of mayonnaise? My team argues about this more than about the budget."
+      cs: "Šunkový, vajíčkový, nebo ten s kudrlinkou majonézy? Můj tým se o tom hádá víc než o rozpočet."
+    replies:
+      flirt:
+        en: "Whichever you'd pick for yourself."
+        cs: "Ten, který by sis vybrala ty."
+      joke:
+        en: "Mix them. Let chaos decide."
+        cs: "Namíchej je. Ať rozhodne chaos."
+      dry:
+        en: "A third of each. No arguments."
+        cs: "Od každého třetinu. Žádné hádky."
+    reactions:
+      flirt:
+        en: "I'd pick none. I don't have time to eat. Ham, then."
+        cs: "Já bych nevybrala žádný. Nemám čas jíst. Tak šunkový."
+      joke:
+        en: "Chaos is what I'm trying to avoid. That's my whole job."
+        cs: "Chaosu se právě snažím vyhnout. To je celá moje práce."
+      dry:
+        en: "A third each. Fair, final. Done."
+        cs: "Třetina od každého. Férově, definitivně. Hotovo."
+  - npc:
+      en: "And dessert. The lady recommends cream rolls. My calendar recommends nothing with cream."
+      cs: "A dezert. Paní doporučuje kremrole. Můj kalendář nedoporučuje nic se šlehačkou."
+    replies:
+      flirt:
+        en: "Treat yourself. You deserve sweet things."
+        cs: "Dopřej si. Zasloužíš si sladké věci."
+      joke:
+        en: "Your calendar is on a diet?"
+        cs: "Tvůj kalendář drží dietu?"
+      dry:
+        en: "Get them. Teams like dessert."
+        cs: "Vezmi je. Týmy mají dezerty rády."
+    reactions:
+      flirt:
+        en: "Sweet things make me sleepy at three. But thank you."
+        cs: "Ze sladkého jsem ve tři ospalá. Ale děkuju."
+      joke:
+        en: "My calendar is stressed. Not funny."
+        cs: "Můj kalendář je ve stresu. Není to vtipné."
+      dry:
+        en: "True. Morale. Ten cream rolls, please."
+        cs: "Pravda. Morálka. Deset kremrolí, prosím."
+  - npc:
+      en: "A tram just rang outside, which means my eight minutes are now six. Sorry, everyone. You especially."
+      cs: "Venku zazvonila tramvaj, což znamená, že z osmi minut je šest. Omlouvám se všem. Hlavně tobě."
+    replies:
+      flirt:
+        en: "No need. I like the view in this queue."
+        cs: "Není za co. Výhled v téhle frontě se mi líbí."
+      joke:
+        en: "The tram rings the time for you? Handy."
+        cs: "Tramvaj ti zvoní čas? Šikovné."
+      dry:
+        en: "It's fine. I'm not in a rush."
+        cs: "V pohodě. Nespěchám."
+    reactions:
+      flirt:
+        en: "The view is a glass case of sandwiches. But okay."
+        cs: "Výhled je vitrína s chlebíčky. Ale dobře."
+      joke:
+        en: "It's a tram. Not my assistant."
+        cs: "Je to tramvaj. Ne moje asistentka."
+      dry:
+        en: "Not in a rush. I don't understand it, but I respect it."
+        cs: "Nespěcháš. Nechápu to, ale respektuju to."
+  - npc:
+      en: "Done. Forty sandwiches, ten cream rolls, two minutes to spare. Here, take one. For the consulting."
+      cs: "Hotovo. Čtyřicet chlebíčků, deset kremrolí, dvě minuty rezerva. Tady, vezmi si jeden. Za poradenství."
+    replies:
+      flirt:
+        en: "I'll save it for when we meet again."
+        cs: "Schovám si ho na příští setkání."
+      joke:
+        en: "My consulting fee is one sandwich. Very reasonable."
+        cs: "Můj honorář za poradenství je jeden chlebíček. Velmi rozumné."
+      dry:
+        en: "Thanks. Good luck with the meeting."
+        cs: "Díky. Ať se porada vydaří."
+    reactions:
+      flirt:
+        en: "Eat it now. Mayonnaise doesn't wait. Neither do I. Bye."
+        cs: "Sněz ho hned. Majonéza nečeká. Já taky ne. Ahoj."
+      joke:
+        en: "Reasonable. Still not funny. Bye."
+        cs: "Rozumné. Pořád to není vtipné. Ahoj."
+      dry:
+        en: "Thank you. You can queue behind me anytime."
+        cs: "Děkuju. Za mnou ve frontě můžeš stát kdykoli."

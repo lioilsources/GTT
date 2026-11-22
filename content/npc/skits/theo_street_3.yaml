@@ -1,0 +1,121 @@
+# DRAFT for Ol1n's review (specs/dialogue.md). Theo sweeping leaves outside a Vinohrady café before opening.
+id: theo_street_3
+character: theo
+context: street
+city: prague
+beats:
+  - npc:
+      en: "Morning. We open in ten. I'm sweeping chestnut leaves off the pavement, which is basically meditation with a broom."
+      cs: "Dobré ráno. Otevíráme za deset minut. Zametám kaštanové listí z chodníku, což je vlastně meditace s koštětem."
+    replies:
+      flirt:
+        en: "Can I get the first coffee of the day?"
+        cs: "Můžu dostat první kafe dne?"
+      joke:
+        en: "Zen and the art of chestnut removal."
+        cs: "Zen a umění odklízet kaštany."
+      dry:
+        en: "Ten minutes. I'll wait."
+        cs: "Deset minut. Počkám."
+    reactions:
+      flirt:
+        en: "The first one goes to the cat next door. You get the second."
+        cs: "První kafe dostává kocour od vedle. Ty dostaneš druhé."
+      joke:
+        en: "I'd read that book. Nobody else would."
+        cs: "Tu knížku bych si přečetl. Nikdo jiný ne."
+      dry:
+        en: "Patience. Rare. The grinder will thank you."
+        cs: "Trpělivost. Vzácné. Mlýnek ti poděkuje."
+  - npc:
+      en: "Vinohrady is perfect. Old buildings, wide streets, and every second ground floor is a café. Competition keeps the beans honest."
+      cs: "Vinohrady jsou dokonalé. Staré domy, široké ulice a každé druhé přízemí je kavárna. Konkurence drží zrna v poctivosti."
+    replies:
+      flirt:
+        en: "Yours is the one I want to come back to."
+        cs: "Do té tvé se chci vracet."
+      joke:
+        en: "So it's a coffee war. Who's winning?"
+        cs: "Takže kávová válka. Kdo vyhrává?"
+      dry:
+        en: "Too many cafés. Not enough parking."
+        cs: "Moc kaváren. Málo parkování."
+    reactions:
+      flirt:
+        en: "Come back for the beans. I'm just the guy with the broom."
+        cs: "Vracej se kvůli zrnům. Já jsem jen ten s koštětem."
+      joke:
+        en: "Nobody. We all just get more tattoos."
+        cs: "Nikdo. Všichni jen přibíráme tetování."
+      dry:
+        en: "True. Drivers suffer here. That's why I bike."
+        cs: "Pravda. Řidiči tady trpí. Proto jezdím na kole."
+  - npc:
+      en: "Listen. A tram just went by and the bell rang an E-flat. Every morning. It's in tune with my grinder."
+      cs: "Poslouchej. Zrovna projela tramvaj a zvonek cinkl na es. Každé ráno. Ladí s mým mlýnkem."
+    replies:
+      flirt:
+        en: "Everything sounds good around you."
+        cs: "Kolem tebe zní všechno dobře."
+      joke:
+        en: "Start a band. Tram, Grinder and Broom."
+        cs: "Založ kapelu. Tramvaj, Mlýnek a Koště."
+      dry:
+        en: "You can hear the note? Impressive."
+        cs: "Ty slyšíš, jaký to je tón? Působivé."
+    reactions:
+      flirt:
+        en: "That's the grinder. It's very loud. But thanks."
+        cs: "To je mlýnek. Je hodně nahlas. Ale díky."
+      joke:
+        en: "I'd see them live. First album only."
+        cs: "Viděl bych je naživo. Jen první album."
+      dry:
+        en: "Perfect pitch. A gift and a curse. Mostly a curse."
+        cs: "Absolutní sluch. Dar i prokletí. Hlavně prokletí."
+  - npc:
+      en: "It's starting to drizzle. Classic November. The cobbles go shiny and everyone suddenly walks like they're on ice."
+      cs: "Začíná mrholit. Klasický listopad. Kostky se lesknou a všichni najednou chodí jako po ledu."
+    replies:
+      flirt:
+        en: "I'll hold your umbrella. And your broom."
+        cs: "Podržím ti deštník. I koště."
+      joke:
+        en: "A free ice show, every rainy morning."
+        cs: "Lední revue zdarma, každé deštivé ráno."
+      dry:
+        en: "Wet cobbles. I'll drive slowly."
+        cs: "Mokré kostky. Pojedu pomalu."
+    reactions:
+      flirt:
+        en: "I don't own an umbrella. Too mainstream. You can hold the broom."
+        cs: "Deštník nemám. Moc mainstream. Koště podržet můžeš."
+      joke:
+        en: "And the reviews are always mixed."
+        cs: "A recenze jsou vždycky rozporuplné."
+      dry:
+        en: "Good. Cobbles don't forgive."
+        cs: "Dobře. Kostky neodpouštějí."
+  - npc:
+      en: "Door's open. Come in, your coffee's on me. Single origin, no sugar, no questions. Okay, one question: oat or regular?"
+      cs: "Je otevřeno. Pojď dál, kafe máš ode mě. Jednodruhová, bez cukru, bez otázek. Dobře, jedna otázka: ovesné, nebo normální?"
+    replies:
+      flirt:
+        en: "Whatever you'd make for yourself."
+        cs: "To, co by sis udělal ty."
+      joke:
+        en: "Surprise me. Oat-regular fusion."
+        cs: "Překvap mě. Fúze ovesného a normálního."
+      dry:
+        en: "Regular. Actually, black."
+        cs: "Normální. Vlastně černou."
+    reactions:
+      flirt:
+        en: "For myself? Black, nothing else. Bold, but okay. Come in."
+        cs: "Pro sebe? Černou, nic víc. Odvážné, ale dobře. Pojď dál."
+      joke:
+        en: "Fusion. Please never say that word in here again."
+        cs: "Fúze. Tohle slovo tady už prosím nikdy neříkej."
+      dry:
+        en: "Black. Finally, someone who trusts the bean."
+        cs: "Černou. Konečně někdo, kdo věří zrnu."
