@@ -83,9 +83,12 @@ items:
      started: 2026-11-21T22:05, done: 2026-11-21T23:35, commit: 7ce1e0e, evidence: "provoz a dvoufázové semafory v obou klientech, stejné syntetické testy (F-016, PR #30–#32); chybí telefon"}
   - {id: M1-S3, milestone: M1, name: "chodci s uskakováním", size: M, status: "čeká na Ol1na",
      started: 2026-11-21T22:05, done: 2026-11-21T23:15, commit: 7ce1e0e, evidence: "chodci s uskakováním, 400 náhodných průjezdů bez dotyku v obou klientech (F-017, PR #24–#26); chybí telefon"}
-  - {id: M1-S4, milestone: M1, name: "policie, hledanost 1–2", size: M, status: todo}
-  - {id: M1-S5, milestone: M1, name: "mg_api, Galerie, enginy puzzle/cards/board/dice/flick/drive", size: L, status: todo}
-  - {id: M1-S6, milestone: M1, name: "osm miniher z 9.5 se spoty", size: L, status: todo}
+  - {id: M1-S4, milestone: M1, name: "policie, hledanost 1–2", size: M, status: "čeká na Ol1na",
+     started: 2026-11-22T00:20, done: 2026-11-22T00:45, commit: 9582e88, evidence: "hledanost 1–2, hlídky, únik, pokuta; vectors/police.json 14 případů v obou klientech (F-024, PR #43–#45); chybí telefon"}
+  - {id: M1-S5, milestone: M1, name: "mg_api, Galerie, enginy puzzle/cards/board/dice/flick/drive", size: L, status: "čeká na Ol1na",
+     started: 2026-11-21T20:20, done: 2026-11-21T21:54, commit: 9582e88, evidence: "mg_api + MinigameShell, Galerie v obou klientech, enginy puzzle/cards/board/dice/flick (drive s Taxi); D2 PR #10–#20; chybí telefon"}
+  - {id: M1-S6, milestone: M1, name: "osm miniher z 9.5 se spoty", size: L, status: wip,
+     started: 2026-11-21T20:20}
   - {id: M1-S7, milestone: M1, name: "telefon s Feedem (6 karet) a Mapou", size: L, status: "čeká na Ol1na",
      started: 2026-11-21T22:05, done: 2026-11-21T23:25, commit: 7ce1e0e, evidence: "telefon, Feed (6 karet, vectors/feed.json) a Mapa v obou klientech (F-022/F-023, PR #27–#29); chybí telefon"}
   - {id: M1-S8, milestone: M1, name: "5 aut, přesedání, 1 garáž", size: M, status: "čeká na Ol1na",
@@ -94,19 +97,24 @@ items:
      started: 2026-11-21T22:05, done: 2026-11-21T23:45, commit: 7ce1e0e, evidence: "20 památek s pohlednicí, Pas s razítky (vectors/passport.json, F-019, PR #33–#35); chybí telefon"}
   - {id: M1-S10, milestone: M1, name: "npc_dialogue: 6 postav, 30 skitů", size: L, status: "čeká na Ol1na",
      started: 2026-11-21T22:05, done: 2026-11-21T23:55, commit: 7ce1e0e, evidence: "6 postav, 30 skitů (návrh k revizi), dialogy a hláška soupeře (vectors/dialogue.json, F-021, PR #36–#38); chybí revize obsahu a telefon"}
-  - {id: M1-S11, milestone: M1, name: "výsledková obrazovka, hotovost, ukládání", size: M, status: todo}
+  - {id: M1-S11, milestone: M1, name: "výsledková obrazovka, hotovost, ukládání", size: M, status: "čeká na Ol1na",
+     started: 2026-11-22T00:20, done: 2026-11-22T01:05, commit: 9582e88, evidence: "smyčka spot → minihra → výsledek → hotovost/razítko → uložení; vectors/economy.json, vectors/save.json v obou klientech (F-025/F-026, PR #46–#48); chybí telefon"}
   - {id: M1-S12, milestone: M1, name: "obrazovka O mapách", size: S, status: "čeká na Ol1na",
      started: 2026-11-21T22:05, done: 2026-11-21T23:45, commit: 7ce1e0e, evidence: "obrazovka O mapách se zdroji a licencemi (F-020, PR #33–#35); chybí potvrzení textu o ODbL"}
   # ---------- M1 – Vertikální řez (acceptance)
-  - {id: M1-A1, milestone: M1, name: "10 smyček za sebou bez pádu a zaseknutí", size: S, status: todo}
+  - {id: M1-A1, milestone: M1, name: "10 smyček za sebou bez pádu a zaseknutí", size: S, status: "čeká na Ol1na",
+     started: 2026-11-22T00:20, done: 2026-11-22T01:05, commit: 9582e88, evidence: "soak test 10 smyček v obou klientech (web/test/loop.test.ts, app/test/loop_soak_test.dart); chybí 10 smyček ručně na telefonu"}
   - {id: M1-A2, milestone: M1, name: "každá minihra projde unit testy a jde spustit z Galerie", size: S, status: todo}
   - {id: M1-A3, milestone: M1, name: "dogfooding: seance ≥ 10 min, návrat tři dny po sobě", size: S, status: todo}
   - {id: M1-A4, milestone: M1, name: "interní build v TestFlightu a Play internal testing", size: M, status: todo}
 
   # ---------- D3 – M1 v obou
-  - {id: D3-1, milestone: D3, name: "celá smyčka M1 v obou klientech", size: L, status: todo}
-  - {id: D3-2, milestone: D3, name: "matice parity pro rozsah M1 zelená", size: M, status: todo}
-  - {id: D3-3, milestone: D3, name: "W veřejně na odkazu", size: S, status: todo}
+  - {id: D3-1, milestone: D3, name: "celá smyčka M1 v obou klientech", size: L, status: wip,
+     started: 2026-11-21T22:05}
+  - {id: D3-2, milestone: D3, name: "matice parity pro rozsah M1 zelená", size: M, status: wip,
+     started: 2026-11-21T22:05}
+  - {id: D3-3, milestone: D3, name: "W veřejně na odkazu", size: S, status: hotovo,
+     started: 2026-11-21T17:10, done: 2026-11-22T01:05, commit: 9582e88, evidence: "https://lioilsources.github.io/GTT/ nasazeno z main (web.yml), celá smyčka M1 kromě Taxi; HTTP 200"}
   - {id: D3-4, milestone: D3, name: "F v TestFlightu a Play internal", size: M, status: todo}
 
 # Content counters with targets. tests and fps are measured; the rest metro progress counts itself.

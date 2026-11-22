@@ -199,21 +199,24 @@
   spec: specs/police.md@1
   vectors: vectors/police.json
   lead: web
-  flutter: todo
-  web: todo
+  flutter: done
+  web: done
+  checks: {flutter: pass, web: pass}
 - id: F-025
   name: Loop glue (arrival → minigame → result, cash, stamp, save v2)
   level: P0
   spec: specs/economy.md@1
   vectors: vectors/economy.json
   lead: web
-  flutter: todo
-  web: todo
+  flutter: done
+  web: done
+  checks: {flutter: pass, web: pass}
 - id: F-026
   name: Save format v2 and migration from v1
   level: P0
   spec: specs/save.md@1
   vectors: vectors/save.json
   lead: web
-  flutter: todo
-  web: todo
+  flutter: done
+  web: done
+  checks: {flutter: pass, web: pass}
