@@ -171,6 +171,7 @@ class Autopilot {
     final p = route.at(0);
     drive.spawn(p.x, p.y, p.dir);
     drive.traffic?.solid = false; // the autopilot does not avoid cars
+    drive.trams?.solid = false;
     s = 0;
   }
 

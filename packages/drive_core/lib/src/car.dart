@@ -15,6 +15,10 @@ const int catTraffic = 4;
 /// Parked cars (specs/cars.md): dynamic bodies the player and traffic can push.
 const int catParked = 8;
 
+/// Tram cars (specs/trams.md): kinematic, never pushed; collide with the player, traffic and parked
+/// cars in the same layer.
+const int catTram = 64;
+
 /// Pedestrian-zone bollards (specs/zones.md): static, layer 0, collide only with the player's car.
 const int catZone = 32;
 
@@ -102,7 +106,8 @@ class Car {
 
   // Buildings, parked cars and zone bollards only exist on the ground layer; bridges and tunnels
   // use rails instead. Traffic cars switch their own mask by layer (traffic.dart).
-  static int _mask(int layer, int zone) => (layer == 0 ? catBuildings | catParked | zone : 0) | catTraffic;
+  static int _mask(int layer, int zone) =>
+      (layer == 0 ? catBuildings | catParked | zone : 0) | catTraffic | catTram;
 
   int get maskBits => _mask(layer, zoneBits);
 

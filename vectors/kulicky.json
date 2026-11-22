@@ -1,0 +1,1407 @@
+{
+ "module": "kulicky",
+ "specVersion": 1,
+ "$comment": "Whole games; player aims written out, rival moves as {by: ai, level} decided by aiAction. States recorded by the lead client (web).",
+ "cases": [
+  {
+   "name": "hole-level-1",
+   "config": {
+    "rounds": 5,
+    "holeR": 25,
+    "holePoints": 3,
+    "closerPoints": 1,
+    "scatter": [
+     30,
+     40,
+     50,
+     60,
+     70
+    ],
+    "aiScatter": [
+     110,
+     90,
+     70,
+     55,
+     40
+    ],
+    "starMargins": [
+     6,
+     3,
+     1
+    ]
+   },
+   "seed": 1,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 0,
+      "level": 1
+     },
+     "state": {
+      "round": 1,
+      "turn": "ai",
+      "playerPts": 0,
+      "aiPts": 0,
+      "playerShot": {
+       "x": -13,
+       "y": -6,
+       "inHole": true
+      },
+      "aiShot": {
+       "x": 0,
+       "y": 0,
+       "inHole": false
+      },
+      "over": false,
+      "rng": 67634689
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "round": 2,
+      "turn": "player",
+      "playerPts": 3,
+      "aiPts": 0,
+      "playerShot": {
+       "x": -13,
+       "y": -6,
+       "inHole": true
+      },
+      "aiShot": {
+       "x": 106,
+       "y": 72,
+       "inHole": false
+      },
+      "over": false,
+      "rng": 307599695
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 0,
+      "level": 1
+     },
+     "state": {
+      "round": 2,
+      "turn": "ai",
+      "playerPts": 3,
+      "aiPts": 0,
+      "playerShot": {
+       "x": -11,
+       "y": 17,
+       "inHole": true
+      },
+      "aiShot": {
+       "x": 106,
+       "y": 72,
+       "inHole": false
+      },
+      "over": false,
+      "rng": 745495504
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "round": 3,
+      "turn": "player",
+      "playerPts": 6,
+      "aiPts": 0,
+      "playerShot": {
+       "x": -11,
+       "y": 17,
+       "inHole": true
+      },
+      "aiShot": {
+       "x": -107,
+       "y": 13,
+       "inHole": false
+      },
+      "over": false,
+      "rng": 435756210
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 0,
+      "level": 1
+     },
+     "state": {
+      "round": 3,
+      "turn": "ai",
+      "playerPts": 6,
+      "aiPts": 0,
+      "playerShot": {
+       "x": 3,
+       "y": 2,
+       "inHole": true
+      },
+      "aiShot": {
+       "x": -107,
+       "y": 13,
+       "inHole": false
+      },
+      "over": false,
+      "rng": 2916098932
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "round": 4,
+      "turn": "player",
+      "playerPts": 9,
+      "aiPts": 0,
+      "playerShot": {
+       "x": 3,
+       "y": 2,
+       "inHole": true
+      },
+      "aiShot": {
+       "x": -93,
+       "y": 60,
+       "inHole": false
+      },
+      "over": false,
+      "rng": 1495045943
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 0,
+      "level": 1
+     },
+     "state": {
+      "round": 4,
+      "turn": "ai",
+      "playerPts": 9,
+      "aiPts": 0,
+      "playerShot": {
+       "x": -6,
+       "y": 20,
+       "inHole": true
+      },
+      "aiShot": {
+       "x": -93,
+       "y": 60,
+       "inHole": false
+      },
+      "over": false,
+      "rng": 82049198
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "round": 5,
+      "turn": "player",
+      "playerPts": 12,
+      "aiPts": 0,
+      "playerShot": {
+       "x": -6,
+       "y": 20,
+       "inHole": true
+      },
+      "aiShot": {
+       "x": -73,
+       "y": 52,
+       "inHole": false
+      },
+      "over": false,
+      "rng": 3385103793
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 0,
+      "level": 1
+     },
+     "state": {
+      "round": 5,
+      "turn": "ai",
+      "playerPts": 12,
+      "aiPts": 0,
+      "playerShot": {
+       "x": 1,
+       "y": 30,
+       "inHole": false
+      },
+      "aiShot": {
+       "x": -73,
+       "y": 52,
+       "inHole": false
+      },
+      "over": false,
+      "rng": 3323190024
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "round": 6,
+      "turn": "player",
+      "playerPts": 13,
+      "aiPts": 0,
+      "playerShot": {
+       "x": 1,
+       "y": 30,
+       "inHole": false
+      },
+      "aiShot": {
+       "x": -48,
+       "y": -53,
+       "inHole": false
+      },
+      "over": true,
+      "rng": 4283899417
+     }
+    }
+   ],
+   "result": {
+    "winner": "player",
+    "stars": 3,
+    "score": 13,
+    "playerPts": 13,
+    "aiPts": 0
+   }
+  },
+  {
+   "name": "mixed-level-3",
+   "config": {
+    "rounds": 5,
+    "holeR": 25,
+    "holePoints": 3,
+    "closerPoints": 1,
+    "scatter": [
+     30,
+     40,
+     50,
+     60,
+     70
+    ],
+    "aiScatter": [
+     110,
+     90,
+     70,
+     55,
+     40
+    ],
+    "starMargins": [
+     6,
+     3,
+     1
+    ]
+   },
+   "seed": 7,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 0,
+      "level": 3
+     },
+     "state": {
+      "round": 1,
+      "turn": "ai",
+      "playerPts": 0,
+      "aiPts": 0,
+      "playerShot": {
+       "x": -5,
+       "y": -14,
+       "inHole": true
+      },
+      "aiShot": {
+       "x": 0,
+       "y": 0,
+       "inHole": false
+      },
+      "over": false,
+      "rng": 470389255
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "round": 2,
+      "turn": "player",
+      "playerPts": 3,
+      "aiPts": 0,
+      "playerShot": {
+       "x": -5,
+       "y": -14,
+       "inHole": true
+      },
+      "aiShot": {
+       "x": -15,
+       "y": 41,
+       "inHole": false
+      },
+      "over": false,
+      "rng": 3069989445
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 20,
+      "y": -10,
+      "level": 3
+     },
+     "state": {
+      "round": 2,
+      "turn": "ai",
+      "playerPts": 3,
+      "aiPts": 0,
+      "playerShot": {
+       "x": -29,
+       "y": -17,
+       "inHole": false
+      },
+      "aiShot": {
+       "x": -15,
+       "y": 41,
+       "inHole": false
+      },
+      "over": false,
+      "rng": 2098155156
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "round": 3,
+      "turn": "player",
+      "playerPts": 4,
+      "aiPts": 0,
+      "playerShot": {
+       "x": -29,
+       "y": -17,
+       "inHole": false
+      },
+      "aiShot": {
+       "x": -51,
+       "y": 36,
+       "inHole": false
+      },
+      "over": false,
+      "rng": 794540887
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": -40,
+      "y": 15,
+      "level": 3
+     },
+     "state": {
+      "round": 3,
+      "turn": "ai",
+      "playerPts": 4,
+      "aiPts": 0,
+      "playerShot": {
+       "x": -2,
+       "y": -2,
+       "inHole": true
+      },
+      "aiShot": {
+       "x": -51,
+       "y": 36,
+       "inHole": false
+      },
+      "over": false,
+      "rng": 344924426
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "round": 4,
+      "turn": "player",
+      "playerPts": 7,
+      "aiPts": 0,
+      "playerShot": {
+       "x": -2,
+       "y": -2,
+       "inHole": true
+      },
+      "aiShot": {
+       "x": 34,
+       "y": 41,
+       "inHole": false
+      },
+      "over": false,
+      "rng": 627367908
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 5,
+      "y": 30,
+      "level": 3
+     },
+     "state": {
+      "round": 4,
+      "turn": "ai",
+      "playerPts": 7,
+      "aiPts": 0,
+      "playerShot": {
+       "x": 28,
+       "y": 52,
+       "inHole": false
+      },
+      "aiShot": {
+       "x": 34,
+       "y": 41,
+       "inHole": false
+      },
+      "over": false,
+      "rng": 2324260350
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "round": 5,
+      "turn": "player",
+      "playerPts": 8,
+      "aiPts": 0,
+      "playerShot": {
+       "x": 28,
+       "y": 52,
+       "inHole": false
+      },
+      "aiShot": {
+       "x": -15,
+       "y": -67,
+       "inHole": false
+      },
+      "over": false,
+      "rng": 3518474805
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": -10,
+      "y": -25,
+      "level": 3
+     },
+     "state": {
+      "round": 5,
+      "turn": "ai",
+      "playerPts": 8,
+      "aiPts": 0,
+      "playerShot": {
+       "x": 2,
+       "y": -72,
+       "inHole": false
+      },
+      "aiShot": {
+       "x": -15,
+       "y": -67,
+       "inHole": false
+      },
+      "over": false,
+      "rng": 3843456730
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "round": 6,
+      "turn": "player",
+      "playerPts": 8,
+      "aiPts": 1,
+      "playerShot": {
+       "x": 2,
+       "y": -72,
+       "inHole": false
+      },
+      "aiShot": {
+       "x": -65,
+       "y": 5,
+       "inHole": false
+      },
+      "over": true,
+      "rng": 1695803691
+     }
+    }
+   ],
+   "result": {
+    "winner": "player",
+    "stars": 3,
+    "score": 8,
+    "playerPts": 8,
+    "aiPts": 1
+   }
+  },
+  {
+   "name": "hole-level-5",
+   "config": {
+    "rounds": 5,
+    "holeR": 25,
+    "holePoints": 3,
+    "closerPoints": 1,
+    "scatter": [
+     30,
+     40,
+     50,
+     60,
+     70
+    ],
+    "aiScatter": [
+     110,
+     90,
+     70,
+     55,
+     40
+    ],
+    "starMargins": [
+     6,
+     3,
+     1
+    ]
+   },
+   "seed": 2024,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 0,
+      "level": 5
+     },
+     "state": {
+      "round": 1,
+      "turn": "ai",
+      "playerPts": 0,
+      "aiPts": 0,
+      "playerShot": {
+       "x": -59,
+       "y": -8,
+       "inHole": false
+      },
+      "aiShot": {
+       "x": 0,
+       "y": 0,
+       "inHole": false
+      },
+      "over": false,
+      "rng": 2669400077
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "round": 2,
+      "turn": "player",
+      "playerPts": 0,
+      "aiPts": 1,
+      "playerShot": {
+       "x": -59,
+       "y": -8,
+       "inHole": false
+      },
+      "aiShot": {
+       "x": -27,
+       "y": 29,
+       "inHole": false
+      },
+      "over": false,
+      "rng": 2369831973
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 0,
+      "level": 5
+     },
+     "state": {
+      "round": 2,
+      "turn": "ai",
+      "playerPts": 0,
+      "aiPts": 1,
+      "playerShot": {
+       "x": -44,
+       "y": -39,
+       "inHole": false
+      },
+      "aiShot": {
+       "x": -27,
+       "y": 29,
+       "inHole": false
+      },
+      "over": false,
+      "rng": 1663492933
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "round": 3,
+      "turn": "player",
+      "playerPts": 0,
+      "aiPts": 4,
+      "playerShot": {
+       "x": -44,
+       "y": -39,
+       "inHole": false
+      },
+      "aiShot": {
+       "x": -12,
+       "y": -16,
+       "inHole": true
+      },
+      "over": false,
+      "rng": 900714030
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 0,
+      "level": 5
+     },
+     "state": {
+      "round": 3,
+      "turn": "ai",
+      "playerPts": 0,
+      "aiPts": 4,
+      "playerShot": {
+       "x": 30,
+       "y": -60,
+       "inHole": false
+      },
+      "aiShot": {
+       "x": -12,
+       "y": -16,
+       "inHole": true
+      },
+      "over": false,
+      "rng": 625211071
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "round": 4,
+      "turn": "player",
+      "playerPts": 0,
+      "aiPts": 5,
+      "playerShot": {
+       "x": 30,
+       "y": -60,
+       "inHole": false
+      },
+      "aiShot": {
+       "x": 39,
+       "y": -19,
+       "inHole": false
+      },
+      "over": false,
+      "rng": 915624993
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 0,
+      "level": 5
+     },
+     "state": {
+      "round": 4,
+      "turn": "ai",
+      "playerPts": 0,
+      "aiPts": 5,
+      "playerShot": {
+       "x": -20,
+       "y": 16,
+       "inHole": false
+      },
+      "aiShot": {
+       "x": 39,
+       "y": -19,
+       "inHole": false
+      },
+      "over": false,
+      "rng": 4282338722
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "round": 5,
+      "turn": "player",
+      "playerPts": 1,
+      "aiPts": 5,
+      "playerShot": {
+       "x": -20,
+       "y": 16,
+       "inHole": false
+      },
+      "aiShot": {
+       "x": 37,
+       "y": 15,
+       "inHole": false
+      },
+      "over": false,
+      "rng": 700968466
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 0,
+      "level": 5
+     },
+     "state": {
+      "round": 5,
+      "turn": "ai",
+      "playerPts": 1,
+      "aiPts": 5,
+      "playerShot": {
+       "x": 4,
+       "y": 60,
+       "inHole": false
+      },
+      "aiShot": {
+       "x": 37,
+       "y": 15,
+       "inHole": false
+      },
+      "over": false,
+      "rng": 1939357135
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "round": 6,
+      "turn": "player",
+      "playerPts": 1,
+      "aiPts": 6,
+      "playerShot": {
+       "x": 4,
+       "y": 60,
+       "inHole": false
+      },
+      "aiShot": {
+       "x": -7,
+       "y": 34,
+       "inHole": false
+      },
+      "over": true,
+      "rng": 549481394
+     }
+    }
+   ],
+   "result": {
+    "winner": "ai",
+    "stars": 0,
+    "score": 1,
+    "playerPts": 1,
+    "aiPts": 6
+   }
+  },
+  {
+   "name": "wide-level-2-loses",
+   "config": {
+    "rounds": 5,
+    "holeR": 25,
+    "holePoints": 3,
+    "closerPoints": 1,
+    "scatter": [
+     30,
+     40,
+     50,
+     60,
+     70
+    ],
+    "aiScatter": [
+     110,
+     90,
+     70,
+     55,
+     40
+    ],
+    "starMargins": [
+     6,
+     3,
+     1
+    ]
+   },
+   "seed": 31,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "x": 180,
+      "y": -120,
+      "level": 2
+     },
+     "state": {
+      "round": 1,
+      "turn": "ai",
+      "playerPts": 0,
+      "aiPts": 0,
+      "playerShot": {
+       "x": 152,
+       "y": -102,
+       "inHole": false
+      },
+      "aiShot": {
+       "x": 0,
+       "y": 0,
+       "inHole": false
+      },
+      "over": false,
+      "rng": 2089805404
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "round": 2,
+      "turn": "player",
+      "playerPts": 0,
+      "aiPts": 1,
+      "playerShot": {
+       "x": 152,
+       "y": -102,
+       "inHole": false
+      },
+      "aiShot": {
+       "x": -18,
+       "y": -25,
+       "inHole": false
+      },
+      "over": false,
+      "rng": 723192805
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 180,
+      "y": -120,
+      "level": 2
+     },
+     "state": {
+      "round": 2,
+      "turn": "ai",
+      "playerPts": 0,
+      "aiPts": 1,
+      "playerShot": {
+       "x": 177,
+       "y": -88,
+       "inHole": false
+      },
+      "aiShot": {
+       "x": -18,
+       "y": -25,
+       "inHole": false
+      },
+      "over": false,
+      "rng": 1317712284
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "round": 3,
+      "turn": "player",
+      "playerPts": 0,
+      "aiPts": 2,
+      "playerShot": {
+       "x": 177,
+       "y": -88,
+       "inHole": false
+      },
+      "aiShot": {
+       "x": -16,
+       "y": -43,
+       "inHole": false
+      },
+      "over": false,
+      "rng": 1006346291
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 180,
+      "y": -120,
+      "level": 2
+     },
+     "state": {
+      "round": 3,
+      "turn": "ai",
+      "playerPts": 0,
+      "aiPts": 2,
+      "playerShot": {
+       "x": 181,
+       "y": -137,
+       "inHole": false
+      },
+      "aiShot": {
+       "x": -16,
+       "y": -43,
+       "inHole": false
+      },
+      "over": false,
+      "rng": 3792831179
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "round": 4,
+      "turn": "player",
+      "playerPts": 0,
+      "aiPts": 3,
+      "playerShot": {
+       "x": 181,
+       "y": -137,
+       "inHole": false
+      },
+      "aiShot": {
+       "x": -33,
+       "y": 41,
+       "inHole": false
+      },
+      "over": false,
+      "rng": 536691738
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 180,
+      "y": -120,
+      "level": 2
+     },
+     "state": {
+      "round": 4,
+      "turn": "ai",
+      "playerPts": 0,
+      "aiPts": 3,
+      "playerShot": {
+       "x": 141,
+       "y": -137,
+       "inHole": false
+      },
+      "aiShot": {
+       "x": -33,
+       "y": 41,
+       "inHole": false
+      },
+      "over": false,
+      "rng": 1467662351
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "round": 5,
+      "turn": "player",
+      "playerPts": 0,
+      "aiPts": 4,
+      "playerShot": {
+       "x": 141,
+       "y": -137,
+       "inHole": false
+      },
+      "aiShot": {
+       "x": 52,
+       "y": 17,
+       "inHole": false
+      },
+      "over": false,
+      "rng": 1578238114
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 180,
+      "y": -120,
+      "level": 2
+     },
+     "state": {
+      "round": 5,
+      "turn": "ai",
+      "playerPts": 0,
+      "aiPts": 4,
+      "playerShot": {
+       "x": 213,
+       "y": -124,
+       "inHole": false
+      },
+      "aiShot": {
+       "x": 52,
+       "y": 17,
+       "inHole": false
+      },
+      "over": false,
+      "rng": 508454046
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "round": 6,
+      "turn": "player",
+      "playerPts": 0,
+      "aiPts": 5,
+      "playerShot": {
+       "x": 213,
+       "y": -124,
+       "inHole": false
+      },
+      "aiShot": {
+       "x": -6,
+       "y": 90,
+       "inHole": false
+      },
+      "over": true,
+      "rng": 3830743005
+     }
+    }
+   ],
+   "result": {
+    "winner": "ai",
+    "stars": 0,
+    "score": 0,
+    "playerPts": 0,
+    "aiPts": 5
+   }
+  },
+  {
+   "name": "timeout-mid-round",
+   "config": {
+    "rounds": 5,
+    "holeR": 25,
+    "holePoints": 3,
+    "closerPoints": 1,
+    "scatter": [
+     30,
+     40,
+     50,
+     60,
+     70
+    ],
+    "aiScatter": [
+     110,
+     90,
+     70,
+     55,
+     40
+    ],
+    "starMargins": [
+     6,
+     3,
+     1
+    ]
+   },
+   "seed": 99,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 0,
+      "level": 2
+     },
+     "state": {
+      "round": 1,
+      "turn": "ai",
+      "playerPts": 0,
+      "aiPts": 0,
+      "playerShot": {
+       "x": 37,
+       "y": -23,
+       "inHole": false
+      },
+      "aiShot": {
+       "x": 0,
+       "y": 0,
+       "inHole": false
+      },
+      "over": false,
+      "rng": 2399245289
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "round": 2,
+      "turn": "player",
+      "playerPts": 1,
+      "aiPts": 0,
+      "playerShot": {
+       "x": 37,
+       "y": -23,
+       "inHole": false
+      },
+      "aiShot": {
+       "x": -44,
+       "y": 90,
+       "inHole": false
+      },
+      "over": false,
+      "rng": 2028006716
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 0,
+      "level": 2
+     },
+     "state": {
+      "round": 2,
+      "turn": "ai",
+      "playerPts": 1,
+      "aiPts": 0,
+      "playerShot": {
+       "x": -12,
+       "y": 27,
+       "inHole": false
+      },
+      "aiShot": {
+       "x": -44,
+       "y": 90,
+       "inHole": false
+      },
+      "over": false,
+      "rng": 1548709294
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "round": 3,
+      "turn": "player",
+      "playerPts": 2,
+      "aiPts": 0,
+      "playerShot": {
+       "x": -12,
+       "y": 27,
+       "inHole": false
+      },
+      "aiShot": {
+       "x": -74,
+       "y": -19,
+       "inHole": false
+      },
+      "over": false,
+      "rng": 2902822866
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "x": 0,
+      "y": 0,
+      "level": 2
+     },
+     "state": {
+      "round": 3,
+      "turn": "ai",
+      "playerPts": 2,
+      "aiPts": 0,
+      "playerShot": {
+       "x": -32,
+       "y": -28,
+       "inHole": false
+      },
+      "aiShot": {
+       "x": -74,
+       "y": -19,
+       "inHole": false
+      },
+      "over": false,
+      "rng": 3444257550
+     }
+    },
+    {
+     "action": {
+      "by": "timeout"
+     },
+     "state": {
+      "round": 3,
+      "turn": "ai",
+      "playerPts": 2,
+      "aiPts": 0,
+      "playerShot": {
+       "x": -32,
+       "y": -28,
+       "inHole": false
+      },
+      "aiShot": {
+       "x": -74,
+       "y": -19,
+       "inHole": false
+      },
+      "over": true,
+      "rng": 3444257550
+     }
+    }
+   ],
+   "result": {
+    "winner": "player",
+    "stars": 1,
+    "score": 2,
+    "playerPts": 2,
+    "aiPts": 0
+   }
+  },
+  {
+   "name": "timeout-at-start-draw",
+   "config": {
+    "rounds": 5,
+    "holeR": 25,
+    "holePoints": 3,
+    "closerPoints": 1,
+    "scatter": [
+     30,
+     40,
+     50,
+     60,
+     70
+    ],
+    "aiScatter": [
+     110,
+     90,
+     70,
+     55,
+     40
+    ],
+    "starMargins": [
+     6,
+     3,
+     1
+    ]
+   },
+   "seed": 5,
+   "steps": [
+    {
+     "action": {
+      "by": "timeout"
+     },
+     "state": {
+      "round": 1,
+      "turn": "player",
+      "playerPts": 0,
+      "aiPts": 0,
+      "playerShot": {
+       "x": 0,
+       "y": 0,
+       "inHole": false
+      },
+      "aiShot": {
+       "x": 0,
+       "y": 0,
+       "inHole": false
+      },
+      "over": true,
+      "rng": 5
+     }
+    }
+   ],
+   "result": {
+    "winner": "draw",
+    "stars": 0,
+    "score": 0,
+    "playerPts": 0,
+    "aiPts": 0
+   }
+  }
+ ]
+}

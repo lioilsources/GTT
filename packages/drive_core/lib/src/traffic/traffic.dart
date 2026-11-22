@@ -5,6 +5,7 @@ import 'package:rules_core/rules_core.dart';
 import 'package:world_engine/core.dart';
 
 import '../car.dart';
+import '../trams/trams.dart';
 import 'road_rules.dart';
 
 /// What traffic needs of a parked car (specs/traffic.md step 8); hl/hw null = a traffic car.
@@ -138,6 +139,9 @@ class Traffic {
   /// Parked cars to drive round (set by the car fleet, specs/traffic.md step 8).
   List<ParkedPose> parked = const [];
 
+  /// Tram cars that block the road ahead in any direction (set by DriveWorld, specs/traffic.md v3).
+  List<TramCar> tramCars = const [];
+
   final Prng _rng;
   final double _halfLength;
   final double _halfWidth;
@@ -260,7 +264,7 @@ class Traffic {
 
   void _setMask(TrafficCar c, bool same) {
     final ground = c.layer == 0;
-    final mask = (same ? catCar : 0) | (ground ? catParked : 0) | (ground && c.loose ? catBuildings : 0);
+    final mask = (same ? catCar : 0) | (ground ? catParked | catTram : 0) | (ground && c.loose ? catBuildings : 0);
     if (mask == c.mask) return;
     c.mask = mask;
     c.shape.filter = Filter(categoryBits: catTraffic, maskBits: mask);
@@ -345,7 +349,7 @@ class Traffic {
       ShapeDef(
         density: _t.massKg / (4 * _halfLength * _halfWidth),
         material: SurfaceMaterial(friction: tuning.drive.carFriction, restitution: tuning.drive.carRestitution),
-        filter: Filter(categoryBits: catTraffic, maskBits: catCar | catParked),
+        filter: Filter(categoryBits: catTraffic, maskBits: catCar | catParked | catTram),
       ),
     );
     final ln = lane.clamp(0, lanesPerDir(e, tuning) - 1);
@@ -527,6 +531,11 @@ class Traffic {
     if (solid && player.layer == c.layer) {
       gap = math.min(gap, _gapTo(c, hc, hs, player.x, player.y, player.halfLength, player.halfWidth, look));
     }
+    // Tram cars in the same layer block in any direction (v3, step 1 b); even a chasing patrol stops.
+    for (final o in tramCars) {
+      if (o.layer != c.layer) continue;
+      gap = math.min(gap, _gapToBox(c, hc, hs, o.x, o.y, o.heading, o.halfLength, o.halfWidth, look));
+    }
     // A chasing patrol ignores other cars and the lights (sirens, specs/police.md).
     if (c.pursuing) return gap;
     for (final o in cars) {
@@ -555,6 +564,29 @@ class Traffic {
     final ly = -dx * hs + dy * hc;
     if (ly.abs() > (c.halfWidth + ohw) * _t.corridor) return double.infinity;
     return math.max(0, lx - c.halfLength - ohl);
+  }
+
+  /// Like [_gapTo] for a box at any heading [oh]: its extents are projected on the car's axes.
+  double _gapToBox(
+    TrafficCar c,
+    double hc,
+    double hs,
+    double ox,
+    double oy,
+    double oh,
+    double ohl,
+    double ohw,
+    double look,
+  ) {
+    final dx = ox - c.x, dy = oy - c.y;
+    final oc = math.cos(oh), os = math.sin(oh);
+    final along = ohl * (oc * hc + os * hs).abs() + ohw * (-oc * hs + os * hc).abs();
+    final side = ohl * (-oc * hs + os * hc).abs() + ohw * (oc * hc + os * hs).abs();
+    final lx = dx * hc + dy * hs;
+    if (lx <= 0 || lx > look + c.halfLength + along) return double.infinity;
+    final ly = -dx * hs + dy * hc;
+    if (ly.abs() > (c.halfWidth + side) * _t.corridor) return double.infinity;
+    return math.max(0, lx - c.halfLength - along);
   }
 }
 
