@@ -40,7 +40,7 @@ export const tokens = {
   colorCityNycShadow: "#28436959",
   colorCityNycRoof: "#8E95A3",
   colorCityNycRoofEdge: "#F0E2C8",
-  colorCityNycCastShadow: "#22427F8C",
+  colorCityNycCastShadow: "#24447FBF",
   colorCityPragueLand: "#FBEED7",
   colorCityPragueWater: "#368C76",
   colorCityPraguePark: "#63A18D",
