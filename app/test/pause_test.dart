@@ -6,6 +6,7 @@ import 'package:drive_core/drive_core.dart';
 import 'package:flame/game.dart' show Vector2;
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:game_loop/game_loop.dart' show BoothWorld, boothsOf;
 import 'package:meta_progress/meta_progress.dart';
 import 'package:metropole/game/metropole_game.dart';
 import 'package:metropole/game/pause.dart';
@@ -32,6 +33,42 @@ void main() {
       for (final o in GameOverlay.values) {
         expect(paused([o]), isTrue, reason: o.name);
       }
+    });
+
+    test('every pausing overlay of specs/pause.md has a kind, the booth offer card included', () {
+      expect(GameOverlay.values.map((o) => o.name).toList()..sort(), [
+        'about',
+        'bench',
+        'booth',
+        'dialogue',
+        'gallery',
+        'garage',
+        'minigame',
+        'passport',
+        'phone',
+        'postcard',
+        'result',
+        'tuning',
+      ]);
+    });
+
+    test('the booth offer card stops the booth clock (game dt 0 while paused)', () {
+      final r = OverlayRegistry();
+      final spot = Spot(id: 'b', kind: 'booth', name: 'b', parkX: 1000, parkY: 0);
+      final w = BoothWorld(boothsOf([spot]), tuning, ['bar'], 8);
+      final next0 = w.state.next;
+      double step(double dt) => r.isPaused ? 0 : dt;
+      r.register(GameOverlay.booth);
+      expect(r.isPaused, isTrue);
+      for (var i = 0; i < 300; i++) {
+        w.update(step(1 / 60), () => [0]);
+      }
+      expect(w.state.next, next0);
+      r.unregister(GameOverlay.booth);
+      for (var i = 0; i < 61; i++) {
+        w.update(step(1 / 60), () => [0]);
+      }
+      expect(w.state.next, next0 - 1);
     });
 
     test('register / unregister are counted; set is one-shot; hold lasts until the future completes', () async {

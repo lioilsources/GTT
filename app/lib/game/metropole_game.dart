@@ -269,6 +269,9 @@ class MetropoleGame extends Game {
     pilot = null;
   }
 
+  /// A context button with priority ("Zvednout", specs/booths.md): while true, the car button hides.
+  bool Function()? carActionYield;
+
   /// The context button: switch to the parked car, or open the garage (the UI shows the list).
   void boardCandidate() {
     final p = fleet.boardTarget;
@@ -369,11 +372,13 @@ class MetropoleGame extends Game {
         hopFull: hopCharges(drive.spec),
         hopCharges: drive.hop.charges,
         hopReady: !pause && drive.hopReady,
-        carAction: switch (action) {
-          'board' => CarAction.board,
-          'garage' => CarAction.garage,
-          _ => null,
-        },
+        carAction: (carActionYield?.call() ?? false)
+            ? null
+            : switch (action) {
+                'board' => CarAction.board,
+                'garage' => CarAction.garage,
+                _ => null,
+              },
       );
       _prepAcc = 0;
       _prepN = 0;

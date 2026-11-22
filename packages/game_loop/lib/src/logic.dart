@@ -70,6 +70,7 @@ class LoopOutcome {
     required this.score,
     required this.aborted,
     required this.cash,
+    required this.booth,
     required this.total,
     required this.firstTime,
     required this.newBest,
@@ -81,7 +82,10 @@ class LoopOutcome {
   final bool aborted;
   final EconomyLast cash;
 
-  /// Cash after the reward.
+  /// Booth bonus of this loop (specs/booths.md "Hotovost"), 0 without one; part of loopCash.
+  final int booth;
+
+  /// Cash after the reward and the booth bonus.
   final int total;
   final bool firstTime, newBest, stamp, hasStamp;
 }
@@ -98,6 +102,10 @@ class LoopBook {
   late EconomyState eco;
   Map<String, BestScore> best = {};
   Map<String, int> plays = {};
+
+  /// Booth bonus hook (specs/booths.md): the booths module's `finish(spot, stars, aborted)`,
+  /// returning its `last`. Called right after the reward; the bonus goes to the cars-state cash.
+  int Function(String spot, int stars, bool aborted)? bonus;
 
   void restore(Map<String, BestScore> b, Map<String, int> p) {
     best = {...b};
@@ -138,6 +146,12 @@ class LoopBook {
         aborted: r.aborted,
       ),
     );
+    final b = bonus?.call(spot, stars, r.aborted) ?? 0;
+    final booth = b > 0 ? b : 0;
+    if (booth > 0) {
+      ports.setCash(ports.getCash() + booth);
+      eco = eco.withCash(ports.getCash());
+    }
     final stamp = r.aborted ? false : ports.stamp(minigame, stars);
     final newBest = !r.aborted && betterBest(old, stars, r.score);
     if (newBest) best = {...best, minigame: (stars: stars, score: r.score)};
@@ -149,7 +163,8 @@ class LoopBook {
       score: r.score,
       aborted: r.aborted,
       cash: cash,
-      total: eco.cash,
+      booth: booth,
+      total: ports.getCash(),
       firstTime: firstTime && cash.first > 0,
       newBest: newBest,
       stamp: stamp,

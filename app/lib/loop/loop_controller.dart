@@ -94,6 +94,12 @@ class LoopController extends ChangeNotifier {
   final Map<MinigameId, WorldMinigame> worldGames = {};
   bool get _inWorldGame => worldGames.values.any((g) => g.active);
 
+  /// True while a world minigame (Taxi) runs.
+  bool get inWorldGame => _inWorldGame;
+
+  /// A context button with priority ("Zvednout", specs/booths.md): while true, "Play" hides.
+  bool Function()? yieldTo;
+
   /// Minigame id of the "coming soon" toast, or null.
   final soon = ValueNotifier<String?>(null);
   Timer? _soonTimer;
@@ -282,7 +288,7 @@ class LoopController extends ChangeNotifier {
     const dt = 0.1;
     final c = game.drive.car;
     LoopSpot? s;
-    if (!busy && !phone.isOpen && !phone.nav.active && !_inWorldGame) {
+    if (!busy && !phone.isOpen && !phone.nav.active && !_inWorldGame && !(yieldTo?.call() ?? false)) {
       final now = spotInReach(_loopSpots, c.x, c.y, c.speed, c.layer, tuning.loop);
       final prev = playSpot.value;
       if (now != null) {

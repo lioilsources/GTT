@@ -89,6 +89,7 @@ class _MapPainter extends CustomPainter {
     }
     final target = phone.nav.target?.id;
     for (final s in city.spots.items) {
+      if (s.kind == 'booth') continue; // only a ringing booth shows, as an extra point (specs/booths.md)
       final game = s.minigame.isNotEmpty;
       final r = t.mapSpotPx * (s.id == target ? 1.6 : 1) * (game ? 1 : 0.7);
       canvas.drawCircle(
@@ -96,6 +97,11 @@ class _MapPainter extends CustomPainter {
         r,
         Paint()..color = Color(game ? Tokens.colorPhoneMapGame : Tokens.colorPhoneMapSpot),
       );
+    }
+    for (final f in phone.mapPoints) {
+      for (final e in f()) {
+        canvas.drawCircle(_p(e.x, e.y), t.mapSpotPx * 1.6, Paint()..color = Color(e.color));
+      }
     }
     final car = phone.game.drive.car, pr = t.mapPlayerPx;
     canvas
