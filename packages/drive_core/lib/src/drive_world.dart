@@ -8,6 +8,7 @@ import 'controls.dart';
 import 'props.dart';
 import 'traffic/traffic.dart';
 import 'trams/trams.dart';
+import 'zones.dart';
 
 /// Tracks which road edge the car is on, and with it the layer (−1 tunnel, 0, +1 bridge).
 ///
@@ -68,6 +69,7 @@ class LayerTracker {
 class DriveWorld {
   DriveWorld({required this.city, required this.spec, required this.tuning}) {
     world = World(gravity: Vector2.zero());
+    zones = Zones(world, tuning);
     layers = LayerTracker(city.graph, tuning.layers);
     spawn(city.startX, city.startY, city.startHeading);
     traffic = tuning.traffic.enabled ? Traffic(world, city, tuning) : null;
@@ -87,6 +89,9 @@ class DriveWorld {
   late final World world;
   late Car car;
   late final LayerTracker layers;
+
+  /// Pedestrian zones and their bollards (specs/zones.md).
+  late final Zones zones;
 
   /// AI traffic and lights (specs/traffic.md); null when `traffic.enabled` is off.
   late final Traffic? traffic;
@@ -117,6 +122,7 @@ class DriveWorld {
     _spawned = true;
     layers.reset(x, y);
     car.setLayer(layers.layer);
+    _zoneMask();
   }
 
   /// Switches to another car: a new body with that car's parameters, at rest (specs/cars.md).
@@ -134,6 +140,7 @@ class DriveWorld {
     car = Car(world, spec, _d, x: x, y: y, heading: h, scale: tuning.carScale);
     car.body.linearVelocity = v;
     car.setLayer(l);
+    _zoneMask();
   }
 
   void addChunk(ChunkData c) {
@@ -163,12 +170,14 @@ class DriveWorld {
     }
     _colliders[key] = body;
     props[key] = generateProps(city.graph, c.x, c.y, tuning);
+    zones.add(c);
   }
 
   void removeChunk(ChunkData c) {
     final key = City.chunkKey(c.x, c.y);
     _colliders.remove(key)?.destroy();
     props.remove(key);
+    zones.remove(c);
   }
 
   /// Advances with a fixed step (`drive.step_hz`).
@@ -190,12 +199,18 @@ class DriveWorld {
     world.step(step, subStepCount: _d.substeps);
     layers.update(car.x, car.y);
     car.setLayer(layers.layer);
+    _zoneMask();
     traffic?.postStep(car);
     trams?.postStep(car);
     if (car.layer != 0) _rails();
     _props(step);
     _skidMarks();
   }
+
+  /// Drops the bollards from the player's mask while its centre is inside a zone (specs/zones.md).
+  /// The zone bit only matters on layer 0 (Car.maskBits), so other layers skip the test.
+  void _zoneMask() => car.setInsideZone(
+      car.layer == 0 && zones.insideFor(car.x, car.y, car.boundingRadius, wasInside: car.zoneBits == 0));
 
   /// Keeps the car on bridge decks and in tunnels.
   void _rails() {

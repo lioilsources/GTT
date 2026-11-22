@@ -11,6 +11,7 @@ import 'package:flutter/services.dart';
 import 'package:meta_progress/meta_progress.dart';
 import 'package:world_engine/world_engine.dart';
 
+import 'paint/bollards_painter.dart';
 import 'paint/car_painter.dart';
 import 'paint/controls_painter.dart';
 import 'paint/pedestrians_painter.dart';
@@ -355,6 +356,8 @@ class MetropoleGame extends Game {
     if (any([LogicalKeyboardKey.space])) input.handbrake = true;
   }
 
+  final _bollards = BollardPainter();
+
   @override
   void render(ui.Canvas canvas) {
     if (_size.isEmpty) return;
@@ -370,6 +373,7 @@ class MetropoleGame extends Game {
         if (layer == 0) {
           paintSkids(c, drive.skids, car.halfWidth * 0.32);
           paintProps(c, drive.propsNear(car.x, car.y, r), night: night);
+          _bollards.paint(c, drive.zones.bollards, tuning, vpX: camera.x, vpY: camera.y, radius: r);
           paintParked(c, fleet.parked.where((p) => (p.x - car.x).abs() < r && (p.y - car.y).abs() < r), data.cars, tuning);
           paintPedestrians(c, peds);
           paintWorld?.call(c);

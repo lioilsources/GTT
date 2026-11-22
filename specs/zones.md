@@ -30,8 +30,10 @@ jediný způsob, jak se v jádru Prahy dostat pěšími uličkami (R8: bez voln�
 - Auto hráče třídy ≠ `micro` má v masce `CAT_ZONE` (narazí do sloupků jako do zdi, odraz jako u
   budov). Auto třídy `micro` `CAT_ZONE` v masce nemá a projede.
 - **Výjimka uvnitř zóny:** když je střed auta hráče uvnitř nějaké zóny (bod v polygonu, ve vrstvě
-  0), `CAT_ZONE` se z masky odebere, dokud střed zónu neopustí. Auto, které se do zóny dostalo
-  jinak (přesednutí z koloběžky, start), tak vždycky vyjede ven. Čistá funkce
+  0), `CAT_ZONE` se z masky odebere. Vrátí se, až střed zónu opustí **a** žádná zábrana není
+  blíž než opsaná kružnice auta (poloviční úhlopříčka), jinak by fyzika auto podržela na
+  sloupcích. Auto, které se do zóny dostalo jinak (přesednutí z koloběžky, start), tak vždycky
+  vyjede ven. Čistá funkce
   `zoneMask(class, insideZone)` → bity masky; testy v obou klientech.
 - Provoz, zaparkovaná auta a policie zábrany ignorují (jezdí jen po grafu, zóny se ho netýkají).
 - GPS (`specs/route.md`) vede jen po ponechaných silnicích, zóny nemění.

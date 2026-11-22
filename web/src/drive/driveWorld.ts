@@ -4,10 +4,11 @@ import type { CarSpec } from '../gen/schema';
 import type { Tuning, TuningLayers } from '../gen/tuning';
 import type { ChunkData } from '../world/chunk';
 import { chunkKey, type City, type EdgeHit, type RoadEdge, type RoadGraph } from '../world/model';
-import { CAT_BUILDINGS, CAT_CAR, CAT_PARKED, CAT_TRAFFIC, Car } from './car';
+import { CAT_BUILDINGS, CAT_CAR, CAT_PARKED, CAT_TRAFFIC, Car, zoneMask } from './car';
 import { ControlInput } from './controls';
 import { generateProps, type Prop, type PropSet } from './props';
 import { Traffic } from '../traffic/traffic';
+import { ZoneWorld } from './zones';
 
 /**
  * Tracks which road edge the car is on, and with it the layer (−1 tunnel, 0, +1 bridge).
@@ -88,6 +89,8 @@ export class DriveWorld {
   beforeStep: ((step: number) => void) | null = null;
   /** AI traffic and lights (specs/traffic.md); null when traffic.enabled is off. */
   readonly traffic: Traffic | null;
+  /** Pedestrian zones and bollards (specs/zones.md). */
+  readonly zones: ZoneWorld;
 
   constructor(
     readonly city: City,
@@ -95,6 +98,7 @@ export class DriveWorld {
     readonly tuning: Tuning,
   ) {
     this.world = new World({ gravity: { x: 0, y: 0 } });
+    this.zones = new ZoneWorld(this.world, tuning.drive);
     this.layers = new LayerTracker(city.graph, tuning.layers);
     this.car = this.makeCar(city.startX, city.startY, city.startHeading);
     this.layers.reset(this.car.x, this.car.y);
@@ -154,6 +158,7 @@ export class DriveWorld {
       }
     }
     this.colliders.set(key, body);
+    this.zones.addChunk(c);
     this.props.set(key, generateProps(this.city.graph, c.x, c.y, this.tuning));
     this.propsVersion++;
   }
@@ -163,6 +168,7 @@ export class DriveWorld {
     const body = this.colliders.get(key);
     if (body) this.world.destroyBody(body);
     this.colliders.delete(key);
+    this.zones.removeChunk(c);
     if (this.props.delete(key)) this.propsVersion++;
   }
 
@@ -180,6 +186,7 @@ export class DriveWorld {
     const d = this.tuning.drive;
     this.time += step;
     this.beforeStep?.(step);
+    this.updateZoneMask();
     this.car.drive(this.input, step, this.tuning.speedMps.cruise, this.tuning.speedMps.topDefault);
     this.traffic?.preStep(step, this.car);
     this.world.step(step, d.velocityIterations, d.positionIterations);
@@ -190,6 +197,16 @@ export class DriveWorld {
     this.stepProps(step);
     this.skidMarks();
   }
+
+  /** CAT_ZONE in the player's mask (specs/zones.md); the inside test only counts on layer 0. */
+  private updateZoneMask(): void {
+    const car = this.car;
+    const r = Math.hypot(car.halfLength, car.halfWidth) + this.tuning.drive.bodyRoundM;
+    this.inZone = car.layer === 0 && this.zones.insideFor(car.x, car.y, r, this.inZone);
+    car.setZone(zoneMask(car.spec.class, this.inZone));
+  }
+  /** Last zone test result (the hold-off in specs/zones.md). */
+  private inZone = false;
 
   /** Keeps the car on bridge decks and in tunnels. */
   private rails(): void {

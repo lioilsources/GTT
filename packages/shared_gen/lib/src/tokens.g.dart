@@ -142,7 +142,7 @@ abstract final class Tokens {
   static const int colorNpcVibe = 0xFFFF6FA8;
   static const int colorNpcVibeTrack = 0x26FFFFFF;
   static const int colorNpcContact = 0xFF7CE08A;
-  static const Map<String, int> colorCarPaint = {'comet_red': 0xFFD7263D, 'pip_teal': 0xFF2BA6A0, 'brute_orange': 0xFFE8772E, 'cab_yellow': 0xFFF2C12E, 'hauler_green': 0xFF4E6B3A};
+  static const Map<String, int> colorCarPaint = {'comet_red': 0xFFD7263D, 'pip_teal': 0xFF2BA6A0, 'brute_orange': 0xFFE8772E, 'cab_yellow': 0xFFF2C12E, 'hauler_green': 0xFF4E6B3A, 'lidka_cream': 0xFFD8C79E, 'slapka_lime': 0xFF7DC242, 'brk_blue': 0xFF2C6FB7};
   static const int colorCarDetailMuscleStripe = 0xDD1B1B1F;
   static const int colorCarDetailTaxiSign = 0xFFFFF6D0;
   static const int colorCarDetailTaxiChecker = 0xFF1B1B1F;

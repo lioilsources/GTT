@@ -39,7 +39,7 @@ describe('geometry for client W', () => {
 
   it('a square building gives four walls and a roof at the display height', () => {
     const chunk: ChunkData = {
-      x: 0, y: 0, ground: [],
+      x: 0, y: 0, ground: [], barriers: [],
       buildings: [{
         xy: Float32Array.from([0, 0, 10, 0, 10, 10, 0, 10]), ringEnds: Int32Array.from([4]),
         roof: Uint16Array.from([0, 1, 2, 0, 2, 3]), height: 30, minHeight: 0, landmark: 0, collide: true,

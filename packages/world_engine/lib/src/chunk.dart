@@ -51,11 +51,14 @@ class GroundData {
 }
 
 class ChunkData {
-  ChunkData(this.x, this.y, this.buildings, this.ground);
+  ChunkData(this.x, this.y, this.buildings, this.ground, [this.barriers = const []]);
   final int x;
   final int y;
   final List<BuildingData> buildings;
   final List<GroundData> ground;
+
+  /// Bollard lines of pedestrian zones on layer 0 (specs/zones.md): interleaved x, y in metres.
+  final List<Float32List> barriers;
 }
 
 /// Decodes and prepares one chunk. Pure function so it can run in an isolate.
@@ -125,5 +128,9 @@ ChunkData prepareChunk(Uint8List gz) {
   final ground = [
     for (final e in byKind.entries) GroundData(e.key, Float32List.fromList(e.value.xy), Uint16List.fromList(e.value.idx)),
   ];
-  return ChunkData(c.x, c.y, buildings, ground);
+  final barriers = [
+    for (final b in c.barriers)
+      if (b.points.length >= 4) Float32List.fromList([for (final v in b.points) v / 10]),
+  ];
+  return ChunkData(c.x, c.y, buildings, ground, barriers);
 }
