@@ -127,15 +127,20 @@ items:
      started: 2026-11-22T08:20, done: 2026-11-22T09:25, commit: 0235ea3, evidence: "aplikace Cesty a uložení po městech v obou klientech, testy přepnutí NYC → Praha → NYC (PR #60, #61, #63); chybí soak 10 přepnutí a vyzkoušení na telefonu"}
   - {id: M3-S4, milestone: M3, name: "pěší zóny a mikrovozidla", size: L, status: "čeká na Ol1na",
      started: 2026-11-22T08:30, done: 2026-11-22T10:05, commit: 7711630, evidence: "zóny a sloupky v balíčku (validate), kolize a maska podle třídy v obou klientech s testy (PR #62, #64, #68, #69); chybí projet Karlův most koloběžkou na telefonu"}
-  - {id: M3-S5, milestone: M3, name: "tramvaje na linkách se zastávkami", size: L, status: wip, started: 2026-11-22T09:15}
+  - {id: M3-S5, milestone: M3, name: "tramvaje na linkách se zastávkami", size: L, status: "čeká na Ol1na",
+     started: 2026-11-22T09:15, done: 2026-11-22T10:20, commit: 55fae42, evidence: "koleje a 174 zastávek v balíčku Prahy (validate), tramvaje v obou klientech s testy (PR #65, #74, #78); chybí vyzkoušet jízdu za tramvají na telefonu"}
   - {id: M3-S6, milestone: M3, name: "místní vozidla (lidovka, koloběžka, kolo)", size: M, status: "čeká na Ol1na",
      started: 2026-11-22T09:30, done: 2026-11-22T10:10, commit: 7711630, evidence: "Lidka 105, koloběžka a kolo, parkování podle města, kresba micro v obou klientech s testy (PR #70, #72, #76); chybí vyzkoušet jízdu"}
-  - {id: M3-S7, milestone: M3, name: "tři místní minihry: Kuličky, Čára, Nohejbal", size: L, status: wip, started: 2026-11-22T09:40}
-  - {id: M3-S8, milestone: M3, name: "pražské skity a pohlednice", size: M, status: todo}
+  - {id: M3-S7, milestone: M3, name: "tři místní minihry: Kuličky, Čára, Nohejbal", size: L, status: "čeká na Ol1na",
+     started: 2026-11-22T09:40, done: 2026-11-22T10:35, commit: 55fae42, evidence: "spec, vektory (web lead) a obě implementace, vektory projdou v obou klientech (PR #73, #75, #77, #81, #83); chybí dohrát a doladit obtížnost Nohejbalu"}
+  - {id: M3-S8, milestone: M3, name: "pražské skity a pohlednice", size: M, status: "čeká na Ol1na",
+     started: 2026-11-22T08:20, done: 2026-11-22T10:30, commit: 55fae42, evidence: "20 pohlednic (PR #60) a 20 pražských skitů (PR #82), validate a testy obsahu v obou klientech; texty jsou DRAFT k přečtení"}
   - {id: M3-A1, milestone: M3, name: "Ol1n ověří věrnost Prahy osobně", size: S, status: todo}
   - {id: M3-A2, milestone: M3, name: "60 fps v Praze na obou telefonech", size: S, status: todo}
-  - {id: M3-A3, milestone: M3, name: "přepnutí měst 10× bez pádu", size: S, status: todo}
-  - {id: M3-A4, milestone: M3, name: "matice parity pro rozsah M3 zelená", size: M, status: todo}
+  - {id: M3-A3, milestone: M3, name: "přepnutí měst 10× bez pádu", size: S, status: "čeká na Ol1na",
+     started: 2026-11-22T10:25, done: 2026-11-22T10:40, commit: 55fae42, evidence: "soak 10 přepnutí NYC ↔ Praha v obou klientech bez úniku těles (web/test/citySoak.test.ts, app/test/cities_soak_test.dart, PR #84, #85); chybí 10 přepnutí ručně na telefonu"}
+  - {id: M3-A4, milestone: M3, name: "matice parity pro rozsah M3 zelená", size: M, status: hotovo,
+     started: 2026-11-22T10:40, done: 2026-11-22T10:42, commit: 55fae42, evidence: "metro parity report zelený: F-028–F-033 done/done, vektory Kuliček, Čáry a Nohejbalu v obou klientech"}
 
 # Content counters with targets. tests and fps are measured; the rest metro progress counts itself.
 counters:

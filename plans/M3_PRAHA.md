@@ -53,3 +53,9 @@ DUALSTACK (každá feature ve sdílené vrstvě, pak W a F, matice parity).
 | P3 | Karlův most a Staroměstské náměstí | pěší zóna: jen mikrovozidla |
 | P4 | Výšky budov | Overture (`height`, `num_floors`), default 18 m; data IPR až když nestačí |
 | P5 | Jména podniků | fiktivní (R10), náměstí, parky, instituce a památky skutečné |
+
+## Stav (2026-11-22)
+
+Rozsah 1–8 je hotový v obou klientech a zmergovaný (PR #57–#85), matice parity F-028–F-033 zelená.
+Zbývá Ol1novo ověření: `docs/m3-test.md` (věrnost Prahy, zóny, tramvaje, minihry, skity) a
+60 fps v Praze na telefonech (M3-A2). Známá zjednodušení tramvají jsou ve `specs/trams.md`.

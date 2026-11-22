@@ -55,3 +55,34 @@ Bez pohlednice: Letenské sady, Kampa, Riegrovy sady, Karlovo náměstí, kostel
 Jména podniků jsou fiktivní (R10). Koulená je jen v New Yorku.
 
 - [ ] Spot je na místě, kam hra patří, a jde k němu dojet.
+| Kuličky | Vrchlického sady u Hlavního nádraží |
+| Čára | Malostranské náměstí |
+| Nohejbal | Letenská pláň |
+
+## Pěší zóny a mikrovozidla
+
+- [ ] Autem se do Karlova mostu, na Staroměstské náměstí ani na náplavku nevjede (sloupky).
+- [ ] Koloběžkou nebo kolem (přesednout u zaparkované, třída Mikro) se zónou projede.
+- [ ] Z koloběžky uvnitř zóny přesednout do auta nejde (auta tam neparkují); auto, které se
+      do zóny nějak dostane, vždy vyjede ven.
+
+## Tramvaje
+
+- [ ] Tramvaje jezdí po skutečných kolejích (Národní, Vodičkova, nábřeží, Letná, Vinohrady).
+- [ ] Staví na zastávkách (generované po úsecích mezi výhybkami, nemusí sedět s realitou).
+- [ ] Do tramvaje jde narazit, odtlačit ne; auta provozu za ní čekají.
+
+## Místní auta
+
+- [ ] V Praze parkují Lidka 105, Lumo Pip, koloběžky a kola; v New Yorku jako dřív.
+
+## Místní minihry
+
+- [ ] Kuličky, Čára, Nohejbal jdou spustit ze spotů i z Galerie a dají se dohrát.
+- [ ] Nohejbal: obtížnost 3 je zhruba vyrovnaná jen s přesným mířením k čarám — řekni, jestli
+      je moc těžký (ladí se `minigames.nohejbal.ai_reach`, `player_reach` v `tuning.yaml`).
+
+## Přepínání měst
+
+- [ ] Telefon → Cesty → Praha a zpět, desetkrát; hotovost a razítka zůstanou každému městu.
+- [ ] Pražské skity (20) jsou k přečtení v `content/npc/skits/*` s `city: prague` (DRAFT).
