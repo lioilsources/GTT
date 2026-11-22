@@ -324,6 +324,10 @@ void main() {
       final tram = tm.addTram(0, 1, 300)!..hitTimer = 1e9; // stands still
       final car = tr.addCar(0, 1, 100, 0)!;
       expect(car.y, closeTo(-4, 1e-3));
+      // The player stays put (it would cruise or reverse otherwise).
+      d.beforeStep = (_) => d.car.body
+        ..linearVelocity = Vector2.zero()
+        ..angularVelocity = 0;
       for (var i = 0; i < 40 * 60; i++) {
         d.update(1 / 60);
       }
