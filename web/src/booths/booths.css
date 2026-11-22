@@ -31,3 +31,24 @@
 .booth-offer h2 {
   color: var(--color-booth-ring);
 }
+/* Host bust (specs/art.md): anchored at the bottom, ≈ 45 % of the card, gentle bob. */
+.booth-host {
+  position: relative;
+  height: min(32vh, 240px);
+  margin: calc(-1 * var(--space-sm)) 0 var(--space-sm);
+  animation: booth-bob 3.2s ease-in-out infinite;
+}
+.booth-host-bust {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: 50% 100%;
+  pointer-events: none;
+  user-select: none;
+}
+@keyframes booth-bob {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-5px) rotate(1deg); }
+}

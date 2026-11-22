@@ -1,4 +1,5 @@
 import type { MessageKey } from '../gen/i18n';
+import { art } from '../art';
 import { h } from '../minigames/dom';
 import { contexts, text } from './rules';
 import type { DialogueSession } from './session';
@@ -13,7 +14,7 @@ export function runSkits(host: HTMLElement, env: DialogueEnv, session: DialogueS
 
   function list(): void {
     const rows = session.pack.characters.flatMap((c) => [
-      h('h2.npc-skits-char', {}, portrait(c.name, c.portrait, 32), ' ',
+      h('h2.npc-skits-char', {}, portrait(c.name, c.portrait, 32, art().avatar(c.id)), ' ',
         t('npcNameAge', { name: c.name, age: c.age }), ' · ',
         t('npcVibe', { vibe: session.vibe(c.id), max: session.tuning.vibeMax }),
         session.state.contacts.includes(c.id) ? ' ✓' : ''),

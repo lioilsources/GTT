@@ -20,6 +20,7 @@ export function installPassport(
   hud: { root: HTMLElement; about: HTMLElement },
   saved: readonly string[] = [],
 ): PassportHud {
+  env = { ...env, city: env.city ?? city.id };
   const tracker = new PassportTracker(passportCity(city), tuning, saved);
   const host = document.body;
   let closePostcard: (() => void) | null = null;

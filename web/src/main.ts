@@ -26,6 +26,8 @@ import { installPhone } from './phone';
 import { installPolice } from './police';
 import { installBooths } from './booths';
 import { installLoop } from './loop';
+import { opponentIndex } from './loop/logic';
+import { loadArt } from './art';
 import { installTaxi } from './minigames/taxi';
 import { installTravel } from './travel';
 import { installFastTravel } from './travel/fastTravel';
@@ -66,6 +68,8 @@ async function json<T>(path: string): Promise<T> {
 }
 
 async function main(): Promise<void> {
+  // Generated art index (specs/art.md): fetched once; missing = placeholders everywhere.
+  const artReady = loadArt();
   // ?gallery / ?mg=<id>: minigames without the world (specs/minigames/README.md "Galerie").
   // ?skits: NPC dialogue debug list (specs/dialogue.md); the gallery also gets NPC opponents.
   // ?mg=<id> of a world minigame (engine drive, Taxi) opens the world at its spot and starts it there.
@@ -77,6 +81,7 @@ async function main(): Promise<void> {
       import('./dialogue/session'),
       json<unknown>('content/tuning.json').then((j) => Tuning.fromJson(j)),
       json<NpcPack>('content/npc.json'),
+      artReady,
     ]);
     const npc = new DialogueSession(npcPack, tuning.npc, cityId, (Math.random() * 0xffffffff) >>> 0);
     setDialogueSession(npc);
@@ -96,6 +101,7 @@ async function main(): Promise<void> {
     json<unknown>('content/tuning.json').then((j) => Tuning.fromJson(j)),
     Promise.all(carIdValues.map(async (id) => [id, await json<CarSpec>(`content/cars/${id}.json`)] as const)).then((e) => new Map<string, CarSpec>(e)),
     HttpPackSource.open(ASSET_BASE_URL, cityId),
+    artReady,
   ]);
   const city = await City.load(source);
   // The pack loaded: remember the city now, not only when leaving it (specs/cities.md).
@@ -246,6 +252,10 @@ async function main(): Promise<void> {
 
   // Loop glue: arrival → minigame → result → cash, stamp, save (specs/loop.md); loads the save.
   const npcPack = await json<NpcPack>('content/npc.json').catch(() => null);
+  // Feed cards of a spot are hosted by its NPC (the spot's opponent, specs/loop.md); the bust
+  // replaces the silhouette when it exists (specs/art.md).
+  const hosts = npcPack?.characters ?? [];
+  phone.feedHost = (spot) => hosts[opponentIndex(spot, hosts.length)]?.id ?? null;
   const loop = await installLoop({
     city, tuning, locale, t, drive, fleet, passport, phone, params, hud: $('hud'), buttons: $('buttons'),
     npcPack,

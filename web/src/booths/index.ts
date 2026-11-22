@@ -8,6 +8,7 @@ import type { NpcPack } from '../gen/schema';
 import { tokens } from '../gen/tokens';
 import type { Tuning } from '../gen/tuning';
 import type { LoopApi } from '../loop';
+import { art, artImage, usable } from '../art';
 import { h } from '../minigames/dom';
 import { overlays } from '../pause';
 import type { PhoneApi } from '../phone';
@@ -101,8 +102,13 @@ export function installBooths(env: BoothsEnv): BoothsFeature {
       sheet.remove();
       closeCard = null;
     };
+    // Host bust (specs/art.md) above the call; without the file the card stays as before.
+    const bust = hi >= 0 ? usable(art().bust(chars[hi]!.id)) : null;
+    const hostPic = bust ? h('div.booth-host', {}) : null;
+    if (hostPic && bust) hostPic.append(artImage(bust, 'booth-host-bust', () => hostPic.remove()));
     const sheet = h('div.mg-sheet.booth-offer', {},
       h('div.mg-card', {},
+        hostPic,
         h('h2', {}, booth.name),
         h('p', {}, t('boothCall', { host, game, place: spot?.name ?? offer.spot, bonus: offer.bonus })),
         h('button.mg-btn', { type: 'button', onclick: () => {

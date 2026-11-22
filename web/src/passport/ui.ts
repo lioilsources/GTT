@@ -1,6 +1,7 @@
 // Passport UI for client W (specs/passport.md): postcard card, Passport screen, About the maps.
 // Each is a DOM component with mount → unmount, so the phone app can host it later.
 import type { MessageKey } from '../gen/i18n';
+import { art, artImage, usable } from '../art';
 import { h, svg } from '../minigames/dom';
 import { overlays } from '../pause';
 import { POSTCARD_H, POSTCARD_W, postcardShapes } from './postcard';
@@ -10,6 +11,24 @@ import './passport.css';
 
 export interface PassportEnv {
   t(key: MessageKey, args?: Record<string, string | number>): string;
+  /** City id for generated postcards (`postcards/<city>/<id>.png`, specs/art.md); none = placeholder. */
+  city?: string;
+}
+
+/** The generated postcard of a landmark when the index has it, else null. */
+function postcardArt(env: PassportEnv, id: string): string | null {
+  return env.city ? usable(art().postcard(env.city, id)) : null;
+}
+
+/** Postcard picture: the generated 4 : 5 image (contain to card width) or the placeholder 3 : 2 SVG. */
+export function postcardPic(env: PassportEnv, lm: Pick<PassportLandmark, 'id' | 'heightM'>): Element {
+  const path = postcardArt(env, lm.id);
+  if (!path) return postcardSvg(lm);
+  const img = artImage(path, 'pp-pic pp-art', () => slot.replaceChildren(postcardSvg(lm)));
+  img.width = 1080;
+  img.height = 1350;
+  const slot = h('div.pp-pic-slot', {}, img);
+  return slot;
 }
 
 /** The placeholder picture as an inline SVG. */
@@ -34,7 +53,7 @@ export function mountPostcard(
   const card = h(
     'div.pp-postcard',
     { role: 'dialog' },
-    postcardSvg(lm),
+    postcardPic(env, lm),
     h('div.pp-postcard-title', {}, env.t(postcardTitleKey(lm.id))),
     h('div.pp-postcard-text', {}, env.t(postcardTextKey(lm.id))),
     h('div.pp-postcard-stamp', {}, env.t('postcardStamped')),
@@ -94,6 +113,17 @@ export function mountPassport(host: HTMLElement, env: PassportEnv, tracker: Pass
     for (const id of ids) {
       const owned = tracker.has(kind, id);
       const lm = kind === 'landmark' ? tracker.landmarks.find((l) => l.id === id) : undefined;
+      // An owned landmark with a generated postcard shows its thumbnail (cover square) as the mark.
+      const thumb = owned && lm ? postcardArt(env, lm.id) : null;
+      const mark = h('span.pp-stamp-mark', {}, owned ? '★' : '');
+      if (thumb) {
+        mark.className = 'pp-stamp-mark pp-thumb';
+        mark.textContent = '';
+        mark.append(artImage(thumb, 'art-fill', () => {
+          mark.className = 'pp-stamp-mark';
+          mark.textContent = '★';
+        }));
+      }
       grid.append(
         h(
           'button.pp-stamp',
@@ -103,7 +133,7 @@ export function mountPassport(host: HTMLElement, env: PassportEnv, tracker: Pass
             disabled: !(owned && lm),
             onclick: () => lm && o.onPostcard(lm),
           },
-          h('span.pp-stamp-mark', {}, owned ? '★' : ''),
+          mark,
           h('span.pp-stamp-name', {}, name(kind, id)),
         ),
       );
