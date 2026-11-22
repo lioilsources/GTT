@@ -53,7 +53,10 @@ class CarFleet {
       for (final p in parked)
         if (p.chunk == null) (x: p.x, y: p.y),
     ];
-    for (final p in generateParked(drive.city.graph, c.x, c.y, key, tuning, specs, kept, (x: car.x, y: car.y))) {
+    for (final p in generateParked(drive.city.graph, c.x, c.y, key, tuning, specs, kept, (
+      x: car.x,
+      y: car.y,
+    ), cityId: drive.city.id)) {
       _add(p);
     }
   }
