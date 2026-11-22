@@ -9,6 +9,8 @@ import 'package:flutter/services.dart';
 import 'package:npc_dialogue/npc_dialogue.dart';
 import 'package:shared_gen/shared_gen.dart';
 
+import '../booths/booths_controller.dart';
+import '../booths/booths_layer.dart';
 import '../cities/cities.dart';
 import '../cities/passport_percent.dart';
 import '../game/metropole_game.dart';
@@ -50,6 +52,7 @@ class _GameScreenState extends State<GameScreen> {
   LoopController? _loop;
   LoopController? _finesWired;
   TaxiController? _taxi;
+  BoothsController? _booths;
   final SaveStore _store = FileSaveStore();
   final CityStore _cities = FileCityStore();
   Object? _saved;
@@ -64,6 +67,7 @@ class _GameScreenState extends State<GameScreen> {
     // one is released by the GameWidget (onRemove: streamer, police, physics).
     if (!_shown) _game.then((g) => g.onRemove(), onError: (_) {});
     _loop?.save();
+    _booths?.dispose();
     _loop?.dispose();
     _taxi?.dispose();
     TaxiGame.startInCity = null;
@@ -97,6 +101,7 @@ class _GameScreenState extends State<GameScreen> {
     if (_leaving || to == widget.city) return;
     _leaving = true;
     _phone?.close();
+    _booths?.clear(); // the booth offer does not travel (specs/booths.md "Bonus")
     await switchCity(widget.city, to, saveCurrent: () => _loop?.save() ?? Future.value());
     if (!mounted) return;
     Navigator.of(context).pushReplacement(
@@ -192,6 +197,8 @@ class _GameScreenState extends State<GameScreen> {
           final taxi = _taxi ??= TaxiController(game, phone);
           loop.worldGames[MinigameId.taxi] = taxi;
           TaxiGame.startInCity = () => _startTaxi(game, loop);
+          // Ringing phone booths (specs/booths.md): offer a minigame with a cash bonus.
+          final booths = _booths ??= BoothsController(game, phone, loop);
           return Stack(
             fit: StackFit.expand,
             children: [
@@ -236,6 +243,7 @@ class _GameScreenState extends State<GameScreen> {
               TaxiHud(taxi: taxi),
               PhoneLayer(phone: phone),
               LoopLayer(loop: loop),
+              BoothsLayer(booths: booths),
               PassportOverlay(
                 events: game.passportEvent,
                 seconds: game.tuning.passport.postcardS,

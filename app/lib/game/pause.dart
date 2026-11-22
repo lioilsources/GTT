@@ -3,7 +3,8 @@ import 'package:flutter/foundation.dart';
 /// Overlays that pause the game while open (specs/pause.md "Co hru zastaví"). Short toasts (cash,
 /// fine, wanted level, navigation) are deliberately not here: they never pause. Client F has no
 /// separate arrival card: arriving at a spot opens the minigame ([minigame]) straight away.
-enum GameOverlay { phone, garage, passport, about, postcard, dialogue, minigame, result, gallery, tuning, bench }
+/// [booth] = the offer card of a ringing booth (specs/booths.md).
+enum GameOverlay { phone, garage, passport, about, postcard, dialogue, minigame, result, gallery, tuning, bench, booth }
 
 /// The pure rule: the game is paused while at least one overlay is open.
 bool paused(Iterable<GameOverlay> overlays) => overlays.isNotEmpty;

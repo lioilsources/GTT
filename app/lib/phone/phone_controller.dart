@@ -57,6 +57,12 @@ class PhoneController extends ChangeNotifier {
   void Function(CityId city)? onTravel;
   Future<int> Function(CityId city)? passportPercent;
 
+  /// Called when the player accepts a feed card (spot id); not for [acceptSpot].
+  final List<void Function(String spotId)> onAccept = [];
+
+  /// Extra points on the Map app (metres, ARGB colour), e.g. a ringing booth (specs/booths.md).
+  final List<List<({double x, double y, int color})> Function()> mapPoints = [];
+
   /// The last accepted feed card; the loop reads its distance and difficulty on arrival and clears it.
   ({String spot, int distDm, int difficulty})? accepted;
 
@@ -77,6 +83,7 @@ class PhoneController extends ChangeNotifier {
       ..addAll(f.districts);
     _deck = null;
   }
+
   final navHud = ValueNotifier<NavHudState?>(null);
 
   /// i18n key of the toast shown now, or null.
@@ -138,16 +145,31 @@ class PhoneController extends ChangeNotifier {
       discovered: discovered(),
       visits: _visits,
       landmarkRadiusDm: tuning.feed.landmarkRadiusDm,
-      distDm: (id) {
-        final t = NavTarget.fromSpot(_spots[id]!);
-        return feedDistDm(rg, _lens, start, navGoal(g, t), car.x, car.y, t, tuning.feed.straightPct);
-      },
+      distDm: (id) => _distDm(id, start),
     );
     final seed = _firstSeed ?? _random.nextInt(1 << 32);
     _firstSeed = null;
     _deck = _rules.deal(FeedConfig.fromTuning(tuning.feed, candidates, _prefs, _visitedDistricts.toList()), seed);
     _driven = 0;
     _arrivedSinceDeal = false;
+  }
+
+  /// Integer road distance from the car to a spot, as on feed cards (specs/feed.md).
+  int _distDm(String id, NavEnd? start) {
+    final car = game.drive.car;
+    final t = NavTarget.fromSpot(_spots[id]!);
+    return feedDistDm(rg, _lens, start, navGoal(game.city.graph, t), car.x, car.y, t, tuning.feed.straightPct);
+  }
+
+  /// Accepts a spot like a feed card (a booth offer, specs/booths.md): route to the spot,
+  /// `distDm` = road distance as on feed cards, the given difficulty. Does not call [onAccept].
+  bool acceptSpot(String spotId, int difficulty) {
+    if (!_spots.containsKey(spotId)) return false;
+    final car = game.drive.car;
+    final start = navStart(game.city.graph, game.drive.layers.hit, car.x, car.y, car.heading, tuning.nav.searchM);
+    accepted = (spot: spotId, distDm: _distDm(spotId, start), difficulty: difficulty);
+    close();
+    return navigate(spotId);
   }
 
   /// Applies a feed gesture through the rules; accept closes the phone and navigates.
@@ -162,6 +184,9 @@ class PhoneController extends ChangeNotifier {
       accepted = card == null ? null : (spot: card.spot, distDm: card.distDm, difficulty: card.difficulty);
       close();
       navigate(next.accepted);
+      for (final f in [...onAccept]) {
+        f(next.accepted);
+      }
     }
     notifyListeners();
   }
