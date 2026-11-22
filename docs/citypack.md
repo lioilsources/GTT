@@ -19,9 +19,10 @@ Cache nesleduje změny konfigurace: po úpravě `city.yaml`, `tuning.yaml` (ší
 | `widen` | budovy − koridory silnic | Šířka = pruhy × `lane_width_m` + 2 × `sidewalk_width_m`, uličky 1,5 × pruh. Jen silnice ve vrstvě 0 (tunely vedou pod budovami, estakády nad nimi). |
 | `buildings` | → `buildings.jsonl` | Výška: `height` → `num_floors` × 3,2 → `default_height_m`. Zjednodušení 1,5 m, sloučení sousedů ve stejném výškovém pásmu (DBSCAN 0,5 m). Památky a části budov (`building_part`) se neslučují; části památky se přeškálují na ruční výšku. |
 | `ground` | voda, parky, náměstí, kolejiště → `ground.jsonl` | Sjednocení po druhu, ořez oblastí a mřížkou chunků. |
+| `zones` | pěší segmenty a náměstí − koridory silnic → `zones_ground.jsonl`, `zones_barriers.jsonl` | Pěší zóny a sloupky (`specs/zones.md`): pásy `zones.street_width_m` kolem segmentů `pedestrian` a pěší náměstí, které protínají, bez koridorů silnic (+ `zones.gap_margin_m`). Hranice zóny bez hranice oblasti = zábrana (`Chunk.barriers`). |
 | `landmarks`, `spots` | YAML → `landmarks.pb`, `spots.pb` | Památka = nejbližší budova do 40 m od bodu (nebo `overture_id`). Spoty se přichytí na nejbližší ponechanou silnici. |
 | `pack` | → `app/assets/cities/<city>/` | `manifest.pb`, `graph.pb`, `chunks/{x}_{y}.pb`, `landmarks.pb`, `spots.pb`; vše gzip protobuf, souřadnice v decimetrech. Střechy a země předtriangulované (earcut). Deterministický: kanonické prstence, úplné řazení, bez času buildu – stejný vstup dá stejné bajty. |
-| `validate` | hotový balíček | Souvislý graf, mosty a tunely napojené na obou koncích, trasa ze startu ke každému spotu (po ponechaných silnicích, s jednosměrkami), žádná budova na ose silnice, limit velikosti chunku, každá hero památka má budovu. |
+| `validate` | hotový balíček | Souvislý graf, mosty a tunely napojené na obou koncích, trasa ze startu ke každému spotu (po ponechaných silnicích, s jednosměrkami), žádná budova na ose silnice, žádné sloupky přes osu silnice, limit velikosti chunku, každá hero památka má budovu. |
 | `preview` | → `preview/{city.png,index.html}` | Přehledka a porovnání s OSM. |
 
 ## Ověřeno proti datům (OVĚŘ z plánu, release 2026-11-18.0)
@@ -54,6 +55,9 @@ Praha 1 a 2 s Letnou, Holešovicemi, Karlínem, Žižkovem, Vinohrady, Smíchove
 jednosměrkám), 13 942 hmot budov, 507 chunků, 15 spotů (7 se minihrou), balíček 1,5 MB. Build s
 `-refetch` ~6 min. Organická síť jednosměrek bez spojek po směru jízdy rozpadla ponechané silnice
 na ostrovy, kam se nedalo dojet (Národní, Spálená, Dlouhá); proto druhý krok spojek.
+
+Pěší zóny (M3-S4): Praha 274 ploch dlažby a 496 linií sloupků (Karlův most, Staroměstské
+náměstí, náplavky), Manhattan 253 a 475 (pěší náměstí jako Times Square). Balíčky 1,6 a 2,6 MB.
 
 - Spoty mají pole `minigame` (id z katalogu): na tom místě se minihra hraje (9.5).
 - `validate` bere při kontrole „silnice v budově“ v úvahu dvory (díry v obrysu): příjezd do dvora

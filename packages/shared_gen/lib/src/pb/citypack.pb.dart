@@ -908,12 +908,14 @@ class Chunk extends $pb.GeneratedMessage {
     $core.int? y,
     $core.Iterable<Building>? buildings,
     $core.Iterable<Mesh>? ground,
+    $core.Iterable<Barrier>? barriers,
   }) {
     final result = Chunk._();
     if (x != null) result.x = x;
     if (y != null) result.y = y;
     if (buildings != null) result.buildings.addAll(buildings);
     if (ground != null) result.ground.addAll(ground);
+    if (barriers != null) result.barriers.addAll(barriers);
     return result;
   }
 
@@ -936,6 +938,8 @@ class Chunk extends $pb.GeneratedMessage {
         subBuilder: Building.$_createMessage)
     ..pPM<Mesh>(4, _omitFieldNames ? '' : 'ground',
         subBuilder: Mesh.$_createMessage)
+    ..pPM<Barrier>(5, _omitFieldNames ? '' : 'barriers',
+        subBuilder: Barrier.$_createMessage)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -981,6 +985,59 @@ class Chunk extends $pb.GeneratedMessage {
 
   @$pb.TagNumber(4)
   $pb.PbList<Mesh> get ground => $_getList(3);
+
+  @$pb.TagNumber(5)
+  $pb.PbList<Barrier> get barriers => $_getList(4);
+}
+
+/// A bollard line: cars (not micro vehicles) collide with it as with a wall.
+class Barrier extends $pb.GeneratedMessage {
+  factory Barrier({
+    $core.Iterable<$core.int>? points,
+  }) {
+    final result = Barrier._();
+    if (points != null) result.points.addAll(points);
+    return result;
+  }
+
+  Barrier._();
+
+  factory Barrier.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      Barrier()..mergeFromBuffer(data, registry);
+  factory Barrier.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      Barrier()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'Barrier',
+      package: const $pb.PackageName(_omitMessageNames ? '' : 'citypack'),
+      createEmptyInstance: Barrier.$_createMessage)
+    ..p<$core.int>(1, _omitFieldNames ? '' : 'points', $pb.PbFieldType.KS3)
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  Barrier clone() => deepCopy();
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  Barrier copyWith(void Function(Barrier) updates) =>
+      super.copyWith((message) => updates(message as Barrier)) as Barrier;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  @$core.Deprecated('Use Barrier() / Barrier.new instead')
+  static Barrier create() => Barrier._();
+  static $pb.GeneratedMessage $_createMessage() => Barrier._();
+  @$core.override
+  Barrier createEmptyInstance() => Barrier._();
+  @$core.pragma('dart2js:noInline')
+  static Barrier getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<Barrier>(Barrier.$_createMessage);
+  static Barrier? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $pb.PbList<$core.int> get points => $_getList(0);
 }
 
 class Building extends $pb.GeneratedMessage {

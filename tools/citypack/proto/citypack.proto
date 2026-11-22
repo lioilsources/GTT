@@ -102,6 +102,12 @@ message Chunk {
   sint32 y = 2;
   repeated Building buildings = 3;
   repeated Mesh ground = 4;
+  repeated Barrier barriers = 5;  // pedestrian-zone bollard lines (specs/zones.md), layer 0
+}
+
+// A bollard line: cars (not micro vehicles) collide with it as with a wall.
+message Barrier {
+  repeated sint32 points = 1;  // open polyline, dm
 }
 
 message Building {
@@ -122,6 +128,7 @@ enum GroundKind {
   PARK = 3;
   RAIL = 4;
   PLAZA = 5;
+  PEDESTRIAN = 6;  // pedestrian zone paving (specs/zones.md)
 }
 
 message Mesh {

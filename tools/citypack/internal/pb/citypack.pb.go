@@ -100,6 +100,7 @@ const (
 	GroundKind_PARK           GroundKind = 3
 	GroundKind_RAIL           GroundKind = 4
 	GroundKind_PLAZA          GroundKind = 5
+	GroundKind_PEDESTRIAN     GroundKind = 6 // pedestrian zone paving (specs/zones.md)
 )
 
 // Enum value maps for GroundKind.
@@ -111,6 +112,7 @@ var (
 		3: "PARK",
 		4: "RAIL",
 		5: "PLAZA",
+		6: "PEDESTRIAN",
 	}
 	GroundKind_value = map[string]int32{
 		"GROUND_UNKNOWN": 0,
@@ -119,6 +121,7 @@ var (
 		"PARK":           3,
 		"RAIL":           4,
 		"PLAZA":          5,
+		"PEDESTRIAN":     6,
 	}
 )
 
@@ -831,6 +834,7 @@ type Chunk struct {
 	Y             int32                  `protobuf:"zigzag32,2,opt,name=y,proto3" json:"y,omitempty"`
 	Buildings     []*Building            `protobuf:"bytes,3,rep,name=buildings,proto3" json:"buildings,omitempty"`
 	Ground        []*Mesh                `protobuf:"bytes,4,rep,name=ground,proto3" json:"ground,omitempty"`
+	Barriers      []*Barrier             `protobuf:"bytes,5,rep,name=barriers,proto3" json:"barriers,omitempty"` // pedestrian-zone bollard lines (specs/zones.md), layer 0
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -893,6 +897,58 @@ func (x *Chunk) GetGround() []*Mesh {
 	return nil
 }
 
+func (x *Chunk) GetBarriers() []*Barrier {
+	if x != nil {
+		return x.Barriers
+	}
+	return nil
+}
+
+// A bollard line: cars (not micro vehicles) collide with it as with a wall.
+type Barrier struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Points        []int32                `protobuf:"zigzag32,1,rep,packed,name=points,proto3" json:"points,omitempty"` // open polyline, dm
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *Barrier) Reset() {
+	*x = Barrier{}
+	mi := &file_citypack_proto_msgTypes[9]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Barrier) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Barrier) ProtoMessage() {}
+
+func (x *Barrier) ProtoReflect() protoreflect.Message {
+	mi := &file_citypack_proto_msgTypes[9]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Barrier.ProtoReflect.Descriptor instead.
+func (*Barrier) Descriptor() ([]byte, []int) {
+	return file_citypack_proto_rawDescGZIP(), []int{9}
+}
+
+func (x *Barrier) GetPoints() []int32 {
+	if x != nil {
+		return x.Points
+	}
+	return nil
+}
+
 type Building struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Rings         []int32                `protobuf:"zigzag32,1,rep,packed,name=rings,proto3" json:"rings,omitempty"`                     // all rings concatenated, dm
@@ -909,7 +965,7 @@ type Building struct {
 
 func (x *Building) Reset() {
 	*x = Building{}
-	mi := &file_citypack_proto_msgTypes[9]
+	mi := &file_citypack_proto_msgTypes[10]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -921,7 +977,7 @@ func (x *Building) String() string {
 func (*Building) ProtoMessage() {}
 
 func (x *Building) ProtoReflect() protoreflect.Message {
-	mi := &file_citypack_proto_msgTypes[9]
+	mi := &file_citypack_proto_msgTypes[10]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -934,7 +990,7 @@ func (x *Building) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Building.ProtoReflect.Descriptor instead.
 func (*Building) Descriptor() ([]byte, []int) {
-	return file_citypack_proto_rawDescGZIP(), []int{9}
+	return file_citypack_proto_rawDescGZIP(), []int{10}
 }
 
 func (x *Building) GetRings() []int32 {
@@ -1004,7 +1060,7 @@ type Mesh struct {
 
 func (x *Mesh) Reset() {
 	*x = Mesh{}
-	mi := &file_citypack_proto_msgTypes[10]
+	mi := &file_citypack_proto_msgTypes[11]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1016,7 +1072,7 @@ func (x *Mesh) String() string {
 func (*Mesh) ProtoMessage() {}
 
 func (x *Mesh) ProtoReflect() protoreflect.Message {
-	mi := &file_citypack_proto_msgTypes[10]
+	mi := &file_citypack_proto_msgTypes[11]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1029,7 +1085,7 @@ func (x *Mesh) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Mesh.ProtoReflect.Descriptor instead.
 func (*Mesh) Descriptor() ([]byte, []int) {
-	return file_citypack_proto_rawDescGZIP(), []int{10}
+	return file_citypack_proto_rawDescGZIP(), []int{11}
 }
 
 func (x *Mesh) GetKind() GroundKind {
@@ -1063,7 +1119,7 @@ type Landmarks struct {
 
 func (x *Landmarks) Reset() {
 	*x = Landmarks{}
-	mi := &file_citypack_proto_msgTypes[11]
+	mi := &file_citypack_proto_msgTypes[12]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1075,7 +1131,7 @@ func (x *Landmarks) String() string {
 func (*Landmarks) ProtoMessage() {}
 
 func (x *Landmarks) ProtoReflect() protoreflect.Message {
-	mi := &file_citypack_proto_msgTypes[11]
+	mi := &file_citypack_proto_msgTypes[12]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1088,7 +1144,7 @@ func (x *Landmarks) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Landmarks.ProtoReflect.Descriptor instead.
 func (*Landmarks) Descriptor() ([]byte, []int) {
-	return file_citypack_proto_rawDescGZIP(), []int{11}
+	return file_citypack_proto_rawDescGZIP(), []int{12}
 }
 
 func (x *Landmarks) GetItems() []*Landmark {
@@ -1113,7 +1169,7 @@ type Landmark struct {
 
 func (x *Landmark) Reset() {
 	*x = Landmark{}
-	mi := &file_citypack_proto_msgTypes[12]
+	mi := &file_citypack_proto_msgTypes[13]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1125,7 +1181,7 @@ func (x *Landmark) String() string {
 func (*Landmark) ProtoMessage() {}
 
 func (x *Landmark) ProtoReflect() protoreflect.Message {
-	mi := &file_citypack_proto_msgTypes[12]
+	mi := &file_citypack_proto_msgTypes[13]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1138,7 +1194,7 @@ func (x *Landmark) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Landmark.ProtoReflect.Descriptor instead.
 func (*Landmark) Descriptor() ([]byte, []int) {
-	return file_citypack_proto_rawDescGZIP(), []int{12}
+	return file_citypack_proto_rawDescGZIP(), []int{13}
 }
 
 func (x *Landmark) GetId() string {
@@ -1200,7 +1256,7 @@ type Spots struct {
 
 func (x *Spots) Reset() {
 	*x = Spots{}
-	mi := &file_citypack_proto_msgTypes[13]
+	mi := &file_citypack_proto_msgTypes[14]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1212,7 +1268,7 @@ func (x *Spots) String() string {
 func (*Spots) ProtoMessage() {}
 
 func (x *Spots) ProtoReflect() protoreflect.Message {
-	mi := &file_citypack_proto_msgTypes[13]
+	mi := &file_citypack_proto_msgTypes[14]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1225,7 +1281,7 @@ func (x *Spots) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Spots.ProtoReflect.Descriptor instead.
 func (*Spots) Descriptor() ([]byte, []int) {
-	return file_citypack_proto_rawDescGZIP(), []int{13}
+	return file_citypack_proto_rawDescGZIP(), []int{14}
 }
 
 func (x *Spots) GetItems() []*Spot {
@@ -1253,7 +1309,7 @@ type Spot struct {
 
 func (x *Spot) Reset() {
 	*x = Spot{}
-	mi := &file_citypack_proto_msgTypes[14]
+	mi := &file_citypack_proto_msgTypes[15]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1265,7 +1321,7 @@ func (x *Spot) String() string {
 func (*Spot) ProtoMessage() {}
 
 func (x *Spot) ProtoReflect() protoreflect.Message {
-	mi := &file_citypack_proto_msgTypes[14]
+	mi := &file_citypack_proto_msgTypes[15]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1278,7 +1334,7 @@ func (x *Spot) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Spot.ProtoReflect.Descriptor instead.
 func (*Spot) Descriptor() ([]byte, []int) {
-	return file_citypack_proto_rawDescGZIP(), []int{14}
+	return file_citypack_proto_rawDescGZIP(), []int{15}
 }
 
 func (x *Spot) GetId() string {
@@ -1418,12 +1474,15 @@ const file_citypack_proto_rawDesc = "" +
 	" \x01(\bR\x06bridge\x12\x16\n" +
 	"\x06tunnel\x18\v \x01(\bR\x06tunnel\x12\x12\n" +
 	"\x04kept\x18\f \x01(\bR\x04kept\x12\x17\n" +
-	"\awidth_m\x18\r \x01(\x02R\x06widthM\"}\n" +
+	"\awidth_m\x18\r \x01(\x02R\x06widthM\"\xac\x01\n" +
 	"\x05Chunk\x12\f\n" +
 	"\x01x\x18\x01 \x01(\x11R\x01x\x12\f\n" +
 	"\x01y\x18\x02 \x01(\x11R\x01y\x120\n" +
 	"\tbuildings\x18\x03 \x03(\v2\x12.citypack.BuildingR\tbuildings\x12&\n" +
-	"\x06ground\x18\x04 \x03(\v2\x0e.citypack.MeshR\x06ground\"\xe1\x01\n" +
+	"\x06ground\x18\x04 \x03(\v2\x0e.citypack.MeshR\x06ground\x12-\n" +
+	"\bbarriers\x18\x05 \x03(\v2\x11.citypack.BarrierR\bbarriers\"!\n" +
+	"\aBarrier\x12\x16\n" +
+	"\x06points\x18\x01 \x03(\x11R\x06points\"\xe1\x01\n" +
 	"\bBuilding\x12\x14\n" +
 	"\x05rings\x18\x01 \x03(\x11R\x05rings\x12\x1b\n" +
 	"\tring_ends\x18\x02 \x03(\rR\bringEnds\x12\x12\n" +
@@ -1470,7 +1529,7 @@ const file_citypack_proto_rawDesc = "" +
 	"\tSECONDARY\x10\x04\x12\f\n" +
 	"\bTERTIARY\x10\x05\x12\x0f\n" +
 	"\vRESIDENTIAL\x10\x06\x12\v\n" +
-	"\aSERVICE\x10\a*T\n" +
+	"\aSERVICE\x10\a*d\n" +
 	"\n" +
 	"GroundKind\x12\x12\n" +
 	"\x0eGROUND_UNKNOWN\x10\x00\x12\b\n" +
@@ -1478,7 +1537,9 @@ const file_citypack_proto_rawDesc = "" +
 	"\x05WATER\x10\x02\x12\b\n" +
 	"\x04PARK\x10\x03\x12\b\n" +
 	"\x04RAIL\x10\x04\x12\t\n" +
-	"\x05PLAZA\x10\x05B\x16Z\x14citypack/internal/pbb\x06proto3"
+	"\x05PLAZA\x10\x05\x12\x0e\n" +
+	"\n" +
+	"PEDESTRIAN\x10\x06B\x16Z\x14citypack/internal/pbb\x06proto3"
 
 var (
 	file_citypack_proto_rawDescOnce sync.Once
@@ -1493,7 +1554,7 @@ func file_citypack_proto_rawDescGZIP() []byte {
 }
 
 var file_citypack_proto_enumTypes = make([]protoimpl.EnumInfo, 2)
-var file_citypack_proto_msgTypes = make([]protoimpl.MessageInfo, 15)
+var file_citypack_proto_msgTypes = make([]protoimpl.MessageInfo, 16)
 var file_citypack_proto_goTypes = []any{
 	(RoadClass)(0),    // 0: citypack.RoadClass
 	(GroundKind)(0),   // 1: citypack.GroundKind
@@ -1506,12 +1567,13 @@ var file_citypack_proto_goTypes = []any{
 	(*Node)(nil),      // 8: citypack.Node
 	(*Edge)(nil),      // 9: citypack.Edge
 	(*Chunk)(nil),     // 10: citypack.Chunk
-	(*Building)(nil),  // 11: citypack.Building
-	(*Mesh)(nil),      // 12: citypack.Mesh
-	(*Landmarks)(nil), // 13: citypack.Landmarks
-	(*Landmark)(nil),  // 14: citypack.Landmark
-	(*Spots)(nil),     // 15: citypack.Spots
-	(*Spot)(nil),      // 16: citypack.Spot
+	(*Barrier)(nil),   // 11: citypack.Barrier
+	(*Building)(nil),  // 12: citypack.Building
+	(*Mesh)(nil),      // 13: citypack.Mesh
+	(*Landmarks)(nil), // 14: citypack.Landmarks
+	(*Landmark)(nil),  // 15: citypack.Landmark
+	(*Spots)(nil),     // 16: citypack.Spots
+	(*Spot)(nil),      // 17: citypack.Spot
 }
 var file_citypack_proto_depIdxs = []int32{
 	3,  // 0: citypack.Manifest.bounds:type_name -> citypack.Rect
@@ -1521,16 +1583,17 @@ var file_citypack_proto_depIdxs = []int32{
 	8,  // 4: citypack.Graph.nodes:type_name -> citypack.Node
 	9,  // 5: citypack.Graph.edges:type_name -> citypack.Edge
 	0,  // 6: citypack.Edge.class:type_name -> citypack.RoadClass
-	11, // 7: citypack.Chunk.buildings:type_name -> citypack.Building
-	12, // 8: citypack.Chunk.ground:type_name -> citypack.Mesh
-	1,  // 9: citypack.Mesh.kind:type_name -> citypack.GroundKind
-	14, // 10: citypack.Landmarks.items:type_name -> citypack.Landmark
-	16, // 11: citypack.Spots.items:type_name -> citypack.Spot
-	12, // [12:12] is the sub-list for method output_type
-	12, // [12:12] is the sub-list for method input_type
-	12, // [12:12] is the sub-list for extension type_name
-	12, // [12:12] is the sub-list for extension extendee
-	0,  // [0:12] is the sub-list for field type_name
+	12, // 7: citypack.Chunk.buildings:type_name -> citypack.Building
+	13, // 8: citypack.Chunk.ground:type_name -> citypack.Mesh
+	11, // 9: citypack.Chunk.barriers:type_name -> citypack.Barrier
+	1,  // 10: citypack.Mesh.kind:type_name -> citypack.GroundKind
+	15, // 11: citypack.Landmarks.items:type_name -> citypack.Landmark
+	17, // 12: citypack.Spots.items:type_name -> citypack.Spot
+	13, // [13:13] is the sub-list for method output_type
+	13, // [13:13] is the sub-list for method input_type
+	13, // [13:13] is the sub-list for extension type_name
+	13, // [13:13] is the sub-list for extension extendee
+	0,  // [0:13] is the sub-list for field type_name
 }
 
 func init() { file_citypack_proto_init() }
@@ -1544,7 +1607,7 @@ func file_citypack_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_citypack_proto_rawDesc), len(file_citypack_proto_rawDesc)),
 			NumEnums:      2,
-			NumMessages:   15,
+			NumMessages:   16,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

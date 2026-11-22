@@ -24,6 +24,7 @@ var pipeline = []step{
 	{"widen", steps.Widen},
 	{"buildings", steps.Buildings},
 	{"ground", steps.Ground},
+	{"zones", steps.Zones},
 	{"landmarks", steps.Landmarks},
 	{"spots", steps.Spots},
 	{"pack", steps.Pack},

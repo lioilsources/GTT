@@ -26,6 +26,7 @@ abstract final class Tokens {
   static const int colorWorldDayWater = 0xFF4F8CC9;
   static const int colorWorldDayPark = 0xFF79B35F;
   static const int colorWorldDayPlaza = 0xFFDCCFB9;
+  static const int colorWorldDayPedestrian = 0xFFD6CBB8;
   static const int colorWorldDayRail = 0xFF9C9087;
   static const int colorWorldDaySidewalk = 0xFFC9C1B4;
   static const int colorWorldDayAsphalt = 0xFF55565E;
@@ -41,6 +42,7 @@ abstract final class Tokens {
   static const int colorWorldNightWater = 0xFF12223D;
   static const int colorWorldNightPark = 0xFF1E3426;
   static const int colorWorldNightPlaza = 0xFF3A3846;
+  static const int colorWorldNightPedestrian = 0xFF45424F;
   static const int colorWorldNightRail = 0xFF2D2B30;
   static const int colorWorldNightSidewalk = 0xFF4A4A57;
   static const int colorWorldNightAsphalt = 0xFF1D1E25;
@@ -83,6 +85,7 @@ abstract final class Tokens {
   static const int colorPropsNewsbox = 0xFF285AAA;
   static const int colorPropsPlanter = 0xFF786050;
   static const int colorPropsPlanterGreen = 0xFF468C46;
+  static const int colorPropsBollard = 0xFF3A3A40;
   static const List<int> colorPedestriansShirts = [0xFFD2483C, 0xFF3C78C8, 0xFFE6B43C, 0xFF46A06E, 0xFF8C5AB4, 0xFFE67896, 0xFFF0F0EA, 0xFF3C3C46];
   static const int colorPedestriansHead = 0xFF5A4134;
   static const int colorPedestriansShadow = 0x38000000;

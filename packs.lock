@@ -1,14 +1,14 @@
 # Written by `citypack publish`; read by `citypack pull` and `metro sync`. Do not edit by hand.
 packs:
     nyc:
-        version: f4f93f00ebc9
-        tag: pack-nyc-f4f93f00ebc9
-        asset: nyc-f4f93f00ebc9.tar.gz
-        sha256: f4f93f00ebc902e24cc347c25a16cb23181fbd90dbd7b69a1c5f933988e67c86
+        version: 31be5ec2ba98
+        tag: pack-nyc-31be5ec2ba98
+        asset: nyc-31be5ec2ba98.tar.gz
+        sha256: 31be5ec2ba981e443c6bd39cbb535c764a2ee5bdef18b796d421a3113b32623f
         overture_release: 2026-11-18.0
     prague:
-        version: 5e0c381c9550
-        tag: pack-prague-5e0c381c9550
-        asset: prague-5e0c381c9550.tar.gz
-        sha256: 5e0c381c9550ee94b8ff128cf7ccfbebfa2ac6690b1907c327a662d0bcd1eab4
+        version: c3609f3a6463
+        tag: pack-prague-c3609f3a6463
+        asset: prague-c3609f3a6463.tar.gz
+        sha256: c3609f3a6463cd208ab6f590c6d350240ac46ba3538069274a2eada506d6f96d
         overture_release: 2026-11-18.0

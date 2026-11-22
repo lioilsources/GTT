@@ -1,6 +1,6 @@
 # Citypack – formát balíčku města
 
-**version: 1** · P0 · schéma `tools/citypack/proto/citypack.proto` (`format_version` 1)
+**version: 2** · P0 · schéma `tools/citypack/proto/citypack.proto` (`format_version` 1)
 
 ## Účel
 Jeden balíček města, který čtou oba klienti. Staví ho `citypack` (Go), čte F (`world_engine`) i W.
@@ -17,7 +17,11 @@ R = 6 371 008,8 m), v souborech decimetry `sint32`. Ploché seznamy `x0, y0, x1,
   `roof` = trojúhelníky do vrcholů všech prstenců; `min_height_m` > 0 = stohovaná část.
 - Hrana: `points` včetně obou uzlů; `oneway` 1 = jen from→to, −1 = jen to→from; `kept` = provoz a GPS,
   jinak průjezdná ulička; vrstva v bodě t (0..1) = `layer_from`, pro t ≥ 0,5 `layer_to`.
-- Země: `Mesh` = trojúhelníky jednoho druhu (`GroundKind`).
+- Země: `Mesh` = trojúhelníky jednoho druhu (`GroundKind`). `PEDESTRIAN` (v2) = dlažba pěší zóny
+  (`specs/zones.md`); klient, který ho nezná, ho kreslí jako `PLAZA`.
+- Zábrana (v2): `Chunk.barriers` = lomené čáry sloupků pěších zón ve vrstvě 0 (`specs/zones.md`).
+  Starší balíček je nemá; klient bez podpory zón je ignoruje. `format_version` zůstává 1 (pole
+  přibyla, nic se neodebralo).
 
 ## Hraniční případy
 - Uzel s `border` = silnice opouští oblast, kreslí se uzavírka.

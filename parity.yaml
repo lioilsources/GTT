@@ -12,7 +12,7 @@
 - id: F-002
   name: Citypack decoding (manifest, graph, chunks)
   level: P0
-  spec: specs/citypack.md@1
+  spec: specs/citypack.md@2
   lead: flutter
   flutter: done
   web: done
@@ -233,6 +233,13 @@
   name: Cities and switching (Travel app, last city, per-city save)
   level: P2
   spec: specs/cities.md@1
+  lead: web
+  flutter: todo
+  web: todo
+- id: F-029
+  name: Pedestrian zones and micro vehicles (bollards, micro passes)
+  level: P1
+  spec: specs/zones.md@1
   lead: web
   flutter: todo
   web: todo

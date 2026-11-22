@@ -67,6 +67,11 @@ type Tuning struct {
 		SimplifyM float64 `yaml:"simplify_m"`
 		MinAreaM2 float64 `yaml:"min_area_m2"`
 	} `yaml:"ground"`
+	Zones struct {
+		StreetWidthM float64 `yaml:"street_width_m"`
+		GapMarginM   float64 `yaml:"gap_margin_m"`
+		MinBarrierM  float64 `yaml:"min_barrier_m"`
+	} `yaml:"zones"`
 }
 
 func (t *Tuning) check() error {
@@ -78,6 +83,7 @@ func (t *Tuning) check() error {
 		"buildings.merge_gap_m": b.MergeGapM, "buildings.min_area_m2": b.MinAreaM2,
 		"buildings.floor_height_m": b.FloorHeightM, "buildings.landmark_search_m": b.LandmarkSearchM,
 		"buildings.degenerate_m2": b.DegenerateM2, "ground.simplify_m": g.SimplifyM, "ground.min_area_m2": g.MinAreaM2,
+		"zones.street_width_m": t.Zones.StreetWidthM, "zones.gap_margin_m": t.Zones.GapMarginM, "zones.min_barrier_m": t.Zones.MinBarrierM,
 	} {
 		if v <= 0 {
 			return fmt.Errorf("tuning.yaml: %s missing or not positive", name)

@@ -31,6 +31,14 @@ buildings:
 ground:
   simplify_m: 1.0
   min_area_m2: 4.0
+# Pedestrian zones and bollards (specs/zones.md): citypack uses the first three, clients the rest.
+zones:
+  street_width_m: 12.0          # corridor around a pedestrian street segment
+  gap_margin_m: 1.5             # clearance kept around every road corridor (roads stay drivable)
+  min_barrier_m: 2.0            # shorter bollard pieces are dropped
+  bollard_spacing_m: 4.0
+  bollard_radius_m: 0.6
+  bollard_height_m: 2.0
 
 # Chunk streaming (METROPOLE_PLAN 6.4): window in chunks around the player.
 streaming: {ahead: 3, behind: 1, side: 1, keep: 3, max_in_flight: 2, retry_s: 2.0}

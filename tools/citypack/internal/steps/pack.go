@@ -243,6 +243,28 @@ func Pack(e *Env) error {
 	if failed > 0 {
 		slog.Warn("pack: polygons failed to triangulate", "count", failed)
 	}
+	barriers, err := e.LoadZoneBarriers()
+	if err != nil {
+		return err
+	}
+	for i := range barriers {
+		// Canonical direction so the same input packs to the same bytes.
+		b := barriers[i].Pts
+		if ptLess(b[len(b)-1], b[0]) {
+			for l, r := 0, len(b)-1; l < r; l, r = l+1, r-1 {
+				b[l], b[r] = b[r], b[l]
+			}
+		}
+	}
+	sort.Slice(barriers, func(i, j int) bool { return barrierLess(barriers[i], barriers[j]) })
+	for _, br := range barriers {
+		bar := &pb.Barrier{}
+		for _, p := range br.Pts {
+			bar.Points = append(bar.Points, geo.DM(p.X), geo.DM(p.Y))
+		}
+		ch := chunk(br.CX, br.CY)
+		ch.Barriers = append(ch.Barriers, bar)
+	}
 	if err := os.MkdirAll(filepath.Join(e.Out, "chunks"), 0o755); err != nil {
 		return err
 	}
@@ -356,6 +378,21 @@ func ringsLess(a, b [][]geo.Pt) bool {
 		}
 	}
 	return len(a) < len(b)
+}
+
+func barrierLess(a, b BarrierRow) bool {
+	if a.CX != b.CX {
+		return a.CX < b.CX
+	}
+	if a.CY != b.CY {
+		return a.CY < b.CY
+	}
+	for i := 0; i < len(a.Pts) && i < len(b.Pts); i++ {
+		if a.Pts[i] != b.Pts[i] {
+			return ptLess(a.Pts[i], b.Pts[i])
+		}
+	}
+	return len(a.Pts) < len(b.Pts)
 }
 
 func groundLess(a, b GroundRow) bool {
