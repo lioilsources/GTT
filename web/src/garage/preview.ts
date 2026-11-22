@@ -1,4 +1,4 @@
-import { carPrims, wheelRects } from '../cars/carTris';
+import { carPrims, wheelRects, type WheelRect } from '../cars/carTris';
 import type { CarSpec } from '../gen/schema';
 import { tokens } from '../gen/tokens';
 import type { Tuning } from '../gen/tuning';
@@ -38,13 +38,17 @@ export function drawCarPreview(canvas: HTMLCanvasElement, spec: CarSpec, look: L
   };
   const glow = lookGlow(look);
   if (glow) fill(glowPoly(hl, hw, margin), rgba(glow));
-  if (spec.class !== 'micro') {
-    const tyre = rgba(tokens.colorCarTyre), rim = rgba(lookRim(look));
-    for (const r of wheelRects(hl, hw, hl * tuning.drive.axleOffset)) {
-      fill([r.x0, r.y0, r.x1, r.y0, r.x1, r.y1, r.x0, r.y1], tyre);
-      const [a, b, c, d] = r.rim;
-      fill([a, b, c, b, c, d, a, d], rim);
-    }
-  }
-  for (const p of carPrims(spec, hl, hw, false, look ?? {})) fill(p.poly, p.color);
+  // Wheels by class (specs/cars.md); the single front wheel of a trike or rickshaw goes over the body.
+  // [look] null = a catalog car (the sale list): drawn like a parked car, without rims.
+  const tyre = rgba(tokens.colorCarTyre), rim = look ? rgba(lookRim(look)) : null;
+  const axle = hl * tuning.drive.axleOffset;
+  const wheels = wheelRects(hl, hw, axle, spec.class, spec.length_m);
+  const wheel = (r: WheelRect): void => {
+    fill([r.x0, r.y0, r.x1, r.y0, r.x1, r.y1, r.x0, r.y1], tyre);
+    const [a, b, c, d] = r.rim;
+    if (rim) fill([a, b, c, b, c, d, a, d], rim);
+  };
+  for (const r of wheels) if (!r.top) wheel(r);
+  for (const p of carPrims(spec, hl, hw, false, look, undefined, axle)) fill(p.poly, p.color);
+  for (const r of wheels) if (r.top) wheel(r);
 }

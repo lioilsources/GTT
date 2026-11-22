@@ -35,7 +35,7 @@ export function carsConfig(t: TuningCars, prices: Record<string, number>): CarsC
 
 export class CarsRules implements Rules<CarsState, CarsAction, CarsResult, CarsConfig> {
   readonly id = 'cars';
-  readonly specVersion = 1;
+  readonly specVersion = 2;
   private cfg: CarsConfig | null = null;
 
   init(config: CarsConfig, _seed: number): CarsState {

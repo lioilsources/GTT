@@ -1,0 +1,27 @@
+/* Garage "Auta": cars for sale with a preview (specs/cars.md "Garáž"); colours from tokens.css only. */
+.garage-sale {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  width: 100%;
+  text-align: left;
+}
+.garage-sale-thumb {
+  width: 40px;
+  height: 56px;
+  flex: none;
+}
+.garage-sale-info {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+}
+.garage-sale-info span,
+.garage-sale-price {
+  font-size: var(--font-hud-small);
+  color: var(--color-ui-text-muted);
+}
+.garage-sale-price {
+  flex: none;
+}
