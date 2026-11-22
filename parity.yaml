@@ -153,7 +153,7 @@
 - id: F-016
   name: Traffic and two-phase traffic lights
   level: P1
-  spec: specs/traffic.md@1
+  spec: specs/traffic.md@2
   lead: web
   flutter: done
   web: done
