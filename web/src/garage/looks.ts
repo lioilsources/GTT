@@ -93,6 +93,33 @@ export function glowPoly(hl: number, hw: number, margin: number, segs = 4): Poly
   return out;
 }
 
+/**
+ * [p] clipped to the convex counter-clockwise polygon [clip] (Sutherland–Hodgman); decals stay
+ * inside a body that is not a rectangle. Fewer than three points left = nothing to draw.
+ */
+export function clipConvex(p: Poly, clip: Poly): Poly {
+  let out = p;
+  const n = clip.length / 2;
+  for (let e = 0; e < n && out.length >= 6; e++) {
+    const ax = clip[e * 2]!, ay = clip[e * 2 + 1]!;
+    const bx = clip[((e + 1) % n) * 2]!, by = clip[((e + 1) % n) * 2 + 1]!;
+    const side = (x: number, y: number): number => (bx - ax) * (y - ay) - (by - ay) * (x - ax);
+    const src = out;
+    out = [];
+    for (let i = 0; i < src.length; i += 2) {
+      const j = (i + 2) % src.length;
+      const px = src[i]!, py = src[i + 1]!, qx = src[j]!, qy = src[j + 1]!;
+      const sp = side(px, py), sq = side(qx, qy);
+      if (sp >= 0) out.push(px, py);
+      if ((sp >= 0) !== (sq >= 0)) {
+        const k = sp / (sp - sq);
+        out.push(px + (qx - px) * k, py + (qy - py) * k);
+      }
+    }
+  }
+  return out.length >= 6 ? out : [];
+}
+
 /** The polygon counter-clockwise (positive signed area). */
 function ccw(p: Poly): Poly {
   let a = 0;

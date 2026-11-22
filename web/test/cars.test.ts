@@ -7,7 +7,9 @@ import { beforeAll, describe, expect, it } from 'vitest';
 import { CarFleet } from '../src/cars/fleet';
 import { boardCandidate, generateParked, parkedPool } from '../src/cars/parked';
 import { carsConfig, CarsRules, type CarsState } from '../src/cars/rules';
-import { carShape, paintHex } from '../src/cars/shape';
+import { carPrims } from '../src/cars/carTris';
+import { carShape, paintHex, shapeKind, wheelLayout } from '../src/cars/shape';
+import { saleOrder } from '../src/cars/ui';
 import { DriveWorld } from '../src/drive/driveWorld';
 import { carIdValues, cityIdValues } from '../src/gen/ids';
 import type { CarSpec } from '../src/gen/schema';
@@ -44,7 +46,8 @@ describe('car content (specs/cars.md)', () => {
     for (const s of specs.values()) {
       const parts = carShape(s.class, 5, 2, s.length_m);
       expect(paintHex(s.paint)).toBe(tokens.colorCarPaint[s.paint]);
-      for (const r of parts.filter((p) => p.part !== 'shadow')) {
+      // The offroad spare wheel hangs off the tailgate (specs/cars.md).
+      for (const r of parts.filter((p) => p.part !== 'shadow' && p.color !== tokens.colorCarDetailSpare)) {
         expect(Math.min(r.x0, r.x1)).toBeGreaterThanOrEqual(-5);
         expect(Math.max(r.x0, r.x1)).toBeLessThanOrEqual(5);
         expect(Math.max(Math.abs(r.y0), Math.abs(r.y1))).toBeLessThanOrEqual(2);
@@ -53,6 +56,82 @@ describe('car content (specs/cars.md)', () => {
     expect(carShape('taxi', 5, 2).some((r) => r.color === tokens.colorCarDetailTaxiSign)).toBe(true);
     expect(carShape('pickup', 5, 2).some((r) => r.color === tokens.colorCarDetailBed)).toBe(true);
     expect(carShape('hatchback', 5, 2).some((r) => r.part === 'stripe')).toBe(false);
+  });
+
+  it('v2: every class and special variant has its own shape with its detail tokens (F-045)', () => {
+    const variants: Array<[string, number]> = [
+      ['mini', 3], ['hatchback', 4], ['sedan', 4.5], ['kombi', 4.9], ['coupe', 4.5], ['muscle', 5], ['supersport', 4.5],
+      ['veteran', 5], ['offroad', 4.8], ['pickup', 5.4], ['van', 6], ['taxi', 5], ['limo', 8], ['bus', 12],
+      ['micro', 1.2], ['micro', 1.8], ['special', 7], ['special', 3.2], ['special', 2.6]];
+    const key = (cls: string, len: number): string =>
+      JSON.stringify(carShape(cls, 5, 2, len, 3).map((r) => [r.part, r.color ?? '', r.x0, r.y0, r.x1, r.y1, r.poly ?? []]));
+    const keys = variants.map(([c, l]) => key(c, l));
+    expect(new Set(keys).size).toBe(variants.length);
+    expect(shapeKind('special', 7)).toBe('foodtruck');
+    expect(shapeKind('special', 5)).toBe('foodtruck');
+    expect(shapeKind('special', 3.2)).toBe('trike');
+    expect(shapeKind('special', 2.8)).toBe('trike');
+    expect(shapeKind('special', 2.6)).toBe('rickshaw');
+    const has = (cls: string, color: string, len = 0): boolean => carShape(cls, 5, 2, len, 3).some((r) => r.color === color);
+    expect(has('kombi', tokens.colorCarDetailRoofRail)).toBe(true);
+    expect(has('supersport', tokens.colorCarDetailSpoiler)).toBe(true);
+    expect(has('veteran', tokens.colorCarDetailFender)).toBe(true);
+    expect(has('offroad', tokens.colorCarDetailSpare)).toBe(true);
+    expect(has('van', tokens.colorCarDetailCargoRoof)).toBe(true);
+    expect(has('limo', tokens.colorCarDetailLimoPillar)).toBe(true);
+    expect(has('bus', tokens.colorCarDetailBusRoofUnit)).toBe(true);
+    expect(has('special', tokens.colorCarDetailAwningA, 7) && has('special', tokens.colorCarDetailAwningB, 7)).toBe(true);
+    expect(has('special', tokens.colorCarDetailCanopy, 2.6)).toBe(true);
+    // Veteran: narrow body, four fenders on the outer side over the wheels.
+    const vet = carShape('veteran', 5, 2, 5, 3);
+    expect(vet.find((r) => r.part === 'body')).toMatchObject({ y0: -1.6, y1: 1.6 });
+    const fenders = vet.filter((r) => r.color === tokens.colorCarDetailFender);
+    expect(fenders.map((r) => (r.x0 + r.x1) / 2).sort()).toEqual([-3, -3, 3, 3]);
+    // Bus: no cabin; trike: narrowed nose polygon.
+    expect(carShape('bus', 5, 2, 12).some((r) => r.part === 'cabin' && r.x0 < 4)).toBe(false);
+    const trikeBody = carShape('special', 5, 2, 3.2).find((r) => r.part === 'body')!;
+    expect(trikeBody.poly).toBeDefined();
+  });
+
+  it('v2: wheels by class (bus axles, one front wheel on trike and rickshaw)', () => {
+    expect(wheelLayout('coupe', 5, 2, 3).map((w) => w.x)).toEqual([3, 3, -3, -3]);
+    expect(wheelLayout('bus', 10, 2, 6).map((w) => w.x)).toEqual([6, 6, -7, -7]);
+    for (const len of [3.2, 2.6]) {
+      const w = wheelLayout('special', 5, 2, 3, len);
+      expect(w).toHaveLength(3);
+      expect(w.filter((x) => x.front)).toEqual([{ x: 3.75, y: 0, front: true, top: true }]);
+    }
+    expect(wheelLayout('special', 5, 2, 3, 7)).toHaveLength(4);
+    expect(wheelLayout('micro', 1, 0.3, 0.6)).toEqual([]);
+  });
+
+  it('v2: decals stay inside a non-rectangular body (trike)', () => {
+    const s = specs.get('spec_trike')!;
+    const hl = (s.length_m * tuning.carScale) / 2, hw = (s.width_m * tuning.carScale) / 2;
+    for (const decal of [1, 2, 3]) {
+      const prims = carPrims(s, hl, hw, false, { decal }, undefined, hl * tuning.drive.axleOffset);
+      const decals = prims.filter((p) => p.part === 'decal');
+      expect(decals.length, `decal ${decal}`).toBeGreaterThan(0);
+      for (const p of decals) {
+        for (let i = 0; i < p.poly.length; i += 2) {
+          const x = p.poly[i]!, y = Math.abs(p.poly[i + 1]!);
+          // Inside the taper from (0.3 hl, hw) to (hl, 0.45 hw).
+          const lim = x <= hl * 0.3 ? hw : hw - ((x - hl * 0.3) / (hl * 0.7)) * hw * 0.55;
+          expect(y).toBeLessThanOrEqual(lim + 1e-9);
+        }
+      }
+    }
+  });
+
+  it('v2: sale list sorted by city, class, price and id', () => {
+    const order = saleOrder(specs.values(), ['m0_coupe'], 'prague').map((s) => s.id);
+    expect(order).not.toContain('m0_coupe');
+    const pragueCount = [...specs.values()].filter((s) => s.tags.includes('prague') && s.id !== 'm0_coupe').length;
+    expect(order.slice(0, pragueCount).every((id) => specs.get(id)!.tags.includes('prague'))).toBe(true);
+    const nyc = saleOrder(specs.values(), [], 'nyc');
+    expect(nyc[0]!.class).toBe('mini');
+    expect(nyc.slice(0, 3).map((s) => s.id)).toEqual(['mini_pebble', 'mini_dot', 'mini_bolt']);
+    expect(nyc.at(-1)!.tags.includes('nyc')).toBe(false);
   });
 
   it('every part of every class is a proper rectangle (x0 < x1, y0 < y1)', () => {

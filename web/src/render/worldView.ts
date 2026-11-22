@@ -31,7 +31,8 @@ import {
   DEPTH_LAYER, DYNAMIC_LAYERS, RISOGRAPH_FRAGMENT, RISOGRAPH_UNIFORMS, WORLD_LAYER, cityFlag, mainCameraMask, risographOn, risographUniforms,
 } from './risograph';
 import { facadeTexture } from './textures';
-import { CAR_PART_DZ, carGlowTris, carShadowTris, carTris, carUndersideTris, parkedTris } from '../cars/carTris';
+import { CAR_PART_DZ, carGlowTris, carShadowTris, carTris, carUndersideTris, parkedTris, wheelRects } from '../cars/carTris';
+import { carShape } from '../cars/shape';
 import type { ParkedCar } from '../cars/parked';
 import { glowStrength, lookRim } from '../garage/looks';
 import type { Look } from '../garage/rules';
@@ -530,8 +531,10 @@ export class WorldView {
 
     const lights = (c: string): Mesh => {
       const t = new Tris();
-      t.rect(0, 0, 0, -hl, hw * 0.5, -hl * 0.92, hw * 0.85, top + 0.01, rgba(c));
-      t.rect(0, 0, 0, -hl, -hw * 0.85, -hl * 0.92, -hw * 0.5, top + 0.01, rgba(c));
+      // Over the tail lights of the class shape (specs/cars.md: veterans have a narrower body).
+      for (const r of carShape(car.spec.class, hl, hw, car.spec.length_m, car.axleOffset)) {
+        if (r.part === 'tail') t.rect(0, 0, 0, r.x0, r.y0, r.x1, r.y1, top + 0.01, rgba(c));
+      }
       const m = this.mesh('car-lights', t, this.flatMat, false, false);
       m.parent = root;
       m.setEnabled(false);
@@ -551,19 +554,19 @@ export class WorldView {
     coneMesh.setEnabled(night && !micro);
 
     const wheels: TransformNode[] = [];
-    const ww = hl * 0.36, wt = hw * 0.32;
-    const tyre = new Tris();
-    tyre.rect(0, 0, 0, -ww / 2, -wt / 2, ww / 2, wt / 2, z + 0.01, rgba(tokens.colorCarTyre));
-    // Rim of an own car (specs/garage.md "wheels").
-    if (look) tyre.rect(0, 0, 0, -ww / 4, -wt * 0.275, ww / 4, wt * 0.275, z + 0.015, rgba(lookRim(look)));
-    for (const fx of micro ? [] : [car.axleOffset, -car.axleOffset]) {
-      for (const sy of [hw * 0.92, -hw * 0.92]) {
-        const w = new TransformNode('wheel', this.scene);
-        w.parent = root;
-        w.position.set(fx, 0, sy);
-        this.mesh('tyre', tyre, this.flatMat, false, false).parent = w;
-        if (fx > 0) wheels.push(w);
-      }
+    // Wheels by class (specs/cars.md); the single front wheel of a trike or rickshaw sits over the body.
+    for (const r of wheelRects(hl, hw, car.axleOffset, car.spec.class, car.spec.length_m)) {
+      const wz = r.top ? top + 0.02 : z + 0.01;
+      const cx = (r.x0 + r.x1) / 2, cy = (r.y0 + r.y1) / 2;
+      const tyre = new Tris();
+      tyre.rect(0, 0, 0, r.x0 - cx, r.y0 - cy, r.x1 - cx, r.y1 - cy, wz, rgba(tokens.colorCarTyre));
+      // Rim of an own car (specs/garage.md "wheels").
+      if (look) tyre.rect(0, 0, 0, r.rim[0] - cx, r.rim[1] - cy, r.rim[2] - cx, r.rim[3] - cy, wz + 0.005, rgba(lookRim(look)));
+      const w = new TransformNode('wheel', this.scene);
+      w.parent = root;
+      w.position.set(cx, 0, cy);
+      this.mesh('tyre', tyre, this.flatMat, false, false).parent = w;
+      if (r.front) wheels.push(w);
     }
     this.carParts = { wheels, brake, reverse, cone: coneMesh, root: holder, lights: !micro, lift, top: root, under, shadow: shadowNode, glow };
   }

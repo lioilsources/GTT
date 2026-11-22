@@ -2,10 +2,10 @@ import type { CarSpec } from '../gen/schema';
 import { tokens } from '../gen/tokens';
 import { Tris } from '../render/geometry';
 import { rgba, type Rgba } from '../render/palette';
-import { decalPolys, glowPoly, lookGlow, lookPaint, lookRim, type Poly } from '../garage/looks';
+import { clipConvex, decalPolys, glowPoly, lookGlow, lookPaint, lookRim, type Poly } from '../garage/looks';
 import type { Look } from '../garage/rules';
 import type { ParkedCar } from './parked';
-import { carShape, paintHex, type CarPart, type CarRect } from './shape';
+import { carShape, paintHex, wheelLayout, wheelSize, type CarPart, type CarRect } from './shape';
 
 /** Height step between car parts (painter's order of carShape). */
 export const CAR_PART_DZ = 0.01;
@@ -33,24 +33,28 @@ export interface CarPrim {
   color: Rgba;
 }
 
-const rectPoly = (r: CarRect): Poly => [r.x0, r.y0, r.x1, r.y0, r.x1, r.y1, r.x0, r.y1];
+const rectPoly = (r: CarRect): Poly => r.poly ?? [r.x0, r.y0, r.x1, r.y0, r.x1, r.y1, r.x0, r.y1];
 
 /**
  * The car's top-down shape with its look (specs/garage.md "Kreslení") in painter's order: the
  * class shape (shadow first) in the look's paint, the decal over the body and the class details
  * (muscle stripes, taxi sign stay under it), then the lights. [look] null = catalog drawing.
+ * Decals are clipped to the body outline (the trike's narrow nose). [axle] places veteran fenders.
  */
 export function carPrims(spec: CarSpec, hl: number, hw: number, night: boolean, look: Look | null = null,
-  shadowCol: Rgba = rgba(tokens.colorCarShadow)): CarPrim[] {
+  shadowCol: Rgba = rgba(tokens.colorCarShadow), axle = 0): CarPrim[] {
   const paint = rgba(look ? lookPaint(spec, look) : paintHex(spec.paint));
-  const shape = carShape(spec.class, hl, hw, spec.length_m);
+  const shape = carShape(spec.class, hl, hw, spec.length_m, axle);
   const out: CarPrim[] = [];
   const body = shape.find((r) => r.part === 'body');
   const decal = body ? (look?.decal ?? 0) : 0;
   let pending = decal !== 0;
   const addDecal = (): void => {
     pending = false;
-    for (const poly of decalPolys(decal, body!)) out.push({ part: 'decal', poly, color: rgba(tokens.colorGarageDecal) });
+    for (const p of decalPolys(decal, body!)) {
+      const poly = body!.poly ? clipConvex(p, body!.poly) : p;
+      if (poly.length >= 6) out.push({ part: 'decal', poly, color: rgba(tokens.colorGarageDecal) });
+    }
   };
   for (const r of shape) {
     if (pending && (r.part === 'head' || r.part === 'tail')) addDecal();
@@ -67,18 +71,20 @@ export interface WheelRect {
   y1: number;
   /** The rim inside the tyre (own cars, `color.garage.wheels`). */
   rim: [number, number, number, number];
+  /** Steering wheel. */
+  front: boolean;
+  /** Drawn over the body (the single front wheel of a trike or rickshaw). */
+  top: boolean;
 }
 
-/** Side wheels of a non-micro car (local rectangles), each with its rim. */
-export function wheelRects(hl: number, hw: number, axle: number): WheelRect[] {
-  const ww = hl * 0.36, wt = hw * 0.32, rw = ww * 0.5, rt = wt * 0.55;
-  const out: WheelRect[] = [];
-  for (const fx of [axle, -axle]) {
-    for (const sy of [hw * 0.92, -hw * 0.92]) {
-      out.push({ x0: fx - ww / 2, y0: sy - wt / 2, x1: fx + ww / 2, y1: sy + wt / 2, rim: [fx - rw / 2, sy - rt / 2, fx + rw / 2, sy + rt / 2] });
-    }
-  }
-  return out;
+/** Wheels of a non-micro car by class (local rectangles, specs/cars.md), each with its rim. */
+export function wheelRects(hl: number, hw: number, axle: number, cls = 'coupe', lengthM = 0): WheelRect[] {
+  const [ww, wt] = wheelSize(hl, hw), rw = ww * 0.5, rt = wt * 0.55;
+  return wheelLayout(cls, hl, hw, axle, lengthM).map((w) => ({
+    x0: w.x - ww / 2, y0: w.y - wt / 2, x1: w.x + ww / 2, y1: w.y + wt / 2,
+    rim: [w.x - rw / 2, w.y - rt / 2, w.x + rw / 2, w.y + rt / 2],
+    front: w.front, top: w.top,
+  }));
 }
 
 /** Adds a convex counter-clockwise polygon in a local frame at (ox, oy) rotated by ang. */
@@ -102,18 +108,24 @@ export function carTris(
   shadowCol: Rgba = rgba(tokens.colorCarShadow), look: Look | null = null,
 ): number {
   let z = h;
-  if (tyres && spec.class !== 'micro') {
-    const c = rgba(tokens.colorCarTyre), rim = look ? rgba(lookRim(look)) : null;
-    for (const w of wheelRects(hl, hw, axle)) {
-      t.rect(ox, oy, ang, w.x0, w.y0, w.x1, w.y1, h + CAR_PART_DZ, c);
-      if (rim) t.rect(ox, oy, ang, w.rim[0], w.rim[1], w.rim[2], w.rim[3], h + CAR_PART_DZ * 1.5, rim);
-    }
-  }
-  carPrims(spec, hl, hw, night, look, shadowCol).forEach((p, i) => {
+  const wheels = tyres ? wheelRects(hl, hw, axle, spec.class, spec.length_m) : [];
+  const tyre = rgba(tokens.colorCarTyre), rim = look ? rgba(lookRim(look)) : null;
+  const wheel = (w: WheelRect, at: number): void => {
+    t.rect(ox, oy, ang, w.x0, w.y0, w.x1, w.y1, at, tyre);
+    if (rim) t.rect(ox, oy, ang, w.rim[0], w.rim[1], w.rim[2], w.rim[3], at + CAR_PART_DZ * 0.5, rim);
+  };
+  for (const w of wheels) if (!w.top) wheel(w, h + CAR_PART_DZ);
+  carPrims(spec, hl, hw, night, look, shadowCol, axle).forEach((p, i) => {
     z = h + (p.part === 'shadow' ? 0 : (i + 2) * CAR_PART_DZ);
     if (p.part === 'shadow' && !shadow) return;
     polyTris(t, ox, oy, ang, p.poly, z, p.color);
   });
+  for (const w of wheels) {
+    if (!w.top) continue;
+    z += CAR_PART_DZ;
+    wheel(w, z);
+    z += CAR_PART_DZ * 0.5;
+  }
   return z - h;
 }
 
