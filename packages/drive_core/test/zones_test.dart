@@ -113,7 +113,7 @@ void main() {
       for (var i = 0; i < seconds * d.stepHz; i++) {
         car.drive(input, 1 / d.stepHz, cruise: tuning.speedMps.cruise, top: tuning.speedMps.topDefault);
         w.step(1 / d.stepHz, subStepCount: d.substeps);
-        car.setInsideZone(zones.contains(car.x, car.y));
+        car.setInsideZone(zones.insideFor(car.x, car.y, car.boundingRadius, wasInside: car.zoneBits == 0));
       }
       final x = car.x;
       w.destroy();
@@ -133,12 +133,12 @@ void main() {
       final zones = Zones(w, tuning)..add(barrierChunk());
       // Parked inside the zone, facing west, out through the bollard line.
       final car = Car(w, specOf('coupe'), d, x: 14, y: 0, heading: math.pi, scale: tuning.carScale);
-      car.setInsideZone(zones.contains(car.x, car.y));
+      car.setInsideZone(zones.insideFor(car.x, car.y, car.boundingRadius, wasInside: car.zoneBits == 0));
       expect(car.zoneBits, 0);
       for (var i = 0; i < 4 * d.stepHz; i++) {
         car.drive(ControlInput(), 1 / d.stepHz, cruise: tuning.speedMps.cruise, top: tuning.speedMps.topDefault);
         w.step(1 / d.stepHz, subStepCount: d.substeps);
-        car.setInsideZone(zones.contains(car.x, car.y));
+        car.setInsideZone(zones.insideFor(car.x, car.y, car.boundingRadius, wasInside: car.zoneBits == 0));
       }
       expect(car.x, lessThan(6));
       expect(car.zoneBits, catZone, reason: 'outside again, bollards are back in the mask');

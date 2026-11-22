@@ -106,6 +106,9 @@ class Car {
 
   int get maskBits => _mask(layer, zoneBits);
 
+  /// Radius of the circle around the centre that covers the whole body.
+  double get boundingRadius => math.sqrt(halfLength * halfLength + halfWidth * halfWidth) + t.bodyRoundM;
+
   void setLayer(int l) {
     if (l == layer) return;
     layer = l;

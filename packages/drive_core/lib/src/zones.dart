@@ -55,10 +55,11 @@ Float32List bollardsAlong(Float32List line, double spacing) {
 }
 
 class _ZoneChunk {
-  _ZoneChunk(this.body, this.meshes, this.bollards);
+  _ZoneChunk(this.body, this.meshes, this.bollards, this.barriers);
   final Body? body;
   final List<GroundData> meshes;
   final Float32List bollards;
+  final List<Float32List> barriers;
   double minX = double.infinity, minY = double.infinity, maxX = -double.infinity, maxY = -double.infinity;
 }
 
@@ -105,7 +106,7 @@ class Zones {
         bollards.addAll(bollardsAlong(line, tuning.zones.bollardSpacingM));
       }
     }
-    final z = _ZoneChunk(body, meshes, Float32List.fromList(bollards));
+    final z = _ZoneChunk(body, meshes, Float32List.fromList(bollards), c.barriers);
     for (final m in meshes) {
       for (var i = 0; i + 1 < m.xy.length; i += 2) {
         z
@@ -129,6 +130,33 @@ class Zones {
       }
     }
     return false;
+  }
+
+  /// Whether a loaded bollard line passes within [radius] of (x, y).
+  bool nearBarrier(double x, double y, double radius) {
+    final r2 = radius * radius;
+    for (final z in _chunks.values) {
+      for (final line in z.barriers) {
+        for (var i = 0; i + 3 < line.length; i += 2) {
+          if (_segDist2(x, y, line[i], line[i + 1], line[i + 2], line[i + 3]) < r2) return true;
+        }
+      }
+    }
+    return false;
+  }
+
+  /// The inside-zone flag for [zoneMask] (specs/zones.md). Once the bollards are off the mask
+  /// ([wasInside]), they stay off until the car of bounding [radius] has fully cleared the bollard
+  /// line too: re-enabling them while the body still overlaps a barrier would trap it there.
+  bool insideFor(double x, double y, double radius, {required bool wasInside}) =>
+      contains(x, y) || (wasInside && nearBarrier(x, y, radius));
+
+  static double _segDist2(double px, double py, double ax, double ay, double bx, double by) {
+    final dx = bx - ax, dy = by - ay;
+    final l2 = dx * dx + dy * dy;
+    final t = l2 == 0 ? 0.0 : (((px - ax) * dx + (py - ay) * dy) / l2).clamp(0.0, 1.0);
+    final ex = ax + dx * t - px, ey = ay + dy * t - py;
+    return ex * ex + ey * ey;
   }
 
   /// Bollard centres (interleaved x, y) of each loaded chunk that has any.

@@ -196,7 +196,8 @@ class DriveWorld {
 
   /// Drops the bollards from the player's mask while its centre is inside a zone (specs/zones.md).
   /// The zone bit only matters on layer 0 (Car.maskBits), so other layers skip the test.
-  void _zoneMask() => car.setInsideZone(car.layer == 0 && zones.contains(car.x, car.y));
+  void _zoneMask() => car.setInsideZone(
+      car.layer == 0 && zones.insideFor(car.x, car.y, car.boundingRadius, wasInside: car.zoneBits == 0));
 
   /// Keeps the car on bridge decks and in tunnels.
   void _rails() {
