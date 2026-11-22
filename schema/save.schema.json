@@ -2,14 +2,14 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "save.schema.json",
   "title": "Save",
-  "description": "Local save, the same JSON in both clients (specs/save.md): a JSON file in F, IndexedDB in W. Version 2; version 1 (M1 skeleton) is migrated on load.",
+  "description": "Local save, the same JSON in both clients (specs/save.md): a JSON file in F, IndexedDB in W. Version 3; versions 1 (M1 skeleton) and 2 (before metro stations) are migrated on load.",
   "$defs": {
     "Save": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["version", "cityId", "cash", "cars", "car", "stamps", "best", "plays", "feed", "npc", "settings"],
+      "required": ["version", "cityId", "cash", "cars", "car", "stamps", "best", "plays", "feed", "npc", "settings", "stations"],
       "properties": {
-        "version": {"type": "integer", "const": 2},
+        "version": {"type": "integer", "const": 3},
         "cityId": {"type": "string"},
         "cash": {"type": "integer", "minimum": 0},
         "cars": {"type": "array", "items": {"type": "string"}, "description": "Owned cars in the order acquired."},
@@ -19,7 +19,8 @@
         "plays": {"type": "object", "additionalProperties": {"type": "integer", "minimum": 0}, "description": "Finished loops per spot id."},
         "feed": {"$ref": "#/$defs/SaveFeed"},
         "npc": {"$ref": "#/$defs/SaveNpc"},
-        "settings": {"$ref": "#/$defs/SaveSettings"}
+        "settings": {"$ref": "#/$defs/SaveSettings"},
+        "stations": {"type": "array", "items": {"type": "string"}, "description": "Unlocked metro stations (spot ids) in unlock order (specs/travel.md)."}
       }
     },
     "BestResult": {

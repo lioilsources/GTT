@@ -101,6 +101,7 @@ class Tuning {
         passport = TuningPassport._(r.sub('passport')),
         npc = TuningNpc._(r.sub('npc')),
         cars = TuningCars._(r.sub('cars')),
+        travel = TuningTravel._(r.sub('travel')),
         booths = TuningBooths._(r.sub('booths')),
         police = TuningPolice._(r.sub('police')),
         economy = TuningEconomy._(r.sub('economy')),
@@ -206,6 +207,9 @@ class Tuning {
   /// Cars, switching and the garage (specs/cars.md). Distances in world metres (after car_scale).
   final TuningCars cars;
 
+  /// Fast travel by metro and taxi (specs/travel.md). Fares: base + distance (dm) × per_km ÷ 10000.
+  final TuningTravel travel;
+
   /// Ringing phone booths (specs/booths.md). P0 rules tick once per game second.
   final TuningBooths booths;
 
@@ -254,6 +258,7 @@ class Tuning {
         'passport': passport.toJson(),
         'npc': npc.toJson(),
         'cars': cars.toJson(),
+        'travel': travel.toJson(),
         'booths': booths.toJson(),
         'police': police.toJson(),
         'economy': economy.toJson(),
@@ -2701,6 +2706,53 @@ class TuningCarsParked {
         'mass_factor': massFactor,
         'linear_damping': linearDamping,
         'angular_damping': angularDamping,
+      };
+}
+
+/// Fast travel by metro and taxi (specs/travel.md). Fares: base + distance (dm) × per_km ÷ 10000.
+class TuningTravel {
+  TuningTravel._(_R r)
+      : enabled = r.b('enabled'),
+        fareBase = r.i('fare_base'),
+        farePerKm = r.i('fare_per_km'),
+        taxiBase = r.i('taxi_base'),
+        taxiPerKm = r.i('taxi_per_km'),
+        unlockM = r.d('unlock_m'),
+        cutS = r.d('cut_s'),
+        entryWM = r.d('entry_w_m'),
+        entryLM = r.d('entry_l_m');
+
+  bool enabled;
+
+  /// metro
+  int fareBase;
+
+  int farePerKm;
+
+  int taxiBase;
+
+  int taxiPerKm;
+
+  /// pass this close to a station entrance to unlock it
+  double unlockM;
+
+  /// the line card shown while moving
+  double cutS;
+
+  double entryWM;
+
+  double entryLM;
+
+  Map<String, Object> toJson() => {
+        'enabled': enabled,
+        'fare_base': fareBase,
+        'fare_per_km': farePerKm,
+        'taxi_base': taxiBase,
+        'taxi_per_km': taxiPerKm,
+        'unlock_m': unlockM,
+        'cut_s': cutS,
+        'entry_w_m': entryWM,
+        'entry_l_m': entryLM,
       };
 }
 

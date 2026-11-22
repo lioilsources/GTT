@@ -136,6 +136,8 @@ export class Tuning {
   readonly npc: TuningNpc;
   /** Cars, switching and the garage (specs/cars.md). Distances in world metres (after car_scale). */
   readonly cars: TuningCars;
+  /** Fast travel by metro and taxi (specs/travel.md). Fares: base + distance (dm) × per_km ÷ 10000. */
+  readonly travel: TuningTravel;
   /** Ringing phone booths (specs/booths.md). P0 rules tick once per game second. */
   readonly booths: TuningBooths;
   /**
@@ -185,6 +187,7 @@ export class Tuning {
     this.passport = new TuningPassport(r.sub('passport'));
     this.npc = new TuningNpc(r.sub('npc'));
     this.cars = new TuningCars(r.sub('cars'));
+    this.travel = new TuningTravel(r.sub('travel'));
     this.booths = new TuningBooths(r.sub('booths'));
     this.police = new TuningPolice(r.sub('police'));
     this.economy = new TuningEconomy(r.sub('economy'));
@@ -226,6 +229,7 @@ export class Tuning {
       passport: this.passport.toJson(),
       npc: this.npc.toJson(),
       cars: this.cars.toJson(),
+      travel: this.travel.toJson(),
       booths: this.booths.toJson(),
       police: this.police.toJson(),
       economy: this.economy.toJson(),
@@ -2516,6 +2520,48 @@ export class TuningCarsParked {
       mass_factor: this.massFactor,
       linear_damping: this.linearDamping,
       angular_damping: this.angularDamping,
+    };
+  }
+}
+
+/** Fast travel by metro and taxi (specs/travel.md). Fares: base + distance (dm) × per_km ÷ 10000. */
+export class TuningTravel {
+  enabled: boolean;
+  /** metro */
+  fareBase: number;
+  farePerKm: number;
+  taxiBase: number;
+  taxiPerKm: number;
+  /** pass this close to a station entrance to unlock it */
+  unlockM: number;
+  /** the line card shown while moving */
+  cutS: number;
+  entryWM: number;
+  entryLM: number;
+
+  constructor(r: R) {
+    this.enabled = r.b('enabled');
+    this.fareBase = r.i('fare_base');
+    this.farePerKm = r.i('fare_per_km');
+    this.taxiBase = r.i('taxi_base');
+    this.taxiPerKm = r.i('taxi_per_km');
+    this.unlockM = r.d('unlock_m');
+    this.cutS = r.d('cut_s');
+    this.entryWM = r.d('entry_w_m');
+    this.entryLM = r.d('entry_l_m');
+  }
+
+  toJson(): Record<string, unknown> {
+    return {
+      enabled: this.enabled,
+      fare_base: this.fareBase,
+      fare_per_km: this.farePerKm,
+      taxi_base: this.taxiBase,
+      taxi_per_km: this.taxiPerKm,
+      unlock_m: this.unlockM,
+      cut_s: this.cutS,
+      entry_w_m: this.entryWM,
+      entry_l_m: this.entryLM,
     };
   }
 }
