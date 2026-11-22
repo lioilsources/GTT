@@ -1,0 +1,121 @@
+# DRAFT for Ol1n's review (specs/dialogue.md). Ray right after the player beat him at čára on the pavement by his cab.
+id: ray_minigame_win_2
+character: ray
+context: minigame_win
+city: prague
+beats:
+  - npc:
+      en: "Your coin landed right on the line. Right on it. Thirty years of tossing change into tip jars, and you beat me."
+      cs: "Tvoje mince dopadla přímo na čáru. Přesně na ni. Třicet let házím drobné do kasiček na dýško a ty mě porazíš."
+    replies:
+      flirt:
+        en: "You were a worthy rival."
+        cs: "Byl jsi důstojný soupeř."
+      joke:
+        en: "It's the training with tram tickets."
+        cs: "To dělá trénink s jízdenkami."
+      dry:
+        en: "Steady hand. That's all."
+        cs: "Klidná ruka. Nic víc."
+    reactions:
+      flirt:
+        en: "Worthy. I'll take that. Nothing more."
+        cs: "Důstojný. To beru. Víc ne."
+      joke:
+        en: "Ha! Tickets fly straighter than coins? New theory!"
+        cs: "Cha! Jízdenky létají rovněji než mince? Nová teorie!"
+      dry:
+        en: "A steady hand. Mine drive all day. Now they shake."
+        cs: "Klidná ruka. Moje ruce řídí celý den. Teď se třesou."
+  - npc:
+      en: "You know what čára teaches? The line doesn't move. You do. Most people never figure that out."
+      cs: "Víš, co učí čára? Čára se nehýbe. Hýbeš se ty. Většina lidí na to nikdy nepřijde."
+    replies:
+      flirt:
+        en: "Wise words. You should be on a poster."
+        cs: "Moudrá slova. Měl bys být na plakátu."
+      joke:
+        en: "The line moved. It has tiny legs."
+        cs: "Čára se hýbala. Má malé nožičky."
+      dry:
+        en: "Aim at the line. Got it."
+        cs: "Mířit na čáru. Jasně."
+    reactions:
+      flirt:
+        en: "A poster? With this face? Only on the dispatch office wall."
+        cs: "Na plakátu? S tímhle obličejem? Leda na zdi dispečinku."
+      joke:
+        en: "Tiny legs! Then it ran to you. Traitor."
+        cs: "Nožičky! Tak to utekla k tobě. Zrádkyně."
+      dry:
+        en: "Simple. The best philosophy fits on a coin."
+        cs: "Jednoduché. Nejlepší filozofie se vejde na minci."
+  - npc:
+      en: "My coins are taxi coins. They sat in the cup holder so long they forgot how to fly."
+      cs: "Moje mince jsou taxíkové. Ležely v držáku na pití tak dlouho, že zapomněly létat."
+    replies:
+      flirt:
+        en: "Let them rest. You did great anyway."
+        cs: "Nech je odpočívat. Stejně ti to šlo skvěle."
+      joke:
+        en: "Retire them. Give them a pension."
+        cs: "Pošli je do důchodu."
+      dry:
+        en: "Use new coins next time."
+        cs: "Příště použij nové mince."
+    reactions:
+      flirt:
+        en: "Great is a strong word. Fine is enough."
+        cs: "Skvěle je silné slovo. Stačí dobře."
+      joke:
+        en: "Ha! A pension for coins! Paid in more coins?"
+        cs: "Cha! Důchod pro mince! A kdo ho platí, další mince?"
+      dry:
+        en: "New coins have no stories. But they win. Fair point."
+        cs: "Nové mince nemají historky. Zato vyhrávají. Uznávám."
+  - npc:
+      en: "Your prize: one smažák from the stand by the tram stop. Fried cheese is the trophy of this town."
+      cs: "Tvoje cena: smažák ve stánku u zastávky. Smažený sýr je trofej tohohle města."
+    replies:
+      flirt:
+        en: "Only if you eat it with me."
+        cs: "Jen když ho sníš se mnou."
+      joke:
+        en: "Does it come engraved?"
+        cs: "Bude mít gravírování?"
+      dry:
+        en: "Accepted. With tartar sauce."
+        cs: "Beru. S tatarkou."
+    reactions:
+      flirt:
+        en: "I'll have my own. My wife watches my cholesterol."
+        cs: "Já si dám vlastní. Žena mi hlídá cholesterol."
+      joke:
+        en: "Engraved in breadcrumbs. Ha!"
+        cs: "Vyrytý ve strouhance. Cha!"
+      dry:
+        en: "With tartar. A person of culture."
+        cs: "S tatarkou. Člověk s kulturou."
+  - npc:
+      en: "Rematch next week. Same line, same coins. And I'm bringing my lucky one. It's been in my pocket since the nineties."
+      cs: "Příští týden odveta. Stejná čára, stejné mince. A vezmu si tu šťastnou. Mám ji v kapse od devadesátek."
+    replies:
+      flirt:
+        en: "I'll be there. Wouldn't miss you."
+        cs: "Budu tam. Tebe si nenechám ujít."
+      joke:
+        en: "A coin from the nineties. Practically a relic."
+        cs: "Mince z devadesátek. To je skoro relikvie."
+      dry:
+        en: "Deal. Same time."
+        cs: "Platí. Ve stejnou dobu."
+    reactions:
+      flirt:
+        en: "Don't miss the line, that's what matters. See you."
+        cs: "Hlavně neminout čáru. Uvidíme se."
+      joke:
+        en: "A relic! Worth more than my cab. Bye!"
+        cs: "Relikvie! Má větší cenu než můj taxík. Měj se!"
+      dry:
+        en: "Same time. You bring the steady hand, I'll bring excuses."
+        cs: "Ve stejnou dobu. Ty přines klidnou ruku, já výmluvy."

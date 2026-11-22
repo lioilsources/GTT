@@ -36,6 +36,12 @@ dependencies:
     path: ../packages/mg_sipky
   mg_koulena:
     path: ../packages/mg_koulena
+  mg_kulicky:
+    path: ../packages/mg_kulicky
+  mg_cara:
+    path: ../packages/mg_cara
+  mg_nohejbal:
+    path: ../packages/mg_nohejbal
   mg_strelnice:
     path: ../packages/mg_strelnice
   mg_taxi:

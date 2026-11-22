@@ -1,0 +1,121 @@
+# DRAFT for Ol1n's review (specs/dialogue.md). Ray by his Prague taxi at a riverside rank, fog over the Vltava.
+id: ray_street_3
+character: ray
+context: street
+city: prague
+beats:
+  - npc:
+      en: "Look at that fog over the river. You can't see the castle. Thirty years at the wheel and the castle still plays hide and seek with me."
+      cs: "Koukni na tu mlhu nad řekou. Hrad není vidět. Třicet let za volantem a hrad si se mnou pořád hraje na schovávanou."
+    replies:
+      flirt:
+        en: "I'd rather look at you than at the castle."
+        cs: "Radši se dívám na tebe než na hrad."
+      joke:
+        en: "Maybe the castle went out for a coffee."
+        cs: "Možná si hrad odskočil na kafe."
+      dry:
+        en: "It'll lift by noon."
+        cs: "Do poledne se zvedne."
+    reactions:
+      flirt:
+        en: "Look at the road, friend. The castle's prettier and I'm married."
+        cs: "Koukej radši na silnici. Hrad je hezčí a já jsem ženatý."
+      joke:
+        en: "Ha! A thousand years up there, he's earned a coffee."
+        cs: "Cha! Tisíc let tam nahoře, na kafe má nárok."
+      dry:
+        en: "By noon. You sound like the weather forecast."
+        cs: "Do poledne. Mluvíš jako předpověď počasí."
+  - npc:
+      en: "New city, new theory. Prague streets aren't a grid. They're a conversation. They change their mind halfway."
+      cs: "Nové město, nová teorie. Pražské ulice nejsou mřížka. Jsou to rozhovory. V polovině si to rozmyslí."
+    replies:
+      flirt:
+        en: "You can lead the conversation."
+        cs: "Rozhovor klidně povedeš ty."
+      joke:
+        en: "And the one-way streets are arguments."
+        cs: "A jednosměrky jsou hádky."
+      dry:
+        en: "So use the navigation."
+        cs: "Tak používej navigaci."
+    reactions:
+      flirt:
+        en: "I lead, you listen. That's a taxi, not a date."
+        cs: "Já vedu, ty posloucháš. To je taxík, ne rande."
+      joke:
+        en: "Ha! And Malá Strana is a family dinner. Nobody gets out."
+        cs: "Cha! A Malá Strana je rodinná večeře. Nikdo se odtamtud nedostane."
+      dry:
+        en: "Navigation sent me up a staircase once. Thanks, though."
+        cs: "Navigace mě jednou poslala na schody. Ale díky."
+  - npc:
+      en: "And the trams. They don't honk, they ring. A polite bell saying 'move, please, or I'll flatten you.'"
+      cs: "A tramvaje. Netroubí, zvoní. Jako zdvořilý zvonek: „uhněte, prosím, nebo vás přejedu.“"
+    replies:
+      flirt:
+        en: "You'd make a charming tram."
+        cs: "Z tebe by byla okouzlující tramvaj."
+      joke:
+        en: "Polite and threatening. Like a grandmother."
+        cs: "Zdvořilé a výhrůžné. Jako babička."
+      dry:
+        en: "The tram always wins. Give way."
+        cs: "Tramvaj vyhraje vždycky. Dej přednost."
+    reactions:
+      flirt:
+        en: "Charming? I'm forty tonnes of opinions. Thanks, I guess."
+        cs: "Okouzlující? Jsem čtyřicet tun názorů. Asi díky."
+      joke:
+        en: "Ha! Exactly like my mother-in-law. Ring, ring."
+        cs: "Cha! Přesně jako moje tchyně. Cink, cink."
+      dry:
+        en: "Rule number one in this town. You've got a head for taxis."
+        cs: "Pravidlo číslo jedna v tomhle městě. Máš na taxík buňky."
+  - npc:
+      en: "Best fare today? A man with a cello. The cello paid. The man was just its plus-one."
+      cs: "Nejlepší jízda dneška? Pán s violoncellem. Platilo violoncello. Pán byl jen jeho doprovod."
+    replies:
+      flirt:
+        en: "Your passengers must love you."
+        cs: "Tvoji pasažéři tě musí milovat."
+      joke:
+        en: "Did the cello tip?"
+        cs: "Dalo violoncello dýško?"
+      dry:
+        en: "Did it ride in the back seat?"
+        cs: "Jelo na zadním sedadle?"
+    reactions:
+      flirt:
+        en: "They love getting out. That's the job."
+        cs: "Milují vystupování. To je ta práce."
+      joke:
+        en: "In rosin. Ha! No, a fifty. Good cello."
+        cs: "Kalafunou. Cha! Ne, padesátkou. Hodné violoncello."
+      dry:
+        en: "Seatbelt and everything. Safest passenger all week."
+        cs: "S pásem a vším. Nejbezpečnější pasažér celého týdne."
+  - npc:
+      en: "Fog's lifting a bit. There's the castle. Told you, he's just shy. Drive carefully on those cobbles, eh?"
+      cs: "Mlha se trochu zvedá. Tamhle je hrad. Říkal jsem, že se jen stydí. Po těch kostkách jezdi opatrně, jo?"
+    replies:
+      flirt:
+        en: "Only if you wave when I pass."
+        cs: "Jen když zamáváš, až pojedu kolem."
+      joke:
+        en: "Say hi to the castle for me."
+        cs: "Pozdravuj ode mě hrad."
+      dry:
+        en: "Will do. Thanks, Ray."
+        cs: "Budu. Díky, Rayi."
+    reactions:
+      flirt:
+        en: "I'll flash my lights. As a friend. Go on."
+        cs: "Bliknu světly. Kamarádsky. Jeď."
+      joke:
+        en: "He'll hide again. Shy fellow. Take care!"
+        cs: "Zase se schová. Stydlín jeden. Měj se!"
+      dry:
+        en: "Good. Short and sure. Off you go."
+        cs: "Dobře. Krátce a jistě. Jeď."

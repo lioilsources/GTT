@@ -1,0 +1,121 @@
+# DRAFT for Ol1n's review (specs/dialogue.md). Iris right after she beat the player at kuličky.
+id: iris_minigame_lose_2
+character: iris
+context: minigame_lose
+city: prague
+beats:
+  - npc:
+      en: "I won? I won at kuličky! I only knew the rules from a book. Apparently that counts."
+      cs: "Vyhrála jsem? Vyhrála jsem v kuličkách! Pravidla jsem znala jen z knížky. Asi se to počítá."
+    replies:
+      flirt:
+        en: "You're full of surprises. I like that."
+        cs: "Jsi plná překvapení. To se mi líbí."
+      joke:
+        en: "Next you'll win at nohejbal from a manual."
+        cs: "Příště vyhraješ nohejbal podle příručky."
+      dry:
+        en: "Theory works. Well played."
+        cs: "Teorie funguje. Dobře zahráno."
+    reactions:
+      flirt:
+        en: "Surprises are my favourite plot device. Thank you."
+        cs: "Překvapení jsou můj oblíbený vypravěčský trik. Děkuju."
+      joke:
+        en: "Nohejbal manuals are very thin. Mostly pictures of feet."
+        cs: "Příručky na nohejbal jsou hodně tenké. Hlavně obrázky nohou."
+      dry:
+        en: "Thank you. You played well too. Mostly."
+        cs: "Děkuju. I tobě to šlo. Většinou."
+  - npc:
+      en: "Your last marble stopped right at the edge of the hole. It just sat there, thinking. Like a character before a big decision."
+      cs: "Tvoje poslední kulička se zastavila přesně na kraji důlku. Jen tam ležela a přemýšlela. Jako postava před velkým rozhodnutím."
+    replies:
+      flirt:
+        en: "It was waiting for you to notice it."
+        cs: "Čekala, až si jí všimneš."
+      joke:
+        en: "It chose not to go in. Character development."
+        cs: "Rozhodla se nespadnout. Vývoj postavy."
+      dry:
+        en: "It needed one more centimetre."
+        cs: "Chyběl jí centimetr."
+    reactions:
+      flirt:
+        en: "I noticed. I notice a lot of things, actually."
+        cs: "Všimla jsem si. Já si všímám spousty věcí."
+      joke:
+        en: "Character development. Hm. Fair."
+        cs: "Vývoj postavy. Hm. Budiž."
+      dry:
+        en: "One centimetre. That's the whole difference between endings."
+        cs: "Centimetr. To je celý rozdíl mezi konci."
+  - npc:
+      en: "My hands are covered in park dust. I'll leave fingerprints on every page tonight. Evidence of my glory."
+      cs: "Mám ruce od prachu z parku. Dnes večer nechám otisky na každé stránce. Důkazy mé slávy."
+    replies:
+      flirt:
+        en: "Your fingerprints would make any book better."
+        cs: "S tvými otisky bude každá kniha lepší."
+      joke:
+        en: "The library will press charges."
+        cs: "Knihovna podá trestní oznámení."
+      dry:
+        en: "Wash your hands first."
+        cs: "Napřed si umyj ruce."
+    reactions:
+      flirt:
+        en: "Any book? Even the bad ones? Generous."
+        cs: "Každá? I ty špatné? Velkorysé."
+      joke:
+        en: "They'll fine me. As usual."
+        cs: "Dostanu pokutu. Jako obvykle."
+      dry:
+        en: "Yes. Practical. You're right."
+        cs: "Ano. Prakticky. Máš pravdu."
+  - npc:
+      en: "There's a tram stop right by the park, and every time a tram rang, it threw you off. I counted. Seven times."
+      cs: "U parku je zastávka a pokaždé, když tramvaj zazvonila, tě to vyrušilo. Počítala jsem. Sedmkrát."
+    replies:
+      flirt:
+        en: "No. Those were looks at you. Seven times."
+        cs: "Ne. To byly pohledy na tebe. Sedmkrát."
+      joke:
+        en: "The tram was on your side."
+        cs: "Tramvaj byla na tvé straně."
+      dry:
+        en: "No excuses. You won fairly."
+        cs: "Žádné výmluvy. Vyhrála jsi poctivě."
+    reactions:
+      flirt:
+        en: "Seven. Oh. Then I counted wrong. Or right."
+        cs: "Sedmkrát. Aha. Tak jsem to spočítala špatně. Nebo dobře."
+      joke:
+        en: "Trams have a sense of drama. Yes."
+        cs: "Tramvaje mají smysl pro drama. Ano."
+      dry:
+        en: "Thank you. That's very decent."
+        cs: "Děkuju. To je moc slušné."
+  - npc:
+      en: "I'm writing a tiny note in my book: 'Won at kuličky. The loss was taken gracefully.' Is that okay?"
+      cs: "Napíšu si do knížky malou poznámku: „Vyhrála jsem v kuličkách. Prohra se nesla s grácií.“ Smím?"
+    replies:
+      flirt:
+        en: "Add 'and got invited for tea'."
+        cs: "Připiš: „a dostala jsem pozvání na čaj“."
+      joke:
+        en: "Write 'rematch pending'. Underlined."
+        cs: "Napiš „odveta se chystá“. Podtrženě."
+      dry:
+        en: "Fine. Spell it right."
+        cs: "Dobře. Bez chyb."
+    reactions:
+      flirt:
+        en: "I'll write it in pencil. In case it turns into ink."
+        cs: "Napíšu to tužkou. Kdyby se z toho stal inkoust."
+      joke:
+        en: "Underlined. Fine. Get your thumb in shape."
+        cs: "Podtrženo. Dobře. Dej palec do formy."
+      dry:
+        en: "I always spell it right. That's a promise."
+        cs: "Píšu vždycky bez chyb. To slibuju."
