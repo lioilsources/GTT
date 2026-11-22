@@ -42,6 +42,17 @@ class WorldRenderer {
   final Tuning tuning;
   final FacadeTextures textures;
   Palette palette = Palette.day;
+
+  /// Screen-space filter over the static world only (specs/style.md "Risograf"), null = none.
+  ///
+  /// Vehicles of layer 0 are drawn between the ground and the buildings, so the world is split in
+  /// two offscreen layers that each get the filter: (a) paper, ground, roads; (b) buildings and
+  /// bridges. Cars, peds, props and trams (drawDynamic) go between and after them unfiltered.
+  /// The layers are opened in screen space (camera transform popped) so the filter's pixel
+  /// coordinates are the device's, not world metres. The tunnel layer is left unfiltered.
+  ui.ImageFilter? worldFilter;
+  ui.ImageFilter? _layerFilter;
+  ui.Paint? _layerPaint;
   final stats = RenderStats();
   final _batcher = BuildingBatcher();
   final _sw = Stopwatch();
@@ -66,9 +77,27 @@ class WorldRenderer {
     required void Function(ui.Canvas canvas, int layer) drawDynamic,
   }) {
     final pal = palette;
-    canvas.drawRect(ui.Offset.zero & size, _paint..color = pal.land);
+    final filter = worldFilter;
+    final screen = ui.Offset.zero & size;
+    if (!identical(filter, _layerFilter)) {
+      _layerFilter = filter;
+      _layerPaint = filter == null ? null : (ui.Paint()..imageFilter = filter);
+    }
+    final layerPaint = _layerPaint;
+    if (layerPaint != null) canvas.saveLayer(screen, layerPaint);
+    canvas.drawRect(screen, _paint..color = pal.land);
     canvas.save();
     cam.apply(canvas, size, tuning);
+    // Closes the current filtered layer and/or opens a new one, keeping the camera transform.
+    void layer({required bool close, required bool open}) {
+      if (layerPaint == null) return;
+      canvas.restore(); // camera
+      if (close) canvas.restore(); // filtered layer
+      if (open) canvas.saveLayer(screen, layerPaint);
+      canvas.save();
+      cam.apply(canvas, size, tuning);
+    }
+
     final r = cam.visibleRadius(size, tuning);
     final vx = cam.x, vy = cam.y;
     final cm = city.chunkM;
@@ -99,6 +128,7 @@ class WorldRenderer {
     // 2. roads, markings, alleys
     _roadPasses(canvas, roadKeys, groundPasses);
     _roadblocks(canvas, vx, vy, r);
+    layer(close: true, open: false);
     // 4. props and vehicles on the ground
     drawDynamic(canvas, 0);
     // 3. tunnel layer, only while the player is inside (the ceiling is hidden)
@@ -109,6 +139,7 @@ class WorldRenderer {
       drawDynamic(canvas, -1);
     }
     // 5. buildings, far to near from the vanishing point
+    layer(close: false, open: true);
     _sw
       ..reset()
       ..start();
@@ -139,6 +170,7 @@ class WorldRenderer {
       ..buildingPrepMicros = _sw.elapsedMicroseconds;
     // 6. bridges and overpasses, then whatever drives on them
     _roadPasses(canvas, roadKeys, bridgePasses);
+    layer(close: true, open: false);
     drawDynamic(canvas, 1);
     canvas.restore();
   }
@@ -172,7 +204,9 @@ class WorldRenderer {
         final hw = e.width / 2;
         const stripes = 8;
         for (var i = 0; i < stripes; i++) {
-          _paint.color = i.isEven ? const ui.Color(Tokens.colorWorldRoadblockA) : const ui.Color(Tokens.colorWorldRoadblockB);
+          _paint.color = i.isEven
+              ? const ui.Color(Tokens.colorWorldRoadblockA)
+              : const ui.Color(Tokens.colorWorldRoadblockB);
           canvas.drawRect(ui.Rect.fromLTWH(1, -hw + i * 2 * hw / stripes, 2.5, 2 * hw / stripes), _paint);
         }
         canvas.restore();

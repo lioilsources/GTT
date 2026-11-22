@@ -20,7 +20,14 @@ CarLift carLift(double x, double y, double vpX, double vpY, double heightM, doub
 
 /// Top-down car drawn in world space (canvas transformed to metres, y north). With [lift] the car
 /// is in the air: no shadow here ([paintHopShadow] draws it on the ground), lifted and rolled.
-void paintCar(Canvas canvas, Car car, {required bool night, CarLift? lift}) {
+/// [shadow] is the city's ground shadow by day (specs/style.md).
+void paintCar(
+  Canvas canvas,
+  Car car, {
+  required bool night,
+  CarLift? lift,
+  Color shadow = const Color(Tokens.colorCarShadow),
+}) {
   _paintShape(
     canvas,
     car.spec,
@@ -37,12 +44,13 @@ void paintCar(Canvas canvas, Car car, {required bool night, CarLift? lift}) {
         ? (car.reversing ? const Color(Tokens.colorCarReverse) : const Color(Tokens.colorCarBrake))
         : null,
     lift: lift,
+    shadow: shadow,
   );
 }
 
 /// The shadow of a car in a hop: stays on the ground under the car and shrinks with the height
 /// (inverse of the lift scale).
-void paintHopShadow(Canvas canvas, Car car, CarLift lift) {
+void paintHopShadow(Canvas canvas, Car car, CarLift lift, {Color shadow = const Color(Tokens.colorCarShadow)}) {
   final hl = car.halfLength, hw = car.halfWidth;
   final r = carShape(car.spec.class_, hl, hw, lengthM: car.spec.lengthM).first;
   final k = 1 / lift.scale;
@@ -52,13 +60,19 @@ void paintHopShadow(Canvas canvas, Car car, CarLift lift) {
   canvas.scale(k, k);
   canvas.drawRRect(
     RRect.fromRectAndRadius(Rect.fromLTRB(r.x0, r.y0, r.x1, r.y1), Radius.circular(hw * 0.5)),
-    Paint()..color = const Color(Tokens.colorCarShadow),
+    Paint()..color = shadow,
   );
   canvas.restore();
 }
 
 /// Parked cars (specs/cars.md): same shape, straight wheels, lights off.
-void paintParked(Canvas canvas, Iterable<ParkedCar> cars, Map<String, CarSpec> specs, Tuning t) {
+void paintParked(
+  Canvas canvas,
+  Iterable<ParkedCar> cars,
+  Map<String, CarSpec> specs,
+  Tuning t, {
+  Color shadow = const Color(Tokens.colorCarShadow),
+}) {
   for (final p in cars) {
     final s = specs[p.carId];
     if (s == null) continue;
@@ -75,6 +89,7 @@ void paintParked(Canvas canvas, Iterable<ParkedCar> cars, Map<String, CarSpec> s
       wheelAngle: 0,
       night: false,
       cone: false,
+      shadow: shadow,
     );
   }
 }
@@ -93,6 +108,7 @@ void _paintShape(
   required bool cone,
   Color? rear,
   CarLift? lift,
+  Color shadow = const Color(Tokens.colorCarShadow),
 }) {
   final p = Paint();
   final paint = Color(paintArgb(spec));
@@ -114,7 +130,7 @@ void _paintShape(
     }
   } else {
     // Shadow first, then the headlight cone and the wheels under the body.
-    p.color = const Color(Tokens.colorCarShadow);
+    p.color = shadow;
     canvas.drawRRect(rr(shape.first, hw * 0.5), p);
   }
   if (cone && !micro) {

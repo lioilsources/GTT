@@ -66,6 +66,9 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   generate: true
+  # City skins (specs/style.md): risograph pass over the world layer.
+  shaders:
+    - shaders/risograph.frag
   # Filled by `metro sync` (gitignored): run it before building.
   assets:
     - assets/shared/content/

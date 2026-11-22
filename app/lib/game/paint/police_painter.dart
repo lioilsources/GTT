@@ -14,6 +14,7 @@ void paintPolice(
   required double timeS,
   required double blinkS,
   required bool night,
+  Color shadow = const Color(Tokens.colorCarShadow),
 }) {
   for (final c in traffic.cars) {
     if (!c.police || c.layer != layer) continue;
@@ -21,7 +22,7 @@ void paintPolice(
     canvas.save();
     canvas.translate(c.x, c.y);
     canvas.rotate(c.heading);
-    _p.color = const Color(Tokens.colorCarShadow);
+    _p.color = shadow;
     canvas.drawRRect(
       RRect.fromRectAndRadius(Rect.fromLTRB(-hl + 0.6, -hw - 0.6, hl + 0.6, hw - 0.6), Radius.circular(hw * 0.5)),
       _p,

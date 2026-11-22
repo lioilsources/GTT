@@ -12,7 +12,13 @@ const _lights = [
 ];
 
 /// AI cars of [layer], top-down like the player's car (canvas in world metres, y north).
-void paintTraffic(Canvas canvas, Traffic traffic, int layer, {required bool night}) {
+void paintTraffic(
+  Canvas canvas,
+  Traffic traffic,
+  int layer, {
+  required bool night,
+  Color shadow = const Color(Tokens.colorCarShadow),
+}) {
   for (final c in traffic.cars) {
     // Patrols are drawn by police_painter.dart.
     if (c.layer != layer || c.police) continue;
@@ -20,7 +26,7 @@ void paintTraffic(Canvas canvas, Traffic traffic, int layer, {required bool nigh
     canvas.save();
     canvas.translate(c.x, c.y);
     canvas.rotate(c.heading);
-    _p.color = const Color(Tokens.colorCarShadow);
+    _p.color = shadow;
     canvas.drawRRect(
       RRect.fromRectAndRadius(Rect.fromLTRB(-hl + 0.6, -hw - 0.6, hl + 0.6, hw - 0.6), Radius.circular(hw * 0.5)),
       _p,
