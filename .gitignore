@@ -30,3 +30,4 @@ app/assets/shared/
 web/public/shared/
 app/lib/l10n/app_localizations*.dart
 PARITY.md
+.claude/worktrees/
