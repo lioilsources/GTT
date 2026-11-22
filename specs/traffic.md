@@ -1,6 +1,6 @@
 # Provoz a semafory
 
-**version: 2** · P1 (jízda aut v reálném čase) · deterministické části testované v obou klientech
+**version: 3** · P1 (jízda aut v reálném čase) · deterministické části testované v obou klientech
 · plán: METROPOLE_PLAN 7.3, M1 bod 2 · parita F-016
 
 ## Účel
@@ -68,7 +68,8 @@ Bez kandidátů: otočka zpět po `e`, když z `n` po ní lze vyjet, jinak −1 
 ## Krok auta (P1, pevný krok `drive.step_hz`)
 
 1. **Překážka vpředu:** nejbližší z (a) hráče ve stejné vrstvě, (b) AI auta ve stejné vrstvě se
-   směrem do ±60° od vlastního, (c) stop čáry na konci hrany, když je semafor červený nebo oranžový
+   směrem do ±60° od vlastního nebo článku tramvaje ve stejné vrstvě v jakémkoli směru (v3,
+   `specs/trams.md`), (c) stop čáry na konci hrany, když je semafor červený nebo oranžový
    a auto je od čáry dál než `amber_commit_m` (při oranžové). Auto/hráč se počítá, když leží před
    autem do `look_ahead_m` a bočně do `corridor · (pološířka + pološířka)`; mezera = podélná
    vzdálenost minus poloviční délky.

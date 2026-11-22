@@ -169,3 +169,26 @@ message Spot {
   float park_heading = 9;
   string minigame = 10;      // minigame id played here (content/minigames/catalog.yaml), empty = none
 }
+
+// trams.pb (specs/trams.md): tram tracks as their own graph, always two-way, plus generated stops.
+// A city without trams has an empty TramGraph (the file always exists from citypack v2 on).
+message TramGraph {
+  repeated Node nodes = 1;        // border = the track leaves the playable area
+  repeated TramEdge edges = 2;
+  repeated TramStop stops = 3;
+}
+
+message TramEdge {
+  uint32 from = 1;
+  uint32 to = 2;
+  repeated sint32 points = 3;  // full polyline incl. both end nodes, dm
+  sint32 layer_from = 4;       // -1 tunnel, 0 ground, +1 bridge
+  sint32 layer_to = 5;
+  bool bridge = 6;
+  bool tunnel = 7;
+}
+
+message TramStop {
+  uint32 edge = 1;
+  float s_m = 2;  // distance from the edge's `from` end along its polyline
+}

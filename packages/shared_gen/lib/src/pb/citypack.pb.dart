@@ -1621,6 +1621,260 @@ class Spot extends $pb.GeneratedMessage {
   void clearMinigame() => $_clearField(10);
 }
 
+/// trams.pb (specs/trams.md): tram tracks as their own graph, always two-way, plus generated stops.
+/// A city without trams has an empty TramGraph (the file always exists from citypack v2 on).
+class TramGraph extends $pb.GeneratedMessage {
+  factory TramGraph({
+    $core.Iterable<Node>? nodes,
+    $core.Iterable<TramEdge>? edges,
+    $core.Iterable<TramStop>? stops,
+  }) {
+    final result = TramGraph._();
+    if (nodes != null) result.nodes.addAll(nodes);
+    if (edges != null) result.edges.addAll(edges);
+    if (stops != null) result.stops.addAll(stops);
+    return result;
+  }
+
+  TramGraph._();
+
+  factory TramGraph.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      TramGraph()..mergeFromBuffer(data, registry);
+  factory TramGraph.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      TramGraph()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'TramGraph',
+      package: const $pb.PackageName(_omitMessageNames ? '' : 'citypack'),
+      createEmptyInstance: TramGraph.$_createMessage)
+    ..pPM<Node>(1, _omitFieldNames ? '' : 'nodes',
+        subBuilder: Node.$_createMessage)
+    ..pPM<TramEdge>(2, _omitFieldNames ? '' : 'edges',
+        subBuilder: TramEdge.$_createMessage)
+    ..pPM<TramStop>(3, _omitFieldNames ? '' : 'stops',
+        subBuilder: TramStop.$_createMessage)
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  TramGraph clone() => deepCopy();
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  TramGraph copyWith(void Function(TramGraph) updates) =>
+      super.copyWith((message) => updates(message as TramGraph)) as TramGraph;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  @$core.Deprecated('Use TramGraph() / TramGraph.new instead')
+  static TramGraph create() => TramGraph._();
+  static $pb.GeneratedMessage $_createMessage() => TramGraph._();
+  @$core.override
+  TramGraph createEmptyInstance() => TramGraph._();
+  @$core.pragma('dart2js:noInline')
+  static TramGraph getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<TramGraph>(TramGraph.$_createMessage);
+  static TramGraph? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $pb.PbList<Node> get nodes => $_getList(0);
+
+  @$pb.TagNumber(2)
+  $pb.PbList<TramEdge> get edges => $_getList(1);
+
+  @$pb.TagNumber(3)
+  $pb.PbList<TramStop> get stops => $_getList(2);
+}
+
+class TramEdge extends $pb.GeneratedMessage {
+  factory TramEdge({
+    $core.int? from,
+    $core.int? to,
+    $core.Iterable<$core.int>? points,
+    $core.int? layerFrom,
+    $core.int? layerTo,
+    $core.bool? bridge,
+    $core.bool? tunnel,
+  }) {
+    final result = TramEdge._();
+    if (from != null) result.from = from;
+    if (to != null) result.to = to;
+    if (points != null) result.points.addAll(points);
+    if (layerFrom != null) result.layerFrom = layerFrom;
+    if (layerTo != null) result.layerTo = layerTo;
+    if (bridge != null) result.bridge = bridge;
+    if (tunnel != null) result.tunnel = tunnel;
+    return result;
+  }
+
+  TramEdge._();
+
+  factory TramEdge.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      TramEdge()..mergeFromBuffer(data, registry);
+  factory TramEdge.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      TramEdge()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'TramEdge',
+      package: const $pb.PackageName(_omitMessageNames ? '' : 'citypack'),
+      createEmptyInstance: TramEdge.$_createMessage)
+    ..aI(1, _omitFieldNames ? '' : 'from', fieldType: $pb.PbFieldType.OU3)
+    ..aI(2, _omitFieldNames ? '' : 'to', fieldType: $pb.PbFieldType.OU3)
+    ..p<$core.int>(3, _omitFieldNames ? '' : 'points', $pb.PbFieldType.KS3)
+    ..aI(4, _omitFieldNames ? '' : 'layerFrom', fieldType: $pb.PbFieldType.OS3)
+    ..aI(5, _omitFieldNames ? '' : 'layerTo', fieldType: $pb.PbFieldType.OS3)
+    ..aOB(6, _omitFieldNames ? '' : 'bridge')
+    ..aOB(7, _omitFieldNames ? '' : 'tunnel')
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  TramEdge clone() => deepCopy();
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  TramEdge copyWith(void Function(TramEdge) updates) =>
+      super.copyWith((message) => updates(message as TramEdge)) as TramEdge;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  @$core.Deprecated('Use TramEdge() / TramEdge.new instead')
+  static TramEdge create() => TramEdge._();
+  static $pb.GeneratedMessage $_createMessage() => TramEdge._();
+  @$core.override
+  TramEdge createEmptyInstance() => TramEdge._();
+  @$core.pragma('dart2js:noInline')
+  static TramEdge getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<TramEdge>(TramEdge.$_createMessage);
+  static TramEdge? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.int get from => $_getIZ(0);
+  @$pb.TagNumber(1)
+  set from($core.int value) => $_setUnsignedInt32(0, value);
+  @$pb.TagNumber(1)
+  $core.bool hasFrom() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearFrom() => $_clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.int get to => $_getIZ(1);
+  @$pb.TagNumber(2)
+  set to($core.int value) => $_setUnsignedInt32(1, value);
+  @$pb.TagNumber(2)
+  $core.bool hasTo() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearTo() => $_clearField(2);
+
+  @$pb.TagNumber(3)
+  $pb.PbList<$core.int> get points => $_getList(2);
+
+  @$pb.TagNumber(4)
+  $core.int get layerFrom => $_getIZ(3);
+  @$pb.TagNumber(4)
+  set layerFrom($core.int value) => $_setSignedInt32(3, value);
+  @$pb.TagNumber(4)
+  $core.bool hasLayerFrom() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearLayerFrom() => $_clearField(4);
+
+  @$pb.TagNumber(5)
+  $core.int get layerTo => $_getIZ(4);
+  @$pb.TagNumber(5)
+  set layerTo($core.int value) => $_setSignedInt32(4, value);
+  @$pb.TagNumber(5)
+  $core.bool hasLayerTo() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearLayerTo() => $_clearField(5);
+
+  @$pb.TagNumber(6)
+  $core.bool get bridge => $_getBF(5);
+  @$pb.TagNumber(6)
+  set bridge($core.bool value) => $_setBool(5, value);
+  @$pb.TagNumber(6)
+  $core.bool hasBridge() => $_has(5);
+  @$pb.TagNumber(6)
+  void clearBridge() => $_clearField(6);
+
+  @$pb.TagNumber(7)
+  $core.bool get tunnel => $_getBF(6);
+  @$pb.TagNumber(7)
+  set tunnel($core.bool value) => $_setBool(6, value);
+  @$pb.TagNumber(7)
+  $core.bool hasTunnel() => $_has(6);
+  @$pb.TagNumber(7)
+  void clearTunnel() => $_clearField(7);
+}
+
+class TramStop extends $pb.GeneratedMessage {
+  factory TramStop({
+    $core.int? edge,
+    $core.double? sM,
+  }) {
+    final result = TramStop._();
+    if (edge != null) result.edge = edge;
+    if (sM != null) result.sM = sM;
+    return result;
+  }
+
+  TramStop._();
+
+  factory TramStop.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      TramStop()..mergeFromBuffer(data, registry);
+  factory TramStop.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      TramStop()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'TramStop',
+      package: const $pb.PackageName(_omitMessageNames ? '' : 'citypack'),
+      createEmptyInstance: TramStop.$_createMessage)
+    ..aI(1, _omitFieldNames ? '' : 'edge', fieldType: $pb.PbFieldType.OU3)
+    ..aD(2, _omitFieldNames ? '' : 'sM', fieldType: $pb.PbFieldType.OF)
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  TramStop clone() => deepCopy();
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  TramStop copyWith(void Function(TramStop) updates) =>
+      super.copyWith((message) => updates(message as TramStop)) as TramStop;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  @$core.Deprecated('Use TramStop() / TramStop.new instead')
+  static TramStop create() => TramStop._();
+  static $pb.GeneratedMessage $_createMessage() => TramStop._();
+  @$core.override
+  TramStop createEmptyInstance() => TramStop._();
+  @$core.pragma('dart2js:noInline')
+  static TramStop getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<TramStop>(TramStop.$_createMessage);
+  static TramStop? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.int get edge => $_getIZ(0);
+  @$pb.TagNumber(1)
+  set edge($core.int value) => $_setUnsignedInt32(0, value);
+  @$pb.TagNumber(1)
+  $core.bool hasEdge() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearEdge() => $_clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.double get sM => $_getN(1);
+  @$pb.TagNumber(2)
+  set sM($core.double value) => $_setFloat(1, value);
+  @$pb.TagNumber(2)
+  $core.bool hasSM() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearSM() => $_clearField(2);
+}
+
 const $core.bool _omitFieldNames =
     $core.bool.fromEnvironment('protobuf.omit_field_names');
 const $core.bool _omitMessageNames =

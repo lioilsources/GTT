@@ -17,7 +17,7 @@ import type { Message } from "@bufbuild/protobuf";
  * Describes the file citypack.proto.
  */
 export const file_citypack: GenFile = /*@__PURE__*/
-  fileDesc("Cg5jaXR5cGFjay5wcm90bxIIY2l0eXBhY2si9wIKCE1hbmlmZXN0EhYKDmZvcm1hdF92ZXJzaW9uGAEgASgNEg8KB2NpdHlfaWQYAiABKAkSDAoEbmFtZRgDIAEoCRISCgpvcmlnaW5fbGF0GAQgASgBEhIKCm9yaWdpbl9sb24YBSABKAESEgoKZHJpdmVfc2lkZRgGIAEoCRINCgV1bml0cxgHIAEoCRIYChBvdmVydHVyZV9yZWxlYXNlGAggASgJEg8KB2NodW5rX20YCSABKA0SHgoGYm91bmRzGAogASgLMg4uY2l0eXBhY2suUmVjdBIMCgRhcmVhGAsgAygREiIKBmNodW5rcxgMIAMoCzISLmNpdHlwYWNrLkNodW5rUmVmEh4KBXN0YXJ0GA0gASgLMg8uY2l0eXBhY2suU3Bhd24SJQoJZGlzdHJpY3RzGA4gAygLMhIuY2l0eXBhY2suRGlzdHJpY3QSEwoLYXR0cmlidXRpb24YDyADKAkSEAoIYnVpbHRfYXQYECABKAkiQgoEUmVjdBINCgVtaW5feBgBIAEoERINCgVtaW5feRgCIAEoERINCgVtYXhfeBgDIAEoERINCgVtYXhfeRgEIAEoESJCCghDaHVua1JlZhIJCgF4GAEgASgREgkKAXkYAiABKBESDQoFYnl0ZXMYAyABKA0SEQoJYnVpbGRpbmdzGAQgASgNIjIKBVNwYXduEgkKAXgYASABKBESCQoBeRgCIAEoERITCgtoZWFkaW5nX3JhZBgDIAEoAiImCghEaXN0cmljdBIMCgRuYW1lGAEgASgJEgwKBHJpbmcYAiADKBEiVAoFR3JhcGgSHQoFbm9kZXMYASADKAsyDi5jaXR5cGFjay5Ob2RlEh0KBWVkZ2VzGAIgAygLMg4uY2l0eXBhY2suRWRnZRINCgVuYW1lcxgDIAMoCSIsCgROb2RlEgkKAXgYASABKBESCQoBeRgCIAEoERIOCgZib3JkZXIYAyABKAgi5gEKBEVkZ2USDAoEZnJvbRgBIAEoDRIKCgJ0bxgCIAEoDRIOCgZwb2ludHMYAyADKBESIgoFY2xhc3MYBCABKA4yEy5jaXR5cGFjay5Sb2FkQ2xhc3MSDAoEbmFtZRgFIAEoDRINCgVsYW5lcxgGIAEoDRIOCgZvbmV3YXkYByABKBESEgoKbGF5ZXJfZnJvbRgIIAEoERIQCghsYXllcl90bxgJIAEoERIOCgZicmlkZ2UYCiABKAgSDgoGdHVubmVsGAsgASgIEgwKBGtlcHQYDCABKAgSDwoHd2lkdGhfbRgNIAEoAiKJAQoFQ2h1bmsSCQoBeBgBIAEoERIJCgF5GAIgASgREiUKCWJ1aWxkaW5ncxgDIAMoCzISLmNpdHlwYWNrLkJ1aWxkaW5nEh4KBmdyb3VuZBgEIAMoCzIOLmNpdHlwYWNrLk1lc2gSIwoIYmFycmllcnMYBSADKAsyES5jaXR5cGFjay5CYXJyaWVyIhkKB0JhcnJpZXISDgoGcG9pbnRzGAEgAygRIpgBCghCdWlsZGluZxINCgVyaW5ncxgBIAMoERIRCglyaW5nX2VuZHMYAiADKA0SDAoEcm9vZhgDIAMoDRIQCghoZWlnaHRfbRgEIAEoAhIUCgxtaW5faGVpZ2h0X20YBSABKAISEAoIbGFuZG1hcmsYBiABKA0SDwoHY29sbGlkZRgHIAEoCBIRCgl3YWxsX3NlZWQYCCABKA0iTQoETWVzaBIiCgRraW5kGAEgASgOMhQuY2l0eXBhY2suR3JvdW5kS2luZBIQCgh2ZXJ0aWNlcxgCIAMoERIPCgdpbmRpY2VzGAMgAygNIi4KCUxhbmRtYXJrcxIhCgVpdGVtcxgBIAMoCzISLmNpdHlwYWNrLkxhbmRtYXJrImkKCExhbmRtYXJrEgoKAmlkGAEgASgJEgwKBG5hbWUYAiABKAkSCQoBeBgDIAEoERIJCgF5GAQgASgREhAKCGhlaWdodF9tGAUgASgCEgwKBGhlcm8YBiABKAgSDQoFYmx1cmIYByABKAkiJgoFU3BvdHMSHQoFaXRlbXMYASADKAsyDi5jaXR5cGFjay5TcG90IpoBCgRTcG90EgoKAmlkGAEgASgJEgwKBGtpbmQYAiABKAkSDAoEbmFtZRgDIAEoCRIJCgF4GAQgASgREgkKAXkYBSABKBESDAoEZWRnZRgGIAEoDRIOCgZwYXJrX3gYByABKBESDgoGcGFya195GAggASgREhQKDHBhcmtfaGVhZGluZxgJIAEoAhIQCghtaW5pZ2FtZRgKIAEoCSp+CglSb2FkQ2xhc3MSEAoMUk9BRF9VTktOT1dOEAASDAoITU9UT1JXQVkQARIJCgVUUlVOSxACEgsKB1BSSU1BUlkQAxINCglTRUNPTkRBUlkQBBIMCghURVJUSUFSWRAFEg8KC1JFU0lERU5USUFMEAYSCwoHU0VSVklDRRAHKmQKCkdyb3VuZEtpbmQSEgoOR1JPVU5EX1VOS05PV04QABIICgRMQU5EEAESCQoFV0FURVIQAhIICgRQQVJLEAMSCAoEUkFJTBAEEgkKBVBMQVpBEAUSDgoKUEVERVNUUklBThAGQhZaFGNpdHlwYWNrL2ludGVybmFsL3BiYgZwcm90bzM");
+  fileDesc("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Z2VzGAIgAygLMhIuY2l0eXBhY2suVHJhbUVkZ2USIQoFc3RvcHMYAyADKAsyEi5jaXR5cGFjay5UcmFtU3RvcCJ6CghUcmFtRWRnZRIMCgRmcm9tGAEgASgNEgoKAnRvGAIgASgNEg4KBnBvaW50cxgDIAMoERISCgpsYXllcl9mcm9tGAQgASgREhAKCGxheWVyX3RvGAUgASgREg4KBmJyaWRnZRgGIAEoCBIOCgZ0dW5uZWwYByABKAgiJQoIVHJhbVN0b3ASDAoEZWRnZRgBIAEoDRILCgNzX20YAiABKAIqfgoJUm9hZENsYXNzEhAKDFJPQURfVU5LTk9XThAAEgwKCE1PVE9SV0FZEAESCQoFVFJVTksQAhILCgdQUklNQVJZEAMSDQoJU0VDT05EQVJZEAQSDAoIVEVSVElBUlkQBRIPCgtSRVNJREVOVElBTBAGEgsKB1NFUlZJQ0UQBypkCgpHcm91bmRLaW5kEhIKDkdST1VORF9VTktOT1dOEAASCAoETEFORBABEgkKBVdBVEVSEAISCAoEUEFSSxADEggKBFJBSUwQBBIJCgVQTEFaQRAFEg4KClBFREVTVFJJQU4QBkIWWhRjaXR5cGFjay9pbnRlcm5hbC9wYmIGcHJvdG8z");
 
 /**
  * manifest.pb
@@ -702,6 +702,113 @@ export type Spot = Message<"citypack.Spot"> & {
  */
 export const SpotSchema: GenMessage<Spot> = /*@__PURE__*/
   messageDesc(file_citypack, 15);
+
+/**
+ * trams.pb (specs/trams.md): tram tracks as their own graph, always two-way, plus generated stops.
+ * A city without trams has an empty TramGraph (the file always exists from citypack v2 on).
+ *
+ * @generated from message citypack.TramGraph
+ */
+export type TramGraph = Message<"citypack.TramGraph"> & {
+  /**
+   * border = the track leaves the playable area
+   *
+   * @generated from field: repeated citypack.Node nodes = 1;
+   */
+  nodes: Node[];
+
+  /**
+   * @generated from field: repeated citypack.TramEdge edges = 2;
+   */
+  edges: TramEdge[];
+
+  /**
+   * @generated from field: repeated citypack.TramStop stops = 3;
+   */
+  stops: TramStop[];
+};
+
+/**
+ * Describes the message citypack.TramGraph.
+ * Use `create(TramGraphSchema)` to create a new message.
+ */
+export const TramGraphSchema: GenMessage<TramGraph> = /*@__PURE__*/
+  messageDesc(file_citypack, 16);
+
+/**
+ * @generated from message citypack.TramEdge
+ */
+export type TramEdge = Message<"citypack.TramEdge"> & {
+  /**
+   * @generated from field: uint32 from = 1;
+   */
+  from: number;
+
+  /**
+   * @generated from field: uint32 to = 2;
+   */
+  to: number;
+
+  /**
+   * full polyline incl. both end nodes, dm
+   *
+   * @generated from field: repeated sint32 points = 3;
+   */
+  points: number[];
+
+  /**
+   * -1 tunnel, 0 ground, +1 bridge
+   *
+   * @generated from field: sint32 layer_from = 4;
+   */
+  layerFrom: number;
+
+  /**
+   * @generated from field: sint32 layer_to = 5;
+   */
+  layerTo: number;
+
+  /**
+   * @generated from field: bool bridge = 6;
+   */
+  bridge: boolean;
+
+  /**
+   * @generated from field: bool tunnel = 7;
+   */
+  tunnel: boolean;
+};
+
+/**
+ * Describes the message citypack.TramEdge.
+ * Use `create(TramEdgeSchema)` to create a new message.
+ */
+export const TramEdgeSchema: GenMessage<TramEdge> = /*@__PURE__*/
+  messageDesc(file_citypack, 17);
+
+/**
+ * @generated from message citypack.TramStop
+ */
+export type TramStop = Message<"citypack.TramStop"> & {
+  /**
+   * @generated from field: uint32 edge = 1;
+   */
+  edge: number;
+
+  /**
+   * distance from the edge's `from` end along its polyline
+   *
+   * @generated from field: float s_m = 2;
+   */
+  sM: number;
+};
+
+/**
+ * Describes the message citypack.TramStop.
+ * Use `create(TramStopSchema)` to create a new message.
+ */
+export const TramStopSchema: GenMessage<TramStop> = /*@__PURE__*/
+  messageDesc(file_citypack, 18);
 
 /**
  * @generated from enum citypack.RoadClass
