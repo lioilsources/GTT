@@ -1,6 +1,7 @@
 import type { MessageKey } from '../gen/i18n';
 import type { TuningPhone } from '../gen/tuning';
 import { h } from '../minigames/dom';
+import { overlays } from '../pause';
 
 /** In-game phone shell (specs/phone.md "Telefon"): bottom sheet, home grid, app slots. */
 
@@ -29,11 +30,13 @@ export class Phone {
   private unmount: (() => void) | null = null;
   private app: PhoneAppId | null = null;
   isOpen = false;
+  /** Release of the pause registration while open (specs/pause.md). */
+  private release: (() => void) | null = null;
   onChange: (open: boolean) => void = () => {};
 
   constructor(
     parent: HTMLElement,
-    private readonly tuning: TuningPhone,
+    tuning: TuningPhone,
     private readonly t: (k: MessageKey, a?: Record<string, string | number>) => string,
   ) {
     this.title = h('div.phone-title', {}, t('phone'));
@@ -69,6 +72,7 @@ export class Phone {
   open(app?: PhoneAppId): void {
     if (!this.isOpen) {
       this.isOpen = true;
+      this.release = overlays.open('phone');
       this.root.hidden = false;
       this.onChange(true);
     }
@@ -79,6 +83,8 @@ export class Phone {
   close(): void {
     if (!this.isOpen) return;
     this.isOpen = false;
+    this.release?.();
+    this.release = null;
     this.root.hidden = true;
     this.onChange(false);
   }
@@ -111,10 +117,5 @@ export class Phone {
     this.backBtn.style.visibility = 'visible';
     this.screen.replaceChildren();
     this.unmount = mount(this.screen);
-  }
-
-  /** Driving time scale while the phone is open (specs/phone.md). */
-  get timeScale(): number {
-    return this.isOpen ? this.tuning.timeScale : 1;
   }
 }

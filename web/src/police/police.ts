@@ -165,7 +165,8 @@ export class Police {
     this.seen = this.anySees();
 
     // Sidewalk: on the band for sidewalk_s in one go → one offence, re-armed after leaving it.
-    const walk = c.layer === 0 && c.speed >= t.sidewalkMinMps && onSidewalk(this.drive.city.graph.near(c.x, c.y, this.tuning.layers.searchM), this.tuning);
+    // A hop over the sidewalk is not driving on it (specs/hop.md).
+    const walk = c.layer === 0 && !c.airborne && c.speed >= t.sidewalkMinMps && onSidewalk(this.drive.city.graph.near(c.x, c.y, this.tuning.layers.searchM), this.tuning);
     if (walk) {
       this.sidewalkT += step;
       if (this.sidewalkArmed && this.sidewalkT >= t.sidewalkS) {

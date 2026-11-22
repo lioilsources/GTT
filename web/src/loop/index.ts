@@ -9,6 +9,7 @@ import type { MinigameResult, NpcPack, Save } from '../gen/schema';
 import type { Tuning } from '../gen/tuning';
 import type { WorldMinigame } from '../minigames/api';
 import { h } from '../minigames/dom';
+import { overlays } from '../pause';
 import { minigames } from '../minigames/registry';
 import type { PassportHud } from '../passport/hud';
 import type { PhoneApi } from '../phone';
@@ -215,12 +216,14 @@ export async function installLoop(env: LoopEnv): Promise<LoopApi> {
     };
     const game = make({ tuning, locale: env.locale, t, opponent: npc?.opponent(opponentId, seed, env.locale) });
     busy = true;
+    const release = overlays.open('minigame');
     playBtn.hidden = true;
     const host = h('div', { id: 'minigames', className: 'loop-host' });
     document.body.append(host);
     const unmount = game.mount(host, ctx, (r: MinigameResult) => {
       unmount();
       host.remove();
+      release();
       finish(spotId, id, card, r);
     });
   }

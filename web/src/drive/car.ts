@@ -42,6 +42,8 @@ export class Car {
   layer = 0;
   /** CAT_ZONE is in the mask (only effective on layer 0); see zoneMask. */
   zone = false;
+  /** In the air (specs/hop.md): the mask holds buildings only. */
+  airborne = false;
   /** Lateral slip left over at each axle in the last step, m/s (skid marks). */
   rearSlip = 0;
   frontSlip = 0;
@@ -138,7 +140,18 @@ export class Car {
     this.refilter();
   }
 
+  /** Hop take-off / landing (specs/hop.md): buildings only in the air, the layer mask back on landing. */
+  setAirborne(on: boolean): void {
+    if (on === this.airborne) return;
+    this.airborne = on;
+    this.refilter();
+  }
+
   private refilter(): void {
+    if (this.airborne) {
+      this.fixture.setFilterData({ groupIndex: 0, categoryBits: CAT_CAR, maskBits: CAT_BUILDINGS });
+      return;
+    }
     // Buildings, parked cars and bollards only exist on the ground layer; bridges and tunnels use
     // rails instead. Traffic cars and trams switch their own masks by layer (traffic.ts, trams.ts).
     const ground = CAT_BUILDINGS | CAT_PARKED | (this.zone ? CAT_ZONE : 0);
@@ -217,6 +230,26 @@ export class Car {
     if (speed < t.stopSpeedMps && input.brake === 0 && input.steer === 0) {
       body.setAngularVelocity(w * t.stopSpinDamping);
     }
+  }
+
+  /**
+   * One step in the air (specs/hop.md): no input, no tyres (drive step 5 skipped), no spin; the
+   * linear velocity only loses drag (step 4). Call before world.step instead of drive().
+   */
+  fly(): void {
+    const t = this.t, body = this.body;
+    const v = body.getLinearVelocity();
+    const vx = v.x, vy = v.y;
+    const speed = Math.sqrt(vx * vx + vy * vy);
+    const drag = body.getMass() * (t.dragLinear + t.dragQuadratic * speed);
+    this.f.x = -vx * drag;
+    this.f.y = -vy * drag;
+    body.applyForceToCenter(this.f, true);
+    body.setAngularVelocity(0);
+    this.braking = false;
+    this.reversing = false;
+    this.rearSlip = 0;
+    this.frontSlip = 0;
   }
 
   /** Cancels lateral velocity at an axle up to its grip; returns the remaining slip (m/s). */

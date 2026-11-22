@@ -11,6 +11,7 @@ import { t as tr, type Locale, type MessageKey } from './gen/i18n';
 import { carIdValues, cityIdNames, cityIdValues, minigameCatalog, type CityId, type MinigameId } from './gen/ids';
 import { CarFleet } from './cars/fleet';
 import { CarsHud } from './cars/ui';
+import { HopHud } from './cars/hopHud';
 import type { BenchResult, BenchRoute, CarSpec, NpcPack } from './gen/schema';
 import { tokens } from './gen/tokens';
 import { carPose, PedestrianWorld } from './peds/pedestrians';
@@ -19,6 +20,7 @@ import { Tuning } from './gen/tuning';
 import { TrafficView } from './render/trafficView';
 import { TramView } from './render/tramView';
 import { installPassport } from './passport/hud';
+import { overlays, PauseGate } from './pause';
 import { WorldView } from './render/worldView';
 import { installPhone } from './phone';
 import { installPolice } from './police';
@@ -225,6 +227,11 @@ async function main(): Promise<void> {
 
   // Car name, "Přesednout" / garage button and the garage list (specs/cars.md).
   const carsHud = new CarsHud(fleet, t, $('hud'), () => view.carChanged());
+  // "Skok" over traffic (specs/hop.md): HUD button and key J.
+  const hopHud = new HopHud(drive, t, $('hud'), tuning.nav.toastS);
+  window.addEventListener('keydown', (e) => {
+    if (e.code === 'KeyJ' && !e.repeat && !pilot) hopHud.press();
+  });
 
   // Loop glue: arrival → minigame → result → cash, stamp, save (specs/loop.md); loads the save.
   const loop = await installLoop({
@@ -254,6 +261,8 @@ async function main(): Promise<void> {
   // ---------- loop
   const perf = { frames: 0, acc: 0, fps: 0, frameMs: 0, worst: 0, worstAcc: 0, hudTimer: 0 };
   const frameTimes: number[] = [];
+  // Pause under overlays (specs/pause.md): the world steps with 0 while one is open.
+  const gate = new PauseGate(overlays);
   let last = performance.now();
   engine.runRenderLoop(() => {
     const now = performance.now();
@@ -261,21 +270,25 @@ async function main(): Promise<void> {
     last = now;
     if (loop.busy) return; // minigame up: the world neither steps nor renders (DUALSTACK 6.5)
     if (firstFrameMs === 0) firstFrameMs = now;
-    if (!pilot) {
+    // Paused: no step, no game clock, input dropped; on resume the controls start from zero.
+    const stepDt = gate.frame(dt, pilot ? null : drive.input, () => {
+      scheme = createScheme(scheme.id, tuning.controls);
+      keys.clear();
+    });
+    if (!pilot && !gate.paused) {
       const input = drive.input;
       input.reset();
       scheme.update(input);
       applyKeys(keys, input);
     }
-    const stepDt = carsHud.busy ? 0 : dt * phone.timeScale();
-    if (!carsHud.busy) drive.update(stepDt);
+    drive.update(stepDt);
     police.update(stepDt, dt);
     phone.update(dt);
     taxi.update(stepDt);
     const c = drive.car;
     view.rig.follow(c.x, c.y, c.heading, c.speed, dt, tuning, c.forwardSpeed < -0.5);
     streamer.update(c.x, c.y, c.heading, now);
-    peds.update(dt, [carPose(c)], view.rig.visibleRadius(size.w, size.h, tuning), night);
+    peds.update(stepDt, [carPose(c)], view.rig.visibleRadius(size.w, size.h, tuning), night);
     pedView.update(peds);
     trafficView?.update(view.rig.x, view.rig.y, view.rig.visibleRadius(size.w, size.h, tuning), c.layer);
     tramView?.update(c.layer);
@@ -308,6 +321,7 @@ async function main(): Promise<void> {
   function hud(): void {
     fleet.update();
     carsHud.update();
+    hopHud.update(0.1);
     const c = drive.car;
     const edge = drive.layers.edge;
     const street = edge?.name ? edge.name : t('unnamedRoad');
@@ -371,6 +385,7 @@ async function main(): Promise<void> {
     copy.textContent = t('copy');
     copy.onclick = () => void navigator.clipboard?.writeText(text).then(() => (copy.textContent = t('copied')));
     $('bench').hidden = false;
+    overlays.open('bench');
     console.info('[metro bench]', text);
   }
 

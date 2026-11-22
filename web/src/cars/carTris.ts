@@ -27,11 +27,12 @@ function partColor(r: CarRect, paint: Rgba, night: boolean): Rgba {
 /**
  * Adds a car's top-down shape at (ox, oy, ang) to [t]; returns the height above [h] of the top part.
  * Tyres are added when [tyres] is set (parked cars; the player's car steers its own wheel nodes);
- * `micro` cars carry their in-line wheels in the shape itself.
+ * `micro` cars carry their in-line wheels in the shape itself. [shadow] false leaves the ground
+ * shadow out (the player's car draws it apart, so it stays on the ground during a hop).
  */
 export function carTris(
   t: Tris, spec: CarSpec, hl: number, hw: number, axle: number,
-  ox: number, oy: number, ang: number, h: number, night: boolean, tyres: boolean,
+  ox: number, oy: number, ang: number, h: number, night: boolean, tyres: boolean, shadow = true,
 ): number {
   const paint = rgba(paintHex(spec.paint));
   let z = h;
@@ -43,9 +44,22 @@ export function carTris(
   }
   carShape(spec.class, hl, hw, spec.length_m).forEach((r, i) => {
     z = h + (r.part === 'shadow' ? 0 : (i + 2) * CAR_PART_DZ);
+    if (r.part === 'shadow' && !shadow) return;
     t.rect(ox, oy, ang, r.x0, r.y0, r.x1, r.y1, z, partColor(r, paint, night));
   });
   return z - h;
+}
+
+/** The ground shadow of a car shape alone (see carTris [shadow]). */
+export function carShadowTris(t: Tris, spec: CarSpec, hl: number, hw: number, h: number): void {
+  for (const r of carShape(spec.class, hl, hw, spec.length_m)) {
+    if (r.part === 'shadow') t.rect(0, 0, 0, r.x0, r.y0, r.x1, r.y1, h, rgba(tokens.colorCarShadow));
+  }
+}
+
+/** Underside seen during a flip (specs/hop.md "Kreslení"): the body outline in `color.car.tyre`, at [h]. */
+export function carUndersideTris(t: Tris, hl: number, hw: number, h: number): void {
+  t.rect(0, 0, 0, -hl, -hw, hl, hw, h, rgba(tokens.colorCarTyre));
 }
 
 /** One mesh's worth of parked cars. */

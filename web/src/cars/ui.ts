@@ -1,5 +1,6 @@
 import type { MessageKey } from '../gen/i18n';
 import { h } from '../minigames/dom';
+import { overlays } from '../pause';
 import type { CarFleet } from './fleet';
 import type { ParkedCar } from './parked';
 
@@ -26,8 +27,10 @@ export class CarsHud {
   private mode: 'board' | 'garage' | null = null;
   private boardTarget: ParkedCar | null = null;
   private last = performance.now();
+  /** Pause registration while the garage is open (specs/pause.md). */
+  private release: (() => void) | null = null;
 
-  /** True while the garage list is open: the world does not step (specs/cars.md). */
+  /** True while the garage list is open: the world does not step (specs/cars.md, specs/pause.md). */
   get busy(): boolean {
     return !this.sheet.hidden;
   }
@@ -76,6 +79,8 @@ export class CarsHud {
     const close = (): void => {
       this.sheet.hidden = true;
       this.sheet.replaceChildren();
+      this.release?.();
+      this.release = null;
     };
     const rows = f.owned.map((id) => {
       const spec = f.specs.get(id);
@@ -113,12 +118,23 @@ export class CarsHud {
           },
         }, `${spec.name}${ck ? ' · ' + t(ck) : ''} — ${t('garageBuy', { price: spec.price })}`);
       });
+    // Air tank of a hop car (specs/hop.md): refilled to full for free.
+    const refill = f.canRefillHop()
+      ? h('button.mg-btn', {
+        type: 'button',
+        onclick: () => {
+          f.refillHop();
+          this.openGarage();
+        },
+      }, t('hopRefill'))
+      : null;
     this.sheet.replaceChildren(
-      h('div.mg-card', {}, h('h2', {}, t('garageTitle')), ...rows,
+      h('div.mg-card', {}, h('h2', {}, t('garageTitle')), refill, ...rows,
         sale.length ? h('h2', {}, t('garageForSale')) : null, ...sale,
         h('p', {}, t('cashHud', { cash: f.state.cash })),
         h('button.mg-btn.ghost', { type: 'button', onclick: close }, t('close'))),
     );
     this.sheet.hidden = false;
+    this.release ??= overlays.open('garage');
   }
 }
