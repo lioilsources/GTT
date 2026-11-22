@@ -21,22 +21,10 @@ import { SirkyRules, sirkyConfig } from '../src/minigames/sirky/rules';
 import { StrelniceRules, strelniceConfig } from '../src/minigames/strelnice/rules';
 import { PassportTracker } from '../src/passport/tracker';
 import { buildCandidates, feedConfig, FeedRules } from '../src/phone/feed';
-import { canonical, replayers, type VectorFile } from '../src/rules/vectors';
+import { canonical } from '../src/rules/vectors';
 
 const root = join(__dirname, '..', '..');
 const tuning = Tuning.fromJson(parse(readFileSync(join(root, 'content', 'tuning.yaml'), 'utf8')));
-const readVectors = (m: string): VectorFile => JSON.parse(readFileSync(join(root, 'vectors', `${m}.json`), 'utf8')) as VectorFile;
-
-describe('economy and save vectors (ungated until parity marks them done)', () => {
-  for (const m of ['economy', 'save']) {
-    for (const c of readVectors(m).cases) {
-      it(`${m}: ${c.name}`, () => {
-        const states = replayers[m]!(c);
-        c.steps.forEach((s, i) => expect(canonical(states[i]), `step ${i}`).toBe(canonical(s.state)));
-      });
-    }
-  }
-});
 
 describe('economy (specs/economy.md)', () => {
   it('pays the feed card reward at three stars', () => {

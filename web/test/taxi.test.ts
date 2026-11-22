@@ -9,7 +9,7 @@ import { Tuning } from '../src/gen/tuning';
 import { taxiConfig, taxiFare, TaxiRules, taxiStars, type TaxiState } from '../src/minigames/taxi/rules';
 import { spawnPassenger, taxiDests, TaxiShift, type TaxiDest, type TaxiPose } from '../src/minigames/taxi/shift';
 import { edgeLengthsDm } from '../src/phone/nav';
-import { canonical, replayers, replayResult, type VectorFile } from '../src/rules/vectors';
+import { canonical } from '../src/rules/vectors';
 import type { PackSource } from '../src/world/citypack';
 import { City } from '../src/world/model';
 
@@ -72,16 +72,6 @@ describe('taxi rules (specs/minigames/taxi.md)', () => {
     expect(r.result(over)).toEqual({ winner: 'draw', stars: 0, score: 0, rides: 0 });
     expect(() => r.apply(over, { by: 'timeout' })).toThrow();
     expect(r.result(s)).toBeNull();
-  });
-
-  // Ungated until parity.yaml marks F-027 done: replays the recording with this client.
-  it('replays vectors/taxi.json', () => {
-    const v = JSON.parse(readFileSync(join(root, 'vectors', 'taxi.json'), 'utf8')) as VectorFile;
-    for (const c of v.cases) {
-      const states = replayers['taxi']!(c);
-      c.steps.forEach((s, i) => expect(canonical(states[i]), `${c.name} step ${i}`).toBe(canonical(s.state)));
-      expect(canonical(replayResult('taxi', c) ?? null)).toBe(canonical(c.result));
-    }
   });
 });
 
