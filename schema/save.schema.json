@@ -7,7 +7,7 @@
     "Save": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["version", "cityId", "cash", "cars", "car", "stamps", "best", "plays", "feed", "npc", "settings", "stations"],
+      "required": ["version", "cityId", "cash", "cars", "car", "stamps", "best", "plays", "feed", "npc", "settings"],
       "properties": {
         "version": {"type": "integer", "const": 3},
         "cityId": {"type": "string"},
@@ -20,7 +20,7 @@
         "feed": {"$ref": "#/$defs/SaveFeed"},
         "npc": {"$ref": "#/$defs/SaveNpc"},
         "settings": {"$ref": "#/$defs/SaveSettings"},
-        "stations": {"type": "array", "items": {"type": "string"}, "description": "Unlocked metro stations (spot ids) in unlock order (specs/travel.md)."}
+        "stations": {"type": "array", "items": {"type": "string"}, "description": "Unlocked metro stations (spot ids) in unlock order (specs/travel.md); missing = []."}
       }
     },
     "BestResult": {

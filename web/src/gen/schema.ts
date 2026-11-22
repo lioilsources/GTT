@@ -81,8 +81,8 @@ export interface Save {
   feed: SaveFeed;
   npc: SaveNpc;
   settings: SaveSettings;
-  /** Unlocked metro stations (spot ids) in unlock order (specs/travel.md). */
-  stations: string[];
+  /** Unlocked metro stations (spot ids) in unlock order (specs/travel.md); missing = []. */
+  stations?: string[];
 }
 
 export interface SaveFeed {

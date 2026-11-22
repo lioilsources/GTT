@@ -27,7 +27,7 @@ Spec v2 (M2-S3): uložení verze 3 přidává `stations` (odemčené stanice met
   feed: {prefs: {engine: int}, visits: {spotId: int}, districts: [jméno čtvrti]},
   npc: {vibe: {characterId: int}, contacts: [characterId], recent: [skitId]},
   settings: {scheme: "a" | "b" | "c", night: bool},
-  stations: [spotId]      // odemčené stanice metra v pořadí odemknutí (specs/travel.md)
+  stations: [spotId]      // odemčené stanice metra v pořadí odemknutí (specs/travel.md); chybí = []
 }
 ```
 
@@ -69,7 +69,7 @@ Výsledný stav = `normalize(save)`:
 1. `save` není objekt, `version` není 1, 2 ani 3, nebo `cityId ≠ config.cityId` → čerstvé uložení.
 2. Kontrola typů (podle verze): chybějící povinné pole nebo pole špatného typu (číslo místo
    řetězce, desetinné číslo místo celého, …) → čerstvé uložení. Povinná pole verze 1: `cash`,
-   `stamps`, `cars`, `best`; verze 2 všechna pole formátu kromě `stations`; verze 3 všechna.
+   `stamps`, `cars`, `best`; verze 2 a 3 všechna pole formátu kromě `stations` (nepovinné, chybí = `[]`).
 3. **Migrace 1 → 2:** `cash`, `stamps`, `best` se převezmou, `cars` z verze 1, `car = cars[0]`
    (po kroku 4), `plays`, `feed`, `npc` prázdné, `settings` výchozí.
    **Migrace 2 → 3:** vše se převezme, `stations = []`. Výsledek je vždy verze 3.
