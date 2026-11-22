@@ -41,7 +41,7 @@ abstract final class Tokens {
   static const int colorCityNycShadow = 0x59284369;
   static const int colorCityNycRoof = 0xFF8E95A3;
   static const int colorCityNycRoofEdge = 0xFFF0E2C8;
-  static const int colorCityNycCastShadow = 0x8C22427F;
+  static const int colorCityNycCastShadow = 0xBF24447F;
   static const int colorCityPragueLand = 0xFFFBEED7;
   static const int colorCityPragueWater = 0xFF368C76;
   static const int colorCityPraguePark = 0xFF63A18D;
