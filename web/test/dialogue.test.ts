@@ -80,10 +80,12 @@ describe('dialogue rules (specs/dialogue.md)', () => {
 const QUIP_2 = [1, 0, 1, 0, 0];
 
 describe('npc content', () => {
-  it('has 6 adult characters and 30 skits of 5 beats', () => {
+  it('has 6 adult characters, 30 skits for New York (M1), city skits on top, 5 beats each', () => {
     expect(pack.characters).toHaveLength(6);
     expect(pack.characters.every((c) => c.age >= 21)).toBe(true);
-    expect(pack.skits).toHaveLength(30);
+    expect(pack.skits.filter((s) => s.city === '' || s.city === 'nyc')).toHaveLength(30);
+    const prague = pack.skits.filter((s) => s.city === 'prague').length;
+    expect(prague === 0 || prague >= 20, `prague skits ${prague}`).toBe(true);
     expect(pack.skits.every((s) => s.beats.length === 5)).toBe(true);
   });
 
