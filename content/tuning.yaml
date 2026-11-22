@@ -354,6 +354,13 @@ traffic:
   hit_stop_s: 2.5
   hit_min_mps: 1.5
   hit_margin_m: 0.3
+  mass_kg: 1400.0               # traffic car mass when it is loose (pushed, specs/traffic.md step 7)
+  push_hold_s: 1.0              # stays loose this long after the last touch
+  push_linear_damping: 2.5
+  push_angular_damping: 3.0
+  swerve_ahead_m: 22.0          # start moving round a parked car this far ahead (step 8)
+  swerve_margin_m: 0.6
+  swerve_max_m: 7.0             # a bigger sideways shift is not attempted
   amber_commit_m: 14.0          # on amber, cars closer than this to the stop line go on
   stop_margin_m: 1.5
   signal_classes: [2, 3, 4]     # trunk, primary, secondary
@@ -404,6 +411,9 @@ cars:
     min_spacing_m: 16.0
     clear_player_m: 20.0
     forget_m: 600.0
+    mass_factor: 1.0          # parked cars are dynamic bodies the player and traffic can push
+    linear_damping: 3.0
+    angular_damping: 4.0
 # Police and wanted level (specs/police.md). P0 rules run in integer ticks: s → round(s · tick_hz).
 # Distances in world metres (after car_scale); patrols are traffic cars flagged as police.
 police:

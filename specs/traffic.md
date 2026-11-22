@@ -1,6 +1,6 @@
 # Provoz a semafory
 
-**version: 1** · P1 (jízda aut v reálném čase) · deterministické části testované v obou klientech
+**version: 2** · P1 (jízda aut v reálném čase) · deterministické části testované v obou klientech
 · plán: METROPOLE_PLAN 7.3, M1 bod 2 · parita F-016
 
 ## Účel
@@ -79,12 +79,26 @@ Bez kandidátů: otočka zpět po `e`, když z `n` po ní lze vyjet, jinak −1 
 4. **Poloha:** bod pruhu v `s`; skutečná poloha a natočení se k němu blíží exponenciálně
    (`follow_rate`, 1/s), což zaoblí zatáčky a přeskoky mezi pruhy.
 5. **Tělo:** kinematické těleso (planck ve W, forge2d ve F) o rozměrech `car_length_m × car_width_m
-   × car_scale`; rychlost těla = (nová poloha − stará) / dt, takže hráč do auta narazí a odrazí se.
-   Koliduje jen s hráčem a jen ve stejné vrstvě (`CAT_TRAFFIC`). AI auta se navzájem nesrážejí
-   (na křižovatkách bez semaforu se mohou krátce překrýt – vědomé zjednodušení M1).
+   × car_scale`, hustota `mass_kg / plocha`; rychlost těla = (nová poloha − stará) / dt, takže hráč
+   do auta narazí a odrazí se. Kategorie `CAT_TRAFFIC`; koliduje s hráčem ve stejné vrstvě a ve
+   vrstvě 0 se zaparkovanými auty (`CAT_PARKED`, kinematické auto je odsune). AI auta se navzájem
+   nesrážejí (na křižovatkách bez semaforu se mohou krátce překrýt – vědomé zjednodušení M1).
 6. **Náraz:** po kroku fyziky test překryvu obdélníků hráče a auta (SAT, rezerva `hit_margin_m`).
    Začátek překryvu při relativní rychlosti ≥ `hit_min_mps` = událost „auto trefené hráčem“
    (auto, rychlost nárazu); auto stojí `hit_stop_s`, pak pokračuje.
+7. **Odstrčení (v2):** každý krok s překryvem (při jakékoli rychlosti) nastaví `push_hold_s`.
+   Auto je **volné**, dokud běží `hit_stop_s` nebo `push_hold_s`: těleso je dynamické (útlum
+   `push_linear_damping`, `push_angular_damping`), hráč ho odtlačí, ve vrstvě 0 navíc koliduje
+   s budovami (`CAT_BUILDINGS`); poloha a natočení se čtou z tělesa, rychlost v pruhu je 0.
+   Po skončení je těleso zase kinematické, `s` = průmět polohy na vlastní hranu (nejbližší úsek)
+   a auto se do pruhu vrátí přes `follow_rate`. Hráč obklíčený auty se tak vždy vytlačí ven.
+8. **Objíždění zaparkovaných aut (v2):** v kroku 4 se cílový bod pruhu posune bočně o `shift`.
+   Pro každé zaparkované auto ve vrstvě 0: `lx` = vzdálenost před skutečnou polohou auta (ta se za
+   bodem pruhu opožďuje), `ly` = vzdálenost doprava od bodu pruhu, obojí ve směru jízdy; boční přesah `ext = phl · |sin Δ| + phw · |cos Δ|` (Δ = rozdíl natočení), potřeba
+   `need = pološířka + ext + swerve_margin_m`. Počítá se, když `−(hl + phl) ≤ lx ≤ swerve_ahead_m
+   + hl + phl` a `|ly| < need`: vpravo (`ly ≥ 0`) posun `ly − need` (doleva), vlevo `ly + need`.
+   `shift` = posun s největší absolutní hodnotou; je-li větší než `swerve_max_m`, `shift = 0`
+   (auto se neobjíždí a odsune ho těleso). Funkce `swerveShift` je čistá a testovaná v obou klientech.
 
 ## Hustota a vznik
 
@@ -116,4 +130,4 @@ autopilot měření D1 (`specs/bench.md`), který auta neobjíždí.
 - Hrana s nulovou délkou: auto ji projede v jednom kroku.
 - Semafor s jedinou skupinou (všechny přístupy v ose): skupina 1 nemá přístupy, auta čekají jen svou
   červenou.
-- Hráč stojí v pruhu: auto za ním zastaví a čeká (žádné objíždění v M1).
+- Hráč stojí v pruhu: auto za ním zastaví a čeká (hráče neobjíždí); hráč ho může odtlačit (krok 7).

@@ -1943,6 +1943,13 @@ class TuningTraffic {
         hitStopS = r.d('hit_stop_s'),
         hitMinMps = r.d('hit_min_mps'),
         hitMarginM = r.d('hit_margin_m'),
+        massKg = r.d('mass_kg'),
+        pushHoldS = r.d('push_hold_s'),
+        pushLinearDamping = r.d('push_linear_damping'),
+        pushAngularDamping = r.d('push_angular_damping'),
+        swerveAheadM = r.d('swerve_ahead_m'),
+        swerveMarginM = r.d('swerve_margin_m'),
+        swerveMaxM = r.d('swerve_max_m'),
         amberCommitM = r.d('amber_commit_m'),
         stopMarginM = r.d('stop_margin_m'),
         signalClasses = r.il('signal_classes'),
@@ -2021,6 +2028,24 @@ class TuningTraffic {
 
   double hitMarginM;
 
+  /// traffic car mass when it is loose (pushed, specs/traffic.md step 7)
+  double massKg;
+
+  /// stays loose this long after the last touch
+  double pushHoldS;
+
+  double pushLinearDamping;
+
+  double pushAngularDamping;
+
+  /// start moving round a parked car this far ahead (step 8)
+  double swerveAheadM;
+
+  double swerveMarginM;
+
+  /// a bigger sideways shift is not attempted
+  double swerveMaxM;
+
   /// on amber, cars closer than this to the stop line go on
   double amberCommitM;
 
@@ -2077,6 +2102,13 @@ class TuningTraffic {
         'hit_stop_s': hitStopS,
         'hit_min_mps': hitMinMps,
         'hit_margin_m': hitMarginM,
+        'mass_kg': massKg,
+        'push_hold_s': pushHoldS,
+        'push_linear_damping': pushLinearDamping,
+        'push_angular_damping': pushAngularDamping,
+        'swerve_ahead_m': swerveAheadM,
+        'swerve_margin_m': swerveMarginM,
+        'swerve_max_m': swerveMaxM,
         'amber_commit_m': amberCommitM,
         'stop_margin_m': stopMarginM,
         'signal_classes': signalClasses,
@@ -2232,7 +2264,10 @@ class TuningCarsParked {
         minInnerM = r.d('min_inner_m'),
         minSpacingM = r.d('min_spacing_m'),
         clearPlayerM = r.d('clear_player_m'),
-        forgetM = r.d('forget_m');
+        forgetM = r.d('forget_m'),
+        massFactor = r.d('mass_factor'),
+        linearDamping = r.d('linear_damping'),
+        angularDamping = r.d('angular_damping');
 
   int salt;
 
@@ -2257,6 +2292,13 @@ class TuningCarsParked {
 
   double forgetM;
 
+  /// parked cars are dynamic bodies the player and traffic can push
+  double massFactor;
+
+  double linearDamping;
+
+  double angularDamping;
+
   Map<String, Object> toJson() => {
         'salt': salt,
         'per_chunk': perChunk,
@@ -2269,6 +2311,9 @@ class TuningCarsParked {
         'min_spacing_m': minSpacingM,
         'clear_player_m': clearPlayerM,
         'forget_m': forgetM,
+        'mass_factor': massFactor,
+        'linear_damping': linearDamping,
+        'angular_damping': angularDamping,
       };
 }
 

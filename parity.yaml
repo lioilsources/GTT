@@ -153,7 +153,7 @@
 - id: F-016
   name: Traffic and two-phase traffic lights
   level: P1
-  spec: specs/traffic.md@1
+  spec: specs/traffic.md@2
   lead: web
   flutter: done
   web: done
@@ -187,7 +187,7 @@
 - id: F-018
   name: Cars, switching and the garage (5 cars, parked cars, garage)
   level: P0
-  spec: specs/cars.md@1
+  spec: specs/cars.md@2
   vectors: vectors/cars.json
   lead: web
   flutter: done

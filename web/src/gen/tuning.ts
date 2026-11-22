@@ -1860,6 +1860,17 @@ export class TuningTraffic {
   hitStopS: number;
   hitMinMps: number;
   hitMarginM: number;
+  /** traffic car mass when it is loose (pushed, specs/traffic.md step 7) */
+  massKg: number;
+  /** stays loose this long after the last touch */
+  pushHoldS: number;
+  pushLinearDamping: number;
+  pushAngularDamping: number;
+  /** start moving round a parked car this far ahead (step 8) */
+  swerveAheadM: number;
+  swerveMarginM: number;
+  /** a bigger sideways shift is not attempted */
+  swerveMaxM: number;
   /** on amber, cars closer than this to the stop line go on */
   amberCommitM: number;
   stopMarginM: number;
@@ -1905,6 +1916,13 @@ export class TuningTraffic {
     this.hitStopS = r.d('hit_stop_s');
     this.hitMinMps = r.d('hit_min_mps');
     this.hitMarginM = r.d('hit_margin_m');
+    this.massKg = r.d('mass_kg');
+    this.pushHoldS = r.d('push_hold_s');
+    this.pushLinearDamping = r.d('push_linear_damping');
+    this.pushAngularDamping = r.d('push_angular_damping');
+    this.swerveAheadM = r.d('swerve_ahead_m');
+    this.swerveMarginM = r.d('swerve_margin_m');
+    this.swerveMaxM = r.d('swerve_max_m');
     this.amberCommitM = r.d('amber_commit_m');
     this.stopMarginM = r.d('stop_margin_m');
     this.signalClasses = r.il('signal_classes');
@@ -1949,6 +1967,13 @@ export class TuningTraffic {
       hit_stop_s: this.hitStopS,
       hit_min_mps: this.hitMinMps,
       hit_margin_m: this.hitMarginM,
+      mass_kg: this.massKg,
+      push_hold_s: this.pushHoldS,
+      push_linear_damping: this.pushLinearDamping,
+      push_angular_damping: this.pushAngularDamping,
+      swerve_ahead_m: this.swerveAheadM,
+      swerve_margin_m: this.swerveMarginM,
+      swerve_max_m: this.swerveMaxM,
       amber_commit_m: this.amberCommitM,
       stop_margin_m: this.stopMarginM,
       signal_classes: this.signalClasses,
@@ -2110,6 +2135,10 @@ export class TuningCarsParked {
   minSpacingM: number;
   clearPlayerM: number;
   forgetM: number;
+  /** parked cars are dynamic bodies the player and traffic can push */
+  massFactor: number;
+  linearDamping: number;
+  angularDamping: number;
 
   constructor(r: R) {
     this.salt = r.i('salt');
@@ -2123,6 +2152,9 @@ export class TuningCarsParked {
     this.minSpacingM = r.d('min_spacing_m');
     this.clearPlayerM = r.d('clear_player_m');
     this.forgetM = r.d('forget_m');
+    this.massFactor = r.d('mass_factor');
+    this.linearDamping = r.d('linear_damping');
+    this.angularDamping = r.d('angular_damping');
   }
 
   toJson(): Record<string, unknown> {
@@ -2138,6 +2170,9 @@ export class TuningCarsParked {
       min_spacing_m: this.minSpacingM,
       clear_player_m: this.clearPlayerM,
       forget_m: this.forgetM,
+      mass_factor: this.massFactor,
+      linear_damping: this.linearDamping,
+      angular_damping: this.angularDamping,
     };
   }
 }

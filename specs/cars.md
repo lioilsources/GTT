@@ -1,6 +1,6 @@
 # Auta, přesedání a garáž (M1-S8)
 
-**version: 1** · P0 vlastnictví a garáž (`vectors/cars.json`) · P2 zaparkovaná auta a kreslení ·
+**version: 2** · P0 vlastnictví a garáž (`vectors/cars.json`) · P2 zaparkovaná auta a kreslení ·
 METROPOLE_PLAN 7.5, 10, M1 bod 8 · parita F-018
 
 ## Účel
@@ -69,10 +69,13 @@ Klient po každé úspěšné akci porovná stav před a po a ohlásí:
   Tlačítko proto zůstane `cars.action_hold_s` od posledního splnění podmínek, dokud je vybrané
   auto pořád do `board_distance_m` (rychlost se v té době nehlídá). Stejně tlačítko Garáž
   (do `garage_radius_m`).
-- Stisk: hráčovo auto zůstane zaparkované na místě (statické těleso, vlastník podle toho, jestli je
+- Stisk: hráčovo auto zůstane zaparkované na místě (zaparkované těleso, vlastník podle toho, jestli je
   v `owned` a hráč ho neukradl), vybrané zaparkované auto zmizí a na jeho místě vznikne nové
   dynamické těleso s parametry nového auta (rozměry × `car_scale`, hmotnost, grip, …). Rychlost 0.
-- Zaparkovaná auta jsou statická tělesa v kategorii budov: kolidují s hráčem jen ve vrstvě 0.
+- Zaparkovaná auta (v2) jsou dynamická tělesa v kategorii `CAT_PARKED` (hmotnost auta ×
+  `cars.parked.mass_factor`, útlum `cars.parked.linear_damping`, `angular_damping`). Kolidují s hráčem
+  jen ve vrstvě 0, s budovami, mezi sebou a s provozem, takže je hráč i provoz odtlačí. Po kroku fyziky
+  se poloha a natočení probuzeného tělesa zapíšou zpět do zaparkovaného auta (kreslení, přesedání).
 
 ## Zaparkovaná auta (P2, generují se po chunku)
 - Generují se při načtení chunku a zahodí s ním (jako mobiliář, plán 6.4). Generátor je sdílený
