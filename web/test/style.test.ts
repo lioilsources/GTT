@@ -7,7 +7,9 @@ import { parse } from 'yaml';
 import { tokens } from '../src/gen/tokens';
 import { Tuning } from '../src/gen/tuning';
 import { cityInks, cityPalette, cityTokenPrefix, dayPalette, nightPalette, rgba } from '../src/render/palette';
-import { RISOGRAPH_FRAGMENT, RISOGRAPH_UNIFORMS, risographOn, risographUniforms } from '../src/render/risograph';
+import {
+  DEPTH_LAYER, DYNAMIC_LAYERS, RISOGRAPH_FRAGMENT, RISOGRAPH_UNIFORMS, WORLD_LAYER, mainCameraMask, risographOn, risographUniforms,
+} from '../src/render/risograph';
 
 const tuning = Tuning.fromJson(parse(readFileSync(join(__dirname, '..', '..', 'content', 'tuning.yaml'), 'utf8')));
 
@@ -98,5 +100,17 @@ describe('risograph (specs/style.md "Risograf")', () => {
   it('the shader declares every uniform it is given', () => {
     for (const u of [...RISOGRAPH_UNIFORMS, 'texelSize']) expect(RISOGRAPH_FRAGMENT).toMatch(new RegExp(`uniform \\w+ ${u};`));
     expect(RISOGRAPH_FRAGMENT).toContain('0.299, 0.587, 0.114');
+  });
+});
+
+describe('camera layer masks (regression: NYC drew no world)', () => {
+  it('main camera sees the world with and without the risograph', () => {
+    expect((mainCameraMask(false) & WORLD_LAYER) >>> 0).toBe(WORLD_LAYER);
+    expect((mainCameraMask(false) & DYNAMIC_LAYERS) >>> 0).toBe(DYNAMIC_LAYERS);
+    expect(mainCameraMask(true)).toBe(WORLD_LAYER);
+  });
+  it('world layers are outside Babylon\'s default mask', () => {
+    expect(WORLD_LAYER & 0x0fffffff).toBe(0);
+    expect(DEPTH_LAYER & 0x0fffffff).toBe(0);
   });
 });

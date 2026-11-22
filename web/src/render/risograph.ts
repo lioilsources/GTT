@@ -95,3 +95,14 @@ void main(void) {
   gl_FragColor = vec4(clamp(c, 0.0, 1.0), 1.0);
 }
 `;
+
+/** Layer masks (specs/style.md "Risograf"): world meshes sit outside Babylon's default mask 0x0FFFFFFF. */
+export const WORLD_LAYER = 0x10000000;
+export const DEPTH_LAYER = 0x20000000;
+export const DYNAMIC_LAYERS = 0x0fffffff;
+export const ALL_LAYERS = 0xffffffff;
+
+/** Layer mask of the main camera: only the world under the risograph, otherwise every layer. */
+export function mainCameraMask(risograph: boolean): number {
+  return risograph ? WORLD_LAYER : ALL_LAYERS;
+}

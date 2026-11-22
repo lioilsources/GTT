@@ -26,7 +26,9 @@ import { chunkKey, type City } from '../world/model';
 import { cameraHeight, displayHeight, extrusionScale, fovX } from '../world/camera';
 import { bollardPoints, bollardTris, buildRoads, buildingTris, groundTris, Tris, Z, type RoadChunk } from './geometry';
 import { cityInks, cityPalette, dayPalette, nightPalette, rgba, type Palette, type Rgba } from './palette';
-import { RISOGRAPH_FRAGMENT, RISOGRAPH_UNIFORMS, risographOn, risographUniforms } from './risograph';
+import {
+  DEPTH_LAYER, DYNAMIC_LAYERS, RISOGRAPH_FRAGMENT, RISOGRAPH_UNIFORMS, WORLD_LAYER, mainCameraMask, risographOn, risographUniforms,
+} from './risograph';
 import { facadeTexture } from './textures';
 import { carShadowTris, carTris, carUndersideTris, parkedTris } from '../cars/carTris';
 import { hopArc, hopFlip } from '../drive/hop';
@@ -96,10 +98,6 @@ function wrap(a: number): number {
  * decks also DEPTH_LAYER, so the second camera redraws them depth-only and cars still hide behind
  * them. Everything else keeps Babylon's default mask (0x0FFFFFFF).
  */
-const WORLD_LAYER = 0x10000000;
-const DEPTH_LAYER = 0x20000000;
-const DYNAMIC_LAYERS = 0x0fffffff;
-const ALL_LAYERS = 0xffffffff;
 
 ShaderStore.ShadersStore['risographFragmentShader'] = RISOGRAPH_FRAGMENT;
 
@@ -202,6 +200,9 @@ export class WorldView {
     cam.fovMode = TargetCamera.FOVMODE_HORIZONTAL_FIXED;
     cam.minZ = this.H * 0.25;
     cam.maxZ = this.H * 1.5;
+    // World meshes live on WORLD_LAYER, outside Babylon's default camera mask: without the risograph
+    // the main camera must see every layer (NYC, or any city loaded at night).
+    cam.layerMask = mainCameraMask(false);
     const top = (this.topCamera = new TargetCamera('camera-top', new Vector3(0, this.H, 0), scene, false));
     top.fovMode = TargetCamera.FOVMODE_HORIZONTAL_FIXED;
     top.minZ = cam.minZ;
@@ -271,7 +272,7 @@ export class WorldView {
       cam.detachPostProcess(this.riso!);
       this.riso!.dispose(cam);
       this.riso = null;
-      cam.layerMask = ALL_LAYERS;
+      cam.layerMask = mainCameraMask(false);
       scene.activeCameras = [];
       scene.activeCamera = cam;
       scene.setRenderingOrder(0, null);
@@ -303,7 +304,7 @@ export class WorldView {
       fx.setFloat('grainStrength', u.grainStrength);
     };
     this.riso = pp;
-    cam.layerMask = WORLD_LAYER;
+    cam.layerMask = mainCameraMask(true);
     this.updateTopMask();
     scene.activeCameras = [cam, this.topCamera];
     scene.setRenderingOrder(0, depthFirst);
