@@ -1,0 +1,21 @@
+{
+  "id": "kombi_woody",
+  "name": "Corvan Country Woody",
+  "class": "kombi",
+  "length_m": 5.3,
+  "width_m": 1.95,
+  "mass": 1800,
+  "power": 6.8,
+  "brake": 12.5,
+  "grip_front": 19.5,
+  "grip_rear": 18.5,
+  "drift_bias": 0.42,
+  "steer_speed": 3.9,
+  "top_speed": 33.0,
+  "seats": 6,
+  "tags": ["nyc"],
+  "price": 17000,
+  "rarity": "rare",
+  "tuning_slots": ["engine", "tyres", "brakes", "weight", "drift"],
+  "paint": "woody_tan"
+}

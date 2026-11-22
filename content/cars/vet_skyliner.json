@@ -1,0 +1,21 @@
+{
+  "id": "vet_skyliner",
+  "name": "Amberline Skyliner 59",
+  "class": "veteran",
+  "length_m": 5.6,
+  "width_m": 2.0,
+  "mass": 1900,
+  "power": 7.2,
+  "brake": 11.0,
+  "grip_front": 18.5,
+  "grip_rear": 17.5,
+  "drift_bias": 0.4,
+  "steer_speed": 3.3,
+  "top_speed": 36.0,
+  "seats": 6,
+  "tags": ["nyc"],
+  "price": 26000,
+  "rarity": "epic",
+  "tuning_slots": ["engine", "tyres", "brakes", "weight", "drift"],
+  "paint": "skyliner_mint"
+}

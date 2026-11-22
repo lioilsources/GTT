@@ -1,0 +1,21 @@
+{
+  "id": "sedan_crown",
+  "name": "Amberline Crown 300",
+  "class": "sedan",
+  "length_m": 5.2,
+  "width_m": 1.9,
+  "mass": 1750,
+  "power": 8.0,
+  "brake": 14.5,
+  "grip_front": 21.0,
+  "grip_rear": 20.0,
+  "drift_bias": 0.36,
+  "steer_speed": 4.0,
+  "top_speed": 39.0,
+  "seats": 5,
+  "tags": ["nyc"],
+  "price": 19000,
+  "rarity": "common",
+  "tuning_slots": ["engine", "tyres", "brakes", "weight", "drift"],
+  "paint": "crown_wine"
+}

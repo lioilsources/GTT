@@ -1,0 +1,21 @@
+{
+  "id": "off_ridge",
+  "name": "Torvik Ridge 4x4",
+  "class": "offroad",
+  "length_m": 4.7,
+  "width_m": 1.95,
+  "mass": 2100,
+  "power": 7.8,
+  "brake": 13.5,
+  "grip_front": 20.0,
+  "grip_rear": 19.5,
+  "drift_bias": 0.42,
+  "steer_speed": 3.8,
+  "top_speed": 36.0,
+  "seats": 5,
+  "tags": ["nyc"],
+  "price": 22000,
+  "rarity": "common",
+  "tuning_slots": ["engine", "tyres", "brakes", "weight", "drift"],
+  "paint": "ridge_khaki"
+}

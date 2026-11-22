@@ -1,0 +1,21 @@
+{
+  "id": "muscle_thunder",
+  "name": "Corvan Thunder 69",
+  "class": "muscle",
+  "length_m": 5.0,
+  "width_m": 1.95,
+  "mass": 1700,
+  "power": 12.0,
+  "brake": 13.0,
+  "grip_front": 20.5,
+  "grip_rear": 16.5,
+  "drift_bias": 0.22,
+  "steer_speed": 3.7,
+  "top_speed": 47.0,
+  "seats": 2,
+  "tags": ["nyc"],
+  "price": 38000,
+  "rarity": "rare",
+  "tuning_slots": ["engine", "tyres", "brakes", "weight", "drift"],
+  "paint": "thunder_black"
+}

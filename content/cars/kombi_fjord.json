@@ -1,0 +1,21 @@
+{
+  "id": "kombi_fjord",
+  "name": "Talvik Fjord Estate",
+  "class": "kombi",
+  "length_m": 4.9,
+  "width_m": 1.85,
+  "mass": 1560,
+  "power": 7.4,
+  "brake": 14.5,
+  "grip_front": 21.5,
+  "grip_rear": 21.0,
+  "drift_bias": 0.4,
+  "steer_speed": 4.4,
+  "top_speed": 36.0,
+  "seats": 5,
+  "tags": ["nyc"],
+  "price": 13000,
+  "rarity": "common",
+  "tuning_slots": ["engine", "tyres", "brakes", "weight", "drift"],
+  "paint": "fjord_sage"
+}

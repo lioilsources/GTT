@@ -1,0 +1,21 @@
+{
+  "id": "hatch_rally",
+  "name": "Talvik Rallye S",
+  "class": "hatchback",
+  "length_m": 4.0,
+  "width_m": 1.8,
+  "mass": 1150,
+  "power": 9.4,
+  "brake": 16.0,
+  "grip_front": 24.0,
+  "grip_rear": 23.0,
+  "drift_bias": 0.34,
+  "steer_speed": 5.4,
+  "top_speed": 38.0,
+  "seats": 4,
+  "tags": ["nyc"],
+  "price": 16000,
+  "rarity": "rare",
+  "tuning_slots": ["engine", "tyres", "brakes", "weight", "drift"],
+  "paint": "rally_blue"
+}

@@ -1,0 +1,21 @@
+{
+  "id": "hatch_city",
+  "name": "Bellmar Civetta",
+  "class": "hatchback",
+  "length_m": 4.1,
+  "width_m": 1.75,
+  "mass": 1120,
+  "power": 7.4,
+  "brake": 14.5,
+  "grip_front": 22.0,
+  "grip_rear": 21.0,
+  "drift_bias": 0.4,
+  "steer_speed": 5.2,
+  "top_speed": 34.0,
+  "seats": 5,
+  "tags": ["nyc"],
+  "price": 7500,
+  "rarity": "common",
+  "tuning_slots": ["engine", "tyres", "brakes", "weight", "drift"],
+  "paint": "civetta_silver"
+}

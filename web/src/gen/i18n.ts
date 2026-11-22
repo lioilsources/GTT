@@ -306,6 +306,14 @@ export type MessageKey =
   | "carClassSedan"
   | "carClassMicro"
   | "carClassSupersport"
+  | "carClassMini"
+  | "carClassKombi"
+  | "carClassVeteran"
+  | "carClassOffroad"
+  | "carClassVan"
+  | "carClassLimo"
+  | "carClassBus"
+  | "carClassSpecial"
   | "hopButton"
   | "hopRefill"
   | "hopEmpty"
@@ -731,6 +739,14 @@ export const messages: Record<Locale, Record<MessageKey, string>> = {
     carClassSedan: "Sedan",
     carClassMicro: "Mikro",
     carClassSupersport: "Supersport",
+    carClassMini: "Mini",
+    carClassKombi: "Kombi",
+    carClassVeteran: "Veterán",
+    carClassOffroad: "Terénní",
+    carClassVan: "Dodávka",
+    carClassLimo: "Limuzína",
+    carClassBus: "Autobus",
+    carClassSpecial: "Speciál",
     hopButton: "Skok",
     hopRefill: "Doplnit vzduch",
     hopEmpty: "Kontejner vzduchu je prázdný",
@@ -1154,6 +1170,14 @@ export const messages: Record<Locale, Record<MessageKey, string>> = {
     carClassSedan: "Sedan",
     carClassMicro: "Micro",
     carClassSupersport: "Supercar",
+    carClassMini: "Mini",
+    carClassKombi: "Estate",
+    carClassVeteran: "Classic",
+    carClassOffroad: "Off-road",
+    carClassVan: "Van",
+    carClassLimo: "Limousine",
+    carClassBus: "Bus",
+    carClassSpecial: "Special",
     hopButton: "Hop",
     hopRefill: "Refill air",
     hopEmpty: "Air tank empty",

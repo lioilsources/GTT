@@ -1,0 +1,21 @@
+{
+  "id": "van_box",
+  "name": "Torvik Boxline",
+  "class": "van",
+  "length_m": 6.6,
+  "width_m": 2.2,
+  "mass": 3300,
+  "power": 5.4,
+  "brake": 11.0,
+  "grip_front": 18.0,
+  "grip_rear": 17.0,
+  "drift_bias": 0.45,
+  "steer_speed": 3.1,
+  "top_speed": 30.0,
+  "seats": 3,
+  "tags": ["nyc"],
+  "price": 14000,
+  "rarity": "common",
+  "tuning_slots": ["engine", "tyres", "brakes", "weight", "drift"],
+  "paint": "box_bone"
+}

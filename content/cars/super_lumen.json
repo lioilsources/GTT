@@ -1,0 +1,21 @@
+{
+  "id": "super_lumen",
+  "name": "Quillon Lumen EV",
+  "class": "supersport",
+  "length_m": 4.7,
+  "width_m": 1.98,
+  "mass": 1700,
+  "power": 14.6,
+  "brake": 18.0,
+  "grip_front": 26.0,
+  "grip_rear": 25.0,
+  "drift_bias": 0.3,
+  "steer_speed": 5.0,
+  "top_speed": 50.0,
+  "seats": 2,
+  "tags": ["nyc"],
+  "price": 60000,
+  "rarity": "legendary",
+  "tuning_slots": ["engine", "tyres", "brakes", "weight", "drift"],
+  "paint": "lumen_frost"
+}

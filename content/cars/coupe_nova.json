@@ -1,0 +1,21 @@
+{
+  "id": "coupe_nova",
+  "name": "Varga Nova",
+  "class": "coupe",
+  "length_m": 4.4,
+  "width_m": 1.82,
+  "mass": 1290,
+  "power": 9.2,
+  "brake": 16.0,
+  "grip_front": 23.5,
+  "grip_rear": 22.0,
+  "drift_bias": 0.32,
+  "steer_speed": 4.7,
+  "top_speed": 41.0,
+  "seats": 4,
+  "tags": ["nyc"],
+  "price": 21000,
+  "rarity": "common",
+  "tuning_slots": ["engine", "tyres", "brakes", "weight", "drift"],
+  "paint": "nova_jade"
+}

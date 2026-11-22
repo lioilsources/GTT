@@ -1,0 +1,21 @@
+{
+  "id": "super_vento",
+  "name": "Ostra Vento",
+  "class": "supersport",
+  "length_m": 4.4,
+  "width_m": 1.92,
+  "mass": 1320,
+  "power": 13.4,
+  "brake": 18.5,
+  "grip_front": 26.5,
+  "grip_rear": 25.5,
+  "drift_bias": 0.3,
+  "steer_speed": 5.2,
+  "top_speed": 52.0,
+  "seats": 2,
+  "tags": ["nyc"],
+  "price": 52000,
+  "rarity": "epic",
+  "tuning_slots": ["engine", "tyres", "brakes", "weight", "drift"],
+  "paint": "vento_green"
+}

@@ -1,0 +1,21 @@
+{
+  "id": "muscle_bulldog",
+  "name": "Rennet Bulldog 8",
+  "class": "muscle",
+  "length_m": 5.1,
+  "width_m": 1.98,
+  "mass": 1750,
+  "power": 11.8,
+  "brake": 13.5,
+  "grip_front": 21.0,
+  "grip_rear": 17.0,
+  "drift_bias": 0.23,
+  "steer_speed": 3.6,
+  "top_speed": 46.0,
+  "seats": 4,
+  "tags": ["nyc"],
+  "price": 34000,
+  "rarity": "rare",
+  "tuning_slots": ["engine", "tyres", "brakes", "weight", "drift"],
+  "paint": "bulldog_plum"
+}

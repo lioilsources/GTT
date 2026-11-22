@@ -1,0 +1,21 @@
+{
+  "id": "off_bloc",
+  "name": "Nordquist Bloc G",
+  "class": "offroad",
+  "length_m": 4.8,
+  "width_m": 1.98,
+  "mass": 2400,
+  "power": 8.0,
+  "brake": 13.0,
+  "grip_front": 19.5,
+  "grip_rear": 19.0,
+  "drift_bias": 0.4,
+  "steer_speed": 3.6,
+  "top_speed": 38.0,
+  "seats": 5,
+  "tags": ["nyc"],
+  "price": 36000,
+  "rarity": "rare",
+  "tuning_slots": ["engine", "tyres", "brakes", "weight", "drift"],
+  "paint": "bloc_olive"
+}

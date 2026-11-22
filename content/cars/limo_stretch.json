@@ -1,0 +1,21 @@
+{
+  "id": "limo_stretch",
+  "name": "Nordquist Regent Stretch",
+  "class": "limo",
+  "length_m": 7.6,
+  "width_m": 2.0,
+  "mass": 2600,
+  "power": 7.0,
+  "brake": 13.0,
+  "grip_front": 20.0,
+  "grip_rear": 19.0,
+  "drift_bias": 0.4,
+  "steer_speed": 2.8,
+  "top_speed": 38.0,
+  "seats": 8,
+  "tags": ["nyc"],
+  "price": 42000,
+  "rarity": "epic",
+  "tuning_slots": ["engine", "tyres", "brakes", "weight", "drift"],
+  "paint": "stretch_black"
+}
