@@ -23,7 +23,7 @@ state:  {unlocked: [spotId], paid, last: {op, amount}}
 - `stations` – id stanic města v pořadí balíčku. `unlocked` – odemčené stanice v pořadí
   odemknutí (z uložení, `specs/save.md` v3 `stations`).
 - `paid` – součet zaplaceného jízdného v relaci, `last` – poslední akce (`op = ""`, `amount = 0`
-  po `init` a po akci, která nic nestojí).
+  po `init`, `load` a `unlock`; `metro` a `taxi` zapíší svůj `op` i při nulovém jízdném).
 - `init(config, seed)`: `unlocked = []`, `paid = 0`, `last = {op: "", amount: 0}`; `seed` se
   nepoužívá. Klient pak pošle `load` s uloženými stanicemi.
 
@@ -60,18 +60,21 @@ odečte `last.amount` a zapíše zpět. Hotovost tak nikdy neklesne pod 0.
   `loop.spot_radius_m`) ukážou kontextové tlačítko „Metro“ (`travelMetro`). Karta přes svět
   (pauza, `specs/pause.md`): seznam ostatních odemčených stanic v pořadí `unlocked` se jménem a
   jízdným (`travelFare`); stanice, na kterou hotovost nestačí, je šedá. Výběr → `metro` →
-  přesun. Zamčená stanice ukáže místo tlačítka nápovědu `travelLocked` jen v kartě (zamčené
-  stanice se v seznamu nezobrazují). Tlačítko „Zpět“ (`travelClose`).
+  přesun. Dokud je některá stanice zamčená, karta ukáže řádek `travelLocked` (zamčené stanice se
+  v seznamu nezobrazují). Tlačítko Metro se ukazuje i během navigace. Tlačítko „Zpět“ (`travelClose`).
 - **Taxi:** aplikace telefonu Taxi (id `taxi`, mezi Mapou a Garáží, `specs/phone.md`): seznam
   cílů = spoty s minigame a hero památky města, řazené podle vzdálenosti od auta, každý s cenou;
   na co hotovost nestačí, je šedé. Výběr → `taxi` → přesun na parkovací bod cíle (u památky
-  nejbližší ponechaná silnice k bodu památky, `graph.near`). Během hledanosti > 0 je Taxi
+  průmět na nejbližší ponechanou hranu na zemi do `minigames.taxi.dest_search_m`, směr podle
+  hrany, na jednosměrce po směru; památka bez silnice v tom okruhu v seznamu není). Řazení podle
+  celočíselného `distDm`, při shodě spoty před památkami v pořadí seznamu. Během hledanosti > 0 je Taxi
   zamčené (`travelWanted`).
 - **Přesun:** karta linky přes svět na `travel.cut_s` (jméno cíle, ikona metra nebo taxi, barvy
   `color.travel`), pak auto stojí na parkovacím bodu cíle ve směru `parkHeading` s nulovou
   rychlostí, vrstva 0. Provoz, chodci a hlídky se resetují jako po teleportu (`specs/traffic.md`,
   `specs/pedestrians.md`). Přijatá karta feedu a navigace zůstanou (trasa se přepočítá).
   Odemknutí cílové stanice je tím splněné.
+- **Ukládá se** po odemknutí a po každé jízdě (změna hotovosti).
 - **Kdy ne:** během minihry, Taxi směny (`specs/minigames/taxi.md`) a s hledaností > 0 se
   rychlý přesun nenabízí.
 - **Kreslení:** vstup do metra shora jako obdélník `travel.entry_w_m × travel.entry_l_m` u
