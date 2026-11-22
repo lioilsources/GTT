@@ -103,7 +103,7 @@ export function mountPassport(host: HTMLElement, env: PassportEnv, tracker: Pass
     if (kind === 'landmark') return t(postcardTitleKey(id));
     if (kind === 'district') return tracker.districtNames.get(id) ?? id;
     if (kind === 'minigame') return t(`mg_${id}` as MessageKey);
-    return id;
+    return tracker.photoNames.get(id) ?? id;
   };
   const bar = h('div.pp-progress', {}, h('span', { style: { width: `${r.percent}%` } }));
   const sections = stampKinds.map((kind) => {
