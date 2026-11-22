@@ -540,6 +540,14 @@ style:                        # city skins (specs/style.md); colours in design/t
   halftone_strength: 0.12     # darkening inside a halftone dot
   halftone_low: 0.25          # luminance band that gets dots (midtones only)
   halftone_high: 0.8
+  cast_shadow: {nyc: true, prague: false}   # building shadows on the ground (style A, v2)
+  shadow_ratio: 0.5           # shadow length per metre of building height
+  shadow_max_m: 22.0          # cap, so towers don't shade half the map
+  roof_edge_m: 0.9            # light parapet band inside the roof outline
+  crosswalks: {nyc: true, prague: false}
+  crosswalk_gap_m: 1.5        # from the junction box to the crossing
+  crosswalk_len_m: 4.0        # crossing depth along the road
+  crosswalk_stripe_m: 0.6     # stripe width = gap width
 
 police:
   enabled: true

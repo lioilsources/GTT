@@ -2683,6 +2683,21 @@ export class TuningStyle {
   /** luminance band that gets dots (midtones only) */
   halftoneLow: number;
   halftoneHigh: number;
+  /** building shadows on the ground (style A, v2) */
+  readonly castShadow: TuningStyleCastShadow;
+  /** shadow length per metre of building height */
+  shadowRatio: number;
+  /** cap, so towers don't shade half the map */
+  shadowMaxM: number;
+  /** light parapet band inside the roof outline */
+  roofEdgeM: number;
+  readonly crosswalks: TuningStyleCrosswalks;
+  /** from the junction box to the crossing */
+  crosswalkGapM: number;
+  /** crossing depth along the road */
+  crosswalkLenM: number;
+  /** stripe width = gap width */
+  crosswalkStripeM: number;
 
   constructor(r: R) {
     this.risograph = new TuningStyleRisograph(r.sub('risograph'));
@@ -2694,6 +2709,14 @@ export class TuningStyle {
     this.halftoneStrength = r.d('halftone_strength');
     this.halftoneLow = r.d('halftone_low');
     this.halftoneHigh = r.d('halftone_high');
+    this.castShadow = new TuningStyleCastShadow(r.sub('cast_shadow'));
+    this.shadowRatio = r.d('shadow_ratio');
+    this.shadowMaxM = r.d('shadow_max_m');
+    this.roofEdgeM = r.d('roof_edge_m');
+    this.crosswalks = new TuningStyleCrosswalks(r.sub('crosswalks'));
+    this.crosswalkGapM = r.d('crosswalk_gap_m');
+    this.crosswalkLenM = r.d('crosswalk_len_m');
+    this.crosswalkStripeM = r.d('crosswalk_stripe_m');
   }
 
   toJson(): Record<string, unknown> {
@@ -2707,11 +2730,54 @@ export class TuningStyle {
       halftone_strength: this.halftoneStrength,
       halftone_low: this.halftoneLow,
       halftone_high: this.halftoneHigh,
+      cast_shadow: this.castShadow.toJson(),
+      shadow_ratio: this.shadowRatio,
+      shadow_max_m: this.shadowMaxM,
+      roof_edge_m: this.roofEdgeM,
+      crosswalks: this.crosswalks.toJson(),
+      crosswalk_gap_m: this.crosswalkGapM,
+      crosswalk_len_m: this.crosswalkLenM,
+      crosswalk_stripe_m: this.crosswalkStripeM,
     };
   }
 }
 
 export class TuningStyleRisograph {
+  nyc: boolean;
+  prague: boolean;
+
+  constructor(r: R) {
+    this.nyc = r.b('nyc');
+    this.prague = r.b('prague');
+  }
+
+  toJson(): Record<string, unknown> {
+    return {
+      nyc: this.nyc,
+      prague: this.prague,
+    };
+  }
+}
+
+/** building shadows on the ground (style A, v2) */
+export class TuningStyleCastShadow {
+  nyc: boolean;
+  prague: boolean;
+
+  constructor(r: R) {
+    this.nyc = r.b('nyc');
+    this.prague = r.b('prague');
+  }
+
+  toJson(): Record<string, unknown> {
+    return {
+      nyc: this.nyc,
+      prague: this.prague,
+    };
+  }
+}
+
+export class TuningStyleCrosswalks {
   nyc: boolean;
   prague: boolean;
 

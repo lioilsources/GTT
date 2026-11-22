@@ -2878,7 +2878,15 @@ class TuningStyle {
         halftoneCellPx = r.d('halftone_cell_px'),
         halftoneStrength = r.d('halftone_strength'),
         halftoneLow = r.d('halftone_low'),
-        halftoneHigh = r.d('halftone_high');
+        halftoneHigh = r.d('halftone_high'),
+        castShadow = TuningStyleCastShadow._(r.sub('cast_shadow')),
+        shadowRatio = r.d('shadow_ratio'),
+        shadowMaxM = r.d('shadow_max_m'),
+        roofEdgeM = r.d('roof_edge_m'),
+        crosswalks = TuningStyleCrosswalks._(r.sub('crosswalks')),
+        crosswalkGapM = r.d('crosswalk_gap_m'),
+        crosswalkLenM = r.d('crosswalk_len_m'),
+        crosswalkStripeM = r.d('crosswalk_stripe_m');
 
   final TuningStyleRisograph risograph;
 
@@ -2903,6 +2911,29 @@ class TuningStyle {
 
   double halftoneHigh;
 
+  /// building shadows on the ground (style A, v2)
+  final TuningStyleCastShadow castShadow;
+
+  /// shadow length per metre of building height
+  double shadowRatio;
+
+  /// cap, so towers don't shade half the map
+  double shadowMaxM;
+
+  /// light parapet band inside the roof outline
+  double roofEdgeM;
+
+  final TuningStyleCrosswalks crosswalks;
+
+  /// from the junction box to the crossing
+  double crosswalkGapM;
+
+  /// crossing depth along the road
+  double crosswalkLenM;
+
+  /// stripe width = gap width
+  double crosswalkStripeM;
+
   Map<String, Object> toJson() => {
         'risograph': risograph.toJson(),
         'misregistration_px': misregistrationPx,
@@ -2913,11 +2944,50 @@ class TuningStyle {
         'halftone_strength': halftoneStrength,
         'halftone_low': halftoneLow,
         'halftone_high': halftoneHigh,
+        'cast_shadow': castShadow.toJson(),
+        'shadow_ratio': shadowRatio,
+        'shadow_max_m': shadowMaxM,
+        'roof_edge_m': roofEdgeM,
+        'crosswalks': crosswalks.toJson(),
+        'crosswalk_gap_m': crosswalkGapM,
+        'crosswalk_len_m': crosswalkLenM,
+        'crosswalk_stripe_m': crosswalkStripeM,
       };
 }
 
 class TuningStyleRisograph {
   TuningStyleRisograph._(_R r)
+      : nyc = r.b('nyc'),
+        prague = r.b('prague');
+
+  bool nyc;
+
+  bool prague;
+
+  Map<String, Object> toJson() => {
+        'nyc': nyc,
+        'prague': prague,
+      };
+}
+
+/// building shadows on the ground (style A, v2)
+class TuningStyleCastShadow {
+  TuningStyleCastShadow._(_R r)
+      : nyc = r.b('nyc'),
+        prague = r.b('prague');
+
+  bool nyc;
+
+  bool prague;
+
+  Map<String, Object> toJson() => {
+        'nyc': nyc,
+        'prague': prague,
+      };
+}
+
+class TuningStyleCrosswalks {
+  TuningStyleCrosswalks._(_R r)
       : nyc = r.b('nyc'),
         prague = r.b('prague');
 
