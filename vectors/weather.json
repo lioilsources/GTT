@@ -1,0 +1,851 @@
+{
+ "module": "weather",
+ "specVersion": 1,
+ "cases": [
+  {
+   "name": "one tick before any change",
+   "config": {
+    "weights": [
+     5,
+     3,
+     2
+    ],
+    "minS": 3,
+    "maxS": 5
+   },
+   "seed": 1,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "tick"
+     },
+     "state": {
+      "kind": "clear",
+      "left": 2,
+      "changes": 0,
+      "rng": 270369
+     }
+    }
+   ],
+   "result": null
+  },
+  {
+   "name": "first change after the initial gap",
+   "config": {
+    "weights": [
+     5,
+     3,
+     2
+    ],
+    "minS": 2,
+    "maxS": 4
+   },
+   "seed": 7,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "tick"
+     },
+     "state": {
+      "kind": "clear",
+      "left": 1,
+      "changes": 0,
+      "rng": 1892583
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick"
+     },
+     "state": {
+      "kind": "rain",
+      "left": 3,
+      "changes": 1,
+      "rng": 3882205507
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick"
+     },
+     "state": {
+      "kind": "rain",
+      "left": 2,
+      "changes": 1,
+      "rng": 3882205507
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick"
+     },
+     "state": {
+      "kind": "rain",
+      "left": 1,
+      "changes": 1,
+      "rng": 3882205507
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick"
+     },
+     "state": {
+      "kind": "fog",
+      "left": 3,
+      "changes": 2,
+      "rng": 2854842367
+     }
+    }
+   ],
+   "result": null
+  },
+  {
+   "name": "several changes never repeat the kind",
+   "config": {
+    "weights": [
+     5,
+     3,
+     2
+    ],
+    "minS": 1,
+    "maxS": 2
+   },
+   "seed": 42,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "tick"
+     },
+     "state": {
+      "kind": "fog",
+      "left": 2,
+      "changes": 1,
+      "rng": 476557059
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick"
+     },
+     "state": {
+      "kind": "fog",
+      "left": 1,
+      "changes": 1,
+      "rng": 476557059
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick"
+     },
+     "state": {
+      "kind": "clear",
+      "left": 1,
+      "changes": 2,
+      "rng": 3759983556
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick"
+     },
+     "state": {
+      "kind": "fog",
+      "left": 1,
+      "changes": 3,
+      "rng": 3713466840
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick"
+     },
+     "state": {
+      "kind": "rain",
+      "left": 2,
+      "changes": 4,
+      "rng": 3120216979
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick"
+     },
+     "state": {
+      "kind": "rain",
+      "left": 1,
+      "changes": 4,
+      "rng": 3120216979
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick"
+     },
+     "state": {
+      "kind": "clear",
+      "left": 1,
+      "changes": 5,
+      "rng": 2989017562
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick"
+     },
+     "state": {
+      "kind": "rain",
+      "left": 1,
+      "changes": 6,
+      "rng": 3060050788
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick"
+     },
+     "state": {
+      "kind": "clear",
+      "left": 2,
+      "changes": 7,
+      "rng": 1958019241
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick"
+     },
+     "state": {
+      "kind": "clear",
+      "left": 1,
+      "changes": 7,
+      "rng": 1958019241
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick"
+     },
+     "state": {
+      "kind": "rain",
+      "left": 1,
+      "changes": 8,
+      "rng": 542285520
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick"
+     },
+     "state": {
+      "kind": "clear",
+      "left": 2,
+      "changes": 9,
+      "rng": 3489566947
+     }
+    }
+   ],
+   "result": null
+  },
+  {
+   "name": "rain only weight goes clear to rain and back",
+   "config": {
+    "weights": [
+     1,
+     1,
+     0
+    ],
+    "minS": 1,
+    "maxS": 1
+   },
+   "seed": 3,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "tick"
+     },
+     "state": {
+      "kind": "rain",
+      "left": 1,
+      "changes": 1,
+      "rng": 3025432647
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick"
+     },
+     "state": {
+      "kind": "clear",
+      "left": 1,
+      "changes": 2,
+      "rng": 1833517003
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick"
+     },
+     "state": {
+      "kind": "rain",
+      "left": 1,
+      "changes": 3,
+      "rng": 3448221763
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick"
+     },
+     "state": {
+      "kind": "clear",
+      "left": 1,
+      "changes": 4,
+      "rng": 1057047055
+     }
+    }
+   ],
+   "result": null
+  },
+  {
+   "name": "all other weights zero keeps the kind",
+   "config": {
+    "weights": [
+     4,
+     0,
+     0
+    ],
+    "minS": 1,
+    "maxS": 1
+   },
+   "seed": 9,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "tick"
+     },
+     "state": {
+      "kind": "clear",
+      "left": 1,
+      "changes": 1,
+      "rng": 604648969
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick"
+     },
+     "state": {
+      "kind": "clear",
+      "left": 1,
+      "changes": 2,
+      "rng": 1001376492
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick"
+     },
+     "state": {
+      "kind": "clear",
+      "left": 1,
+      "changes": 3,
+      "rng": 2629261621
+     }
+    }
+   ],
+   "result": null
+  },
+  {
+   "name": "fixed duration still draws the gap",
+   "config": {
+    "weights": [
+     2,
+     2,
+     2
+    ],
+    "minS": 2,
+    "maxS": 2
+   },
+   "seed": 11,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "tick"
+     },
+     "state": {
+      "kind": "clear",
+      "left": 1,
+      "changes": 0,
+      "rng": 2974059
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick"
+     },
+     "state": {
+      "kind": "fog",
+      "left": 2,
+      "changes": 1,
+      "rng": 305599086
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick"
+     },
+     "state": {
+      "kind": "fog",
+      "left": 1,
+      "changes": 1,
+      "rng": 305599086
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick"
+     },
+     "state": {
+      "kind": "rain",
+      "left": 2,
+      "changes": 2,
+      "rng": 1712960839
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick"
+     },
+     "state": {
+      "kind": "rain",
+      "left": 1,
+      "changes": 2,
+      "rng": 1712960839
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick"
+     },
+     "state": {
+      "kind": "fog",
+      "left": 2,
+      "changes": 3,
+      "rng": 896498623
+     }
+    }
+   ],
+   "result": null
+  },
+  {
+   "name": "seed zero uses the golden constant",
+   "config": {
+    "weights": [
+     5,
+     3,
+     2
+    ],
+    "minS": 1,
+    "maxS": 3
+   },
+   "seed": 0,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "tick"
+     },
+     "state": {
+      "kind": "clear",
+      "left": 2,
+      "changes": 0,
+      "rng": 1359758873
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick"
+     },
+     "state": {
+      "kind": "clear",
+      "left": 1,
+      "changes": 0,
+      "rng": 1359758873
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick"
+     },
+     "state": {
+      "kind": "rain",
+      "left": 3,
+      "changes": 1,
+      "rng": 2075758394
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick"
+     },
+     "state": {
+      "kind": "rain",
+      "left": 2,
+      "changes": 1,
+      "rng": 2075758394
+     }
+    }
+   ],
+   "result": null
+  },
+  {
+   "name": "set rain then ticks",
+   "config": {
+    "weights": [
+     5,
+     3,
+     2
+    ],
+    "minS": 2,
+    "maxS": 3
+   },
+   "seed": 5,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "set",
+      "kind": "rain"
+     },
+     "state": {
+      "kind": "rain",
+      "left": 3,
+      "changes": 1,
+      "rng": 336141829
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick"
+     },
+     "state": {
+      "kind": "rain",
+      "left": 2,
+      "changes": 1,
+      "rng": 336141829
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick"
+     },
+     "state": {
+      "kind": "rain",
+      "left": 1,
+      "changes": 1,
+      "rng": 336141829
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick"
+     },
+     "state": {
+      "kind": "clear",
+      "left": 3,
+      "changes": 2,
+      "rng": 3580160835
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick"
+     },
+     "state": {
+      "kind": "clear",
+      "left": 2,
+      "changes": 2,
+      "rng": 3580160835
+     }
+    }
+   ],
+   "result": null
+  },
+  {
+   "name": "set fog from clear",
+   "config": {
+    "weights": [
+     5,
+     3,
+     2
+    ],
+    "minS": 1,
+    "maxS": 4
+   },
+   "seed": 13,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "set",
+      "kind": "fog"
+     },
+     "state": {
+      "kind": "fog",
+      "left": 2,
+      "changes": 1,
+      "rng": 873147917
+     }
+    }
+   ],
+   "result": null
+  },
+  {
+   "name": "set the same kind renews the gap",
+   "config": {
+    "weights": [
+     5,
+     3,
+     2
+    ],
+    "minS": 2,
+    "maxS": 6
+   },
+   "seed": 21,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "set",
+      "kind": "clear"
+     },
+     "state": {
+      "kind": "clear",
+      "left": 3,
+      "changes": 1,
+      "rng": 1418549846
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick"
+     },
+     "state": {
+      "kind": "clear",
+      "left": 2,
+      "changes": 1,
+      "rng": 1418549846
+     }
+    }
+   ],
+   "result": null
+  },
+  {
+   "name": "heavy fog weight",
+   "config": {
+    "weights": [
+     1,
+     0,
+     9
+    ],
+    "minS": 1,
+    "maxS": 2
+   },
+   "seed": 77,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "tick"
+     },
+     "state": {
+      "kind": "clear",
+      "left": 1,
+      "changes": 0,
+      "rng": 20818281
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick"
+     },
+     "state": {
+      "kind": "fog",
+      "left": 1,
+      "changes": 1,
+      "rng": 1572297136
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick"
+     },
+     "state": {
+      "kind": "clear",
+      "left": 2,
+      "changes": 2,
+      "rng": 3939514255
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick"
+     },
+     "state": {
+      "kind": "clear",
+      "left": 1,
+      "changes": 2,
+      "rng": 3939514255
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick"
+     },
+     "state": {
+      "kind": "fog",
+      "left": 1,
+      "changes": 3,
+      "rng": 2434397458
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick"
+     },
+     "state": {
+      "kind": "clear",
+      "left": 1,
+      "changes": 4,
+      "rng": 1541641022
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick"
+     },
+     "state": {
+      "kind": "fog",
+      "left": 2,
+      "changes": 5,
+      "rng": 1315737821
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick"
+     },
+     "state": {
+      "kind": "fog",
+      "left": 1,
+      "changes": 5,
+      "rng": 1315737821
+     }
+    }
+   ],
+   "result": null
+  },
+  {
+   "name": "long range gap",
+   "config": {
+    "weights": [
+     6,
+     3,
+     1
+    ],
+    "minS": 10,
+    "maxS": 600
+   },
+   "seed": 123,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "set",
+      "kind": "rain"
+     },
+     "state": {
+      "kind": "rain",
+      "left": 193,
+      "changes": 1,
+      "rng": 4018661298
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick"
+     },
+     "state": {
+      "kind": "rain",
+      "left": 192,
+      "changes": 1,
+      "rng": 4018661298
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "set",
+      "kind": "clear"
+     },
+     "state": {
+      "kind": "clear",
+      "left": 169,
+      "changes": 2,
+      "rng": 2101636938
+     }
+    }
+   ],
+   "result": null
+  }
+ ]
+}

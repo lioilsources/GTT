@@ -140,8 +140,10 @@ export class Tuning {
   readonly travel: TuningTravel;
   /**
    * Shops and bars (specs/shops.md).
-   * colours in design/tokens.json color.shops
+   * specs/weather.md; colours in design/tokens.json color.weather
    */
+  readonly weather: TuningWeather;
+  /** colours in design/tokens.json color.shops */
   readonly shops: TuningShops;
   /** Photo spots and the Camera app (specs/photo.md). */
   readonly photo: TuningPhoto;
@@ -197,6 +199,7 @@ export class Tuning {
     this.npc = new TuningNpc(r.sub('npc'));
     this.cars = new TuningCars(r.sub('cars'));
     this.travel = new TuningTravel(r.sub('travel'));
+    this.weather = new TuningWeather(r.sub('weather'));
     this.shops = new TuningShops(r.sub('shops'));
     this.photo = new TuningPhoto(r.sub('photo'));
     this.booths = new TuningBooths(r.sub('booths'));
@@ -242,6 +245,7 @@ export class Tuning {
       npc: this.npc.toJson(),
       cars: this.cars.toJson(),
       travel: this.travel.toJson(),
+      weather: this.weather.toJson(),
       shops: this.shops.toJson(),
       photo: this.photo.toJson(),
       booths: this.booths.toJson(),
@@ -2583,8 +2587,94 @@ export class TuningTravel {
 
 /**
  * Shops and bars (specs/shops.md).
- * colours in design/tokens.json color.shops
+ * specs/weather.md; colours in design/tokens.json color.weather
  */
+export class TuningWeather {
+  enabled: boolean;
+  readonly cities: TuningWeatherCities;
+  /** weighted draw of the next kind (never the current one) */
+  weightClear: number;
+  weightRain: number;
+  weightFog: number;
+  /** one weather lasts min_s..max_s game seconds */
+  minS: number;
+  maxS: number;
+  /** player car grip multiplier in rain */
+  rainGrip: number;
+  /** visual cross-fade on a change */
+  blendS: number;
+  rainDrops: number;
+  rainLenPx: number;
+  rainSpeedPxS: number;
+  rainAngleDeg: number;
+  /** road, sidewalk and alley colour × (1 − this) when wet */
+  wetDarken: number;
+  fogCenterAlpha: number;
+  fogEdgeAlpha: number;
+  /** fog ramps up from this fraction of the half diagonal */
+  fogInner: number;
+
+  constructor(r: R) {
+    this.enabled = r.b('enabled');
+    this.cities = new TuningWeatherCities(r.sub('cities'));
+    this.weightClear = r.i('weight_clear');
+    this.weightRain = r.i('weight_rain');
+    this.weightFog = r.i('weight_fog');
+    this.minS = r.i('min_s');
+    this.maxS = r.i('max_s');
+    this.rainGrip = r.d('rain_grip');
+    this.blendS = r.d('blend_s');
+    this.rainDrops = r.i('rain_drops');
+    this.rainLenPx = r.d('rain_len_px');
+    this.rainSpeedPxS = r.d('rain_speed_px_s');
+    this.rainAngleDeg = r.d('rain_angle_deg');
+    this.wetDarken = r.d('wet_darken');
+    this.fogCenterAlpha = r.d('fog_center_alpha');
+    this.fogEdgeAlpha = r.d('fog_edge_alpha');
+    this.fogInner = r.d('fog_inner');
+  }
+
+  toJson(): Record<string, unknown> {
+    return {
+      enabled: this.enabled,
+      cities: this.cities.toJson(),
+      weight_clear: this.weightClear,
+      weight_rain: this.weightRain,
+      weight_fog: this.weightFog,
+      min_s: this.minS,
+      max_s: this.maxS,
+      rain_grip: this.rainGrip,
+      blend_s: this.blendS,
+      rain_drops: this.rainDrops,
+      rain_len_px: this.rainLenPx,
+      rain_speed_px_s: this.rainSpeedPxS,
+      rain_angle_deg: this.rainAngleDeg,
+      wet_darken: this.wetDarken,
+      fog_center_alpha: this.fogCenterAlpha,
+      fog_edge_alpha: this.fogEdgeAlpha,
+      fog_inner: this.fogInner,
+    };
+  }
+}
+
+export class TuningWeatherCities {
+  nyc: boolean;
+  prague: boolean;
+
+  constructor(r: R) {
+    this.nyc = r.b('nyc');
+    this.prague = r.b('prague');
+  }
+
+  toJson(): Record<string, unknown> {
+    return {
+      nyc: this.nyc,
+      prague: this.prague,
+    };
+  }
+}
+
+/** colours in design/tokens.json color.shops */
 export class TuningShops {
   enabled: boolean;
   readonly cities: TuningShopsCities;

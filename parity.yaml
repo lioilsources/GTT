@@ -359,3 +359,13 @@
   flutter: done
   web: done
   checks: {flutter: pass, web: pass}
+
+- id: F-043
+  name: Weather (clear, rain, fog; rain grip, overlays, HUD icon)
+  level: P0
+  spec: specs/weather.md@1
+  vectors: vectors/weather.json
+  lead: web
+  flutter: todo
+  web: todo
+  checks: {flutter: pass, web: pass}

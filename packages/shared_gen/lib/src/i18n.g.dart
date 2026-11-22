@@ -388,6 +388,9 @@ enum MessageKey {
   shopShelf('shopShelf'),
   shopShelfEmpty('shopShelfEmpty'),
   loopSnack('loopSnack'),
+  weatherClear('weatherClear'),
+  weatherRain('weatherRain'),
+  weatherFog('weatherFog'),
   ;
 
   const MessageKey(this.key);
@@ -781,6 +784,9 @@ const Map<String, Map<String, String>> _messages = {
     'shopShelf': 'Polička',
     'shopShelfEmpty': 'Zatím žádné suvenýry – najdi obchod se suvenýry',
     'loopSnack': 'Bonus za svačinu {cash}',
+    'weatherClear': 'Vyjasnilo se',
+    'weatherRain': 'Prší – silnice klouže',
+    'weatherFog': 'Padla mlha',
   },
   'en': {
     'appTitle': 'Metropole',
@@ -1166,6 +1172,9 @@ const Map<String, Map<String, String>> _messages = {
     'shopShelf': 'Shelf',
     'shopShelfEmpty': 'No souvenirs yet – find a gift shop',
     'loopSnack': 'Snack bonus {cash}',
+    'weatherClear': 'The sky clears up',
+    'weatherRain': 'Rain – the road is slippery',
+    'weatherFog': 'Fog rolls in',
   },
 };
 

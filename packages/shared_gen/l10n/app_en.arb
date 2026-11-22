@@ -461,5 +461,8 @@
   "shopShelf": "Shelf",
   "shopShelfEmpty": "No souvenirs yet – find a gift shop",
   "loopSnack": "Snack bonus {cash}",
-  "@loopSnack": {"placeholders":{"cash":{"type":"int"}}}
+  "@loopSnack": {"placeholders":{"cash":{"type":"int"}}},
+  "weatherClear": "The sky clears up",
+  "weatherRain": "Rain – the road is slippery",
+  "weatherFog": "Fog rolls in"
 }

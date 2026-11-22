@@ -102,6 +102,7 @@ class Tuning {
         npc = TuningNpc._(r.sub('npc')),
         cars = TuningCars._(r.sub('cars')),
         travel = TuningTravel._(r.sub('travel')),
+        weather = TuningWeather._(r.sub('weather')),
         shops = TuningShops._(r.sub('shops')),
         photo = TuningPhoto._(r.sub('photo')),
         booths = TuningBooths._(r.sub('booths')),
@@ -214,6 +215,9 @@ class Tuning {
   final TuningTravel travel;
 
   /// Shops and bars (specs/shops.md).
+  /// specs/weather.md; colours in design/tokens.json color.weather
+  final TuningWeather weather;
+
   /// colours in design/tokens.json color.shops
   final TuningShops shops;
 
@@ -272,6 +276,7 @@ class Tuning {
         'npc': npc.toJson(),
         'cars': cars.toJson(),
         'travel': travel.toJson(),
+        'weather': weather.toJson(),
         'shops': shops.toJson(),
         'photo': photo.toJson(),
         'booths': booths.toJson(),
@@ -2773,6 +2778,103 @@ class TuningTravel {
 }
 
 /// Shops and bars (specs/shops.md).
+/// specs/weather.md; colours in design/tokens.json color.weather
+class TuningWeather {
+  TuningWeather._(_R r)
+      : enabled = r.b('enabled'),
+        cities = TuningWeatherCities._(r.sub('cities')),
+        weightClear = r.i('weight_clear'),
+        weightRain = r.i('weight_rain'),
+        weightFog = r.i('weight_fog'),
+        minS = r.i('min_s'),
+        maxS = r.i('max_s'),
+        rainGrip = r.d('rain_grip'),
+        blendS = r.d('blend_s'),
+        rainDrops = r.i('rain_drops'),
+        rainLenPx = r.d('rain_len_px'),
+        rainSpeedPxS = r.d('rain_speed_px_s'),
+        rainAngleDeg = r.d('rain_angle_deg'),
+        wetDarken = r.d('wet_darken'),
+        fogCenterAlpha = r.d('fog_center_alpha'),
+        fogEdgeAlpha = r.d('fog_edge_alpha'),
+        fogInner = r.d('fog_inner');
+
+  bool enabled;
+
+  final TuningWeatherCities cities;
+
+  /// weighted draw of the next kind (never the current one)
+  int weightClear;
+
+  int weightRain;
+
+  int weightFog;
+
+  /// one weather lasts min_s..max_s game seconds
+  int minS;
+
+  int maxS;
+
+  /// player car grip multiplier in rain
+  double rainGrip;
+
+  /// visual cross-fade on a change
+  double blendS;
+
+  int rainDrops;
+
+  double rainLenPx;
+
+  double rainSpeedPxS;
+
+  double rainAngleDeg;
+
+  /// road, sidewalk and alley colour × (1 − this) when wet
+  double wetDarken;
+
+  double fogCenterAlpha;
+
+  double fogEdgeAlpha;
+
+  /// fog ramps up from this fraction of the half diagonal
+  double fogInner;
+
+  Map<String, Object> toJson() => {
+        'enabled': enabled,
+        'cities': cities.toJson(),
+        'weight_clear': weightClear,
+        'weight_rain': weightRain,
+        'weight_fog': weightFog,
+        'min_s': minS,
+        'max_s': maxS,
+        'rain_grip': rainGrip,
+        'blend_s': blendS,
+        'rain_drops': rainDrops,
+        'rain_len_px': rainLenPx,
+        'rain_speed_px_s': rainSpeedPxS,
+        'rain_angle_deg': rainAngleDeg,
+        'wet_darken': wetDarken,
+        'fog_center_alpha': fogCenterAlpha,
+        'fog_edge_alpha': fogEdgeAlpha,
+        'fog_inner': fogInner,
+      };
+}
+
+class TuningWeatherCities {
+  TuningWeatherCities._(_R r)
+      : nyc = r.b('nyc'),
+        prague = r.b('prague');
+
+  bool nyc;
+
+  bool prague;
+
+  Map<String, Object> toJson() => {
+        'nyc': nyc,
+        'prague': prague,
+      };
+}
+
 /// colours in design/tokens.json color.shops
 class TuningShops {
   TuningShops._(_R r)

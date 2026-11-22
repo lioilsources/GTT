@@ -129,6 +129,9 @@ abstract final class Tokens {
   static const int colorShopsSouvenir = 0xFFC2408F;
   static const int colorShopsBar = 0xFF8A5A2B;
   static const int colorShopsDrunk = 0x99E8B830;
+  static const int colorWeatherRain = 0x8CC8D8EC;
+  static const int colorWeatherFog = 0xFFD9DEE3;
+  static const int colorWeatherIcon = 0xFFF2F4F7;
   static const int colorBoothBody = 0xFFB8202A;
   static const int colorBoothRoof = 0xFF7A1218;
   static const int colorBoothGlass = 0xFFCFE4EE;
