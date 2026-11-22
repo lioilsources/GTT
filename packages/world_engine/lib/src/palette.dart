@@ -11,6 +11,7 @@ class Palette {
     required this.park,
     required this.plaza,
     required this.rail,
+    required this.pedestrian,
     required this.sidewalk,
     required this.asphalt,
     required this.alley,
@@ -28,7 +29,7 @@ class Palette {
     required this.night,
   });
 
-  final Color land, water, park, plaza, rail, sidewalk, asphalt, alley, marking, centerLine;
+  final Color land, water, park, plaza, rail, pedestrian, sidewalk, asphalt, alley, marking, centerLine;
   final Color bridgeDeck, bridgeEdge, tunnel, landmark;
   final List<Color> facades;
 
@@ -46,6 +47,7 @@ class Palette {
         GroundKind.PARK => park,
         GroundKind.PLAZA => plaza,
         GroundKind.RAIL => rail,
+        GroundKind.PEDESTRIAN => pedestrian,
         _ => land,
       };
 
@@ -55,6 +57,7 @@ class Palette {
     park: const Color(Tokens.colorWorldDayPark),
     plaza: const Color(Tokens.colorWorldDayPlaza),
     rail: const Color(Tokens.colorWorldDayRail),
+    pedestrian: const Color(Tokens.colorWorldDayPedestrian),
     sidewalk: const Color(Tokens.colorWorldDaySidewalk),
     asphalt: const Color(Tokens.colorWorldDayAsphalt),
     alley: const Color(Tokens.colorWorldDayAlley),
@@ -78,6 +81,7 @@ class Palette {
     park: const Color(Tokens.colorWorldNightPark),
     plaza: const Color(Tokens.colorWorldNightPlaza),
     rail: const Color(Tokens.colorWorldNightRail),
+    pedestrian: const Color(Tokens.colorWorldNightPedestrian),
     sidewalk: const Color(Tokens.colorWorldNightSidewalk),
     asphalt: const Color(Tokens.colorWorldNightAsphalt),
     alley: const Color(Tokens.colorWorldNightAlley),
