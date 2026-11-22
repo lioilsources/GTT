@@ -196,7 +196,7 @@
 - id: F-024
   name: Police and wanted level 1–2 (patrols, escape, fine)
   level: P0
-  spec: specs/police.md@2
+  spec: specs/police.md@1
   vectors: vectors/police.json
   lead: web
   flutter: done
@@ -299,8 +299,7 @@
 - id: F-036
   name: Wanted level 3 with a roadblock of two standing patrols
   level: P1
-  spec: specs/police.md@2
-  vectors: vectors/police.json
+  spec: specs/roadblock.md@1
   lead: web
   flutter: todo
   web: todo

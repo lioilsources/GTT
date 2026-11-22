@@ -1,6 +1,6 @@
 {
  "module": "police",
- "specVersion": 2,
+ "specVersion": 1,
  "cases": [
   {
    "name": "unseen offences change nothing",
@@ -2319,7 +2319,7 @@
    "result": null
   },
   {
-   "name": "v2: three seen offences climb to level 3, the cap holds",
+   "name": "cap 3: three seen offences climb to level 3, the cap holds",
    "config": {
     "maxLevel": 3,
     "escapeTicks": 2,
@@ -2549,7 +2549,7 @@
    "result": null
   },
   {
-   "name": "v2: escape from level 3 one level per escapeTicks",
+   "name": "cap 3: escape from level 3 one level per escapeTicks",
    "config": {
     "maxLevel": 3,
     "escapeTicks": 2,
@@ -2858,7 +2858,7 @@
    "result": null
   },
   {
-   "name": "v2: busted at level 3 pays fines[3]",
+   "name": "cap 3: busted at level 3 pays fines[3]",
    "config": {
     "maxLevel": 3,
     "escapeTicks": 2,
@@ -3089,7 +3089,7 @@
    "result": null
   },
   {
-   "name": "v2: hit-and-run seen from level 2 goes to 3",
+   "name": "cap 3: hit-and-run seen from level 2 goes to 3",
    "config": {
     "maxLevel": 3,
     "escapeTicks": 2,

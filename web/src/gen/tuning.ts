@@ -2558,7 +2558,7 @@ export class TuningPolice {
   toastS: number;
   bustedS: number;
   lightBlinkS: number;
-  /** two standing patrols across the road ahead (v2, M2) */
+  /** two standing patrols across the road ahead (specs/roadblock.md) */
   readonly roadblock: TuningPoliceRoadblock;
 
   constructor(r: R) {
@@ -2665,7 +2665,7 @@ export class TuningPoliceOffenceLevel {
   static readonly keys = ['crash', 'hitrun', 'sidewalk', 'theft'] as const;
 }
 
-/** two standing patrols across the road ahead (v2, M2) */
+/** two standing patrols across the road ahead (specs/roadblock.md) */
 export class TuningPoliceRoadblock {
   /** wanted level that sends a roadblock */
   level: number;

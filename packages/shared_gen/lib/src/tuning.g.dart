@@ -2794,7 +2794,7 @@ class TuningPolice {
 
   double lightBlinkS;
 
-  /// two standing patrols across the road ahead (v2, M2)
+  /// two standing patrols across the road ahead (specs/roadblock.md)
   final TuningPoliceRoadblock roadblock;
 
   Map<String, Object> toJson() => {
@@ -2862,7 +2862,7 @@ class TuningPoliceOffenceLevel {
   static const keys = ['crash', 'hitrun', 'sidewalk', 'theft'];
 }
 
-/// two standing patrols across the road ahead (v2, M2)
+/// two standing patrols across the road ahead (specs/roadblock.md)
 class TuningPoliceRoadblock {
   TuningPoliceRoadblock._(_R r)
       : level = r.i('level'),

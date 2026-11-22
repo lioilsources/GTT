@@ -1,16 +1,14 @@
-# Policie a hledanost (M1-S4, M2-S1)
+# Policie a hledanost (M1-S4)
 
-**version: 2** · P0 pravidla hledanosti (`vectors/police.json`) · P1 hlídky, dohled, honička,
-zátaras · METROPOLE_PLAN 7.4, R7, M1 bod 4, M2 bod 1 · parita F-024, F-036
-
-v2: strop hledanosti 3 (`police.max_level = 3`, M2) a zátaras na úrovni 3. P0 pravidla se
-nemění, vektory přidávají případy se stropem 3.
+**version: 1** · P0 pravidla hledanosti (`vectors/police.json`) · P1 hlídky, dohled, honička ·
+METROPOLE_PLAN 7.4, R7, M1 bod 4 · parita F-024
 
 ## Účel
 Svět reaguje na přestupky: hlídka, která hráče vidí, mu zvedne hledanost a honí ho. Hráč uteče,
 když ho žádná hlídka chvíli nevidí; když ho hlídka dostihne stojícího, zaplatí pokutu. Žádné
 násilí (R7): žádné střílení, žádné rozbíjení, dopadení je jen karta „Dopaden“ a pokuta.
-M1 měla hledanost 1–2, M2 zvedá strop na 3 (`police.max_level`) a přidává zátaras.
+M1 měla hledanost 1–2, M2 zvedá strop na 3 (`police.max_level`; pravidla se nemění, vektory mají
+i případy se stropem 3). Zátaras na úrovni 3 je ve `specs/roadblock.md`.
 Čísla jsou v `content/tuning.yaml` → `police`, texty v `i18n/` (`police*`), barvy v
 `design/tokens.json` → `color.police`. Vypíná se `police.enabled`.
 
@@ -111,28 +109,6 @@ auta ani stromy výhled neblokují. Dohled se počítá v každém tiku a v okam
 - **Dopadení:** `near` = `level > 0`, hráč jede nejvýš `capture_mps` a některá hlídka je do
   `capture_m` (ve stejné vrstvě). Za `capture_s` v kuse → dopadení.
 
-## Zátaras (P1, v2)
-Na hledanosti aspoň `police.roadblock.level` postaví policie před hráčem zátaras: dvě stojící
-hlídky napříč silnicí. Čísla v `police.roadblock`.
-- **Kdy:** v tiku, kdy `level ≥ roadblock.level`, žádný zátaras nestojí a od zrušení minulého
-  uplynulo aspoň `cooldown_s` (na začátku hned). Pokus nejvýš jednou za `pick_interval_s`.
-- **Kde:** hrana pod hráčem = nejbližší ponechaná hrana ve vrstvě hráče (`graph.near`, do
-  `layers.search_m`); směr jízdy = znaménko `dot(směr hrany, směr auta)`. Od průmětu hráče se jde
-  po směru jízdy; na konci hrany se další hrana volí `chooseToward(graph, uzel, předchozí, gx, gy)`
-  s cílem `g = hráč + roadblock.probe_m · (cos heading, sin heading)`. Kde ujitá vzdálenost dosáhne `ahead_m`, stojí zátaras.
-  Hraniční uzel (−1), hrana v jiné vrstvě než 0 nebo hrana pěší zóny = pokus se vzdá.
-- **Jak:** dvě auta provozu (`addCar`, příznak `police` a `blocking`) v bodě `p` na hraně,
-  posunutá o `±lateral_m` po normále hrany, natočená napříč (`heading` hrany + π/2). Blokující
-  hlídka stojí (`speed = 0`), nejede, neotáčí se, nehoní, nezmizí s provozem (`despawn_m`) a
-  nepočítá se do `police.patrols[level]`. Je kinematická jako ostatní auta, takže do ní hráč
-  narazí. Vidí a dopadá jako ostatní hlídky (Dohled, Dopadení). Nedaří-li se `addCar` (strop aut),
-  pokus se vzdá a zkusí se za `pick_interval_s`.
-- **Zrušení** (obě auta zmizí a začne `cooldown_s`): `level < roadblock.level` (únik, dopadení),
-  hráč je od zátarasu dál než `clear_m`, nebo zátaras stojí déle než `ttl_s`. Respawn hráče a
-  reset provozu ho zahodí také.
-- **HUD:** při postavení toast `policeRoadblock` (`toast_s`).
-- **Kreslení:** jako hlídka; majáky blikají vždy (stejné barvy, `light_blink_s`).
-
 ## Kreslení a HUD (P2)
 - Hlídka shora jako auto provozu: karoserie `police.body`, dveře `police.door`, na střeše
   maják `police.bar` s dvěma světly (`police.lightRed`, `police.lightBlue`), která se při honičce
@@ -148,6 +124,4 @@ hlídky napříč silnicí. Čísla v `police.roadblock`.
 - Po dopadení `cooldown_s` klidu, než se stejný přestupek znovu počítá.
 - Respawn hráče a reset provozu zahodí hlídky; hledanost zůstane a nové hlídky se označí.
 - `police.enabled = false`: žádné hlídky, žádné přestupky, HUD skrytý.
-- Zátaras na hraně, kde hráč zrovna stojí (krátká hrana, `ahead_m` přesáhne konec slepé ulice):
-  pokus se vzdá, další za `pick_interval_s`.
 - Hledanost na stropu 3 a další přestupek: zůstane 3, toast se ukáže.
