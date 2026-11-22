@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log/slog"
 	"math"
+	"os"
 	"path/filepath"
 
 	"citypack/internal/geo"
@@ -18,6 +19,7 @@ type PackData struct {
 	Chunks    []*pb.Chunk
 	Landmarks *pb.Landmarks
 	Spots     *pb.Spots
+	Trams     *pb.TramGraph // empty when the pack predates trams.pb
 }
 
 func ReadPack(dir string) (*PackData, error) {
@@ -33,6 +35,12 @@ func ReadPack(dir string) (*PackData, error) {
 	}
 	if err := ReadPB(filepath.Join(dir, "spots.pb"), p.Spots); err != nil {
 		return nil, err
+	}
+	p.Trams = &pb.TramGraph{}
+	if _, err := os.Stat(filepath.Join(dir, "trams.pb")); err == nil {
+		if err := ReadPB(filepath.Join(dir, "trams.pb"), p.Trams); err != nil {
+			return nil, err
+		}
 	}
 	for _, r := range p.Manifest.Chunks {
 		c := &pb.Chunk{}
@@ -130,6 +138,26 @@ func Validate(e *Env) error {
 		fail("%d bollard lines cross a road centreline", n)
 	}
 
+	// 4c. Tram graph: valid node indices, stops inside their edge (specs/trams.md).
+	for i, ed := range p.Trams.Edges {
+		if int(ed.From) >= len(p.Trams.Nodes) || int(ed.To) >= len(p.Trams.Nodes) || len(ed.Points) < 4 {
+			fail("tram edge %d is malformed", i)
+		}
+	}
+	for i, st := range p.Trams.Stops {
+		if int(st.Edge) >= len(p.Trams.Edges) {
+			fail("tram stop %d has no edge", i)
+			continue
+		}
+		pts := make([]geo.Pt, 0, len(p.Trams.Edges[st.Edge].Points)/2)
+		for j := 0; j+1 < len(p.Trams.Edges[st.Edge].Points); j += 2 {
+			pts = append(pts, geo.Pt{X: float64(p.Trams.Edges[st.Edge].Points[j]) / 10, Y: float64(p.Trams.Edges[st.Edge].Points[j+1]) / 10})
+		}
+		if l := geo.PolylineLength(pts); float64(st.SM) < 0 || float64(st.SM) > l+0.1 {
+			fail("tram stop %d at %.1f m is outside its edge (%.1f m)", i, st.SM, l)
+		}
+	}
+
 	// 5. Chunk size limit.
 	maxB := uint32(e.C.City.MaxChunkKB) * 1024
 	for _, r := range p.Manifest.Chunks {
@@ -153,7 +181,8 @@ func Validate(e *Env) error {
 	if len(errs) > 0 {
 		return errors.Join(errs...)
 	}
-	slog.Info("validate ok", "nodes", len(g.Nodes), "edges", len(g.Edges), "chunks", len(p.Chunks), "spots", len(p.Spots.Items))
+	slog.Info("validate ok", "nodes", len(g.Nodes), "edges", len(g.Edges), "chunks", len(p.Chunks), "spots", len(p.Spots.Items),
+		"tram_edges", len(p.Trams.Edges), "tram_stops", len(p.Trams.Stops))
 	return nil
 }
 

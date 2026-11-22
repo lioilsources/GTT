@@ -122,10 +122,11 @@ items:
   # ---------- M3 – Praha (plans/M3_PRAHA.md; M2 přeskočeno rozhodnutím Ol1na 2026-11-22)
   - {id: M3-S1, milestone: M3, name: "balíček Praha: oblast, čtvrti, 20 památek, spoty, validate", size: L, status: hotovo,
      started: 2026-11-22T07:59, done: 2026-11-22T08:28, commit: 2c9a13c, evidence: "run/bin/citypack validate prague (PR #57); web ?city=prague na Pages 60 fps bez chyb; pohlednice v PR shared/m3-cities"}
-  - {id: M3-S2, milestone: M3, name: "zobecnění pro druhé město: metrické jednotky, diakritika v čtvrtích, skity po městech", size: M, status: wip, started: 2026-11-22T08:20}
-  - {id: M3-S3, milestone: M3, name: "přepínání měst, uložení po městech", size: M, status: wip, started: 2026-11-22T08:20}
-  - {id: M3-S4, milestone: M3, name: "pěší zóny a mikrovozidla", size: L, status: todo}
-  - {id: M3-S5, milestone: M3, name: "tramvaje na linkách se zastávkami", size: L, status: todo}
+  - {id: M3-S2, milestone: M3, name: "zobecnění pro druhé město: metrické jednotky, diakritika v čtvrtích, skity po městech", size: M, status: hotovo, started: 2026-11-22T08:20, done: 2026-11-22T09:25, commit: 0235ea3, evidence: "metrické jednotky už byly; districtId s diakritikou v obou klientech (testy), skity po městech: DialogueSession bere město (PR #61, #63)"}
+  - {id: M3-S3, milestone: M3, name: "přepínání měst, uložení po městech", size: M, status: "čeká na Ol1na",
+     started: 2026-11-22T08:20, done: 2026-11-22T09:25, commit: 0235ea3, evidence: "aplikace Cesty a uložení po městech v obou klientech, testy přepnutí NYC → Praha → NYC (PR #60, #61, #63); chybí soak 10 přepnutí a vyzkoušení na telefonu"}
+  - {id: M3-S4, milestone: M3, name: "pěší zóny a mikrovozidla", size: L, status: wip, started: 2026-11-22T08:30}
+  - {id: M3-S5, milestone: M3, name: "tramvaje na linkách se zastávkami", size: L, status: wip, started: 2026-11-22T09:15}
   - {id: M3-S6, milestone: M3, name: "místní vozidla (lidovka, koloběžka, kolo)", size: M, status: wip, started: 2026-11-22T09:30}
   - {id: M3-S7, milestone: M3, name: "tři místní minihry: Kuličky, Čára, Nohejbal", size: L, status: todo}
   - {id: M3-S8, milestone: M3, name: "pražské skity a pohlednice", size: M, status: todo}

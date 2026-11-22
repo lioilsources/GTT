@@ -164,6 +164,12 @@ abstract final class Tokens {
   static const int colorLoopBest = 0xFFF4C430;
   static const int colorLoopMuted = 0xA0FFFFFF;
   static const int colorLoopPlay = 0xFF2BA6A0;
+  static const int colorTramsBody = 0xFFC8202F;
+  static const int colorTramsStripe = 0xFFF2E6C8;
+  static const int colorTramsWindow = 0xFF2B3440;
+  static const int colorTramsWindowLit = 0xFFFFE6A0;
+  static const int colorTramsRail = 0xFF8A8A92;
+  static const int colorTramsStop = 0xFFBDB5A8;
   static const int colorTaxiPill = 0xFFF7C531;
   static const int colorTaxiPillText = 0xFF1B1B1F;
   static const int colorTaxiPassenger = 0xFFF7C531;

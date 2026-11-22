@@ -437,3 +437,74 @@ final $typed_data.Uint8List spotDescriptor = $convert.base64Decode(
     'lSBG5hbWUSDAoBeBgEIAEoEVIBeBIMCgF5GAUgASgRUgF5EhIKBGVkZ2UYBiABKA1SBGVkZ2US'
     'FQoGcGFya194GAcgASgRUgVwYXJrWBIVCgZwYXJrX3kYCCABKBFSBXBhcmtZEiEKDHBhcmtfaG'
     'VhZGluZxgJIAEoAlILcGFya0hlYWRpbmcSGgoIbWluaWdhbWUYCiABKAlSCG1pbmlnYW1l');
+
+@$core.Deprecated('Use tramGraphDescriptor instead')
+const TramGraph$json = {
+  '1': 'TramGraph',
+  '2': [
+    {
+      '1': 'nodes',
+      '3': 1,
+      '4': 3,
+      '5': 11,
+      '6': '.citypack.Node',
+      '10': 'nodes'
+    },
+    {
+      '1': 'edges',
+      '3': 2,
+      '4': 3,
+      '5': 11,
+      '6': '.citypack.TramEdge',
+      '10': 'edges'
+    },
+    {
+      '1': 'stops',
+      '3': 3,
+      '4': 3,
+      '5': 11,
+      '6': '.citypack.TramStop',
+      '10': 'stops'
+    },
+  ],
+};
+
+/// Descriptor for `TramGraph`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List tramGraphDescriptor = $convert.base64Decode(
+    'CglUcmFtR3JhcGgSJAoFbm9kZXMYASADKAsyDi5jaXR5cGFjay5Ob2RlUgVub2RlcxIoCgVlZG'
+    'dlcxgCIAMoCzISLmNpdHlwYWNrLlRyYW1FZGdlUgVlZGdlcxIoCgVzdG9wcxgDIAMoCzISLmNp'
+    'dHlwYWNrLlRyYW1TdG9wUgVzdG9wcw==');
+
+@$core.Deprecated('Use tramEdgeDescriptor instead')
+const TramEdge$json = {
+  '1': 'TramEdge',
+  '2': [
+    {'1': 'from', '3': 1, '4': 1, '5': 13, '10': 'from'},
+    {'1': 'to', '3': 2, '4': 1, '5': 13, '10': 'to'},
+    {'1': 'points', '3': 3, '4': 3, '5': 17, '10': 'points'},
+    {'1': 'layer_from', '3': 4, '4': 1, '5': 17, '10': 'layerFrom'},
+    {'1': 'layer_to', '3': 5, '4': 1, '5': 17, '10': 'layerTo'},
+    {'1': 'bridge', '3': 6, '4': 1, '5': 8, '10': 'bridge'},
+    {'1': 'tunnel', '3': 7, '4': 1, '5': 8, '10': 'tunnel'},
+  ],
+};
+
+/// Descriptor for `TramEdge`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List tramEdgeDescriptor = $convert.base64Decode(
+    'CghUcmFtRWRnZRISCgRmcm9tGAEgASgNUgRmcm9tEg4KAnRvGAIgASgNUgJ0bxIWCgZwb2ludH'
+    'MYAyADKBFSBnBvaW50cxIdCgpsYXllcl9mcm9tGAQgASgRUglsYXllckZyb20SGQoIbGF5ZXJf'
+    'dG8YBSABKBFSB2xheWVyVG8SFgoGYnJpZGdlGAYgASgIUgZicmlkZ2USFgoGdHVubmVsGAcgAS'
+    'gIUgZ0dW5uZWw=');
+
+@$core.Deprecated('Use tramStopDescriptor instead')
+const TramStop$json = {
+  '1': 'TramStop',
+  '2': [
+    {'1': 'edge', '3': 1, '4': 1, '5': 13, '10': 'edge'},
+    {'1': 's_m', '3': 2, '4': 1, '5': 2, '10': 'sM'},
+  ],
+};
+
+/// Descriptor for `TramStop`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List tramStopDescriptor = $convert.base64Decode(
+    'CghUcmFtU3RvcBISCgRlZGdlGAEgASgNUgRlZGdlEg8KA3NfbRgCIAEoAlICc00=');

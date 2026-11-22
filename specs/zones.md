@@ -16,8 +16,8 @@ jediný způsob, jak se v jádru Prahy dostat pěšími uličkami (R8: bez voln�
   a pěší náměstí (Overture `land_use` `subtype: pedestrian`), kterými takový segment prochází,
   sjednocené, bez koridorů všech silnic grafu (ponechaných i uliček) rozšířených o
   `zones.gap_margin_m`, oříznuté oblastí a mřížkou chunků. Silnice tak zůstanou průjezdné celou
-  šířkou. V chunku je zóna `Mesh` s druhem `GroundKind.PEDESTRIAN` (dlažba, kreslí se nad parkem
-  a náměstím, pod silnicemi).
+  šířkou. V chunku je zóna `Mesh` s druhem `GroundKind.PEDESTRIAN` (dlažba, kreslí se nad parkem,
+  náměstím, kolejištěm i vodou, aby byl vidět Karlův most, a pod silnicemi).
 - **Zábrana** = hranice zóny bez hranice oblasti, rozdělená do chunků; kusy kratší než
   `zones.min_barrier_m` se zahodí. Vede po obrubníku mezi zónou a silnicí a po okrajích zóny
   (u budov se zdvojí s jejich kolizí, to nevadí). V chunku je to `Barrier` (lomená čára v dm).

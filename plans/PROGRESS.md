@@ -30,7 +30,7 @@ Stav k 2026-11-22 09:36.
 | D2 | 0 / 19 | 19 | 0 | 0 | 0 / 9 |
 | M1 | 0 / 40 | 37 | 0 | 3 | 0 / 16 |
 | D3 | 3 / 9 | 4 | 0 | 2 | 2 / 4 |
-| M3 | 4 / 29 | 0 | 6 | 25 | 1 / 12 |
+| M3 | 6 / 29 | 2 | 10 | 21 | 2 / 12 |
 
 ## Čeká na Ol1na
 
@@ -68,6 +68,7 @@ Stav k 2026-11-22 09:36.
 | D2-9 Taxi v obou klientech | 7.9 h | Taxi jako minihra ve světě, vectors/taxi.json 5 případů v obou klientech, scénářová směna na NYC (F-027, PR #50–#52); chybí telefon |
 | M1-A2 každá minihra projde unit testy a jde spustit z Galerie | 7.9 h | všech 8 miniher má testy pravidel a vektory v obou klientech a jde je spustit z Galerie; chybí ruční průchod Galerií na telefonu |
 | D3-1 celá smyčka M1 v obou klientech | 7.9 h | feed → jízda → minihra → výsledek → uložení v obou klientech, soak test 10 smyček v obou; Pages: běží bez chyb v konzoli (Mac 41 fps s provozem a chodci); chybí telefony |
+| M3-S3 přepínání měst, uložení po městech | 11 min | aplikace Cesty a uložení po městech v obou klientech, testy přepnutí NYC → Praha → NYC (PR #60, #61, #63); chybí soak 10 přepnutí a vyzkoušení na telefonu |
 
 ## Tempo
 
@@ -81,14 +82,14 @@ Body dodaných položek (hotovo, čeká na Ol1na, ověřeno) podle dne dokončen
 | 2026-11-19 | 0 |
 | 2026-11-20 | 0 |
 | 2026-11-21 | 77 |
-| 2026-11-22 | 31 |
+| 2026-11-22 | 35 |
 
-Průměr za posledních 7 dní: **15.4 bodu/den**.
+Průměr za posledních 7 dní: **16.0 bodu/den**.
 
 ## Odhad dokončení
 
 Aktuální milník **D1**: zbývá 1 bodů (bez položek čekajících na Ol1na).
-Při nejrychlejším třídenním okně (36.0 b/den) **2026-11-22**, při nejpomalejším (36.0 b/den) **2026-11-22**.
+Při nejrychlejším třídenním okně (37.3 b/den) **2026-11-22**, při nejpomalejším (37.3 b/den) **2026-11-22**.
 Měřeno na krátké historii; rozmezí se zpřesní s každým dalším dnem.
 
 ## Obsah
