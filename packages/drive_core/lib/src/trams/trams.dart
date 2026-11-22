@@ -176,7 +176,8 @@ class Trams {
   }
 
   /// After `world.step`: hit detection against the player (SAT on the boxes), body masks.
-  void postStep(Car player) {
+  /// [airborne]: the player is in a hop (specs/hop.md), so nothing touches it and no hit fires.
+  void postStep(Car player, {bool airborne = false}) {
     final t = _t;
     final pv = player.velocity;
     final ph = player.heading, pc = math.cos(ph), ps = math.sin(ph);
@@ -187,7 +188,7 @@ class Trams {
       var touch = false;
       var impact = 0.0;
       for (final c in tr.cars) {
-        final same = solid && c.layer == player.layer;
+        final same = solid && !airborne && c.layer == player.layer;
         _setMask(c, same);
         if (!same) continue;
         final ch = math.cos(c.heading), sh = math.sin(c.heading);

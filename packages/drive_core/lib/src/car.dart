@@ -109,7 +109,29 @@ class Car {
   static int _mask(int layer, int zone) =>
       (layer == 0 ? catBuildings | catParked | zone : 0) | catTraffic | catTram;
 
-  int get maskBits => _mask(layer, zoneBits);
+  /// Airborne in a hop (specs/hop.md): only buildings collide.
+  bool airborne = false;
+
+  int get maskBits => airborne ? catBuildings : _mask(layer, zoneBits);
+
+  /// Switches the hop mask on take-off and landing.
+  void setAirborne(bool v) {
+    if (v == airborne) return;
+    airborne = v;
+    _shape.filter = Filter(categoryBits: catCar, maskBits: maskBits);
+  }
+
+  /// One step in the air (specs/hop.md): no input, no tyre forces, no spin, air drag only.
+  void fly() {
+    final v = body.linearVelocity;
+    final drag = body.mass * (t.dragLinear + t.dragQuadratic * v.length);
+    body.applyForce(Vector2(-v.x * drag, -v.y * drag));
+    body.angularVelocity = 0;
+    rearSlip = 0;
+    frontSlip = 0;
+    braking = false;
+    reversing = false;
+  }
 
   /// Radius of the circle around the centre that covers the whole body.
   double get boundingRadius => math.sqrt(halfLength * halfLength + halfWidth * halfWidth) + t.bodyRoundM;

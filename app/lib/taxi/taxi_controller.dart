@@ -156,11 +156,11 @@ class TaxiController extends ChangeNotifier implements WorldMinigame {
 
   void _afterUpdate(double dt) {
     _prevUpdate?.call(dt);
-    final stepDt = game.carsPaused ? 0.0 : dt * game.timeScale();
-    update(stepDt);
+    // Shift time is a world clock: it stands while the game is paused (specs/pause.md).
+    update(game.worldDt(dt));
   }
 
-  /// One frame with the world dt (scaled like driving); public for tests.
+  /// One frame with the world dt (0 while paused); public for tests.
   void update(double dt) {
     if (_lineS > 0 && (_lineS -= dt) <= 0) line.value = null;
     final s = shift;

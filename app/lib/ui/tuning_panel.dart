@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../game/metropole_game.dart';
+import '../game/pause.dart';
 import '../l10n/app_localizations.dart';
 import '../minigames/gallery.dart';
 import '../dialogue/skits.dart';
@@ -17,12 +18,16 @@ void showTuningPanel(
   required Future<void> Function()? onBench,
   Future<void> Function()? onResetSave,
 }) {
-  showModalBottomSheet<void>(
-    context: context,
-    isScrollControlled: true,
-    backgroundColor: const Color(Tokens.colorUiSheet),
-    barrierColor: Colors.transparent,
-    builder: (_) => _TuningPanel(game: game, onScheme: onScheme, onBench: onBench, onResetSave: onResetSave),
+  // The debug panel pauses the game while open (specs/pause.md).
+  game.pauseOverlays.hold(
+    GameOverlay.tuning,
+    showModalBottomSheet<void>(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: const Color(Tokens.colorUiSheet),
+      barrierColor: Colors.transparent,
+      builder: (_) => _TuningPanel(game: game, onScheme: onScheme, onBench: onBench, onResetSave: onResetSave),
+    ),
   );
 }
 
@@ -182,10 +187,14 @@ class _TuningPanelState extends State<_TuningPanel> {
                 icon: const Icon(Icons.grid_view, size: 16),
                 label: Text(l.gallery),
                 onPressed: () {
-                  Navigator.of(context).pop();
-                  Navigator.of(context).push(
-                    MaterialPageRoute<void>(
-                      builder: (_) => GalleryScreen(tuning: g.tuning, cityId: g.city.id),
+                  final nav = Navigator.of(context);
+                  nav.pop();
+                  g.pauseOverlays.hold(
+                    GameOverlay.gallery,
+                    nav.push(
+                      MaterialPageRoute<void>(
+                        builder: (_) => GalleryScreen(tuning: g.tuning, cityId: g.city.id),
+                      ),
                     ),
                   );
                 },
@@ -197,7 +206,8 @@ class _TuningPanelState extends State<_TuningPanel> {
                   final nav = Navigator.of(context);
                   final lang = Localizations.localeOf(context).languageCode;
                   nav.pop();
-                  openSkits(nav, g.tuning, lang, city: g.city.id);
+                  // NPC dialogue (the skit list and its dialogue routes) pauses the game.
+                  g.pauseOverlays.hold(GameOverlay.dialogue, openSkits(nav, g.tuning, lang, city: g.city.id));
                 },
               ),
               OutlinedButton.icon(

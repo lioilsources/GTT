@@ -16,6 +16,7 @@ export 'src/parked.dart';
 export 'src/controls.dart';
 export 'src/drive_world.dart';
 export 'src/gps.dart';
+export 'src/hop.dart';
 export 'src/pedestrians.dart';
 export 'src/police/police.dart';
 export 'src/police/rules.dart';

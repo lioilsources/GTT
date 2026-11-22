@@ -214,14 +214,15 @@ class Traffic {
   }
 
   /// After `world.step`: hit detection against the player (SAT on the two boxes).
-  void postStep(Car player) {
+  /// [airborne]: the player is in a hop (specs/hop.md), so nothing touches it and no hit fires.
+  void postStep(Car player, {bool airborne = false}) {
     final t = _t;
     final pv = player.velocity;
     final ph = player.heading, pc = math.cos(ph), ps = math.sin(ph);
     final round = tuning.drive.bodyRoundM;
     final phl = player.halfLength + round, phw = player.halfWidth + round;
     for (final c in cars) {
-      final same = solid && c.layer == player.layer;
+      final same = solid && !airborne && c.layer == player.layer;
       final ch = math.cos(c.heading), sh = math.sin(c.heading);
       final touch =
           same &&

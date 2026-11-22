@@ -16,6 +16,7 @@ class Hud extends StatelessWidget {
     this.onPhone,
     this.onPassport,
     this.onCarAction,
+    this.onHop,
   });
 
   final MetropoleGame game;
@@ -27,6 +28,9 @@ class Hud extends StatelessWidget {
 
   /// The context button next to a parked car or in the garage (specs/cars.md).
   final void Function(CarAction action)? onCarAction;
+
+  /// The "Hop" button of a car with an air tank (specs/hop.md "Ovládání").
+  final VoidCallback? onHop;
 
   @override
   Widget build(BuildContext context) {
@@ -154,6 +158,18 @@ class Hud extends StatelessWidget {
                     ),
                   ),
                 ),
+                if (s.hopFull case final full?)
+                  Positioned(
+                    right: 8,
+                    bottom: 80,
+                    child: _HopButton(
+                      label: l.hopButton,
+                      empty: l.hopEmpty,
+                      charges: s.hopCharges,
+                      full: full,
+                      onTap: s.hopReady ? onHop : null,
+                    ),
+                  ),
                 if (onPassport != null)
                   Positioned(
                     right: 8,
@@ -195,6 +211,68 @@ class _Pill extends StatelessWidget {
     decoration: BoxDecoration(color: color, borderRadius: BorderRadius.circular(Tokens.radiusPill)),
     child: child,
   );
+}
+
+/// "Hop" with the air tank as one pip per charge; greyed (null [onTap]) when a hop cannot start.
+class _HopButton extends StatelessWidget {
+  const _HopButton({
+    required this.label,
+    required this.empty,
+    required this.charges,
+    required this.full,
+    required this.onTap,
+  });
+  final String label;
+  final String empty;
+  final int charges;
+  final int full;
+  final VoidCallback? onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final on = onTap != null;
+    final fg = Color(on ? Tokens.colorUiText : Tokens.colorUiTextFaint);
+    return Tooltip(
+      message: charges == 0 ? empty : '$label $charges/$full',
+      child: Material(
+        key: const ValueKey('hopButton'),
+        color: Color(on ? Tokens.colorBrandAccent : Tokens.colorUiPill),
+        borderRadius: BorderRadius.circular(Tokens.radiusPill),
+        child: InkWell(
+          borderRadius: BorderRadius.circular(Tokens.radiusPill),
+          onTap: onTap,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  label,
+                  style: TextStyle(color: fg, fontSize: Tokens.fontHudSmall, fontWeight: FontWeight.w800),
+                ),
+                const SizedBox(height: 4),
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    for (var i = 0; i < full; i++)
+                      Container(
+                        width: 8,
+                        height: 8,
+                        margin: const EdgeInsets.symmetric(horizontal: 2),
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Color(i < charges ? Tokens.colorUiText : Tokens.colorUiTextFaint),
+                        ),
+                      ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
 }
 
 class _RoundButton extends StatelessWidget {

@@ -22,6 +22,8 @@ const _cabins = <String, (double, double)>{
   'muscle': (-0.5, 0.1),
   'taxi': (-0.45, 0.3),
   'pickup': (0.05, 0.45),
+  // Supersport (specs/hop.md, Vega Roadster): low cabin set back behind a long bonnet.
+  'supersport': (-0.5, 0.05),
 };
 
 /// Micro vehicles shorter than this (spec `length_m`, before car_scale) draw as a scooter, longer

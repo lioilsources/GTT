@@ -20,6 +20,7 @@ import 'paint/props_painter.dart';
 import 'paint/traffic_painter.dart';
 import 'paint/trams_painter.dart';
 import '../ui/passport.dart' show passportCityOf;
+import 'pause.dart';
 
 /// Everything loaded before the first frame.
 class GameAssets {
@@ -85,6 +86,9 @@ class HudState {
     this.nearBorder = false,
     this.carName = '',
     this.carAction,
+    this.hopFull,
+    this.hopCharges = 0,
+    this.hopReady = false,
   });
 
   final String street;
@@ -101,6 +105,12 @@ class HudState {
   /// Name of the car being driven and the context button (specs/cars.md).
   final String carName;
   final CarAction? carAction;
+
+  /// Air tank of the driven car (specs/hop.md): full size (null = the car cannot hop), hops left,
+  /// and whether the "Hop" button is live now.
+  final int? hopFull;
+  final int hopCharges;
+  final bool hopReady;
 }
 
 /// Context button next to a parked car or in the garage.
@@ -152,6 +162,8 @@ class MetropoleGame extends Game {
     passport = PassportTracker(passportCityOf(city), tuning.passport)..onStamp((e) => passportEvent.value = e);
     // Police and wanted level (specs/police.md); the HUD listens to its hooks.
     police = Police(drive, tuning, fleet);
+    // The benchmark result card pauses the game until it is closed (specs/pause.md).
+    benchResult.addListener(() => pauseOverlays.set(GameOverlay.bench, benchResult.value != null));
   }
 
   final GameAssets data;
@@ -184,9 +196,8 @@ class MetropoleGame extends Game {
   /// Milliseconds from `main` to the first frame with the car's surroundings loaded.
   int firstFrameMs = 0;
 
-  /// Feature hooks (the phone, specs/phone.md): driving time scale, per-frame update with the
-  /// real dt, drawing in world metres on layer 0 and on top of the screen.
-  double Function() timeScale = () => 1;
+  /// Feature hooks (the phone, specs/phone.md): per-frame update with the real dt (read [worldPaused]
+  /// for world clocks), drawing in world metres on layer 0 and on top of the screen.
   void Function(double dt)? afterUpdate;
   void Function(ui.Canvas canvas)? paintWorld;
   void Function(ui.Canvas canvas, ui.Size size)? paintScreen;
@@ -264,8 +275,18 @@ class MetropoleGame extends Game {
     if (hud.value.carAction == CarAction.board && p != null && fleet.parked.contains(p)) fleet.board(p);
   }
 
-  /// True while the garage list is open: the world does not step (specs/cars.md).
-  bool carsPaused = false;
+  /// Open overlays (specs/pause.md): while any is open the simulation and the game clock stand.
+  final pauseOverlays = OverlayRegistry();
+
+  /// True while an overlay pauses the game; paused frames give every simulation and clock dt 0.
+  bool get worldPaused => pauseOverlays.isPaused;
+  bool _wasPaused = false;
+
+  /// World time step of this frame: the real dt, or 0 while [worldPaused].
+  double worldDt(double dt) => worldPaused ? 0 : dt;
+
+  /// The HUD "Hop" button (specs/hop.md).
+  bool hop() => !worldPaused && drive.startHop();
 
   void respawn() {
     drive.spawn(city.startX, city.startY, city.startHeading);
@@ -285,21 +306,36 @@ class MetropoleGame extends Game {
 
   @override
   void update(double dt) {
-    if (pilot == null) {
-      final input = drive.input..reset();
+    final pause = worldPaused;
+    if (pause != _wasPaused) {
+      _wasPaused = pause;
+      // Resume from zero input (released throttle, no brake): a finger that went down before the
+      // overlay opened never reaches the scheme's up event (specs/pause.md).
+      if (!pause) scheme = ControlScheme.create(scheme.id, tuning.controls);
+    }
+    final input = drive.input;
+    if (pause) {
+      input.reset();
+    } else if (pilot == null) {
+      input.reset();
       scheme.update(input);
       _keyboard(input);
     }
-    final stepDt = carsPaused ? 0.0 : dt * timeScale();
-    if (!carsPaused) drive.update(stepDt);
-    police.update(stepDt);
-    _policeClock += stepDt;
+    final stepDt = worldDt(dt);
+    if (!pause) {
+      drive.update(stepDt);
+      police.update(stepDt);
+      _policeClock += stepDt;
+    }
     afterUpdate?.call(dt);
-    _benchFrame(dt);
+    if (!pause) _benchFrame(dt);
     final car = drive.car;
     camera.follow(car.x, car.y, car.heading, car.speed, dt, tuning, reversing: car.forwardSpeed < -0.5);
+    // Streaming may finish loading chunks while paused.
     streamer.update(car.x, car.y, car.heading);
-    if (!_size.isEmpty) peds.update(dt, [CarPose.of(car)], camera.visibleRadius(_size, tuning), night: night);
+    if (!_size.isEmpty && !pause) {
+      peds.update(stepDt, [CarPose.of(car)], camera.visibleRadius(_size, tuning), night: night);
+    }
 
     _frames++;
     _frameAcc += dt;
@@ -313,9 +349,9 @@ class MetropoleGame extends Game {
     }
     _hudTimer += dt;
     if (_hudTimer >= 0.1) {
-      final action = fleet.action(_hudTimer);
+      final action = fleet.action(pause ? 0 : _hudTimer);
       _hudTimer = 0;
-      fleet.update();
+      if (!pause) fleet.update();
       final edge = drive.layers.edge;
       hud.value = HudState(
         street: edge?.name ?? '',
@@ -329,6 +365,9 @@ class MetropoleGame extends Game {
         chunks: renderer.stats.chunks,
         nearBorder: _nearBorder(),
         carName: drive.spec.name,
+        hopFull: hopCharges(drive.spec),
+        hopCharges: drive.hop.charges,
+        hopReady: !pause && drive.hopReady,
         carAction: switch (action) {
           'board' => CarAction.board,
           'garage' => CarAction.garage,
@@ -354,7 +393,13 @@ class MetropoleGame extends Game {
     if (any([LogicalKeyboardKey.arrowDown, LogicalKeyboardKey.keyS])) input.brake = 1;
     if (any([LogicalKeyboardKey.arrowUp, LogicalKeyboardKey.keyW])) input.boost = true;
     if (any([LogicalKeyboardKey.space])) input.handbrake = true;
+    // Hop on the J key edge, like client W (specs/hop.md "Ovládání").
+    final j = keys.contains(LogicalKeyboardKey.keyJ);
+    if (j && !_hopKey) hop();
+    _hopKey = j;
   }
+
+  bool _hopKey = false;
 
   final _bollards = BollardPainter();
 
@@ -362,6 +407,7 @@ class MetropoleGame extends Game {
   void render(ui.Canvas canvas) {
     if (_size.isEmpty) return;
     final car = drive.car;
+    final lift = _hopLift();
     renderer.render(
       canvas,
       _size,
@@ -389,13 +435,29 @@ class MetropoleGame extends Game {
         }
         final tm = drive.trams;
         if (tm != null) _tramsPainter?.paintTrams(c, tm, layer, night: night);
-        if (layer == car.layer) paintCar(c, car, night: night);
+        if (lift == null) {
+          if (layer == car.layer) paintCar(c, car, night: night);
+        } else if (layer == 0) {
+          paintHopShadow(c, car, lift);
+        } else if (layer == 1) {
+          // In the air above everything on the ground, buildings included (specs/hop.md).
+          paintCar(c, car, night: night, lift: lift);
+        }
       },
     );
     _streetLabels(canvas);
     paintScreen?.call(canvas, _size);
     _pedBubbles.paint(canvas, _size, peds, camera, tuning);
     paintControls(canvas, _size, scheme);
+  }
+
+  /// Lift and roll of the car while it hops (specs/hop.md "Kreslení"), null on the ground.
+  CarLift? _hopLift() {
+    final h = drive.hop, t = tuning.hop;
+    if (!h.airborne) return null;
+    final car = drive.car;
+    final roll = 2 * math.pi * t.flips * h.t / t.airS;
+    return carLift(car.x, car.y, camera.x, camera.y, hopArc(h.t, t.airS, t.heightM), roll, tuning);
   }
 
   final Map<String, TextPainter> _labels = {};
