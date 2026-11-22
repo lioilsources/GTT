@@ -13,7 +13,7 @@ const cfg: NohejbalConfig = {
   maxPoints: 15,
   scatter: [40, 55, 70, 85, 100],
   aiScatter: [160, 130, 100, 80, 60],
-  aiReach: [250, 300, 350, 400, 450],
+  aiReach: [380, 420, 460, 500, 540],
   playerReach: 380,
   aiMargin: [220, 180, 140, 110, 80],
   starMargins: [6, 3, 1],
@@ -62,13 +62,13 @@ describe('nohejbal rules (specs/minigames/nohejbal.md)', () => {
 
   it('the rival returns balls within aiReach of its centre, otherwise the player scores', () => {
     const { r, s } = start();
-    const ret = r.apply(s, p(150, 650)); // 150² + 200² = 250²: on the edge at level 1
+    const ret = r.apply(s, p(228, 754)); // 228² + 304² = 380²: on the edge at level 1
     expect(ret).toMatchObject({ turn: 'ai', rally: 1, playerPts: 0, aiPts: 0 });
     expect(ret.lastShot).toMatchObject({ in: true, reached: true });
-    const win = r.apply(s, p(151, 650));
+    const win = r.apply(s, p(229, 754));
     expect(win).toMatchObject({ playerPts: 1, server: 'player', turn: 'player', rally: 0 });
     expect(win.lastShot).toMatchObject({ in: true, reached: false });
-    expect(r.apply(s, p(151, 650, 2)).turn).toBe('ai'); // level 2 reaches 300
+    expect(r.apply(s, p(229, 754, 2)).turn).toBe('ai'); // level 2 reaches 420
   });
 
   it('the player returns balls within playerReach of its centre, otherwise the rival scores', () => {
