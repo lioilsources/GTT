@@ -19,7 +19,9 @@ uloží hru a vrátí hráče do jízdy s nabídkou Feedu.
   (`loopPlay`); stejně jako u aut (`specs/cars.md`) vydrží `loop.action_hold_s` od posledního
   splnění podmínek, dokud je spot pořád v dosahu. Z více spotů nejbližší. Během navigace a
   otevřeného telefonu se tlačítko neukazuje.
-- **Engine `drive` (Taxi):** zatím není; místo hry toast „<název> už brzy“ (`loopSoon`).
+- **Engine `drive` (Taxi):** světová minihra (`specs/minigames/taxi.md`): smyčka ji spustí ve
+  běžícím světě (bez pauzy a bez celoobrazovkové hry), po jejím konci ukáže normální výsledek smyčky.
+  Klient bez světové minihry pro daný engine ukáže toast „<název> už brzy“ (`loopSoon`).
 - Minihra, kterou klient nemá v registru, se chová stejně jako `drive`.
 
 ## Kontext minihry

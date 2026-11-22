@@ -270,6 +270,20 @@ export type MessageKey =
   | "garageForSale"
   | "garageBuy"
   | "saveReset"
+  | "taxiLine1"
+  | "taxiLine2"
+  | "taxiLine3"
+  | "taxiLine4"
+  | "taxiLine5"
+  | "taxiLine6"
+  | "taxiStart"
+  | "taxiTime"
+  | "taxiFare"
+  | "taxiPassenger"
+  | "taxiPaid"
+  | "taxiEnd"
+  | "taxiGallery"
+  | "taxiGalleryGo"
 ;
 
 export const messages: Record<Locale, Record<MessageKey, string>> = {
@@ -540,6 +554,20 @@ export const messages: Record<Locale, Record<MessageKey, string>> = {
     garageForSale: "Na prodej",
     garageBuy: "Koupit · {price}",
     saveReset: "Smazat uložení",
+    taxiLine1: "Na {place}, prosím.",
+    taxiLine2: "{place}, a šlápněte na to!",
+    taxiLine3: "Cíl: {place}. Jedeme!",
+    taxiLine4: "{place}. Mám zpoždění!",
+    taxiLine5: "Hodíte mě na {place}?",
+    taxiLine6: "{place}, klidně tou hezčí cestou.",
+    taxiStart: "Směna začala: naber cestující u chodníku",
+    taxiTime: "Směna {time}",
+    taxiFare: "Tržba {fare}",
+    taxiPassenger: "Cestující",
+    taxiPaid: "Jízdné {fare}",
+    taxiEnd: "Ukončit směnu",
+    taxiGallery: "Taxi se hraje ve městě: 4minutová směna od stanoviště taxi.",
+    taxiGalleryGo: "Začít směnu ve městě",
   },
   "en": {
     appTitle: "Metropole",
@@ -808,6 +836,20 @@ export const messages: Record<Locale, Record<MessageKey, string>> = {
     garageForSale: "For sale",
     garageBuy: "Buy · {price}",
     saveReset: "Reset save",
+    taxiLine1: "To {place}, please.",
+    taxiLine2: "{place}, and step on it!",
+    taxiLine3: "Take me to {place}.",
+    taxiLine4: "{place}. I'm running late!",
+    taxiLine5: "Could you drop me at {place}?",
+    taxiLine6: "{place}, the scenic way is fine.",
+    taxiStart: "Shift started: pick up passengers at the curb",
+    taxiTime: "Shift {time}",
+    taxiFare: "Fares {fare}",
+    taxiPassenger: "Passenger",
+    taxiPaid: "Fare {fare}",
+    taxiEnd: "End shift",
+    taxiGallery: "Taxi is played in the city: a 4-minute shift from the taxi stand.",
+    taxiGalleryGo: "Start the shift in the city",
   },
 };
 

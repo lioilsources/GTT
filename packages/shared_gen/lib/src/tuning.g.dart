@@ -1101,7 +1101,8 @@ class TuningMinigames {
         desetitisic = TuningMinigamesDesetitisic._(r.sub('desetitisic')),
         sipky = TuningMinigamesSipky._(r.sub('sipky')),
         koulena = TuningMinigamesKoulena._(r.sub('koulena')),
-        strelnice = TuningMinigamesStrelnice._(r.sub('strelnice'));
+        strelnice = TuningMinigamesStrelnice._(r.sub('strelnice')),
+        taxi = TuningMinigamesTaxi._(r.sub('taxi'));
 
   /// hard cap for every minigame (9.2)
   int timeCapS;
@@ -1120,6 +1121,9 @@ class TuningMinigames {
 
   final TuningMinigamesStrelnice strelnice;
 
+  /// Taxi shift (specs/minigames/taxi.md): a world minigame in the taxi_metro car.
+  final TuningMinigamesTaxi taxi;
+
   Map<String, Object> toJson() => {
         'time_cap_s': timeCapS,
         'sirky': sirky.toJson(),
@@ -1129,6 +1133,7 @@ class TuningMinigames {
         'sipky': sipky.toJson(),
         'koulena': koulena.toJson(),
         'strelnice': strelnice.toJson(),
+        'taxi': taxi.toJson(),
       };
 }
 
@@ -1420,6 +1425,131 @@ class TuningMinigamesStrelnice {
         'reload_ticks': reloadTicks,
         'star_scores': starScores,
         'time_cap_s': timeCapS,
+      };
+}
+
+/// Taxi shift (specs/minigames/taxi.md): a world minigame in the taxi_metro car.
+class TuningMinigamesTaxi {
+  TuningMinigamesTaxi._(_R r)
+      : shiftS = r.i('shift_s'),
+        fareBase = r.i('fare_base'),
+        farePerKm = r.i('fare_per_km'),
+        expectBaseS = r.i('expect_base_s'),
+        expectDmPerS = r.i('expect_dm_per_s'),
+        bonusPerS = r.i('bonus_per_s'),
+        bonusMaxPct = r.i('bonus_max_pct'),
+        latePerS = r.i('late_per_s'),
+        lateMaxPct = r.i('late_max_pct'),
+        tipPct = r.i('tip_pct'),
+        hitTipPct = r.i('hit_tip_pct'),
+        starFares = r.il('star_fares'),
+        lines = r.i('lines'),
+        pickupMinM = r.d('pickup_min_m'),
+        pickupMaxM = r.d('pickup_max_m'),
+        pickupRadiusM = r.d('pickup_radius_m'),
+        dropRadiusM = r.d('drop_radius_m'),
+        stopSpeedMps = r.d('stop_speed_mps'),
+        destMinM = r.d('dest_min_m'),
+        destMaxM = r.d('dest_max_m'),
+        destSearchM = r.d('dest_search_m'),
+        renavS = r.d('renav_s'),
+        lineS = r.d('line_s'),
+        lowS = r.d('low_s'),
+        passengerM = r.d('passenger_m'),
+        passengerPx = r.d('passenger_px'),
+        curbM = r.d('curb_m');
+
+  int shiftS;
+
+  int fareBase;
+
+  int farePerKm;
+
+  /// expected ride = base + route dm / expect_dm_per_s
+  int expectBaseS;
+
+  int expectDmPerS;
+
+  /// per second faster than expected, capped at bonus_max_pct of the meter
+  int bonusPerS;
+
+  int bonusMaxPct;
+
+  /// per second slower, capped at late_max_pct of the meter
+  int latePerS;
+
+  int lateMaxPct;
+
+  /// tip in % of the meter, minus hit_tip_pct per crash into traffic
+  int tipPct;
+
+  int hitTipPct;
+
+  /// shift fare for 3, 2, 1 stars
+  List<int> starFares;
+
+  /// passenger lines taxiLine1..N in i18n
+  int lines;
+
+  double pickupMinM;
+
+  double pickupMaxM;
+
+  double pickupRadiusM;
+
+  double dropRadiusM;
+
+  double stopSpeedMps;
+
+  double destMinM;
+
+  double destMaxM;
+
+  double destSearchM;
+
+  double renavS;
+
+  double lineS;
+
+  /// the shift timer turns red below this (UI only)
+  double lowS;
+
+  /// passenger marker radius (min passenger_px)
+  double passengerM;
+
+  double passengerPx;
+
+  /// passenger beyond the corridor edge
+  double curbM;
+
+  Map<String, Object> toJson() => {
+        'shift_s': shiftS,
+        'fare_base': fareBase,
+        'fare_per_km': farePerKm,
+        'expect_base_s': expectBaseS,
+        'expect_dm_per_s': expectDmPerS,
+        'bonus_per_s': bonusPerS,
+        'bonus_max_pct': bonusMaxPct,
+        'late_per_s': latePerS,
+        'late_max_pct': lateMaxPct,
+        'tip_pct': tipPct,
+        'hit_tip_pct': hitTipPct,
+        'star_fares': starFares,
+        'lines': lines,
+        'pickup_min_m': pickupMinM,
+        'pickup_max_m': pickupMaxM,
+        'pickup_radius_m': pickupRadiusM,
+        'drop_radius_m': dropRadiusM,
+        'stop_speed_mps': stopSpeedMps,
+        'dest_min_m': destMinM,
+        'dest_max_m': destMaxM,
+        'dest_search_m': destSearchM,
+        'renav_s': renavS,
+        'line_s': lineS,
+        'low_s': lowS,
+        'passenger_m': passengerM,
+        'passenger_px': passengerPx,
+        'curb_m': curbM,
       };
 }
 
