@@ -47,13 +47,13 @@ Cache nesleduje změny konfigurace: po úpravě `city.yaml`, `tuning.yaml` (ší
 
 Manhattan jižně od 110th St s mosty Brooklyn, Manhattan, Williamsburg a Queensboro a krátkými předmostími
 (DUMBO, Williamsburg, Long Island City): 17 065 uzlů, 20 037 hran, 32 246 hmot budov, 896 chunků,
-15 spotů (8 se minihrou), balíček 2,5 MB. Build s `-refetch` ~5 min.
+36 spotů (8 se minihrou, 8 budek, 12 vstupů do metra), balíček 2,6 MB. Build s `-refetch` ~5 min.
 
 ## Praha v číslech (M3)
 
 Praha 1 a 2 s Letnou, Holešovicemi, Karlínem, Žižkovem, Vinohrady, Smíchovem a Vyšehradem
 (`plans/M3_PRAHA.md`): 12 510 uzlů, 14 419 hran (4 524 ponechaných, z toho 435 spojek kvůli
-jednosměrkám), 13 942 hmot budov, 507 chunků, 15 spotů (7 se minihrou), balíček 1,5 MB. Build s
+jednosměrkám), 13 942 hmot budov, 507 chunků, 36 spotů (7 se minihrou, 6 budek, 12 vstupů do metra), balíček 1,7 MB. Build s
 `-refetch` ~6 min. Organická síť jednosměrek bez spojek po směru jízdy rozpadla ponechané silnice
 na ostrovy, kam se nedalo dojet (Národní, Spálená, Dlouhá); proto druhý krok spojek.
 
