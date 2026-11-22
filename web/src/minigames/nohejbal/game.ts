@@ -64,6 +64,7 @@ export function nohejbal(env: MinigameEnv): Minigame {
           court.append(svg('rect', { x: -lay.halfW, y: 0, width: 2 * lay.halfW, height: lay.depth, class: 'nohejbal-half' }));
           court.append(svg('line', { x1: -w, y1: 0, x2: w, y2: 0, class: 'nohejbal-net' }));
           court.append(svg('circle', { cx: 0, cy: -homeY, r: reach, class: 'nohejbal-reach' }));
+          court.append(svg('circle', { cx: 0, cy: homeY, r: cfg.playerReach, class: 'nohejbal-reach' }));
           const guide = svg('line', { class: 'koulena-guide', x1: 0, y1: homeY, x2: 0, y2: homeY, visibility: 'hidden' });
           const mark = svg('circle', { class: 'koulena-mark', r: lay.ballR * 0.6, visibility: 'hidden' });
           const me = svg('circle', { class: 'koulena-ball', cx: 0, cy: homeY, r: lay.manR });

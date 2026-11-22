@@ -13,6 +13,7 @@ export interface NohejbalConfig {
   scatter: number[];
   aiScatter: number[];
   aiReach: number[];
+  playerReach: number;
   aiMargin: number[];
   starMargins: number[];
 }
@@ -24,7 +25,7 @@ export interface NohejbalShot {
   x: number;
   y: number;
   in: boolean;
-  /** The receiver got to it (the player always does for a ball in the court). */
+  /** The receiver got to it (within its reach of the centre of its half). */
   reached: boolean;
 }
 
@@ -51,6 +52,7 @@ export function nohejbalConfig(t: TuningMinigamesNohejbal): NohejbalConfig {
     scatter: [...t.scatter],
     aiScatter: [...t.aiScatter],
     aiReach: [...t.aiReach],
+    playerReach: t.playerReach,
     aiMargin: [...t.aiMargin],
     starMargins: [...t.starMargins],
   };
@@ -107,13 +109,9 @@ export class NohejbalRules implements Rules<NohejbalState, NohejbalAction, DuelR
     const inCourt = Math.abs(p.x) <= c.halfWidth && p.y >= 0 && p.y <= c.depth;
     let reached = false;
     if (inCourt) {
-      if (a.by === 'player') {
-        const reach = c.aiReach[a.level - 1]!;
-        const dy = p.y - Math.trunc(c.depth / 2);
-        reached = p.x * p.x + dy * dy <= reach * reach;
-      } else {
-        reached = true;
-      }
+      const reach = a.by === 'player' ? c.aiReach[a.level - 1]! : c.playerReach;
+      const dy = p.y - Math.trunc(c.depth / 2);
+      reached = p.x * p.x + dy * dy <= reach * reach;
     }
     const lastShot: NohejbalShot = { by: a.by, x: p.x, y: p.y, in: inCourt, reached };
     const other: Side = a.by === 'player' ? 'ai' : 'player';

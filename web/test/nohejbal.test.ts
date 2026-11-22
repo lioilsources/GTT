@@ -14,6 +14,7 @@ const cfg: NohejbalConfig = {
   scatter: [40, 55, 70, 85, 100],
   aiScatter: [160, 130, 100, 80, 60],
   aiReach: [250, 300, 350, 400, 450],
+  playerReach: 380,
   aiMargin: [220, 180, 140, 110, 80],
   starMargins: [6, 3, 1],
 };
@@ -70,14 +71,18 @@ describe('nohejbal rules (specs/minigames/nohejbal.md)', () => {
     expect(r.apply(s, p(151, 650, 2)).turn).toBe('ai'); // level 2 reaches 300
   });
 
-  it('the player always returns a ball in the court; out balls from the rival score for the player', () => {
+  it('the player returns balls within playerReach of its centre, otherwise the rival scores', () => {
     const { r, s } = start();
     const s1 = r.apply(s, p(0, 450));
-    const s2 = r.apply(s1, a(-450, 900));
+    const s2 = r.apply(s1, a(228, 754)); // 228² + 304² = 380²: on the edge
     expect(s2).toMatchObject({ turn: 'player', rally: 2 });
     expect(s2.lastShot).toMatchObject({ by: 'ai', in: true, reached: true });
-    const s3 = r.apply(s1, a(0, 950));
-    expect(s3).toMatchObject({ playerPts: 1, server: 'player', turn: 'player', rally: 0 });
+    const s3 = r.apply(s1, a(229, 754));
+    expect(s3).toMatchObject({ aiPts: 1, playerPts: 0, server: 'ai', turn: 'ai', rally: 0 });
+    expect(s3.lastShot).toMatchObject({ by: 'ai', in: true, reached: false });
+    const s4 = r.apply(s1, a(0, 950)); // out: point to the player
+    expect(s4).toMatchObject({ playerPts: 1, server: 'player', turn: 'player', rally: 0 });
+    expect(s4.lastShot).toMatchObject({ in: false, reached: false });
   });
 
   it('end: win_points with a two-point lead, deuce goes on, max_points ends it', () => {
