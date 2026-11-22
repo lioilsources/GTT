@@ -1,4 +1,4 @@
-import { existsSync, readFileSync } from 'node:fs';
+import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { gzipSync } from 'node:zlib';
 
@@ -17,13 +17,11 @@ import type { CarSpec, MinigameResult } from '../src/gen/schema';
 import { Tuning } from '../src/gen/tuning';
 import { LoopBook } from '../src/loop/logic';
 import { overlays, PauseGate, pausingOverlays } from '../src/pause';
-import { canonical, replayers, type VectorFile } from '../src/rules/vectors';
 import { City } from '../src/world/model';
 
 const root = join(__dirname, '..', '..');
 const tuning = Tuning.fromJson(parse(readFileSync(join(root, 'content', 'tuning.yaml'), 'utf8')));
 const car = JSON.parse(readFileSync(join(root, 'content', 'cars', 'm0_coupe.json'), 'utf8')) as CarSpec;
-const vectorsFile = join(root, 'vectors', 'booths.json');
 
 afterEach(() => overlays.clear());
 
@@ -35,17 +33,6 @@ function ringUp(r: BoothsRules, s: ReturnType<BoothsRules['init']>, near: number
   for (let i = 0; i < n && s.ringing < 0; i++) s = r.apply(s, tick(near));
   return s;
 }
-
-// Vectors are replayed here even before parity marks F-037 web done; skipped without the file.
-describe.skipIf(!existsSync(vectorsFile))('booths vectors (vectors/booths.json)', () => {
-  const v = existsSync(vectorsFile) ? (JSON.parse(readFileSync(vectorsFile, 'utf8')) as VectorFile) : { cases: [] } as unknown as VectorFile;
-  for (const c of v.cases) {
-    it(c.name, () => {
-      const states = replayers['booths']!(c);
-      c.steps.forEach((s, i) => expect(canonical(states[i]), `step ${i}`).toBe(canonical(s.state)));
-    });
-  }
-});
 
 describe('booths rules (specs/booths.md)', () => {
   it('init: silence, a gap in [gapMin, gapMax], no offer', () => {

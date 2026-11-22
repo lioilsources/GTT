@@ -7,8 +7,6 @@ import { DialogueRules, contexts, quipIndex, quipOutcome, type DialogueConfig } 
 import { DialogueSession, initials, opponentOf } from '../src/dialogue/session';
 import type { NpcPack } from '../src/gen/schema';
 import { Tuning } from '../src/gen/tuning';
-import { replay } from '../src/minigames/rules';
-import { canonical, type VectorFile } from '../src/rules/vectors';
 
 const root = join(__dirname, '..', '..');
 const tuning = Tuning.fromJson(parse(readFileSync(join(root, 'content/tuning.yaml'), 'utf8')));
@@ -57,15 +55,6 @@ describe('dialogue rules (specs/dialogue.md)', () => {
     expect(s.gained).toBe(0);
     s = r.apply(s, { by: 'player', type: 'reply', tone: 'flirt' });
     expect(r.result(s)).toMatchObject({ skit: 'a_street_1', completed: true, gained: 3, vibe: 3, newContact: false });
-  });
-
-  it('replays vectors/dialogue.json', () => {
-    const v = JSON.parse(readFileSync(join(root, 'vectors/dialogue.json'), 'utf8')) as VectorFile;
-    for (const c of v.cases) {
-      const got = replay(new DialogueRules() as never, c);
-      c.steps.forEach((st, i) => expect(canonical(got.states[i]), `${c.name} ${i}`).toBe(canonical(st.state)));
-      expect(canonical(got.result), c.name).toBe(canonical(c.result));
-    }
   });
 
   it('picks quips with Prng(seed)', () => {

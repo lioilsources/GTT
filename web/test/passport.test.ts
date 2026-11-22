@@ -9,7 +9,6 @@ import { Tuning } from '../src/gen/tuning';
 import { fnv1a, postcardShapes } from '../src/passport/postcard';
 import { districtId, PassportRules } from '../src/passport/rules';
 import { PassportTracker, passportCity, type PassportCity } from '../src/passport/tracker';
-import { canonical, replayers, replayResult, type VectorFile } from '../src/rules/vectors';
 import type { PackSource } from '../src/world/citypack';
 import { City } from '../src/world/model';
 
@@ -177,14 +176,3 @@ describe.skipIf(!existsSync(pack))('passport on the NYC pack', () => {
   });
 });
 
-// Temporary until parity marks passport done: the recorded vectors replay on web.
-describe('vectors/passport.json (ungated)', () => {
-  const v = JSON.parse(readFileSync(join(root, 'vectors', 'passport.json'), 'utf8')) as VectorFile;
-  for (const c of v.cases) {
-    it(c.name, () => {
-      const states = replayers['passport']!(c);
-      c.steps.forEach((s, i) => expect(canonical(states[i])).toBe(canonical(s.state)));
-      expect(canonical(replayResult('passport', c))).toBe(canonical(c.result));
-    });
-  }
-});

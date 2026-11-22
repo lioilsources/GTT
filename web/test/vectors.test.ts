@@ -8,7 +8,8 @@ import { canonical, replayers, replayResult, rulesModules, type VectorFile } fro
 const root = join(__dirname, '..', '..');
 const parity = parse(readFileSync(join(root, 'parity.yaml'), 'utf8')) as Array<{ vectors?: string; web: string }>;
 
-// Vectors are replayed only for rows where the web client is done (DUALSTACK 5.6).
+// Vectors are replayed only for rows where the web client is done (DUALSTACK 5.6). This is the only
+// place web tests read vectors/*.json, so a `web: todo` row skips the module everywhere.
 const done = parity.filter((r) => r.vectors && r.web === 'done').map((r) => r.vectors as string);
 
 describe('P0 vectors', () => {
@@ -17,6 +18,8 @@ describe('P0 vectors', () => {
     const replay = replayers[v.module];
     const pending = !done.includes(`vectors/${file}`) || !replay;
     describe.skipIf(pending)(v.module, () => {
+      const make = rulesModules[v.module];
+      if (make) it('specVersion', () => expect(v.specVersion).toBe(make().specVersion));
       for (const c of v.cases) {
         it(c.name, () => {
           const states = replay!(c);
