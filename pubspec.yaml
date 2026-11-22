@@ -15,6 +15,9 @@ workspace:
   - packages/mg_desetitisic
   - packages/mg_sipky
   - packages/mg_koulena
+  - packages/mg_kulicky
+  - packages/mg_cara
+  - packages/mg_nohejbal
   - packages/mg_strelnice
   - packages/mg_taxi
   - packages/feed_hub
