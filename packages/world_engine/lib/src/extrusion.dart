@@ -6,6 +6,7 @@ import 'package:shared_gen/shared_gen.dart';
 
 import 'chunk.dart';
 import 'palette.dart';
+import 'style_geometry.dart';
 import 'tuning.dart';
 
 /// Window texture tiling: one window cell is 4 m wide and 3.2 m tall, 64 px square.
@@ -57,12 +58,22 @@ class BuildingBatcher {
   static Float32List _grow(Float32List a, int n) => Float32List(n)..setRange(0, a.length, a);
 
   /// Adds one building. [vpX], [vpY] is the vanishing point (the player's car) in world metres.
-  void add(ui.Canvas canvas, ui.Paint paint, BuildingData b, double vpX, double vpY, Palette pal, Tuning t,
-      {int alpha = 255}) {
+  void add(
+    ui.Canvas canvas,
+    ui.Paint paint,
+    BuildingData b,
+    double vpX,
+    double vpY,
+    Palette pal,
+    Tuning t, {
+    int alpha = 255,
+  }) {
     final n = b.vertexCount;
     final walls = n; // upper bound of visible walls
-    final needV = walls * 4 + n;
-    final needI = walls * 6 + b.roof.length;
+    // Style A (specs/style.md v2): flat roof colour plus a parapet band, landmarks excepted.
+    final band = pal.flatRoofs && b.landmark == 0 && t.style.roofEdgeM > 0;
+    final needV = walls * 4 + n + (band ? 4 * n : 0);
+    final needI = walls * 6 + b.roof.length + (band ? 6 * n : 0);
     if (needV > 65535) return;
     if (_nv + needV > 65535) flush(canvas, paint);
     _ensure(needV, needI);
@@ -134,7 +145,8 @@ class BuildingBatcher {
       start = end;
     }
 
-    final roofC = _shade(base, pal.roofLight * jitter, alpha);
+    final flat = pal.flatRoofs && b.landmark == 0;
+    final roofC = flat ? _shade(pal.roof!, jitter, alpha) : _shade(base, pal.roofLight * jitter, alpha);
     final rb = nv;
     for (var i = 0; i < n; i++) {
       pos[2 * nv] = _top[2 * i];
@@ -148,9 +160,48 @@ class BuildingBatcher {
     for (var k = 0; k < roof.length; k++) {
       idx[ni++] = rb + roof[k];
     }
+    if (band) {
+      // Inner band points are world metres; project them like the roof (scale s1 about the VP).
+      final inner = roofBandOf(b, t.style.roofEdgeM);
+      final edgeC = _shade(pal.roofEdge!, 1, alpha);
+      for (var i = 0; i < n; i++) {
+        final j = _next(b.ringEnds, i);
+        pos[2 * nv] = _top[2 * i];
+        pos[2 * nv + 1] = _top[2 * i + 1];
+        pos[2 * nv + 2] = _top[2 * j];
+        pos[2 * nv + 3] = _top[2 * j + 1];
+        pos[2 * nv + 4] = vpX + (inner[4 * i + 2] - vpX) * s1;
+        pos[2 * nv + 5] = vpY + (inner[4 * i + 3] - vpY) * s1;
+        pos[2 * nv + 6] = vpX + (inner[4 * i] - vpX) * s1;
+        pos[2 * nv + 7] = vpY + (inner[4 * i + 1] - vpY) * s1;
+        for (var k = 0; k < 4; k++) {
+          tex[2 * (nv + k)] = roofTexU;
+          tex[2 * (nv + k) + 1] = roofTexV;
+          col[nv + k] = edgeC;
+        }
+        idx[ni] = nv;
+        idx[ni + 1] = nv + 1;
+        idx[ni + 2] = nv + 2;
+        idx[ni + 3] = nv;
+        idx[ni + 4] = nv + 2;
+        idx[ni + 5] = nv + 3;
+        nv += 4;
+        ni += 6;
+      }
+    }
     _nv = nv;
     _ni = ni;
     buildingsDrawn++;
+  }
+
+  /// The vertex after [i] in its ring (wrapping to the ring start).
+  static int _next(Int32List ends, int i) {
+    var start = 0;
+    for (final end in ends) {
+      if (i < end) return i + 1 < end ? i + 1 : start;
+      start = end;
+    }
+    return i;
   }
 
   static int _shade(ui.Color c, double k, int alpha) {

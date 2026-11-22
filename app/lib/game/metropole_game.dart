@@ -167,7 +167,13 @@ class MetropoleGame extends Game {
     scheme = ControlScheme.create(ControlSchemeId.a, tuning.controls);
     renderer = WorldRenderer(
       city: city,
-      roads: RoadMeshes.build(city.graph, city.chunkM, sidewalkM: tuning.sidewalkWidthM, laneM: tuning.laneWidthM),
+      roads: RoadMeshes.build(
+        city.graph,
+        city.chunkM,
+        sidewalkM: tuning.sidewalkWidthM,
+        laneM: tuning.laneWidthM,
+        crosswalks: crosswalksOn(tuning.style, city.id) ? CrosswalkParams.fromTuning(tuning) : null,
+      ),
       streamer: streamer,
       tuning: tuning,
       textures: data.textures,
