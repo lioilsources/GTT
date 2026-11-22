@@ -2584,7 +2584,7 @@ export class TuningPhoto {
   /** camera glide into the framing view */
   zoomS: number;
   flashS: number;
-  /** crosshair size on the view centre */
+  /** crosshair size, drawn on the view (look) */
   crossPx: number;
   /** camera icon at the parking point */
   spotIconM: number;

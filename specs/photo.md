@@ -51,7 +51,8 @@ Všechny `by: "player"`; `÷` je celočíselné dělení nezáporných čísel.
   „Zvednout“ (budka), pak Foťák, pak „Hrát“. Stejně jde otevřít aplikace Foťák v telefonu (id
   `camera`, slot z `specs/phone.md`); jinde než u fotomísta ukáže jen `photoNoSpot`.
 - **Foťák:** telefon se zavře, hra stojí (`specs/pause.md`, druh `photo`), kamera plynule
-  (`photo.zoom_s`) přejede na střed mezi autem a `look` a oddálí se tak, aby šířka pohledu byla
+  (`photo.zoom_s`) přejede tak, aby střed mezi autem a `look` byl uprostřed obrazovky (natočení
+  beze změny; při zavření stejně zpět) a oddálí se tak, aby šířka pohledu byla
   `max(view_width_m.slow, 2 × subject_m × photo.view_factor)`. Na `look` se kreslí zaměřovač
   (`photo.cross`), nahoře text `photoHint` se jménem fotomísta. Tah prstem/myší = rámeček
   (protilehlé rohy, obdélník rovnoběžný s obrazovkou, barva `photo.frame`); puštění = snímek.
@@ -69,7 +70,11 @@ Všechny `by: "player"`; `÷` je celočíselné dělení nezáporných čísel.
   z razítek `photo:*`.
 
 ## Hraniční případy
-- Fotomísto zmizelé z balíčku: razítko v Pasu zůstane (Pas ho jen nepočítá do katalogu), `load`
-  ho tiše zahodí.
+- Fotomísto zmizelé z balíčku: Pas jeho razítko zahodí jako každé mimo katalog
+  (`specs/passport.md`), `load` ho tedy nedostane.
+- Široký pohled (velký `subject_m`) může na okrajích ukázat nenačtené chunky, streamování jede
+  dál kolem auta.
+- Klepnutí bez tahu = rámeček `hw = hh = 1` → `cut`.
+- Pořadí kontextových tlačítek: Zvednout > Foťák > Hrát > Přesednout; Metro zvlášť.
 - Rámeček přes celou obrazovku na malém výhledu = `loose`; malý rámeček vedle = `cut`.
 - Město bez fotomíst: tlačítko se neukáže, aplikace ukáže `photoNoSpot`.

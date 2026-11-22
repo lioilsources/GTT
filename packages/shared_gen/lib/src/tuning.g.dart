@@ -2790,7 +2790,7 @@ class TuningPhoto {
 
   double flashS;
 
-  /// crosshair size on the view centre
+  /// crosshair size, drawn on the view (look)
   double crossPx;
 
   /// camera icon at the parking point
