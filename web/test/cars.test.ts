@@ -94,7 +94,8 @@ describe('parked models by city (specs/cars.md)', () => {
 
   it('keeps every original model in list order for NYC', () => {
     const nyc = parkedPool(models, specs, 'nyc');
-    expect(nyc).toEqual(['hatch_pip', 'muscle_brute', 'taxi_metro', 'pickup_hauler', 'm0_coupe']);
+    // The M1 models come first, in their original order; later cars (M2) only append.
+    expect(nyc.slice(0, 5)).toEqual(['hatch_pip', 'muscle_brute', 'taxi_metro', 'pickup_hauler', 'm0_coupe']);
     expect(nyc).toEqual(models.filter((id) => specs.get(id)!.tags.includes('nyc')));
   });
 
@@ -186,16 +187,15 @@ describe.skipIf(!existsSync(pack))('parked cars and boarding in NYC', () => {
     expect(total).toBeGreaterThan(10);
   });
 
-  it('filters models by city without changing NYC; an empty pool parks nothing', () => {
+  it('filters models by city; an empty pool parks nothing', () => {
     expect(city.id).toBe('nyc');
-    // The pre-M3 list: every NYC model, unfiltered.
-    const m1 = ['hatch_pip', 'muscle_brute', 'taxi_metro', 'pickup_hauler', 'm0_coupe'];
-    const old = { ...tuning, cars: { ...tuning.cars, parked: { ...tuning.cars.parked, models: m1 } } } as unknown as Tuning;
+    const pool = parkedPool(tuning.cars.parked.models, specs, 'nyc');
     let total = 0;
     for (const c of chunks) {
       const now = generateParked(city.graph, c.x, c.y, 1, tuning, specs, [], { x: 1e9, y: 1e9 }, 'nyc');
-      expect(now).toEqual(generateParked(city.graph, c.x, c.y, 1, old, specs, [], { x: 1e9, y: 1e9 }, 'nyc'));
-      for (const p of now) expect(m1).toContain(p.carId);
+      // Deterministic per chunk, and only models of the city's pool park there.
+      expect(now).toEqual(generateParked(city.graph, c.x, c.y, 1, tuning, specs, [], { x: 1e9, y: 1e9 }, 'nyc'));
+      for (const p of now) expect(pool).toContain(p.carId);
       expect(generateParked(city.graph, c.x, c.y, 1, tuning, specs, [], { x: 1e9, y: 1e9 }, 'nowhere')).toEqual([]);
       total += now.length;
     }

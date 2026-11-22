@@ -11,6 +11,7 @@ není uvedeno jinak. Reprodukce: `tools/art/` (prompty, seedy, parametry workflo
 | `postcards/prague/*.png` | Qwen-Image (fp8), ComfyUI | Apache 2.0 | vlastní dílo projektu GTT | várka 1, seed 201, styl C, ořez 1080×1350, 256 barev |
 | `postcards/nyc/{guggenheim,msg}.png` | Qwen-Image (fp8), ComfyUI | Apache 2.0 | vlastní dílo projektu GTT | oprava 2, seed 214 (guggenheim) a 211 (msg), styl A, `tools/art/make_fix2.py` |
 | `postcards/prague/old_new_synagogue.png` | Qwen-Image (fp8), ComfyUI | Apache 2.0 | vlastní dílo projektu GTT | oprava 2, seed 214, styl C, nápis v okraji papíru přebarven (`tools/art/post_fix2.py`) |
+| `postcards/nyc/amnh.png` | Qwen-Image (fp8), ComfyUI | Apache 2.0 | vlastní dílo projektu GTT | oprava 3, seed 221 (`tools/art/make_fix3.py`), styl A, štít bez nápisu, podpis v rohu přebarven (`tools/art/post_fix3.py`) |
 | `cars/lidovka/body.png` | Qwen-Image (fp8), ComfyUI + BiRefNet-general | Apache 2.0 / MIT | vlastní dílo projektu GTT | oprava 1, seed 316 (`tools/art/make_fix1.py`), ručně ořezáno a zmenšeno na 32 px/m |
 
 Nepoužívat pro herní assety: modely s nekomerční licencí (např. FLUX.1-dev, RMBG-2.0) a modely
@@ -22,3 +23,4 @@ s omezující licencí (Illustrious-XL).
 |---|---|---|---|---|
 | `cities/prague/{cobblestone,mosaic_sidewalk,roof_tiles}.png` | Qwen-Image (fp8), ComfyUI | Apache 2.0 | vlastní dílo projektu GTT | dávka tex1, seedy 403, 401, 402 (`tools/art/make_tex1.py`), 512², bezešvé (roll + prolnutí) |
 | `cities/nyc/asphalt.png` | Qwen-Image (fp8), ComfyUI | Apache 2.0 | vlastní dílo projektu GTT | oprava 2, seed 413 (`tools/art/make_fix2.py`), 512², bezešvé (`tools/art/post_fix2.py`) |
+| `cities/nyc/{sidewalk_concrete,roof_tar}.png` | vlastní skript (`tools/art/proc_tex.py`, numpy) | – | vlastní dílo projektu GTT | procedurální, bez modelu, seedy 511 a 512, 512² bezešvé |

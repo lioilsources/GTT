@@ -131,10 +131,10 @@ vzorem). Do té doby klient kreslí ikonu a jméno.
   768×1280 (výraz happy), 22. 11. 2026, všech 6 postav, průhledné pozadí (BiRefNet-general, `tools/art/run_rmbg.py`).
 - `assets/cars/lidovka/body.png`, 22. 11. 2026, karoserie Lidky kolmo shora 56×148 (32 px/m, plátno +10 %),
   alfa. `paint_mask.png` a `wheel.png` zatím chybí, ostatní auta taky (zatím jen test postupu).
-- `assets/postcards/nyc/*.png`, 22. 11. 2026, 33 z 34. Chybí amnh (Qwen píše nápis na štít ve všech
-  variantách, bude potřeba jiný postup).
+- `assets/postcards/nyc/*.png`, 22. 11. 2026, všech 34 (amnh z ostrého úhlu se štítem bez nápisu).
 - `assets/postcards/prague/*.png`, 22. 11. 2026, všech 20.
 - Postup: `tools/art/make_batch1.py` (prompty, seedy) + `tools/art/run_board.py` (workflow ComfyUI).
 - `assets/cities/prague/{cobblestone,mosaic_sidewalk,roof_tiles}.png` a `assets/cities/nyc/asphalt.png`,
-  22. 11. 2026, tileable 512×512, 256 barev. Chybí nyc/sidewalk_concrete a nyc/roof_tar (výsledky
-  s perspektivou a viditelným opakováním, budou potřeba nové prompty).
+  22. 11. 2026, tileable 512×512, 256 barev.
+- `assets/cities/nyc/{sidewalk_concrete,roof_tar}.png`, 22. 11. 2026, procedurálně (`tools/art/proc_tex.py`):
+  chodník 4×4 desky se spárami, střecha štěrk se švy. Tím je sada textur kompletní.
