@@ -75,7 +75,7 @@ void main() {
       final p = tuning.police;
       expect(cfg.escapeTicks, (p.escapeS * p.tickHz).round());
       expect(cfg.captureTicks, (p.captureS * p.tickHz).round());
-      expect(cfg.maxLevel, 2);
+      expect(cfg.maxLevel, tuning.police.maxLevel);
       expect(cfg.levels.keys.toList(), offenceKinds);
     });
 

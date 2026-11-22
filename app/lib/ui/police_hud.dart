@@ -7,7 +7,7 @@ import 'package:shared_gen/shared_gen.dart';
 import '../l10n/app_localizations.dart';
 
 /// Police HUD (specs/police.md "Kreslení a HUD"): wanted badges top centre, a short reason toast
-/// and the "busted" card. Thin widget over the Police hooks.
+/// the "roadblock" toast (specs/roadblock.md) and the "busted" card. Thin widget over the Police hooks.
 class PoliceHud extends StatefulWidget {
   const PoliceHud({super.key, required this.police});
 
@@ -33,6 +33,7 @@ class _PoliceHudState extends State<PoliceHud> {
     _p.onOffence.add(_onOffence);
     _p.onWantedChanged.add(_onWanted);
     _p.onFined.add(_onFined);
+    _p.onRoadblock.add(_onRoadblock);
   }
 
   @override
@@ -40,6 +41,7 @@ class _PoliceHudState extends State<PoliceHud> {
     _p.onOffence.remove(_onOffence);
     _p.onWantedChanged.remove(_onWanted);
     _p.onFined.remove(_onFined);
+    _p.onRoadblock.remove(_onRoadblock);
     _toastTimer?.cancel();
     _cardTimer?.cancel();
     super.dispose();
@@ -69,6 +71,9 @@ class _PoliceHudState extends State<PoliceHud> {
     setState(() => _level = e.level);
     if (e.reason == 'escape' && e.level == 0) _say(AppLocalizations.of(context).policeEscaped);
   }
+
+  /// Roadblock put up ahead (specs/roadblock.md "HUD").
+  void _onRoadblock(double _, double _) => _say(AppLocalizations.of(context).policeRoadblock);
 
   void _onFined(int amount) {
     _cardTimer?.cancel();

@@ -37,7 +37,8 @@ void paintPolice(
     );
     _p.color = const Color(Tokens.colorPoliceBar);
     canvas.drawRect(Rect.fromLTRB(-hl * 0.12, -hw * 0.85, hl * 0.04, hw * 0.85), _p);
-    final ph = lightPhase(c.pursuing, timeS, blinkS);
+    // A roadblock patrol blinks always (specs/roadblock.md "Kreslení").
+    final ph = lightPhase(c.pursuing || c.blocking, timeS, blinkS);
     const off = Color(Tokens.colorPoliceLightOff);
     _p.color = ph == 0 ? const Color(Tokens.colorPoliceLightRed) : off;
     canvas.drawRect(Rect.fromLTRB(-hl * 0.1, hw * 0.1, hl * 0.02, hw * 0.8), _p);

@@ -289,6 +289,7 @@ class MetropoleGame extends Game {
   bool hop() => !worldPaused && drive.startHop();
 
   void respawn() {
+    police.clearRoadblock(); // specs/roadblock.md: a respawn drops the roadblock
     drive.spawn(city.startX, city.startY, city.startHeading);
     camera.snap(drive.car.x, drive.car.y, drive.car.heading, tuning);
   }
