@@ -53,30 +53,29 @@ const contextKeys = {
   'car_owner': MessageKey.npcCtxCarOwner,
 };
 
-/// Placeholder portrait: initials on a token-coloured circle (manga portraits come later via ComfyUI).
+/// A character's portrait (specs/art.md): the art for [expression] or `npc/<id>.png` in a circle,
+/// else initials on a token-coloured circle.
 class NpcPortrait extends StatelessWidget {
-  const NpcPortrait({super.key, required this.name, required this.index, this.size = 56});
+  const NpcPortrait({
+    super.key,
+    required this.id,
+    required this.name,
+    required this.index,
+    this.size = 56,
+    this.expression,
+  });
 
+  final String id;
   final String name;
   final int index;
   final double size;
 
+  /// Dialogue variant ([npcExpression]); null = the plain portrait (contacts, lists).
+  final String? expression;
+
   @override
-  Widget build(BuildContext context) {
-    const colors = Tokens.colorNpcPortraits;
-    return CircleAvatar(
-      radius: size / 2,
-      backgroundColor: Color(colors[index % colors.length]),
-      child: Text(
-        initials(name),
-        style: TextStyle(
-          color: const Color(Tokens.colorNpcPortraitText),
-          fontWeight: FontWeight.w700,
-          fontSize: size * 0.4,
-        ),
-      ),
-    );
-  }
+  Widget build(BuildContext context) =>
+      NpcAvatar(id: id, initials: initials(name), index: index, size: size, expression: expression);
 }
 
 /// Shows the dialogue of a skit [session] has already started ([DialogueSession.startSkit]):
@@ -186,7 +185,16 @@ class _DialogueViewState extends State<DialogueView> {
               children: [
                 Row(
                   children: [
-                    NpcPortrait(name: ch.name, index: ch.portrait),
+                    NpcPortrait(
+                      id: ch.id,
+                      name: ch.name,
+                      index: ch.portrait,
+                      expression: npcExpression(
+                        vibe,
+                        contactMinVibe: s.tuning.contactMinVibe,
+                        vibeStart: s.tuning.vibeStart,
+                      ),
+                    ),
                     const SizedBox(width: Tokens.spaceMd),
                     Expanded(
                       child: Column(
@@ -376,7 +384,7 @@ class _SkitsScreenState extends State<SkitsScreen> {
             const SizedBox(height: Tokens.spaceMd),
             Row(
               children: [
-                NpcPortrait(name: c.name, index: c.portrait, size: 32),
+                NpcPortrait(id: c.id, name: c.name, index: c.portrait, size: 32),
                 const SizedBox(width: Tokens.spaceSm),
                 Expanded(
                   child: Text(

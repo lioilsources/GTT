@@ -1,8 +1,10 @@
 import 'dart:async';
+import 'dart:math' as math;
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:mg_api/mg_api.dart' show ArtImage, artIndex;
 import 'package:meta_progress/meta_progress.dart';
 import 'package:world_engine/world_engine.dart';
 
@@ -26,21 +28,57 @@ String _lang(BuildContext context) => Localizations.localeOf(context).languageCo
 /// Text of an `lm_<id>_title` / `_text` key (dynamic keys go through the pure `tr`).
 String _lm(BuildContext context, MessageKey? key, String fallback) => key == null ? fallback : tr(_lang(context), key);
 
-/// The placeholder postcard picture; real illustrations come later from ComfyUI (tools/artgen).
+/// The postcard picture: `postcards/<city>/<id>.png` in 4 : 5 (specs/art.md) when it exists,
+/// else the placeholder drawing in 3 : 2 (specs/passport.md).
 class PostcardPicture extends StatelessWidget {
-  const PostcardPicture({super.key, required this.id, required this.heightM});
+  const PostcardPicture({super.key, required this.id, required this.heightM, this.city, this.width = _cardInner});
   final String id;
   final double heightM;
 
+  /// City of the landmark; null = no art lookup.
+  final String? city;
+
+  /// Logical width the picture is drawn at (decode size).
+  final double width;
+
   @override
-  Widget build(BuildContext context) => ClipRRect(
-    borderRadius: BorderRadius.circular(4),
-    child: AspectRatio(
+  Widget build(BuildContext context) {
+    final drawing = AspectRatio(
       aspectRatio: postcardW / postcardH,
       child: CustomPaint(painter: _PostcardPainter(postcardShapes(id, heightM))),
-    ),
-  );
+    );
+    final path = city == null ? null : artIndex.postcard(city!, id);
+    if (path == null) return ClipRRect(borderRadius: BorderRadius.circular(4), child: drawing);
+    return Center(
+      child: ConstrainedBox(
+        // The card fits the screen height: the picture shrinks first, keeping 4 : 5.
+        constraints: BoxConstraints(maxHeight: math.max(_minPicture, _screenFree(context))),
+        child: AspectRatio(
+          aspectRatio: 4 / 5,
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(4),
+            child: ArtImage(path: path, decodeWidth: width, fit: BoxFit.contain, fallback: drawing),
+          ),
+        ),
+      ),
+    );
+  }
+
+  /// Height left for the picture: the screen minus safe areas and the card's text and stamp.
+  static double _screenFree(BuildContext context) {
+    final m = MediaQuery.of(context);
+    return m.size.height - m.padding.vertical - _cardTextReserve;
+  }
 }
+
+/// Room the card keeps for title, text, stamp, padding and the overlay offset, and the smallest
+/// picture height.
+const _cardTextReserve = 300.0;
+const _minPicture = 120.0;
+
+/// Postcard card width and the picture width inside its padding.
+const _cardW = 360.0;
+const _cardInner = _cardW - 2 * Tokens.spaceMd;
 
 class _PostcardPainter extends CustomPainter {
   _PostcardPainter(this.shapes);
@@ -73,8 +111,9 @@ class _PostcardPainter extends CustomPainter {
 
 /// The postcard card: picture, title, two sentences and the stamp mark.
 class PostcardCard extends StatelessWidget {
-  const PostcardCard({super.key, required this.landmark, this.onTap});
+  const PostcardCard({super.key, required this.landmark, this.city, this.onTap});
   final PassportLandmark landmark;
+  final String? city;
   final VoidCallback? onTap;
 
   @override
@@ -86,7 +125,7 @@ class PostcardCard extends StatelessWidget {
       child: Transform.rotate(
         angle: -0.035,
         child: Container(
-          width: 360,
+          width: _cardW,
           padding: const EdgeInsets.all(Tokens.spaceMd),
           decoration: BoxDecoration(
             color: const Color(Tokens.colorPassportCard),
@@ -97,7 +136,7 @@ class PostcardCard extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              PostcardPicture(id: landmark.id, heightM: landmark.heightM),
+              PostcardPicture(id: landmark.id, heightM: landmark.heightM, city: city),
               const SizedBox(height: Tokens.spaceSm),
               Text(
                 _lm(context, postcardTitleKey(landmark.id), landmark.name),
@@ -137,9 +176,12 @@ class PostcardCard extends StatelessWidget {
 
 /// Shows postcards (landmarks) and stamp labels (districts) as they are stamped.
 class PassportOverlay extends StatefulWidget {
-  const PassportOverlay({super.key, required this.events, required this.seconds, this.overlays});
+  const PassportOverlay({super.key, required this.events, required this.seconds, this.city, this.overlays});
   final ValueListenable<StampEvent?> events;
   final double seconds;
+
+  /// City id for the postcard art (specs/art.md); null = placeholder drawings.
+  final String? city;
 
   /// The postcard pauses the game until it is closed or times out (specs/pause.md); the stamp
   /// toast does not.
@@ -232,7 +274,7 @@ class _PassportOverlayState extends State<PassportOverlay> {
                       widthFactor: 0.88,
                       child: FittedBox(
                         fit: BoxFit.scaleDown,
-                        child: PostcardCard(landmark: _card!, onTap: () => _setCard(null)),
+                        child: PostcardCard(landmark: _card!, city: widget.city, onTap: () => _setCard(null)),
                       ),
                     ),
             ),
@@ -246,9 +288,19 @@ class _PassportOverlayState extends State<PassportOverlay> {
 /// The Passport screen: completion % and a stamp grid per kind. A plain widget, so the phone
 /// app (feed_hub) can host it later.
 class PassportScreen extends StatelessWidget {
-  const PassportScreen({super.key, required this.tracker, required this.cityName, this.about, this.overlays});
+  const PassportScreen({
+    super.key,
+    required this.tracker,
+    required this.cityName,
+    this.city,
+    this.about,
+    this.overlays,
+  });
   final PassportTracker tracker;
   final String cityName;
+
+  /// City id for the postcard art (specs/art.md); null = placeholder drawings.
+  final String? city;
   final AboutInfo? about;
 
   /// Passport and About pause the game while open (specs/pause.md).
@@ -259,11 +311,13 @@ class PassportScreen extends StatelessWidget {
     PassportTracker tracker,
     String cityName,
     AboutInfo about, {
+    String? city,
     OverlayRegistry? overlays,
   }) {
     final f = Navigator.of(context).push(
       MaterialPageRoute<void>(
-        builder: (_) => PassportScreen(tracker: tracker, cityName: cityName, about: about, overlays: overlays),
+        builder: (_) =>
+            PassportScreen(tracker: tracker, cityName: cityName, city: city, about: about, overlays: overlays),
       ),
     );
     return overlays?.hold(GameOverlay.passport, f) ?? f;
@@ -349,6 +403,9 @@ class PassportScreen extends StatelessWidget {
                         _StampTile(
                           label: name(kind, id),
                           got: tracker.has(kind, id),
+                          thumb: kind == 'landmark' && city != null && tracker.has(kind, id)
+                              ? artIndex.postcard(city!, id)
+                              : null,
                           onTap: kind == 'landmark' && tracker.has(kind, id)
                               ? () => _showPostcard(context, tracker.landmarks.firstWhere((x) => x.id == id))
                               : null,
@@ -377,7 +434,7 @@ class PassportScreen extends StatelessWidget {
         widthFactor: 0.88,
         child: FittedBox(
           fit: BoxFit.scaleDown,
-          child: PostcardCard(landmark: lm, onTap: () => Navigator.of(ctx).pop()),
+          child: PostcardCard(landmark: lm, city: city, onTap: () => Navigator.of(ctx).pop()),
         ),
       ),
     ),
@@ -385,10 +442,27 @@ class PassportScreen extends StatelessWidget {
 }
 
 class _StampTile extends StatelessWidget {
-  const _StampTile({required this.label, required this.got, this.onTap});
+  const _StampTile({required this.label, required this.got, this.thumb, this.onTap});
   final String label;
   final bool got;
+
+  /// Postcard art of a stamped landmark (specs/art.md), shown as a `cover` square.
+  final String? thumb;
   final VoidCallback? onTap;
+
+  static const _thumb = 72.0;
+
+  /// The stamp mark: a circle with a star when stamped.
+  Widget _mark(Color fg) => Container(
+    width: 28,
+    height: 28,
+    alignment: Alignment.center,
+    decoration: BoxDecoration(
+      shape: BoxShape.circle,
+      border: Border.all(color: got ? const Color(Tokens.colorPassportStamp) : fg, width: 2),
+    ),
+    child: got ? const Icon(Icons.star, size: 16, color: Color(Tokens.colorPassportStamp)) : const SizedBox.shrink(),
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -411,18 +485,16 @@ class _StampTile extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: Tokens.spaceSm, horizontal: Tokens.spaceXs),
             child: Column(
               children: [
-                Container(
-                  width: 28,
-                  height: 28,
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    border: Border.all(color: got ? const Color(Tokens.colorPassportStamp) : fg, width: 2),
-                  ),
-                  child: got
-                      ? const Icon(Icons.star, size: 16, color: Color(Tokens.colorPassportStamp))
-                      : const SizedBox.shrink(),
-                ),
+                if (thumb != null)
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(4),
+                    child: SizedBox.square(
+                      dimension: _thumb,
+                      child: ArtImage(path: thumb!, decodeWidth: _thumb, fallback: _mark(fg)),
+                    ),
+                  )
+                else
+                  _mark(fg),
                 const SizedBox(height: Tokens.spaceXs),
                 Text(
                   label,

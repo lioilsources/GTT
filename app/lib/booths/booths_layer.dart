@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mg_api/mg_api.dart';
 import 'package:shared_gen/shared_gen.dart';
 
 import '../l10n/app_localizations.dart';
@@ -76,6 +77,8 @@ class BoothsLayer extends StatelessWidget {
   }
 }
 
+const _cardW = 360.0;
+
 /// The offer after "Zvednout": host, minigame, place and bonus; "Jedu" / "Nechat být".
 class _OfferCard extends StatelessWidget {
   const _OfferCard({required this.booths, required this.card, required this.locale});
@@ -90,11 +93,13 @@ class _OfferCard extends StatelessWidget {
     final mg = booths.gameOf(o);
     final key = mg.isEmpty ? null : LoopController.nameKey(mg);
     final game = key == null ? o.spot : tr(locale, key);
+    final id = booths.hostId(card.booth);
+    final bust = id == null ? null : artIndex.bust(id);
     return ColoredBox(
       color: const Color(Tokens.colorUiPill),
       child: Center(
         child: Container(
-          width: 360,
+          width: _cardW,
           margin: const EdgeInsets.all(Tokens.spaceLg),
           padding: const EdgeInsets.all(Tokens.spaceLg),
           decoration: BoxDecoration(
@@ -114,6 +119,9 @@ class _OfferCard extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: Tokens.spaceSm),
+              // The host bust above the call (specs/art.md); without the file the card stays text only.
+              if (bust != null)
+                HostBust(path: bust, height: _cardW * hostBustHeight, fallback: const SizedBox.shrink()),
               Text(
                 l.boothCall(o.bonus, game, booths.hostName(card.booth), booths.phone.spotName(o.spot)),
                 textAlign: TextAlign.center,

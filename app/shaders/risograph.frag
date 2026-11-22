@@ -56,7 +56,7 @@ void main() {
   float l = lum(c);
   if (l >= uHtLow && l <= uHtHigh) {
     vec2 d = (fract(p / cell) - 0.5) * cell;
-    if (length(d) <= (1.0 - l) * cell * 0.5) c *= 1.0 - uHtStrength;
+    if (length(d) <= (1.0 - l) * cell * 0.7071) c *= 1.0 - uHtStrength;
   }
 
   // 3. Grain.

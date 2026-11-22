@@ -85,7 +85,10 @@ class _GameScreenState extends State<GameScreen> {
     unawaited(_cities.write(widget.city.id));
     _hasBench = await _assetExists('${GameAssets.shared}content/bench/${widget.city.id}.json');
     _saved = await _store.read(widget.city.id);
-    _npc = await ensureDialogueSession(assets.tuning, city: widget.city.id).then<DialogueSession?>((s) => s, onError: (_) => null);
+    _npc = await ensureDialogueSession(
+      assets.tuning,
+      city: widget.city.id,
+    ).then<DialogueSession?>((s) => s, onError: (_) => null);
     final game = MetropoleGame(assets);
     await game.preload();
     return game;
@@ -242,6 +245,7 @@ class _GameScreenState extends State<GameScreen> {
                   game.passport,
                   game.city.manifest.name,
                   AboutInfo.of(game.city),
+                  city: game.city.id,
                   overlays: game.pauseOverlays,
                 ),
               ),
@@ -255,6 +259,7 @@ class _GameScreenState extends State<GameScreen> {
               PassportOverlay(
                 events: game.passportEvent,
                 seconds: game.tuning.passport.postcardS,
+                city: game.city.id,
                 overlays: game.pauseOverlays,
               ),
               _BenchOverlay(game: game),

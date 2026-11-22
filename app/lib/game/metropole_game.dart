@@ -519,7 +519,7 @@ class MetropoleGame extends Game {
           );
         }
         final tm = drive.trams;
-        if (tm != null) _tramsPainter?.paintTrams(c, tm, layer, night: night);
+        if (tm != null) _tramsPainter?.paintTrams(c, tm, layer, night: night, shadow: shadow);
         if (lift == null) {
           if (layer == car.layer) paintCar(c, car, night: night, shadow: shadow);
         } else if (layer == 0) {
