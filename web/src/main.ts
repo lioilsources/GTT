@@ -28,6 +28,7 @@ import { installBooths } from './booths';
 import { installLoop } from './loop';
 import { installTaxi } from './minigames/taxi';
 import { installTravel } from './travel';
+import { installFastTravel } from './travel/fastTravel';
 import { cityUrl, pickStartCity, readLastCity, writeLastCity } from './travel/cities';
 import { HttpPackSource } from './world/citypack';
 import { City } from './world/model';
@@ -262,6 +263,15 @@ async function main(): Promise<void> {
     city, tuning, t, drive, phone, loop, carsHud, npcPack, hud: $('hud'), rig: view.rig, wanted: () => police.police.wantedLevel,
   });
   installTravel({ cityId, tuning, t, phone, tracker: passport.tracker, store: loop.store, save: () => loop.save(), onSwitch: () => booths.clear() });
+  // Fast travel by metro and taxi (specs/travel.md): stations unlock by passing, the move resets
+  // traffic, patrols and pedestrians like a teleport.
+  const fastTravel = installFastTravel({
+    city, tuning, t, drive, fleet, phone, loop, wanted: () => police.police.wantedLevel, police: police.police, peds, hud: $('hud'), rig: view.rig,
+    onMoved: () => {
+      view.carChanged();
+      view.rig.snap(drive.car.x, drive.car.y, drive.car.heading, tuning);
+    },
+  });
   // Police fines take cash through the economy (specs/economy.md).
   police.police.onFined((e) => loop.fine(e.amount));
 
@@ -328,6 +338,7 @@ async function main(): Promise<void> {
   noticeEl.textContent = t('borderNotice');
   function hud(): void {
     booths.hud();
+    fastTravel.hud(0.1);
     fleet.update();
     carsHud.update();
     hopHud.update(0.1);
@@ -432,6 +443,7 @@ async function main(): Promise<void> {
       ctx.shadowBlur = 0;
     }
     booths.draw(ctx, size.w, size.h);
+    fastTravel.draw(ctx, size.w, size.h);
     phone.draw(ctx, size.w, size.h);
     taxi.draw(ctx, size.w, size.h);
     drawPedBubbles(ctx, peds, rig, size, tuning, t('pedestrianBubble'));
@@ -486,7 +498,7 @@ async function main(): Promise<void> {
 
   if (import.meta.env.DEV || params.has('debug')) {
     (window as unknown as Record<string, unknown>)['metro'] = {
-      engine, view, drive, fleet, city, tuning, frameTimes, pilot, bench, peds, phone, passport, loop, taxi, police: police.police, booths,
+      engine, view, drive, fleet, city, tuning, frameTimes, pilot, bench, peds, phone, passport, loop, taxi, police: police.police, booths, fastTravel,
       timing: () => ({ firstFrameMs, loadMs }),
     };
   }

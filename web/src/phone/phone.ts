@@ -5,11 +5,11 @@ import { overlays } from '../pause';
 
 /** In-game phone shell (specs/phone.md "Telefon"): bottom sheet, home grid, app slots. */
 
-export const phoneAppIds = ['feed', 'map', 'garage', 'passport', 'camera', 'contacts', 'wallet', 'travel', 'settings'] as const;
+export const phoneAppIds = ['feed', 'map', 'taxi', 'garage', 'passport', 'camera', 'contacts', 'wallet', 'travel', 'settings'] as const;
 export type PhoneAppId = (typeof phoneAppIds)[number];
 
 const icons: Record<PhoneAppId, string> = {
-  feed: '▤', map: '⌖', garage: '⌂', passport: '✪', camera: '◉', contacts: '☺', wallet: '¤', travel: '✈', settings: '⚙',
+  feed: '▤', map: '⌖', taxi: '⇢', garage: '⌂', passport: '✪', camera: '◉', contacts: '☺', wallet: '¤', travel: '✈', settings: '⚙',
 };
 
 /** Mounts an app screen into host; returns unmount. */
