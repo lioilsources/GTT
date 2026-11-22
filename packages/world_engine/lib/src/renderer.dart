@@ -49,7 +49,14 @@ class WorldRenderer {
   final _dist = <BuildingData, double>{};
   final _paint = ui.Paint()..isAntiAlias = false;
 
-  static const _groundOrder = [GroundKind.PARK, GroundKind.PLAZA, GroundKind.RAIL, GroundKind.WATER];
+  // Pedestrian paving last: above parks and plazas (and water, for bridges), below roads.
+  static const _groundOrder = [
+    GroundKind.PARK,
+    GroundKind.PLAZA,
+    GroundKind.RAIL,
+    GroundKind.WATER,
+    GroundKind.PEDESTRIAN,
+  ];
 
   void render(
     ui.Canvas canvas,
