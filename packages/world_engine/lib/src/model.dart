@@ -2,6 +2,7 @@ import 'dart:math' as math;
 import 'dart:typed_data';
 
 import 'citypack.dart';
+import 'tracks.dart';
 import 'package:shared_gen/citypack_pb.dart' as pb;
 
 /// A drivable road edge in world metres.
@@ -251,7 +252,16 @@ Float32List _ringM(List<int> dm) {
 
 /// The static, always-loaded part of a citypack.
 class City {
-  City._(this.manifest, this.graph, this.landmarks, this.spots, this.districts, this.area, this.graphPb);
+  City._(
+    this.manifest,
+    this.graph,
+    this.landmarks,
+    this.spots,
+    this.districts,
+    this.area,
+    this.graphPb,
+    this.trams,
+  );
 
   final pb.Manifest manifest;
   final RoadGraph graph;
@@ -262,6 +272,9 @@ class City {
 
   /// Raw graph (dm integers) for the GPS route (specs/route.md).
   final pb.Graph graphPb;
+
+  /// Tram tracks and stops (`trams.pb`, specs/trams.md); empty without trams or in an old pack.
+  final TrackGraph trams;
   late final Set<int> chunkKeys = {for (final c in manifest.chunks) chunkKey(c.x, c.y)};
 
   String get id => manifest.cityId;
@@ -284,25 +297,28 @@ class City {
   }
 
   static Future<City> load(PackSource src) async {
-    final files = await Future.wait([
+    final files = await Future.wait<Uint8List?>([
       src.read('manifest.pb'),
       src.read('graph.pb'),
       src.read('landmarks.pb'),
       src.read('spots.pb'),
+      // Optional since citypack v3: an older pack has no trams.pb, which means no tracks.
+      src.read('trams.pb').then<Uint8List?>((b) => b, onError: (Object _) => null),
     ]);
-    final m = decodeManifest(files[0]);
+    final m = decodeManifest(files[0]!);
     if (m.formatVersion != 1) {
       throw StateError('citypack format ${m.formatVersion} is not supported');
     }
-    final graph = decodeGraph(files[1]);
+    final graph = decodeGraph(files[1]!);
     return City._(
       m,
       RoadGraph.fromPb(graph),
-      decodeLandmarks(files[2]),
-      decodeSpots(files[3]),
+      decodeLandmarks(files[2]!),
+      decodeSpots(files[3]!),
       [for (final d in m.districts) District(d.name, _ringM(d.ring))],
       _ringM(m.area),
       graph,
+      files[4] == null ? TrackGraph.empty() : TrackGraph.fromPb(decodeTrams(files[4]!)),
     );
   }
 }

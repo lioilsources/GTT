@@ -1,6 +1,6 @@
-import type { Graph, Landmarks, Manifest, Spots } from '../gen/pb/citypack_pb';
+import type { Graph, Landmarks, Manifest, Spots, TramGraph } from '../gen/pb/citypack_pb';
 import { RoadClass } from '../gen/pb/citypack_pb';
-import { decodeGraph, decodeLandmarks, decodeManifest, decodeSpots, type PackSource } from './citypack';
+import { decodeGraph, decodeLandmarks, decodeManifest, decodeSpots, decodeTrams, type PackSource } from './citypack';
 
 /** A drivable road edge in world metres (port of world_engine model.dart). */
 export class RoadEdge {
@@ -196,6 +196,139 @@ export class RoadGraph {
   }
 }
 
+/** A tram track edge in world metres (specs/trams.md, trams.pb); always two-way. */
+export class TrackEdge {
+  readonly length: number;
+  /** Cumulative distance from `from` at each point (m). */
+  readonly cum: Float64Array;
+
+  constructor(
+    readonly index: number,
+    readonly from: number,
+    readonly to: number,
+    /** Interleaved x, y in metres, both end nodes included. */
+    readonly pts: Float32Array,
+    readonly layerFrom: number,
+    readonly layerTo: number,
+    readonly bridge: boolean,
+    readonly tunnel: boolean,
+  ) {
+    const n = pts.length >> 1;
+    const cum = new Float64Array(Math.max(1, n));
+    for (let i = 1; i < n; i++) cum[i] = cum[i - 1]! + dist(pts[2 * i - 2]!, pts[2 * i - 1]!, pts[2 * i]!, pts[2 * i + 1]!);
+    this.cum = cum;
+    this.length = n > 0 ? cum[n - 1]! : 0;
+  }
+
+  get pointCount(): number {
+    return this.pts.length >> 1;
+  }
+  get isGround(): boolean {
+    return !this.tunnel && this.layerFrom === 0 && this.layerTo === 0;
+  }
+
+  /** The layer at parameter t (0..1 along the edge); a ramp switches halfway (as RoadEdge). */
+  layerAt(t: number): number {
+    return this.layerFrom === this.layerTo ? this.layerFrom : t < 0.5 ? this.layerFrom : this.layerTo;
+  }
+
+  /** The draw pass of the edge, as RoadEdge.drawLayer. */
+  get drawLayer(): number {
+    if (this.tunnel) return -1;
+    return Math.max(this.layerFrom, this.layerTo) > 0 ? 1 : Math.min(this.layerFrom, this.layerTo);
+  }
+
+  /**
+   * Point and unit direction (from → to) at distance d from `from`, clamped to the edge; written
+   * into out = [x, y, dirX, dirY]. Allocation-free.
+   */
+  pointAt(d: number, out: Float64Array | number[]): void {
+    const n = this.pointCount;
+    if (n < 2) {
+      out[0] = n > 0 ? this.pts[0]! : 0;
+      out[1] = n > 0 ? this.pts[1]! : 0;
+      out[2] = 1;
+      out[3] = 0;
+      return;
+    }
+    let s = 0;
+    while (s < n - 2 && this.cum[s + 1]! < d) s++;
+    const ax = this.pts[2 * s]!, ay = this.pts[2 * s + 1]!, bx = this.pts[2 * s + 2]!, by = this.pts[2 * s + 3]!;
+    const l = this.cum[s + 1]! - this.cum[s]!;
+    const f = l > 0 ? Math.min(1, Math.max(0, (d - this.cum[s]!) / l)) : 0;
+    out[0] = ax + (bx - ax) * f;
+    out[1] = ay + (by - ay) * f;
+    out[2] = l > 0 ? (bx - ax) / l : 1;
+    out[3] = l > 0 ? (by - ay) / l : 0;
+  }
+}
+
+/** A generated tram stop (specs/trams.md "Zastávky"): `s` metres from the edge's `from` end. */
+export interface TrackStop {
+  readonly index: number;
+  readonly edge: number;
+  readonly s: number;
+  readonly x: number;
+  readonly y: number;
+  /** Unit direction of the track at the stop, from → to. */
+  readonly dirX: number;
+  readonly dirY: number;
+}
+
+/** Tram tracks and stops of a city (trams.pb, specs/citypack.md v3); empty without trams. */
+export class TrackGraph {
+  /** Per edge: stop indices sorted by s ascending. */
+  readonly stopsByEdge: number[][];
+
+  private constructor(
+    readonly nodeXY: Float32Array,
+    readonly border: boolean[],
+    readonly edges: TrackEdge[],
+    readonly nodeEdges: number[][],
+    readonly stops: TrackStop[],
+  ) {
+    this.stopsByEdge = edges.map(() => []);
+    for (const st of stops) this.stopsByEdge[st.edge]?.push(st.index);
+    for (const list of this.stopsByEdge) list.sort((a, b) => stops[a]!.s - stops[b]!.s || a - b);
+  }
+
+  static empty(): TrackGraph {
+    return new TrackGraph(new Float32Array(0), [], [], [], []);
+  }
+
+  get isEmpty(): boolean {
+    return this.edges.length === 0;
+  }
+
+  static fromPb(g: TramGraph): TrackGraph {
+    const xy = new Float32Array(g.nodes.length * 2);
+    const border: boolean[] = [];
+    g.nodes.forEach((n, i) => {
+      xy[2 * i] = n.x / 10;
+      xy[2 * i + 1] = n.y / 10;
+      border.push(n.border);
+    });
+    const nodeEdges: number[][] = g.nodes.map(() => []);
+    const edges = g.edges.map((e, i) => {
+      const pts = new Float32Array(e.points.length);
+      for (let j = 0; j < pts.length; j++) pts[j] = e.points[j]! / 10;
+      nodeEdges[e.from]!.push(i);
+      nodeEdges[e.to]!.push(i);
+      return new TrackEdge(i, e.from, e.to, pts, e.layerFrom, e.layerTo, e.bridge, e.tunnel);
+    });
+    const p = [0, 0, 0, 0];
+    const stops: TrackStop[] = [];
+    for (const st of g.stops) {
+      const e = edges[st.edge];
+      if (!e) continue;
+      const s = Math.max(0, Math.min(st.sM, e.length));
+      e.pointAt(s, p);
+      stops.push({ index: stops.length, edge: st.edge, s, x: p[0]!, y: p[1]!, dirX: p[2]!, dirY: p[3]! });
+    }
+    return new TrackGraph(xy, border, edges, nodeEdges, stops);
+  }
+}
+
 /** Even-odd point in polygon over an interleaved ring. */
 export function pointInRing(x: number, y: number, ring: Float32Array): boolean {
   let inside = false;
@@ -224,6 +357,8 @@ export class City {
     readonly area: Float32Array,
     /** Raw graph (dm integers) for the GPS route (specs/route.md). */
     readonly graphPb: Graph,
+    /** Tram tracks and stops (specs/trams.md); empty for a city without trams or an old pack. */
+    readonly trams: TrackGraph,
   ) {
     this.chunkKeys = new Set(manifest.chunks.map((c) => chunkKey(c.x, c.y)));
   }
@@ -260,6 +395,11 @@ export class City {
     const [m, g, l, s] = await Promise.all(
       ['manifest.pb', 'graph.pb', 'landmarks.pb', 'spots.pb'].map((p) => src.read(p)),
     );
+    // trams.pb exists from citypack v3 on; an older pack has none = an empty track graph.
+    const trams = await src.read('trams.pb').then((b) => decodeTrams(b)).then(
+      (pb) => TrackGraph.fromPb(pb),
+      () => TrackGraph.empty(),
+    );
     const manifest = await decodeManifest(m!);
     if (manifest.formatVersion !== 1) throw new Error(`citypack format ${manifest.formatVersion} is not supported`);
     const graph = await decodeGraph(g!);
@@ -271,6 +411,7 @@ export class City {
       manifest.districts.map((d) => ({ name: d.name, ring: ringM(d.ring) })),
       ringM(manifest.area),
       graph,
+      trams,
     );
   }
 }

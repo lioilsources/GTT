@@ -48,7 +48,8 @@ nárazu, počet článků (`trams.cars_per_tram`), poloha a natočení každého
    (jen když tramvaj na ní ještě nestála). Hráč, auto a tramvaj se počítají ve stejné vrstvě před
    čelem do `trams.look_ahead_m` a bočně do `trams.corridor_m` od osy koleje. Jiná tramvaj
    v protisměru na téže hraně (jednokolejka) se počítá jako překážka jen té, která do hrany
-   vjela později.
+   vjela později. Jiná tramvaj se počítá jen se směrem do ±60° od vlastního (jinak by se
+   blokovaly tramvaje na sousední koleji dvojkolejky).
 2. **Cílová rychlost:** jako u provozu (`specs/traffic.md` krok 2) s `trams.speed_mps`,
    `trams.accel_mps2`, `trams.brake_mps2`, `trams.min_gap_m`. U zastávky zastaví čelem na
    zastávce a stojí `trams.dwell_s`; pak zvoní (P2 zvuk) a jede.
@@ -57,7 +58,8 @@ nárazu, počet článků (`trams.cars_per_tram`), poloha a natočení každého
    (bez `car_scale`, rozměry jsou už ve světových metrech), kategorie `CAT_TRAM = 64`, maska
    `CAT_CAR | CAT_TRAFFIC | CAT_PARKED`, ve stejné vrstvě. Hráč do něj narazí a odrazí se jako od
    zdi, tramvaj se nepohne (žádné odstrčení jako v `specs/traffic.md` kroku 7).
-5. **Náraz hráče:** překryv s rychlostí ≥ `trams.hit_min_mps` = událost „tramvaj trefená
+5. **Náraz hráče:** překryv obdélníků hráče a článku (SAT, rezerva `traffic.hit_margin_m`, obdélník
+   hráče zvětšený o `drive.body_round_m` jako u provozu) s rychlostí ≥ `trams.hit_min_mps` = událost „tramvaj trefená
    hráčem“ (pro policii a dialogy); tramvaj stojí `trams.hit_stop_s`.
 
 Provoz (`specs/traffic.md` v3) bere tramvaj jako překážku vpředu (krok 1, bod b) se stejným
@@ -80,6 +82,15 @@ hráče na náhodné hraně kolejí ve vrstvě 0, volno `trams.spawn_clear_m`; z
 ## API
 
 `trams.items` (články: poloha, natočení, vrstva), `trams.onHit(fn)`, `trams.stops`.
+
+## Vědomá zjednodušení (v1)
+
+- Zastávka vpředu se hledá jen na aktuální hraně; zastávku těsně za začátkem další hrany
+  tramvaj nestihne ubrzdit a vynechá ji.
+- Na konečné se tramvaj otočí na místě (články se na chvíli překryjí).
+- Na jednokolejce tramvaj, která do hrany vjela dřív, protijedoucí projede (tramvaje spolu
+  nekolidují). V Praze jsou koleje dvojkolejné, takže se to skoro nestane.
+- Proporce kolejnic, ostrůvku a oken jsou poměry v kódu klienta (jako vodorovné značení).
 
 ## Hraniční případy
 

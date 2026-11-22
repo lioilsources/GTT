@@ -53,7 +53,10 @@ class CarFleet {
       for (final p in parked)
         if (p.chunk == null) (x: p.x, y: p.y),
     ];
-    for (final p in generateParked(drive.city.graph, c.x, c.y, key, tuning, specs, kept, (x: car.x, y: car.y))) {
+    for (final p in generateParked(drive.city.graph, c.x, c.y, key, tuning, specs, kept, (
+      x: car.x,
+      y: car.y,
+    ), cityId: drive.city.id)) {
       _add(p);
     }
   }
@@ -105,7 +108,7 @@ class CarFleet {
       Polygon.box(hl, hw),
       ShapeDef(
         density: s.mass * t.massFactor / (4 * hl * hw),
-        filter: Filter(categoryBits: catParked, maskBits: catCar | catBuildings | catParked | catTraffic),
+        filter: Filter(categoryBits: catParked, maskBits: catCar | catBuildings | catParked | catTraffic | catTram),
         material: SurfaceMaterial(friction: d.carFriction, restitution: d.carRestitution),
       ),
     );

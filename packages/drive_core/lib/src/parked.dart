@@ -35,8 +35,15 @@ class ParkedCar implements ParkedPose {
   String toString() => 'ParkedCar($carId, $owner, ${x.toStringAsFixed(1)}, ${y.toStringAsFixed(1)})';
 }
 
-/// Places parked cars for chunk (cx, cy) with the shared PRNG; every attempt draws four numbers
-/// (segment, position, side, model) so both clients consume the stream identically.
+/// Models that park in [cityId]: `cars.parked.models` in list order, only cars whose `tags` contain
+/// the city id (specs/cars.md "Zaparkovaná auta"). Unknown models are skipped.
+List<String> parkedModels(Tuning tuning, Map<String, CarSpec> specs, String cityId) => [
+  for (final id in tuning.cars.parked.models)
+    if (specs[id]?.tags.contains(cityId) ?? false) id,
+];
+
+/// Places parked cars for chunk (cx, cy) of city [cityId] with the shared PRNG; every attempt draws
+/// four numbers (segment, position, side, model) so both clients consume the stream identically.
 /// Port of web/src/cars/parked.ts.
 List<ParkedCar> generateParked(
   RoadGraph graph,
@@ -46,9 +53,11 @@ List<ParkedCar> generateParked(
   Tuning tuning,
   Map<String, CarSpec> specs,
   List<({double x, double y})> avoid,
-  ({double x, double y}) player,
-) {
+  ({double x, double y}) player, {
+  required String cityId,
+}) {
   final t = tuning.cars.parked;
+  final models = parkedModels(tuning, specs, cityId);
   final chunkM = tuning.chunkM.toDouble();
   final x0 = cx * chunkM, y0 = cy * chunkM;
   final segs = <(double, double, double, double, double, double)>[]; // ax, ay, dx, dy, l, width
@@ -66,7 +75,7 @@ List<ParkedCar> generateParked(
     }
   }
   final out = <ParkedCar>[];
-  if (segs.isEmpty || t.models.isEmpty) return out;
+  if (segs.isEmpty || models.isEmpty) return out;
   const mask = 0xFFFFFFFF;
   final rnd = Prng(((cx * 73856093) & mask) ^ ((cy * 19349663) & mask) ^ (t.salt & mask));
   bool far(double x, double y, double px, double py, double d) => (x - px) * (x - px) + (y - py) * (y - py) >= d * d;
@@ -74,9 +83,8 @@ List<ParkedCar> generateParked(
     final seg = segs[rnd.nextInt(segs.length)];
     final along = rnd.nextInt(1000);
     final side = rnd.nextInt(2);
-    final model = t.models[rnd.nextInt(t.models.length)];
-    final spec = specs[model];
-    if (spec == null) continue;
+    final model = models[rnd.nextInt(models.length)];
+    final spec = specs[model]!;
     final (ax, ay, dx, dy, l, width) = seg;
     final hw = spec.widthM * tuning.carScale / 2;
     final offset = width / 2 - tuning.sidewalkWidthM - hw - t.curbGapM;

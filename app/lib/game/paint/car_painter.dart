@@ -31,7 +31,19 @@ void paintParked(Canvas canvas, Iterable<ParkedCar> cars, Map<String, CarSpec> s
     final s = specs[p.carId];
     if (s == null) continue;
     final hl = s.lengthM * t.carScale / 2, hw = s.widthM * t.carScale / 2;
-    _paintShape(canvas, s, p.x, p.y, p.heading, hl, hw, hl * t.drive.axleOffset, wheelAngle: 0, night: false, cone: false);
+    _paintShape(
+      canvas,
+      s,
+      p.x,
+      p.y,
+      p.heading,
+      hl,
+      hw,
+      hl * t.drive.axleOffset,
+      wheelAngle: 0,
+      night: false,
+      cone: false,
+    );
   }
 }
 
@@ -51,7 +63,8 @@ void _paintShape(
 }) {
   final p = Paint();
   final paint = Color(paintArgb(spec));
-  final shape = carShape(spec.class_, hl, hw);
+  final micro = spec.class_ == 'micro';
+  final shape = carShape(spec.class_, hl, hw, lengthM: spec.lengthM);
   canvas.save();
   canvas.translate(x, y);
   canvas.rotate(heading);
@@ -60,7 +73,7 @@ void _paintShape(
   // Shadow first, then the headlight cone and the wheels under the body.
   p.color = const Color(Tokens.colorCarShadow);
   canvas.drawRRect(rr(shape.first, hw * 0.5), p);
-  if (cone) {
+  if (cone && !micro) {
     final path = Path()
       ..moveTo(hl, hw * 0.6)
       ..lineTo(hl + 14 * hw, hw * 4)
@@ -72,7 +85,8 @@ void _paintShape(
   }
   p.color = const Color(Tokens.colorCarTyre);
   final ww = hl * 0.36, wt = hw * 0.32;
-  for (final fx in [axle, -axle]) {
+  // Micro vehicles carry their two wheels in the shape.
+  for (final fx in micro ? const <double>[] : [axle, -axle]) {
     for (final sy in [hw * 0.92, -hw * 0.92]) {
       canvas.save();
       canvas.translate(fx, sy);
@@ -98,6 +112,24 @@ void _paintShape(
       case CarPart.tail:
         p.color = rear ?? const Color(Tokens.colorCarTail);
         canvas.drawRect(Rect.fromLTRB(r.x0, r.y0, r.x1, r.y1), p);
+      case CarPart.wheel:
+        // The front wheel steers about its centre.
+        p.color = const Color(Tokens.colorCarTyre);
+        final cx = (r.x0 + r.x1) / 2, cy = (r.y0 + r.y1) / 2;
+        canvas.save();
+        canvas.translate(cx, cy);
+        if (cx > 0) canvas.rotate(wheelAngle);
+        canvas.drawRRect(
+          RRect.fromRectAndRadius(
+            Rect.fromCenter(center: Offset.zero, width: r.x1 - r.x0, height: r.y1 - r.y0),
+            Radius.circular((r.y1 - r.y0) / 2),
+          ),
+          p,
+        );
+        canvas.restore();
+      case CarPart.rider:
+        p.color = const Color(Tokens.colorCarCabin);
+        canvas.drawOval(Rect.fromLTRB(r.x0, r.y0, r.x1, r.y1), p);
       case CarPart.shadow || CarPart.stripe || CarPart.detail:
         p.color = Color(r.color ?? Tokens.colorCarStripe);
         canvas.drawRect(Rect.fromLTRB(r.x0, r.y0, r.x1, r.y1), p);

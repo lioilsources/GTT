@@ -1,0 +1,1666 @@
+{
+ "module": "cara",
+ "specVersion": 1,
+ "$comment": "Whole games; player aims written out, rival moves as {by: ai, level} decided by aiAction. States recorded by the lead client (web).",
+ "cases": [
+  {
+   "name": "short-level-1",
+   "config": {
+    "rounds": 7,
+    "linePoints": 3,
+    "roundPoints": 1,
+    "scatter": [
+     20,
+     28,
+     36,
+     44,
+     52
+    ],
+    "aiScatter": [
+     90,
+     70,
+     55,
+     40,
+     28
+    ],
+    "aiAim": [
+     90,
+     70,
+     55,
+     40,
+     28
+    ],
+    "starMargins": [
+     5,
+     3,
+     1
+    ]
+   },
+   "seed": 1,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "y": -20,
+      "level": 1
+     },
+     "state": {
+      "round": 1,
+      "turn": "ai",
+      "playerPts": 0,
+      "aiPts": 0,
+      "playerCoin": {
+       "y": -25,
+       "burnt": false
+      },
+      "aiCoin": {
+       "y": 0,
+       "burnt": false
+      },
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "round": 2,
+      "turn": "player",
+      "playerPts": 1,
+      "aiPts": 0,
+      "playerCoin": {
+       "y": -25,
+       "burnt": false
+      },
+      "aiCoin": {
+       "y": -123,
+       "burnt": false
+      },
+      "over": false,
+      "rng": 67634689
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "y": -20,
+      "level": 1
+     },
+     "state": {
+      "round": 2,
+      "turn": "ai",
+      "playerPts": 1,
+      "aiPts": 0,
+      "playerCoin": {
+       "y": -15,
+       "burnt": false
+      },
+      "aiCoin": {
+       "y": -123,
+       "burnt": false
+      },
+      "over": false,
+      "rng": 2647435461
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "round": 3,
+      "turn": "player",
+      "playerPts": 2,
+      "aiPts": 0,
+      "playerCoin": {
+       "y": -15,
+       "burnt": false
+      },
+      "aiCoin": {
+       "y": -30,
+       "burnt": false
+      },
+      "over": false,
+      "rng": 307599695
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "y": -20,
+      "level": 1
+     },
+     "state": {
+      "round": 3,
+      "turn": "ai",
+      "playerPts": 2,
+      "aiPts": 0,
+      "playerCoin": {
+       "y": -22,
+       "burnt": false
+      },
+      "aiCoin": {
+       "y": -30,
+       "burnt": false
+      },
+      "over": false,
+      "rng": 2398689233
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "round": 4,
+      "turn": "player",
+      "playerPts": 3,
+      "aiPts": 0,
+      "playerCoin": {
+       "y": -22,
+       "burnt": false
+      },
+      "aiCoin": {
+       "y": -55,
+       "burnt": false
+      },
+      "over": false,
+      "rng": 745495504
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "y": -20,
+      "level": 1
+     },
+     "state": {
+      "round": 4,
+      "turn": "ai",
+      "playerPts": 3,
+      "aiPts": 0,
+      "playerCoin": {
+       "y": -13,
+       "burnt": false
+      },
+      "aiCoin": {
+       "y": -55,
+       "burnt": false
+      },
+      "over": false,
+      "rng": 632435482
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "round": 5,
+      "turn": "player",
+      "playerPts": 4,
+      "aiPts": 0,
+      "playerCoin": {
+       "y": -13,
+       "burnt": false
+      },
+      "aiCoin": {
+       "y": -22,
+       "burnt": false
+      },
+      "over": false,
+      "rng": 435756210
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "y": -20,
+      "level": 1
+     },
+     "state": {
+      "round": 5,
+      "turn": "ai",
+      "playerPts": 4,
+      "aiPts": 0,
+      "playerCoin": {
+       "y": -33,
+       "burnt": false
+      },
+      "aiCoin": {
+       "y": -22,
+       "burnt": false
+      },
+      "over": false,
+      "rng": 2005365029
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "round": 6,
+      "turn": "player",
+      "playerPts": 4,
+      "aiPts": 1,
+      "playerCoin": {
+       "y": -33,
+       "burnt": false
+      },
+      "aiCoin": {
+       "y": -31,
+       "burnt": false
+      },
+      "over": false,
+      "rng": 2916098932
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "y": -20,
+      "level": 1
+     },
+     "state": {
+      "round": 6,
+      "turn": "ai",
+      "playerPts": 4,
+      "aiPts": 1,
+      "playerCoin": {
+       "y": -30,
+       "burnt": false
+      },
+      "aiCoin": {
+       "y": -31,
+       "burnt": false
+      },
+      "over": false,
+      "rng": 2657092299
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "round": 7,
+      "turn": "player",
+      "playerPts": 5,
+      "aiPts": 1,
+      "playerCoin": {
+       "y": -30,
+       "burnt": false
+      },
+      "aiCoin": {
+       "y": -119,
+       "burnt": false
+      },
+      "over": false,
+      "rng": 1495045943
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "y": -20,
+      "level": 1
+     },
+     "state": {
+      "round": 7,
+      "turn": "ai",
+      "playerPts": 5,
+      "aiPts": 1,
+      "playerCoin": {
+       "y": -12,
+       "burnt": false
+      },
+      "aiCoin": {
+       "y": -119,
+       "burnt": false
+      },
+      "over": false,
+      "rng": 3031976842
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "round": 8,
+      "turn": "player",
+      "playerPts": 6,
+      "aiPts": 1,
+      "playerCoin": {
+       "y": -12,
+       "burnt": false
+      },
+      "aiCoin": {
+       "y": -92,
+       "burnt": false
+      },
+      "over": true,
+      "rng": 82049198
+     }
+    }
+   ],
+   "result": {
+    "winner": "player",
+    "stars": 3,
+    "score": 6,
+    "playerPts": 6,
+    "aiPts": 1
+   }
+  },
+  {
+   "name": "mixed-level-3",
+   "config": {
+    "rounds": 7,
+    "linePoints": 3,
+    "roundPoints": 1,
+    "scatter": [
+     20,
+     28,
+     36,
+     44,
+     52
+    ],
+    "aiScatter": [
+     90,
+     70,
+     55,
+     40,
+     28
+    ],
+    "aiAim": [
+     90,
+     70,
+     55,
+     40,
+     28
+    ],
+    "starMargins": [
+     5,
+     3,
+     1
+    ]
+   },
+   "seed": 13,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "y": -20,
+      "level": 3
+     },
+     "state": {
+      "round": 1,
+      "turn": "ai",
+      "playerPts": 0,
+      "aiPts": 0,
+      "playerCoin": {
+       "y": 10,
+       "burnt": true
+      },
+      "aiCoin": {
+       "y": 0,
+       "burnt": false
+      },
+      "over": false,
+      "rng": 3514797
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "round": 2,
+      "turn": "player",
+      "playerPts": 0,
+      "aiPts": 1,
+      "playerCoin": {
+       "y": 10,
+       "burnt": true
+      },
+      "aiCoin": {
+       "y": -60,
+       "burnt": false
+      },
+      "over": false,
+      "rng": 873147917
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "y": -10,
+      "level": 3
+     },
+     "state": {
+      "round": 2,
+      "turn": "ai",
+      "playerPts": 0,
+      "aiPts": 1,
+      "playerCoin": {
+       "y": 8,
+       "burnt": true
+      },
+      "aiCoin": {
+       "y": -60,
+       "burnt": false
+      },
+      "over": false,
+      "rng": 1755216872
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "round": 3,
+      "turn": "player",
+      "playerPts": 0,
+      "aiPts": 2,
+      "playerCoin": {
+       "y": 8,
+       "burnt": true
+      },
+      "aiCoin": {
+       "y": -64,
+       "burnt": false
+      },
+      "over": false,
+      "rng": 1535519545
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "y": -35,
+      "level": 3
+     },
+     "state": {
+      "round": 3,
+      "turn": "ai",
+      "playerPts": 0,
+      "aiPts": 2,
+      "playerCoin": {
+       "y": -24,
+       "burnt": false
+      },
+      "aiCoin": {
+       "y": -64,
+       "burnt": false
+      },
+      "over": false,
+      "rng": 1120521577
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "round": 4,
+      "turn": "player",
+      "playerPts": 1,
+      "aiPts": 2,
+      "playerCoin": {
+       "y": -24,
+       "burnt": false
+      },
+      "aiCoin": {
+       "y": -88,
+       "burnt": false
+      },
+      "over": false,
+      "rng": 402574267
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "y": 0,
+      "level": 3
+     },
+     "state": {
+      "round": 4,
+      "turn": "ai",
+      "playerPts": 1,
+      "aiPts": 2,
+      "playerCoin": {
+       "y": -16,
+       "burnt": false
+      },
+      "aiCoin": {
+       "y": -88,
+       "burnt": false
+      },
+      "over": false,
+      "rng": 531649311
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "round": 5,
+      "turn": "player",
+      "playerPts": 2,
+      "aiPts": 2,
+      "playerCoin": {
+       "y": -16,
+       "burnt": false
+      },
+      "aiCoin": {
+       "y": -47,
+       "burnt": false
+      },
+      "over": false,
+      "rng": 2946795318
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "y": -5,
+      "level": 3
+     },
+     "state": {
+      "round": 5,
+      "turn": "ai",
+      "playerPts": 2,
+      "aiPts": 2,
+      "playerCoin": {
+       "y": -11,
+       "burnt": false
+      },
+      "aiCoin": {
+       "y": -47,
+       "burnt": false
+      },
+      "over": false,
+      "rng": 3607710327
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "round": 6,
+      "turn": "player",
+      "playerPts": 3,
+      "aiPts": 2,
+      "playerCoin": {
+       "y": -11,
+       "burnt": false
+      },
+      "aiCoin": {
+       "y": -110,
+       "burnt": false
+      },
+      "over": false,
+      "rng": 918388692
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "y": -50,
+      "level": 3
+     },
+     "state": {
+      "round": 6,
+      "turn": "ai",
+      "playerPts": 3,
+      "aiPts": 2,
+      "playerCoin": {
+       "y": -41,
+       "burnt": false
+      },
+      "aiCoin": {
+       "y": -110,
+       "burnt": false
+      },
+      "over": false,
+      "rng": 2981223831
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "round": 7,
+      "turn": "player",
+      "playerPts": 4,
+      "aiPts": 2,
+      "playerCoin": {
+       "y": -41,
+       "burnt": false
+      },
+      "aiCoin": {
+       "y": -88,
+       "burnt": false
+      },
+      "over": false,
+      "rng": 3396102742
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "y": -15,
+      "level": 3
+     },
+     "state": {
+      "round": 7,
+      "turn": "ai",
+      "playerPts": 4,
+      "aiPts": 2,
+      "playerCoin": {
+       "y": -44,
+       "burnt": false
+      },
+      "aiCoin": {
+       "y": -88,
+       "burnt": false
+      },
+      "over": false,
+      "rng": 2750919013
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "round": 8,
+      "turn": "player",
+      "playerPts": 5,
+      "aiPts": 2,
+      "playerCoin": {
+       "y": -44,
+       "burnt": false
+      },
+      "aiCoin": {
+       "y": -83,
+       "burnt": false
+      },
+      "over": true,
+      "rng": 4005317256
+     }
+    }
+   ],
+   "result": {
+    "winner": "player",
+    "stars": 2,
+    "score": 5,
+    "playerPts": 5,
+    "aiPts": 2
+   }
+  },
+  {
+   "name": "line-level-5",
+   "config": {
+    "rounds": 7,
+    "linePoints": 3,
+    "roundPoints": 1,
+    "scatter": [
+     20,
+     28,
+     36,
+     44,
+     52
+    ],
+    "aiScatter": [
+     90,
+     70,
+     55,
+     40,
+     28
+    ],
+    "aiAim": [
+     90,
+     70,
+     55,
+     40,
+     28
+    ],
+    "starMargins": [
+     5,
+     3,
+     1
+    ]
+   },
+   "seed": 2024,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "y": 0,
+      "level": 5
+     },
+     "state": {
+      "round": 1,
+      "turn": "ai",
+      "playerPts": 0,
+      "aiPts": 0,
+      "playerCoin": {
+       "y": 13,
+       "burnt": true
+      },
+      "aiCoin": {
+       "y": 0,
+       "burnt": false
+      },
+      "over": false,
+      "rng": 526251350
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "round": 2,
+      "turn": "player",
+      "playerPts": 0,
+      "aiPts": 1,
+      "playerCoin": {
+       "y": 13,
+       "burnt": true
+      },
+      "aiCoin": {
+       "y": -39,
+       "burnt": false
+      },
+      "over": false,
+      "rng": 2669400077
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "y": 0,
+      "level": 5
+     },
+     "state": {
+      "round": 2,
+      "turn": "ai",
+      "playerPts": 0,
+      "aiPts": 1,
+      "playerCoin": {
+       "y": 3,
+       "burnt": true
+      },
+      "aiCoin": {
+       "y": -39,
+       "burnt": false
+      },
+      "over": false,
+      "rng": 1180324480
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "round": 3,
+      "turn": "player",
+      "playerPts": 0,
+      "aiPts": 2,
+      "playerCoin": {
+       "y": 3,
+       "burnt": true
+      },
+      "aiCoin": {
+       "y": -26,
+       "burnt": false
+      },
+      "over": false,
+      "rng": 2369831973
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "y": 0,
+      "level": 5
+     },
+     "state": {
+      "round": 3,
+      "turn": "ai",
+      "playerPts": 0,
+      "aiPts": 2,
+      "playerCoin": {
+       "y": -2,
+       "burnt": false
+      },
+      "aiCoin": {
+       "y": -26,
+       "burnt": false
+      },
+      "over": false,
+      "rng": 759297575
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "round": 4,
+      "turn": "player",
+      "playerPts": 1,
+      "aiPts": 2,
+      "playerCoin": {
+       "y": -2,
+       "burnt": false
+      },
+      "aiCoin": {
+       "y": -25,
+       "burnt": false
+      },
+      "over": false,
+      "rng": 1663492933
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "y": 0,
+      "level": 5
+     },
+     "state": {
+      "round": 4,
+      "turn": "ai",
+      "playerPts": 1,
+      "aiPts": 2,
+      "playerCoin": {
+       "y": 45,
+       "burnt": true
+      },
+      "aiCoin": {
+       "y": -25,
+       "burnt": false
+      },
+      "over": false,
+      "rng": 1452114082
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "round": 5,
+      "turn": "player",
+      "playerPts": 1,
+      "aiPts": 3,
+      "playerCoin": {
+       "y": 45,
+       "burnt": true
+      },
+      "aiCoin": {
+       "y": -26,
+       "burnt": false
+      },
+      "over": false,
+      "rng": 900714030
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "y": 0,
+      "level": 5
+     },
+     "state": {
+      "round": 5,
+      "turn": "ai",
+      "playerPts": 1,
+      "aiPts": 3,
+      "playerCoin": {
+       "y": 12,
+       "burnt": true
+      },
+      "aiCoin": {
+       "y": -26,
+       "burnt": false
+      },
+      "over": false,
+      "rng": 1093102459
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "round": 6,
+      "turn": "player",
+      "playerPts": 1,
+      "aiPts": 4,
+      "playerCoin": {
+       "y": 12,
+       "burnt": true
+      },
+      "aiCoin": {
+       "y": -40,
+       "burnt": false
+      },
+      "over": false,
+      "rng": 625211071
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "y": 0,
+      "level": 5
+     },
+     "state": {
+      "round": 6,
+      "turn": "ai",
+      "playerPts": 1,
+      "aiPts": 4,
+      "playerCoin": {
+       "y": 6,
+       "burnt": true
+      },
+      "aiCoin": {
+       "y": -40,
+       "burnt": false
+      },
+      "over": false,
+      "rng": 689133013
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "round": 7,
+      "turn": "player",
+      "playerPts": 1,
+      "aiPts": 5,
+      "playerCoin": {
+       "y": 6,
+       "burnt": true
+      },
+      "aiCoin": {
+       "y": -35,
+       "burnt": false
+      },
+      "over": false,
+      "rng": 915624993
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "y": 0,
+      "level": 5
+     },
+     "state": {
+      "round": 7,
+      "turn": "ai",
+      "playerPts": 1,
+      "aiPts": 5,
+      "playerCoin": {
+       "y": -41,
+       "burnt": false
+      },
+      "aiCoin": {
+       "y": -35,
+       "burnt": false
+      },
+      "over": false,
+      "rng": 3741065066
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "round": 8,
+      "turn": "player",
+      "playerPts": 1,
+      "aiPts": 6,
+      "playerCoin": {
+       "y": -41,
+       "burnt": false
+      },
+      "aiCoin": {
+       "y": -27,
+       "burnt": false
+      },
+      "over": true,
+      "rng": 4282338722
+     }
+    }
+   ],
+   "result": {
+    "winner": "ai",
+    "stars": 0,
+    "score": 1,
+    "playerPts": 1,
+    "aiPts": 6
+   }
+  },
+  {
+   "name": "overthrow-level-2-burns",
+   "config": {
+    "rounds": 7,
+    "linePoints": 3,
+    "roundPoints": 1,
+    "scatter": [
+     20,
+     28,
+     36,
+     44,
+     52
+    ],
+    "aiScatter": [
+     90,
+     70,
+     55,
+     40,
+     28
+    ],
+    "aiAim": [
+     90,
+     70,
+     55,
+     40,
+     28
+    ],
+    "starMargins": [
+     5,
+     3,
+     1
+    ]
+   },
+   "seed": 42,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "y": 30,
+      "level": 2
+     },
+     "state": {
+      "round": 1,
+      "turn": "ai",
+      "playerPts": 0,
+      "aiPts": 0,
+      "playerCoin": {
+       "y": 8,
+       "burnt": true
+      },
+      "aiCoin": {
+       "y": 0,
+       "burnt": false
+      },
+      "over": false,
+      "rng": 11355432
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "round": 2,
+      "turn": "player",
+      "playerPts": 0,
+      "aiPts": 1,
+      "playerCoin": {
+       "y": 8,
+       "burnt": true
+      },
+      "aiCoin": {
+       "y": -97,
+       "burnt": false
+      },
+      "over": false,
+      "rng": 2836018348
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "y": 30,
+      "level": 2
+     },
+     "state": {
+      "round": 2,
+      "turn": "ai",
+      "playerPts": 0,
+      "aiPts": 1,
+      "playerCoin": {
+       "y": 11,
+       "burnt": true
+      },
+      "aiCoin": {
+       "y": -97,
+       "burnt": false
+      },
+      "over": false,
+      "rng": 476557059
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "round": 3,
+      "turn": "player",
+      "playerPts": 0,
+      "aiPts": 2,
+      "playerCoin": {
+       "y": 11,
+       "burnt": true
+      },
+      "aiCoin": {
+       "y": -30,
+       "burnt": false
+      },
+      "over": false,
+      "rng": 3648046016
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "y": 30,
+      "level": 2
+     },
+     "state": {
+      "round": 3,
+      "turn": "ai",
+      "playerPts": 0,
+      "aiPts": 2,
+      "playerCoin": {
+       "y": 47,
+       "burnt": true
+      },
+      "aiCoin": {
+       "y": -30,
+       "burnt": false
+      },
+      "over": false,
+      "rng": 3759983556
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "round": 4,
+      "turn": "player",
+      "playerPts": 0,
+      "aiPts": 3,
+      "playerCoin": {
+       "y": 47,
+       "burnt": true
+      },
+      "aiCoin": {
+       "y": -71,
+       "burnt": false
+      },
+      "over": false,
+      "rng": 1441438134
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "y": 30,
+      "level": 2
+     },
+     "state": {
+      "round": 4,
+      "turn": "ai",
+      "playerPts": 0,
+      "aiPts": 3,
+      "playerCoin": {
+       "y": 5,
+       "burnt": true
+      },
+      "aiCoin": {
+       "y": -71,
+       "burnt": false
+      },
+      "over": false,
+      "rng": 3713466840
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "round": 5,
+      "turn": "player",
+      "playerPts": 0,
+      "aiPts": 4,
+      "playerCoin": {
+       "y": 5,
+       "burnt": true
+      },
+      "aiCoin": {
+       "y": -70,
+       "burnt": false
+      },
+      "over": false,
+      "rng": 2431644334
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "y": 30,
+      "level": 2
+     },
+     "state": {
+      "round": 5,
+      "turn": "ai",
+      "playerPts": 0,
+      "aiPts": 4,
+      "playerCoin": {
+       "y": 45,
+       "burnt": true
+      },
+      "aiCoin": {
+       "y": -70,
+       "burnt": false
+      },
+      "over": false,
+      "rng": 3120216979
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "round": 6,
+      "turn": "player",
+      "playerPts": 0,
+      "aiPts": 5,
+      "playerCoin": {
+       "y": 45,
+       "burnt": true
+      },
+      "aiCoin": {
+       "y": -135,
+       "burnt": false
+      },
+      "over": false,
+      "rng": 1067267639
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "y": 30,
+      "level": 2
+     },
+     "state": {
+      "round": 6,
+      "turn": "ai",
+      "playerPts": 0,
+      "aiPts": 5,
+      "playerCoin": {
+       "y": 36,
+       "burnt": true
+      },
+      "aiCoin": {
+       "y": -135,
+       "burnt": false
+      },
+      "over": false,
+      "rng": 2989017562
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "round": 7,
+      "turn": "player",
+      "playerPts": 0,
+      "aiPts": 6,
+      "playerCoin": {
+       "y": 36,
+       "burnt": true
+      },
+      "aiCoin": {
+       "y": -4,
+       "burnt": false
+      },
+      "over": false,
+      "rng": 3379058227
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "y": 30,
+      "level": 2
+     },
+     "state": {
+      "round": 7,
+      "turn": "ai",
+      "playerPts": 0,
+      "aiPts": 6,
+      "playerCoin": {
+       "y": 33,
+       "burnt": true
+      },
+      "aiCoin": {
+       "y": -4,
+       "burnt": false
+      },
+      "over": false,
+      "rng": 3060050788
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "round": 8,
+      "turn": "player",
+      "playerPts": 0,
+      "aiPts": 7,
+      "playerCoin": {
+       "y": 33,
+       "burnt": true
+      },
+      "aiCoin": {
+       "y": -51,
+       "burnt": false
+      },
+      "over": true,
+      "rng": 1108305632
+     }
+    }
+   ],
+   "result": {
+    "winner": "ai",
+    "stars": 0,
+    "score": 0,
+    "playerPts": 0,
+    "aiPts": 7
+   }
+  },
+  {
+   "name": "timeout-mid-round",
+   "config": {
+    "rounds": 7,
+    "linePoints": 3,
+    "roundPoints": 1,
+    "scatter": [
+     20,
+     28,
+     36,
+     44,
+     52
+    ],
+    "aiScatter": [
+     90,
+     70,
+     55,
+     40,
+     28
+    ],
+    "aiAim": [
+     90,
+     70,
+     55,
+     40,
+     28
+    ],
+    "starMargins": [
+     5,
+     3,
+     1
+    ]
+   },
+   "seed": 77,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "y": -15,
+      "level": 2
+     },
+     "state": {
+      "round": 1,
+      "turn": "ai",
+      "playerPts": 0,
+      "aiPts": 0,
+      "playerCoin": {
+       "y": -43,
+       "burnt": false
+      },
+      "aiCoin": {
+       "y": 0,
+       "burnt": false
+      },
+      "over": false,
+      "rng": 20818281
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "round": 2,
+      "turn": "player",
+      "playerPts": 0,
+      "aiPts": 1,
+      "playerCoin": {
+       "y": -43,
+       "burnt": false
+      },
+      "aiCoin": {
+       "y": -6,
+       "burnt": false
+      },
+      "over": false,
+      "rng": 906673985
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "y": -15,
+      "level": 2
+     },
+     "state": {
+      "round": 2,
+      "turn": "ai",
+      "playerPts": 0,
+      "aiPts": 1,
+      "playerCoin": {
+       "y": -27,
+       "burnt": false
+      },
+      "aiCoin": {
+       "y": -6,
+       "burnt": false
+      },
+      "over": false,
+      "rng": 1572297136
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "round": 3,
+      "turn": "player",
+      "playerPts": 1,
+      "aiPts": 1,
+      "playerCoin": {
+       "y": -27,
+       "burnt": false
+      },
+      "aiCoin": {
+       "y": -130,
+       "burnt": false
+      },
+      "over": false,
+      "rng": 1721851120
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "y": -15,
+      "level": 2
+     },
+     "state": {
+      "round": 3,
+      "turn": "ai",
+      "playerPts": 1,
+      "aiPts": 1,
+      "playerCoin": {
+       "y": -33,
+       "burnt": false
+      },
+      "aiCoin": {
+       "y": -130,
+       "burnt": false
+      },
+      "over": false,
+      "rng": 3939514255
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "round": 4,
+      "turn": "player",
+      "playerPts": 1,
+      "aiPts": 2,
+      "playerCoin": {
+       "y": -33,
+       "burnt": false
+      },
+      "aiCoin": {
+       "y": -27,
+       "burnt": false
+      },
+      "over": false,
+      "rng": 1746244223
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "y": -15,
+      "level": 2
+     },
+     "state": {
+      "round": 4,
+      "turn": "ai",
+      "playerPts": 1,
+      "aiPts": 2,
+      "playerCoin": {
+       "y": -24,
+       "burnt": false
+      },
+      "aiCoin": {
+       "y": -27,
+       "burnt": false
+      },
+      "over": false,
+      "rng": 2434397458
+     }
+    },
+    {
+     "action": {
+      "by": "timeout"
+     },
+     "state": {
+      "round": 4,
+      "turn": "ai",
+      "playerPts": 1,
+      "aiPts": 2,
+      "playerCoin": {
+       "y": -24,
+       "burnt": false
+      },
+      "aiCoin": {
+       "y": -27,
+       "burnt": false
+      },
+      "over": true,
+      "rng": 2434397458
+     }
+    }
+   ],
+   "result": {
+    "winner": "ai",
+    "stars": 0,
+    "score": 1,
+    "playerPts": 1,
+    "aiPts": 2
+   }
+  }
+ ]
+}

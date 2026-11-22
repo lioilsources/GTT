@@ -8,6 +8,7 @@ import { CAT_BUILDINGS, CAT_CAR, CAT_PARKED, CAT_TRAFFIC, Car, zoneMask } from '
 import { ControlInput } from './controls';
 import { generateProps, type Prop, type PropSet } from './props';
 import { Traffic } from '../traffic/traffic';
+import { Trams } from '../trams/trams';
 import { ZoneWorld } from './zones';
 
 /**
@@ -89,6 +90,8 @@ export class DriveWorld {
   beforeStep: ((step: number) => void) | null = null;
   /** AI traffic and lights (specs/traffic.md); null when traffic.enabled is off. */
   readonly traffic: Traffic | null;
+  /** Trams (specs/trams.md); null when trams.enabled is off or the city has no tracks. */
+  readonly trams: Trams | null;
   /** Pedestrian zones and bollards (specs/zones.md). */
   readonly zones: ZoneWorld;
 
@@ -104,6 +107,8 @@ export class DriveWorld {
     this.layers.reset(this.car.x, this.car.y);
     this.car.setLayer(this.layers.layer);
     this.traffic = tuning.traffic.enabled ? new Traffic(this.world, city, tuning) : null;
+    this.trams = tuning.trams.enabled && !city.trams.isEmpty ? new Trams(this.world, city.trams, tuning, this.traffic) : null;
+    if (this.traffic && this.trams) this.traffic.trams = this.trams.items;
   }
 
   private makeCar(x: number, y: number, h: number): Car {
@@ -189,10 +194,12 @@ export class DriveWorld {
     this.updateZoneMask();
     this.car.drive(this.input, step, this.tuning.speedMps.cruise, this.tuning.speedMps.topDefault);
     this.traffic?.preStep(step, this.car);
+    this.trams?.preStep(step, this.car);
     this.world.step(step, d.velocityIterations, d.positionIterations);
     this.layers.update(this.car.x, this.car.y);
     this.car.setLayer(this.layers.layer);
     this.traffic?.postStep(this.car);
+    this.trams?.postStep(this.car);
     if (this.car.layer !== 0) this.rails();
     this.stepProps(step);
     this.skidMarks();

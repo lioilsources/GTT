@@ -20,6 +20,7 @@ export class Autopilot {
     const p = this.route.at(0);
     drive.spawn(p.x, p.y, p.dir);
     if (drive.traffic) drive.traffic.solid = false; // the autopilot does not avoid cars
+    if (drive.trams) drive.trams.solid = false;
     this.s = 0;
   }
 

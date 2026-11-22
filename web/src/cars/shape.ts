@@ -5,7 +5,7 @@ import { tokens } from '../gen/tokens';
  * space: x forward, y left, in metres after car_scale. Port: app/lib/game/paint/car_shape.dart.
  * ComfyUI sprites (METROPOLE_PLAN 10) will replace this drawing later; sizes stay from the JSON.
  */
-export type CarPart = 'shadow' | 'body' | 'cabin' | 'glass' | 'stripe' | 'detail' | 'head' | 'tail';
+export type CarPart = 'shadow' | 'body' | 'cabin' | 'glass' | 'stripe' | 'detail' | 'head' | 'tail' | 'tyre';
 
 export interface CarRect {
   part: CarPart;
@@ -35,9 +35,17 @@ export function paintHex(paint: string): string {
   return tokens.colorCarPaint[paint] ?? tokens.colorCarPaint['comet_red']!;
 }
 
-export function carShape(cls: string, hl: number, hw: number): CarRect[] {
+/** Below this JSON length a `micro` car is drawn as a scooter, otherwise as a bicycle. */
+const SCOOTER_MAX_LENGTH_M = 1.5;
+
+/**
+ * Shape of class [cls] with half extents [hl] x [hw]; [lengthM] is the car's JSON `length_m`
+ * (only `micro` uses it, to pick scooter or bicycle).
+ */
+export function carShape(cls: string, hl: number, hw: number, lengthM = 0): CarRect[] {
   const r = (part: CarPart, x0: number, y0: number, x1: number, y1: number, color?: string): CarRect =>
     color === undefined ? { part, x0, y0, x1, y1 } : { part, x0, y0, x1, y1, color };
+  if (cls === 'micro') return microShape(r, hl, hw, lengthM < SCOOTER_MAX_LENGTH_M);
   const cab = cabins[cls] ?? cabins['coupe']!;
   const out: CarRect[] = [r('shadow', -hl + 0.6, -hw - 0.6, hl + 0.6, hw - 0.6), r('body', -hl, -hw, hl, hw)];
   if (cls === 'pickup') {
@@ -68,5 +76,29 @@ export function carShape(cls: string, hl: number, hw: number): CarRect[] {
   }
   out.push(r('head', hl * 0.9, hw * 0.5, hl, hw * 0.85), r('head', hl * 0.9, -hw * 0.85, hl, -hw * 0.5));
   out.push(r('tail', -hl, hw * 0.5, -hl * 0.92, hw * 0.85), r('tail', -hl, -hw * 0.85, -hl * 0.92, -hw * 0.5));
+  return out;
+}
+
+type RectFn = (part: CarPart, x0: number, y0: number, x1: number, y1: number, color?: string) => CarRect;
+
+/**
+ * Scooter or bicycle seen from above (specs/cars.md "Kreslení podle třídy"): deck or frame in the
+ * paint, two in-line wheels, handlebar, rider blob; no lights. Wheels are part of the shape.
+ */
+function microShape(r: RectFn, hl: number, hw: number, scooter: boolean): CarRect[] {
+  const out: CarRect[] = [r('shadow', -hl + 0.3, -hw * 0.5 - 0.3, hl + 0.3, hw * 0.5 - 0.3)];
+  if (scooter) {
+    out.push(r('tyre', hl * 0.62, -hw * 0.2, hl * 0.98, hw * 0.2), r('tyre', -hl * 0.98, -hw * 0.2, -hl * 0.62, hw * 0.2));
+    out.push(r('body', -hl * 0.75, -hw * 0.38, hl * 0.5, hw * 0.38));
+    // Stem and handlebar.
+    out.push(r('body', hl * 0.5, -hw * 0.12, hl * 0.72, hw * 0.12));
+    out.push(r('tyre', hl * 0.64, -hw * 0.95, hl * 0.74, hw * 0.95));
+    out.push(r('cabin', -hl * 0.3, -hw * 0.62, hl * 0.3, hw * 0.62));
+  } else {
+    out.push(r('tyre', hl * 0.5, -hw * 0.14, hl * 0.98, hw * 0.14), r('tyre', -hl * 0.98, -hw * 0.14, -hl * 0.5, hw * 0.14));
+    out.push(r('body', -hl * 0.6, -hw * 0.16, hl * 0.6, hw * 0.16));
+    out.push(r('tyre', hl * 0.42, -hw * 0.95, hl * 0.5, hw * 0.95));
+    out.push(r('cabin', -hl * 0.4, -hw * 0.66, hl * 0.25, hw * 0.66));
+  }
   return out;
 }

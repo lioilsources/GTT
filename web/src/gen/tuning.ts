@@ -1283,6 +1283,9 @@ export class TuningMinigames {
   readonly desetitisic: TuningMinigamesDesetitisic;
   readonly sipky: TuningMinigamesSipky;
   readonly koulena: TuningMinigamesKoulena;
+  readonly kulicky: TuningMinigamesKulicky;
+  readonly cara: TuningMinigamesCara;
+  readonly nohejbal: TuningMinigamesNohejbal;
   readonly strelnice: TuningMinigamesStrelnice;
   /** Taxi shift (specs/minigames/taxi.md): a world minigame in the taxi_metro car. */
   readonly taxi: TuningMinigamesTaxi;
@@ -1295,6 +1298,9 @@ export class TuningMinigames {
     this.desetitisic = new TuningMinigamesDesetitisic(r.sub('desetitisic'));
     this.sipky = new TuningMinigamesSipky(r.sub('sipky'));
     this.koulena = new TuningMinigamesKoulena(r.sub('koulena'));
+    this.kulicky = new TuningMinigamesKulicky(r.sub('kulicky'));
+    this.cara = new TuningMinigamesCara(r.sub('cara'));
+    this.nohejbal = new TuningMinigamesNohejbal(r.sub('nohejbal'));
     this.strelnice = new TuningMinigamesStrelnice(r.sub('strelnice'));
     this.taxi = new TuningMinigamesTaxi(r.sub('taxi'));
   }
@@ -1308,6 +1314,9 @@ export class TuningMinigames {
       desetitisic: this.desetitisic.toJson(),
       sipky: this.sipky.toJson(),
       koulena: this.koulena.toJson(),
+      kulicky: this.kulicky.toJson(),
+      cara: this.cara.toJson(),
+      nohejbal: this.nohejbal.toJson(),
       strelnice: this.strelnice.toJson(),
       taxi: this.taxi.toJson(),
     };
@@ -1522,6 +1531,138 @@ export class TuningMinigamesKoulena {
       pocket_points: this.pocketPoints,
       scatter: this.scatter,
       star_scores: this.starScores,
+      flick_mm_per_px: this.flickMmPerPx,
+      time_cap_s: this.timeCapS,
+    };
+  }
+}
+
+export class TuningMinigamesKulicky {
+  rounds: number;
+  /** mm */
+  holeR: number;
+  holePoints: number;
+  closerPoints: number;
+  /** mm per difficulty 1..5 (player) */
+  scatter: number[];
+  aiScatter: number[];
+  starMargins: number[];
+  /** swipe length to aim distance (UI only) */
+  flickMmPerPx: number;
+  timeCapS: number;
+
+  constructor(r: R) {
+    this.rounds = r.i('rounds');
+    this.holeR = r.i('hole_r');
+    this.holePoints = r.i('hole_points');
+    this.closerPoints = r.i('closer_points');
+    this.scatter = r.il('scatter');
+    this.aiScatter = r.il('ai_scatter');
+    this.starMargins = r.il('star_margins');
+    this.flickMmPerPx = r.d('flick_mm_per_px');
+    this.timeCapS = r.i('time_cap_s');
+  }
+
+  toJson(): Record<string, unknown> {
+    return {
+      rounds: this.rounds,
+      hole_r: this.holeR,
+      hole_points: this.holePoints,
+      closer_points: this.closerPoints,
+      scatter: this.scatter,
+      ai_scatter: this.aiScatter,
+      star_margins: this.starMargins,
+      flick_mm_per_px: this.flickMmPerPx,
+      time_cap_s: this.timeCapS,
+    };
+  }
+}
+
+export class TuningMinigamesCara {
+  rounds: number;
+  linePoints: number;
+  roundPoints: number;
+  scatter: number[];
+  aiScatter: number[];
+  /** mm short of the line */
+  aiAim: number[];
+  starMargins: number[];
+  flickMmPerPx: number;
+  timeCapS: number;
+
+  constructor(r: R) {
+    this.rounds = r.i('rounds');
+    this.linePoints = r.i('line_points');
+    this.roundPoints = r.i('round_points');
+    this.scatter = r.il('scatter');
+    this.aiScatter = r.il('ai_scatter');
+    this.aiAim = r.il('ai_aim');
+    this.starMargins = r.il('star_margins');
+    this.flickMmPerPx = r.d('flick_mm_per_px');
+    this.timeCapS = r.i('time_cap_s');
+  }
+
+  toJson(): Record<string, unknown> {
+    return {
+      rounds: this.rounds,
+      line_points: this.linePoints,
+      round_points: this.roundPoints,
+      scatter: this.scatter,
+      ai_scatter: this.aiScatter,
+      ai_aim: this.aiAim,
+      star_margins: this.starMargins,
+      flick_mm_per_px: this.flickMmPerPx,
+      time_cap_s: this.timeCapS,
+    };
+  }
+}
+
+export class TuningMinigamesNohejbal {
+  /** mm */
+  halfWidth: number;
+  depth: number;
+  winPoints: number;
+  winBy: number;
+  maxPoints: number;
+  scatter: number[];
+  aiScatter: number[];
+  aiReach: number[];
+  /** mm, the player returns balls within this */
+  playerReach: number;
+  aiMargin: number[];
+  starMargins: number[];
+  flickMmPerPx: number;
+  timeCapS: number;
+
+  constructor(r: R) {
+    this.halfWidth = r.i('half_width');
+    this.depth = r.i('depth');
+    this.winPoints = r.i('win_points');
+    this.winBy = r.i('win_by');
+    this.maxPoints = r.i('max_points');
+    this.scatter = r.il('scatter');
+    this.aiScatter = r.il('ai_scatter');
+    this.aiReach = r.il('ai_reach');
+    this.playerReach = r.i('player_reach');
+    this.aiMargin = r.il('ai_margin');
+    this.starMargins = r.il('star_margins');
+    this.flickMmPerPx = r.d('flick_mm_per_px');
+    this.timeCapS = r.i('time_cap_s');
+  }
+
+  toJson(): Record<string, unknown> {
+    return {
+      half_width: this.halfWidth,
+      depth: this.depth,
+      win_points: this.winPoints,
+      win_by: this.winBy,
+      max_points: this.maxPoints,
+      scatter: this.scatter,
+      ai_scatter: this.aiScatter,
+      ai_reach: this.aiReach,
+      player_reach: this.playerReach,
+      ai_margin: this.aiMargin,
+      star_margins: this.starMargins,
       flick_mm_per_px: this.flickMmPerPx,
       time_cap_s: this.timeCapS,
     };

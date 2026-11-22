@@ -46,7 +46,10 @@ Future<void> showGarage(BuildContext context, CarFleet fleet) => showModalBottom
                 ListTile(
                   leading: CircleAvatar(backgroundColor: Color(paintArgb(spec)), radius: 10),
                   title: Text(spec.name, style: const TextStyle(color: Color(Tokens.colorUiText))),
-                  subtitle: Text(cls(spec.class_), style: const TextStyle(color: Color(Tokens.colorUiTextMuted))),
+                  // Classes without a label yet (sedan, micro) show the name only.
+                  subtitle: cls(spec.class_).isEmpty
+                      ? null
+                      : Text(cls(spec.class_), style: const TextStyle(color: Color(Tokens.colorUiTextMuted))),
                   trailing: fleet.canSelect(id)
                       ? FilledButton(
                           onPressed: () {
@@ -67,7 +70,10 @@ Future<void> showGarage(BuildContext context, CarFleet fleet) => showModalBottom
                 ListTile(
                   leading: CircleAvatar(backgroundColor: Color(paintArgb(spec)), radius: 10),
                   title: Text(spec.name, style: const TextStyle(color: Color(Tokens.colorUiText))),
-                  subtitle: Text(cls(spec.class_), style: const TextStyle(color: Color(Tokens.colorUiTextMuted))),
+                  // Classes without a label yet (sedan, micro) show the name only.
+                  subtitle: cls(spec.class_).isEmpty
+                      ? null
+                      : Text(cls(spec.class_), style: const TextStyle(color: Color(Tokens.colorUiTextMuted))),
                   trailing: OutlinedButton(
                     onPressed: buyable.contains(spec.id) ? () => setState(() => fleet.buy(spec.id)) : null,
                     child: Text(l.garageBuy(spec.price)),

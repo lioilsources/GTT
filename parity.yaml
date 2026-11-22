@@ -234,19 +234,49 @@
   level: P2
   spec: specs/cities.md@1
   lead: web
-  flutter: todo
-  web: todo
+  flutter: done
+  web: done
+  checks: {flutter: pass, web: pass}
 - id: F-029
   name: Pedestrian zones and micro vehicles (bollards, micro passes)
   level: P1
   spec: specs/zones.md@1
   lead: web
-  flutter: todo
-  web: todo
+  flutter: done
+  web: done
+  checks: {flutter: pass, web: pass}
 - id: F-030
   name: Trams (tracks, generated stops, articulated cars, right of way)
   level: P1
   spec: specs/trams.md@1
   lead: web
-  flutter: todo
-  web: todo
+  flutter: wip
+  web: done
+  checks: {web: pass}
+- id: F-031
+  name: Kuličky (Prague local game)
+  level: P0
+  spec: specs/minigames/kulicky.md@1
+  vectors: vectors/kulicky.json
+  lead: web
+  flutter: wip
+  web: done
+  checks: {web: pass}
+- id: F-032
+  name: Čára (Prague local game)
+  level: P0
+  spec: specs/minigames/cara.md@1
+  vectors: vectors/cara.json
+  lead: web
+  flutter: wip
+  web: done
+  checks: {web: pass}
+- id: F-033
+  name: Nohejbal (Prague local game)
+  level: P0
+  spec: specs/minigames/nohejbal.md@1
+  vectors: vectors/nohejbal.json
+  lead: web
+  flutter: wip
+  web: done
+  checks: {web: pass}
