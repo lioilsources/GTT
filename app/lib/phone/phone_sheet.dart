@@ -6,12 +6,14 @@ import 'package:shared_gen/shared_gen.dart';
 import 'feed_screen.dart';
 import 'map_screen.dart';
 import 'phone_controller.dart';
+import 'travel_screen.dart';
 
 /// Shared i18n lookup for the phone (keys are built from ids, e.g. `app_feed`, `engine_cards`).
 String phoneText(BuildContext context, MessageKey key, [Map<String, Object> args = const {}]) =>
     tr(Localizations.localeOf(context).languageCode, key, args);
 
-MessageKey messageKey(String name) => MessageKey.values.byName(name);
+/// Message key by its i18n key (e.g. `app_feed`); the enum names are camel case (`appFeed`).
+MessageKey messageKey(String key) => MessageKey.values.firstWhere((k) => k.key == key);
 
 typedef PhoneAppBuilder = Widget Function(BuildContext context, PhoneController phone);
 
@@ -19,6 +21,7 @@ typedef PhoneAppBuilder = Widget Function(BuildContext context, PhoneController 
 final Map<PhoneAppId, PhoneAppBuilder> phoneApps = {
   PhoneAppId.feed: (context, phone) => FeedScreen(phone: phone),
   PhoneAppId.map: (context, phone) => MapScreen(phone: phone),
+  PhoneAppId.travel: (context, phone) => TravelScreen(phone: phone),
 };
 
 void registerPhoneApp(PhoneAppId id, PhoneAppBuilder builder) => phoneApps[id] = builder;
@@ -31,6 +34,7 @@ const _icons = {
   PhoneAppId.camera: Icons.photo_camera,
   PhoneAppId.contacts: Icons.contacts,
   PhoneAppId.wallet: Icons.account_balance_wallet,
+  PhoneAppId.travel: Icons.flight_takeoff,
   PhoneAppId.settings: Icons.settings,
 };
 

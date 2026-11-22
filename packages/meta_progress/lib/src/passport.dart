@@ -5,9 +5,19 @@ const stampKinds = ['landmark', 'district', 'minigame', 'photo'];
 
 String stampId(String kind, String id) => '$kind:$id';
 
+/// Diacritics table of specs/passport.md "districtId" (applied after lowercasing).
+const _fold = {
+  'á': 'a', 'ä': 'a', 'à': 'a', 'â': 'a', 'č': 'c', 'ç': 'c', 'ď': 'd', 'é': 'e', 'ě': 'e', 'è': 'e', //
+  'ê': 'e', 'ë': 'e', 'í': 'i', 'î': 'i', 'ï': 'i', 'ľ': 'l', 'ĺ': 'l', 'ň': 'n', 'ñ': 'n', 'ó': 'o', //
+  'ô': 'o', 'ö': 'o', 'ő': 'o', 'ř': 'r', 'ŕ': 'r', 'š': 's', 'ť': 't', 'ú': 'u', 'ů': 'u', 'ü': 'u', //
+  'ű': 'u', 'û': 'u', 'ý': 'y', 'ÿ': 'y', 'ž': 'z', 'ß': 'ss',
+};
+final _foldRe = RegExp('[${_fold.keys.join()}]');
+
 /// Stable district id from its display name (specs/passport.md "districtId").
 String districtId(String name) => name
     .toLowerCase()
+    .replaceAllMapped(_foldRe, (m) => _fold[m[0]]!)
     .replaceAll(RegExp("['’.]"), '')
     .replaceAll(RegExp('[^a-z0-9]+'), '_')
     .replaceAll(RegExp(r'^_+|_+$'), '');
