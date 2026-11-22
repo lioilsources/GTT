@@ -10,7 +10,7 @@ import 'package:world_engine/world_engine.dart';
 import '../game/metropole_game.dart';
 
 /// Phone apps in home-screen order (specs/phone.md "Telefon").
-enum PhoneAppId { feed, map, garage, passport, camera, contacts, wallet, settings }
+enum PhoneAppId { feed, map, garage, passport, camera, contacts, wallet, travel, settings }
 
 /// What the navigation pill shows; refreshed ~10× a second.
 class NavHudState {
@@ -50,6 +50,11 @@ class PhoneController extends ChangeNotifier {
 
   /// arrived(spotId): the minigame launch hook (the loop, specs/loop.md).
   final List<void Function(String spotId)> onArrived = [];
+
+  /// Travel app hooks (specs/cities.md), wired by the game screen: switch to a city, and the
+  /// passport completion of a city from its save.
+  void Function(CityId city)? onTravel;
+  Future<int> Function(CityId city)? passportPercent;
 
   /// The last accepted feed card; the loop reads its distance and difficulty on arrival and clears it.
   ({String spot, int distDm, int difficulty})? accepted;

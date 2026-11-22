@@ -64,6 +64,11 @@ void main() {
     expect(districtId('DUMBO'), 'dumbo');
     expect(districtId('Upper West Side'), 'upper_west_side');
     expect(districtId(' St. Mark’s  Place '), 'st_marks_place');
+    // Diacritics are transliterated (M3, Prague).
+    expect(districtId('Žižkov'), 'zizkov');
+    expect(districtId('Malá Strana'), 'mala_strana');
+    expect(districtId('Staré Město'), 'stare_mesto');
+    expect(districtId('Straße'), 'strasse');
   });
 
   test('postcard picture', () {

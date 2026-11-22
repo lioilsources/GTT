@@ -9,12 +9,15 @@ import 'package:world_engine/world_engine.dart';
 import '../l10n/app_localizations.dart';
 
 /// Plain passport data from a loaded City (specs/passport.md "Katalog razítek").
-PassportCity passportCityOf(City c) => PassportCity(
+PassportCity passportCityOf(City c) => passportCityOfPack(c.manifest, c.landmarks, c.spots);
+
+/// The same catalog from the small pack files only (the Travel app reads other cities this way).
+PassportCity passportCityOfPack(Manifest m, Landmarks landmarks, Spots spots) => PassportCity(
   landmarks: [
-    for (final l in c.landmarks.items) (id: l.id, name: l.name, x: l.x, y: l.y, heightM: l.heightM, hero: l.hero),
+    for (final l in landmarks.items) (id: l.id, name: l.name, x: l.x, y: l.y, heightM: l.heightM, hero: l.hero),
   ],
-  districts: [for (final d in c.districts) d.name],
-  spotMinigames: [for (final s in c.spots.items) s.minigame],
+  districts: [for (final d in m.districts) d.name],
+  spotMinigames: [for (final s in spots.items) s.minigame],
 );
 
 String _lang(BuildContext context) => Localizations.localeOf(context).languageCode;

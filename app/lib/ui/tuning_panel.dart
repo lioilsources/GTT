@@ -14,7 +14,7 @@ void showTuningPanel(
   BuildContext context,
   MetropoleGame game, {
   required void Function(ControlSchemeId) onScheme,
-  required Future<void> Function() onBench,
+  required Future<void> Function()? onBench,
   Future<void> Function()? onResetSave,
 }) {
   showModalBottomSheet<void>(
@@ -30,7 +30,9 @@ class _TuningPanel extends StatefulWidget {
   const _TuningPanel({required this.game, required this.onScheme, required this.onBench, this.onResetSave});
   final MetropoleGame game;
   final void Function(ControlSchemeId) onScheme;
-  final Future<void> Function() onBench;
+
+  /// Null when the city has no `content/bench/<cityId>.json` (specs/cities.md): the button is disabled.
+  final Future<void> Function()? onBench;
 
   /// Debug "reset save" (specs/save.md).
   final Future<void> Function()? onResetSave;
@@ -181,7 +183,11 @@ class _TuningPanelState extends State<_TuningPanel> {
                 label: Text(l.gallery),
                 onPressed: () {
                   Navigator.of(context).pop();
-                  Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => GalleryScreen(tuning: g.tuning)));
+                  Navigator.of(context).push(
+                    MaterialPageRoute<void>(
+                      builder: (_) => GalleryScreen(tuning: g.tuning, cityId: g.city.id),
+                    ),
+                  );
                 },
               ),
               OutlinedButton.icon(
@@ -191,15 +197,18 @@ class _TuningPanelState extends State<_TuningPanel> {
                   final nav = Navigator.of(context);
                   final lang = Localizations.localeOf(context).languageCode;
                   nav.pop();
-                  openSkits(nav, g.tuning, lang);
+                  openSkits(nav, g.tuning, lang, city: g.city.id);
                 },
               ),
               OutlinedButton.icon(
                 icon: const Icon(Icons.speed, size: 16),
                 label: Text(l.benchStart),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                  widget.onBench();
+                onPressed: switch (widget.onBench) {
+                  final bench? => () {
+                    Navigator.of(context).pop();
+                    bench();
+                  },
+                  null => null,
                 },
               ),
               if (widget.onResetSave case final reset?)
