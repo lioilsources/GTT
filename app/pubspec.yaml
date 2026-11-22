@@ -66,3 +66,5 @@ flutter:
     - assets/shared/content/bench/
     - assets/shared/packs/nyc/
     - assets/shared/packs/nyc/chunks/
+    - assets/shared/packs/prague/
+    - assets/shared/packs/prague/chunks/
