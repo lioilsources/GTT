@@ -103,6 +103,7 @@ class Tuning {
         cars = TuningCars._(r.sub('cars')),
         travel = TuningTravel._(r.sub('travel')),
         booths = TuningBooths._(r.sub('booths')),
+        style = TuningStyle._(r.sub('style')),
         police = TuningPolice._(r.sub('police')),
         economy = TuningEconomy._(r.sub('economy')),
         loop = TuningLoop._(r.sub('loop'));
@@ -215,6 +216,9 @@ class Tuning {
 
   /// Police and wanted level (specs/police.md). P0 rules run in integer ticks: s → round(s · tick_hz).
   /// Distances in world metres (after car_scale); patrols are traffic cars flagged as police.
+  /// city skins (specs/style.md); colours in design/tokens.json color.city
+  final TuningStyle style;
+
   final TuningPolice police;
 
   /// Economy (specs/economy.md): cash for a loop result, tow fee. The drive part of the reward uses
@@ -260,6 +264,7 @@ class Tuning {
         'cars': cars.toJson(),
         'travel': travel.toJson(),
         'booths': booths.toJson(),
+        'style': style.toJson(),
         'police': police.toJson(),
         'economy': economy.toJson(),
         'loop': loop.toJson(),
@@ -2816,6 +2821,70 @@ class TuningBooths {
 
 /// Police and wanted level (specs/police.md). P0 rules run in integer ticks: s → round(s · tick_hz).
 /// Distances in world metres (after car_scale); patrols are traffic cars flagged as police.
+/// city skins (specs/style.md); colours in design/tokens.json color.city
+class TuningStyle {
+  TuningStyle._(_R r)
+      : risograph = TuningStyleRisograph._(r.sub('risograph')),
+        misregistrationPx = r.d('misregistration_px'),
+        fringe = r.d('fringe'),
+        grainStrength = r.d('grain_strength'),
+        grainSizePx = r.d('grain_size_px'),
+        halftoneCellPx = r.d('halftone_cell_px'),
+        halftoneStrength = r.d('halftone_strength'),
+        halftoneLow = r.d('halftone_low'),
+        halftoneHigh = r.d('halftone_high');
+
+  final TuningStyleRisograph risograph;
+
+  /// ink fringe offset at 1x, scaled by device pixel ratio
+  double misregistrationPx;
+
+  /// ink strength of the misregistered fringe on edges
+  double fringe;
+
+  /// paper grain, ± this much brightness
+  double grainStrength;
+
+  double grainSizePx;
+
+  double halftoneCellPx;
+
+  /// darkening inside a halftone dot
+  double halftoneStrength;
+
+  /// luminance band that gets dots (midtones only)
+  double halftoneLow;
+
+  double halftoneHigh;
+
+  Map<String, Object> toJson() => {
+        'risograph': risograph.toJson(),
+        'misregistration_px': misregistrationPx,
+        'fringe': fringe,
+        'grain_strength': grainStrength,
+        'grain_size_px': grainSizePx,
+        'halftone_cell_px': halftoneCellPx,
+        'halftone_strength': halftoneStrength,
+        'halftone_low': halftoneLow,
+        'halftone_high': halftoneHigh,
+      };
+}
+
+class TuningStyleRisograph {
+  TuningStyleRisograph._(_R r)
+      : nyc = r.b('nyc'),
+        prague = r.b('prague');
+
+  bool nyc;
+
+  bool prague;
+
+  Map<String, Object> toJson() => {
+        'nyc': nyc,
+        'prague': prague,
+      };
+}
+
 class TuningPolice {
   TuningPolice._(_R r)
       : enabled = r.b('enabled'),

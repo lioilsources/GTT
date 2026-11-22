@@ -10,8 +10,8 @@ do té doby zůstává procedurální záloha.
 - **R10:** žádné reálné značky, loga, nápisy firem, SPZ, ani podoba skutečných aut. Památky a
   instituce skutečné jsou v pořádku. Žádní skuteční lidé.
 - **Postavy:** zjevně dospělí (21+, věk je u postavy), manga styl, přitažliví, nic explicitního.
-- **Styl:** plochý vektorový styl, výrazná paleta na město (kap. 12). Barvy palet ladit
-  s `design/tokens.json`.
+- **Styl (vybraný Ol1nem):** New York = **A, plochý vektor**, Praha = **C, sítotisk / risograf**.
+  Paleta měst je v `design/tokens.json` → `color.city.<city>` (`specs/style.md`), grafiku ladit s ní.
 - **Formát:** PNG s alfou (sRGB), finální velikost níže, k tomu zdrojový soubor / workflow ComfyUI
   a seed (kvůli dalším variantám). Pojmenování přesně podle cest níže.
 - **Kam:** `assets/<oblast>/…` v repu (sdílená cesta, větev `shared/art-…`). `metro sync` je
@@ -108,6 +108,10 @@ Navíc provoz (bez jména, náhodný lak): 6 generických aut `assets/cars/traff
 - **Minihry M2 (22):** skiny stolů a herních ploch 1080×1920 (dřevo, plsť, asfalt NYC):
   karty (1 sada 52 + žolík, fiktivní rub „Metropole“), kostky, šachovnice/dáma, kulečník,
   bowling, minigolf (dráhy s motivem NYC), vzdušný hokej, stickball ulice, švihadla Double Dutch.
+
+### 6. Textury povrchů (objednané, dávka gtt-tex1)
+`assets/cities/<city>/<id>.png`, tileable 512×512, shora, neutrální světlo: nyc/asphalt,
+nyc/sidewalk_concrete, nyc/roof_tar, prague/cobblestone, prague/mosaic_sidewalk, prague/roof_tiles.
 
 ## Hotovo
 

@@ -143,7 +143,9 @@ export class Tuning {
   /**
    * Police and wanted level (specs/police.md). P0 rules run in integer ticks: s → round(s · tick_hz).
    * Distances in world metres (after car_scale); patrols are traffic cars flagged as police.
+   * city skins (specs/style.md); colours in design/tokens.json color.city
    */
+  readonly style: TuningStyle;
   readonly police: TuningPolice;
   /**
    * Economy (specs/economy.md): cash for a loop result, tow fee. The drive part of the reward uses
@@ -189,6 +191,7 @@ export class Tuning {
     this.cars = new TuningCars(r.sub('cars'));
     this.travel = new TuningTravel(r.sub('travel'));
     this.booths = new TuningBooths(r.sub('booths'));
+    this.style = new TuningStyle(r.sub('style'));
     this.police = new TuningPolice(r.sub('police'));
     this.economy = new TuningEconomy(r.sub('economy'));
     this.loop = new TuningLoop(r.sub('loop'));
@@ -231,6 +234,7 @@ export class Tuning {
       cars: this.cars.toJson(),
       travel: this.travel.toJson(),
       booths: this.booths.toJson(),
+      style: this.style.toJson(),
       police: this.police.toJson(),
       economy: this.economy.toJson(),
       loop: this.loop.toJson(),
@@ -2620,7 +2624,68 @@ export class TuningBooths {
 /**
  * Police and wanted level (specs/police.md). P0 rules run in integer ticks: s → round(s · tick_hz).
  * Distances in world metres (after car_scale); patrols are traffic cars flagged as police.
+ * city skins (specs/style.md); colours in design/tokens.json color.city
  */
+export class TuningStyle {
+  readonly risograph: TuningStyleRisograph;
+  /** ink fringe offset at 1x, scaled by device pixel ratio */
+  misregistrationPx: number;
+  /** ink strength of the misregistered fringe on edges */
+  fringe: number;
+  /** paper grain, ± this much brightness */
+  grainStrength: number;
+  grainSizePx: number;
+  halftoneCellPx: number;
+  /** darkening inside a halftone dot */
+  halftoneStrength: number;
+  /** luminance band that gets dots (midtones only) */
+  halftoneLow: number;
+  halftoneHigh: number;
+
+  constructor(r: R) {
+    this.risograph = new TuningStyleRisograph(r.sub('risograph'));
+    this.misregistrationPx = r.d('misregistration_px');
+    this.fringe = r.d('fringe');
+    this.grainStrength = r.d('grain_strength');
+    this.grainSizePx = r.d('grain_size_px');
+    this.halftoneCellPx = r.d('halftone_cell_px');
+    this.halftoneStrength = r.d('halftone_strength');
+    this.halftoneLow = r.d('halftone_low');
+    this.halftoneHigh = r.d('halftone_high');
+  }
+
+  toJson(): Record<string, unknown> {
+    return {
+      risograph: this.risograph.toJson(),
+      misregistration_px: this.misregistrationPx,
+      fringe: this.fringe,
+      grain_strength: this.grainStrength,
+      grain_size_px: this.grainSizePx,
+      halftone_cell_px: this.halftoneCellPx,
+      halftone_strength: this.halftoneStrength,
+      halftone_low: this.halftoneLow,
+      halftone_high: this.halftoneHigh,
+    };
+  }
+}
+
+export class TuningStyleRisograph {
+  nyc: boolean;
+  prague: boolean;
+
+  constructor(r: R) {
+    this.nyc = r.b('nyc');
+    this.prague = r.b('prague');
+  }
+
+  toJson(): Record<string, unknown> {
+    return {
+      nyc: this.nyc,
+      prague: this.prague,
+    };
+  }
+}
+
 export class TuningPolice {
   enabled: boolean;
   /** M2: wanted 1–3, roadblock at 3 (specs/roadblock.md) */
