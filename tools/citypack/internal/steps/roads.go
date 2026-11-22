@@ -176,6 +176,7 @@ func Roads(e *Env) error {
 	g = largestComponent(g)
 	e.markKept(g)
 	connectKept(g)
+	connectKeptDirected(g)
 	gp := e.toProto(g)
 	kept := 0
 	for _, ed := range gp.Edges {

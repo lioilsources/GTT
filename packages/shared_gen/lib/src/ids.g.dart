@@ -5,6 +5,7 @@ import 'schema.g.dart';
 /// Cities with a content/cities/<id>/city.yaml.
 enum CityId {
   nyc('nyc', "New York"),
+  prague('prague', "Praha"),
   ;
 
   const CityId(this.id, this.name);

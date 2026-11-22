@@ -1,0 +1,16 @@
+id: prague
+name: Praha
+origin: {lat: 50.0875, lon: 14.4213}   # Old Town Square
+drive_side: right
+units: metric
+area: area.geojson           # M3: Praha 1 and 2 + Letná, Holešovice, Karlín, Žižkov, Vinohrady, Smíchov, Vyšehrad (plans/M3_PRAHA.md P1)
+overture_release: "2026-11-18.0"
+height_sources: [overture]
+road_keep_classes: [motorway, trunk, primary, secondary, tertiary]
+# The organic old town has few tertiary streets; keep the ones that carry the city.
+road_keep_names: [Pařížská, Dlouhá, Revoluční, Karmelitská, Újezd, Nerudova, Vinohradská, Korunní, Seifertova, Křižíkova, Sokolovská, Plzeňská, Nádražní, Národní, Spálená, Žitná, Ječná, Myslíkova, Vodičkova, Jindřišská, Hybernská, Dukelských hrdinů, Milady Horákové]
+style: style.yaml
+start: {lat: 50.08050, lon: 14.41300, heading_deg: 0, street: Masarykovo nábřeží}   # by the National Theatre, castle ahead
+default_height_m: 18
+max_chunk_kb: 512
+districts: districts.yaml

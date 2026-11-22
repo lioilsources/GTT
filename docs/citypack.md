@@ -15,7 +15,7 @@ Cache nesleduje změny konfigurace: po úpravě `city.yaml`, `tuning.yaml` (ší
 | Krok | Vstup → výstup | Poznámka |
 |---|---|---|
 | `fetch` | Overture release → `raw/<vrstva>.parquet` | Z STAC indexu releasu (`collections.parquet`) vybere jen soubory, které protínají bbox oblasti. Midtown: ~5 min místo ~9 min na samotné budovy. |
-| `roads` | segmenty + konektory → `graph.pb` | Rozdělí segmenty v konektorech, ořízne hranicí oblasti (konec = uzavírka), zahodí slepé mosty/tunely, nechá největší komponentu, vyznačí ponechané silnice (`road_keep_classes`, `road_keep_names`) a doplní nejkratší spojky. Ostatní silnice jsou uličky. |
+| `roads` | segmenty + konektory → `graph.pb` | Rozdělí segmenty v konektorech, ořízne hranicí oblasti (konec = uzavírka), zahodí slepé mosty/tunely, nechá největší komponentu, vyznačí ponechané silnice (`road_keep_classes`, `road_keep_names`) a doplní nejkratší spojky: nejdřív bez ohledu na směr, pak po směru jízdy tam i zpět, aby se z každé ponechané silnice dalo dojet k ostatním i s jednosměrkami (silnice ven z oblasti bez cesty zpět zůstanou). Ostatní silnice jsou uličky. |
 | `widen` | budovy − koridory silnic | Šířka = pruhy × `lane_width_m` + 2 × `sidewalk_width_m`, uličky 1,5 × pruh. Jen silnice ve vrstvě 0 (tunely vedou pod budovami, estakády nad nimi). |
 | `buildings` | → `buildings.jsonl` | Výška: `height` → `num_floors` × 3,2 → `default_height_m`. Zjednodušení 1,5 m, sloučení sousedů ve stejném výškovém pásmu (DBSCAN 0,5 m). Památky a části budov (`building_part`) se neslučují; části památky se přeškálují na ruční výšku. |
 | `ground` | voda, parky, náměstí, kolejiště → `ground.jsonl` | Sjednocení po druhu, ořez oblastí a mřížkou chunků. |
@@ -46,6 +46,14 @@ Cache nesleduje změny konfigurace: po úpravě `city.yaml`, `tuning.yaml` (ší
 Manhattan jižně od 110th St s mosty Brooklyn, Manhattan, Williamsburg a Queensboro a krátkými předmostími
 (DUMBO, Williamsburg, Long Island City): 17 065 uzlů, 20 037 hran, 32 246 hmot budov, 896 chunků,
 15 spotů (8 se minihrou), balíček 2,5 MB. Build s `-refetch` ~5 min.
+
+## Praha v číslech (M3)
+
+Praha 1 a 2 s Letnou, Holešovicemi, Karlínem, Žižkovem, Vinohrady, Smíchovem a Vyšehradem
+(`plans/M3_PRAHA.md`): 12 510 uzlů, 14 419 hran (4 524 ponechaných, z toho 435 spojek kvůli
+jednosměrkám), 13 942 hmot budov, 507 chunků, 15 spotů (7 se minihrou), balíček 1,5 MB. Build s
+`-refetch` ~6 min. Organická síť jednosměrek bez spojek po směru jízdy rozpadla ponechané silnice
+na ostrovy, kam se nedalo dojet (Národní, Spálená, Dlouhá); proto druhý krok spojek.
 
 - Spoty mají pole `minigame` (id z katalogu): na tom místě se minihra hraje (9.5).
 - `validate` bere při kontrole „silnice v budově“ v úvahu dvory (díry v obrysu): příjezd do dvora

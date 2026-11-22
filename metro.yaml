@@ -11,4 +11,4 @@ owners:
 bootstrap_branches: [shared/d0]
 
 # Cities whose packs `metro sync` bundles into the app (the first city ships with the install).
-bundle_cities: [nyc]
+bundle_cities: [nyc, prague]

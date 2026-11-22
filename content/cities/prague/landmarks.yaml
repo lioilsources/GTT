@@ -1,0 +1,27 @@
+# Hand-curated Prague landmarks (same rules as nyc/landmarks.yaml). Coordinates approximate; Ol1n checks (M3-A1).
+landmarks:
+  - {id: prague_castle, name: Pražský hrad, lat: 50.09090, lon: 14.40050, height_m: 97, hero: true}
+  - {id: old_town_square, name: Staroměstské náměstí, lat: 50.08750, lon: 14.42130, kind: plaza, hero: true}
+  - {id: old_town_hall, name: Staroměstská radnice, lat: 50.08700, lon: 14.42070, height_m: 70, hero: true}
+  - {id: tyn_church, name: Týnský chrám, lat: 50.08780, lon: 14.42300, height_m: 80, hero: true}
+  - {id: bridge_tower, name: Staroměstská mostecká věž, lat: 50.08620, lon: 14.41360, height_m: 47, hero: true}
+  - {id: st_nicholas, name: Chrám svatého Mikuláše, lat: 50.08800, lon: 14.40340, height_m: 79, hero: true}
+  - {id: wenceslas_square, name: Václavské náměstí, lat: 50.08150, lon: 14.42800, kind: plaza, hero: true}
+  - {id: national_museum, name: Národní muzeum, lat: 50.07910, lon: 14.43070, height_m: 70, hero: true}
+  - {id: national_theatre, name: Národní divadlo, lat: 50.08100, lon: 14.41350, height_m: 34, hero: true}
+  - {id: dancing_house, name: Tančící dům, lat: 50.07550, lon: 14.41410, height_m: 24, hero: true}
+  - {id: powder_tower, name: Prašná brána, lat: 50.08720, lon: 14.42750, height_m: 65, hero: true}
+  - {id: municipal_house, name: Obecní dům, lat: 50.08750, lon: 14.42820, height_m: 30, hero: true}
+  - {id: rudolfinum, name: Rudolfinum, lat: 50.09000, lon: 14.41530, height_m: 30, hero: true}
+  - {id: petrin_tower, name: Petřínská rozhledna, lat: 50.08350, lon: 14.39510, height_m: 64, hero: true}
+  - {id: zizkov_tower, name: Žižkovský vysílač, lat: 50.08100, lon: 14.45100, height_m: 216, hero: true}
+  - {id: vysehrad, name: Bazilika svatého Petra a Pavla, lat: 50.06440, lon: 14.41780, height_m: 58, hero: true}
+  - {id: main_station, name: Hlavní nádraží, lat: 50.08320, lon: 14.43530, height_m: 30, hero: true}
+  - {id: old_new_synagogue, name: Staronová synagoga, lat: 50.09030, lon: 14.41890, height_m: 20, hero: true}
+  - {id: klementinum, name: Klementinum, lat: 50.08650, lon: 14.41650, height_m: 68, hero: true}
+  - {id: vitkov, name: Národní památník na Vítkově, lat: 50.08890, lon: 14.45050, height_m: 34, hero: true}
+  - {id: letna_park, name: Letenské sady, lat: 50.09600, lon: 14.42000, kind: park}
+  - {id: kampa, name: Kampa, lat: 50.08500, lon: 14.40780, kind: park}
+  - {id: riegrovy_sady, name: Riegrovy sady, lat: 50.07900, lon: 14.44250, kind: park}
+  - {id: karlovo_namesti, name: Karlovo náměstí, lat: 50.07600, lon: 14.41850, kind: park}
+  - {id: st_ludmila, name: Kostel svaté Ludmily, lat: 50.07530, lon: 14.43710, height_m: 60}
