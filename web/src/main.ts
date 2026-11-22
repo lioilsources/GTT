@@ -17,6 +17,7 @@ import { carPose, PedestrianWorld } from './peds/pedestrians';
 import { drawPedBubbles, PedView } from './render/pedView';
 import { Tuning } from './gen/tuning';
 import { TrafficView } from './render/trafficView';
+import { TramView } from './render/tramView';
 import { installPassport } from './passport/hud';
 import { WorldView } from './render/worldView';
 import { installPhone } from './phone';
@@ -123,6 +124,8 @@ async function main(): Promise<void> {
   const peds = new PedestrianWorld(city, tuning);
   const pedView = new PedView(view.scene);
   const trafficView = drive.traffic ? new TrafficView(view.scene, drive.traffic, tuning) : null;
+  // Trams (specs/trams.md): drive.trams exposes items, onHit and stops for police and dialogue.
+  const tramView = drive.trams ? new TramView(view.scene, drive.trams, tuning) : null;
   // Police and wanted level (specs/police.md).
   const police = installPolice({ drive, cars: fleet, tuning, t, hud: $('hud'), scene: view.scene });
   const streamer = new ChunkStreamer(city, source, tuning, (c) => {
@@ -179,6 +182,7 @@ async function main(): Promise<void> {
     night = !night;
     view.setNight(night);
     if (drive.traffic) drive.traffic.night = night;
+    tramView?.setNight(night);
   });
   $('btn-respawn').title = t('respawn');
   $('btn-respawn').addEventListener('click', () => {
@@ -235,6 +239,7 @@ async function main(): Promise<void> {
         night = st.night;
         view.setNight(night);
         if (drive.traffic) drive.traffic.night = night;
+        tramView?.setNight(night);
       },
     },
   });
@@ -273,6 +278,7 @@ async function main(): Promise<void> {
     peds.update(dt, [carPose(c)], view.rig.visibleRadius(size.w, size.h, tuning), night);
     pedView.update(peds);
     trafficView?.update(view.rig.x, view.rig.y, view.rig.visibleRadius(size.w, size.h, tuning), c.layer);
+    tramView?.update(c.layer);
     view.render();
     drawOverlay();
 
@@ -315,7 +321,7 @@ async function main(): Promise<void> {
     perfEl.textContent =
       `${perf.fps.toFixed(0)} fps  ${perf.frameMs.toFixed(1)} ms  max ${perf.worst.toFixed(0)}\n` +
       `draw ${s.drawCalls}  tri ${(s.triangles / 1000).toFixed(0)}k\n` +
-      `chunks ${s.chunks}  cars ${drive.traffic?.cars.length ?? 0}  ${engine.isWebGPU ? 'WebGPU' : 'WebGL2'}  ${scheme.id.toUpperCase()}`;
+      `chunks ${s.chunks}  cars ${drive.traffic?.cars.length ?? 0}  trams ${drive.trams?.trams.length ?? 0}  ${engine.isWebGPU ? 'WebGPU' : 'WebGL2'}  ${scheme.id.toUpperCase()}`;
     perfEl.style.color = perf.fps >= 57 ? tokens.colorUiFpsOk : tokens.colorUiFpsBad;
     const d = drive.borderDistance();
     noticeEl.hidden = !(d !== null && d < tuning.hud.borderNoticeM);

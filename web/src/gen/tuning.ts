@@ -1627,6 +1627,8 @@ export class TuningMinigamesNohejbal {
   scatter: number[];
   aiScatter: number[];
   aiReach: number[];
+  /** mm, the player returns balls within this */
+  playerReach: number;
   aiMargin: number[];
   starMargins: number[];
   flickMmPerPx: number;
@@ -1641,6 +1643,7 @@ export class TuningMinigamesNohejbal {
     this.scatter = r.il('scatter');
     this.aiScatter = r.il('ai_scatter');
     this.aiReach = r.il('ai_reach');
+    this.playerReach = r.i('player_reach');
     this.aiMargin = r.il('ai_margin');
     this.starMargins = r.il('star_margins');
     this.flickMmPerPx = r.d('flick_mm_per_px');
@@ -1657,6 +1660,7 @@ export class TuningMinigamesNohejbal {
       scatter: this.scatter,
       ai_scatter: this.aiScatter,
       ai_reach: this.aiReach,
+      player_reach: this.playerReach,
       ai_margin: this.aiMargin,
       star_margins: this.starMargins,
       flick_mm_per_px: this.flickMmPerPx,
@@ -2433,6 +2437,7 @@ export class TuningCarsParked {
   attempts: number;
   /** RoadClass: primary, secondary, tertiary, residential */
   classes: number[];
+  /** filtered by the city's tag */
   models: string[];
   segmentMarginM: number;
   curbGapM: number;

@@ -6,11 +6,13 @@ import {
   LandmarksSchema,
   ManifestSchema,
   SpotsSchema,
+  TramGraphSchema,
   type Chunk,
   type Graph,
   type Landmarks,
   type Manifest,
   type Spots,
+  type TramGraph,
 } from '../gen/pb/citypack_pb';
 
 /** Where citypack files come from (specs/citypack.md): fetch on the web, the file system in tests. */
@@ -32,6 +34,7 @@ export const decodeManifest = (gz: Uint8Array): Promise<Manifest> => decode(Mani
 export const decodeGraph = (gz: Uint8Array): Promise<Graph> => decode(GraphSchema, gz);
 export const decodeLandmarks = (gz: Uint8Array): Promise<Landmarks> => decode(LandmarksSchema, gz);
 export const decodeSpots = (gz: Uint8Array): Promise<Spots> => decode(SpotsSchema, gz);
+export const decodeTrams = (gz: Uint8Array): Promise<TramGraph> => decode(TramGraphSchema, gz);
 export const decodeChunk = (gz: Uint8Array): Promise<Chunk> => decode(ChunkSchema, gz);
 
 export const chunkPath = (x: number, y: number): string => `chunks/${x}_${y}.pb`;

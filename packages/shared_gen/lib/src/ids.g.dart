@@ -27,6 +27,9 @@ enum CityId {
 /// Cars defined in content/cars/<id>.json.
 enum CarId {
   hatchPip('hatch_pip'),
+  kolo('kolo'),
+  kolobezka('kolobezka'),
+  lidovka('lidovka'),
   m0Coupe('m0_coupe'),
   muscleBrute('muscle_brute'),
   pickupHauler('pickup_hauler'),

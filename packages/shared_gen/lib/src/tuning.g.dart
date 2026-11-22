@@ -1672,6 +1672,7 @@ class TuningMinigamesNohejbal {
         scatter = r.il('scatter'),
         aiScatter = r.il('ai_scatter'),
         aiReach = r.il('ai_reach'),
+        playerReach = r.i('player_reach'),
         aiMargin = r.il('ai_margin'),
         starMargins = r.il('star_margins'),
         flickMmPerPx = r.d('flick_mm_per_px'),
@@ -1694,6 +1695,9 @@ class TuningMinigamesNohejbal {
 
   List<int> aiReach;
 
+  /// mm, the player returns balls within this
+  int playerReach;
+
   List<int> aiMargin;
 
   List<int> starMargins;
@@ -1711,6 +1715,7 @@ class TuningMinigamesNohejbal {
         'scatter': scatter,
         'ai_scatter': aiScatter,
         'ai_reach': aiReach,
+        'player_reach': playerReach,
         'ai_margin': aiMargin,
         'star_margins': starMargins,
         'flick_mm_per_px': flickMmPerPx,
@@ -2624,6 +2629,7 @@ class TuningCarsParked {
   /// RoadClass: primary, secondary, tertiary, residential
   List<int> classes;
 
+  /// filtered by the city's tag
   List<String> models;
 
   double segmentMarginM;

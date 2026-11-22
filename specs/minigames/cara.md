@@ -45,6 +45,7 @@ vzdálenost od čáry v mm, záporná před čárou.
   `burnt = y' > 0` (přehozená přes čáru).
 - Hráčův hod uloží `playerCoin`, `turn = "ai"`. Soupeřův uloží `aiCoin` a vyhodnotí kolo:
   - mince s `y' = 0` dá své straně `linePoints` (obě mohou);
+  - když je na čáře aspoň jedna mince, bod za bližší minci v tom kole nedostane nikdo;
   - jinak bližší nepřehozená mince (větší `y'`, tj. menší `|y'|`) dá `roundPoints`; obě
     přehozené nebo stejná vzdálenost = nikdo;
   - `round += 1`, `turn = "player"`; po posledním kole `over = true`.

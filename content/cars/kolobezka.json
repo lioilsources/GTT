@@ -1,0 +1,21 @@
+{
+  "id": "kolobezka",
+  "name": "Šlapka E",
+  "class": "micro",
+  "length_m": 1.2,
+  "width_m": 0.55,
+  "mass": 95,
+  "power": 3.2,
+  "brake": 7.0,
+  "grip_front": 17.0,
+  "grip_rear": 17.0,
+  "drift_bias": 0.9,
+  "steer_speed": 7.0,
+  "top_speed": 7.0,
+  "seats": 1,
+  "tags": ["prague"],
+  "price": 400,
+  "rarity": "common",
+  "tuning_slots": [],
+  "paint": "slapka_lime"
+}
