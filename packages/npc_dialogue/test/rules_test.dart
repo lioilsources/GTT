@@ -106,10 +106,12 @@ void main() {
     final pack = loadPack();
     final tuning = loadTuning();
 
-    test('6 adult characters, 30 skits of 5 beats', () {
+    test('6 adult characters, 30 skits for New York (M1), city skits on top, 5 beats each', () {
       expect(pack.characters, hasLength(6));
       expect(pack.characters.every((c) => c.age >= 21), isTrue);
-      expect(pack.skits, hasLength(30));
+      expect(pack.skits.where((s) => s.city == '' || s.city == 'nyc'), hasLength(30));
+      final prague = pack.skits.where((s) => s.city == 'prague').length;
+      expect(prague == 0 || prague >= 20, isTrue, reason: 'prague skits $prague');
       expect(pack.skits.every((s) => s.beats.length == 5), isTrue);
     });
 
