@@ -13,6 +13,11 @@ s hotovostí (M1-S11); pravidla na něj jsou připravená už teď.
 - Auta: `content/cars/<id>.json` podle `schema/car.schema.json`. M1 má 5 aut (plán 10), každé jiné
   třídy: `m0_coupe` (kupé), `hatch_pip` (hatchback), `muscle_brute` (muscle), `taxi_metro`
   (taxi, žlutý sedan), `pickup_hauler` (pick-up). Jména jsou smyšlená (R10).
+- M3 (Praha, `plans/M3_PRAHA.md` bod 6): `lidovka` (malý sedan „Lidka 105“), `kolobezka` a `kolo`
+  (třída `micro`, `specs/zones.md`). `tags` = id měst, kde auto parkuje; `hatch_pip` parkuje
+  v obou městech. Koupit jde každé auto v kterékoli garáži.
+- Kreslení podle třídy: `micro` se kreslí jako koloběžka (`length_m` < 1,5) nebo kolo shora
+  (rám, dvě kola, jezdec), bez světlometů a kuželu; ostatní třídy jako dosud.
 - `paint` v autě je klíč do `design/tokens.json` → `color.carPaint` (mapa klíč → barva). Barva
   karoserie tak žije jen v tokenech; klient ji najde přes `Tokens.colorCarPaint[paint]`
   (TS `tokens.colorCarPaint[paint]`).
@@ -84,7 +89,9 @@ Klient po každé úspěšné akci porovná stav před a po a ohlásí:
   `cars.parked.classes`, střed úseku v chunku, délka úseku > 2·`cars.parked.segment_margin_m`.
 - Až `cars.parked.attempts` pokusů, nejvýš `cars.parked.per_chunk` aut. Každý pokus vždy vytáhne
   čtyři čísla v tomto pořadí: úsek `nextInt(počet)`, místo `nextInt(1000)`, strana `nextInt(2)`
-  (0 = vpravo po směru úseku, normála `(dy, −dx)/l`), model `nextInt(počet cars.parked.models)`. Bez způsobilého úseku
+  (0 = vpravo po směru úseku, normála `(dy, −dx)/l`), model `nextInt(počet modelů města)`; modely města =
+  `cars.parked.models` v pořadí seznamu, jen auta, jejichž `tags` obsahují id města (M3; v New Yorku
+  jsou to všechna původní auta, takže se jeho generování nemění). Bez způsobilého úseku
   se nic negeneruje.
 - Místo podél úseku: `margin + (l − 2·margin) · místo / 1000`, `margin = segment_margin_m`.
   Střed auta je `width/2 − sidewalk_width_m − půlšířka − curb_gap_m` od osy hrany (když vnitřní bok

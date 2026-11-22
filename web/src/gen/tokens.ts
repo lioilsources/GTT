@@ -141,7 +141,7 @@ export const tokens = {
   colorNpcVibe: "#FF6FA8",
   colorNpcVibeTrack: "#FFFFFF26",
   colorNpcContact: "#7CE08A",
-  colorCarPaint: {"comet_red": "#D7263D", "pip_teal": "#2BA6A0", "brute_orange": "#E8772E", "cab_yellow": "#F2C12E", "hauler_green": "#4E6B3A"} as Readonly<Record<string, string>>,
+  colorCarPaint: {"comet_red": "#D7263D", "pip_teal": "#2BA6A0", "brute_orange": "#E8772E", "cab_yellow": "#F2C12E", "hauler_green": "#4E6B3A", "lidka_cream": "#D8C79E", "slapka_lime": "#7DC242", "brk_blue": "#2C6FB7"} as Readonly<Record<string, string>>,
   colorCarDetailMuscleStripe: "#1B1B1FDD",
   colorCarDetailTaxiSign: "#FFF6D0",
   colorCarDetailTaxiChecker: "#1B1B1F",

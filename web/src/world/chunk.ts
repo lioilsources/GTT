@@ -32,6 +32,8 @@ export interface ChunkData {
   y: number;
   buildings: BuildingData[];
   ground: GroundData[];
+  /** Pedestrian-zone bollard lines (specs/zones.md): open polylines, interleaved metres. */
+  barriers: Float32Array[];
 }
 
 /** Decodes and prepares one chunk. */
@@ -83,5 +85,8 @@ export async function prepareChunk(gz: Uint8Array): Promise<ChunkData> {
   const ground = [...byKind].map(([kind, a]) => ({
     kind, xy: Float32Array.from(a.xy), indices: Uint32Array.from(a.idx),
   }));
-  return { x: c.x, y: c.y, buildings, ground };
+  const barriers = c.barriers
+    .filter((b) => b.points.length >= 4)
+    .map((b) => Float32Array.from(b.points, (v) => v / 10));
+  return { x: c.x, y: c.y, buildings, ground, barriers };
 }

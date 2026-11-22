@@ -23,3 +23,4 @@ export 'src/police/sense.dart';
 export 'src/props.dart';
 export 'src/traffic/road_rules.dart';
 export 'src/traffic/traffic.dart';
+export 'src/zones.dart';

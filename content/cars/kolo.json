@@ -1,0 +1,21 @@
+{
+  "id": "kolo",
+  "name": "Velo Brk",
+  "class": "micro",
+  "length_m": 1.8,
+  "width_m": 0.6,
+  "mass": 90,
+  "power": 3.6,
+  "brake": 7.5,
+  "grip_front": 18.0,
+  "grip_rear": 17.5,
+  "drift_bias": 0.85,
+  "steer_speed": 6.2,
+  "top_speed": 9.0,
+  "seats": 1,
+  "tags": ["prague"],
+  "price": 600,
+  "rarity": "common",
+  "tuning_slots": [],
+  "paint": "brk_blue"
+}

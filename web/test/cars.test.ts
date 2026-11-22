@@ -9,7 +9,7 @@ import { boardCandidate, generateParked } from '../src/cars/parked';
 import { carsConfig, CarsRules, type CarsState } from '../src/cars/rules';
 import { carShape, paintHex } from '../src/cars/shape';
 import { DriveWorld } from '../src/drive/driveWorld';
-import { carIdValues } from '../src/gen/ids';
+import { carIdValues, cityIdValues } from '../src/gen/ids';
 import type { CarSpec } from '../src/gen/schema';
 import { tokens } from '../src/gen/tokens';
 import { Tuning } from '../src/gen/tuning';
@@ -28,11 +28,15 @@ const specs = new Map<string, CarSpec>(
 const prices = Object.fromEntries([...specs].map(([id, s]) => [id, s.price]));
 
 describe('car content (specs/cars.md)', () => {
-  it('has 5 cars of different classes with paints from the tokens', () => {
+  it('M1 cars of different classes, every car tagged with known cities, paints from the tokens', () => {
     expect([...specs.keys()].sort()).toEqual([...carIdValues]);
-    expect(specs.size).toBe(5);
-    expect(new Set([...specs.values()].map((s) => s.class)).size).toBe(5);
-    for (const s of specs.values()) expect(tokens.colorCarPaint[s.paint], s.id).toMatch(/^#[0-9A-F]{6}$/i);
+    const m1 = ['m0_coupe', 'hatch_pip', 'muscle_brute', 'taxi_metro', 'pickup_hauler'];
+    expect(new Set(m1.map((id) => specs.get(id)!.class)).size).toBe(5);
+    for (const s of specs.values()) {
+      expect(tokens.colorCarPaint[s.paint], s.id).toMatch(/^#[0-9A-F]{6}$/i);
+      expect(s.tags.length, s.id).toBeGreaterThan(0);
+      for (const tag of s.tags) expect(cityIdValues as readonly string[], `${s.id} ${tag}`).toContain(tag);
+    }
     for (const id of [tuning.cars.startCar, ...tuning.cars.startOwned, ...tuning.cars.parked.models]) expect(specs.has(id), id).toBe(true);
   });
 
@@ -86,7 +90,10 @@ describe('cars rules (P0)', () => {
   it('buys with enough cash (API for M1-S11)', () => {
     const r = new CarsRules();
     const s = r.init({ ...carsConfig(tuning.cars, prices), cash: 16000 }, 0);
-    expect(r.buyable(s)).toEqual(['hatch_pip', 'taxi_metro']);
+    // Every affordable car not owned, in catalogue order; M3 adds the cheap Prague cars.
+    expect(r.buyable(s)).toEqual(expect.arrayContaining(['hatch_pip', 'taxi_metro']));
+    for (const id of r.buyable(s)) expect(prices[id]!, id).toBeLessThanOrEqual(16000);
+    expect(r.buyable(s)).not.toContain('m0_coupe');
     const b = r.apply(s, { by: 'player', op: 'buy', car: 'taxi_metro' });
     expect(b.cash).toBe(1000);
     expect(b.owned).toEqual(['m0_coupe', 'taxi_metro']);

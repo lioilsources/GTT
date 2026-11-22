@@ -13,6 +13,16 @@ export const CAT_TRAFFIC = 4;
 export const CAT_PARKED = 8;
 /** Tram cars (specs/trams.md): kinematic, never pushed; collide with the player in the same layer. */
 export const CAT_TRAM = 64;
+/** Pedestrian-zone bollard lines (specs/zones.md): static, layer 0, collide with the player only. */
+export const CAT_ZONE = 32;
+
+/**
+ * Whether the player's mask contains CAT_ZONE (specs/zones.md "Kdo smí do zóny"): micro vehicles
+ * pass bollards, and a car whose centre is inside a zone always gets out again.
+ */
+export function zoneMask(carClass: CarSpec['class'], insideZone: boolean): boolean {
+  return carClass !== 'micro' && !insideZone;
+}
 
 const clamp = (v: number, lo: number, hi: number): number => Math.min(hi, Math.max(lo, v));
 
@@ -30,6 +40,8 @@ export class Car {
   /** Current front wheel angle (radians, + = left). */
   wheelAngle = 0;
   layer = 0;
+  /** CAT_ZONE is in the mask (only effective on layer 0); see zoneMask. */
+  zone = false;
   /** Lateral slip left over at each axle in the last step, m/s (skid marks). */
   rearSlip = 0;
   frontSlip = 0;
@@ -116,9 +128,21 @@ export class Car {
   setLayer(l: number): void {
     if (l === this.layer) return;
     this.layer = l;
-    // Buildings only exist on the ground layer; bridges and tunnels use rails instead. Traffic
-    // cars and trams switch their own masks by layer (traffic.ts, trams.ts).
-    this.fixture.setFilterData({ groupIndex: 0, categoryBits: CAT_CAR, maskBits: (l === 0 ? CAT_BUILDINGS | CAT_PARKED : 0) | CAT_TRAFFIC | CAT_TRAM });
+    this.refilter();
+  }
+
+  /** Adds or removes CAT_ZONE from the mask (zoneMask); refilters only on a change. */
+  setZone(on: boolean): void {
+    if (on === this.zone) return;
+    this.zone = on;
+    this.refilter();
+  }
+
+  private refilter(): void {
+    // Buildings, parked cars and bollards only exist on the ground layer; bridges and tunnels use
+    // rails instead. Traffic cars and trams switch their own masks by layer (traffic.ts, trams.ts).
+    const ground = CAT_BUILDINGS | CAT_PARKED | (this.zone ? CAT_ZONE : 0);
+    this.fixture.setFilterData({ groupIndex: 0, categoryBits: CAT_CAR, maskBits: (this.layer === 0 ? ground : 0) | CAT_TRAFFIC | CAT_TRAM });
   }
 
   /** Applies controls and tyre forces; call before world.step. */
@@ -166,8 +190,9 @@ export class Car {
     }
     if (input.handbrake) {
       accel = Math.min(accel, speedF > t.brakeMinMps ? -t.handbrakeDecelMps2 : 0);
-      // Kick the tail out: yaw towards the steer direction, stronger with speed.
-      if (speedF > t.handbrakeMinMps) {
+      // Kick the tail out: yaw towards the steer direction, stronger with speed. Micro vehicles
+      // only slow down (specs/zones.md "Mikrovozidla": handbrake_yaw × 0).
+      if (speedF > t.handbrakeMinMps && spec.class !== 'micro') {
         const k = clamp(speedF / t.handbrakeYawRefMps, 0, t.handbrakeYawMax);
         body.applyAngularImpulse(-input.steer * body.getInertia() * t.handbrakeYaw * k * dt, true);
       }
