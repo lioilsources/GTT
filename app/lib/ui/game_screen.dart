@@ -16,6 +16,8 @@ import '../main.dart' show appClock;
 import '../phone/nav_hud.dart';
 import '../phone/phone_controller.dart';
 import '../phone/phone_sheet.dart';
+import '../taxi/taxi_controller.dart';
+import '../taxi/taxi_hud.dart';
 import 'garage_sheet.dart';
 import 'hud.dart';
 import 'passport.dart';
@@ -39,6 +41,7 @@ class _GameScreenState extends State<GameScreen> {
   // Loop glue and the save (specs/loop.md, specs/save.md): read before the first frame.
   LoopController? _loop;
   LoopController? _finesWired;
+  TaxiController? _taxi;
   final SaveStore _store = FileSaveStore();
   Object? _saved;
   DialogueSession? _npc;
@@ -47,6 +50,8 @@ class _GameScreenState extends State<GameScreen> {
   void dispose() {
     _loop?.save();
     _loop?.dispose();
+    _taxi?.dispose();
+    TaxiGame.startInCity = null;
     _phone?.dispose();
     super.dispose();
   }
@@ -58,6 +63,15 @@ class _GameScreenState extends State<GameScreen> {
     final game = MetropoleGame(assets);
     await game.preload();
     return game;
+  }
+
+  /// Gallery: teleport to the taxi stand and start the shift there.
+  void _startTaxi(MetropoleGame game, LoopController loop) {
+    final s = game.city.spots.items.where((s) => s.minigame == MinigameId.taxi.id).firstOrNull;
+    if (s == null) return;
+    game.drive.spawn(s.parkX / 10, s.parkY / 10, s.parkHeading.toDouble());
+    game.camera.snap(game.drive.car.x, game.drive.car.y, game.drive.car.heading, game.tuning);
+    loop.start(s.id);
   }
 
   void _setSettings(MetropoleGame game, LoopSettings s) {
@@ -111,6 +125,10 @@ class _GameScreenState extends State<GameScreen> {
             _finesWired = loop;
             game.police.onFined.add(loop.fine);
           }
+          // Taxi: a world minigame the loop starts at the taxi stand (specs/minigames/taxi.md).
+          final taxi = _taxi ??= TaxiController(game, phone);
+          loop.worldGames[MinigameId.taxi] = taxi;
+          TaxiGame.startInCity = () => _startTaxi(game, loop);
           return Stack(
             fit: StackFit.expand,
             children: [
@@ -148,6 +166,7 @@ class _GameScreenState extends State<GameScreen> {
               ),
               PoliceHud(police: game.police),
               NavHud(phone: phone),
+              TaxiHud(taxi: taxi),
               PhoneLayer(phone: phone),
               LoopLayer(loop: loop),
               PassportOverlay(events: game.passportEvent, seconds: game.tuning.passport.postcardS),

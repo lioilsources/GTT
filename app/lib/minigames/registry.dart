@@ -8,6 +8,8 @@ import 'package:mg_sirky/mg_sirky.dart';
 import 'package:mg_strelnice/mg_strelnice.dart';
 import 'package:shared_gen/shared_gen.dart';
 
+import '../taxi/taxi_hud.dart' show TaxiGame;
+
 /// Minigames this client implements; the Gallery greys out the rest.
 const Map<MinigameId, Minigame> minigames = {
   MinigameId.sirky: SirkyGame(),
@@ -17,4 +19,6 @@ const Map<MinigameId, Minigame> minigames = {
   MinigameId.sipky: SipkyGame(),
   MinigameId.strelnice: StrelniceGame(),
   MinigameId.koulena: KoulenaGame(),
+  // World minigame: the Gallery card starts the shift in the city (specs/minigames/taxi.md).
+  MinigameId.taxi: TaxiGame(),
 };
