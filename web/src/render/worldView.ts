@@ -31,7 +31,10 @@ import {
   DEPTH_LAYER, DYNAMIC_LAYERS, RISOGRAPH_FRAGMENT, RISOGRAPH_UNIFORMS, WORLD_LAYER, cityFlag, mainCameraMask, risographOn, risographUniforms,
 } from './risograph';
 import { facadeTexture } from './textures';
-import { carShadowTris, carTris, carUndersideTris, parkedTris } from '../cars/carTris';
+import { CAR_PART_DZ, carGlowTris, carShadowTris, carTris, carUndersideTris, parkedTris } from '../cars/carTris';
+import type { ParkedCar } from '../cars/parked';
+import { glowStrength, lookRim } from '../garage/looks';
+import type { Look } from '../garage/rules';
 import { hopArc, hopFlip } from '../drive/hop';
 import type { CarFleet } from '../cars/fleet';
 
@@ -168,7 +171,14 @@ export class WorldView {
     wheels: TransformNode[]; brake: Mesh; reverse: Mesh; cone: Mesh; root: TransformNode; lights: boolean;
     /** Hop (specs/hop.md): the lifted, flipped body; its top and underside; the ground shadow. */
     lift: TransformNode; top: TransformNode; under: Mesh; shadow: TransformNode;
+    /** Underglow of an own car (specs/garage.md), null without one. */
+    glow: Mesh | null;
   };
+  /**
+   * Looks of own cars (specs/garage.md "Kreslení"): the driven car's (null for a stolen car or no
+   * garage) and of the player's parked cars; set by the garage, then `looksChanged()`.
+   */
+  looks: { driven(): Look | null; parked(p: ParkedCar): Look | null } | null = null;
   private readonly propMeshes = new Map<PropKind, Mesh>();
   private readonly lampGlow: Mesh;
   private propsVersion = -1;
@@ -498,11 +508,20 @@ export class WorldView {
     const body = new Tris();
     const z = 0.0;
     // Class-specific vector shape (specs/cars.md "Kreslení"); lights go above its top part.
-    const top = carTris(body, car.spec, hl, hw, car.axleOffset, 0, 0, 0, z - 0.01, night, false, false) - 0.01;
+    const look = this.looks?.driven() ?? null;
+    const top = carTris(body, car.spec, hl, hw, car.axleOffset, 0, 0, 0, z - 0.01, night, false, false, undefined, look) - 0.01;
     this.mesh('car-body', body, this.flatMat, true, false).parent = root;
     const shadow = new Tris();
     carShadowTris(shadow, car.spec, hl, hw, z - 0.01, this.palette.shadow);
     this.mesh('car-shadow', shadow, this.flatMat, true, false).parent = shadowNode;
+    // Underglow under the shadow, on the ground during a hop; its strength is set per frame.
+    const glowT = new Tris();
+    carGlowTris(glowT, look, hl, hw, this.tuning.garage.glowMarginM, 0, 0, 0, z - 0.01 - CAR_PART_DZ, 1);
+    const glow = glowT.empty ? null : this.mesh('car-glow', glowT, this.flatMat, true, false);
+    if (glow) {
+      glow.parent = shadowNode;
+      glow.alphaIndex = 1;
+    }
     const underTris = new Tris();
     carUndersideTris(underTris, hl, hw, top);
     const under = this.mesh('car-under', underTris, this.flatMat, false, false);
@@ -535,6 +554,8 @@ export class WorldView {
     const ww = hl * 0.36, wt = hw * 0.32;
     const tyre = new Tris();
     tyre.rect(0, 0, 0, -ww / 2, -wt / 2, ww / 2, wt / 2, z + 0.01, rgba(tokens.colorCarTyre));
+    // Rim of an own car (specs/garage.md "wheels").
+    if (look) tyre.rect(0, 0, 0, -ww / 4, -wt * 0.275, ww / 4, wt * 0.275, z + 0.015, rgba(lookRim(look)));
     for (const fx of micro ? [] : [car.axleOffset, -car.axleOffset]) {
       for (const sy of [hw * 0.92, -hw * 0.92]) {
         const w = new TransformNode('wheel', this.scene);
@@ -544,7 +565,7 @@ export class WorldView {
         if (fx > 0) wheels.push(w);
       }
     }
-    this.carParts = { wheels, brake, reverse, cone: coneMesh, root: holder, lights: !micro, lift, top: root, under, shadow: shadowNode };
+    this.carParts = { wheels, brake, reverse, cone: coneMesh, root: holder, lights: !micro, lift, top: root, under, shadow: shadowNode, glow };
   }
 
   setFleet(f: CarFleet): void {
@@ -557,7 +578,10 @@ export class WorldView {
     if (!f || f.version === this.parkedVersion) return;
     this.parkedVersion = f.version;
     this.parkedMesh?.dispose();
-    const t = parkedTris(f.parked, f.specs, this.tuning.carScale, this.tuning.drive.axleOffset, Z.car, this.palette.shadow);
+    const looks = this.looks;
+    const glow = { margin: this.tuning.garage.glowMarginM, strength: glowStrength(this.palette.night, false, this.tuning.garage.glowDay) };
+    const t = parkedTris(f.parked, f.specs, this.tuning.carScale, this.tuning.drive.axleOffset, Z.car, this.palette.shadow,
+      looks ? (p) => looks.parked(p) : null, glow);
     this.parkedMesh = t.empty ? null : this.mesh('parked-cars', t, this.flatMat, true, false);
   }
 
@@ -566,12 +590,20 @@ export class WorldView {
     this.buildCar(this.drive.car);
   }
 
+  /** Redraws the driven and the parked own cars after a look changed (specs/garage.md). */
+  looksChanged(): void {
+    this.buildCar(this.drive.car);
+    this.parkedVersion = -1;
+  }
+
   private updateCar(car: Car): void {
     const lift = car.layer > 0 ? this.tuning.layers.deckLiftM * car.layer : 0;
     this.carRoot.position.set(car.x, lift + Z.car, car.y);
     // Babylon rotates about +Y clockwise seen from above; world headings are CCW.
     this.carRoot.rotation.y = -car.heading;
     for (const w of this.carParts.wheels) w.rotation.y = -car.wheelAngle;
+    const glow = this.carParts.glow;
+    if (glow) glow.visibility = glowStrength(this.palette.night, car.layer < 0, this.tuning.garage.glowDay);
     this.carParts.brake.setEnabled(this.carParts.lights && car.braking && !car.reversing);
     this.carParts.reverse.setEnabled(this.carParts.lights && car.reversing);
     this.updateHop();

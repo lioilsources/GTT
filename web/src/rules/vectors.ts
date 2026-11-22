@@ -23,6 +23,7 @@ import { TravelRules } from '../travel/rules';
 import { PhotoRules } from '../photo/rules';
 import { ShopsRules } from '../shops/rules';
 import { WeatherRules } from '../weather/rules';
+import { GarageRules } from '../garage/rules';
 import { Prng } from './prng';
 
 /** One step of a P0 vector: an action and the state after it (DUALSTACK 5.4). */
@@ -76,6 +77,7 @@ export const rulesModules: Record<string, () => AnyRules> = {
   photo: () => new PhotoRules() as unknown as AnyRules,
   shops: () => new ShopsRules() as unknown as AnyRules,
   weather: () => new WeatherRules() as unknown as AnyRules,
+  garage: () => new GarageRules() as unknown as AnyRules,
 };
 
 /** Final result of a rules case (compared with case.result). */

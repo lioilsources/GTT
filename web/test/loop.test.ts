@@ -196,7 +196,7 @@ describe('soak: 10 loops in a row (M1-A1)', () => {
     const cfg = saveConfig(tuning, 'nyc', carIdValues);
     const v1 = { version: 1, cityId: 'nyc', cash: 90, stamps: ['minigame:oko'], cars: ['taxi_metro'], best: { oko: { stars: 3, score: 300 } } };
     const s = normalizeSave(cfg, v1);
-    expect(s.version).toBe(4);
+    expect(s.version).toBe(5);
     expect([s.cash, s.cars, s.car, s.best['oko']?.stars]).toEqual([90, ['taxi_metro'], 'taxi_metro', 3]);
     expect(normalizeSave(cfg, '{')).toEqual(freshSave(cfg));
   });

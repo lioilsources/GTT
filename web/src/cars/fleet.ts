@@ -7,6 +7,7 @@ import type { DriveWorld } from '../drive/driveWorld';
 import { hopCharges } from '../drive/hop';
 import type { ChunkData } from '../world/chunk';
 import { chunkKey } from '../world/model';
+import { tunedSpec, type Levels } from '../garage/rules';
 import { boardCandidate, generateParked, type ParkedCar } from './parked';
 import { carsConfig, CarsRules, type CarOwner, type CarsAction, type CarsState } from './rules';
 
@@ -56,6 +57,28 @@ export class CarFleet {
 
   get spec(): CarSpec {
     return this.specs.get(this.state.driving)!;
+  }
+
+  /** Upgrade levels of an own car (the garage sets this, specs/garage.md); none by default. */
+  levelsOf: (car: string) => Levels = () => ({});
+
+  /** True when the driven car is the player's own (not stolen): upgrades and looks apply. */
+  get drivingOwn(): boolean {
+    return this.state.owned.includes(this.state.driving) && !this.state.stolen;
+  }
+
+  /**
+   * Parameters the body is built from (specs/garage.md "Účinek na jízdu"): the catalog car with
+   * its upgrades for an own car; a stolen car drives by the catalog.
+   */
+  get drivenSpec(): CarSpec {
+    const spec = this.spec;
+    return this.drivingOwn ? tunedSpec(spec, this.levelsOf(spec.id), this.tuning.garage) : spec;
+  }
+
+  /** Rebuilds the driven body in place at rest from drivenSpec (after the garage, at start). */
+  rebuild(): void {
+    this.drive.rebuildCar(this.drivenSpec);
   }
 
   on<K extends CarEvent>(event: K, fn: (e: CarEventMap[K]) => void): () => void {
@@ -191,7 +214,7 @@ export class CarFleet {
 
   /** Who owns the car the player drives now, if it were left parked. */
   private currentOwner(): CarOwner {
-    return this.state.owned.includes(this.state.driving) && !this.state.stolen ? 'player' : 'npc';
+    return this.drivingOwn ? 'player' : 'npc';
   }
 
   /** "Přesednout": the current car stays parked, the player drives the parked one. */
@@ -200,7 +223,7 @@ export class CarFleet {
     const left: ParkedCar = { carId: this.state.driving, owner: this.currentOwner(), x: c.x, y: c.y, heading: c.heading, chunk: null };
     this.apply({ by: 'player', op: 'board', car: p.carId, owner: p.owner });
     this.removeParked(p);
-    this.drive.replaceCar(this.spec, p.x, p.y, p.heading);
+    this.drive.replaceCar(this.drivenSpec, p.x, p.y, p.heading);
     this.addParked(left);
     if (p.owner === 'npc') {
       this.emit('stolen', { car: p.carId, x: p.x, y: p.y });
@@ -254,7 +277,7 @@ export class CarFleet {
     this.state = this.rules.init({ prices, cash: Math.max(0, s.cash), owned, driving }, 0);
     if (this.drive.spec.id !== driving) {
       const c = this.drive.car;
-      this.drive.replaceCar(this.spec, c.x, c.y, c.heading);
+      this.drive.replaceCar(this.drivenSpec, c.x, c.y, c.heading);
       this.emit('carChanged', { car: driving });
     }
   }
@@ -276,7 +299,7 @@ export class CarFleet {
     if (!g) return;
     this.apply({ by: 'player', op: 'select', car });
     for (const p of this.parked.filter((q) => q.chunk === null && q.owner === 'player' && q.carId === car)) this.removeParked(p);
-    this.drive.replaceCar(this.spec, g.x, g.y, g.heading);
+    this.drive.replaceCar(this.drivenSpec, g.x, g.y, g.heading);
     this.emit('carChanged', { car });
   }
 }

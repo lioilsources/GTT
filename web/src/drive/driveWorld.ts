@@ -143,6 +143,16 @@ export class DriveWorld {
     this.hop.fill(spec);
   }
 
+  /**
+   * Same car, new parameters (tuning, specs/garage.md "Účinek na jízdu"): the body is rebuilt in
+   * place at rest from [spec]; the air tank stays.
+   */
+  rebuildCar(spec: CarSpec): void {
+    const c = this.car;
+    this.spec = spec;
+    this.spawn(c.x, c.y, c.heading);
+  }
+
   /** The driven car can hop now (specs/hop.md canHop). */
   get canHop(): boolean {
     const c = this.car;
