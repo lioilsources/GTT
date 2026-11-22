@@ -2728,7 +2728,8 @@ class TuningPolice {
         sidewalkMarginM = r.d('sidewalk_margin_m'),
         toastS = r.d('toast_s'),
         bustedS = r.d('busted_s'),
-        lightBlinkS = r.d('light_blink_s');
+        lightBlinkS = r.d('light_blink_s'),
+        roadblock = TuningPoliceRoadblock._(r.sub('roadblock'));
 
   bool enabled;
 
@@ -2793,6 +2794,9 @@ class TuningPolice {
 
   double lightBlinkS;
 
+  /// two standing patrols across the road ahead (specs/roadblock.md)
+  final TuningPoliceRoadblock roadblock;
+
   Map<String, Object> toJson() => {
         'enabled': enabled,
         'max_level': maxLevel,
@@ -2820,6 +2824,7 @@ class TuningPolice {
         'toast_s': toastS,
         'busted_s': bustedS,
         'light_blink_s': lightBlinkS,
+        'roadblock': roadblock.toJson(),
       };
 }
 
@@ -2855,6 +2860,47 @@ class TuningPoliceOffenceLevel {
       };
 
   static const keys = ['crash', 'hitrun', 'sidewalk', 'theft'];
+}
+
+/// two standing patrols across the road ahead (specs/roadblock.md)
+class TuningPoliceRoadblock {
+  TuningPoliceRoadblock._(_R r)
+      : level = r.i('level'),
+        aheadM = r.d('ahead_m'),
+        probeM = r.d('probe_m'),
+        lateralM = r.d('lateral_m'),
+        clearM = r.d('clear_m'),
+        ttlS = r.d('ttl_s'),
+        cooldownS = r.d('cooldown_s');
+
+  /// wanted level that sends a roadblock
+  int level;
+
+  /// along the road in the player's direction (past view_m)
+  double aheadM;
+
+  /// goal for choosing the next edge: this far along the heading
+  double probeM;
+
+  /// each patrol this far left and right of the edge centre
+  double lateralM;
+
+  /// removed when the player is farther than this
+  double clearM;
+
+  double ttlS;
+
+  double cooldownS;
+
+  Map<String, Object> toJson() => {
+        'level': level,
+        'ahead_m': aheadM,
+        'probe_m': probeM,
+        'lateral_m': lateralM,
+        'clear_m': clearM,
+        'ttl_s': ttlS,
+        'cooldown_s': cooldownS,
+      };
 }
 
 /// Economy (specs/economy.md): cash for a loop result, tow fee. The drive part of the reward uses

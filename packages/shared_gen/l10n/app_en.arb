@@ -361,6 +361,7 @@
   "policeBusted": "Busted!",
   "policeFine": "Fine: {amount}",
   "@policeFine": {"placeholders":{"amount":{"type":"int"}}},
+  "policeRoadblock": "Roadblock ahead!",
   "loopPlay": "Play {name}",
   "@loopPlay": {"placeholders":{"name":{"type":"String"}}},
   "loopSoon": "{name}: coming soon",

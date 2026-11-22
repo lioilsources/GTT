@@ -524,6 +524,14 @@ police:
   toast_s: 3.0
   busted_s: 2.5
   light_blink_s: 0.25
+  roadblock:                  # two standing patrols across the road ahead (specs/roadblock.md)
+    level: 3                  # wanted level that sends a roadblock
+    ahead_m: 140.0            # along the road in the player's direction (past view_m)
+    probe_m: 600.0            # goal for choosing the next edge: this far along the heading
+    lateral_m: 3.0            # each patrol this far left and right of the edge centre
+    clear_m: 260.0            # removed when the player is farther than this
+    ttl_s: 40.0
+    cooldown_s: 12.0
 # Economy (specs/economy.md): cash for a loop result, tow fee. The drive part of the reward uses
 # feed.reward_base / reward_per_min / drive_dm_per_s, so the feed card shows the 3★ trip money.
 economy:

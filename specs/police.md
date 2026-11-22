@@ -7,7 +7,8 @@ METROPOLE_PLAN 7.4, R7, M1 bod 4 · parita F-024
 Svět reaguje na přestupky: hlídka, která hráče vidí, mu zvedne hledanost a honí ho. Hráč uteče,
 když ho žádná hlídka chvíli nevidí; když ho hlídka dostihne stojícího, zaplatí pokutu. Žádné
 násilí (R7): žádné střílení, žádné rozbíjení, dopadení je jen karta „Dopaden“ a pokuta.
-M1 má hledanost 1–2 (`police.max_level = 2`); pravidla počítají i se 3 (M2), stačí zvednout strop.
+M1 měla hledanost 1–2, M2 zvedá strop na 3 (`police.max_level`; pravidla se nemění, vektory mají
+i případy se stropem 3). Zátaras na úrovni 3 je ve `specs/roadblock.md`.
 Čísla jsou v `content/tuning.yaml` → `police`, texty v `i18n/` (`police*`), barvy v
 `design/tokens.json` → `color.police`. Vypíná se `police.enabled`.
 
@@ -123,3 +124,4 @@ auta ani stromy výhled neblokují. Dohled se počítá v každém tiku a v okam
 - Po dopadení `cooldown_s` klidu, než se stejný přestupek znovu počítá.
 - Respawn hráče a reset provozu zahodí hlídky; hledanost zůstane a nové hlídky se označí.
 - `police.enabled = false`: žádné hlídky, žádné přestupky, HUD skrytý.
+- Hledanost na stropu 3 a další přestupek: zůstane 3, toast se ukáže.
