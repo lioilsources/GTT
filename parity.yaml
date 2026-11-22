@@ -346,5 +346,6 @@
   spec: specs/photo.md@1
   vectors: vectors/photo.json
   lead: web
-  flutter: todo
-  web: todo
+  flutter: done
+  web: done
+  checks: {flutter: pass, web: pass}
