@@ -131,6 +131,7 @@ export type MessageKey =
   | "phone"
   | "app_feed"
   | "app_map"
+  | "app_taxi"
   | "app_garage"
   | "app_passport"
   | "app_camera"
@@ -317,6 +318,13 @@ export type MessageKey =
   | "policeBusted"
   | "policeFine"
   | "policeRoadblock"
+  | "travelUnlocked"
+  | "travelMetro"
+  | "travelFare"
+  | "travelLocked"
+  | "travelClose"
+  | "travelWanted"
+  | "travelTo"
   | "boothRinging"
   | "boothAnswer"
   | "boothCall"
@@ -486,6 +494,7 @@ export const messages: Record<Locale, Record<MessageKey, string>> = {
     phone: "Telefon",
     app_feed: "Feed",
     app_map: "Mapa",
+    app_taxi: "Taxi",
     app_garage: "Garáž",
     app_passport: "Pas",
     app_camera: "Foťák",
@@ -672,6 +681,13 @@ export const messages: Record<Locale, Record<MessageKey, string>> = {
     policeBusted: "Dopaden!",
     policeFine: "Pokuta: {amount}",
     policeRoadblock: "Zátaras před tebou!",
+    travelUnlocked: "Stanice odemčena: {name}",
+    travelMetro: "Metro",
+    travelFare: "{name} · {fare}",
+    travelLocked: "Stanici odemkneš návštěvou",
+    travelClose: "Zpět",
+    travelWanted: "Když tě honí policie, taxi nepřijede",
+    travelTo: "Do: {name}",
     boothRinging: "Zvoní telefonní budka",
     boothAnswer: "Zvednout",
     boothCall: "{host}: Mám pro tebe kšeft – {game} u {place}. Bonus {bonus}.",
@@ -839,6 +855,7 @@ export const messages: Record<Locale, Record<MessageKey, string>> = {
     phone: "Phone",
     app_feed: "Feed",
     app_map: "Map",
+    app_taxi: "Taxi",
     app_garage: "Garage",
     app_passport: "Passport",
     app_camera: "Camera",
@@ -1025,6 +1042,13 @@ export const messages: Record<Locale, Record<MessageKey, string>> = {
     policeBusted: "Busted!",
     policeFine: "Fine: {amount}",
     policeRoadblock: "Roadblock ahead!",
+    travelUnlocked: "Station unlocked: {name}",
+    travelMetro: "Metro",
+    travelFare: "{name} · {fare}",
+    travelLocked: "Visit a station to unlock it",
+    travelClose: "Back",
+    travelWanted: "No taxi while the police are after you",
+    travelTo: "To {name}",
     boothRinging: "A phone booth is ringing",
     boothAnswer: "Pick up",
     boothCall: "{host}: Got a job for you – {game} at {place}. Bonus {bonus}.",

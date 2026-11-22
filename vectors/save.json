@@ -1,6 +1,6 @@
 {
  "module": "save",
- "specVersion": 1,
+ "specVersion": 2,
  "cases": [
   {
    "name": "migrate version 1",

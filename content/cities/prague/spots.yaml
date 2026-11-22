@@ -28,3 +28,16 @@ spots:
   - {id: booth_florenc, kind: booth, name: Budka na Florenci, lat: 50.09050, lon: 14.43920}
   - {id: booth_jiriho, kind: booth, name: Budka na Jiřího z Poděbrad, lat: 50.07800, lon: 14.44980}
   - {id: booth_palackeho, kind: booth, name: Budka na Palackého náměstí, lat: 50.07580, lon: 14.41430}
+  # Vstupy do metra (specs/travel.md): odemknou se návštěvou, bez miniher a bez oficiálních log.
+  - {id: metro_mustek, kind: subway, name: Můstek, lat: 50.08380, lon: 14.42420}
+  - {id: metro_muzeum, kind: subway, name: Muzeum, lat: 50.07940, lon: 14.43100}
+  - {id: metro_staromestska, kind: subway, name: Staroměstská, lat: 50.08830, lon: 14.41710}
+  - {id: metro_malostranska, kind: subway, name: Malostranská, lat: 50.09090, lon: 14.40930}
+  - {id: metro_namesti_miru, kind: subway, name: Náměstí Míru, lat: 50.07550, lon: 14.43900}
+  - {id: metro_andel, kind: subway, name: Anděl, lat: 50.07040, lon: 14.40500}
+  - {id: metro_florenc, kind: subway, name: Florenc, lat: 50.09090, lon: 14.44000}
+  - {id: metro_karlovo, kind: subway, name: Karlovo náměstí, lat: 50.07500, lon: 14.41800}
+  - {id: metro_ipp, kind: subway, name: I. P. Pavlova, lat: 50.07500, lon: 14.43050}
+  - {id: metro_vysehrad, kind: subway, name: Vyšehrad, lat: 50.06260, lon: 14.43080}
+  - {id: metro_hradcanska, kind: subway, name: Hradčanská, lat: 50.09770, lon: 14.40300}
+  - {id: metro_vltavska, kind: subway, name: Vltavská, lat: 50.09920, lon: 14.43840}

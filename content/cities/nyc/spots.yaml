@@ -1,4 +1,4 @@
-# Curated points snapped to the nearest kept road (5.5). kind: plaza|station|park|landmark|bar|pier|stand|garage|booth.
+# Curated points snapped to the nearest kept road (5.5). kind: plaza|station|park|landmark|bar|pier|stand|garage|booth|subway.
 # minigame: the M1 minigame played at the spot (9.5, "každá se spotem na autentickém místě").
 # Commercial places keep a fictional name (R10); the point is a real location of that kind.
 spots:
@@ -29,3 +29,16 @@ spots:
   - {id: booth_23_7av, kind: booth, name: Phone booth 23rd St & 7th Ave, lat: 40.74450, lon: -73.99580}
   - {id: booth_50_5av, kind: booth, name: Phone booth 50th St & 5th Ave, lat: 40.75860, lon: -73.97790}
   - {id: booth_chambers, kind: booth, name: Phone booth Chambers St & Broadway, lat: 40.71400, lon: -74.00620}
+  # Subway entrances (specs/travel.md): stations unlock by visiting, no minigame, no official logos.
+  - {id: subway_times_sq, kind: subway, name: Times Sq–42 St, lat: 40.75550, lon: -73.98760}
+  - {id: subway_grand_central, kind: subway, name: Grand Central–42 St, lat: 40.75180, lon: -73.97660}
+  - {id: subway_herald_sq, kind: subway, name: 34 St–Herald Sq, lat: 40.74970, lon: -73.98790}
+  - {id: subway_union_sq, kind: subway, name: 14 St–Union Sq, lat: 40.73480, lon: -73.98990}
+  - {id: subway_columbus, kind: subway, name: 59 St–Columbus Circle, lat: 40.76820, lon: -73.98190}
+  - {id: subway_51_lex, kind: subway, name: 51 St, lat: 40.75710, lon: -73.97190}
+  - {id: subway_86_lex, kind: subway, name: 86 St, lat: 40.77950, lon: -73.95560}
+  - {id: subway_96_bway, kind: subway, name: 96 St, lat: 40.79380, lon: -73.97240}
+  - {id: subway_23_bway, kind: subway, name: 23 St, lat: 40.74290, lon: -73.99280}
+  - {id: subway_w4, kind: subway, name: W 4 St, lat: 40.73220, lon: -74.00030}
+  - {id: subway_spring, kind: subway, name: Spring St, lat: 40.72220, lon: -73.99740}
+  - {id: subway_fulton, kind: subway, name: Fulton St, lat: 40.71030, lon: -74.00750}

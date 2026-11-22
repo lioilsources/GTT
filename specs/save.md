@@ -1,7 +1,7 @@
 # Uložení hry
 
-**version: 1** · P0 (formát a migrace, vektory `vectors/save.json`) + P2 (úložiště, kdy se ukládá) ·
-schéma `schema/save.schema.json` (verze uložení 2) · plán: METROPOLE_PLAN 4, M1 bod 11,
+**version: 2** · P0 (formát a migrace, vektory `vectors/save.json`) + P2 (úložiště, kdy se ukládá) ·
+schéma `schema/save.schema.json` (verze uložení 3) · plán: METROPOLE_PLAN 4, M1 bod 11,
 DUALSTACK 2 („formát uložení“ je P0) · parita F-025
 
 ## Účel
@@ -10,11 +10,13 @@ Lokální uložení postupu hráče, stejný JSON v obou klientech: hotovost, au
 miniher, stav feedu, NPC a nastavení. Bez cloudu a bez účtu (METROPOLE_PLAN 3). Jedno uložení na
 město (`cityId`).
 
-## Formát (verze 2)
+## Formát (verze 3)
+
+Spec v2 (M2-S3): uložení verze 3 přidává `stations` (odemčené stanice metra, `specs/travel.md`).
 
 ```
 {
-  version: 2,
+  version: 3,
   cityId: "nyc",
   cash: int ≥ 0,
   cars: [carId],          // vlastní auta v pořadí, jak přibyla (stav cars.owned)
@@ -24,7 +26,8 @@ město (`cityId`).
   plays: {spotId: int},   // dohrané smyčky na spotu (obtížnost, specs/loop.md)
   feed: {prefs: {engine: int}, visits: {spotId: int}, districts: [jméno čtvrti]},
   npc: {vibe: {characterId: int}, contacts: [characterId], recent: [skitId]},
-  settings: {scheme: "a" | "b" | "c", night: bool}
+  settings: {scheme: "a" | "b" | "c", night: bool},
+  stations: [spotId]      // odemčené stanice metra v pořadí odemknutí (specs/travel.md); chybí = []
 }
 ```
 
@@ -51,32 +54,34 @@ Normalizace a migrace jsou pravidla, aby oba klienti ze stejného JSON načetli 
 
 ### Stav
 
-Normalizované uložení verze 2 (tvar výše).
+Normalizované uložení verze 3 (tvar výše).
 
 ### init(config, seed)
 
-Čerstvé uložení: `version 2`, `cityId`, `cash = startCash`, `cars = startOwned` (jen známá, bez
+Čerstvé uložení: `version 3`, `cityId`, `cash = startCash`, `cars = startOwned` (jen známá, bez
 duplicit), `car = startCar`, je-li v `cars`, jinak `cars[0]`; ostatní prázdné (`{}`, `[]`),
-`settings = {scheme: "a", night: false}`. `seed` se nepoužívá.
+`settings = {scheme: "a", night: false}`, `stations = []`. `seed` se nepoužívá.
 
 ### Akce `{by: "player", op: "load", save: <cokoli>}`
 
 Výsledný stav = `normalize(save)`:
 
-1. `save` není objekt, `version` není 1 ani 2, nebo `cityId ≠ config.cityId` → čerstvé uložení.
+1. `save` není objekt, `version` není 1, 2 ani 3, nebo `cityId ≠ config.cityId` → čerstvé uložení.
 2. Kontrola typů (podle verze): chybějící povinné pole nebo pole špatného typu (číslo místo
    řetězce, desetinné číslo místo celého, …) → čerstvé uložení. Povinná pole verze 1: `cash`,
-   `stamps`, `cars`, `best`; verze 2 všechna pole formátu.
+   `stamps`, `cars`, `best`; verze 2 a 3 všechna pole formátu kromě `stations` (nepovinné, chybí = `[]`).
 3. **Migrace 1 → 2:** `cash`, `stamps`, `best` se převezmou, `cars` z verze 1, `car = cars[0]`
    (po kroku 4), `plays`, `feed`, `npc` prázdné, `settings` výchozí.
-4. Normalizace (obě verze):
+   **Migrace 2 → 3:** vše se převezme, `stations = []`. Výsledek je vždy verze 3.
+4. Normalizace (všechny verze):
    - `cash = max(0, cash)`;
    - `cars`: jen id z `config.cars`, bez duplicit (první výskyt); prázdné → jako v `init`;
      `car ∉ cars` → `cars[0]`;
    - `stamps`: bez duplicit (první výskyt) – neznámá razítka zahodí až Pas (`specs/passport.md`);
    - `best`: `stars` oříznuté do 0–3;
    - `plays`, `feed.visits`: záporné hodnoty → 0;
-   - `settings.scheme` mimo `a`, `b`, `c` → `a`.
+   - `settings.scheme` mimo `a`, `b`, `c` → `a`;
+   - `stations`: bez duplicit (první výskyt); neznámé stanice zahodí až `travel` (`load`).
    - Klíče map se ve výstupu řadí (porovnání po kódových jednotkách), aby byl JSON stejný.
 
 `legalActions` → `[]`, `aiAction` neexistuje, `result` → `null`.

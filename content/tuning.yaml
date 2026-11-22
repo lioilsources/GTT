@@ -495,6 +495,17 @@ cars:
     mass_factor: 1.0          # parked cars are dynamic bodies the player and traffic can push
     linear_damping: 3.0
     angular_damping: 4.0
+# Fast travel by metro and taxi (specs/travel.md). Fares: base + distance (dm) × per_km ÷ 10000.
+travel:
+  enabled: true
+  fare_base: 30                 # metro
+  fare_per_km: 4
+  taxi_base: 60
+  taxi_per_km: 25
+  unlock_m: 30.0                # pass this close to a station entrance to unlock it
+  cut_s: 1.2                    # the line card shown while moving
+  entry_w_m: 3.0
+  entry_l_m: 4.5
 # Ringing phone booths (specs/booths.md). P0 rules tick once per game second.
 booths:
   enabled: true
