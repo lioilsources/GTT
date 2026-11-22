@@ -31,6 +31,14 @@ interface Seg {
 }
 
 /**
+ * Models that park in [cityId]: cars.parked.models in list order, only cars tagged with the city
+ * (specs/cars.md; in New York that is every original model, so its generation is unchanged).
+ */
+export function parkedPool(models: readonly string[], specs: ReadonlyMap<string, CarSpec>, cityId: string): string[] {
+  return models.filter((id) => specs.get(id)?.tags.includes(cityId) ?? false);
+}
+
+/**
  * Places parked cars for chunk (cx, cy) with the shared PRNG; every attempt draws four numbers
  * (segment, position, side, model) so both clients consume the stream identically.
  */
@@ -43,6 +51,7 @@ export function generateParked(
   specs: ReadonlyMap<string, CarSpec>,
   avoid: ReadonlyArray<{ x: number; y: number }>,
   player: { x: number; y: number },
+  cityId: string,
 ): ParkedCar[] {
   const t = tuning.cars.parked;
   const chunkM = tuning.chunkM;
@@ -61,14 +70,15 @@ export function generateParked(
     }
   }
   const out: ParkedCar[] = [];
-  if (segs.length === 0 || t.models.length === 0) return out;
+  const pool = parkedPool(t.models, specs, cityId);
+  if (segs.length === 0 || pool.length === 0) return out;
   const rnd = new Prng((Math.imul(cx, 73856093) ^ Math.imul(cy, 19349663) ^ t.salt) >>> 0);
   const far = (x: number, y: number, p: { x: number; y: number }, d: number): boolean => (x - p.x) ** 2 + (y - p.y) ** 2 >= d * d;
   for (let i = 0; i < t.attempts && out.length < t.perChunk; i++) {
     const seg = segs[rnd.nextInt(segs.length)]!;
     const along = rnd.nextInt(1000);
     const side = rnd.nextInt(2);
-    const model = t.models[rnd.nextInt(t.models.length)]!;
+    const model = pool[rnd.nextInt(pool.length)]!;
     const spec = specs.get(model);
     if (!spec) continue;
     const hw = (spec.width_m * tuning.carScale) / 2;
