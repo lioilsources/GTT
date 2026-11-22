@@ -129,7 +129,8 @@ class DriveWorld {
     final key = City.chunkKey(c.x, c.y);
     if (_colliders.containsKey(key)) return;
     final body = world.createBody(BodyDef(type: BodyType.static));
-    final filter = Filter(categoryBits: catBuildings, maskBits: catCar);
+    // Pushed parked cars and loose traffic cars stop at walls.
+    final filter = Filter(categoryBits: catBuildings, maskBits: catCar | catParked | catTraffic);
     final material = SurfaceMaterial(friction: _d.buildingFriction, restitution: _d.buildingRestitution);
     for (final b in c.buildings) {
       if (!b.collide) continue;

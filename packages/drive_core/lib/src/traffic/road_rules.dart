@@ -237,3 +237,30 @@ int chooseToward(RoadGraph g, int node, int from, double gx, double gy) {
   }
   return best < 0 && from >= 0 && from < g.edges.length && g.edges[from].kept ? from : best;
 }
+
+/// Sideways shift of a traffic car's lane point round parked cars (specs/traffic.md step 8).
+/// [obs] holds [n] quads (lx, ly, ext, phl): position ahead / to the right, lateral half extent and
+/// half length of each parked car. Negative = to the left.
+double swerveShift(List<double> obs, int n, double hl, double hw, TuningTraffic t) =>
+    swerveShiftWith(obs, n, hl, hw, aheadM: t.swerveAheadM, marginM: t.swerveMarginM, maxM: t.swerveMaxM);
+
+double swerveShiftWith(
+  List<double> obs,
+  int n,
+  double hl,
+  double hw, {
+  required double aheadM,
+  required double marginM,
+  required double maxM,
+}) {
+  var shift = 0.0;
+  for (var i = 0; i < n; i++) {
+    final lx = obs[4 * i], ly = obs[4 * i + 1], ext = obs[4 * i + 2], phl = obs[4 * i + 3];
+    if (lx < -(hl + phl) || lx > aheadM + hl + phl) continue;
+    final need = hw + ext + marginM;
+    if (ly.abs() >= need) continue;
+    final s = ly >= 0 ? ly - need : ly + need;
+    if (s.abs() > shift.abs()) shift = s;
+  }
+  return shift.abs() > maxM ? 0 : shift;
+}

@@ -12,12 +12,14 @@ typedef CarEvent = ({String car, double x, double y});
 /// The garage's parking point (spot kind `garage`), metres.
 typedef GaragePoint = ({String id, double x, double y, double heading});
 
-/// Cars of one session (specs/cars.md): the P0 ownership state, parked cars as static bodies,
+/// Cars of one session (specs/cars.md): the P0 ownership state, parked cars as dynamic bodies,
 /// boarding and the garage. No UI; the HUD asks [candidate] / [atGarage] and calls [board] / [select].
 /// Port of web/src/cars/fleet.ts.
 class CarFleet {
   CarFleet(this.drive, this.specs, this.tuning, this.garage) {
     state = rules.start(CarsConfig.fromTuning(tuning.cars, {for (final e in specs.entries) e.key: e.value.price}));
+    // Traffic drives round parked cars (specs/traffic.md step 8).
+    drive.traffic?.parked = parked;
   }
 
   final DriveWorld drive;
@@ -65,6 +67,17 @@ class CarFleet {
 
   /// Forgets cars the player left behind once they are far away (cars.parked.forget_m).
   void update() {
+    // Pushed cars: copy the pose of awake bodies back (specs/cars.md).
+    for (final MapEntry(key: p, value: b) in _bodies.entries) {
+      if (!b.isAwake) continue;
+      final q = b.position, a = b.angle;
+      if ((q.x - p.x).abs() + (q.y - p.y).abs() + (a - p.heading).abs() < 1e-3) continue;
+      p
+        ..x = q.x
+        ..y = q.y
+        ..heading = a;
+      version++;
+    }
     final c = drive.car, f = tuning.cars.parked.forgetM;
     for (final p in parked.toList()) {
       if (p.chunk == null && (p.x - c.x) * (p.x - c.x) + (p.y - c.y) * (p.y - c.y) > f * f) _remove(p);
@@ -74,15 +87,26 @@ class CarFleet {
   void _add(ParkedCar p) {
     final s = specs[p.carId];
     if (s == null) return;
-    final d = tuning.drive;
+    final d = tuning.drive, t = tuning.cars.parked;
+    final hl = s.lengthM * tuning.carScale / 2, hw = s.widthM * tuning.carScale / 2;
+    p
+      ..hl = hl
+      ..hw = hw;
     final body = drive.world.createBody(
-      BodyDef(type: BodyType.static, position: Vector2(p.x, p.y), rotation: Rot.fromAngle(p.heading)),
+      BodyDef(
+        type: BodyType.dynamic,
+        position: Vector2(p.x, p.y),
+        rotation: Rot.fromAngle(p.heading),
+        linearDamping: t.linearDamping,
+        angularDamping: t.angularDamping,
+      ),
     );
     body.createShape(
-      Polygon.box(s.lengthM * tuning.carScale / 2, s.widthM * tuning.carScale / 2),
+      Polygon.box(hl, hw),
       ShapeDef(
-        filter: Filter(categoryBits: catBuildings, maskBits: catCar),
-        material: SurfaceMaterial(friction: d.buildingFriction, restitution: d.buildingRestitution),
+        density: s.mass * t.massFactor / (4 * hl * hw),
+        filter: Filter(categoryBits: catParked, maskBits: catCar | catBuildings | catParked | catTraffic),
+        material: SurfaceMaterial(friction: d.carFriction, restitution: d.carRestitution),
       ),
     );
     _bodies[p] = body;

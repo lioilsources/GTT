@@ -7,6 +7,15 @@ import 'package:world_engine/core.dart';
 import '../car.dart';
 import 'road_rules.dart';
 
+/// What traffic needs of a parked car (specs/traffic.md step 8); hl/hw null = a traffic car.
+abstract interface class ParkedPose {
+  double get x;
+  double get y;
+  double get heading;
+  double? get hl;
+  double? get hw;
+}
+
 /// One AI car (specs/traffic.md "Stav"). Read-only for other features.
 class TrafficCar {
   TrafficCar(
@@ -36,6 +45,12 @@ class TrafficCar {
   /// Seconds left standing still after the player hit it.
   double hitTimer = 0;
 
+  /// Seconds left loose after the last touch (specs/traffic.md step 7).
+  double pushTimer = 0;
+
+  /// Dynamic body: pushed or hit; the pose comes from physics.
+  bool loose = false;
+
   /// Police hooks (specs/police.md), set by the police module: a patrol car, chasing a goal.
   bool police = false;
   bool pursuing = false;
@@ -54,7 +69,9 @@ class TrafficCar {
   int seg = 0;
   double segStart = 0;
   bool touching = false;
-  bool collides = true;
+
+  /// Current filter mask (switched by layer, solidity and looseness).
+  int mask = -1;
 
   final Prng rng;
 
@@ -118,6 +135,9 @@ class Traffic {
   /// Fixed steps since start: the signal clock.
   int stepCount = 0;
 
+  /// Parked cars to drive round (set by the car fleet, specs/traffic.md step 8).
+  List<ParkedPose> parked = const [];
+
   final Prng _rng;
   final double _halfLength;
   final double _halfWidth;
@@ -125,6 +145,7 @@ class Traffic {
   final List<int> _scratch = [];
   final Vector2 _v = Vector2.zero();
   final Vector2 _p = Vector2.zero();
+  final List<double> _obs = [];
   double _spawnTimer = 0;
   bool _fresh = true;
   bool _tracked = false;
@@ -197,10 +218,6 @@ class Traffic {
     final phl = player.halfLength + round, phw = player.halfWidth + round;
     for (final c in cars) {
       final same = solid && c.layer == player.layer;
-      if (same != c.collides) {
-        c.collides = same;
-        c.shape.filter = Filter(categoryBits: catTraffic, maskBits: same ? catCar : 0);
-      }
       final ch = math.cos(c.heading), sh = math.sin(c.heading);
       final touch =
           same &&
@@ -217,8 +234,50 @@ class Traffic {
           }
         }
       }
+      if (touch) c.pushTimer = t.pushHoldS;
       c.touching = touch;
+      _setLoose(c, c.hitTimer > 0 || c.pushTimer > 0);
+      _setMask(c, same);
     }
+  }
+
+  /// Dynamic while loose, kinematic otherwise (specs/traffic.md step 7).
+  void _setLoose(TrafficCar c, bool loose) {
+    if (loose == c.loose) return;
+    c.loose = loose;
+    if (loose) {
+      c.body
+        ..type = BodyType.dynamic
+        ..linearDamping = _t.pushLinearDamping
+        ..angularDamping = _t.pushAngularDamping
+        ..isAwake = true;
+      c.speed = 0;
+    } else {
+      c.body.type = BodyType.kinematic;
+      c.s = _projectS(c);
+    }
+  }
+
+  void _setMask(TrafficCar c, bool same) {
+    final ground = c.layer == 0;
+    final mask = (same ? catCar : 0) | (ground ? catParked : 0) | (ground && c.loose ? catBuildings : 0);
+    if (mask == c.mask) return;
+    c.mask = mask;
+    c.shape.filter = Filter(categoryBits: catTraffic, maskBits: mask);
+  }
+
+  /// Distance along the travel direction of the car's own edge nearest to its position.
+  double _projectS(TrafficCar c) {
+    final e = c.edge;
+    var best = double.infinity, d = 0.0;
+    for (var seg = 0; seg + 1 < e.pointCount; seg++) {
+      final h = graph.project(e, seg, c.x, c.y);
+      if (h.dist < best) {
+        best = h.dist;
+        d = h.t * e.length;
+      }
+    }
+    return c.dir > 0 ? d : e.length - d;
   }
 
   // ---------- spawning
@@ -284,8 +343,9 @@ class Traffic {
     final shape = body.createShape(
       Polygon.box(_halfLength, _halfWidth),
       ShapeDef(
+        density: _t.massKg / (4 * _halfLength * _halfWidth),
         material: SurfaceMaterial(friction: tuning.drive.carFriction, restitution: tuning.drive.carRestitution),
-        filter: Filter(categoryBits: catTraffic, maskBits: catCar),
+        filter: Filter(categoryBits: catTraffic, maskBits: catCar | catParked),
       ),
     );
     final ln = lane.clamp(0, lanesPerDir(e, tuning) - 1);
@@ -323,6 +383,18 @@ class Traffic {
   /// One step of one car; false = it has to disappear.
   bool _drive(TrafficCar c, double dt, double k, Car player) {
     final t = _t;
+    c.pushTimer = math.max(0, c.pushTimer - dt);
+    if (c.loose) {
+      // Pushed or knocked: physics owns the pose until it settles (specs/traffic.md step 7).
+      c
+        ..hitTimer = math.max(0, c.hitTimer - dt)
+        ..speed = 0
+        ..braking = false
+        ..x = c.body.position.x
+        ..y = c.body.position.y
+        ..heading = c.body.angle;
+      return true;
+    }
     if (c.hitTimer > 0) {
       c.hitTimer = math.max(0, c.hitTimer - dt);
       c.speed = 0;
@@ -402,7 +474,13 @@ class Traffic {
     }
     final off = laneOffset(e, c.lane, tuning, leftHand: leftHand);
     // Right of the travel direction (ux, uy) is (uy, −ux).
-    final tx = ax + (bx - ax) * f + uy * off, ty = ay + (by - ay) * f - ux * off;
+    var tx = ax + (bx - ax) * f + uy * off, ty = ay + (by - ay) * f - ux * off;
+    c.layer = e.layerAt(e.length > 0 ? d / e.length : 0);
+    if (c.layer == 0 && parked.isNotEmpty) {
+      final sh = _swerve(c, tx, ty, ux, uy);
+      tx += uy * sh;
+      ty -= ux * sh;
+    }
     final th = math.atan2(uy, ux);
     if (k >= 1) {
       c
@@ -415,7 +493,29 @@ class Traffic {
         ..y += (ty - c.y) * k
         ..heading = _wrap(c.heading + _wrap(th - c.heading) * k);
     }
-    c.layer = e.layerAt(e.length > 0 ? d / e.length : 0);
+  }
+
+  /// Sideways shift round parked cars near the lane point (tx, ty) heading (ux, uy).
+  double _swerve(TrafficCar c, double tx, double ty, double ux, double uy) {
+    final t = _t;
+    final o = _obs;
+    final reach = t.swerveAheadM + 4 * c.halfLength;
+    final lane = math.atan2(uy, ux);
+    var n = 0;
+    for (final p in parked) {
+      final dx = p.x - tx, dy = p.y - ty;
+      if (dx * dx + dy * dy > reach * reach) continue;
+      final phl = p.hl ?? c.halfLength, phw = p.hw ?? c.halfWidth;
+      final da = p.heading - lane;
+      if (o.length < 4 * n + 4) o.addAll(const [0.0, 0.0, 0.0, 0.0]);
+      // Ahead of the car itself (its pose lags the lane point), sideways from the lane point.
+      o[4 * n] = (p.x - c.x) * ux + (p.y - c.y) * uy;
+      o[4 * n + 1] = dx * uy - dy * ux;
+      o[4 * n + 2] = phl * math.sin(da).abs() + phw * math.cos(da).abs();
+      o[4 * n + 3] = phl;
+      n++;
+    }
+    return n == 0 ? 0 : swerveShift(o, n, c.halfLength, c.halfWidth, t);
   }
 
   /// Free distance to the nearest obstacle ahead: the player, a car going our way, a stop line.
