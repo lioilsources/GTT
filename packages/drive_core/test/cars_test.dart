@@ -26,13 +26,18 @@ class _FilePack implements PackSource {
 void main() {
   setUpAll(() async => initializeForge2D());
 
-  test('5 cars of different classes, paints from the tokens (specs/cars.md)', () {
+  test('M1 cars of different classes, every car tagged with known cities, paints from the tokens (specs/cars.md)', () {
     expect(specs.keys.toSet(), CarId.values.map((c) => c.id).toSet());
-    expect(specs.length, 5);
-    expect(specs.values.map((s) => s.class_).toSet().length, 5);
+    const m1 = ['m0_coupe', 'hatch_pip', 'muscle_brute', 'taxi_metro', 'pickup_hauler'];
+    expect(m1.map((id) => specs[id]!.class_).toSet().length, 5);
+    final cities = CityId.values.map((c) => c.id).toSet();
     for (final s in specs.values) {
       expect(Tokens.colorCarPaint.containsKey(s.paint), isTrue, reason: s.id);
       expect(paintArgb(s), Tokens.colorCarPaint[s.paint]);
+      expect(s.tags, isNotEmpty, reason: s.id);
+      for (final tag in s.tags) {
+        expect(cities, contains(tag), reason: '${s.id} $tag');
+      }
     }
     for (final id in [tuning.cars.startCar, ...tuning.cars.startOwned, ...tuning.cars.parked.models]) {
       expect(specs.containsKey(id), isTrue, reason: id);
@@ -69,7 +74,11 @@ void main() {
       expect(() => r.apply(s, const CarsAction.select('m0_coupe')), throwsA(isA<IllegalAction>()));
       expect(() => r.apply(s, const CarsAction.buy('hatch_pip')), throwsA(isA<IllegalAction>()));
       final rich = start(r, cash: 16000);
-      expect(r.buyable(rich), ['hatch_pip', 'taxi_metro']);
+      // Every affordable car not owned; M3 adds the cheap Prague cars.
+      expect(r.buyable(rich), containsAll(['hatch_pip', 'taxi_metro']));
+      for (final id in r.buyable(rich)) {
+        expect(prices[id], lessThanOrEqualTo(16000), reason: id);
+      }
       final b = r.apply(rich, const CarsAction.buy('taxi_metro'));
       expect(b.cash, 1000);
       expect(b.owned, ['m0_coupe', 'taxi_metro']);
