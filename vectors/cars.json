@@ -1,6 +1,6 @@
 {
  "module": "cars",
- "specVersion": 2,
+ "specVersion": 1,
  "cases": [
   {
    "name": "steal a parked car, then board the own car again",
