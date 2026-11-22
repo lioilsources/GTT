@@ -1,0 +1,19 @@
+# Curated Prague spots (same rules as nyc/spots.yaml). Koulená is New York only (catalog cities).
+spots:
+  - {id: old_town_square, kind: plaza, name: Staroměstské náměstí, lat: 50.08750, lon: 14.42130}
+  - {id: wenceslas_square, kind: plaza, name: Václavské náměstí, lat: 50.08150, lon: 14.42800}
+  - {id: namesti_miru, kind: plaza, name: Náměstí Míru, lat: 50.07530, lon: 14.43710}
+  - {id: malostranske_namesti, kind: plaza, name: Malostranské náměstí, lat: 50.08780, lon: 14.40370}
+  - {id: main_station, kind: station, name: Hlavní nádraží, lat: 50.08320, lon: 14.43530}
+  - {id: masaryk_station, kind: station, name: Masarykovo nádraží, lat: 50.08800, lon: 14.43350}
+  - {id: prague_castle, kind: landmark, name: Pražský hrad, lat: 50.09320, lon: 14.40400}   # on Chotkova, the drive up to the castle
+  # M1 minigames on Prague spots
+  - {id: zizkov_pub, kind: bar, name: Hostinec U Zápalky, lat: 50.08300, lon: 14.44950, minigame: sirky}
+  - {id: smichov_club, kind: bar, name: Herna U Esa, lat: 50.07100, lon: 14.40300, minigame: oko}
+  - {id: karlak_chess, kind: park, name: Karlovo náměstí, lat: 50.07600, lon: 14.41850, minigame: dama}
+  - {id: riegrovy_beer_garden, kind: park, name: Riegrovy sady, lat: 50.07900, lon: 14.44250, minigame: desetitisic}
+  - {id: karlin_pub, kind: bar, name: Hospoda Na Šipce, lat: 50.09250, lon: 14.45200, minigame: sipky}
+  - {id: strelecky_ostrov, kind: park, name: Střelecký ostrov, lat: 50.08200, lon: 14.41150, minigame: strelnice}
+  - {id: main_station_taxi, kind: stand, name: Stanoviště taxi Hlavní nádraží, lat: 50.08350, lon: 14.43500, minigame: taxi}
+  # Player garage (specs/cars.md)
+  - {id: novomestska_garage, kind: garage, name: Parkovací dům Spálená, lat: 50.08000, lon: 14.42050}

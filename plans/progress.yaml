@@ -6,7 +6,7 @@
 # reopened: list of {date, reason} when an item went back from hotovo/ověřeno (regression).
 # Dropped scope: M0 point 5 (Flutter web build) – replaced by D1, see docs/m0.md.
 
-milestones: [M0, D0, D1, D2, M1, D3]
+milestones: [M0, D0, D1, D2, M1, D3, M3]
 
 items:
   # ---------- M0 – Hračka (scope)
@@ -118,6 +118,20 @@ items:
   - {id: D3-3, milestone: D3, name: "W veřejně na odkazu", size: S, status: hotovo,
      started: 2026-11-21T17:10, done: 2026-11-22T01:05, commit: 9582e88, evidence: "https://lioilsources.github.io/GTT/ nasazeno z main (web.yml), celá smyčka M1 kromě Taxi; HTTP 200"}
   - {id: D3-4, milestone: D3, name: "F v TestFlightu a Play internal", size: M, status: todo}
+
+  # ---------- M3 – Praha (plans/M3_PRAHA.md; M2 přeskočeno rozhodnutím Ol1na 2026-11-22)
+  - {id: M3-S1, milestone: M3, name: "balíček Praha: oblast, čtvrti, 20 památek, spoty, validate", size: L, status: wip, started: 2026-11-22T07:59}
+  - {id: M3-S2, milestone: M3, name: "zobecnění pro druhé město: metrické jednotky, diakritika v čtvrtích, skity po městech", size: M, status: todo}
+  - {id: M3-S3, milestone: M3, name: "přepínání měst, uložení po městech", size: M, status: todo}
+  - {id: M3-S4, milestone: M3, name: "pěší zóny a mikrovozidla", size: L, status: todo}
+  - {id: M3-S5, milestone: M3, name: "tramvaje na linkách se zastávkami", size: L, status: todo}
+  - {id: M3-S6, milestone: M3, name: "místní vozidla (lidovka, koloběžka, kolo)", size: M, status: todo}
+  - {id: M3-S7, milestone: M3, name: "tři místní minihry: Kuličky, Čára, Nohejbal", size: L, status: todo}
+  - {id: M3-S8, milestone: M3, name: "pražské skity a pohlednice", size: M, status: todo}
+  - {id: M3-A1, milestone: M3, name: "Ol1n ověří věrnost Prahy osobně", size: S, status: todo}
+  - {id: M3-A2, milestone: M3, name: "60 fps v Praze na obou telefonech", size: S, status: todo}
+  - {id: M3-A3, milestone: M3, name: "přepnutí měst 10× bez pádu", size: S, status: todo}
+  - {id: M3-A4, milestone: M3, name: "matice parity pro rozsah M3 zelená", size: M, status: todo}
 
 # Content counters with targets. tests and fps are measured; the rest metro progress counts itself.
 counters:

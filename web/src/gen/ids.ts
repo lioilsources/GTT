@@ -3,10 +3,11 @@
 import type { MinigameMeta } from './schema';
 
 /** Cities with a content/cities/<id>/city.yaml. */
-export const cityIdValues = ['nyc'] as const;
+export const cityIdValues = ['nyc', 'prague'] as const;
 export type CityId = (typeof cityIdValues)[number];
 export const cityIdNames: Record<CityId, string> = {
   nyc: "New York",
+  prague: "Praha",
 };
 
 /** Cars defined in content/cars/<id>.json. */
