@@ -381,5 +381,8 @@
   "shopsSober": "Zase střízlivý – můžeš jet",
   "shopShelf": "Polička",
   "shopShelfEmpty": "Zatím žádné suvenýry – najdi obchod se suvenýry",
-  "loopSnack": "Bonus za svačinu {cash}"
+  "loopSnack": "Bonus za svačinu {cash}",
+  "weatherClear": "Vyjasnilo se",
+  "weatherRain": "Prší – silnice klouže",
+  "weatherFog": "Padla mlha"
 }
