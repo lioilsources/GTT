@@ -1,6 +1,7 @@
 import type { AbstractEngine } from '@babylonjs/core/Engines/abstractEngine';
 import { TargetCamera } from '@babylonjs/core/Cameras/targetCamera';
 import { Material } from '@babylonjs/core/Materials/material';
+import { Constants } from '@babylonjs/core/Engines/constants';
 import { ShaderStore } from '@babylonjs/core/Engines/shaderStore';
 import { PostProcess } from '@babylonjs/core/PostProcesses/postProcess';
 import type { SubMesh } from '@babylonjs/core/Meshes/subMesh';
@@ -24,10 +25,10 @@ import { propKinds, type PropKind } from '../drive/props';
 import type { ChunkData } from '../world/chunk';
 import { chunkKey, type City } from '../world/model';
 import { cameraHeight, displayHeight, extrusionScale, fovX } from '../world/camera';
-import { bollardPoints, bollardTris, buildRoads, buildingTris, groundTris, Tris, Z, type RoadChunk } from './geometry';
+import { bollardPoints, bollardTris, buildRoads, buildingTris, castShadowTris, groundTris, Tris, Z, type RoadChunk } from './geometry';
 import { cityInks, cityPalette, dayPalette, nightPalette, rgba, type Palette, type Rgba } from './palette';
 import {
-  DEPTH_LAYER, DYNAMIC_LAYERS, RISOGRAPH_FRAGMENT, RISOGRAPH_UNIFORMS, WORLD_LAYER, mainCameraMask, risographOn, risographUniforms,
+  DEPTH_LAYER, DYNAMIC_LAYERS, RISOGRAPH_FRAGMENT, RISOGRAPH_UNIFORMS, WORLD_LAYER, cityFlag, mainCameraMask, risographOn, risographUniforms,
 } from './risograph';
 import { facadeTexture } from './textures';
 import { carShadowTris, carTris, carUndersideTris, parkedTris } from '../cars/carTris';
@@ -120,6 +121,8 @@ export interface RenderStats {
 interface ChunkMeshes {
   flat: Mesh | null;
   buildings: Mesh | null;
+  /** Building cast shadows (style A, specs/style.md v2), day only. */
+  shadows: Mesh | null;
 }
 
 interface ChunkEntry {
@@ -151,6 +154,7 @@ export class WorldView {
   private readonly H: number;
   private readonly flatMat: StandardMaterial;
   private readonly buildingMat: StandardMaterial;
+  private readonly shadowMat: StandardMaterial;
   private readonly textures: { day: Texture; night: Texture };
   private readonly chunks = new Map<number, ChunkEntry>();
   private roadGeo: Map<number, RoadChunk>;
@@ -212,6 +216,12 @@ export class WorldView {
 
     this.flatMat = this.unlit('flat');
     this.buildingMat = this.unlit('buildings');
+    // Cast shadows must not add up where they overlap (specs/style.md v2): all shadow triangles
+    // lie in one plane and write depth, and a fragment at equal depth fails LESS, so each pixel
+    // is darkened once. Drawn first among the alpha meshes (alphaIndex), so cars and peds blend over it.
+    this.shadowMat = this.unlit('cast-shadows');
+    this.shadowMat.forceDepthWrite = true;
+    this.shadowMat.depthFunction = Constants.LESS;
     this.textures = { day: facadeTexture(scene, false), night: facadeTexture(scene, true) };
     this.buildingMat.diffuseTexture = this.textures.day;
     this.buildingMat.emissiveTexture = this.textures.day;
@@ -380,9 +390,17 @@ export class WorldView {
     groundTris(c, this.palette, flat);
     const b = new Tris();
     buildingTris(c, this.palette, this.tuning, b);
+    const sh = new Tris();
+    if (cityFlag(this.tuning.style.castShadow, this.city.id, this.palette.night)) castShadowTris(c, this.palette, this.tuning, sh);
+    let shadows: Mesh | null = null;
+    if (!sh.empty) {
+      shadows = this.world(this.mesh(`shadows-${key}`, sh, this.shadowMat, true), false);
+      shadows.alphaIndex = 0;
+    }
     return {
       flat: flat.empty ? null : this.world(this.mesh(`ground-${key}`, flat, this.flatMat), false),
       buildings: b.empty ? null : this.world(this.mesh(`buildings-${key}`, b, this.buildingMat), true),
+      shadows,
     };
   }
 
@@ -406,6 +424,7 @@ export class WorldView {
   private disposeChunk(m: ChunkMeshes): void {
     m.flat?.dispose();
     m.buildings?.dispose();
+    m.shadows?.dispose();
   }
 
   private disposeRoads(r: RoadMeshes): void {

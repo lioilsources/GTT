@@ -19,6 +19,10 @@ export interface Palette {
   facades: Rgba[];
   /** Ground shadow under the player's car, traffic and patrols (specs/style.md `shadow`). */
   shadow: Rgba;
+  /** Flat vector look (specs/style.md v2): roof, parapet band and building cast shadow; absent = v1. */
+  roof?: Rgba;
+  roofEdge?: Rgba;
+  castShadow?: Rgba;
   roofLight: number; sunX: number; sunY: number; ambient: number;
   night: boolean;
 }
@@ -57,6 +61,9 @@ export function cityTokenPrefix(cityId: string): string {
   return 'colorCity' + cityId.split(/[-_]/).filter((w) => w).map((w) => w[0]!.toUpperCase() + w.slice(1)).join('');
 }
 
+/** Optional style A keys (specs/style.md v2); a missing one means the thing is not drawn (or v1 roof). */
+const OPTIONAL_CITY_KEYS = ['roof', 'roofEdge', 'castShadow'] as const;
+
 const cityCache = new Map<string, Palette>();
 
 /**
@@ -75,6 +82,10 @@ export function cityPalette(cityId: string): Palette {
   if (CITY_KEYS.every((k) => typeof tk[key(k)] === 'string') && Array.isArray(facades) && facades.length > 0) {
     const c = Object.fromEntries(CITY_KEYS.map((k) => [k, rgba(tk[key(k)] as string)])) as Record<(typeof CITY_KEYS)[number], Rgba>;
     p = { ...dayPalette, ...c, facades: (facades as string[]).map((h) => rgba(h)), night: false };
+    for (const k of OPTIONAL_CITY_KEYS) {
+      const v = tk[key(k)];
+      if (typeof v === 'string') p[k] = rgba(v);
+    }
   }
   cityCache.set(cityId, p);
   return p;

@@ -5,6 +5,7 @@ import type { BuildingData, ChunkData } from '../world/chunk';
 import { chunkKey, type City, type RoadEdge, type RoadGraph, type TrackGraph } from '../world/model';
 import { extrusionScale, displayHeight, cameraHeight } from '../world/camera';
 import { groundColor, rgba, type Palette, type Rgba } from './palette';
+import { cityFlag } from './risograph';
 
 /**
  * Pure geometry for client W: triangles with colours (and UVs for facades) in Babylon axes
@@ -75,10 +76,14 @@ export class Tris {
 /** Heights of the flat layers above the ground plane (m); keeps the draw order of METROPOLE_PLAN 6.3. */
 export const Z = {
   ground: [0.0, 0.01, 0.02, 0.03, 0.05] as const, // park, plaza, rail, water, pedestrian
-  sidewalk: 0.06, alley: 0.07, asphalt: 0.08, laneLines: 0.09, centerLines: 0.1, rails: 0.104, tramStop: 0.106,
+  sidewalk: 0.06, alley: 0.07, asphalt: 0.08, laneLines: 0.09, centerLines: 0.1,
+  // Style A (specs/style.md v2): zebras over the lane markings, building shadows over the zebras, below rails.
+  crosswalks: 0.102, castShadow: 0.103, rails: 0.104, tramStop: 0.106,
   roadblock: 0.11, skids: 0.12, props: 0.14, car: 0.3,
   tunnelShade: 0.2, tunnel: 0.22, tunnelLines: 0.23, tunnelRails: 0.234,
   bridgeEdge: 0.0, bridgeDeck: 0.02, bridgeLines: 0.04, bridgeRails: 0.044,
+  /** Parapet band (style A) just above its roof. */
+  roofEdgeLift: 0.02,
 } as const;
 
 // Pedestrian-zone paving sits above parks, plazas, rail yards and water (Charles Bridge), below roads (specs/zones.md).
@@ -184,6 +189,7 @@ export function buildRoads(city: City, tuning: Tuning, pal: Palette): Map<number
     }
     if (e.kept) markings(e, layer, carriage, laneM, lift, pal, bucket);
   }
+  if (cityFlag(tuning.style.crosswalks, city.id, pal.night)) crosswalkTris(graph, tuning, pal.marking, (x, y) => bucket(x, y).ground);
   tramTracks(city.trams, tuning, bucket);
   roadblocks(graph, bucket);
   return out;
@@ -264,6 +270,98 @@ function markings(
   }
 }
 
+/** Half width of the carriageway (without sidewalks) of an edge, as the asphalt pass draws it. */
+function carriageHalf(e: RoadEdge, tuning: Tuning): number {
+  return e.kept ? Math.max(e.width - 2 * tuning.sidewalkWidthM, tuning.laneWidthM) / 2 : e.width / 2;
+}
+
+/** Kept ground edges meeting node n, one entry per end (a self-loop meets it twice). */
+function groundEnds(g: RoadGraph, n: number): { e: RoadEdge; rev: boolean }[] {
+  const ends: { e: RoadEdge; rev: boolean }[] = [];
+  for (const ei of new Set(g.nodeEdges[n]!)) {
+    const e = g.edges[ei]!;
+    if (!e.kept || !e.isGround) continue;
+    if (e.from === n) ends.push({ e, rev: false });
+    if (e.to === n) ends.push({ e, rev: true });
+  }
+  return ends;
+}
+
+/**
+ * The street leaving node n along one edge end, as a polyline from the node outward: it goes on
+ * through nodes with exactly two kept ground edges until it is [need] metres long, reaches
+ * another junction or a dead end, or comes back to n (specs/style.md v2 "Zebry"; the packs split
+ * roads at every connector). Same walk as world_engine style_geometry.dart `_street`.
+ */
+export function roadArm(g: RoadGraph, n: number, start: { e: RoadEdge; rev: boolean }, need: number): { pts: number[]; length: number } {
+  const pts: number[] = [];
+  let length = 0, cur = start;
+  const seen = new Set<RoadEdge>();
+  while (!seen.has(cur.e)) {
+    seen.add(cur.e);
+    const e = cur.e, k = e.pointCount;
+    for (let i = pts.length === 0 ? 0 : 1; i < k; i++) {
+      const j = cur.rev ? k - 1 - i : i;
+      pts.push(e.pts[2 * j]!, e.pts[2 * j + 1]!);
+    }
+    length += e.length;
+    const at = cur.rev ? e.from : e.to;
+    if (length >= need || at === n) break;
+    const ends = groundEnds(g, at);
+    if (ends.length !== 2) break;
+    // Leave by the other end than the one we came in by (entering end has rev !== cur.rev).
+    cur = ends[0]!.e === e && ends[0]!.rev !== cur.rev ? ends[1]! : ends[0]!;
+  }
+  return { pts, length };
+}
+
+/**
+ * Stripes of one crossing between distances d0 and d1 along [pts], following its bends: stripe =
+ * gap = [stripe], parallel to the road, from the carriageway edge −half, the last one clipped at +half.
+ */
+function crossingTris(pts: number[], d0: number, d1: number, half: number, stripe: number, col: Rgba, put: (x: number, y: number) => Tris): void {
+  let dist = 0;
+  for (let i = 0; i + 3 < pts.length && dist < d1; i += 2) {
+    const ax = pts[i]!, ay = pts[i + 1]!, bx = pts[i + 2]!, by = pts[i + 3]!;
+    const l = Math.hypot(bx - ax, by - ay);
+    if (l < 1e-6) continue;
+    const t0 = Math.max(d0 - dist, 0), t1 = Math.min(d1 - dist, l);
+    dist += l;
+    if (t1 <= t0) continue;
+    const ux = (bx - ax) / l, uy = (by - ay) / l;
+    const sx = ax + ux * t0, sy = ay + uy * t0, ex = ax + ux * t1, ey = ay + uy * t1;
+    const t = put((sx + ex) / 2, (sy + ey) / 2);
+    for (let o = -half; o < half - 1e-6; o += 2 * stripe) {
+      const o1 = Math.min(o + stripe, half);
+      t.quad(sx, sy, ex, ey, (o1 - o) / 2, Z.crosswalks, col, (o + o1) / 2);
+    }
+  }
+}
+
+/**
+ * Zebra crossings (specs/style.md v2 "Zebry"): at every node with at least three kept ground
+ * edges, each of them gets a crossing from c to c + crosswalk_len_m away from the node along its
+ * street (roadArm), where c = max(half width of the node's other such edges) + crosswalk_gap_m;
+ * none on a street shorter than 2 (c + len). Stripes span the carriageway of the junction's edge.
+ */
+export function crosswalkTris(g: RoadGraph, tuning: Tuning, col: Rgba, put: (x: number, y: number) => Tris): void {
+  const st = tuning.style;
+  const len = st.crosswalkLenM, sw = st.crosswalkStripeM;
+  if (len <= 0 || sw <= 0) return;
+  for (let n = 0; n < g.nodeEdges.length; n++) {
+    const ends = groundEnds(g, n);
+    if (ends.length < 3) continue;
+    for (let i = 0; i < ends.length; i++) {
+      let half = 0;
+      for (let j = 0; j < ends.length; j++) if (j !== i) half = Math.max(half, ends[j]!.e.width / 2);
+      const c = half + st.crosswalkGapM;
+      const arm = roadArm(g, n, ends[i]!, 2 * (c + len));
+      if (arm.length < 2 * (c + len)) continue;
+      crossingTris(arm.pts, c, c + len, carriageHalf(ends[i]!.e, tuning), sw, col, put);
+    }
+  }
+}
+
 /** Striped barriers where a road leaves the playable area. */
 function roadblocks(g: RoadGraph, bucket: (x: number, y: number) => RoadChunk): void {
   const a = rgba(tokens.colorWorldRoadblockA), b = rgba(tokens.colorWorldRoadblockB);
@@ -334,8 +432,91 @@ function building(b: BuildingData, pal: Palette, tuning: Tuning, H: number, out:
     }
     start = end;
   }
-  const roofC = shade(base, pal.roofLight * jitter);
+  // Style A (specs/style.md v2): a flat light roof with a parapet band; landmarks keep v1.
+  const flat = b.landmark <= 0 && pal.roof !== undefined && pal.roofEdge !== undefined;
+  const roofC = flat ? shade(pal.roof!, jitter) : shade(base, pal.roofLight * jitter);
   const rb = out.vertexCount;
   for (let i = 0; i < b.xy.length / 2; i++) out.vertex(xy[2 * i]!, xy[2 * i + 1]!, z1, roofC, ROOF_UV, ROOF_UV);
   for (let k = 0; k + 2 < b.roof.length; k += 3) out.tri(rb + b.roof[k]!, rb + b.roof[k + 1]!, rb + b.roof[k + 2]!);
+  if (flat) roofEdgeTris(b, tuning.style.roofEdgeM, z1 + Z.roofEdgeLift, pal.roofEdge!, out);
+}
+
+/**
+ * Parapet band (specs/style.md v2 "Střechy"): along every ring edge a strip [w] wide on the inner
+ * side (left of the edge: rings are CCW outer, CW courtyards). Corners need not meet exactly.
+ */
+export function roofEdgeTris(b: BuildingData, w: number, h: number, col: Rgba, out: Tris): void {
+  if (w <= 0) return;
+  const xy = b.xy;
+  let start = 0;
+  for (const end of b.ringEnds) {
+    for (let i = start; i < end; i++) {
+      const j = i + 1 < end ? i + 1 : start;
+      const ax = xy[2 * i]!, ay = xy[2 * i + 1]!, bx = xy[2 * j]!, by = xy[2 * j + 1]!;
+      const len = Math.hypot(bx - ax, by - ay);
+      if (len < 0.05) continue;
+      const nx = (-(by - ay) / len) * w, ny = ((bx - ax) / len) * w;
+      const v0 = out.vertex(ax, ay, h, col, ROOF_UV, ROOF_UV);
+      const v1 = out.vertex(bx, by, h, col, ROOF_UV, ROOF_UV);
+      const v2 = out.vertex(bx + nx, by + ny, h, col, ROOF_UV, ROOF_UV);
+      const v3 = out.vertex(ax + nx, ay + ny, h, col, ROOF_UV, ROOF_UV);
+      out.tri(v0, v1, v2);
+      out.tri(v0, v2, v3);
+    }
+    start = end;
+  }
+}
+
+/** Cast shadow length (specs/style.md v2): min(height × shadow_ratio, shadow_max_m). */
+export function shadowLength(height: number, tuning: Tuning): number {
+  return Math.max(0, Math.min(height * tuning.style.shadowRatio, tuning.style.shadowMaxM));
+}
+
+/**
+ * Ground shadows of one chunk's buildings (specs/style.md v2 "Vržené stíny"), all at Z.castShadow
+ * in [pal.castShadow]. Only buildings standing on the ground (minHeight 0) cast; the sun is
+ * the palette's (light.day). Empty without a castShadow colour or sun.
+ */
+export function castShadowTris(c: ChunkData, pal: Palette, tuning: Tuning, out: Tris): void {
+  const col = pal.castShadow;
+  const sl = Math.hypot(pal.sunX, pal.sunY);
+  if (!col || sl < 1e-6) return;
+  const sx = -pal.sunX / sl, sy = -pal.sunY / sl;
+  for (const b of c.buildings) {
+    if (b.minHeight > 0) continue;
+    buildingShadow(b, shadowLength(b.height, tuning), sx, sy, Z.castShadow, col, out);
+  }
+}
+
+/**
+ * Shadow of one prism on flat ground: the footprint moved by L·s, plus for every ring edge the
+ * quad (a, b, b + L·s, a + L·s), wound counter-clockwise. The union is not computed; overlaps
+ * are flattened by the renderer.
+ */
+export function buildingShadow(b: BuildingData, L: number, sx: number, sy: number, h: number, col: Rgba, out: Tris): void {
+  if (L <= 1e-3) return;
+  const dx = sx * L, dy = sy * L;
+  const xy = b.xy;
+  const base = out.vertexCount;
+  for (let i = 0; i < xy.length / 2; i++) out.vertex(xy[2 * i]! + dx, xy[2 * i + 1]! + dy, h, col);
+  for (let k = 0; k + 2 < b.roof.length; k += 3) out.tri(base + b.roof[k]!, base + b.roof[k + 1]!, base + b.roof[k + 2]!);
+  let start = 0;
+  for (const end of b.ringEnds) {
+    for (let i = start; i < end; i++) {
+      const j = i + 1 < end ? i + 1 : start;
+      const ax = xy[2 * i]!, ay = xy[2 * i + 1]!, bx = xy[2 * j]!, by = xy[2 * j + 1]!;
+      const cross = (bx - ax) * dy - (by - ay) * dx;
+      if (Math.abs(cross) < 1e-4) continue;
+      const v0 = out.vertex(ax, ay, h, col), v1 = out.vertex(bx, by, h, col);
+      const v2 = out.vertex(bx + dx, by + dy, h, col), v3 = out.vertex(ax + dx, ay + dy, h, col);
+      if (cross > 0) {
+        out.tri(v0, v1, v2);
+        out.tri(v0, v2, v3);
+      } else {
+        out.tri(v0, v2, v1);
+        out.tri(v0, v3, v2);
+      }
+    }
+    start = end;
+  }
 }

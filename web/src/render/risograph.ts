@@ -9,9 +9,17 @@ import type { Rgba } from './palette';
 
 /** `style.risograph.<city>` is true and it is day; unknown cities and the night never get it. */
 export function risographOn(style: TuningStyle, cityId: string, night: boolean): boolean {
+  return cityFlag(style.risograph, cityId, night);
+}
+
+/**
+ * A per-city style switch of `content/tuning.yaml` → `style` (risograph, cast_shadow, crosswalks):
+ * true only by day and only for a city listed with true; unknown cities get nothing.
+ */
+export function cityFlag(map: object, cityId: string, night: boolean): boolean {
   if (night) return false;
-  if (!Object.prototype.hasOwnProperty.call(style.risograph, cityId)) return false;
-  return (style.risograph as unknown as Record<string, unknown>)[cityId] === true;
+  if (!Object.prototype.hasOwnProperty.call(map, cityId)) return false;
+  return (map as Record<string, unknown>)[cityId] === true;
 }
 
 /** Shader uniforms; pixel sizes are physical pixels (tuning px × device pixel ratio). */
