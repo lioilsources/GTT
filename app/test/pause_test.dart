@@ -35,7 +35,7 @@ void main() {
       }
     });
 
-    test('every pausing overlay of specs/pause.md has a kind, the booth and travel cards included', () {
+    test('every pausing overlay of specs/pause.md has a kind, the booth and travel cards and the Camera included', () {
       expect(GameOverlay.values.map((o) => o.name).toList()..sort(), [
         'about',
         'bench',
@@ -46,6 +46,7 @@ void main() {
         'minigame',
         'passport',
         'phone',
+        'photo',
         'postcard',
         'result',
         'travel',
