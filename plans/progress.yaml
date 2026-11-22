@@ -151,6 +151,8 @@ items:
      started: 2026-11-22T15:40, done: 2026-11-22T16:31, commit: 591d2e9, evidence: "specs/travel.md, uložení v3 (save.md v2), aplikace Taxi; vektory travel a save v obou klientech, 12 vstupů do metra v NYC i Praze v balíčcích (PR #106–#110), parita F-023, F-026, F-038; chybí vyzkoušet na telefonu"}
   - {id: M2-ST, milestone: M2, name: "skiny měst: paleta NYC (A) a Praha (C, risograf)", size: M, status: wip,
      started: 2026-11-22T18:15}
+  - {id: M2-AR, milestone: M2, name: "napojení grafiky: portréty, busty, pohlednice", size: S, status: wip,
+     started: 2026-11-22T18:50}
   - {id: M2-S4, milestone: M2, name: "fotomísta a Foťák", size: M, status: todo}
   - {id: M2-S5, milestone: M2, name: "obchody a bary", size: L, status: todo}
   - {id: M2-S6, milestone: M2, name: "počasí (jasno, déšť, mlha)", size: M, status: todo}

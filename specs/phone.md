@@ -24,8 +24,8 @@ lomená čára trasy, postup po ní, formát vzdálenosti, šipka na okraji) maj
 
 ## Feed
 
-- Karta přes celou obrazovku telefonu: portrét hostitele (v M1 zástupná silueta s jemným
-  pohybem), zvací věta `feedHost1..6`, štítky: typ hry (`engine_<id>`), místo a čtvrť,
+- Karta přes celou obrazovku telefonu: portrét hostitele (busta z `specs/art.md`, bez grafiky zástupná
+  silueta s jemným pohybem), zvací věta `feedHost1..6`, štítky: typ hry (`engine_<id>`), místo a čtvrť,
   vzdálenost a čas jízdy, odměna, obtížnost; u místní hry štítek `feedLocal`.
 - Gesta (práh `phone.swipe_px`): tah nahoru = `next`, tah vpravo nebo „Jedu“ = `accept`,
   dvojité klepnutí (do `phone.double_tap_ms`) = `like`, tah vlevo = `less`. Akce jdou přes pravidla

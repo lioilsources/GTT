@@ -329,3 +329,10 @@
   lead: web
   flutter: todo
   web: todo
+- id: F-040
+  name: Generated art wired in (NPC portraits by vibe, feed busts, landmark postcards)
+  level: P2
+  spec: specs/art.md@1
+  lead: web
+  flutter: todo
+  web: todo

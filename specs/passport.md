@@ -106,7 +106,7 @@ Novou památku ukáže karta pohlednice; nová čtvrť krátký štítek „Raz�
 Karta 3 : 2 s obrázkem nahoře, pod ním `lm_<id>_title`, `lm_<id>_text` a značka razítka. Barvy jen
 z `design/tokens.json` (`color.passport.*`).
 
-**Obrázek je zástupný.** Kreslí ho klient z výšky památky (`Landmark.height_m`) na plátno 300 × 200
+**Hotová ilustrace má přednost** (`assets/postcards/<city>/<id>.png`, `specs/art.md`). **Jinak je obrázek zástupný.** Kreslí ho klient z výšky památky (`Landmark.height_m`) na plátno 300 × 200
 jednotek (y dolů); skutečné ilustrace ve stylu hry přijdou později z ComfyUI (`tools/artgen`,
 METROPOLE_PLAN 14: vlastní stylizované ilustrace, žádné fotky) a nahradí tento výkres:
 
