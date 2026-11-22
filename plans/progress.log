@@ -4,3 +4,4 @@
 2026-11-21 | 17:10–17:35 (25 min) | merge PR #1, Pages živé (D0-7); klíče tuning pro W (PR #2); D1-1 hračka M0 ve webu (PR #3) – +2 body hotovo, +4 čekají
 2026-11-21 | 18:30–18:55 (25 min) | merge #2, #3 (W na Pages); benchmark D1: trasa, specs/bench.md, autopilot v obou klientech, šablona BAKEOFF_REPORT (PR #4–#6); rychlejší start W – +0 hotovo, +3 čekají
 2026-11-21 | 19:00–01:05 (6 h) | D2: kontrakt, Galerie a 7 miniher v obou klientech (vektory, PR #10–#20); M1: Manhattan po 110th + mosty, GPS trasa, provoz, chodci, telefon a feed, auta a garáž, Pas, O mapách, dialogy, policie, smyčka s ukládáním (PR #17–#48); release pipeline a privacy (PR #7–#9) – D2 +8 čeká, M1 +12 čeká, D3-3 hotovo
+2026-11-22 | 01:05–01:40 (35 min) | D2-9 Taxi v obou klientech (PR #50–#52); parita F-001–F-027 zelená – D2 kompletní (čeká na Ol1na), D3-2 hotovo, D3-1 čeká
