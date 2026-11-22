@@ -31,6 +31,7 @@ class GameAssets {
     required this.car,
     required this.cars,
     required this.textures,
+    this.risograph,
   }) : tuningBaseline = tuning.flatten(),
        carBaseline = car.toJson();
 
@@ -42,6 +43,9 @@ class GameAssets {
   /// Every car of content/cars by id (specs/cars.md); [car] is one of them.
   final Map<String, CarSpec> cars;
   final FacadeTextures textures;
+
+  /// Risograph shader (specs/style.md), null where shader filters are unsupported (no Impeller).
+  final ui.FragmentProgram? risograph;
 
   /// Values as loaded, so the tuning panel can export only what was changed.
   final Map<String, Object> tuningBaseline;
@@ -58,8 +62,12 @@ class GameAssets {
       rootBundle.loadString('${shared}content/tuning.yaml'),
       Future.wait([for (final c in CarId.values) rootBundle.loadString('${shared}content/cars/${c.id}.json')]),
       FacadeTextures.create(),
+      _loadRisograph(),
     ]);
-    final cars = {for (final j in results[2] as List<String>) for (final s in [parseCarSpec(j)]) s.id: s};
+    final cars = {
+      for (final j in results[2] as List<String>)
+        for (final s in [parseCarSpec(j)]) s.id: s,
+    };
     return GameAssets(
       city: results[0] as City,
       source: source,
@@ -67,7 +75,18 @@ class GameAssets {
       car: cars[car.id]!,
       cars: cars,
       textures: results[3] as FacadeTextures,
+      risograph: results[4] as ui.FragmentProgram?,
     );
+  }
+
+  static Future<ui.FragmentProgram?> _loadRisograph() async {
+    if (!ui.ImageFilter.isShaderFilterSupported) return null;
+    try {
+      return await ui.FragmentProgram.fromAsset('shaders/risograph.frag');
+    } catch (e) {
+      debugPrint('risograph shader unavailable: $e');
+      return null;
+    }
   }
 }
 
@@ -154,11 +173,14 @@ class MetropoleGame extends Game {
       textures: data.textures,
     );
     // Tracks are part of the city even with trams switched off (specs/trams.md).
+    _applySkin();
     _tramsPainter = city.trams.isEmpty ? null : TramsPainter(city.trams, tuning.trams);
     camera.snap(drive.car.x, drive.car.y, drive.car.heading, tuning);
     peds = PedestrianWorld(city, tuning);
     _pedBubbles = PedBubblePainter(
-        tr(ui.PlatformDispatcher.instance.locale.languageCode, MessageKey.pedestrianBubble), tuning.pedestrians.bubblePx);
+      tr(ui.PlatformDispatcher.instance.locale.languageCode, MessageKey.pedestrianBubble),
+      tuning.pedestrians.bubblePx,
+    );
     passport = PassportTracker(passportCityOf(city), tuning.passport)..onStamp((e) => passportEvent.value = e);
     // Police and wanted level (specs/police.md); the HUD listens to its hooks.
     police = Police(drive, tuning, fleet);
@@ -218,7 +240,49 @@ class MetropoleGame extends Game {
   void setNight(bool v) {
     night = v;
     drive.traffic?.night = v;
-    renderer.palette = v ? Palette.nightPalette : Palette.day;
+    _applySkin();
+  }
+
+  /// City skin (specs/style.md): the city's day palette, or the shared night one, and the
+  /// risograph filter over the world layer by day. The renderer rebuilds nothing per palette
+  /// (colours are applied per draw), so swapping the palette is all a switch needs; a city
+  /// switch builds a new game, which lands here from the constructor.
+  void _applySkin() {
+    renderer.palette = night ? Palette.nightPalette : Palette.forCity(city.id);
+    renderer.worldFilter = risographEnabled(tuning.style, city.id, night: night) ? _risographFilter() : null;
+  }
+
+  ui.ImageFilter? _risoFilter;
+
+  /// The filter is built once per game: its uniforms (tuning, inks, pixel ratio) are fixed.
+  ui.ImageFilter? _risographFilter() {
+    final program = data.risograph;
+    if (program == null) return null;
+    final f = _risoFilter;
+    if (f != null) return f;
+    final st = tuning.style;
+    final ink = Palette.forCity(city.id).inks.first;
+    final dpr = ui.PlatformDispatcher.instance.implicitView?.devicePixelRatio ?? 1.0;
+    final sh = program.fragmentShader();
+    // Index 0–1 is uSize, set by the engine for an image filter.
+    var i = 2;
+    for (final v in [
+      dpr,
+      st.misregistrationPx,
+      st.fringe,
+      st.grainStrength,
+      st.grainSizePx,
+      st.halftoneCellPx,
+      st.halftoneStrength,
+      st.halftoneLow,
+      st.halftoneHigh,
+      ink.r,
+      ink.g,
+      ink.b,
+    ]) {
+      sh.setFloat(i++, v);
+    }
+    return _risoFilter = ui.ImageFilter.shader(sh);
   }
 
   void setScheme(ControlSchemeId id) => scheme = ControlScheme.create(id, tuning.controls);
@@ -414,6 +478,7 @@ class MetropoleGame extends Game {
     if (_size.isEmpty) return;
     final car = drive.car;
     final lift = _hopLift();
+    final shadow = renderer.palette.shadow;
     renderer.render(
       canvas,
       _size,
@@ -426,7 +491,13 @@ class MetropoleGame extends Game {
           paintSkids(c, drive.skids, car.halfWidth * 0.32);
           paintProps(c, drive.propsNear(car.x, car.y, r), night: night);
           _bollards.paint(c, drive.zones.bollards, tuning, vpX: camera.x, vpY: camera.y, radius: r);
-          paintParked(c, fleet.parked.where((p) => (p.x - car.x).abs() < r && (p.y - car.y).abs() < r), data.cars, tuning);
+          paintParked(
+            c,
+            fleet.parked.where((p) => (p.x - car.x).abs() < r && (p.y - car.y).abs() < r),
+            data.cars,
+            tuning,
+            shadow: shadow,
+          );
           paintPedestrians(c, peds);
           paintWorld?.call(c);
           final tr = drive.traffic;
@@ -436,15 +507,23 @@ class MetropoleGame extends Game {
         }
         final tr = drive.traffic;
         if (tr != null) {
-          paintTraffic(c, tr, layer, night: night);
-          paintPolice(c, tr, layer, timeS: _policeClock, blinkS: tuning.police.lightBlinkS, night: night);
+          paintTraffic(c, tr, layer, night: night, shadow: shadow);
+          paintPolice(
+            c,
+            tr,
+            layer,
+            timeS: _policeClock,
+            blinkS: tuning.police.lightBlinkS,
+            night: night,
+            shadow: shadow,
+          );
         }
         final tm = drive.trams;
         if (tm != null) _tramsPainter?.paintTrams(c, tm, layer, night: night);
         if (lift == null) {
-          if (layer == car.layer) paintCar(c, car, night: night);
+          if (layer == car.layer) paintCar(c, car, night: night, shadow: shadow);
         } else if (layer == 0) {
-          paintHopShadow(c, car, lift);
+          paintHopShadow(c, car, lift, shadow: shadow);
         } else if (layer == 1) {
           // In the air above everything on the ground, buildings included (specs/hop.md).
           paintCar(c, car, night: night, lift: lift);
