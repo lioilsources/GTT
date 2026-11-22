@@ -101,6 +101,7 @@ class Tuning {
         passport = TuningPassport._(r.sub('passport')),
         npc = TuningNpc._(r.sub('npc')),
         cars = TuningCars._(r.sub('cars')),
+        booths = TuningBooths._(r.sub('booths')),
         police = TuningPolice._(r.sub('police')),
         economy = TuningEconomy._(r.sub('economy')),
         loop = TuningLoop._(r.sub('loop'));
@@ -205,6 +206,9 @@ class Tuning {
   /// Cars, switching and the garage (specs/cars.md). Distances in world metres (after car_scale).
   final TuningCars cars;
 
+  /// Ringing phone booths (specs/booths.md). P0 rules tick once per game second.
+  final TuningBooths booths;
+
   /// Police and wanted level (specs/police.md). P0 rules run in integer ticks: s → round(s · tick_hz).
   /// Distances in world metres (after car_scale); patrols are traffic cars flagged as police.
   final TuningPolice police;
@@ -250,6 +254,7 @@ class Tuning {
         'passport': passport.toJson(),
         'npc': npc.toJson(),
         'cars': cars.toJson(),
+        'booths': booths.toJson(),
         'police': police.toJson(),
         'economy': economy.toJson(),
         'loop': loop.toJson(),
@@ -2696,6 +2701,64 @@ class TuningCarsParked {
         'mass_factor': massFactor,
         'linear_damping': linearDamping,
         'angular_damping': angularDamping,
+      };
+}
+
+/// Ringing phone booths (specs/booths.md). P0 rules tick once per game second.
+class TuningBooths {
+  TuningBooths._(_R r)
+      : enabled = r.b('enabled'),
+        gapMinS = r.i('gap_min_s'),
+        gapMaxS = r.i('gap_max_s'),
+        retryS = r.i('retry_s'),
+        ringS = r.i('ring_s'),
+        bonus = r.i('bonus'),
+        ringMinM = r.d('ring_min_m'),
+        ringMaxM = r.d('ring_max_m'),
+        boothWM = r.d('booth_w_m'),
+        boothLM = r.d('booth_l_m'),
+        ringPulseS = r.d('ring_pulse_s');
+
+  bool enabled;
+
+  /// seconds between ring attempts (inclusive range)
+  int gapMinS;
+
+  int gapMaxS;
+
+  /// no booth in reach: try again after this
+  int retryS;
+
+  /// a booth rings this long
+  int ringS;
+
+  /// cash for finishing the offered minigame with 1★+
+  int bonus;
+
+  /// a booth may ring only this far from the player…
+  double ringMinM;
+
+  /// …and no farther
+  double ringMaxM;
+
+  double boothWM;
+
+  double boothLM;
+
+  double ringPulseS;
+
+  Map<String, Object> toJson() => {
+        'enabled': enabled,
+        'gap_min_s': gapMinS,
+        'gap_max_s': gapMaxS,
+        'retry_s': retryS,
+        'ring_s': ringS,
+        'bonus': bonus,
+        'ring_min_m': ringMinM,
+        'ring_max_m': ringMaxM,
+        'booth_w_m': boothWM,
+        'booth_l_m': boothLM,
+        'ring_pulse_s': ringPulseS,
       };
 }
 

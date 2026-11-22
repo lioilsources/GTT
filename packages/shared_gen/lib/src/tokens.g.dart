@@ -76,6 +76,10 @@ abstract final class Tokens {
   static const int colorCarReverse = 0xFFFFFFFF;
   static const int colorCarTail = 0xFF8A1C1C;
   static const int colorCarSkid = 0x55111111;
+  static const int colorBoothBody = 0xFFB8202A;
+  static const int colorBoothRoof = 0xFF7A1218;
+  static const int colorBoothGlass = 0xFFCFE4EE;
+  static const int colorBoothRing = 0xFFFFD23F;
   static const int colorPropsLampGlow = 0x40FFE9A8;
   static const int colorPropsLamp = 0xFF3C4048;
   static const int colorPropsLampBulb = 0xFFFFF3C4;

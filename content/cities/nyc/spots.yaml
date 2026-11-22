@@ -1,4 +1,4 @@
-# Curated points snapped to the nearest kept road (5.5). kind: plaza|station|park|landmark|bar|pier|stand|garage.
+# Curated points snapped to the nearest kept road (5.5). kind: plaza|station|park|landmark|bar|pier|stand|garage|booth.
 # minigame: the M1 minigame played at the spot (9.5, "každá se spotem na autentickém místě").
 # Commercial places keep a fictional name (R10); the point is a real location of that kind.
 spots:
@@ -20,3 +20,12 @@ spots:
   - {id: penn_taxi_stand, kind: stand, name: Penn Station Taxi Stand, lat: 40.75060, lon: -73.99350, minigame: taxi}
   # Player garage (specs/cars.md): one per city in M1; a multi-storey car park on W 44th St.
   - {id: midtown_garage, kind: garage, name: West 44th Street Garage, lat: 40.75990, lon: -73.99410}
+  # Ringing phone booths (specs/booths.md): street corners, no minigame.
+  - {id: booth_42_8av, kind: booth, name: Phone booth 42nd St & 8th Ave, lat: 40.75710, lon: -73.98990}
+  - {id: booth_union_sq, kind: booth, name: Phone booth Union Square, lat: 40.73530, lon: -73.99050}
+  - {id: booth_72_broadway, kind: booth, name: Phone booth 72nd St & Broadway, lat: 40.77850, lon: -73.98190}
+  - {id: booth_59_lex, kind: booth, name: Phone booth 59th St & Lexington Ave, lat: 40.76250, lon: -73.96760}
+  - {id: booth_canal_lafayette, kind: booth, name: Phone booth Canal St & Lafayette St, lat: 40.71880, lon: -74.00010}
+  - {id: booth_23_7av, kind: booth, name: Phone booth 23rd St & 7th Ave, lat: 40.74450, lon: -73.99580}
+  - {id: booth_50_5av, kind: booth, name: Phone booth 50th St & 5th Ave, lat: 40.75860, lon: -73.97790}
+  - {id: booth_chambers, kind: booth, name: Phone booth Chambers St & Broadway, lat: 40.71400, lon: -74.00620}

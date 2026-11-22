@@ -699,6 +699,14 @@
     }
   },
   "policeRoadblock": "Roadblock ahead!",
+  "boothRinging": "A phone booth is ringing",
+  "boothAnswer": "Pick up",
+  "boothCall": "{host}: Got a job for you – {game} at {place}. Bonus {bonus}.",
+  "@boothCall": {"placeholders": {"host": {"type": "String"}, "game": {"type": "String"}, "place": {"type": "String"}, "bonus": {"type": "int"}}},
+  "boothGo": "On my way",
+  "boothSkip": "Not now",
+  "loopBooth": "Booth bonus {cash}",
+  "@loopBooth": {"placeholders": {"cash": {"type": "int"}}},
   "loopPlay": "Play {name}",
   "@loopPlay": {
     "placeholders": {

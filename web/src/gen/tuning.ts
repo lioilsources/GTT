@@ -136,6 +136,8 @@ export class Tuning {
   readonly npc: TuningNpc;
   /** Cars, switching and the garage (specs/cars.md). Distances in world metres (after car_scale). */
   readonly cars: TuningCars;
+  /** Ringing phone booths (specs/booths.md). P0 rules tick once per game second. */
+  readonly booths: TuningBooths;
   /**
    * Police and wanted level (specs/police.md). P0 rules run in integer ticks: s → round(s · tick_hz).
    * Distances in world metres (after car_scale); patrols are traffic cars flagged as police.
@@ -183,6 +185,7 @@ export class Tuning {
     this.passport = new TuningPassport(r.sub('passport'));
     this.npc = new TuningNpc(r.sub('npc'));
     this.cars = new TuningCars(r.sub('cars'));
+    this.booths = new TuningBooths(r.sub('booths'));
     this.police = new TuningPolice(r.sub('police'));
     this.economy = new TuningEconomy(r.sub('economy'));
     this.loop = new TuningLoop(r.sub('loop'));
@@ -223,6 +226,7 @@ export class Tuning {
       passport: this.passport.toJson(),
       npc: this.npc.toJson(),
       cars: this.cars.toJson(),
+      booths: this.booths.toJson(),
       police: this.police.toJson(),
       economy: this.economy.toJson(),
       loop: this.loop.toJson(),
@@ -2512,6 +2516,57 @@ export class TuningCarsParked {
       mass_factor: this.massFactor,
       linear_damping: this.linearDamping,
       angular_damping: this.angularDamping,
+    };
+  }
+}
+
+/** Ringing phone booths (specs/booths.md). P0 rules tick once per game second. */
+export class TuningBooths {
+  enabled: boolean;
+  /** seconds between ring attempts (inclusive range) */
+  gapMinS: number;
+  gapMaxS: number;
+  /** no booth in reach: try again after this */
+  retryS: number;
+  /** a booth rings this long */
+  ringS: number;
+  /** cash for finishing the offered minigame with 1★+ */
+  bonus: number;
+  /** a booth may ring only this far from the player… */
+  ringMinM: number;
+  /** …and no farther */
+  ringMaxM: number;
+  boothWM: number;
+  boothLM: number;
+  ringPulseS: number;
+
+  constructor(r: R) {
+    this.enabled = r.b('enabled');
+    this.gapMinS = r.i('gap_min_s');
+    this.gapMaxS = r.i('gap_max_s');
+    this.retryS = r.i('retry_s');
+    this.ringS = r.i('ring_s');
+    this.bonus = r.i('bonus');
+    this.ringMinM = r.d('ring_min_m');
+    this.ringMaxM = r.d('ring_max_m');
+    this.boothWM = r.d('booth_w_m');
+    this.boothLM = r.d('booth_l_m');
+    this.ringPulseS = r.d('ring_pulse_s');
+  }
+
+  toJson(): Record<string, unknown> {
+    return {
+      enabled: this.enabled,
+      gap_min_s: this.gapMinS,
+      gap_max_s: this.gapMaxS,
+      retry_s: this.retryS,
+      ring_s: this.ringS,
+      bonus: this.bonus,
+      ring_min_m: this.ringMinM,
+      ring_max_m: this.ringMaxM,
+      booth_w_m: this.boothWM,
+      booth_l_m: this.boothLM,
+      ring_pulse_s: this.ringPulseS,
     };
   }
 }

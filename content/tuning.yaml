@@ -495,6 +495,19 @@ cars:
     mass_factor: 1.0          # parked cars are dynamic bodies the player and traffic can push
     linear_damping: 3.0
     angular_damping: 4.0
+# Ringing phone booths (specs/booths.md). P0 rules tick once per game second.
+booths:
+  enabled: true
+  gap_min_s: 45                 # seconds between ring attempts (inclusive range)
+  gap_max_s: 120
+  retry_s: 10                   # no booth in reach: try again after this
+  ring_s: 30                    # a booth rings this long
+  bonus: 150                    # cash for finishing the offered minigame with 1★+
+  ring_min_m: 60.0              # a booth may ring only this far from the player…
+  ring_max_m: 400.0             # …and no farther
+  booth_w_m: 2.4
+  booth_l_m: 2.4
+  ring_pulse_s: 1.0
 # Police and wanted level (specs/police.md). P0 rules run in integer ticks: s → round(s · tick_hz).
 # Distances in world metres (after car_scale); patrols are traffic cars flagged as police.
 police:

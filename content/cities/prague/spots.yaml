@@ -21,3 +21,10 @@ spots:
   - {id: letna_footnet, kind: park, name: Letenská pláň, lat: 50.09650, lon: 14.42300, minigame: nohejbal}
   # Player garage (specs/cars.md)
   - {id: novomestska_garage, kind: garage, name: Parkovací dům Spálená, lat: 50.08000, lon: 14.42050}
+  # Ringing phone booths (specs/booths.md): street corners, no minigame.
+  - {id: booth_namesti_miru, kind: booth, name: Budka na náměstí Míru, lat: 50.07530, lon: 14.43770}
+  - {id: booth_andel, kind: booth, name: Budka na Andělu, lat: 50.07100, lon: 14.40370}
+  - {id: booth_hradcanska, kind: booth, name: Budka u Hradčanské, lat: 50.09720, lon: 14.40420}
+  - {id: booth_florenc, kind: booth, name: Budka na Florenci, lat: 50.09050, lon: 14.43920}
+  - {id: booth_jiriho, kind: booth, name: Budka na Jiřího z Poděbrad, lat: 50.07800, lon: 14.44980}
+  - {id: booth_palackeho, kind: booth, name: Budka na Palackého náměstí, lat: 50.07580, lon: 14.41430}
