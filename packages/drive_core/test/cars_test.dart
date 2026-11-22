@@ -91,6 +91,36 @@ void main() {
     );
   });
 
+  group('parked model pool per city (specs/cars.md)', () {
+    test('NYC keeps the original M1 pool in order, so its parked cars do not change', () {
+      // The draw is nextInt(pool.length) over this list; same list = same output as before M3.
+      expect(parkedModels(tuning, specs, 'nyc'), [
+        'hatch_pip',
+        'muscle_brute',
+        'taxi_metro',
+        'pickup_hauler',
+        'm0_coupe',
+      ]);
+    });
+
+    test('Prague parks only prague-tagged cars, in list order', () {
+      final pool = parkedModels(tuning, specs, 'prague');
+      expect(pool, isNotEmpty);
+      expect(pool, containsAll(['hatch_pip', 'lidovka', 'kolobezka', 'kolo']));
+      for (final id in pool) {
+        expect(specs[id]!.tags, contains('prague'), reason: id);
+      }
+      final order = tuning.cars.parked.models;
+      for (var i = 0; i + 1 < pool.length; i++) {
+        expect(order.indexOf(pool[i]), lessThan(order.indexOf(pool[i + 1])));
+      }
+    });
+
+    test('a city with no tagged cars has an empty pool', () {
+      expect(parkedModels(tuning, specs, 'atlantis'), isEmpty);
+    });
+  });
+
   const root = '../../build/packs/nyc/';
   final hasPack = File('${root}manifest.pb').existsSync();
 
@@ -112,7 +142,7 @@ void main() {
     test('places parked cars deterministically at curbs, spaced apart', () {
       var total = 0;
       for (final c in chunks) {
-        final a = generateParked(city.graph, c.x, c.y, 1, tuning, specs, const [], (x: 1e9, y: 1e9));
+        final a = generateParked(city.graph, c.x, c.y, 1, tuning, specs, const [], (x: 1e9, y: 1e9), cityId: 'nyc');
         expect(a.length, lessThanOrEqualTo(tuning.cars.parked.perChunk));
         for (var i = 0; i < a.length; i++) {
           for (var j = i + 1; j < a.length; j++) {
@@ -126,6 +156,29 @@ void main() {
         total += a.length;
       }
       expect(total, greaterThan(10));
+    }, skip: !hasPack);
+
+    test('parked cars come only from the city pool; an empty pool parks nothing', () {
+      final nyc = parkedModels(tuning, specs, 'nyc').toSet();
+      final prague = parkedModels(tuning, specs, 'prague').toSet();
+      for (final c in chunks) {
+        for (final p in generateParked(city.graph, c.x, c.y, 1, tuning, specs, const [], (
+          x: 1e9,
+          y: 1e9,
+        ), cityId: 'nyc')) {
+          expect(nyc, contains(p.carId));
+        }
+        for (final p in generateParked(city.graph, c.x, c.y, 1, tuning, specs, const [], (
+          x: 1e9,
+          y: 1e9,
+        ), cityId: 'prague')) {
+          expect(prague, contains(p.carId));
+        }
+        expect(
+          generateParked(city.graph, c.x, c.y, 1, tuning, specs, const [], (x: 1e9, y: 1e9), cityId: 'atlantis'),
+          isEmpty,
+        );
+      }
     }, skip: !hasPack);
 
     test('boards a parked car: new body with its parameters, old car stays parked, events fire', () {

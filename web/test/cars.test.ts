@@ -5,7 +5,7 @@ import { parse } from 'yaml';
 import { beforeAll, describe, expect, it } from 'vitest';
 
 import { CarFleet } from '../src/cars/fleet';
-import { boardCandidate, generateParked } from '../src/cars/parked';
+import { boardCandidate, generateParked, parkedPool } from '../src/cars/parked';
 import { carsConfig, CarsRules, type CarsState } from '../src/cars/rules';
 import { carShape, paintHex } from '../src/cars/shape';
 import { DriveWorld } from '../src/drive/driveWorld';
@@ -42,7 +42,7 @@ describe('car content (specs/cars.md)', () => {
 
   it('draws every class inside the body outline, details by class', () => {
     for (const s of specs.values()) {
-      const parts = carShape(s.class, 5, 2);
+      const parts = carShape(s.class, 5, 2, s.length_m);
       expect(paintHex(s.paint)).toBe(tokens.colorCarPaint[s.paint]);
       for (const r of parts.filter((p) => p.part !== 'shadow')) {
         expect(Math.min(r.x0, r.x1)).toBeGreaterThanOrEqual(-5);
@@ -53,6 +53,48 @@ describe('car content (specs/cars.md)', () => {
     expect(carShape('taxi', 5, 2).some((r) => r.color === tokens.colorCarDetailTaxiSign)).toBe(true);
     expect(carShape('pickup', 5, 2).some((r) => r.color === tokens.colorCarDetailBed)).toBe(true);
     expect(carShape('hatchback', 5, 2).some((r) => r.part === 'stripe')).toBe(false);
+  });
+
+  it('draws micro cars as a scooter or a bicycle inside the outline, without lights', () => {
+    const scooter = specs.get('kolobezka')!, bike = specs.get('kolo')!;
+    expect(scooter.length_m).toBeLessThan(1.5);
+    expect(bike.length_m).toBeGreaterThanOrEqual(1.5);
+    const shapes = [scooter, bike].map((s) => {
+      const hl = (s.length_m * tuning.carScale) / 2, hw = (s.width_m * tuning.carScale) / 2;
+      const parts = carShape(s.class, hl, hw, s.length_m);
+      for (const r of parts.filter((p) => p.part !== 'shadow')) {
+        expect(Math.min(r.x0, r.x1), s.id).toBeGreaterThanOrEqual(-hl);
+        expect(Math.max(r.x0, r.x1), s.id).toBeLessThanOrEqual(hl);
+        expect(Math.max(Math.abs(r.y0), Math.abs(r.y1)), s.id).toBeLessThanOrEqual(hw);
+      }
+      expect(parts.some((p) => p.part === 'head' || p.part === 'tail' || p.part === 'glass'), s.id).toBe(false);
+      // Two in-line wheels (plus the handlebar, also tyre-coloured) and a rider.
+      expect(parts.filter((p) => p.part === 'tyre' && Math.abs(p.y0) < hw / 2).length, s.id).toBe(2);
+      expect(parts.some((p) => p.part === 'cabin'), s.id).toBe(true);
+      return parts.map((p) => [p.part, p.x0 / hl, p.y0 / hw]);
+    });
+    expect(shapes[0]).not.toEqual(shapes[1]);
+  });
+});
+
+describe('parked models by city (specs/cars.md)', () => {
+  const models = tuning.cars.parked.models;
+
+  it('keeps every original model in list order for NYC', () => {
+    const nyc = parkedPool(models, specs, 'nyc');
+    expect(nyc).toEqual(['hatch_pip', 'muscle_brute', 'taxi_metro', 'pickup_hauler', 'm0_coupe']);
+    expect(nyc).toEqual(models.filter((id) => specs.get(id)!.tags.includes('nyc')));
+  });
+
+  it('parks only prague-tagged cars in Prague', () => {
+    const prague = parkedPool(models, specs, 'prague');
+    expect(prague).toEqual(['hatch_pip', 'lidovka', 'kolobezka', 'kolo']);
+    for (const id of prague) expect(specs.get(id)!.tags, id).toContain('prague');
+  });
+
+  it('has an empty pool for a city without tagged cars or without models', () => {
+    expect(parkedPool(models, specs, 'nowhere')).toEqual([]);
+    expect(parkedPool([], specs, 'nyc')).toEqual([]);
   });
 });
 
@@ -117,8 +159,8 @@ describe.skipIf(!existsSync(pack))('parked cars and boarding in NYC', () => {
   it('places parked cars deterministically at curbs, spaced apart', () => {
     let total = 0;
     for (const c of chunks) {
-      const a = generateParked(city.graph, c.x, c.y, 1, tuning, specs, [], { x: 1e9, y: 1e9 });
-      const b = generateParked(city.graph, c.x, c.y, 1, tuning, specs, [], { x: 1e9, y: 1e9 });
+      const a = generateParked(city.graph, c.x, c.y, 1, tuning, specs, [], { x: 1e9, y: 1e9 }, city.id);
+      const b = generateParked(city.graph, c.x, c.y, 1, tuning, specs, [], { x: 1e9, y: 1e9 }, city.id);
       expect(a).toEqual(b);
       expect(a.length).toBeLessThanOrEqual(tuning.cars.parked.perChunk);
       for (let i = 0; i < a.length; i++) {
@@ -128,6 +170,22 @@ describe.skipIf(!existsSync(pack))('parked cars and boarding in NYC', () => {
         expect(hit!.dist).toBeLessThan(hit!.edge.width / 2);
       }
       total += a.length;
+    }
+    expect(total).toBeGreaterThan(10);
+  });
+
+  it('filters models by city without changing NYC; an empty pool parks nothing', () => {
+    expect(city.id).toBe('nyc');
+    // The pre-M3 list: every NYC model, unfiltered.
+    const m1 = ['hatch_pip', 'muscle_brute', 'taxi_metro', 'pickup_hauler', 'm0_coupe'];
+    const old = { ...tuning, cars: { ...tuning.cars, parked: { ...tuning.cars.parked, models: m1 } } } as unknown as Tuning;
+    let total = 0;
+    for (const c of chunks) {
+      const now = generateParked(city.graph, c.x, c.y, 1, tuning, specs, [], { x: 1e9, y: 1e9 }, 'nyc');
+      expect(now).toEqual(generateParked(city.graph, c.x, c.y, 1, old, specs, [], { x: 1e9, y: 1e9 }, 'nyc'));
+      for (const p of now) expect(m1).toContain(p.carId);
+      expect(generateParked(city.graph, c.x, c.y, 1, tuning, specs, [], { x: 1e9, y: 1e9 }, 'nowhere')).toEqual([]);
+      total += now.length;
     }
     expect(total).toBeGreaterThan(10);
   });

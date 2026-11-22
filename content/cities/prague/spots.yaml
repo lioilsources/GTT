@@ -15,5 +15,9 @@ spots:
   - {id: karlin_pub, kind: bar, name: Hospoda Na Šipce, lat: 50.09250, lon: 14.45200, minigame: sipky}
   - {id: strelecky_ostrov, kind: park, name: Střelecký ostrov, lat: 50.08200, lon: 14.41150, minigame: strelnice}
   - {id: main_station_taxi, kind: stand, name: Stanoviště taxi Hlavní nádraží, lat: 50.08350, lon: 14.43500, minigame: taxi}
+  # M3 Prague local games
+  - {id: vrchlickeho_marbles, kind: park, name: Vrchlického sady, lat: 50.08420, lon: 14.43220, minigame: kulicky}
+  - {id: malostranske_coins, kind: plaza, name: Malostranské náměstí, lat: 50.08800, lon: 14.40330, minigame: cara}
+  - {id: letna_footnet, kind: park, name: Letenská pláň, lat: 50.09650, lon: 14.42300, minigame: nohejbal}
   # Player garage (specs/cars.md)
   - {id: novomestska_garage, kind: garage, name: Parkovací dům Spálená, lat: 50.08000, lon: 14.42050}

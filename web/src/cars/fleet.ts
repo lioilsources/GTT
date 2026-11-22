@@ -2,7 +2,7 @@ import { Body, Box } from 'planck';
 
 import type { CarSpec } from '../gen/schema';
 import type { Tuning } from '../gen/tuning';
-import { CAT_BUILDINGS, CAT_CAR, CAT_PARKED, CAT_TRAFFIC } from '../drive/car';
+import { CAT_BUILDINGS, CAT_CAR, CAT_PARKED, CAT_TRAFFIC, CAT_TRAM } from '../drive/car';
 import type { DriveWorld } from '../drive/driveWorld';
 import type { ChunkData } from '../world/chunk';
 import { chunkKey } from '../world/model';
@@ -78,7 +78,9 @@ export class CarFleet {
     if (this.parked.some((p) => p.chunk === key)) return;
     const car = this.drive.car;
     const kept = this.parked.filter((p) => p.chunk === null);
-    for (const p of generateParked(this.drive.city.graph, c.x, c.y, key, this.tuning, this.specs, kept, { x: car.x, y: car.y })) {
+    const city = this.drive.city;
+    // Models are filtered by the pack's cityId (specs/cars.md).
+    for (const p of generateParked(city.graph, c.x, c.y, key, this.tuning, this.specs, kept, { x: car.x, y: car.y }, city.id)) {
       this.addParked(p);
     }
   }
@@ -125,7 +127,7 @@ export class CarFleet {
       friction: d.carFriction,
       restitution: d.carRestitution,
       filterCategoryBits: CAT_PARKED,
-      filterMaskBits: CAT_CAR | CAT_BUILDINGS | CAT_PARKED | CAT_TRAFFIC,
+      filterMaskBits: CAT_CAR | CAT_BUILDINGS | CAT_PARKED | CAT_TRAFFIC | CAT_TRAM,
     });
     this.bodies.set(p, body);
     this.parked.push(p);

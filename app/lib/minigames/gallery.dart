@@ -123,7 +123,7 @@ class _GalleryScreenState extends State<GalleryScreen> {
                 child: ListTile(
                   enabled: minigames.containsKey(id),
                   title: Text(
-                    _name(l, id),
+                    _name(context, id),
                     style: TextStyle(
                       color: Color(minigames.containsKey(id) ? Tokens.colorUiText : Tokens.colorUiTextFaint),
                     ),
@@ -143,14 +143,10 @@ class _GalleryScreenState extends State<GalleryScreen> {
     );
   }
 
-  String _name(AppLocalizations l, MinigameId id) => switch (id) {
-    MinigameId.sirky => l.mg_sirky,
-    MinigameId.oko => l.mg_oko,
-    MinigameId.dama => l.mg_dama,
-    MinigameId.desetitisic => l.mg_desetitisic,
-    MinigameId.sipky => l.mg_sipky,
-    MinigameId.strelnice => l.mg_strelnice,
-    MinigameId.taxi => l.mg_taxi,
-    MinigameId.koulena => l.mg_koulena,
-  };
+  /// The catalogue name from i18n (`mg_<id>`); a game without a text yet shows its id, so new
+  /// catalogue entries (M3 local games) never break the gallery.
+  String _name(BuildContext context, MinigameId id) {
+    final key = MessageKey.values.where((k) => k.key == 'mg_${id.id}').firstOrNull;
+    return key == null ? id.id : tr(Localizations.localeOf(context).languageCode, key);
+  }
 }

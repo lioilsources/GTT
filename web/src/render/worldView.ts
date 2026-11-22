@@ -130,7 +130,7 @@ export class WorldView {
   private readonly roads = new Map<number, RoadMeshes>();
   private readonly tunnelShade: Mesh;
   private readonly carRoot: TransformNode;
-  private carParts!: { wheels: TransformNode[]; brake: Mesh; reverse: Mesh; cone: Mesh; root: TransformNode };
+  private carParts!: { wheels: TransformNode[]; brake: Mesh; reverse: Mesh; cone: Mesh; root: TransformNode; lights: boolean };
   private readonly propMeshes = new Map<PropKind, Mesh>();
   private readonly lampGlow: Mesh;
   private propsVersion = -1;
@@ -340,6 +340,8 @@ export class WorldView {
     root.parent = this.carRoot;
     const hl = car.halfLength, hw = car.halfWidth;
     const night = this.palette.night;
+    // Scooters and bicycles have no lights, cone or side wheels (specs/cars.md).
+    const micro = car.spec.class === 'micro';
     const body = new Tris();
     const z = 0.0;
     // Class-specific vector shape (specs/cars.md "Kreslení"); lights go above its top part.
@@ -366,13 +368,13 @@ export class WorldView {
     cone.tri(a, c, b);
     const coneMesh = this.mesh('car-cone', cone, this.flatMat, true, false);
     coneMesh.parent = root;
-    coneMesh.setEnabled(night);
+    coneMesh.setEnabled(night && !micro);
 
     const wheels: TransformNode[] = [];
     const ww = hl * 0.36, wt = hw * 0.32;
     const tyre = new Tris();
     tyre.rect(0, 0, 0, -ww / 2, -wt / 2, ww / 2, wt / 2, z + 0.01, rgba(tokens.colorCarTyre));
-    for (const fx of [car.axleOffset, -car.axleOffset]) {
+    for (const fx of micro ? [] : [car.axleOffset, -car.axleOffset]) {
       for (const sy of [hw * 0.92, -hw * 0.92]) {
         const w = new TransformNode('wheel', this.scene);
         w.parent = root;
@@ -381,7 +383,7 @@ export class WorldView {
         if (fx > 0) wheels.push(w);
       }
     }
-    this.carParts = { wheels, brake, reverse, cone: coneMesh, root };
+    this.carParts = { wheels, brake, reverse, cone: coneMesh, root, lights: !micro };
   }
 
   setFleet(f: CarFleet): void {
@@ -409,8 +411,8 @@ export class WorldView {
     // Babylon rotates about +Y clockwise seen from above; world headings are CCW.
     this.carRoot.rotation.y = -car.heading;
     for (const w of this.carParts.wheels) w.rotation.y = -car.wheelAngle;
-    this.carParts.brake.setEnabled(car.braking && !car.reversing);
-    this.carParts.reverse.setEnabled(car.reversing);
+    this.carParts.brake.setEnabled(this.carParts.lights && car.braking && !car.reversing);
+    this.carParts.reverse.setEnabled(this.carParts.lights && car.reversing);
   }
 
   // ---------- props and skids
