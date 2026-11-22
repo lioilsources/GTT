@@ -1,0 +1,121 @@
+# DRAFT for Ol1n's review (specs/dialogue.md). Maya filming golden hour on the náplavka embankment.
+id: maya_street_3
+character: maya
+context: street
+city: prague
+beats:
+  - npc:
+      en: "Hi! Can you hold this for ten seconds? I need the river behind me and the boats in focus. Golden hour on the embankment doesn't wait."
+      cs: "Ahoj! Podržíš mi to deset vteřin? Potřebuju za sebou řeku a lodě v ostrosti. Zlatá hodinka na náplavce nečeká."
+    replies:
+      flirt:
+        en: "Ten seconds? I'd hold it all evening."
+        cs: "Deset vteřin? Klidně celý večer."
+      joke:
+        en: "Do I get into the credits?"
+        cs: "Dostanu se do titulků?"
+      dry:
+        en: "Sure. Where do I press?"
+        cs: "Jasně. Kde se to mačká?"
+    reactions:
+      flirt:
+        en: "All evening is a long story. Ten seconds, starting now."
+        cs: "Celý večer je dlouhá storka. Deset vteřin, teď."
+      joke:
+        en: "Credits are for people who don't shake. Don't shake."
+        cs: "Do titulků se dostane, kdo se netřese. Netřes se."
+      dry:
+        en: "The big circle. Wow, so much enthusiasm."
+        cs: "To velké kolečko. Páni, tolik nadšení."
+  - npc:
+      en: "A swan just swam into my shot. Do I keep it? Swans are very on-brand for the embankment."
+      cs: "Do záběru mi vplula labuť. Mám ji tam nechat? Labutě k náplavce prostě patří."
+    replies:
+      flirt:
+        en: "Keep it. Two graceful creatures in one shot."
+        cs: "Nech ji tam. Dvě půvabné bytosti v jednom záběru."
+      joke:
+        en: "Tag it. It clearly wants to go viral."
+        cs: "Označ ji. Evidentně chce být virální."
+      dry:
+        en: "It's a swan. It doesn't care."
+        cs: "Je to labuť. Je jí to jedno."
+    reactions:
+      flirt:
+        en: "Okay, smooth. The swan stays. So do you."
+        cs: "Dobře, to bylo hladké. Labuť zůstává. Ty taky."
+      joke:
+        en: "It probably has more followers than me."
+        cs: "Má asi víc sledujících než já."
+      dry:
+        en: "Nobody asked the swan. I asked you."
+        cs: "Labutě se nikdo neptal. Ptala jsem se tebe."
+  - npc:
+      en: "Now the tram bell in the background. Hear it? That ding is pure Prague. I want it in the sound."
+      cs: "A teď zvonek tramvaje v pozadí. Slyšíš? To cinknutí je čistá Praha. Chci ho mít ve zvuku."
+    replies:
+      flirt:
+        en: "I'll ask the driver to ring just for you."
+        cs: "Řeknu řidiči, ať cinká jen pro tebe."
+      joke:
+        en: "Next time I'll do the ding with my mouth."
+        cs: "Příště to cinknutí udělám pusou."
+      dry:
+        en: "Wait for the next one. They come every few minutes."
+        cs: "Počkej na další. Jezdí každých pár minut."
+    reactions:
+      flirt:
+        en: "A private ding. That's very exclusive content."
+        cs: "Soukromé cinknutí. To je hodně exkluzivní obsah."
+      joke:
+        en: "Show me. If it's convincing, you're hired."
+        cs: "Předveď. Jestli to bude přesvědčivé, máš u mě práci."
+      dry:
+        en: "Every few minutes. Thanks, timetable."
+        cs: "Každých pár minut. Díky, jízdní řáde."
+  - npc:
+      en: "Someone just offered me a trdelník for the shot. I don't eat it, I just hold it. It's a prop. Everyone does it."
+      cs: "Někdo mi do záběru nabídl trdelník. Nejím ho, jen ho držím. Je to rekvizita. Dělá to každý."
+    replies:
+      flirt:
+        en: "After the shoot we share it. The prop would get lonely."
+        cs: "Po natáčení se o něj rozdělíme. Rekvizitě by bylo smutno."
+      joke:
+        en: "A trdelník nobody ever ate. A true tourist legend."
+        cs: "Trdelník, který nikdo nesnědl. Pravá turistická legenda."
+      dry:
+        en: "Eat it. It's food, not a prop."
+        cs: "Sněz ho. Je to jídlo, ne rekvizita."
+    reactions:
+      flirt:
+        en: "Deal. You get the sugary half."
+        cs: "Platí. Ty dostaneš tu cukrovou půlku."
+      joke:
+        en: "It's been in four stories already. It's famous."
+        cs: "Už byl ve čtyřech storkách. Je slavný."
+      dry:
+        en: "Wow. Opinions about props too."
+        cs: "Páni. Tak ty máš názor i na rekvizity."
+  - npc:
+      en: "Sun's gone, fog's coming off the river. That's a wrap. You're an excellent tripod, honestly."
+      cs: "Slunce je pryč, od řeky jde mlha. Hotovo. Jako stativ jsi fakt k nezaplacení."
+    replies:
+      flirt:
+        en: "Same spot tomorrow? I'm free."
+        cs: "Zítra na stejném místě? Mám čas."
+      joke:
+        en: "Tag me as 'human tripod'."
+        cs: "Označ mě jako „lidský stativ“."
+      dry:
+        en: "Send me the video."
+        cs: "Pošli mi to video."
+    reactions:
+      flirt:
+        en: "Tomorrow it might rain. Then it's cosy content. Maybe."
+        cs: "Zítra možná bude pršet. Pak to bude útulný obsah. Možná."
+      joke:
+        en: "Human tripod. Honestly, that's a great handle."
+        cs: "Lidský stativ. Upřímně, to je skvělá přezdívka."
+      dry:
+        en: "After I edit it. So, in about a week. Bye!"
+        cs: "Až ho sestříhám. Tak za týden. Pa!"

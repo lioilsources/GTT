@@ -1,0 +1,121 @@
+# DRAFT for Ol1n's review (specs/dialogue.md). Maya helping a friend at a trdelník stall by the astronomical clock.
+id: maya_shop_2
+character: maya
+context: shop
+city: prague
+beats:
+  - npc:
+      en: "Welcome to the Golden Chimney! I'm only here for a friend today. And for content. Mostly content."
+      cs: "Vítej u Zlatého komínku! Dneska tu jen zaskakuju za kamarádku. A kvůli obsahu. Hlavně kvůli obsahu."
+    replies:
+      flirt:
+        en: "Then this is the best stall on the square."
+        cs: "Tak to je nejlepší stánek na náměstí."
+      joke:
+        en: "Is the chimney gold or just very sugary?"
+        cs: "Je ten komínek zlatý, nebo jen hodně cukrový?"
+      dry:
+        en: "One trdelník, please."
+        cs: "Jeden trdelník, prosím."
+    reactions:
+      flirt:
+        en: "Best stall, best staff. I'm putting that on the sign."
+        cs: "Nejlepší stánek, nejlepší obsluha. Napíšu to na ceduli."
+      joke:
+        en: "Ninety percent sugar, ten percent gold. Like my feed."
+        cs: "Devadesát procent cukru, deset procent zlata. Jako můj feed."
+      dry:
+        en: "Wow, straight to business. Okay. Filling?"
+        cs: "Páni, rovnou k věci. Dobře. S náplní?"
+  - npc:
+      en: "They say locals never eat these. Tourists love them. I love how they look on camera. Cream, chocolate or ice cream?"
+      cs: "Místní tohle prý nejedí. Turisti je milují. Já miluju, jak vypadají na kameře. Šlehačka, čokoláda, nebo zmrzlina?"
+    replies:
+      flirt:
+        en: "Surprise me. You have good taste."
+        cs: "Překvap mě. Máš dobrý vkus."
+      joke:
+        en: "All three. I'm not here to make good choices."
+        cs: "Všechny tři. Nejsem tu kvůli rozumným rozhodnutím."
+      dry:
+        en: "Plain. No filling."
+        cs: "Bez náplně. Obyčejný."
+    reactions:
+      flirt:
+        en: "I do. Chocolate, with a sugar heart. Don't read into it."
+        cs: "To mám. Čokoláda a srdíčko z cukru. Nic si z toho nevyvozuj."
+      joke:
+        en: "All three. The most honest order today."
+        cs: "Všechny tři. Nejupřímnější objednávka dne."
+      dry:
+        en: "Plain? It's going to look so sad on camera."
+        cs: "Obyčejný? Na kameře bude vypadat tak smutně."
+  - npc:
+      en: "Hold on, the astronomical clock is about to start. The whole crowd turns at once. Watch, it's my favourite shot."
+      cs: "Počkej, orloj se chystá spustit. Celý dav se naráz otočí. Sleduj, to je můj nejoblíbenější záběr."
+    replies:
+      flirt:
+        en: "I'd rather watch you."
+        cs: "Radši se budu dívat na tebe."
+      joke:
+        en: "A thousand phones and one tiny skeleton."
+        cs: "Tisíc mobilů a jeden malý kostlivec."
+      dry:
+        en: "I know it. It's short."
+        cs: "Znám to. Je to krátké."
+    reactions:
+      flirt:
+        en: "Then you'll miss the apostles. Your loss. Kind of flattering, though."
+        cs: "Tak ti utečou apoštolové. Tvoje škoda. Ale lichotivé to je."
+      joke:
+        en: "That skeleton has the best reach on the whole square."
+        cs: "Ten kostlivec má nejlepší dosah na celém náměstí."
+      dry:
+        en: "Short is perfect. Short is a reel."
+        cs: "Krátké je ideální. Krátké je reel."
+  - npc:
+      en: "Oops, I got sugar on the lens. And my sleeve. And somehow my eyebrow. Is it bad?"
+      cs: "Jejda, mám cukr na objektivu. A na rukávu. A nějak i na obočí. Je to hrozné?"
+    replies:
+      flirt:
+        en: "It suits you. Sweet look."
+        cs: "Sluší ti to. Sladký look."
+      joke:
+        en: "Call it a new filter: cinnamon."
+        cs: "Řekni, že je to nový filtr: skořice."
+      dry:
+        en: "It's bad. Left eyebrow."
+        cs: "Je. Levé obočí."
+    reactions:
+      flirt:
+        en: "Sweet look. That's going in the caption, thanks."
+        cs: "Sladký look. To dám do popisku, díky."
+      joke:
+        en: "Cinnamon filter. Okay, that might trend."
+        cs: "Skořicový filtr. Dobře, to by mohlo frčet."
+      dry:
+        en: "Left. Thanks. A little kind lie wouldn't hurt."
+        cs: "Levé. Díky. Trocha milosrdné lži by neuškodila."
+  - npc:
+      en: "Here's your trdelník. On the house, because you're in my best take. Don't tell my friend."
+      cs: "Tady je tvůj trdelník. Na účet podniku, protože jsi v mém nejlepším záběru. Neříkej to kamarádce."
+    replies:
+      flirt:
+        en: "Then I owe you a coffee. Somewhere without sugar."
+        cs: "Pak ti dlužím kafe. Někde bez cukru."
+      joke:
+        en: "I'll be the first person to actually eat one."
+        cs: "Budu první, kdo ho opravdu sní."
+      dry:
+        en: "Thanks. I'll pay anyway."
+        cs: "Díky. Stejně zaplatím."
+    reactions:
+      flirt:
+        en: "Coffee. Sugar-free. Okay, it's almost a date."
+        cs: "Kafe. Bez cukru. Dobře, je to skoro rande."
+      joke:
+        en: "A historic moment. I should be filming this."
+        cs: "Historický okamžik. To bych měla natáčet."
+      dry:
+        en: "Wow, okay. Strict with the rules. Bye, then."
+        cs: "Páni, dobře. Ty to máš s pravidly přísné. Tak pa."

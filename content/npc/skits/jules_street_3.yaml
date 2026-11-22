@@ -1,0 +1,121 @@
+# DRAFT for Ol1n's review (specs/dialogue.md). Jules busking on Charles Bridge at dawn, before the crowds.
+id: jules_street_3
+character: jules
+context: street
+city: prague
+beats:
+  - npc:
+      en: "Morning! I play the bridge at six, before the crowds. After nine there are so many people I can't find my own guitar case."
+      cs: "Dobré ráno! Na mostě hraju v šest, než přijdou davy. Po deváté je tu tolik lidí, že nenajdu ani vlastní pouzdro na kytaru."
+    replies:
+      flirt:
+        en: "Lucky me. A private concert."
+        cs: "To mám štěstí. Soukromý koncert."
+      joke:
+        en: "Put a bell on it. Like a tram."
+        cs: "Dej na něj zvonek. Jako tramvaj."
+      dry:
+        en: "Six is early."
+        cs: "Šest je brzo."
+    reactions:
+      flirt:
+        en: "Private, yes. Free, no. Tips welcome."
+        cs: "Soukromý ano. Zadarmo ne. Dýško vítáno."
+      joke:
+        en: "A tram bell! Then everyone would get out of its way. Genius."
+        cs: "Zvonek z tramvaje! Pak by mu všichni uhýbali. Geniální."
+      dry:
+        en: "It is. The statues don't mind, though."
+        cs: "To jo. Sochám to nevadí."
+  - npc:
+      en: "The fog's still on the river. Sound carries weird in fog. My chords bounce off the water and come back out of tune."
+      cs: "Na řece je pořád mlha. V mlze se zvuk nese divně. Akordy se odrazí od vody a vrátí se rozladěné."
+    replies:
+      flirt:
+        en: "Sounded perfect to me."
+        cs: "Mně to znělo dokonale."
+      joke:
+        en: "The river's doing covers of you."
+        cs: "Řeka po tobě hraje covery."
+      dry:
+        en: "Tune up once it lifts."
+        cs: "Nalaď se, až se zvedne."
+    reactions:
+      flirt:
+        en: "You have a kind ear. Or a cold one. Either way, thanks."
+        cs: "Máš laskavé ucho. Nebo zmrzlé. Tak jako tak díky."
+      joke:
+        en: "Covers! And worse ones. Typical river."
+        cs: "Covery! A horší. Typická řeka."
+      dry:
+        en: "I could. I like the weird ones, though."
+        cs: "Šlo by to. Ale ty divné mám radši."
+  - npc:
+      en: "Request time. I know three songs about the river, two about trams and one about fried cheese. It's a ballad."
+      cs: "Čas na přání. Umím tři písně o řece, dvě o tramvajích a jednu o smažáku. Je to balada."
+    replies:
+      flirt:
+        en: "Play the one you'd play for someone special."
+        cs: "Zahraj tu, kterou bys hrál pro někoho výjimečného."
+      joke:
+        en: "The fried cheese ballad. Obviously."
+        cs: "Baladu o smažáku. Samozřejmě."
+      dry:
+        en: "A tram one."
+        cs: "Nějakou tramvajovou."
+    reactions:
+      flirt:
+        en: "That one's not finished. Maybe it is now. Hm."
+        cs: "Ta ještě není hotová. Možná teď už je. Hm."
+      joke:
+        en: "Good choice. It's moving. There's tartar sauce in the chorus."
+        cs: "Dobrá volba. Je dojemná. V refrénu je tatarka."
+      dry:
+        en: "The night tram one. Slow, lots of bells."
+        cs: "Ta o noční tramvaji. Pomalá, spousta cinkání."
+  - npc:
+      en: "Here they come. The first tour group, and the selfies begin. In five minutes I'll be playing to a forest of elbows."
+      cs: "Už jsou tady. První skupina s průvodcem a začínají selfíčka. Za pět minut budu hrát pro les loktů."
+    replies:
+      flirt:
+        en: "I'll guard your case. Nobody touches it."
+        cs: "Budu ti hlídat pouzdro. Nikdo na něj nesáhne."
+      joke:
+        en: "Elbows are a great audience. Very pointed feedback."
+        cs: "Lokty jsou skvělé publikum. Hodně ostrá zpětná vazba."
+      dry:
+        en: "Move to the end of the bridge."
+        cs: "Přesuň se na konec mostu."
+    reactions:
+      flirt:
+        en: "A bodyguard for a guitar case. Most romantic thing this week."
+        cs: "Ochranka pro pouzdro od kytary. Nejromantičtější věc týdne."
+      joke:
+        en: "Pointed feedback! I'm borrowing that."
+        cs: "Ostrá zpětná vazba! To si půjčím."
+      dry:
+        en: "End of the bridge. Fewer people, less echo. Hm, true."
+        cs: "Konec mostu. Míň lidí, míň ozvěny. Hm, pravda."
+  - npc:
+      en: "Okay, I'm packing up before the elbows win. Thanks for listening while it was still quiet. That's the best audience."
+      cs: "Dobře, balím, než vyhrají lokty. Díky za poslech, dokud bylo ticho. To je nejlepší publikum."
+    replies:
+      flirt:
+        en: "Same time tomorrow. I'll bring coffee."
+        cs: "Zítra ve stejnou dobu. Přinesu kafe."
+      joke:
+        en: "Write the elbow song. I want royalties."
+        cs: "Napiš píseň o loktech. Chci podíl."
+      dry:
+        en: "Good playing. See you."
+        cs: "Dobře se to poslouchalo. Měj se."
+    reactions:
+      flirt:
+        en: "Coffee at six. That takes kindness. Or insomnia."
+        cs: "Kafe v šest. Na to je potřeba laskavost. Nebo nespavost."
+      joke:
+        en: "Royalties. You get one fried cheese a year."
+        cs: "Podíl. Dostaneš jeden smažák ročně."
+      dry:
+        en: "See you. Come by in the fog again."
+        cs: "Měj se. Přijď zase v mlze."

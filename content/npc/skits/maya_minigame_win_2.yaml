@@ -1,0 +1,121 @@
+# DRAFT for Ol1n's review (specs/dialogue.md). Maya right after the player beat her at kuličky in Letná park.
+id: maya_minigame_win_2
+character: maya
+context: minigame_win
+city: prague
+beats:
+  - npc:
+      en: "You won at kuličky? I picked marbles because they look cute on camera. Not so I'd lose to you."
+      cs: "Výhra v kuličkách je tvoje? Kuličky jsem vybrala, protože na kameře vypadají roztomile. Ne abych s tebou prohrála."
+    replies:
+      flirt:
+        en: "You looked cute losing, if it helps."
+        cs: "Při prohře ti to slušelo, jestli to pomůže."
+      joke:
+        en: "The marbles respect me. We have history."
+        cs: "Kuličky mě respektují. Máme spolu historii."
+      dry:
+        en: "You aimed with one hand and filmed with the other."
+        cs: "Mířila jsi jednou rukou. Druhou jsi točila."
+    reactions:
+      flirt:
+        en: "It helps a little. Keep going."
+        cs: "Trochu pomůže. Pokračuj."
+      joke:
+        en: "History with marbles. Weirdest flex I've ever heard."
+        cs: "Historii s kuličkami. Nejdivnější chlubení, co jsem kdy slyšela."
+      dry:
+        en: "Multitasking is a talent. Just not for this."
+        cs: "Multitasking je talent. Jen ne na tohle."
+  - npc:
+      en: "Also, I knelt in the dirt for that last flick. These were white jeans. Were."
+      cs: "Mimochodem, kvůli poslednímu cvrnku jsem klečela v hlíně. Tohle byly bílé džíny. Byly."
+    replies:
+      flirt:
+        en: "Dirt suits you. Very authentic."
+        cs: "Hlína ti sluší. Velmi autentické."
+      joke:
+        en: "Brown jeans are a trend now. You started it."
+        cs: "Hnědé džíny jsou teď trend. Ty jsi ho založila."
+      dry:
+        en: "White jeans in a park. Bold."
+        cs: "Bílé džíny do parku. Odvaha."
+    reactions:
+      flirt:
+        en: "Authentic. Ugh, that's my favourite word. Fine."
+        cs: "Autentické. Ach jo, to je moje oblíbené slovo. Fajn."
+      joke:
+        en: "If it trends, I'm taking all the credit."
+        cs: "Jestli to bude frčet, zásluhy beru celé."
+      dry:
+        en: "Bold is my brand. Dirty is not."
+        cs: "Odvaha je moje značka. Špína ne."
+  - npc:
+      en: "Okay, show me the flick. The thumb thing. How does your marble roll straight into the hole?"
+      cs: "Dobře, ukaž mi ten cvrnk. Tu věc s palcem. Jak to, že se ti kulička kutálí rovnou do důlku?"
+    replies:
+      flirt:
+        en: "Come here, I'll guide your hand."
+        cs: "Pojď sem, povedu ti ruku."
+      joke:
+        en: "Years of practice. And bribing the hole."
+        cs: "Roky tréninku. A uplácení důlku."
+      dry:
+        en: "Thumb behind the marble, short flick. That's it."
+        cs: "Palec za kuličku, krátký cvrnk. Nic víc."
+    reactions:
+      flirt:
+        en: "Hand-guiding. Classic move. I'm filming this."
+        cs: "Vedení ruky. Klasika. Tohle natočím."
+      joke:
+        en: "Bribing the hole. What does a hole even want?"
+        cs: "Uplácení důlku. Co vůbec takový důlek chce?"
+      dry:
+        en: "That's it? Your tutorials would get zero views."
+        cs: "Nic víc? Tvoje návody by měly nula zhlédnutí."
+  - npc:
+      en: "An old man on the bench says my technique is 'tragic'. He's been watching us for an hour."
+      cs: "Pán na lavičce říká, že moje technika je „tragická“. Kouká na nás už hodinu."
+    replies:
+      flirt:
+        en: "He's just jealous I'm here with you."
+        cs: "Jen žárlí, že tu jsem s tebou."
+      joke:
+        en: "He's the judge. Official kuličky jury."
+        cs: "Je to porotce. Oficiální kuličková porota."
+      dry:
+        en: "He's right. It's tragic."
+        cs: "Má pravdu. Je tragická."
+    reactions:
+      flirt:
+        en: "Jealous of you or of me? Don't answer, let me dream."
+        cs: "Žárlí na tebe, nebo na mě? Neodpovídej, nech mě snít."
+      joke:
+        en: "Then the jury gives me a two. Out of ten."
+        cs: "Tak to mi porota dává dvojku. Z deseti."
+      dry:
+        en: "Two critics in one park. Amazing. Great day."
+        cs: "Dva kritici v jednom parku. Úžasné. Skvělý den."
+  - npc:
+      en: "Rematch next week. Same chestnut tree, same hole, and I'm wearing black. Deal?"
+      cs: "Odveta příští týden. Stejný kaštan, stejný důlek a já přijdu v černém. Platí?"
+    replies:
+      flirt:
+        en: "Deal. I'm looking forward to you more than to the marbles."
+        cs: "Platí. Těším se na tebe víc než na kuličky."
+      joke:
+        en: "Deal. Black jeans, dirt-proof dignity."
+        cs: "Platí. Černé džíny, nezničitelná důstojnost."
+      dry:
+        en: "Deal. You'll still lose."
+        cs: "Platí. Stejně prohraješ."
+    reactions:
+      flirt:
+        en: "From someone who flicks like that, that's a big compliment."
+        cs: "Od někoho, kdo takhle cvrnká, je to velká poklona."
+      joke:
+        en: "Dignity isn't dirt-proof. Ask my jeans. Bye!"
+        cs: "Důstojnost nezničitelná není. Zeptej se mých džín. Pa!"
+      dry:
+        en: "We'll see. I'm practising on camera all week."
+        cs: "Uvidíme. Celý týden budu trénovat na kameru."

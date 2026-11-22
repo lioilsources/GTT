@@ -1,0 +1,121 @@
+# DRAFT for Ol1n's review (specs/dialogue.md). Dana right after she beat the player at čára during her lunch break.
+id: dana_minigame_lose_2
+character: dana
+context: minigame_lose
+city: prague
+beats:
+  - npc:
+      en: "I won. Čára: coin closest to the line. I calculated the distance during my lunch break. Fifteen minutes, one victory."
+      cs: "Vyhrála jsem. Čára: mince nejblíž k čáře. Vzdálenost jsem spočítala během obědové pauzy. Patnáct minut, jedno vítězství."
+    replies:
+      flirt:
+        en: "Congratulations. You're impressive."
+        cs: "Gratuluju. Jsi působivá."
+      joke:
+        en: "Did you schedule the win too?"
+        cs: "Vítězství sis taky naplánovala?"
+      dry:
+        en: "Good throw. Precise."
+        cs: "Dobrý hod. Přesný."
+    reactions:
+      flirt:
+        en: "I know. But thank you for saying it."
+        cs: "Já vím. Ale díky, že to říkáš."
+      joke:
+        en: "No. Victories aren't on the calendar. They just happen."
+        cs: "Ne. Vítězství nejsou v kalendáři. Prostě přijdou."
+      dry:
+        en: "Precise. The nicest word anyone's said to me today."
+        cs: "Přesný. To je nejhezčí slovo, co mi dnes někdo řekl."
+  - npc:
+      en: "Your coin bounced off a cobblestone and rolled into a drain. I'm sorry. It had a good career."
+      cs: "Tvoje mince se odrazila od kostky a skutálela se do kanálu. Je mi to líto. Měla dobrou kariéru."
+    replies:
+      flirt:
+        en: "Worth it to see you smile."
+        cs: "Stálo to za tvůj úsměv."
+      joke:
+        en: "It took early retirement."
+        cs: "Odešla do předčasného důchodu."
+      dry:
+        en: "Cobbles. Unfair surface."
+        cs: "Kostky. Nefér povrch."
+    reactions:
+      flirt:
+        en: "I didn't smile. That was a squint. The sun."
+        cs: "Neusmála jsem se. To bylo přimhouření. Slunce."
+      joke:
+        en: "Retirement is not a joke. It's a pension plan."
+        cs: "Důchod není vtip. Je to penzijní plán."
+      dry:
+        en: "Equally unfair for both of us. That's the point."
+        cs: "Pro oba stejně nefér. O to jde."
+  - npc:
+      en: "I learned this as a kid outside the panel blocks. Then I stopped. Years later my aim is still better than my work-life balance."
+      cs: "Naučila jsem se to jako dítě před paneláky. Pak jsem přestala. Po letech mi míření jde pořád líp než rovnováha mezi prací a životem."
+    replies:
+      flirt:
+        en: "Then let's work on the balance. Together."
+        cs: "Tak zapracujeme na rovnováze. Spolu."
+      joke:
+        en: "Put that on your CV."
+        cs: "Dej si to do životopisu."
+      dry:
+        en: "Some skills don't fade."
+        cs: "Některé dovednosti nezmizí."
+    reactions:
+      flirt:
+        en: "Together. That sounds like a meeting. Maybe."
+        cs: "Spolu. To zní jako schůzka. Možná."
+      joke:
+        en: "It's already there. Nobody reads that part."
+        cs: "Už tam je. Tu část nikdo nečte."
+      dry:
+        en: "They don't. Unlike lunch breaks. Mine ends in four minutes."
+        cs: "Nezmizí. Na rozdíl od obědových pauz. Ta moje končí za čtyři minuty."
+  - npc:
+      en: "The prize: you buy me svíčková at the canteen round the corner. The dumplings there are the only thing in my week that isn't rushed."
+      cs: "Cena pro vítěze: koupíš mi svíčkovou v jídelně za rohem. Tamní knedlíky jsou jediná věc v mém týdnu, která nespěchá."
+    replies:
+      flirt:
+        en: "Svíčková with you? That's a prize for me too."
+        cs: "Svíčková s tebou? To je cena i pro mě."
+      joke:
+        en: "Six dumplings or I appeal."
+        cs: "Šest knedlíků, nebo se odvolám."
+      dry:
+        en: "Fair. Svíčková it is."
+        cs: "Fér. Tak svíčková."
+    reactions:
+      flirt:
+        en: "Lunch is lunch. But you can sit. Across. Not next to me."
+        cs: "Oběd je oběd. Ale sednout si můžeš. Naproti. Ne vedle."
+      joke:
+        en: "Appeals take weeks. The svíčková won't wait."
+        cs: "Odvolání trvá týdny. Svíčková nepočká."
+      dry:
+        en: "Good. No negotiating. I'm starting to like you."
+        cs: "Dobře. Žádné vyjednávání. Začínáš se mi líbit."
+  - npc:
+      en: "Rematch next Thursday at twelve-thirty, same line. I'm putting it in my calendar. You put it in yours. Don't be late."
+      cs: "Odveta příští čtvrtek ve dvanáct třicet, stejná čára. Dám si to do kalendáře. Ty do svého. A nepřijď pozdě."
+    replies:
+      flirt:
+        en: "I'd never be late for you."
+        cs: "Na tebe nikdy pozdě nepřijdu."
+      joke:
+        en: "I'll bring a coin with GPS."
+        cs: "Přinesu minci s GPS."
+      dry:
+        en: "Thursday, twelve-thirty. Done."
+        cs: "Čtvrtek, dvanáct třicet. Hotovo."
+    reactions:
+      flirt:
+        en: "Good. Being late is the one unforgivable thing. See you."
+        cs: "Dobře. Pozdní příchod je jediná neodpustitelná věc. Uvidíme se."
+      joke:
+        en: "Tracking devices are cheating. And not funny. Bye."
+        cs: "Sledovací zařízení je podvod. A není to vtipné. Ahoj."
+      dry:
+        en: "Done. Short and confirmed. Perfect. Bye."
+        cs: "Hotovo. Krátce a potvrzeno. Perfektní. Ahoj."

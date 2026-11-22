@@ -1,0 +1,121 @@
+# DRAFT for Ol1n's review (specs/dialogue.md). Iris at a shared table in a Letná beer garden. Nobody drives after drinking.
+id: iris_bar_1
+character: iris
+context: bar
+city: prague
+beats:
+  - npc:
+      en: "Sit, there's room. In a Letná beer garden everyone shares a table. I'm reading by a paper lantern. Very romantic, terrible for the eyes."
+      cs: "Sedni si, je tu místo. V letenské zahrádce se stoly sdílí. Čtu u papírového lampionu. Velmi romantické, hrozné pro oči."
+    replies:
+      flirt:
+        en: "Romantic sounds right."
+        cs: "Romantické zní dobře."
+      joke:
+        en: "Read the big print. The menu."
+        cs: "Čti velké písmo. Jídelní lístek."
+      dry:
+        en: "Thanks. Is the beer good here?"
+        cs: "Díky. Je tu dobré pivo?"
+    reactions:
+      flirt:
+        en: "It does, doesn't it? I hadn't noticed until now."
+        cs: "Že jo? Až do teď jsem si toho nevšimla."
+      joke:
+        en: "The menu has a twist: they're out of everything."
+        cs: "Jídelní lístek má zvrat: všechno došlo."
+      dry:
+        en: "Good and cold. The view is better."
+        cs: "Dobré a studené. Výhled je lepší."
+  - npc:
+      en: "From here you see all the bridges in a row, like spines on a bookshelf. I count them every time. Always the same, still satisfying."
+      cs: "Odsud vidíš všechny mosty v řadě, jako hřbety knih v polici. Pokaždé je počítám. Vždycky stejně, a pořád mě to těší."
+    replies:
+      flirt:
+        en: "I'll count them with you."
+        cs: "Spočítám je s tebou."
+      joke:
+        en: "Has one ever gone missing?"
+        cs: "Chyběl někdy nějaký?"
+      dry:
+        en: "It's a good view."
+        cs: "Je to dobrý výhled."
+    reactions:
+      flirt:
+        en: "Then we'll count slowly. No rush."
+        cs: "Tak budeme počítat pomalu. Nespěchá to."
+      joke:
+        en: "No. That would be a better book, though."
+        cs: "Ne. To by byla lepší kniha."
+      dry:
+        en: "It is. Some views don't need words."
+        cs: "Je. Některé výhledy slova nepotřebují."
+  - npc:
+      en: "I'm having one beer and a lemonade, that's my limit. One more and I start reciting poetry to strangers."
+      cs: "Dám si jedno pivo a limonádu, to je můj limit. Ještě jedno a začnu cizím lidem recitovat básně."
+    replies:
+      flirt:
+        en: "Then I'll stop being a stranger."
+        cs: "Tak to přestanu být cizí."
+      joke:
+        en: "Recite one now. A practice run."
+        cs: "Zarecituj jednu teď. Na zkoušku."
+      dry:
+        en: "Lemonade for me. I'm driving."
+        cs: "Já si dám limonádu. Řídím."
+    reactions:
+      flirt:
+        en: "Then the poetry comes next. Careful what you wish for."
+        cs: "Pak přijde na řadu poezie. Opatrně s přáními."
+      joke:
+        en: "No. Poetry needs atmosphere. And a second beer."
+        cs: "Ne. Poezie chce atmosféru. A druhé pivo."
+      dry:
+        en: "Sensible. You and my lemonade will get along."
+        cs: "Rozumné. Moje limonáda a ty si budete rozumět."
+  - npc:
+      en: "The chestnut trees drop conkers on the tables. One fell in my glass earlier. I fished it out with a bookmark."
+      cs: "Kaštany tu padají na stoly. Jeden mi předtím spadl do sklenice. Vylovila jsem ho záložkou."
+    replies:
+      flirt:
+        en: "Lucky chestnut. It got close to you."
+        cs: "Šťastný kaštan. Dostal se k tobě blízko."
+      joke:
+        en: "Chestnut beer. Seasonal special."
+        cs: "Kaštanové pivo. Sezónní speciál."
+      dry:
+        en: "Clever use of a bookmark."
+        cs: "Šikovné použití záložky."
+    reactions:
+      flirt:
+        en: "You can make a wet chestnut sound romantic. That's a talent."
+        cs: "Z mokrého kaštanu umíš udělat romantiku. To je talent."
+      joke:
+        en: "Seasonal. Yes. Very seasonal."
+        cs: "Sezónní. Ano. Velmi sezónní."
+      dry:
+        en: "Bookmarks are underrated tools. Finally someone says it."
+        cs: "Záložky jsou podceňované nástroje. Konečně to někdo řekl."
+  - npc:
+      en: "My tram's in twenty minutes, down to the river. Thank you. This was better than chapter twelve."
+      cs: "Za dvacet minut mi jede tramvaj dolů k řece. Děkuju. Tohle bylo lepší než dvanáctá kapitola."
+    replies:
+      flirt:
+        en: "What happens in chapter thirteen?"
+        cs: "A co se stane ve třinácté kapitole?"
+      joke:
+        en: "Chapter twelve must be really bad."
+        cs: "To musí být dvanáctá kapitola fakt špatná."
+      dry:
+        en: "Get home safe."
+        cs: "Dojeď v pořádku domů."
+    reactions:
+      flirt:
+        en: "I don't know yet. Maybe I'll let you know."
+        cs: "Ještě nevím. Možná ti dám vědět."
+      joke:
+        en: "It's about a tax audit. So, yes."
+        cs: "Je o daňové kontrole. Takže ano."
+      dry:
+        en: "I will. You too. Drive carefully."
+        cs: "Dojedu. Ty taky. Jeď opatrně."

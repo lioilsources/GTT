@@ -1,0 +1,121 @@
+# DRAFT for Ol1n's review (specs/dialogue.md). Iris reading on a Petřín bench, autumn leaves, the city below.
+id: iris_street_3
+character: iris
+context: street
+city: prague
+beats:
+  - npc:
+      en: "Oh, sorry, do sit. I'm just reading on Petřín. The leaves keep landing on my page like bookmarks nobody asked for."
+      cs: "Ach, promiň, klidně si sedni. Jen si čtu na Petříně. Listí mi pořád padá na stránku jako záložky, o které nikdo nestál."
+    replies:
+      flirt:
+        en: "Then let me be a bookmark you want."
+        cs: "Tak já budu záložka, o kterou stojíš."
+      joke:
+        en: "Nature's way of saying 'read faster'."
+        cs: "Příroda ti vzkazuje: „čti rychleji“."
+      dry:
+        en: "Thanks. Good spot."
+        cs: "Díky. Dobré místo."
+    reactions:
+      flirt:
+        en: "Oh. That's... a very good line. I'll mark it."
+        cs: "Ó. To je... moc dobrá věta. Založím si ji."
+      joke:
+        en: "Nature also says 'read slower'. Mixed signals."
+        cs: "Příroda taky vzkazuje „čti pomaleji“. Smíšené signály."
+      dry:
+        en: "The best. A view of the whole city, and nobody talks. Usually."
+        cs: "Nejlepší. Výhled na celé město a nikdo nemluví. Obvykle."
+  - npc:
+      en: "I'm reading a novel set in this exact park. Someone is walking up the hill in the fog. I keep looking up to check it isn't real."
+      cs: "Čtu román, který se odehrává přesně v tomhle parku. Někdo v mlze stoupá do kopce. Pořád zvedám oči, jestli to není doopravdy."
+    replies:
+      flirt:
+        en: "If someone walks out of the fog, I hope it's me."
+        cs: "Jestli někdo vyjde z mlhy, ať jsem to já."
+      joke:
+        en: "It's me. The character from the fog."
+        cs: "To jsem já. Postava z mlhy."
+      dry:
+        en: "Is it a good book?"
+        cs: "Je ta kniha dobrá?"
+    reactions:
+      flirt:
+        en: "It sort of happened. Out of the fog and straight onto my bench."
+        cs: "Tak trochu se to stalo. Z mlhy rovnou na moji lavičku."
+      joke:
+        en: "Characters don't usually sit down. Okay."
+        cs: "Postavy si obvykle nesedají. Dobře."
+      dry:
+        en: "Good and slow. The best ones take a while."
+        cs: "Dobrá a pomalá. Ty nejlepší chvíli trvají."
+  - npc:
+      en: "Up by the funicular, down on foot. The ride is for reading, the walk is for thinking."
+      cs: "Nahoru lanovkou, dolů pěšky. Jízda je na čtení, chůze na přemýšlení."
+    replies:
+      flirt:
+        en: "Can I join the thinking part?"
+        cs: "Můžu se přidat k té přemýšlecí části?"
+      joke:
+        en: "And the stairs are for regretting."
+        cs: "A schody jsou na litování."
+      dry:
+        en: "Sensible system."
+        cs: "Rozumný systém."
+    reactions:
+      flirt:
+        en: "If you don't mind long silences. I might like that."
+        cs: "Jestli ti nevadí dlouhé mlčení. To by se mi mohlo líbit."
+      joke:
+        en: "Stairs for regretting. I see."
+        cs: "Schody na litování. Aha."
+      dry:
+        en: "Thank you. I've been refining it for years."
+        cs: "Děkuju. Ladím ho roky."
+  - npc:
+      en: "From here you can see the trams crossing the bridges. Tiny red lines. I like to imagine where everyone's going."
+      cs: "Odsud jsou vidět tramvaje, jak přejíždějí mosty. Malé červené čárky. Ráda si představuju, kam všichni jedou."
+    replies:
+      flirt:
+        en: "I know where I want to go. With you."
+        cs: "Já vím, kam chci jet. S tebou."
+      joke:
+        en: "That one's off to a fried cheese."
+        cs: "Tamta jede na smažák."
+      dry:
+        en: "Home, mostly. It's evening."
+        cs: "Hlavně domů. Je večer."
+    reactions:
+      flirt:
+        en: "Careful. I write things down. That one goes in the margin."
+        cs: "Opatrně. Já si věci zapisuju. Tohle jde na okraj."
+      joke:
+        en: "That's... probably accurate."
+        cs: "To je... nejspíš přesné."
+      dry:
+        en: "Home. Yes. The most beautiful word there is."
+        cs: "Domů. Ano. Nejkrásnější slovo, co existuje."
+  - npc:
+      en: "It's getting dark and the castle is lighting up. I should go before I end up reading in the dark again. Thank you for the bench company."
+      cs: "Stmívá se a hrad se rozsvěcuje. Měla bych jít, než zase skončím u čtení potmě. Děkuju za společnost na lavičce."
+    replies:
+      flirt:
+        en: "Same bench tomorrow? I'll bring tea."
+        cs: "Zítra stejná lavička? Přinesu čaj."
+      joke:
+        en: "Read the last page first. Saves time."
+        cs: "Přečti si poslední stránku napřed. Ušetříš čas."
+      dry:
+        en: "Careful on the steps. They're wet."
+        cs: "Opatrně na schodech. Jsou mokré."
+    reactions:
+      flirt:
+        en: "Tea and a bench. That's a whole chapter. Yes."
+        cs: "Čaj a lavička. To je celá kapitola. Ano."
+      joke:
+        en: "That's a crime. Goodbye."
+        cs: "To je zločin. Sbohem."
+      dry:
+        en: "I know. I'll take the funicular. Good night."
+        cs: "Já vím. Pojedu lanovkou. Dobrou noc."

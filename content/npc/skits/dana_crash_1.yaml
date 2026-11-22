@@ -1,0 +1,121 @@
+# DRAFT for Ol1n's review (specs/dialogue.md). The player just tapped Dana's car on wet tram tracks in Karlín. Light scratch, nobody hurt.
+id: dana_crash_1
+character: dana
+context: crash
+city: prague
+beats:
+  - npc:
+      en: "Was that... My car just got tapped. On tram tracks. In Karlín. In the rain. During a call."
+      cs: "Tohle bylo... Moje auto právě dostalo ťukanec. Na kolejích. V Karlíně. V dešti. Během callu."
+    replies:
+      flirt:
+        en: "At least you look great when you're annoyed."
+        cs: "Aspoň ti to sluší, i když se zlobíš."
+      joke:
+        en: "Multitasking. Like you."
+        cs: "Multitasking. Jako ty."
+      dry:
+        en: "Sorry. My fault. Is anyone hurt?"
+        cs: "Promiň. Moje chyba. Nikomu nic není?"
+    reactions:
+      flirt:
+        en: "I look the same either way. Busy."
+        cs: "Vypadám pořád stejně. Zaneprázdněně."
+      joke:
+        en: "That's not multitasking. That's a dent."
+        cs: "To není multitasking. To je důlek."
+      dry:
+        en: "Nobody's hurt. And the apology came first. Noted."
+        cs: "Nikomu nic. A omluva přišla první. Beru na vědomí."
+  - npc:
+      en: "Hold on. 'I'll call you back, there's been an incident.' Right. Let's look. A scratch on the bumper. Small. Annoying."
+      cs: "Moment. „Zavolám ti zpátky, stal se incident.“ Tak. Podíváme se. Škrábanec na nárazníku. Malý. Otravný."
+    replies:
+      flirt:
+        en: "I'll make it up to you. Coffee?"
+        cs: "Vynahradím ti to. Kafe?"
+      joke:
+        en: "Incident. Sounds like a thriller."
+        cs: "Incident. Zní to jako thriller."
+      dry:
+        en: "I'll cover the repair."
+        cs: "Opravu zaplatím."
+    reactions:
+      flirt:
+        en: "Coffee doesn't fix bumpers. I'll keep it in mind, though."
+        cs: "Kafe nárazníky neopraví. Ale budu na to myslet."
+      joke:
+        en: "It's not a thriller. It's an expense report."
+        cs: "Není to thriller. Je to vyúčtování nákladů."
+      dry:
+        en: "Good. A clear offer. I like clear offers."
+        cs: "Dobře. Jasná nabídka. Jasné nabídky mám ráda."
+  - npc:
+      en: "A tram is coming and we're on its tracks. It's ringing. It's ringing at me. Move, please, before it files a complaint."
+      cs: "Jede tramvaj a my stojíme v kolejích. Zvoní. Zvoní na mě. Uhni, prosím, než na mě podá stížnost."
+    replies:
+      flirt:
+        en: "For you I'd move mountains. A car is easy."
+        cs: "Pro tebe pohnu i horami. Auto je hračka."
+      joke:
+        en: "It rings like your phone."
+        cs: "Zvoní jako tvůj telefon."
+      dry:
+        en: "Moving. Pull over to the kerb."
+        cs: "Uhýbám. Zajeď k obrubníku."
+    reactions:
+      flirt:
+        en: "The car is enough. Mountains are not on today's agenda."
+        cs: "Auto stačí. Hory dnes nejsou na programu."
+      joke:
+        en: "My phone rings more. Move."
+        cs: "Můj telefon zvoní víc. Uhni."
+      dry:
+        en: "Kerb. Yes. Thank you for having a plan."
+        cs: "K obrubníku. Ano. Díky, že máš plán."
+  - npc:
+      en: "Insurance forms take forty minutes. I have twenty. Can we swap numbers and handle it properly tomorrow?"
+      cs: "Formuláře pro pojišťovnu zaberou čtyřicet minut. Já mám dvacet. Vyměníme si čísla a vyřešíme to pořádně zítra?"
+    replies:
+      flirt:
+        en: "Swapping numbers was my plan all along."
+        cs: "Výměna čísel byla celou dobu můj plán."
+      joke:
+        en: "Can I send you a calendar invite?"
+        cs: "Můžu ti poslat pozvánku do kalendáře?"
+      dry:
+        en: "Yes. Here's my number. I'll pay."
+        cs: "Ano. Tady je moje číslo. Zaplatím to."
+    reactions:
+      flirt:
+        en: "Bold. It's for the insurance. Mostly."
+        cs: "Odvážné. Je to kvůli pojišťovně. Hlavně."
+      joke:
+        en: "My calendar is full. It doesn't take jokes either."
+        cs: "Kalendář mám plný. A vtipy taky nebere."
+      dry:
+        en: "Perfect. Clear, quick, responsible. A rare combination."
+        cs: "Perfektní. Jasně, rychle, zodpovědně. Vzácná kombinace."
+  - npc:
+      en: "Tomorrow at ten-fifteen I'll call. Drive slowly here, wet tracks are slippery. Now excuse me, I'm resuming my call."
+      cs: "Zítra v deset patnáct zavolám. Tady jezdi pomalu, mokré koleje kloužou. A teď mě omluv, pokračuju v callu."
+    replies:
+      flirt:
+        en: "I'll be waiting by the phone."
+        cs: "Budu čekat u telefonu."
+      joke:
+        en: "Tell the call I'm sorry."
+        cs: "Vyřiď callu, že se omlouvám."
+      dry:
+        en: "Ten-fifteen. Got it. Sorry again."
+        cs: "Deset patnáct. Jasně. Ještě jednou promiň."
+    reactions:
+      flirt:
+        en: "Ten-fifteen. Not ten-fourteen. Bye."
+        cs: "Deset patnáct. Ne deset čtrnáct. Ahoj."
+      joke:
+        en: "The call doesn't accept apologies. Bye."
+        cs: "Call omluvy nepřijímá. Ahoj."
+      dry:
+        en: "Accepted. Drive safe."
+        cs: "Přijato. Jeď opatrně."

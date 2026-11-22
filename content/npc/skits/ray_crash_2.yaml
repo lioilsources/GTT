@@ -1,0 +1,121 @@
+# DRAFT for Ol1n's review (specs/dialogue.md). The player just bumped Ray's taxi on wet Malá Strana cobbles. Light dent, nobody hurt.
+id: ray_crash_2
+character: ray
+context: crash
+city: prague
+beats:
+  - npc:
+      en: "Easy, easy! The streets in Malá Strana are narrow and the cobbles are slippery. My bumper just met yours. Everyone okay?"
+      cs: "Pomalu, pomalu! Uličky na Malé Straně jsou úzké a kostky kloužou. Můj nárazník se zrovna seznámil s tvým. Všichni v pořádku?"
+    replies:
+      flirt:
+        en: "Fine. Nice way to meet you."
+        cs: "V pohodě. Hezký způsob, jak se seznámit."
+      joke:
+        en: "Our bumpers are getting along great."
+        cs: "Naše nárazníky si rozumí."
+      dry:
+        en: "I'm fine. Sorry, my fault."
+        cs: "Jsem v pořádku. Promiň, moje chyba."
+    reactions:
+      flirt:
+        en: "A wave is cheaper. Next time, wave."
+        cs: "Mávnutí je levnější. Příště mávni."
+      joke:
+        en: "Ha! They'll be texting by Friday."
+        cs: "Cha! Do pátku si budou psát."
+      dry:
+        en: "Honest. Good. The cobbles get half the blame anyway."
+        cs: "Upřímně. Dobře. Půlku viny mají stejně kostky."
+  - npc:
+      en: "Let's look. A small dent. On this street, a car without dents is a tourist. Mine's a local now."
+      cs: "Mrkneme. Malý důlek. V téhle ulici je auto bez důlků turista. To moje už je místní."
+    replies:
+      flirt:
+        en: "Your car's gorgeous, dents and all."
+        cs: "Tvoje auto je nádherné i s důlky."
+      joke:
+        en: "So that was actually a favour?"
+        cs: "Takže to byla vlastně laskavost?"
+      dry:
+        en: "Small dent. I'll pay for it."
+        cs: "Malý důlek. Zaplatím ho."
+    reactions:
+      flirt:
+        en: "It's a taxi, not a model. But thanks."
+        cs: "Je to taxík, ne modelka. Ale díky."
+      joke:
+        en: "Ha! A favour. Don't do me any more favours."
+        cs: "Cha! Laskavost. Už mi žádné nedělej."
+      dry:
+        en: "Pay? For this? Put your wallet away."
+        cs: "Platit? Za tohle? Schovej peněženku."
+  - npc:
+      en: "Know my theory about cobbles? They're the city saying: slow down, you're on something very old. Show respect."
+      cs: "Znáš moji teorii o kostkách? To ti město říká: zpomal, jedeš po něčem hodně starém. Prokaž úctu."
+    replies:
+      flirt:
+        en: "I respect you a lot too."
+        cs: "Tebe si taky moc vážím."
+      joke:
+        en: "So that was an insult to six hundred years?"
+        cs: "Takže tohle byla urážka šesti set let?"
+      dry:
+        en: "Noted. Slower on the cobbles."
+        cs: "Beru na vědomí. Po kostkách pomaleji."
+    reactions:
+      flirt:
+        en: "Respect the cobbles first. Then the cab driver."
+        cs: "Napřed úcta ke kostkám. Pak k taxikáři."
+      joke:
+        en: "Seven hundred. They forgive. Barely."
+        cs: "Sedmi set. Odpouštějí. Tak tak."
+      dry:
+        en: "Good. You learn fast."
+        cs: "Dobře. Učíš se rychle."
+  - npc:
+      en: "A tram's coming and we're half on the tracks. Let's roll aside before it rings at us. That bell judges."
+      cs: "Jede tramvaj a my stojíme napůl v kolejích. Odsuneme se, než na nás zacinká. Ten zvonek soudí."
+    replies:
+      flirt:
+        en: "Lead the way. I'll follow you anywhere."
+        cs: "Veď. Půjdu za tebou kamkoli."
+      joke:
+        en: "Too late, I can feel it judging."
+        cs: "Pozdě, už cítím, jak soudí."
+      dry:
+        en: "Moving now."
+        cs: "Hned uhnu."
+    reactions:
+      flirt:
+        en: "Follow me to the kerb. That's as far as it goes."
+        cs: "Za mnou k obrubníku. Dál to nejde."
+      joke:
+        en: "Ha! One ring means 'move', two mean 'shame on you'."
+        cs: "Cha! Jednou cinkne „uhni“, dvakrát „styď se“."
+      dry:
+        en: "Good reflexes. Better than your braking."
+        cs: "Dobré reflexy. Lepší než tvoje brzdění."
+  - npc:
+      en: "No paperwork for a dent like this. Let's shake on it. And next time the cobbles get your full attention. Deal?"
+      cs: "Kvůli takovému důlku žádné papíry. Plácneme si. A příště mají kostky tvoji plnou pozornost. Platí?"
+    replies:
+      flirt:
+        en: "Deal. Some of it's left for you."
+        cs: "Platí. Trochu jí zbyde i na tebe."
+      joke:
+        en: "Deal. I'll apologise to every cobble."
+        cs: "Platí. Omluvím se každé kostce."
+      dry:
+        en: "Deal. Thanks, that's decent of you."
+        cs: "Platí. Díky, to je od tebe férové."
+    reactions:
+      flirt:
+        en: "None for me. All of it for the road. Go on."
+        cs: "Pro mě nic. Všechno silnici. Jeď."
+      joke:
+        en: "That's a few million. Better start now. Ha!"
+        cs: "To je pár milionů. Začni hned. Cha!"
+      dry:
+        en: "Decent goes both ways. Drive safe."
+        cs: "Férovost platí oběma směry. Jeď opatrně."
