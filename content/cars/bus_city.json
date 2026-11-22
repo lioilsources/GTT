@@ -1,0 +1,21 @@
+{
+  "id": "bus_city",
+  "name": "Halden Citybus 40",
+  "class": "bus",
+  "length_m": 12.0,
+  "width_m": 2.55,
+  "mass": 11000,
+  "power": 3.4,
+  "brake": 8.5,
+  "grip_front": 15.5,
+  "grip_rear": 15.0,
+  "drift_bias": 0.55,
+  "steer_speed": 2.2,
+  "top_speed": 24.0,
+  "seats": 40,
+  "tags": ["nyc"],
+  "price": 60000,
+  "rarity": "legendary",
+  "tuning_slots": ["engine", "tyres", "brakes"],
+  "paint": "citybus_blue"
+}

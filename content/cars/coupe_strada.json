@@ -1,0 +1,21 @@
+{
+  "id": "coupe_strada",
+  "name": "Bellmar Strada GT",
+  "class": "coupe",
+  "length_m": 4.6,
+  "width_m": 1.85,
+  "mass": 1380,
+  "power": 10.2,
+  "brake": 17.0,
+  "grip_front": 24.5,
+  "grip_rear": 23.0,
+  "drift_bias": 0.3,
+  "steer_speed": 4.8,
+  "top_speed": 44.0,
+  "seats": 2,
+  "tags": ["nyc"],
+  "price": 32000,
+  "rarity": "rare",
+  "tuning_slots": ["engine", "tyres", "brakes", "weight", "drift"],
+  "paint": "strada_pearl"
+}

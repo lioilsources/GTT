@@ -1,0 +1,21 @@
+{
+  "id": "sedan_harbor",
+  "name": "Halden Harbor",
+  "class": "sedan",
+  "length_m": 4.8,
+  "width_m": 1.85,
+  "mass": 1480,
+  "power": 7.6,
+  "brake": 14.5,
+  "grip_front": 21.5,
+  "grip_rear": 20.5,
+  "drift_bias": 0.4,
+  "steer_speed": 4.4,
+  "top_speed": 37.0,
+  "seats": 5,
+  "tags": ["nyc"],
+  "price": 11000,
+  "rarity": "common",
+  "tuning_slots": ["engine", "tyres", "brakes", "weight", "drift"],
+  "paint": "harbor_slate"
+}

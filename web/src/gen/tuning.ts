@@ -2497,7 +2497,7 @@ export class TuningCarsParked {
   attempts: number;
   /** RoadClass: primary, secondary, tertiary, residential */
   classes: number[];
-  /** filtered by the city's tag */
+  /** filtered by the city's tag; every car parks somewhere except the city bus and the Vega (hop tank, garage only; specs/cars.md) */
   models: string[];
   segmentMarginM: number;
   curbGapM: number;

@@ -485,7 +485,11 @@ cars:
     per_chunk: 4
     attempts: 24
     classes: [3, 4, 5, 6]      # RoadClass: primary, secondary, tertiary, residential
-    models: [hatch_pip, muscle_brute, taxi_metro, pickup_hauler, m0_coupe, lidovka, kolobezka, kolo]   # filtered by the city's tag
+    # filtered by the city's tag; every car parks somewhere except the city bus and the Vega (hop tank, garage only; specs/cars.md)
+    models: [hatch_pip, muscle_brute, taxi_metro, pickup_hauler, m0_coupe, lidovka, kolobezka, kolo,
+             mini_pebble, mini_dot, mini_bolt, hatch_rally, hatch_city, sedan_harbor, sedan_regent, sedan_crown, kombi_fjord, kombi_woody, coupe_strada,
+             coupe_nova, muscle_thunder, muscle_bulldog, super_arrow, super_vento, super_lumen, vet_tourer, vet_skyliner, off_ridge, off_bloc, pickup_mesa,
+             van_courier, van_wander, van_box, taxi_classic, limo_stretch, limo_grand, micro_scoot, micro_cruiser, spec_grill, spec_trike, spec_rickshaw]
     segment_margin_m: 14.0
     curb_gap_m: 0.5
     min_inner_m: 2.0

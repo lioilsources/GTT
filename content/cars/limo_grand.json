@@ -1,0 +1,21 @@
+{
+  "id": "limo_grand",
+  "name": "Amberline Grand Stretch",
+  "class": "limo",
+  "length_m": 8.2,
+  "width_m": 2.05,
+  "mass": 2800,
+  "power": 6.6,
+  "brake": 12.5,
+  "grip_front": 19.5,
+  "grip_rear": 18.5,
+  "drift_bias": 0.42,
+  "steer_speed": 2.6,
+  "top_speed": 36.0,
+  "seats": 10,
+  "tags": ["nyc"],
+  "price": 40000,
+  "rarity": "epic",
+  "tuning_slots": ["engine", "tyres", "brakes", "weight", "drift"],
+  "paint": "grand_white"
+}

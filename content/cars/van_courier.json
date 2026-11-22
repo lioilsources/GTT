@@ -1,0 +1,21 @@
+{
+  "id": "van_courier",
+  "name": "Halden Courier",
+  "class": "van",
+  "length_m": 5.4,
+  "width_m": 2.0,
+  "mass": 2200,
+  "power": 6.2,
+  "brake": 12.5,
+  "grip_front": 19.0,
+  "grip_rear": 18.5,
+  "drift_bias": 0.42,
+  "steer_speed": 3.6,
+  "top_speed": 31.0,
+  "seats": 3,
+  "tags": ["nyc"],
+  "price": 12000,
+  "rarity": "common",
+  "tuning_slots": ["engine", "tyres", "brakes", "weight", "drift"],
+  "paint": "courier_white"
+}

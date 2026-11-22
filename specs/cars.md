@@ -1,7 +1,8 @@
 # Auta, přesedání a garáž (M1-S8)
 
-**version: 1** · P0 vlastnictví a garáž (`vectors/cars.json`) · P2 zaparkovaná auta a kreslení ·
-METROPOLE_PLAN 7.5, 10, M1 bod 8 · parita F-018
+**version: 2** · P0 vlastnictví a garáž (`vectors/cars.json`) · P2 zaparkovaná auta a kreslení ·
+METROPOLE_PLAN 7.5, 10, M1 bod 8, M2 bod 8 · parita F-018, kreslení tříd v2 F-045 · v2 nemění pravidla P0 (`vectors/cars.json` jen
+`specVersion` 2)
 
 ## Účel
 Hráč má vlastní auta a smí přesednout do kteréhokoli zaparkovaného auta ve městě. V garáži si
@@ -18,6 +19,15 @@ s hotovostí (M1-S11); pravidla na něj jsou připravená už teď.
   v obou městech. Koupit jde každé auto v kterékoli garáži.
 - `vega_roadster` („Vega Roadster“, supersport) má kontejner vzduchu na skok přes kolonu
   (`hop`, `specs/hop.md`); garáž ho zdarma doplní.
+- M2 (`plans/M2_NYC.md` bod 8): New York má 40 aut (`tags` obsahuje `nyc`), napříč všemi třídami
+  plánu 10: 3 mini, 3 hatchback, 3 sedan, 2 kombi, 3 kupé, 3 muscle, 4 supersport, 2 veterán,
+  2 terénní, 2 pick-up, 3 dodávka, 2 taxi, 2 limuzína, 1 autobus, 2 mikro, 3 speciální (food truck,
+  tříkolka, rikša). Značky i modely jsou smyšlené (R10), ceny 5 000–60 000 (N5), mikro a rikša levněji.
+  Mikro, rikša a vozidla bez slotů nejdou tunit (`specs/garage.md`), autobus a food truck mají jen
+  motor, pneumatiky a brzdy.
+- Každé auto jde koupit v garáži; všechna kromě autobusu a Vegy (kontejner vzduchu) taky parkují ve
+  městě (`cars.parked.models`). Provoz (`specs/traffic.md`) si kreslí vlastní paletu a katalog
+  nepoužívá.
 - Kreslení podle třídy: `micro` se kreslí jako koloběžka (`length_m` < 1,5) nebo kolo shora
   (rám, dvě kola, jezdec), bez světlometů a kuželu; ostatní třídy jako dosud.
 - `paint` v autě je klíč do `design/tokens.json` → `color.carPaint` (mapa klíč → barva). Barva
@@ -92,8 +102,8 @@ Klient po každé úspěšné akci porovná stav před a po a ohlásí:
 - Až `cars.parked.attempts` pokusů, nejvýš `cars.parked.per_chunk` aut. Každý pokus vždy vytáhne
   čtyři čísla v tomto pořadí: úsek `nextInt(počet)`, místo `nextInt(1000)`, strana `nextInt(2)`
   (0 = vpravo po směru úseku, normála `(dy, −dx)/l`), model `nextInt(počet modelů města)`; modely města =
-  `cars.parked.models` v pořadí seznamu, jen auta, jejichž `tags` obsahují id města (M3; v New Yorku
-  jsou to všechna původní auta, takže se jeho generování nemění). Bez způsobilého úseku
+  `cars.parked.models` v pořadí seznamu, jen auta, jejichž `tags` obsahují id města (M3; od M2 je v New Yorku
+  39 modelů, takže se rozložení zaparkovaných aut proti M1 změnilo – P2, vektory ho nehlídají). Bez způsobilého úseku
   se nic negeneruje.
 - Místo podél úseku: `margin + (l − 2·margin) · místo / 1000`, `margin = segment_margin_m`.
   Střed auta je `width/2 − sidewalk_width_m − půlšířka − curb_gap_m` od osy hrany (když vnitřní bok
@@ -113,6 +123,9 @@ Klient po každé úspěšné akci porovná stav před a po a ohlásí:
   zmizí (je teď v garáži / venku).
 - Dokud je seznam garáže otevřený, svět stojí (jízda se nekrokuje).
 - Nákup: pod vlastními auty seznam aut na prodej s cenou; koupit jde auta z `buyable` (`specs/economy.md` „Nákup auta“).
+  Od v2 (40 aut) je seznam na prodej seřazený: nejdřív auta s `tags` aktuálního města, pak ostatní;
+  uvnitř podle třídy v pořadí schématu (`mini` … `special`), pak ceny, pak id. U každého auta jméno,
+  třída (`carClass.<třída>` v `i18n`), cena a malý náhled kreslený stejně jako ve světě.
 
 ## Kreslení (P2)
 Pohled shora, vektorové obdélníky v souřadnicích auta (x dopředu, y doleva, `hl`, `hw` = půldélka
@@ -124,7 +137,28 @@ kabina, sklo (lak + 12 % bílé), světla vpředu i vzadu. Podle třídy:
 - `taxi` – kabina −0,45…0,30 hl, střešní cedule −0,15…0,05 hl × ±0,35 hw (`carDetail.taxiSign`),
   šachovnicový pruh na boku (`carDetail.taxiChecker`).
 - `pickup` – kabina 0,05…0,45 hl, korba −0,95…−0,05 hl (`carDetail.bed`, lem `carDetail.bedRim`).
-- Ostatní třídy jako `coupe` bez pruhů.
+Od v2 (M2, F-045) má vlastní tvar každá třída plánu 10 (dřív „ostatní jako `coupe` bez pruhů“).
+Barvy detailů `design/tokens.json` → `color.carDetail`:
+- `mini` – kabina −0,55…0,35 hl (krátká kapota i záď).
+- `sedan` – kabina −0,45…0,25 hl.
+- `kombi` – kabina −0,75…0,25 hl (střecha až k zádi), dvě střešní ližiny −0,70…0,20 hl na ±0,70 hw,
+  šířka 0,06 hw (`roofRail`).
+- `supersport` – kabina −0,30…0,15 hl jen ±0,70 hw, spoiler −1,00…−0,90 hl × ±0,95 hw (`spoiler`).
+- `veteran` – karoserie jen ±0,80 hw, přes každé kolo blatník 0,32 hl × 0,30 hw na vnější straně
+  (`fender`), kabina −0,40…0,15 hl.
+- `offroad` – kabina −0,60…0,30 hl, rezerva na zádi: kruh o poloměru 0,45 hw se středem −0,98 hl
+  (`spare`).
+- `van` – jen přední sklo 0,62…0,85 hl, zbytek střechy −0,98…0,55 hl jako nákladový prostor
+  (lak + `cargoRoof`).
+- `limo` – kabina −0,55…0,35 hl, dvě příčky ve skle na −0,25 a 0,05 hl, šířka 0,04 hl (`limoPillar`).
+- `bus` – bez kabiny: střecha v laku, přední sklo 0,92…1,00 hl, dvě klimatizace −0,30…−0,10 hl a
+  0,20…0,40 hl × ±0,40 hw (`busRoofUnit`); kola na −0,70 a 0,60 hl.
+- `special` podle délky: ≥ 5 m food truck (jako `van`, na pravém boku markýza −0,60…0,30 hl, y
+  −1,00…−0,80 hw, pruhy po 0,15 hl střídavě `awningA` a `awningB`); 2,8–5 m tříkolka (jedno přední kolo
+  uprostřed na 0,75 hl, karoserie zúžená vpředu na ±0,45 hw od 0,30 hl, kabina −0,35…0,10 hl);
+  < 2,8 m rikša (tři kola jako tříkolka, plachta −0,90…0,10 hl přes celou šířku `canopy`, jezdec
+  vpředu jako u `micro` kola).
+- `coupe`, `hatchback`, `muscle`, `taxi`, `pickup`, `micro` beze změny.
 Zaparkovaná auta stejně, bez světlometů a kuželu. Sprity z ComfyUI (plán 10: maska, lak, kola)
 přijdou později a nahradí jen kreslení; rozměry a kolize zůstávají z JSON.
 

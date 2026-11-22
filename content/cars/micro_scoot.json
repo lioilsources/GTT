@@ -1,0 +1,21 @@
+{
+  "id": "micro_scoot",
+  "name": "Zip E-Scoot",
+  "class": "micro",
+  "length_m": 1.15,
+  "width_m": 0.55,
+  "mass": 90,
+  "power": 3.4,
+  "brake": 7.0,
+  "grip_front": 17.0,
+  "grip_rear": 17.0,
+  "drift_bias": 0.9,
+  "steer_speed": 7.0,
+  "top_speed": 7.5,
+  "seats": 1,
+  "tags": ["nyc"],
+  "price": 450,
+  "rarity": "common",
+  "tuning_slots": [],
+  "paint": "scoot_aqua"
+}

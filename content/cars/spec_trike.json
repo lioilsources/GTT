@@ -1,0 +1,21 @@
+{
+  "id": "spec_trike",
+  "name": "Ostra Trike 3",
+  "class": "special",
+  "length_m": 3.2,
+  "width_m": 1.5,
+  "mass": 650,
+  "power": 7.6,
+  "brake": 12.0,
+  "grip_front": 18.5,
+  "grip_rear": 15.5,
+  "drift_bias": 0.55,
+  "steer_speed": 5.0,
+  "top_speed": 32.0,
+  "seats": 2,
+  "tags": ["nyc"],
+  "price": 12000,
+  "rarity": "rare",
+  "tuning_slots": ["engine", "tyres", "brakes", "weight", "drift"],
+  "paint": "trike_violet"
+}

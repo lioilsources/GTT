@@ -1,0 +1,21 @@
+{
+  "id": "vet_tourer",
+  "name": "Halden Tourer 1931",
+  "class": "veteran",
+  "length_m": 4.6,
+  "width_m": 1.75,
+  "mass": 1500,
+  "power": 4.6,
+  "brake": 9.5,
+  "grip_front": 17.0,
+  "grip_rear": 16.0,
+  "drift_bias": 0.5,
+  "steer_speed": 3.4,
+  "top_speed": 24.0,
+  "seats": 4,
+  "tags": ["nyc"],
+  "price": 14000,
+  "rarity": "rare",
+  "tuning_slots": ["engine", "tyres", "brakes", "weight", "drift"],
+  "paint": "tourer_black"
+}

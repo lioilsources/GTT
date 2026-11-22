@@ -1,0 +1,21 @@
+{
+  "id": "mini_bolt",
+  "name": "Quillon Bolt E",
+  "class": "mini",
+  "length_m": 3.4,
+  "width_m": 1.7,
+  "mass": 950,
+  "power": 8.2,
+  "brake": 14.5,
+  "grip_front": 22.0,
+  "grip_rear": 21.0,
+  "drift_bias": 0.42,
+  "steer_speed": 5.8,
+  "top_speed": 33.0,
+  "seats": 4,
+  "tags": ["nyc"],
+  "price": 9000,
+  "rarity": "rare",
+  "tuning_slots": ["engine", "tyres", "brakes", "weight", "drift"],
+  "paint": "bolt_lime"
+}

@@ -1,0 +1,21 @@
+{
+  "id": "sedan_regent",
+  "name": "Nordquist Regent",
+  "class": "sedan",
+  "length_m": 5.0,
+  "width_m": 1.88,
+  "mass": 1620,
+  "power": 8.6,
+  "brake": 15.5,
+  "grip_front": 22.5,
+  "grip_rear": 21.5,
+  "drift_bias": 0.38,
+  "steer_speed": 4.3,
+  "top_speed": 41.0,
+  "seats": 5,
+  "tags": ["nyc"],
+  "price": 24000,
+  "rarity": "rare",
+  "tuning_slots": ["engine", "tyres", "brakes", "weight", "drift"],
+  "paint": "regent_navy"
+}
