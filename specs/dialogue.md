@@ -12,8 +12,8 @@ a šance, že si hráče postava uloží do telefonu jako **kontakt** (kontakty 
 > **Návrh k revizi Ol1nem.** Postavy (`content/npc/characters.yaml`) i všech 30 skitů
 > (`content/npc/skits/*.yaml`) jsou první ručně psaný draft. Generátor `tools/dialoggen`
 > (dávky přes LLM bránu na SPARKu + revizní UI) zatím není; až bude, nahradí nebo rozšíří tento pool.
-> Portréty jsou zatím zástupné (iniciály v kruhu barvy z `design/tokens.json`), manga portréty
-> přijdou z ComfyUI.
+> Portréty: kde je hotová grafika (`assets/npc/`), kreslí se podle `specs/art.md`; jinak zástupné
+> iniciály v kruhu barvy z `design/tokens.json`.
 
 ## Obsah
 

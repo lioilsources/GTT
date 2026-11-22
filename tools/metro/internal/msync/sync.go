@@ -9,6 +9,7 @@ import (
 	"log/slog"
 	"os"
 	"path/filepath"
+	"sort"
 	"strings"
 
 	"gopkg.in/yaml.v3"
@@ -76,12 +77,16 @@ func Sync(root string) error {
 			return err
 		}
 	}
-	// assets/ as is (README files excluded).
+	// assets/ as is (README files excluded), plus assets/index.json listing the PNGs (specs/art.md).
+	var pngs []string
 	err = filepath.WalkDir(filepath.Join(root, repo.Assets), func(p string, e os.DirEntry, err error) error {
 		if err != nil || e.IsDir() || strings.EqualFold(e.Name(), "README.md") {
 			return err
 		}
 		rel, _ := filepath.Rel(filepath.Join(root, repo.Assets), p)
+		if strings.EqualFold(filepath.Ext(rel), ".png") {
+			pngs = append(pngs, filepath.ToSlash(rel))
+		}
 		for _, d := range []string{app, web} {
 			if err := copyFile(p, filepath.Join(d, "assets", rel)); err != nil {
 				return err
@@ -91,6 +96,19 @@ func Sync(root string) error {
 	})
 	if err != nil {
 		return err
+	}
+	sort.Strings(pngs)
+	if pngs == nil {
+		pngs = []string{}
+	}
+	idx, err := json.Marshal(pngs)
+	if err != nil {
+		return err
+	}
+	for _, d := range []string{app, web} {
+		if err := writeFile(filepath.Join(d, "assets", "index.json"), idx); err != nil {
+			return err
+		}
 	}
 	// City packs: bundled cities into the app, all built packs into the web under a version dir.
 	for _, city := range cfg.BundleCities {
