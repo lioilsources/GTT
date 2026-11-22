@@ -224,6 +224,10 @@ class MetropoleGame extends Game {
   void Function(ui.Canvas canvas)? paintWorld;
   void Function(ui.Canvas canvas, ui.Size size)? paintScreen;
 
+  /// Drives the camera rig this frame with the real dt (the Camera glide, specs/photo.md); false =
+  /// the rig follows the car.
+  bool Function(double dt)? cameraHook;
+
   ui.Size _size = ui.Size.zero;
   double _hudTimer = 0;
   int _frames = 0;
@@ -234,6 +238,9 @@ class MetropoleGame extends Game {
   int _prepN = 0;
 
   City get city => data.city;
+
+  /// The game view size in logical pixels (zero before the first resize).
+  ui.Size get viewSize => _size;
 
   Future<void> preload() => streamer.preload(drive.car.x, drive.car.y, drive.car.heading);
 
@@ -398,7 +405,9 @@ class MetropoleGame extends Game {
     afterUpdate?.call(dt);
     if (!pause) _benchFrame(dt);
     final car = drive.car;
-    camera.follow(car.x, car.y, car.heading, car.speed, dt, tuning, reversing: car.forwardSpeed < -0.5);
+    if (!(cameraHook?.call(dt) ?? false)) {
+      camera.follow(car.x, car.y, car.heading, car.speed, dt, tuning, reversing: car.forwardSpeed < -0.5);
+    }
     // Streaming may finish loading chunks while paused.
     streamer.update(car.x, car.y, car.heading);
     if (!_size.isEmpty && !pause) {

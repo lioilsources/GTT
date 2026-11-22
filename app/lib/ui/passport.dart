@@ -21,6 +21,10 @@ PassportCity passportCityOfPack(Manifest m, Landmarks landmarks, Spots spots) =>
   ],
   districts: [for (final d in m.districts) d.name],
   spotMinigames: [for (final s in spots.items) s.minigame],
+  photos: [
+    for (final s in spots.items)
+      if (s.kind == 'photo' && s.id.isNotEmpty) (id: s.id, name: s.name.isEmpty ? s.id : s.name),
+  ],
 );
 
 String _lang(BuildContext context) => Localizations.localeOf(context).languageCode;
@@ -337,7 +341,7 @@ class PassportScreen extends StatelessWidget {
       'landmark' => _lm(context, postcardTitleKey(id), id),
       'district' => tracker.districtNames[id] ?? id,
       'minigame' => _lm(context, MessageKey.values.where((k) => k.key == 'mg_$id').firstOrNull, id),
-      _ => id,
+      _ => tracker.photoNames[id] ?? id,
     };
     return Scaffold(
       backgroundColor: const Color(Tokens.colorUiSheet),

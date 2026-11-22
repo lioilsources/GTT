@@ -7,7 +7,12 @@ typedef PassportLandmarkIn = ({String id, String name, int x, int y, double heig
 
 /// The parts of a citypack the passport needs (plain data, so tests need no pack).
 class PassportCity {
-  const PassportCity({required this.landmarks, required this.districts, required this.spotMinigames});
+  const PassportCity({
+    required this.landmarks,
+    required this.districts,
+    required this.spotMinigames,
+    this.photos = const [],
+  });
   final List<PassportLandmarkIn> landmarks;
 
   /// District names in pack order (duplicates allowed).
@@ -15,6 +20,9 @@ class PassportCity {
 
   /// Minigame ids of spots in spot order ('' = none).
   final List<String> spotMinigames;
+
+  /// Photo spots (`kind = photo`) in spot order (specs/photo.md); none = empty catalog.
+  final List<({String id, String name})> photos;
 }
 
 class PassportLandmark {
@@ -61,6 +69,9 @@ class PassportTracker {
       final id = districtId(n);
       if (id.isNotEmpty) districtNames.putIfAbsent(id, () => n);
     }
+    for (final p in city.photos) {
+      photoNames.putIfAbsent(p.id, () => p.name);
+    }
     state = rules.init({
       'landmarks': [for (final l in landmarks) l.id],
       'districts': [...districtNames.keys],
@@ -68,7 +79,7 @@ class PassportTracker {
         for (final m in city.spotMinigames)
           if (m.isNotEmpty) m,
       ],
-      'photos': <String>[],
+      'photos': [...photoNames.keys],
       'weights': tuning.weights,
       'starsForStamp': tuning.starsForStamp,
       'stamps': saved,
@@ -81,6 +92,9 @@ class PassportTracker {
 
   /// District id → first display name.
   final districtNames = <String, String>{};
+
+  /// Photo spot id → name (specs/photo.md).
+  final photoNames = <String, String>{};
   late PassportState state;
   final _listeners = <void Function(StampEvent)>[];
 
@@ -134,6 +148,18 @@ class PassportTracker {
     if (ok) {
       for (final f in _listeners) {
         f(StampEvent('minigame', id));
+      }
+    }
+    return ok;
+  }
+
+  /// A Camera shot with verdict `ok` (specs/photo.md): `visit photo`; true when the stamp is new.
+  bool photo(String id) {
+    if (!state.catalog['photo']!.contains(id)) return false;
+    final ok = _visit('photo', id);
+    if (ok) {
+      for (final f in _listeners) {
+        f(StampEvent('photo', id)); // the Camera shows its own photoTaken toast
       }
     }
     return ok;

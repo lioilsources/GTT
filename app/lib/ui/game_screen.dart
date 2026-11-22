@@ -23,6 +23,8 @@ import '../main.dart' show appClock;
 import '../phone/nav_hud.dart';
 import '../phone/phone_controller.dart';
 import '../phone/phone_sheet.dart';
+import '../photo/photo_controller.dart';
+import '../photo/photo_layer.dart';
 import '../taxi/taxi_controller.dart';
 import '../taxi/taxi_hud.dart';
 import '../travel/fast_travel.dart';
@@ -56,6 +58,7 @@ class _GameScreenState extends State<GameScreen> {
   TaxiController? _taxi;
   BoothsController? _booths;
   FastTravelController? _fastTravel;
+  PhotoController? _photo;
   final SaveStore _store = FileSaveStore();
   final CityStore _cities = FileCityStore();
   Object? _saved;
@@ -70,6 +73,7 @@ class _GameScreenState extends State<GameScreen> {
     // one is released by the GameWidget (onRemove: streamer, police, physics).
     if (!_shown) _game.then((g) => g.onRemove(), onError: (_) {});
     _loop?.save();
+    _photo?.dispose();
     _fastTravel?.dispose();
     _booths?.dispose();
     _loop?.dispose();
@@ -209,6 +213,8 @@ class _GameScreenState extends State<GameScreen> {
           // Fast travel by metro and taxi (specs/travel.md): stations unlock by passing, the move
           // resets traffic, patrols and pedestrians like a teleport.
           final fastTravel = _fastTravel ??= FastTravelController(game, phone, loop);
+          // Photo spots and the Camera (specs/photo.md): after the booths, whose "Zvednout" goes first.
+          final photo = _photo ??= PhotoController(game, phone, loop);
           return Stack(
             fit: StackFit.expand,
             children: [
@@ -256,6 +262,7 @@ class _GameScreenState extends State<GameScreen> {
               LoopLayer(loop: loop),
               BoothsLayer(booths: booths),
               FastTravelLayer(travel: fastTravel),
+              PhotoLayer(photo: photo),
               PassportOverlay(
                 events: game.passportEvent,
                 seconds: game.tuning.passport.postcardS,

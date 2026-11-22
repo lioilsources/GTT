@@ -89,7 +89,9 @@ class _MapPainter extends CustomPainter {
     }
     final target = phone.nav.target?.id;
     for (final s in city.spots.items) {
-      if (s.kind == 'booth') continue; // only a ringing booth shows, as an extra point (specs/booths.md)
+      // Only a ringing booth shows, as an extra point (specs/booths.md); photo spots are extra points
+      // in their colour (specs/photo.md).
+      if (s.kind == 'booth' || s.kind == 'photo') continue;
       final game = s.minigame.isNotEmpty;
       final r = t.mapSpotPx * (s.id == target ? 1.6 : 1) * (game ? 1 : 0.7);
       canvas.drawCircle(
