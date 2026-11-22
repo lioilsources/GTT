@@ -11,6 +11,8 @@ const classKeys: Record<string, MessageKey> = {
   muscle: 'carClassMuscle',
   taxi: 'carClassTaxi',
   pickup: 'carClassPickup',
+  sedan: 'carClassSedan',
+  micro: 'carClassMicro',
 };
 
 /**
