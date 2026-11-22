@@ -71,6 +71,8 @@ export interface PhoneApi {
   onAccept: Array<(spotId: string) => void>;
   /** Extra points on the Map app (metres, colour), e.g. a ringing booth. */
   mapPoints: Array<() => Array<{ x: number; y: number; color: string }>>;
+  /** NPC character id hosting feed cards of a spot (bust, specs/art.md); set once NPCs load. */
+  feedHost: ((spotId: string) => string | null) | null;
   feedSave(): FeedSave;
   feedRestore(f: FeedSave): void;
   phone: Phone;
@@ -146,6 +148,7 @@ export function installPhone(env: PhoneEnv): PhoneApi {
         prefs = s.prefs;
       },
       spotName: (id) => spotById.get(id)?.name ?? id,
+      hostOf: (id) => api.feedHost?.(id) ?? null,
       onAccept: (id) => {
         const card = deck?.state.deck.find((c) => c.spot === id);
         api.accepted = card ? { spot: id, distDm: card.distDm, difficulty: card.difficulty } : null;
@@ -208,6 +211,7 @@ export function installPhone(env: PhoneEnv): PhoneApi {
     accepted: null,
     onAccept: [],
     mapPoints: [],
+    feedHost: null,
     acceptSpot(id, difficulty) {
       if (!spotById.has(id)) return false;
       const c = drive.car;

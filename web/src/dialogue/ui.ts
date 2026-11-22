@@ -3,6 +3,7 @@ import './dialogue.css';
 import type { Locale, MessageKey } from '../gen/i18n';
 import type { NpcCharacter } from '../gen/schema';
 import type { MinigameOpponent } from '../minigames/api';
+import { art, artImage, expressionFor, usable } from '../art';
 import { h } from '../minigames/dom';
 import { overlays } from '../pause';
 import { text, tones, type Tone } from './rules';
@@ -15,9 +16,12 @@ export interface DialogueEnv {
 
 const toneKey: Record<Tone, MessageKey> = { flirt: 'npcToneFlirt', joke: 'npcToneJoke', dry: 'npcToneDry' };
 
-/** Placeholder portrait: initials on a token-coloured circle (manga portraits come later via ComfyUI). */
-export function portrait(name: string, index: number, size = 56): HTMLElement {
-  return h('div.npc-portrait', {
+/**
+ * NPC portrait: the generated image (`artPath`, an index path from specs/art.md) cropped to a
+ * circle over the placeholder (initials on a token-coloured circle), which shows without a file.
+ */
+export function portrait(name: string, index: number, size = 56, artPath: string | null = null): HTMLElement {
+  const el = h('div.npc-portrait', {
     style: {
       width: `${size}px`,
       height: `${size}px`,
@@ -25,11 +29,26 @@ export function portrait(name: string, index: number, size = 56): HTMLElement {
       background: `var(--color-npc-portraits-${index}, var(--color-npc-portraits-0))`,
     },
   }, initials(name));
+  setPortraitArt(el, artPath);
+  return el;
 }
 
-/** The opponent's short line on a minigame result screen. */
+/** Swaps the image of a portrait (null = back to initials); no-op when the path is unchanged. */
+export function setPortraitArt(el: HTMLElement, artPath: string | null): void {
+  const path = usable(artPath);
+  if ((el.dataset.art ?? null) === path) return;
+  el.querySelector('img.art-fill')?.remove();
+  if (path) {
+    el.dataset.art = path;
+    el.append(artImage(path, 'art-fill', () => delete el.dataset.art));
+  } else delete el.dataset.art;
+}
+
+/** The opponent's short line on a minigame result screen (rival portrait `npc/<id>.png`). */
 export function opponentBubble(o: MinigameOpponent, winner: 'player' | 'ai' | 'draw'): HTMLElement {
-  return h('div.npc-opponent', {}, portrait(o.name, o.portrait, 40), h('div.npc-bubble', {}, h('b', {}, o.name), ' ', o.line(winner)));
+  return h('div.npc-opponent', {},
+    portrait(o.name, o.portrait, 40, art().avatar(o.id)),
+    h('div.npc-bubble', {}, h('b', {}, o.name), ' ', o.line(winner)));
 }
 
 /**
@@ -46,10 +65,13 @@ export function mountDialogue(host: HTMLElement, session: DialogueSession, env: 
   const vibeLabel = h('span.npc-vibe-label');
   const actions = h('div.npc-actions');
   let closed = false;
+  // Expression by vibe (specs/art.md): happy / neutral / annoyed, then `<id>.png`, then initials.
+  const artPath = (): string | null => art().portrait(charId, expressionFor(session.vibe(charId), session.tuning));
+  const face = portrait(ch.name, ch.portrait, 56, artPath());
 
   const root = h('div.npc', {},
     h('div.npc-head', {},
-      portrait(ch.name, ch.portrait),
+      face,
       h('div.npc-who', {},
         h('div.npc-name', {}, t('npcNameAge', { name: ch.name, age: ch.age })),
         h('div.npc-bio', {}, text(ch.bio, locale)),
@@ -74,6 +96,7 @@ export function mountDialogue(host: HTMLElement, session: DialogueSession, env: 
 
   function render(): void {
     const v = session.vibe(charId);
+    setPortraitArt(face, artPath());
     vibeFill.style.width = `${Math.round((100 * v) / Math.max(1, max))}%`;
     vibeLabel.textContent = t('npcVibe', { vibe: v, max });
     const beat = session.beat;

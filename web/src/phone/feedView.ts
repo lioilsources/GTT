@@ -1,5 +1,6 @@
 import type { MessageKey } from '../gen/i18n';
 import type { TuningPhone } from '../gen/tuning';
+import { art, artImage, usable } from '../art';
 import { h } from '../minigames/dom';
 import { FeedRules, type FeedCard, type FeedOp, type FeedState } from './feed';
 import { driveMinutes, formatDistance } from './nav';
@@ -16,6 +17,8 @@ export interface FeedViewEnv {
   setState: (s: FeedState) => void;
   spotName: (id: string) => string;
   onAccept: (spotId: string) => void;
+  /** NPC character hosting a card of this spot (its bust replaces the silhouette, specs/art.md). */
+  hostOf?: (spotId: string) => string | null;
 }
 
 export function mountFeed(host: HTMLElement, env: FeedViewEnv): () => void {
@@ -37,12 +40,26 @@ export function mountFeed(host: HTMLElement, env: FeedViewEnv): () => void {
     return h(`span.feed-tag${cls}` as 'span.x', {}, text);
   }
 
+  /** Host bust (specs/art.md) anchored at the bottom, else the placeholder silhouette; both bob. */
+  function hostEl(spot: string): HTMLElement {
+    const silhouette = (): Node[] => [h('div.feed-host-head', {}), h('div.feed-host-body', {})];
+    const id = env.hostOf?.(spot) ?? null;
+    const path = id ? usable(art().bust(id)) : null;
+    if (!path) return h('div.feed-host', {}, ...silhouette());
+    const el = h('div.feed-host.art', {});
+    el.append(artImage(path, 'feed-host-bust', () => {
+      el.classList.remove('art');
+      el.replaceChildren(...silhouette());
+    }));
+    return el;
+  }
+
   function card(c: FeedCard, s: FeedState): HTMLElement {
     const d = formatDistance(c.distDm / 10, env.imperial, env.nav);
     const name = c.game === 'challenge' ? t('feedChallenge') : t(`mg_${c.game}` as MessageKey);
     const liked = s.liked.includes(c.spot);
     const el = h('div.feed-card', {},
-      h('div.feed-host', {}, h('div.feed-host-head', {}), h('div.feed-host-body', {})),
+      hostEl(c.spot),
       h('div.feed-line', {}, t(`feedHost${c.host + 1}` as MessageKey)),
       h('div.feed-name', {}, name, liked ? h('span.feed-liked', {}, ` ♥ ${t('feedLiked')}`) : null),
       h('div.feed-tags', {},
