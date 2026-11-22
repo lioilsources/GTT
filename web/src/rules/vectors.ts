@@ -16,6 +16,7 @@ import { PassportRules } from '../passport/rules';
 import { DialogueRules } from '../dialogue/rules';
 import { CarsRules } from '../cars/rules';
 import { PoliceRules } from '../police/rules';
+import { BoothsRules } from '../booths/rules';
 import { EconomyRules } from '../loop/economy';
 import { SaveRules } from '../loop/save';
 import { Prng } from './prng';
@@ -64,6 +65,7 @@ export const rulesModules: Record<string, () => AnyRules> = {
   dialogue: () => new DialogueRules() as unknown as AnyRules,
   cars: () => new CarsRules() as unknown as AnyRules,
   police: () => new PoliceRules() as unknown as AnyRules,
+  booths: () => new BoothsRules() as unknown as AnyRules,
   economy: () => new EconomyRules() as unknown as AnyRules,
   save: () => new SaveRules() as unknown as AnyRules,
 };

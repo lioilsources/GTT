@@ -30,6 +30,8 @@ export class CarsHud {
   private last = performance.now();
   /** Pause registration while the garage is open (specs/pause.md). */
   private release: (() => void) | null = null;
+  /** A context button with priority ("Zvednout", specs/booths.md): while true, this one hides. */
+  yieldTo: (() => boolean) | null = null;
 
   /** True while the garage list is open: the world does not step (specs/cars.md, specs/pause.md). */
   get busy(): boolean {
@@ -67,7 +69,7 @@ export class CarsHud {
     const a = this.fleet.action((now - this.last) / 1000);
     this.last = now;
     this.boardTarget = a?.kind === 'board' ? a.car : null;
-    const mode = a?.kind ?? null;
+    const mode = this.yieldTo?.() ? null : (a?.kind ?? null);
     if (mode !== this.mode) {
       this.mode = mode;
       this.action.hidden = mode === null;

@@ -74,7 +74,9 @@ export interface LoopOutcome {
   score: number;
   aborted: boolean;
   cash: EconomyLast;
-  /** Cash after the reward. */
+  /** Booth bonus of this loop (specs/booths.md "Hotovost"), 0 without one; part of loopCash. */
+  booth: number;
+  /** Cash after the reward and the booth bonus. */
   total: number;
   firstTime: boolean;
   newBest: boolean;
@@ -88,6 +90,11 @@ export class LoopBook {
   eco: EconomyState;
   best: Record<string, BestResult> = {};
   plays: Record<string, number> = {};
+  /**
+   * Booth bonus hook (specs/booths.md): the booths module's `finish(spot, stars, aborted)`,
+   * returning its `last`. Called right after the reward; the bonus goes to the cars-state cash.
+   */
+  bonus: ((spot: string, stars: number, aborted: boolean) => number) | null = null;
 
   constructor(readonly tuning: Tuning, readonly ports: LoopPorts) {
     this.eco = this.economy.init(economyConfig(tuning, ports.getCash()));
@@ -122,12 +129,17 @@ export class LoopBook {
     const cash = this.pay({
       by: 'player', op: 'reward', engine: inp.engine, stars, score: r.score, first: firstTime, driveDm: inp.driveDm, aborted: r.aborted,
     });
+    const booth = Math.max(0, this.bonus?.(inp.spot, stars, r.aborted) ?? 0);
+    if (booth > 0) {
+      this.ports.setCash(this.ports.getCash() + booth);
+      this.eco = { ...this.eco, cash: this.ports.getCash() };
+    }
     const stamp = r.aborted ? false : this.ports.stamp(inp.minigame, stars);
     const newBest = !r.aborted && betterBest(old, stars, r.score);
     if (newBest) this.best = { ...this.best, [inp.minigame]: { stars, score: r.score } };
     if (!r.aborted) this.plays = { ...this.plays, [inp.spot]: (this.plays[inp.spot] ?? 0) + 1 };
     const o: LoopOutcome = {
-      spot: inp.spot, minigame: inp.minigame, stars, score: r.score, aborted: r.aborted, cash, total: this.eco.cash,
+      spot: inp.spot, minigame: inp.minigame, stars, score: r.score, aborted: r.aborted, cash, booth, total: this.ports.getCash(),
       firstTime: firstTime && cash.first > 0, newBest, stamp, hasStamp: hasStamp(inp.minigame),
     };
     return o;

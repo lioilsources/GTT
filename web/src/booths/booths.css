@@ -1,0 +1,33 @@
+/* Ringing booths (specs/booths.md): "Zvednout" button, ringing toast, offer card; colours from design/tokens.json. */
+#booth-answer {
+  position: absolute;
+  left: 50%;
+  bottom: calc(env(safe-area-inset-bottom) + 148px);
+  transform: translateX(-50%);
+  padding: 0 var(--space-lg);
+  background: var(--color-booth-ring);
+  color: var(--color-ui-background);
+  font-weight: 700;
+  pointer-events: auto;
+}
+#booth-answer[hidden],
+#booth-toast[hidden],
+.booth-offer[hidden] {
+  display: none;
+}
+#booth-toast {
+  position: fixed;
+  left: 50%;
+  top: calc(env(safe-area-inset-top) + 96px);
+  transform: translateX(-50%);
+  z-index: 25;
+  color: var(--color-booth-ring);
+  font-weight: 700;
+}
+.booth-offer {
+  position: fixed;
+  z-index: 26;
+}
+.booth-offer h2 {
+  color: var(--color-booth-ring);
+}

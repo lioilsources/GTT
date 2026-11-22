@@ -13,6 +13,8 @@ export interface MapViewEnv {
   player: () => { x: number; y: number; heading: number };
   route: () => number[];
   target: () => string | null;
+  /** Extra points (metres, colour) drawn over the spots, e.g. a ringing booth (specs/booths.md). */
+  extra?: () => Array<{ x: number; y: number; color: string }>;
 }
 
 /** Fits the bounds of a ring into w × h with padding; north up. */
@@ -84,10 +86,17 @@ export function mountMap(host: HTMLElement, env: MapViewEnv): () => void {
     }
     const target = env.target();
     for (const s of env.spots.items) {
+      if (s.kind === 'booth') continue; // only a ringing booth shows, as an extra point
       const r = env.phone.mapSpotPx * (s.id === target ? 1.6 : 1);
       ctx.fillStyle = s.minigame ? tokens.colorPhoneMapGame : tokens.colorPhoneMapSpot;
       ctx.beginPath();
       ctx.arc(sx(s.x / 10), sy(s.y / 10), s.minigame ? r : r * 0.7, 0, 2 * Math.PI);
+      ctx.fill();
+    }
+    for (const e of env.extra?.() ?? []) {
+      ctx.fillStyle = e.color;
+      ctx.beginPath();
+      ctx.arc(sx(e.x), sy(e.y), env.phone.mapSpotPx * 1.6, 0, 2 * Math.PI);
       ctx.fill();
     }
     const p = env.player(), pr = env.phone.mapPlayerPx;

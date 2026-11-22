@@ -62,6 +62,15 @@ export interface PhoneApi {
   onArrived: Array<(spotId: string) => void>;
   /** The last accepted feed card (cleared by the loop once used). */
   accepted: AcceptedCard | null;
+  /**
+   * Accepts a spot like a feed card (a booth offer, specs/booths.md): route to the spot,
+   * `distDm` = route length as on feed cards, the given difficulty. Does not call onAccept.
+   */
+  acceptSpot(spotId: string, difficulty: number): boolean;
+  /** Called when the player accepts a feed card (spot id). */
+  onAccept: Array<(spotId: string) => void>;
+  /** Extra points on the Map app (metres, colour), e.g. a ringing booth. */
+  mapPoints: Array<() => Array<{ x: number; y: number; color: string }>>;
   feedSave(): FeedSave;
   feedRestore(f: FeedSave): void;
   phone: Phone;
@@ -90,6 +99,11 @@ export function installPhone(env: PhoneEnv): PhoneApi {
   let lastX = drive.car.x, lastY = drive.car.y;
   let firstSeed = env.params.has('feedSeed') ? Number.parseInt(env.params.get('feedSeed')!, 10) >>> 0 : null;
 
+  /** Integer road distance from the car to a spot, as on feed cards (specs/feed.md). */
+  const distTo = (id: string, start: ReturnType<typeof navStart>): number => {
+    const c = drive.car;
+    return feedDistDm(rg, lens, start, navGoal(g, target(id)), c.x, c.y, target(id), tuning.feed.straightPct);
+  };
   const deal = (): void => {
     const c = drive.car;
     const start = navStart(g, drive.layers.hit, c.x, c.y, c.heading, tuning.nav.searchM);
@@ -102,7 +116,7 @@ export function installPhone(env: PhoneEnv): PhoneApi {
       discovered: env.discovered?.() ?? new Set(),
       visits,
       landmarkRadiusDm: tuning.feed.landmarkRadiusDm,
-      distDm: (id) => feedDistDm(rg, lens, start, navGoal(g, target(id)), c.x, c.y, target(id), tuning.feed.straightPct),
+      distDm: (id) => distTo(id, start),
     });
     const seed = firstSeed ?? (Math.random() * 0x100000000) >>> 0;
     firstSeed = null;
@@ -137,6 +151,7 @@ export function installPhone(env: PhoneEnv): PhoneApi {
         api.accepted = card ? { spot: id, distDm: card.distDm, difficulty: card.difficulty } : null;
         phone.close();
         navigate(id);
+        for (const f of api.onAccept) f(id);
       },
     }),
   );
@@ -149,6 +164,7 @@ export function installPhone(env: PhoneEnv): PhoneApi {
       player: () => drive.car,
       route: () => nav.ahead(),
       target: () => nav.target?.id ?? null,
+      extra: () => api.mapPoints.flatMap((f) => f()),
     }),
   );
 
@@ -190,6 +206,16 @@ export function installPhone(env: PhoneEnv): PhoneApi {
     nav,
     onArrived: [],
     accepted: null,
+    onAccept: [],
+    mapPoints: [],
+    acceptSpot(id, difficulty) {
+      if (!spotById.has(id)) return false;
+      const c = drive.car;
+      const distDm = distTo(id, navStart(g, drive.layers.hit, c.x, c.y, c.heading, tuning.nav.searchM));
+      api.accepted = { spot: id, distDm, difficulty };
+      phone.close();
+      return navigate(id);
+    },
     feedSave: () => ({ prefs: { ...prefs }, visits: Object.fromEntries(visits), districts: [...visitedDistricts] }),
     feedRestore(f) {
       prefs = { ...f.prefs };
