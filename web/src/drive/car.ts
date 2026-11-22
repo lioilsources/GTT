@@ -11,6 +11,8 @@ export const CAT_CAR = 2;
 export const CAT_TRAFFIC = 4;
 /** Parked cars (specs/cars.md): dynamic bodies the player and traffic can push. */
 export const CAT_PARKED = 8;
+/** Tram cars (specs/trams.md): kinematic, never pushed; collide with the player in the same layer. */
+export const CAT_TRAM = 64;
 /** Pedestrian-zone bollard lines (specs/zones.md): static, layer 0, collide with the player only. */
 export const CAT_ZONE = 32;
 
@@ -81,7 +83,7 @@ export class Car {
       friction: t.carFriction,
       restitution: t.carRestitution,
       filterCategoryBits: CAT_CAR,
-      filterMaskBits: CAT_BUILDINGS | CAT_TRAFFIC | CAT_PARKED,
+      filterMaskBits: CAT_BUILDINGS | CAT_TRAFFIC | CAT_PARKED | CAT_TRAM,
     });
     // Same mass as client F: its density over the area of the rounded box, not of the chamfer.
     const density = spec.mass / (4 * this.halfLength * this.halfWidth);
@@ -138,9 +140,9 @@ export class Car {
 
   private refilter(): void {
     // Buildings, parked cars and bollards only exist on the ground layer; bridges and tunnels use
-    // rails instead. Traffic cars switch their own mask by layer (traffic.ts).
+    // rails instead. Traffic cars and trams switch their own masks by layer (traffic.ts, trams.ts).
     const ground = CAT_BUILDINGS | CAT_PARKED | (this.zone ? CAT_ZONE : 0);
-    this.fixture.setFilterData({ groupIndex: 0, categoryBits: CAT_CAR, maskBits: (this.layer === 0 ? ground : 0) | CAT_TRAFFIC });
+    this.fixture.setFilterData({ groupIndex: 0, categoryBits: CAT_CAR, maskBits: (this.layer === 0 ? ground : 0) | CAT_TRAFFIC | CAT_TRAM });
   }
 
   /** Applies controls and tyre forces; call before world.step. */
