@@ -506,6 +506,15 @@ travel:
   cut_s: 1.2                    # the line card shown while moving
   entry_w_m: 3.0
   entry_l_m: 4.5
+# Photo spots and the Camera app (specs/photo.md).
+photo:
+  enabled: true
+  loose_pct: 400              # widest frame: half its short side <= subject radius x 4
+  view_factor: 3.0            # camera view width = max(slow view, 2 x subject x this)
+  zoom_s: 0.6                 # camera glide into the framing view
+  flash_s: 0.35
+  cross_px: 28.0              # crosshair size on the view centre
+  spot_icon_m: 3.0            # camera icon at the parking point
 # Ringing phone booths (specs/booths.md). P0 rules tick once per game second.
 booths:
   enabled: true

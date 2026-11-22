@@ -111,6 +111,12 @@ abstract final class Tokens {
   static const int colorCarReverse = 0xFFFFFFFF;
   static const int colorCarTail = 0xFF8A1C1C;
   static const int colorCarSkid = 0x55111111;
+  static const int colorPhotoFrame = 0xFFFFFFFF;
+  static const int colorPhotoFrameShade = 0x66000000;
+  static const int colorPhotoCross = 0xFFFFD23F;
+  static const int colorPhotoFlash = 0xCCFFFFFF;
+  static const int colorPhotoSpot = 0xFF2B9FD8;
+  static const int colorPhotoSpotDone = 0xFF8A96A3;
   static const int colorTravelEntry = 0xFF2F6FD0;
   static const int colorTravelEntryLocked = 0xFF6A7078;
   static const int colorTravelCard = 0xFF14181F;

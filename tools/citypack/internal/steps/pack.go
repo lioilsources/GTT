@@ -67,10 +67,20 @@ func Spots(e *Env) error {
 		if d := q.Dist(p); d > 250 {
 			slog.Warn("spot far from kept road", "id", s.ID, "m", int(d))
 		}
-		sp.Items = append(sp.Items, &pb.Spot{
+		item := &pb.Spot{
 			Id: s.ID, Kind: s.Kind, Name: s.Name, Minigame: s.Minigame, X: geo.DM(p.X), Y: geo.DM(p.Y),
 			Edge: uint32(ei), ParkX: geo.DM(q.X), ParkY: geo.DM(q.Y), ParkHeading: float32(math.Atan2(dir.Y, dir.X)),
-		})
+		}
+		if s.Kind == "photo" {
+			// specs/photo.md: the view to frame and its radius.
+			if s.Look == nil || s.SubjectM <= 0 {
+				return fmt.Errorf("photo spot %s: look and subject_m are required", s.ID)
+			}
+			l := e.Proj.Forward(s.Look.Lon, s.Look.Lat)
+			item.LookX, item.LookY = geo.DM(l.X), geo.DM(l.Y)
+			item.SubjectDm = uint32(math.Round(s.SubjectM * 10))
+		}
+		sp.Items = append(sp.Items, item)
 	}
 	return writePB(e.W("spots.pb"), sp, false)
 }

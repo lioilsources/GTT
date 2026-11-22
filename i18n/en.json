@@ -882,5 +882,16 @@
   },
   "taxiEnd": "End shift",
   "taxiGallery": "Taxi is played in the city: a 4-minute shift from the taxi stand.",
+  "photoOpen": "Camera",
+  "photoHint": "Frame the view: {name}",
+  "@photoHint": {"placeholders": {"name": {"type": "String"}}},
+  "photoTaken": "Photo stamp: {name}",
+  "@photoTaken": {"placeholders": {"name": {"type": "String"}}},
+  "photoAgain": "Nice shot – this one is already in your Passport",
+  "photoCut": "The view doesn't fit – draw a bigger frame around the crosshair",
+  "photoLoose": "Too wide – frame the view more tightly",
+  "photoClose": "Back",
+  "photoNoSpot": "Find a photo spot (camera icon) and stop there",
+  "photoWanted": "Not with the police on your tail",
   "taxiGalleryGo": "Start the shift in the city"
 }

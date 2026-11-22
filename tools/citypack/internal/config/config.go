@@ -121,6 +121,9 @@ type Spot struct {
 	Lat      float64 `yaml:"lat"`
 	Lon      float64 `yaml:"lon"`
 	Minigame string  `yaml:"minigame"`
+	// Photo spots (specs/photo.md): the view to frame and its radius.
+	Look     *LatLon `yaml:"look"`
+	SubjectM float64 `yaml:"subject_m"`
 }
 
 // Content is everything citypack reads for one city.

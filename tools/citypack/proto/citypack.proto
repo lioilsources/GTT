@@ -168,6 +168,9 @@ message Spot {
   sint32 park_y = 8;
   float park_heading = 9;
   string minigame = 10;      // minigame id played here (content/minigames/catalog.yaml), empty = none
+  sint32 look_x = 11;        // photo spots (specs/photo.md): the view to frame, dm
+  sint32 look_y = 12;
+  uint32 subject_dm = 13;    // radius of the view, dm
 }
 
 // trams.pb (specs/trams.md): tram tracks as their own graph, always two-way, plus generated stops.

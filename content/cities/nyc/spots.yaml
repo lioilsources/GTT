@@ -1,4 +1,4 @@
-# Curated points snapped to the nearest kept road (5.5). kind: plaza|station|park|landmark|bar|pier|stand|garage|booth|subway.
+# Curated points snapped to the nearest kept road (5.5). kind: plaza|station|park|landmark|bar|pier|stand|garage|booth|subway|photo.
 # minigame: the M1 minigame played at the spot (9.5, "každá se spotem na autentickém místě").
 # Commercial places keep a fictional name (R10); the point is a real location of that kind.
 spots:
@@ -42,3 +42,24 @@ spots:
   - {id: subway_w4, kind: subway, name: W 4 St, lat: 40.73220, lon: -74.00030}
   - {id: subway_spring, kind: subway, name: Spring St, lat: 40.72220, lon: -73.99740}
   - {id: subway_fulton, kind: subway, name: Fulton St, lat: 40.71030, lon: -74.00750}
+  # Photo spots (specs/photo.md): viewpoints, not landmarks. look = what to frame, subject_m = its radius.
+  - {id: photo_dumbo_washington, kind: photo, name: Manhattan Bridge from Washington Street, lat: 40.70320, lon: -73.98950, look: {lat: 40.70700, lon: -73.99050}, subject_m: 60}
+  - {id: photo_queens_plaza, kind: photo, name: Queensboro Bridge from Queens Plaza, lat: 40.75000, lon: -73.94000, look: {lat: 40.75450, lon: -73.94850}, subject_m: 100}
+  - {id: photo_tudor_city, kind: photo, name: 42nd Street from Tudor City Overpass, lat: 40.74890, lon: -73.97120, look: {lat: 40.75050, lon: -73.97600}, subject_m: 70}
+  - {id: photo_high_line_17, kind: photo, name: 10th Avenue under the High Line, lat: 40.74290, lon: -74.00630, look: {lat: 40.74350, lon: -74.00500}, subject_m: 40}
+  - {id: photo_pier_45, kind: photo, name: Hudson sunset from Christopher Street Pier, lat: 40.73300, lon: -74.01030, look: {lat: 40.73300, lon: -74.01500}, subject_m: 90}
+  - {id: photo_battery_harbor, kind: photo, name: The harbor from State Street, lat: 40.70300, lon: -74.01500, look: {lat: 40.69900, lon: -74.02000}, subject_m: 120}
+  - {id: photo_seaport_bridge, kind: photo, name: Brooklyn Bridge from South Street, lat: 40.70590, lon: -74.00180, look: {lat: 40.70400, lon: -73.99600}, subject_m: 80}
+  - {id: photo_williamsburg_kent, kind: photo, name: Williamsburg Bridge from Kent Avenue, lat: 40.71250, lon: -73.96400, look: {lat: 40.71400, lon: -73.97200}, subject_m: 90}
+  - {id: photo_park_ave_viaduct, kind: photo, name: Park Avenue Viaduct, lat: 40.74980, lon: -73.98050, look: {lat: 40.75300, lon: -73.97700}, subject_m: 60}
+  - {id: photo_fifth_ave_arch, kind: photo, name: Fifth Avenue down to the arch, lat: 40.73300, lon: -73.99580, look: {lat: 40.73120, lon: -73.99710}, subject_m: 40}
+  - {id: photo_cpw_lake, kind: photo, name: The Lake from Central Park West, lat: 40.77660, lon: -73.97610, look: {lat: 40.77600, lon: -73.97200}, subject_m: 80}
+  - {id: photo_columbus_circle, kind: photo, name: Columbus Circle roundabout, lat: 40.76700, lon: -73.98300, look: {lat: 40.76810, lon: -73.98190}, subject_m: 50}
+  - {id: photo_sutton_place, kind: photo, name: Queensboro Bridge from Sutton Place, lat: 40.75800, lon: -73.95900, look: {lat: 40.75700, lon: -73.95500}, subject_m: 80}
+  - {id: photo_mott_street, kind: photo, name: Mott Street lanterns, lat: 40.71600, lon: -73.99800, look: {lat: 40.71500, lon: -73.99750}, subject_m: 30}
+  - {id: photo_mulberry_lights, kind: photo, name: Mulberry Street lights, lat: 40.71950, lon: -73.99730, look: {lat: 40.71900, lon: -73.99700}, subject_m: 30}
+  - {id: photo_madison_square, kind: photo, name: Madison Square from Fifth Avenue, lat: 40.74250, lon: -73.98900, look: {lat: 40.74150, lon: -73.98950}, subject_m: 50}
+  - {id: photo_bowery_wall, kind: photo, name: Houston and Bowery mural wall, lat: 40.72470, lon: -73.99250, look: {lat: 40.72450, lon: -73.99300}, subject_m: 25}
+  - {id: photo_riverside_drive, kind: photo, name: The Hudson from Riverside Drive, lat: 40.79320, lon: -73.98020, look: {lat: 40.79350, lon: -73.98300}, subject_m: 90}
+  - {id: photo_harlem_meer, kind: photo, name: Harlem Meer from Fifth Avenue, lat: 40.79300, lon: -73.95100, look: {lat: 40.79550, lon: -73.95200}, subject_m: 70}
+  - {id: photo_east_river_23, kind: photo, name: East River from Stuyvesant Cove, lat: 40.73500, lon: -73.97500, look: {lat: 40.73450, lon: -73.97000}, subject_m: 90}

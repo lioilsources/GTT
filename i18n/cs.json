@@ -357,5 +357,14 @@
   "taxiPaid": "Jízdné {fare}",
   "taxiEnd": "Ukončit směnu",
   "taxiGallery": "Taxi se hraje ve městě: 4minutová směna od stanoviště taxi.",
+  "photoOpen": "Foťák",
+  "photoHint": "Zarámuj výhled: {name}",
+  "photoTaken": "Razítko za fotku: {name}",
+  "photoAgain": "Pěkná fotka – tohle místo už v Pasu máš",
+  "photoCut": "Výhled se nevešel – táhni větší rámeček kolem zaměřovače",
+  "photoLoose": "Moc široký záběr – zarámuj výhled těsněji",
+  "photoClose": "Zpět",
+  "photoNoSpot": "Najdi fotomísto (ikona foťáku) a zastav u něj",
+  "photoWanted": "S policií v zádech ne",
   "taxiGalleryGo": "Začít směnu ve městě"
 }

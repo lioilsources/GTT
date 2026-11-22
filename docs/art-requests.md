@@ -101,8 +101,9 @@ Navíc provoz (bez jména, náhodný lak): 6 generických aut `assets/cars/traff
   (`assets/shops/`): kavárna, bar, pizzerie, suvenýry, stánek s hot dogy, bodega.
 - **Telefonní budka** shora + zvonící stav (`assets/props/booth.png`, `booth_ring.png`).
 - **Stanice metra**: vstup shora + ikona linky bez oficiálního loga MTA (fiktivní kolečka).
-- **Fotomísta**: 20 pohledových ilustrací (výhledy, ne památky) 1080×1350, seznam dodám s
-  `specs/photo.md`.
+- **Fotomísta**: 20 pohledových ilustrací (výhledy, ne památky) 1080×1350,
+  `assets/photos/nyc/<id>.png`, seznam = spoty `kind: photo` v `content/cities/nyc/spots.yaml`
+  (jméno = co je na obrázku). Zatím hra obrázek nepotřebuje, jen do zásoby.
 - **Počasí**: textura kapek a kaluží (tileable 512×512), mlha (gradient), odlesk mokré silnice.
 - **Kosmetika**: 8 polepů (vektorové motivy, tónovatelné), 6 typů kol, barvy kouře řeší kód.
 - **Minihry M2 (22):** skiny stolů a herních ploch 1080×1920 (dřevo, plsť, asfalt NYC):

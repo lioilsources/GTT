@@ -1470,6 +1470,9 @@ class Spot extends $pb.GeneratedMessage {
     $core.int? parkY,
     $core.double? parkHeading,
     $core.String? minigame,
+    $core.int? lookX,
+    $core.int? lookY,
+    $core.int? subjectDm,
   }) {
     final result = Spot._();
     if (id != null) result.id = id;
@@ -1482,6 +1485,9 @@ class Spot extends $pb.GeneratedMessage {
     if (parkY != null) result.parkY = parkY;
     if (parkHeading != null) result.parkHeading = parkHeading;
     if (minigame != null) result.minigame = minigame;
+    if (lookX != null) result.lookX = lookX;
+    if (lookY != null) result.lookY = lookY;
+    if (subjectDm != null) result.subjectDm = subjectDm;
     return result;
   }
 
@@ -1508,6 +1514,9 @@ class Spot extends $pb.GeneratedMessage {
     ..aI(8, _omitFieldNames ? '' : 'parkY', fieldType: $pb.PbFieldType.OS3)
     ..aD(9, _omitFieldNames ? '' : 'parkHeading', fieldType: $pb.PbFieldType.OF)
     ..aOS(10, _omitFieldNames ? '' : 'minigame')
+    ..aI(11, _omitFieldNames ? '' : 'lookX', fieldType: $pb.PbFieldType.OS3)
+    ..aI(12, _omitFieldNames ? '' : 'lookY', fieldType: $pb.PbFieldType.OS3)
+    ..aI(13, _omitFieldNames ? '' : 'subjectDm', fieldType: $pb.PbFieldType.OU3)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -1619,6 +1628,33 @@ class Spot extends $pb.GeneratedMessage {
   $core.bool hasMinigame() => $_has(9);
   @$pb.TagNumber(10)
   void clearMinigame() => $_clearField(10);
+
+  @$pb.TagNumber(11)
+  $core.int get lookX => $_getIZ(10);
+  @$pb.TagNumber(11)
+  set lookX($core.int value) => $_setSignedInt32(10, value);
+  @$pb.TagNumber(11)
+  $core.bool hasLookX() => $_has(10);
+  @$pb.TagNumber(11)
+  void clearLookX() => $_clearField(11);
+
+  @$pb.TagNumber(12)
+  $core.int get lookY => $_getIZ(11);
+  @$pb.TagNumber(12)
+  set lookY($core.int value) => $_setSignedInt32(11, value);
+  @$pb.TagNumber(12)
+  $core.bool hasLookY() => $_has(11);
+  @$pb.TagNumber(12)
+  void clearLookY() => $_clearField(12);
+
+  @$pb.TagNumber(13)
+  $core.int get subjectDm => $_getIZ(12);
+  @$pb.TagNumber(13)
+  set subjectDm($core.int value) => $_setUnsignedInt32(12, value);
+  @$pb.TagNumber(13)
+  $core.bool hasSubjectDm() => $_has(12);
+  @$pb.TagNumber(13)
+  void clearSubjectDm() => $_clearField(13);
 }
 
 /// trams.pb (specs/trams.md): tram tracks as their own graph, always two-way, plus generated stops.

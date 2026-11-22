@@ -336,3 +336,11 @@
   lead: web
   flutter: todo
   web: todo
+- id: F-041
+  name: Photo spots and the Camera app (frame the view, Passport photo stamps)
+  level: P0
+  spec: specs/photo.md@1
+  vectors: vectors/photo.json
+  lead: web
+  flutter: todo
+  web: todo

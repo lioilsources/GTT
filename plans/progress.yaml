@@ -153,7 +153,7 @@ items:
      started: 2026-11-22T18:15}
   - {id: M2-AR, milestone: M2, name: "napojení grafiky: portréty, busty, pohlednice", size: S, status: wip,
      started: 2026-11-22T18:50}
-  - {id: M2-S4, milestone: M2, name: "fotomísta a Foťák", size: M, status: todo}
+  - {id: M2-S4, milestone: M2, name: "fotomísta a Foťák", size: M, status: wip, started: 2026-11-22T19:00}
   - {id: M2-S5, milestone: M2, name: "obchody a bary", size: L, status: todo}
   - {id: M2-S6, milestone: M2, name: "počasí (jasno, déšť, mlha)", size: M, status: todo}
   - {id: M2-S7, milestone: M2, name: "tuning a kosmetika", size: L, status: todo}

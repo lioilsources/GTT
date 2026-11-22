@@ -131,6 +131,12 @@
   --color-car-reverse: #FFFFFF;
   --color-car-tail: #8A1C1C;
   --color-car-skid: #11111155;
+  --color-photo-frame: #FFFFFF;
+  --color-photo-frame-shade: #00000066;
+  --color-photo-cross: #FFD23F;
+  --color-photo-flash: #FFFFFFCC;
+  --color-photo-spot: #2B9FD8;
+  --color-photo-spot-done: #8A96A3;
   --color-travel-entry: #2F6FD0;
   --color-travel-entry-locked: #6A7078;
   --color-travel-card: #14181F;

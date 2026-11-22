@@ -21,6 +21,8 @@ Hra je pozastavená, dokud je otevřený aspoň jeden z těchto překryvů:
 | karta příjezdu na spot, minihra, výsledková obrazovka | `specs/loop.md` |
 | Galerie miniher | `specs/minigames/README.md` |
 | nabídka zvonící budky | `specs/booths.md` |
+| karta linky metra / taxi | `specs/travel.md` |
+| Foťák (rámování snímku) | `specs/photo.md` |
 | ladicí panel | `docs/m0.md` |
 | výsledek benchmarku | `specs/bench.md` |
 
