@@ -2331,6 +2331,7 @@ class TuningCarsParked {
   /// RoadClass: primary, secondary, tertiary, residential
   List<int> classes;
 
+  /// filtered by the city's tag
   List<String> models;
 
   double segmentMarginM;
