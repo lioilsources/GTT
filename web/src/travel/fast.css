@@ -1,0 +1,80 @@
+/* Fast travel (specs/travel.md): "Metro" button, metro card, line card; colours from design/tokens.json. */
+#travel-metro {
+  position: absolute;
+  left: 50%;
+  bottom: calc(env(safe-area-inset-bottom) + 148px);
+  transform: translateX(-50%);
+  padding: 0 var(--space-lg);
+  background: var(--color-travel-entry);
+  color: var(--color-travel-card-text);
+  font-weight: 700;
+  pointer-events: auto;
+}
+#travel-metro[hidden],
+#travel-toast[hidden],
+.travel-cut[hidden] {
+  display: none;
+}
+#travel-toast {
+  position: fixed;
+  left: 50%;
+  top: calc(env(safe-area-inset-top) + 96px);
+  transform: translateX(-50%);
+  z-index: 25;
+  color: var(--color-travel-line);
+  font-weight: 700;
+}
+.travel-card {
+  position: fixed;
+  z-index: 26;
+}
+.travel-card .mg-card {
+  background: var(--color-travel-card);
+  color: var(--color-travel-card-text);
+}
+.travel-card h2 {
+  color: var(--color-travel-line);
+}
+.travel-card .mg-btn {
+  background: var(--color-travel-entry);
+  color: var(--color-travel-card-text);
+}
+.travel-hint {
+  color: var(--color-travel-entry-locked);
+}
+.travel-cut {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-md);
+  background: var(--color-travel-card);
+  color: var(--color-travel-card-text);
+  font-size: 22px;
+  font-weight: 800;
+}
+.travel-cut-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: var(--color-travel-line);
+  color: var(--color-travel-card);
+  font-size: 32px;
+}
+.travel-cut-line {
+  width: min(320px, 70%);
+  height: 6px;
+  border-radius: 3px;
+  background: var(--color-travel-line);
+}
+.taxi-app {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}

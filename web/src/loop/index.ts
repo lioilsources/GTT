@@ -65,6 +65,10 @@ export interface LoopApi {
   readonly inWorldGame: boolean;
   /** A context button with priority ("Zvednout", specs/booths.md): while true, "Hrát" hides. */
   yieldTo: (() => boolean) | null;
+  /** Metro stations of the loaded save (specs/travel.md); the travel module `load`s them. */
+  readonly savedStations: readonly string[];
+  /** Live unlocked stations for the save (set by the travel module; null = keep the loaded ones). */
+  stations: (() => string[]) | null;
 }
 
 /** Loop glue of client W (specs/loop.md): loads the save, wires arrival → minigame → result → save. */
@@ -86,6 +90,7 @@ export async function installLoop(env: LoopEnv): Promise<LoopApi> {
   const npc = env.npcPack ? new DialogueSession(env.npcPack, tuning.npc, city.id, (Math.random() * 0x100000000) >>> 0) : null;
   setDialogueSession(npc);
   let savedNpc: Save['npc'] = { vibe: {}, contacts: [], recent: [] };
+  let savedStations: string[] = [];
 
   // ---------- save
   const snapshot = (): Save => {
@@ -100,6 +105,7 @@ export async function installLoop(env: LoopEnv): Promise<LoopApi> {
       feed: phone.feedSave(),
       npc: npc ? { vibe: { ...npc.state.vibe }, contacts: [...npc.state.contacts], recent: [...npc.state.recent] } : savedNpc,
       settings: env.settings.get(),
+      stations: api.stations ? api.stations() : savedStations,
     });
   };
   const restore = (s: Save): void => {
@@ -109,6 +115,7 @@ export async function installLoop(env: LoopEnv): Promise<LoopApi> {
     book.restore(s.best, s.plays);
     phone.feedRestore(s.feed);
     savedNpc = s.npc;
+    savedStations = [...(s.stations ?? [])];
     if (npc) {
       const known = new Set(npc.pack.characters.map((c) => c.id));
       const skits = new Set(npc.pack.skits.map((k) => k.id));
@@ -288,6 +295,10 @@ export async function installLoop(env: LoopEnv): Promise<LoopApi> {
       return inWorldGame();
     },
     yieldTo: null,
+    get savedStations() {
+      return savedStations;
+    },
+    stations: null,
   };
 
   // ?play=<spotId> starts that spot's minigame right away (DUALSTACK 6.6 debug parameter).

@@ -2,8 +2,8 @@ import type { BestResult, Save } from '../gen/schema';
 import type { Tuning } from '../gen/tuning';
 import { IllegalAction, type Rules, type RulesResult } from '../minigames/rules';
 
-/** specs/save.md, version 1: save format 2, migration from 1, normalisation (P0, module `save`). */
-export const SAVE_VERSION = 2;
+/** specs/save.md, version 2: save format 3, migration from 1 and 2, normalisation (P0, module `save`). */
+export const SAVE_VERSION = 3;
 
 export interface SaveConfig {
   cityId: string;
@@ -56,6 +56,8 @@ export interface SaveParts {
   feed?: Save['feed'];
   npc?: Save['npc'];
   settings?: Save['settings'];
+  /** Unlocked metro stations in unlock order (specs/travel.md). */
+  stations?: string[];
 }
 
 /** Composes a save from the live parts (same normalisation as load, so a round trip is exact). */
@@ -79,12 +81,14 @@ export function composeSave(c: SaveConfig, p: SaveParts): Save {
     feed: { prefs: sorted(feed.prefs), visits: sorted(feed.visits, (n) => Math.max(0, n)), districts: [...feed.districts] },
     npc: { vibe: sorted(npc.vibe), contacts: [...npc.contacts], recent: [...npc.recent] },
     settings: { scheme: (['a', 'b', 'c'] as const).includes(st.scheme) ? st.scheme : 'a', night: st.night },
+    stations: unique(p.stations ?? []),
   };
 }
 
-/** Any JSON value → a normalised version-2 save of this city (specs/save.md "load"). */
+/** Any JSON value → a normalised version-3 save of this city (specs/save.md "load"). */
 export function normalizeSave(c: SaveConfig, raw: unknown): Save {
-  if (!isObj(raw) || (raw['version'] !== 1 && raw['version'] !== 2) || raw['cityId'] !== c.cityId) return freshSave(c);
+  const v = isObj(raw) ? raw['version'] : undefined;
+  if (!isObj(raw) || (v !== 1 && v !== 2 && v !== 3) || raw['cityId'] !== c.cityId) return freshSave(c);
   const s = raw;
   if (!isInt(s['cash']) || !isStrList(s['stamps']) || !isStrList(s['cars']) || !isBestMap(s['best'])) return freshSave(c);
   if (s['version'] === 1) {
@@ -97,6 +101,9 @@ export function normalizeSave(c: SaveConfig, raw: unknown): Save {
     !isObj(st) || typeof st['scheme'] !== 'string' || typeof st['night'] !== 'boolean') {
     return freshSave(c);
   }
+  // Version 3: `stations` is optional (missing = []); migration 2 → 3 sets it to [].
+  const stations = v === 3 && s['stations'] !== undefined ? s['stations'] : [];
+  if (!isStrList(stations)) return freshSave(c);
   return composeSave(c, {
     cash: s['cash'],
     cars: s['cars'],
@@ -107,12 +114,13 @@ export function normalizeSave(c: SaveConfig, raw: unknown): Save {
     feed: { prefs: feed['prefs'], visits: feed['visits'], districts: feed['districts'] },
     npc: { vibe: npc['vibe'], contacts: npc['contacts'], recent: npc['recent'] },
     settings: { scheme: st['scheme'] as Save['settings']['scheme'], night: st['night'] },
+    stations,
   });
 }
 
 export class SaveRules implements Rules<Save & object, SaveAction, RulesResult, SaveConfig> {
   readonly id = 'save';
-  readonly specVersion = 1;
+  readonly specVersion = 2;
   private cfg: SaveConfig | null = null;
 
   init(config: SaveConfig, _seed = 0): Save {
