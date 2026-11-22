@@ -250,3 +250,27 @@
   lead: web
   flutter: todo
   web: todo
+- id: F-031
+  name: Kuličky (Prague local game)
+  level: P0
+  spec: specs/minigames/kulicky.md@1
+  vectors: vectors/kulicky.json
+  lead: web
+  flutter: todo
+  web: todo
+- id: F-032
+  name: Čára (Prague local game)
+  level: P0
+  spec: specs/minigames/cara.md@1
+  vectors: vectors/cara.json
+  lead: web
+  flutter: todo
+  web: todo
+- id: F-033
+  name: Nohejbal (Prague local game)
+  level: P0
+  spec: specs/minigames/nohejbal.md@1
+  vectors: vectors/nohejbal.json
+  lead: web
+  flutter: todo
+  web: todo
