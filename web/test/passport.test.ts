@@ -1,4 +1,4 @@
-import { existsSync, readFileSync } from 'node:fs';
+import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 
 import { parse } from 'yaml';
@@ -120,22 +120,36 @@ describe('passport tracker', () => {
 });
 
 describe('postcards in i18n', () => {
-  const yaml = parse(readFileSync(join(root, 'content', 'cities', 'nyc', 'landmarks.yaml'), 'utf8')) as {
-    landmarks: Array<{ id: string; name: string; hero?: boolean }>;
-  };
+  // Every city's landmarks.yaml; a postcard id belongs to exactly one city (M3: Prague joins New York).
+  const cities = readdirSync(join(root, 'content', 'cities')).filter((c) => existsSync(join(root, 'content', 'cities', c, 'landmarks.yaml')));
+  const byCity = new Map(
+    cities.map((c) => [
+      c,
+      (parse(readFileSync(join(root, 'content', 'cities', c, 'landmarks.yaml'), 'utf8')) as { landmarks: Array<{ id: string; name: string; hero?: boolean }> }).landmarks,
+    ]),
+  );
   const ids = Object.keys(messages.en).filter((k) => /^lm_.+_title$/.test(k)).map((k) => k.slice(3, -6));
 
-  it('20 hero landmarks with title (= landmarks.yaml name) and text in both languages', () => {
-    expect(ids).toHaveLength(20);
+  it('each postcard is a hero landmark of one city with title (= landmarks.yaml name) and two-sentence text in both languages', () => {
     for (const id of ids) {
-      const lm = yaml.landmarks.find((l) => l.id === id);
-      expect(lm?.hero, id).toBe(true);
+      const owners = cities.filter((c) => byCity.get(c)!.some((l) => l.id === id));
+      expect(owners, id).toHaveLength(1);
+      const lm = byCity.get(owners[0]!)!.find((l) => l.id === id)!;
+      expect(lm.hero, id).toBe(true);
       for (const loc of ['en', 'cs'] as const) {
         const m = messages[loc] as Record<string, string>;
-        expect(m[`lm_${id}_title`], `${loc} ${id}`).toBe(lm!.name);
+        expect(m[`lm_${id}_title`], `${loc} ${id}`).toBe(lm.name);
         expect(m[`lm_${id}_text`]?.split('. ').length, `${loc} ${id} two sentences`).toBe(2);
       }
     }
+  });
+
+  it('a city with postcards has 20 of them (M1 9, M3)', () => {
+    for (const c of cities) {
+      const n = byCity.get(c)!.filter((l) => ids.includes(l.id)).length;
+      if (n > 0) expect(n, c).toBe(20);
+    }
+    expect(byCity.get('nyc')!.filter((l) => ids.includes(l.id))).toHaveLength(20);
   });
 });
 
