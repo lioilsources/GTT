@@ -18,7 +18,7 @@ Katalog města skládá klient z dat města, stejně v obou klientech:
 | `landmark` | `landmarks.pb`: `hero = true` **a** v `i18n/en.json` existuje klíč `lm_<id>_title` | `Landmark.id` |
 | `district` | `Manifest.districts` (pořadí balíčku) | `districtId(name)`, viz níže |
 | `minigame` | `spots.pb`: neprázdné `Spot.minigame` (pořadí spotů) | id minihry |
-| `photo` | fotomísta (zatím žádná, pole je prázdné) | – |
+| `photo` | `spots.pb`: `kind = photo` (pořadí spotů, `specs/photo.md`) | `Spot.id` |
 
 - Památka s pohlednicí má v `i18n/` klíče `lm_<id>_title` (jméno jako v `landmarks.yaml`, obchodní
   věže adresou podle R10) a `lm_<id>_text` (2 krátké věty vlastními slovy). V M1 je jich 20.
@@ -96,7 +96,7 @@ Klient volá sledovač Pasu v HUD intervalu (~10× za sekundu) s polohou auta v 
   volání nejvýš jedna nová (další přijde příští tick).
 - **Čtvrť:** objevená, když `districtAt(x, y)` vrátí jméno; `kind = district`, `id = districtId(jméno)`.
 - **Minihra:** po skončení minihry klient předá `stars` z `MinigameResult` (napojení přijde s feedem).
-- **Fotomísto:** později (M2, Foťák).
+- **Fotomísto:** snímek ve Foťáku s výsledkem `ok` (`specs/photo.md`) → `visit photo`.
 
 Novou památku ukáže karta pohlednice; nová čtvrť krátký štítek „Razítko: <čtvrť>“. Obojí zmizí po
 `passport.postcard_s` sekundách nebo klepnutím.

@@ -362,6 +362,15 @@ export type MessageKey =
   | "taxiPaid"
   | "taxiEnd"
   | "taxiGallery"
+  | "photoOpen"
+  | "photoHint"
+  | "photoTaken"
+  | "photoAgain"
+  | "photoCut"
+  | "photoLoose"
+  | "photoClose"
+  | "photoNoSpot"
+  | "photoWanted"
   | "taxiGalleryGo"
 ;
 
@@ -725,6 +734,15 @@ export const messages: Record<Locale, Record<MessageKey, string>> = {
     taxiPaid: "Jízdné {fare}",
     taxiEnd: "Ukončit směnu",
     taxiGallery: "Taxi se hraje ve městě: 4minutová směna od stanoviště taxi.",
+    photoOpen: "Foťák",
+    photoHint: "Zarámuj výhled: {name}",
+    photoTaken: "Razítko za fotku: {name}",
+    photoAgain: "Pěkná fotka – tohle místo už v Pasu máš",
+    photoCut: "Výhled se nevešel – táhni větší rámeček kolem zaměřovače",
+    photoLoose: "Moc široký záběr – zarámuj výhled těsněji",
+    photoClose: "Zpět",
+    photoNoSpot: "Najdi fotomísto (ikona foťáku) a zastav u něj",
+    photoWanted: "S policií v zádech ne",
     taxiGalleryGo: "Začít směnu ve městě",
   },
   "en": {
@@ -1086,6 +1104,15 @@ export const messages: Record<Locale, Record<MessageKey, string>> = {
     taxiPaid: "Fare {fare}",
     taxiEnd: "End shift",
     taxiGallery: "Taxi is played in the city: a 4-minute shift from the taxi stand.",
+    photoOpen: "Camera",
+    photoHint: "Frame the view: {name}",
+    photoTaken: "Photo stamp: {name}",
+    photoAgain: "Nice shot – this one is already in your Passport",
+    photoCut: "The view doesn't fit – draw a bigger frame around the crosshair",
+    photoLoose: "Too wide – frame the view more tightly",
+    photoClose: "Back",
+    photoNoSpot: "Find a photo spot (camera icon) and stop there",
+    photoWanted: "Not with the police on your tail",
     taxiGalleryGo: "Start the shift in the city",
   },
 };

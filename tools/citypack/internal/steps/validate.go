@@ -127,6 +127,19 @@ func Validate(e *Env) error {
 		}
 	}
 
+	// 3b. Photo spots carry a view within 1.5 km of their parking point (specs/photo.md).
+	for _, s := range p.Spots.Items {
+		if s.Kind != "photo" {
+			continue
+		}
+		dx, dy := float64(s.LookX-s.ParkX)/10, float64(s.LookY-s.ParkY)/10
+		if s.SubjectDm == 0 {
+			fail("photo spot %s has no subject", s.Id)
+		} else if math.Hypot(dx, dy) > 1500 {
+			fail("photo spot %s: view %.0f m from the parking point", s.Id, math.Hypot(dx, dy))
+		}
+	}
+
 	// 4. No colliding building covers a ground-level road centreline.
 	overlaps := buildingRoadOverlaps(p)
 	if overlaps > 0 {

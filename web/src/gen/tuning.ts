@@ -138,6 +138,8 @@ export class Tuning {
   readonly cars: TuningCars;
   /** Fast travel by metro and taxi (specs/travel.md). Fares: base + distance (dm) × per_km ÷ 10000. */
   readonly travel: TuningTravel;
+  /** Photo spots and the Camera app (specs/photo.md). */
+  readonly photo: TuningPhoto;
   /** Ringing phone booths (specs/booths.md). P0 rules tick once per game second. */
   readonly booths: TuningBooths;
   /**
@@ -190,6 +192,7 @@ export class Tuning {
     this.npc = new TuningNpc(r.sub('npc'));
     this.cars = new TuningCars(r.sub('cars'));
     this.travel = new TuningTravel(r.sub('travel'));
+    this.photo = new TuningPhoto(r.sub('photo'));
     this.booths = new TuningBooths(r.sub('booths'));
     this.style = new TuningStyle(r.sub('style'));
     this.police = new TuningPolice(r.sub('police'));
@@ -233,6 +236,7 @@ export class Tuning {
       npc: this.npc.toJson(),
       cars: this.cars.toJson(),
       travel: this.travel.toJson(),
+      photo: this.photo.toJson(),
       booths: this.booths.toJson(),
       style: this.style.toJson(),
       police: this.police.toJson(),
@@ -2566,6 +2570,44 @@ export class TuningTravel {
       cut_s: this.cutS,
       entry_w_m: this.entryWM,
       entry_l_m: this.entryLM,
+    };
+  }
+}
+
+/** Photo spots and the Camera app (specs/photo.md). */
+export class TuningPhoto {
+  enabled: boolean;
+  /** widest frame: half its short side <= subject radius x 4 */
+  loosePct: number;
+  /** camera view width = max(slow view, 2 x subject x this) */
+  viewFactor: number;
+  /** camera glide into the framing view */
+  zoomS: number;
+  flashS: number;
+  /** crosshair size on the view centre */
+  crossPx: number;
+  /** camera icon at the parking point */
+  spotIconM: number;
+
+  constructor(r: R) {
+    this.enabled = r.b('enabled');
+    this.loosePct = r.i('loose_pct');
+    this.viewFactor = r.d('view_factor');
+    this.zoomS = r.d('zoom_s');
+    this.flashS = r.d('flash_s');
+    this.crossPx = r.d('cross_px');
+    this.spotIconM = r.d('spot_icon_m');
+  }
+
+  toJson(): Record<string, unknown> {
+    return {
+      enabled: this.enabled,
+      loose_pct: this.loosePct,
+      view_factor: this.viewFactor,
+      zoom_s: this.zoomS,
+      flash_s: this.flashS,
+      cross_px: this.crossPx,
+      spot_icon_m: this.spotIconM,
     };
   }
 }

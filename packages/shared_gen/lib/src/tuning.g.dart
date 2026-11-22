@@ -102,6 +102,7 @@ class Tuning {
         npc = TuningNpc._(r.sub('npc')),
         cars = TuningCars._(r.sub('cars')),
         travel = TuningTravel._(r.sub('travel')),
+        photo = TuningPhoto._(r.sub('photo')),
         booths = TuningBooths._(r.sub('booths')),
         style = TuningStyle._(r.sub('style')),
         police = TuningPolice._(r.sub('police')),
@@ -211,6 +212,9 @@ class Tuning {
   /// Fast travel by metro and taxi (specs/travel.md). Fares: base + distance (dm) × per_km ÷ 10000.
   final TuningTravel travel;
 
+  /// Photo spots and the Camera app (specs/photo.md).
+  final TuningPhoto photo;
+
   /// Ringing phone booths (specs/booths.md). P0 rules tick once per game second.
   final TuningBooths booths;
 
@@ -263,6 +267,7 @@ class Tuning {
         'npc': npc.toJson(),
         'cars': cars.toJson(),
         'travel': travel.toJson(),
+        'photo': photo.toJson(),
         'booths': booths.toJson(),
         'style': style.toJson(),
         'police': police.toJson(),
@@ -2758,6 +2763,47 @@ class TuningTravel {
         'cut_s': cutS,
         'entry_w_m': entryWM,
         'entry_l_m': entryLM,
+      };
+}
+
+/// Photo spots and the Camera app (specs/photo.md).
+class TuningPhoto {
+  TuningPhoto._(_R r)
+      : enabled = r.b('enabled'),
+        loosePct = r.i('loose_pct'),
+        viewFactor = r.d('view_factor'),
+        zoomS = r.d('zoom_s'),
+        flashS = r.d('flash_s'),
+        crossPx = r.d('cross_px'),
+        spotIconM = r.d('spot_icon_m');
+
+  bool enabled;
+
+  /// widest frame: half its short side <= subject radius x 4
+  int loosePct;
+
+  /// camera view width = max(slow view, 2 x subject x this)
+  double viewFactor;
+
+  /// camera glide into the framing view
+  double zoomS;
+
+  double flashS;
+
+  /// crosshair size on the view centre
+  double crossPx;
+
+  /// camera icon at the parking point
+  double spotIconM;
+
+  Map<String, Object> toJson() => {
+        'enabled': enabled,
+        'loose_pct': loosePct,
+        'view_factor': viewFactor,
+        'zoom_s': zoomS,
+        'flash_s': flashS,
+        'cross_px': crossPx,
+        'spot_icon_m': spotIconM,
       };
 }
 

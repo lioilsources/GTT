@@ -17,7 +17,7 @@ lomená čára trasy, postup po ní, formát vzdálenosti, šipka na okraji) maj
 - Telefon zabírá spodní část obrazovky (`phone.height_pct` % výšky); dokud je otevřený, hra stojí
   (v3, `specs/pause.md`; dřív jízda jen zpomalila na `phone.time_scale`).
 - Domovská obrazovka: mřížka aplikací v pořadí Feed, Mapa, Taxi, Garáž, Pas, Foťák, Kontakty,
-  Peněženka, Cesty, Nastavení. Taxi (v4, M2) je rychlý přesun (`specs/travel.md`). V M1 fungují Feed a Mapa, ostatní jsou šedé. Cesty (v2, M3)
+  Peněženka, Cesty, Nastavení. Taxi (v4, M2) je rychlý přesun (`specs/travel.md`), Foťák (M2) fotomísta (`specs/photo.md`). V M1 fungují Feed a Mapa, ostatní jsou šedé. Cesty (v2, M3)
   přepínají města (`specs/cities.md`). Klient má registr aplikací
   (slot): jiná feature později dodá obrazovku pro své id a aplikace zezelená.
 - Zpět (šipka v liště) vrací z aplikace na domovskou obrazovku.
