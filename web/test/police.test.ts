@@ -1,15 +1,16 @@
 import { existsSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
+import { gzipSync } from 'node:zlib';
 
-import { create } from '@bufbuild/protobuf';
+import { create, toBinary, type DescMessage, type MessageShape } from '@bufbuild/protobuf';
 import { beforeAll, describe, expect, it } from 'vitest';
 import { parse } from 'yaml';
 
 import { DriveWorld } from '../src/drive/driveWorld';
-import { EdgeSchema, GraphSchema, NodeSchema, RoadClass } from '../src/gen/pb/citypack_pb';
+import { EdgeSchema, GraphSchema, LandmarksSchema, ManifestSchema, NodeSchema, RoadClass, SpawnSchema, SpotsSchema } from '../src/gen/pb/citypack_pb';
 import type { CarSpec } from '../src/gen/schema';
 import { Tuning } from '../src/gen/tuning';
-import { Police } from '../src/police/police';
+import { Police, roadblockSpot } from '../src/police/police';
 import { fine, OFFENCE_KINDS, policeConfig, PoliceRules } from '../src/police/rules';
 import { inView, onSidewalk, segmentsCross, sightBlocked } from '../src/police/sense';
 import { lightPhase } from '../src/police/view';
@@ -62,7 +63,7 @@ describe('police rules (specs/police.md)', () => {
     const p = tuning.police;
     expect(cfg.escapeTicks).toBe(Math.round(p.escapeS * p.tickHz));
     expect(cfg.captureTicks).toBe(Math.round(p.captureS * p.tickHz));
-    expect(cfg.maxLevel).toBe(2);
+    expect(cfg.maxLevel).toBe(tuning.police.maxLevel);
     expect(Object.keys(cfg.levels)).toEqual([...OFFENCE_KINDS]);
   });
 
@@ -219,4 +220,224 @@ describe.skipIf(!existsSync(pack))('police in the NYC pack', () => {
     expect(fines[0]).toBeGreaterThan(0);
     expect(p.wantedLevel).toBe(0);
   }, 30000);
+});
+
+/**
+ * Roadblock (specs/roadblock.md) on a synthetic city:
+ *  0 (-200,0) ──e0── 1 (0,0) ──e1── 2 (200,0) ──e2── 3 (600,0) border
+ *                    └─e3── 4 (0,400)
+ *  dead end: 5 (-200,500) ──e4── 6 (-100,500)
+ */
+function blockGraph() {
+  const n = (x: number, y: number, border = false) => create(NodeSchema, { x: x * 10, y: y * 10, border });
+  const e = (from: number, to: number, pts: number[]) =>
+    create(EdgeSchema, { from, to, points: pts.map((v) => v * 10), class: RoadClass.PRIMARY, lanes: 4, oneway: 0, kept: true, widthM: 30 });
+  return create(GraphSchema, {
+    names: [''],
+    nodes: [n(-200, 0), n(0, 0), n(200, 0), n(600, 0, true), n(0, 400), n(-200, 500), n(-100, 500)],
+    edges: [
+      e(0, 1, [-200, 0, 0, 0]),
+      e(1, 2, [0, 0, 200, 0]),
+      e(2, 3, [200, 0, 600, 0]),
+      e(1, 4, [0, 0, 0, 400]),
+      e(5, 6, [-200, 500, -100, 500]),
+    ],
+  });
+}
+
+const gz = <D extends DescMessage>(schema: D, m: MessageShape<D>): Uint8Array => new Uint8Array(gzipSync(toBinary(schema, m)));
+
+async function blockCity(): Promise<City> {
+  const files: Record<string, Uint8Array> = {
+    'manifest.pb': gz(ManifestSchema, create(ManifestSchema, {
+      formatVersion: 1, cityId: 'test', chunkM: 256, driveSide: 'right', units: 'metric',
+      start: create(SpawnSchema, { x: -1000, y: 0, headingRad: 0 }),
+    })),
+    'graph.pb': gz(GraphSchema, blockGraph()),
+    'landmarks.pb': gz(LandmarksSchema, create(LandmarksSchema, {})),
+    'spots.pb': gz(SpotsSchema, create(SpotsSchema, {})),
+  };
+  return City.load({
+    read: async (p) => {
+      const f = files[p];
+      if (!f) throw new Error(p);
+      return f;
+    },
+  });
+}
+
+type RawTuning = { police: Record<string, unknown> & { roadblock: Record<string, unknown> } };
+
+/** Tuning with the wanted cap raised to 3 (the roadblock level), plus overrides. */
+function tuning3(edit: (raw: RawTuning) => void = () => {}): Tuning {
+  const raw = parse(readFileSync(join(root, 'content', 'tuning.yaml'), 'utf8')) as RawTuning;
+  raw.police.max_level = 3;
+  edit(raw);
+  return Tuning.fromJson(raw);
+}
+
+describe('police roadblock (specs/roadblock.md)', () => {
+  let city: City;
+  beforeAll(async () => {
+    city = await blockCity();
+  });
+  const rb = tuning.police.roadblock;
+  const search = tuning.layers.searchM;
+
+  it('spot: ahead_m along the road, across a node by chooseToward; gives up at a border or a dead end', () => {
+    const g = city.graph;
+    const a = roadblockSpot(g, -100, 0, 0, 0, search, rb.aheadM, rb.probeM)!;
+    expect(a.edge.index).toBe(1);
+    expect(a.x).toBeCloseTo(-100 + rb.aheadM, 3);
+    expect(a.y).toBeCloseTo(0, 3);
+    expect(a.heading).toBeCloseTo(0, 6);
+    // Heading west on e1: along e1 backwards, then e0.
+    const b = roadblockSpot(g, 100, 2, Math.PI, 0, search, rb.aheadM, rb.probeM)!;
+    expect(b.edge.index).toBe(0);
+    expect(b.x).toBeCloseTo(100 - rb.aheadM, 3);
+    // Heading north-east just before the crossing: the side road e3.
+    const c = roadblockSpot(g, -5, 0, Math.PI / 2 - 0.3, 0, search, rb.aheadM, rb.probeM)!;
+    expect(c.edge.index).toBe(3);
+    // Border node 3 within ahead_m, a dead end, no road at all, another layer.
+    expect(roadblockSpot(g, 550, 0, 0, 0, search, rb.aheadM, rb.probeM)).toBeNull();
+    expect(roadblockSpot(g, -180, 500, 0, 0, search, rb.aheadM, rb.probeM)).toBeNull();
+    expect(roadblockSpot(g, -100, 250, 0, 0, search, rb.aheadM, rb.probeM)).toBeNull();
+    expect(roadblockSpot(g, -100, 0, 0, -1, search, rb.aheadM, rb.probeM)).toBeNull();
+  });
+
+  const world = (t: Tuning) => {
+    const d = new DriveWorld(city, car, t);
+    const p = new Police(d, t, null);
+    d.spawn(-100, 0, 0);
+    return { d, p };
+  };
+  /** Runs s seconds on the handbrake (brake alone reverses); hold > 0 keeps the wanted level there (nobody escapes). */
+  const step = (d: DriveWorld, p: Police, s: number, hold = 0) => {
+    for (let i = 0; i < Math.round(s * 60); i++) {
+      if (hold > 0) p.state = { ...p.state, level: hold, unseen: 0 };
+      d.input.reset();
+      d.input.handbrake = true;
+      d.update(1 / 60);
+      p.update(1 / 60);
+    }
+  };
+
+  it('stands at level 3: two patrols across the road ahead, standing, one event', () => {
+    const t = tuning3();
+    const { d, p } = world(t);
+    const events: Array<{ x: number; y: number }> = [];
+    p.on('roadblock', (e) => events.push(e));
+    step(d, p, 0.5);
+    expect(p.roadblock).toBeNull(); // level 0
+    step(d, p, 2, 3);
+    const b = p.roadblock!;
+    expect(b).not.toBeNull();
+    expect(events.length).toBe(1);
+    expect(b.x).toBeCloseTo(-100 + t.police.roadblock.aheadM, 0);
+    expect(b.y).toBeCloseTo(0, 3);
+    const ys = b.cars.map((c) => c.y).sort((u, v) => u - v);
+    expect(ys[0]).toBeCloseTo(-t.police.roadblock.lateralM, 3);
+    expect(ys[1]).toBeCloseTo(t.police.roadblock.lateralM, 3);
+    for (const c of b.cars) {
+      expect(c.police && c.blocking).toBe(true);
+      expect(c.x).toBeCloseTo(b.x, 3);
+      expect(Math.abs(Math.cos(c.heading))).toBeLessThan(1e-6);
+    }
+    const before = b.cars.map((c) => [c.x, c.y, c.heading]);
+    step(d, p, 5, 3);
+    expect(p.roadblock).toBe(b);
+    expect(events.length).toBe(1);
+    b.cars.forEach((c, i) => {
+      expect(c.speed).toBe(0);
+      expect(c.pursuing).toBe(false);
+      expect(c.x).toBeCloseTo(before[i]![0]!, 6);
+      expect(c.y).toBeCloseTo(before[i]![1]!, 6);
+      expect(c.heading).toBeCloseTo(before[i]![2]!, 6);
+    });
+  }, 30000);
+
+  it('not counted in patrols[level]', () => {
+    // patrols[3] = 2: if the two blocking cars counted, no traffic car would become a patrol.
+    const t = tuning3((raw) => (raw.police.patrols = [0, 0, 0, 2]));
+    const { d, p } = world(t);
+    step(d, p, 20, 3);
+    expect(p.roadblock).not.toBeNull();
+    const cops = d.traffic!.cars.filter((c) => c.police);
+    expect(cops.filter((c) => c.blocking).length).toBe(2);
+    expect(cops.filter((c) => !c.blocking).length).toBe(2);
+  }, 30000);
+
+  it('cleared after escaping below level 3, then cooldown_s', () => {
+    // No chasing patrols, so nobody sees the player (the roadblock is farther than view_m).
+    const t = tuning3((raw) => (raw.police.patrols = [0, 0, 0, 0]));
+    const { d, p } = world(t);
+    step(d, p, 1, 3);
+    const b = p.roadblock!;
+    expect(b).not.toBeNull();
+    // Nobody sees the player: escape_s later the level drops to 2 and the roadblock goes.
+    step(d, p, t.police.escapeS + 1);
+    expect(p.wantedLevel).toBe(2);
+    expect(p.roadblock).toBeNull();
+    for (const c of b.cars) expect(d.traffic!.cars.includes(c)).toBe(false);
+    // Back at 3: no new roadblock within cooldown_s of the clear, then one.
+    step(d, p, t.police.roadblock.cooldownS - 2, 3);
+    expect(p.roadblock).toBeNull();
+    step(d, p, 3, 3);
+    expect(p.roadblock).not.toBeNull();
+  }, 30000);
+
+  it('cleared after ttl_s', () => {
+    const t = tuning3();
+    const { d, p } = world(t);
+    step(d, p, 1, 3);
+    expect(p.roadblock).not.toBeNull();
+    step(d, p, t.police.roadblock.ttlS - 2, 3);
+    expect(p.roadblock).not.toBeNull();
+    step(d, p, 2, 3);
+    expect(p.roadblock).toBeNull();
+  }, 60000);
+
+  it('cleared when the player is farther than clear_m; survives traffic despawn_m', () => {
+    const hop = (d: DriveWorld, p: Police, xs: number[]) => {
+      for (const x of xs) {
+        d.spawn(x, 0, Math.PI);
+        step(d, p, 0.2, 3);
+      }
+    };
+    // Huge clear_m: beyond despawn_m the blocking cars stay.
+    const t1 = tuning3((raw) => (raw.police.roadblock.clear_m = 5000.0));
+    const w1 = world(t1);
+    step(w1.d, w1.p, 1, 3);
+    const b = w1.p.roadblock!;
+    expect(b).not.toBeNull();
+    hop(w1.d, w1.p, [-150, -200, -250, -300, -350]);
+    expect(Math.abs(-350 - b.x)).toBeGreaterThan(t1.traffic.despawnM);
+    expect(w1.p.roadblock).toBe(b);
+    for (const c of b.cars) expect(w1.d.traffic!.cars.includes(c)).toBe(true);
+    // Default clear_m: gone once the player is that far away.
+    const t2 = tuning3();
+    const w2 = world(t2);
+    step(w2.d, w2.p, 1, 3);
+    const b2 = w2.p.roadblock!;
+    expect(b2).not.toBeNull();
+    hop(w2.d, w2.p, [-150, -200]);
+    expect(w2.p.roadblock).toBe(b2);
+    hop(w2.d, w2.p, [-250]);
+    expect(Math.abs(-250 - b2.x)).toBeGreaterThan(t2.police.roadblock.clearM);
+    expect(w2.p.roadblock).toBeNull();
+  }, 30000);
+
+  it('a traffic reset drops it; clearRoadblock (respawn) too', () => {
+    const t = tuning3();
+    const { d, p } = world(t);
+    step(d, p, 1, 3);
+    expect(p.roadblock).not.toBeNull();
+    d.traffic!.reset();
+    step(d, p, 0.2, 3);
+    expect(p.roadblock).toBeNull();
+    step(d, p, t.police.roadblock.cooldownS + 1, 3);
+    expect(p.roadblock).not.toBeNull();
+    p.clearRoadblock();
+    expect(p.roadblock).toBeNull();
+  }, 60000);
 });

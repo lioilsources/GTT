@@ -15,7 +15,8 @@ import type { Traffic } from '../traffic/traffic';
 
 /**
  * Light-bar phase (specs/police.md "Kreslení"): −1 = off (not chasing), else 0 / 1 alternating
- * every light_blink_s. Pure, the Flutter painter uses the same rule.
+ * every light_blink_s. Pure, the Flutter painter uses the same rule; a roadblock patrol passes
+ * pursuing = true (its lights always blink).
  */
 export function lightPhase(pursuing: boolean, timeS: number, blinkS: number): number {
   if (!pursuing) return -1;
@@ -115,7 +116,8 @@ export class PoliceView {
       Matrix.RotationYToRef(-c.heading, this.m);
       this.m.setTranslationFromFloats(c.x, h, c.y);
       this.m.copyToArray(this.carM, 16 * n);
-      const ph = lightPhase(c.pursuing, this.time, blink);
+      // A roadblock patrol's lights blink always (specs/roadblock.md).
+      const ph = lightPhase(c.pursuing || c.blocking, this.time, blink);
       this.colL.set(ph < 0 ? this.off : ph === 0 ? this.red : this.off, 4 * n);
       this.colR.set(ph < 0 ? this.off : ph === 1 ? this.blue : this.off, 4 * n);
       n++;
