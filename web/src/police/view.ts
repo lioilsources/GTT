@@ -11,7 +11,7 @@ import { tokens } from '../gen/tokens';
 import type { Tuning } from '../gen/tuning';
 import { Tris, Z } from '../render/geometry';
 import { rgba, type Rgba } from '../render/palette';
-import { setShadowColour } from '../render/shadow';
+import { setCount, setShadowColour } from '../render/shadow';
 import type { Traffic } from '../traffic/traffic';
 
 /**
@@ -82,7 +82,7 @@ export class PoliceView {
     this.colR = new Float32Array(n * 4).fill(1);
     for (const mesh of [this.body, this.lampL, this.lampR]) {
       mesh.thinInstanceSetBuffer('matrix', this.carM, 16, false);
-      mesh.thinInstanceCount = 0;
+      setCount(mesh, 0);
     }
     this.lampL.thinInstanceSetBuffer('color', this.colL, 4, false);
     this.lampR.thinInstanceSetBuffer('color', this.colR, 4, false);
@@ -129,7 +129,7 @@ export class PoliceView {
       n++;
     }
     for (const mesh of [this.body, this.lampL, this.lampR]) {
-      mesh.thinInstanceCount = n;
+      setCount(mesh, n);
       mesh.thinInstanceBufferUpdated('matrix');
     }
     this.lampL.thinInstanceBufferUpdated('color');
