@@ -112,3 +112,13 @@ Navíc provoz (bez jména, náhodný lak): 6 generických aut `assets/cars/traff
 ## Hotovo
 
 (sem připisovat dodané položky: cesta, datum, poznámka)
+
+- **Style board v1**, 22. 11. 2026: Ol1n vybral NYC = A (plochý vektor), Praha = C (risograf).
+  Sprity, postavy a UI sdílené ve stylu A. Paleta a parametry risografu předány zvlášť (tokens, tuning).
+- `assets/npc/<id>.png` (= `_neutral`), `<id>_happy|_neutral|_annoyed.png` 1024², `<id>_bust.png`
+  768×1280 (výraz happy), 22. 11. 2026, všech 6 postav. Pozadí ploché světle šedé, **alfa zatím chybí**
+  (doplní se odstraněním pozadí na stejných obrázcích).
+- `assets/postcards/nyc/*.png`, 22. 11. 2026, 28 z 34. Chybí (přegenerovávají se kvůli textu na
+  budovách): amnh, carnegie_hall, guggenheim, met_museum, msg, federal_hall.
+- `assets/postcards/prague/*.png`, 22. 11. 2026, 19 z 20. Chybí old_new_synagogue (přegenerovává se).
+- Postup: `tools/art/make_batch1.py` (prompty, seedy) + `tools/art/run_board.py` (workflow ComfyUI).
