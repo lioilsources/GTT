@@ -87,6 +87,26 @@ void main() {
       expect(slip(true), greaterThan(slip(false) + 1));
     });
 
+    test('gripScale (rain, specs/weather.md) caps the axle grip lower: more slip, 1 = unchanged', () {
+      double slip(double scale) {
+        final w = World(gravity: Vector2.zero());
+        final car = newCar(w)..gripScale = scale;
+        run(car, ControlInput(), 4, w);
+        var sum = 0.0;
+        for (var i = 0; i < 2 * d.stepHz; i++) {
+          car.drive(ControlInput()..steer = 1, (1 / d.stepHz), cruise: tuning.speedMps.cruise, top: tuning.speedMps.topDefault);
+          w.step((1 / d.stepHz), subStepCount: d.substeps);
+          sum += car.rearSlip + car.frontSlip;
+        }
+        w.destroy();
+        return sum;
+      }
+
+      final dry = slip(1);
+      expect(slip(tuning.weather.rainGrip), greaterThan(dry));
+      expect(slip(1), dry, reason: 'deterministic, scale 1 is the dry rule');
+    });
+
     test('brake stops the car and then reverses', () {
       final car = newCar(world);
       run(car, ControlInput(), 6);

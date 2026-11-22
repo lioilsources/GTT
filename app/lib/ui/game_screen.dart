@@ -30,6 +30,8 @@ import '../shops/shops_layer.dart';
 import '../taxi/taxi_controller.dart';
 import '../taxi/taxi_hud.dart';
 import '../travel/fast_travel.dart';
+import '../weather/weather_controller.dart';
+import '../weather/weather_layer.dart';
 import '../travel/fast_travel_layer.dart';
 import 'garage_sheet.dart';
 import 'hud.dart';
@@ -62,6 +64,7 @@ class _GameScreenState extends State<GameScreen> {
   FastTravelController? _fastTravel;
   PhotoController? _photo;
   ShopsController? _shops;
+  WeatherController? _weather;
   final SaveStore _store = FileSaveStore();
   final CityStore _cities = FileCityStore();
   Object? _saved;
@@ -76,6 +79,7 @@ class _GameScreenState extends State<GameScreen> {
     // one is released by the GameWidget (onRemove: streamer, police, physics).
     if (!_shown) _game.then((g) => g.onRemove(), onError: (_) {});
     _loop?.save();
+    _weather?.dispose();
     _shops?.dispose();
     _photo?.dispose();
     _fastTravel?.dispose();
@@ -221,6 +225,8 @@ class _GameScreenState extends State<GameScreen> {
           final photo = _photo ??= PhotoController(game, phone, loop);
           // Shops and bars (specs/shops.md): after the Camera, whose "Foťák" goes first.
           final shops = _shops ??= ShopsController(game, phone, loop);
+          // Weather (specs/weather.md): a new module per game, so a city switch starts clear.
+          final weather = _weather ??= WeatherController(game);
           return Stack(
             fit: StackFit.expand,
             children: [
@@ -239,7 +245,10 @@ class _GameScreenState extends State<GameScreen> {
                 onPhone: phone.toggle,
                 onCarAction: (a) async {
                   if (a == CarAction.board) return game.boardCandidate();
-                  await game.pauseOverlays.hold(GameOverlay.garage, showGarage(context, game.fleet, shelf: shops.shelf));
+                  await game.pauseOverlays.hold(
+                    GameOverlay.garage,
+                    showGarage(context, game.fleet, shelf: shops.shelf),
+                  );
                 },
                 onHop: game.hop,
                 onTuning: () => showTuningPanel(
@@ -251,6 +260,7 @@ class _GameScreenState extends State<GameScreen> {
                   },
                   onBench: _hasBench ? game.startBench : null,
                   onResetSave: loop.resetSave,
+                  weather: weather,
                 ),
                 onPassport: () => PassportScreen.open(
                   context,
@@ -270,6 +280,7 @@ class _GameScreenState extends State<GameScreen> {
               FastTravelLayer(travel: fastTravel),
               PhotoLayer(photo: photo),
               ShopsLayer(shops: shops),
+              WeatherLayer(weather: weather),
               PassportOverlay(
                 events: game.passportEvent,
                 seconds: game.tuning.passport.postcardS,

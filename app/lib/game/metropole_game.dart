@@ -230,6 +230,10 @@ class MetropoleGame extends Game {
   void Function(ui.Canvas canvas)? paintWorld;
   void Function(ui.Canvas canvas, ui.Size size)? paintScreen;
 
+  /// Screen-space drawing straight over the world layer (after the risograph pass), under
+  /// [paintScreen], street labels and the HUD: rain and fog of specs/weather.md.
+  void Function(ui.Canvas canvas, ui.Size size)? paintOverWorld;
+
   /// Drives the camera rig this frame with the real dt (the Camera glide, specs/photo.md); false =
   /// the rig follows the car.
   bool Function(double dt)? cameraHook;
@@ -265,8 +269,22 @@ class MetropoleGame extends Game {
   /// (colours are applied per draw), so swapping the palette is all a switch needs; a city
   /// switch builds a new game, which lands here from the constructor.
   void _applySkin() {
-    renderer.palette = night ? Palette.nightPalette : Palette.forCity(city.id);
+    final base = night ? Palette.nightPalette : Palette.forCity(city.id);
+    renderer.palette = base.wet(_wet / _wetSteps);
     renderer.worldFilter = risographEnabled(tuning.style, city.id, night: night) ? _risographFilter() : null;
+  }
+
+  /// Wet roads (specs/weather.md): the darkening in [_wetSteps] steps, so a blend rebuilds the
+  /// palette a few dozen times, not every frame.
+  int _wet = 0;
+  static const _wetSteps = 64;
+
+  /// Road, sidewalk and alley colours × (1 − [k]) (`weather.wet_darken` × the rain amount).
+  void setWet(double k) {
+    final q = (k.clamp(0.0, 1.0) * _wetSteps).round();
+    if (q == _wet) return;
+    _wet = q;
+    _applySkin();
   }
 
   ui.ImageFilter? _risoFilter;
@@ -550,6 +568,7 @@ class MetropoleGame extends Game {
         }
       },
     );
+    paintOverWorld?.call(canvas, _size);
     _streetLabels(canvas);
     paintScreen?.call(canvas, _size);
     _pedBubbles.paint(canvas, _size, peds, camera, tuning);

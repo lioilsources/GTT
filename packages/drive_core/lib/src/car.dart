@@ -67,6 +67,10 @@ class Car {
   late final double halfLength;
   late final double halfWidth;
 
+  /// Grip multiplier on both axles, an input from the client (rain, specs/weather.md); 1 = the
+  /// rules of specs/drive.md as they are.
+  double gripScale = 1;
+
   /// Current front wheel angle (radians, + = left).
   double wheelAngle = 0;
   int layer = 0;
@@ -209,8 +213,8 @@ class Car {
     body.applyForce(Vector2(-v.x * drag, -v.y * drag));
 
     // Lateral tyre impulses.
-    frontSlip = _axle(axleOffset, wheelAngle, spec.gripFront, dt, fx, fy, v, w, m);
-    final rearGrip = input.handbrake ? spec.gripRear * spec.driftBias : spec.gripRear;
+    frontSlip = _axle(axleOffset, wheelAngle, spec.gripFront * gripScale, dt, fx, fy, v, w, m);
+    final rearGrip = (input.handbrake ? spec.gripRear * spec.driftBias : spec.gripRear) * gripScale;
     rearSlip = _axle(rearOff, 0, rearGrip, dt, fx, fy, v, w, m);
     if (speed < t.stopSpeedMps && input.brake == 0 && input.steer == 0) {
       body.angularVelocity = w * t.stopSpinDamping;

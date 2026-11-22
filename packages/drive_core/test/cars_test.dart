@@ -227,6 +227,18 @@ void main() {
       expect(d.car.spec.id, 'pickup_hauler');
       d.spawn(city.startX, city.startY, city.startHeading);
       expect(d.car.spec.id, 'pickup_hauler');
+
+      // The client grip multiplier (rain, specs/weather.md) survives respawns and car switches.
+      d.gripScale = 0.8;
+      expect(d.car.gripScale, 0.8);
+      d.spawn(city.startX, city.startY, city.startHeading);
+      expect(d.car.gripScale, 0.8);
+      fleet.select('m0_coupe');
+      expect(d.car.gripScale, 0.8);
+      d.rescaleCar();
+      expect(d.car.gripScale, 0.8);
+      d.gripScale = 1;
+      expect(d.car.gripScale, 1);
       d.dispose();
     }, skip: !hasPack);
   });
