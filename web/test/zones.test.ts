@@ -43,8 +43,11 @@ function setup(spec: CarSpec, x: number): { world: World; zones: ZoneWorld; car:
 /** Drives east for `seconds`, applying the zone mask before each step like DriveWorld. */
 function drive(s: { world: World; zones: ZoneWorld; car: Car }, seconds: number): void {
   const d = tuning.drive, step = 1 / d.stepHz, input = new ControlInput();
+  const r = Math.hypot(s.car.halfLength, s.car.halfWidth) + d.bodyRoundM;
+  let inside = false;
   for (let t = 0; t < seconds; t += step) {
-    s.car.setZone(zoneMask(s.car.spec.class, s.zones.inside(s.car.x, s.car.y)));
+    inside = s.zones.insideFor(s.car.x, s.car.y, r, inside);
+    s.car.setZone(zoneMask(s.car.spec.class, inside));
     s.car.drive(input, step, tuning.speedMps.cruise, tuning.speedMps.topDefault);
     s.world.step(step, d.velocityIterations, d.positionIterations);
   }
@@ -119,6 +122,17 @@ describe('pedestrian zones (specs/zones.md)', () => {
     s.car.body.setTransform({ x: 30, y: 0 }, Math.PI);
     drive(s, 5);
     expect(s.car.x).toBeLessThan(15);
+  });
+
+  it('after leaving a zone the bollards stay off until the car clears them (hold-off)', () => {
+    const world = new World({ gravity: { x: 0, y: 0 } });
+    const z = new ZoneWorld(world, tuning.drive);
+    z.addChunk(chunk());
+    expect(z.nearBarrier(21, 0, 2)).toBe(true);
+    expect(z.nearBarrier(25, 0, 2)).toBe(false);
+    expect(z.insideFor(21, 0, 2, true)).toBe(true);
+    expect(z.insideFor(21, 0, 2, false)).toBe(z.inside(21, 0));
+    expect(z.insideFor(25, 0, 2, true)).toBe(z.inside(25, 0));
   });
 
   it('micro handbrake gives no yaw impulse', () => {

@@ -201,8 +201,12 @@ export class DriveWorld {
   /** CAT_ZONE in the player's mask (specs/zones.md); the inside test only counts on layer 0. */
   private updateZoneMask(): void {
     const car = this.car;
-    car.setZone(zoneMask(car.spec.class, car.layer === 0 && this.zones.inside(car.x, car.y)));
+    const r = Math.hypot(car.halfLength, car.halfWidth) + this.tuning.drive.bodyRoundM;
+    this.inZone = car.layer === 0 && this.zones.insideFor(car.x, car.y, r, this.inZone);
+    car.setZone(zoneMask(car.spec.class, this.inZone));
   }
+  /** Last zone test result (the hold-off in specs/zones.md). */
+  private inZone = false;
 
   /** Keeps the car on bridge decks and in tunnels. */
   private rails(): void {
