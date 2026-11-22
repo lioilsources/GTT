@@ -1,0 +1,21 @@
+{
+  "id": "lidovka",
+  "name": "Lidka 105",
+  "class": "sedan",
+  "length_m": 4.2,
+  "width_m": 1.6,
+  "mass": 880,
+  "power": 5.8,
+  "brake": 12.5,
+  "grip_front": 20.0,
+  "grip_rear": 19.0,
+  "drift_bias": 0.45,
+  "steer_speed": 4.8,
+  "top_speed": 30.0,
+  "seats": 5,
+  "tags": ["prague"],
+  "price": 3500,
+  "rarity": "common",
+  "tuning_slots": ["engine", "tyres", "brakes", "weight", "drift"],
+  "paint": "lidka_cream"
+}
