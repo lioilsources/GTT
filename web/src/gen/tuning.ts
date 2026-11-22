@@ -2433,6 +2433,7 @@ export class TuningCarsParked {
   attempts: number;
   /** RoadClass: primary, secondary, tertiary, residential */
   classes: number[];
+  /** filtered by the city's tag */
   models: string[];
   segmentMarginM: number;
   curbGapM: number;
