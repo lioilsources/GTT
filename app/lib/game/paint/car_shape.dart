@@ -42,10 +42,9 @@ List<CarRect> carShape(String cls, double hl, double hw, {double lengthM = 0}) {
       ..add(CarRect(CarPart.detail, -hl * 0.9, -hw * 0.72, -hl * 0.1, hw * 0.72, Tokens.colorCarDetailBed));
   }
   if (cls == 'muscle') {
-    for (final s in [-1.0, 1.0]) {
-      out.add(
-        CarRect(CarPart.detail, -hl * 0.98, s * hw * 0.12, hl * 0.98, s * hw * 0.32, Tokens.colorCarDetailMuscleStripe),
-      );
+    // Each stripe as (y0, y1) with y0 < y1.
+    for (final (a, b) in const [(-0.32, -0.12), (0.12, 0.32)]) {
+      out.add(CarRect(CarPart.detail, -hl * 0.98, hw * a, hl * 0.98, hw * b, Tokens.colorCarDetailMuscleStripe));
     }
   }
   out.add(CarRect(CarPart.cabin, hl * c0, -hw * 0.78, hl * c1, hw * 0.78));
