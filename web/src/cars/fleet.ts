@@ -2,7 +2,7 @@ import { Body, Box } from 'planck';
 
 import type { CarSpec } from '../gen/schema';
 import type { Tuning } from '../gen/tuning';
-import { CAT_BUILDINGS, CAT_CAR, CAT_PARKED, CAT_TRAFFIC } from '../drive/car';
+import { CAT_BUILDINGS, CAT_CAR, CAT_PARKED, CAT_TRAFFIC, CAT_TRAM } from '../drive/car';
 import type { DriveWorld } from '../drive/driveWorld';
 import type { ChunkData } from '../world/chunk';
 import { chunkKey } from '../world/model';
@@ -125,7 +125,7 @@ export class CarFleet {
       friction: d.carFriction,
       restitution: d.carRestitution,
       filterCategoryBits: CAT_PARKED,
-      filterMaskBits: CAT_CAR | CAT_BUILDINGS | CAT_PARKED | CAT_TRAFFIC,
+      filterMaskBits: CAT_CAR | CAT_BUILDINGS | CAT_PARKED | CAT_TRAFFIC | CAT_TRAM,
     });
     this.bodies.set(p, body);
     this.parked.push(p);

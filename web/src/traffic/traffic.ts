@@ -2,7 +2,7 @@ import { Box, type Body, type Fixture, type Vec2Value, type World } from 'planck
 
 import { tokens } from '../gen/tokens';
 import type { Tuning } from '../gen/tuning';
-import { CAT_BUILDINGS, CAT_CAR, CAT_PARKED, CAT_TRAFFIC, type Car } from '../drive/car';
+import { CAT_BUILDINGS, CAT_CAR, CAT_PARKED, CAT_TRAFFIC, CAT_TRAM, type Car } from '../drive/car';
 import { Prng } from '../rules/prng';
 import type { City, RoadEdge, RoadGraph } from '../world/model';
 import {
@@ -17,6 +17,16 @@ export interface ParkedPose {
   heading: number;
   hl?: number;
   hw?: number;
+}
+
+/** What traffic needs of a tram car (specs/traffic.md v3 step 1 b, specs/trams.md). */
+export interface TramObstacle {
+  readonly x: number;
+  readonly y: number;
+  readonly heading: number;
+  readonly layer: number;
+  readonly halfLength: number;
+  readonly halfWidth: number;
 }
 
 /** One AI car (specs/traffic.md "Stav"). Read-only for other features. */
@@ -106,6 +116,8 @@ export class Traffic {
   stepCount = 0;
   /** Parked cars to drive round (set by the car fleet, specs/traffic.md step 8). */
   parked: ReadonlyArray<ParkedPose> = [];
+  /** Tram cars, obstacles ahead in any direction (set by the drive world, specs/traffic.md v3). */
+  trams: ReadonlyArray<TramObstacle> = [];
 
   private readonly graph: RoadGraph;
   private readonly rng: Prng;
@@ -242,7 +254,8 @@ export class Traffic {
 
   private setMask(c: TrafficCar, same: boolean): void {
     const ground = c.layer === 0;
-    const mask = (same ? CAT_CAR : 0) | (ground ? CAT_PARKED : 0) | (ground && c.loose ? CAT_BUILDINGS : 0);
+    // A loose car on the ground also stops at tram cars (they never move for it).
+    const mask = (same ? CAT_CAR : 0) | (ground ? CAT_PARKED : 0) | (ground && c.loose ? CAT_BUILDINGS | CAT_TRAM : 0);
     if (mask === c.mask) return;
     c.mask = mask;
     c.fixture.setFilterData({ groupIndex: 0, categoryBits: CAT_TRAFFIC, maskBits: mask });
@@ -472,7 +485,7 @@ export class Traffic {
     return n === 0 ? 0 : swerveShift(o, n, c.halfLength, c.halfWidth, t);
   }
 
-  /** Free distance to the nearest obstacle ahead: the player, a car going our way, a stop line. */
+  /** Free distance to the nearest obstacle ahead: the player, a car going our way, a tram, a stop line. */
   private gapAhead(c: TrafficCar, player: Car): number {
     const t = this.tuning.traffic;
     const look = t.lookAheadM;
@@ -481,6 +494,12 @@ export class Traffic {
     // The player, whatever its heading.
     if (this.solid && player.layer === c.layer) {
       const g = this.gapTo(c, hc, hs, player.x, player.y, player.halfLength, player.halfWidth, look);
+      if (g < gap) gap = g;
+    }
+    // Tram cars in the same layer, whatever their heading (v3); even a chasing patrol waits.
+    for (const o of this.trams) {
+      if (o.layer !== c.layer) continue;
+      const g = this.gapTo(c, hc, hs, o.x, o.y, o.halfLength, o.halfWidth, look);
       if (g < gap) gap = g;
     }
     // A chasing patrol ignores other cars and the lights (sirens, specs/police.md).

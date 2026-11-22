@@ -2,7 +2,7 @@ import { GroundKind } from '../gen/pb/citypack_pb';
 import { tokens } from '../gen/tokens';
 import type { Tuning } from '../gen/tuning';
 import type { BuildingData, ChunkData } from '../world/chunk';
-import { chunkKey, type City, type RoadEdge, type RoadGraph } from '../world/model';
+import { chunkKey, type City, type RoadEdge, type RoadGraph, type TrackGraph } from '../world/model';
 import { extrusionScale, displayHeight, cameraHeight } from '../world/camera';
 import { groundColor, rgba, type Palette, type Rgba } from './palette';
 
@@ -75,10 +75,10 @@ export class Tris {
 /** Heights of the flat layers above the ground plane (m); keeps the draw order of METROPOLE_PLAN 6.3. */
 export const Z = {
   ground: [0.0, 0.01, 0.02, 0.03] as const, // park, plaza, rail, water
-  sidewalk: 0.06, alley: 0.07, asphalt: 0.08, laneLines: 0.09, centerLines: 0.1, roadblock: 0.11,
-  skids: 0.12, props: 0.14, car: 0.3,
-  tunnelShade: 0.2, tunnel: 0.22, tunnelLines: 0.23,
-  bridgeEdge: 0.0, bridgeDeck: 0.02, bridgeLines: 0.04,
+  sidewalk: 0.06, alley: 0.07, asphalt: 0.08, laneLines: 0.09, centerLines: 0.1, rails: 0.104, tramStop: 0.106,
+  roadblock: 0.11, skids: 0.12, props: 0.14, car: 0.3,
+  tunnelShade: 0.2, tunnel: 0.22, tunnelLines: 0.23, tunnelRails: 0.234,
+  bridgeEdge: 0.0, bridgeDeck: 0.02, bridgeLines: 0.04, bridgeRails: 0.044,
 } as const;
 
 const GROUND_ORDER = [GroundKind.PARK, GroundKind.PLAZA, GroundKind.RAIL, GroundKind.WATER];
@@ -140,8 +140,47 @@ export function buildRoads(city: City, tuning: Tuning, pal: Palette): Map<number
     }
     if (e.kept) markings(e, layer, carriage, laneM, lift, pal, bucket);
   }
+  tramTracks(city.trams, tuning, bucket);
   roadblocks(graph, bucket);
   return out;
+}
+
+/** Half width of one drawn rail (m); presentation (P2), like the marking widths. */
+const RAIL_HW = 0.2;
+
+/**
+ * Tram tracks (specs/trams.md "Kreslení"): two rails rail_gauge_m apart along every track edge,
+ * above the asphalt and markings, below cars; stops as a platform beside the track.
+ */
+function tramTracks(g: TrackGraph, tuning: Tuning, bucket: (x: number, y: number) => RoadChunk): void {
+  if (g.isEmpty) return;
+  const t = tuning.trams;
+  const lift = tuning.layers.deckLiftM;
+  const rail = rgba(tokens.colorTramsRail), stopCol = rgba(tokens.colorTramsStop);
+  const half = t.railGaugeM / 2;
+  for (const e of g.edges) {
+    const layer = e.drawLayer;
+    const which = layer < 0 ? 'tunnel' : layer > 0 ? 'bridge' : 'ground';
+    const h = layer < 0 ? Z.tunnelRails : layer > 0 ? lift + Z.bridgeRails : Z.rails;
+    for (let s = 0; s + 1 < e.pointCount; s++) {
+      const ax = e.pts[2 * s]!, ay = e.pts[2 * s + 1]!, bx = e.pts[2 * s + 2]!, by = e.pts[2 * s + 3]!;
+      const dx = bx - ax, dy = by - ay;
+      const l = Math.sqrt(dx * dx + dy * dy);
+      if (l < 1e-3) continue;
+      // Overlap the joints a little so bends have no gaps.
+      const ex = (dx / l) * RAIL_HW, ey = (dy / l) * RAIL_HW;
+      const tr = bucket((ax + bx) / 2, (ay + by) / 2)[which];
+      tr.quad(ax - ex, ay - ey, bx + ex, by + ey, RAIL_HW, h, rail, -half);
+      tr.quad(ax - ex, ay - ey, bx + ex, by + ey, RAIL_HW, h, rail, half);
+    }
+  }
+  // Platform as long as a whole tram, beside the track on the right of from → to.
+  const len = t.carsPerTram * t.carLengthM + Math.max(0, t.carsPerTram - 1) * t.jointGapM;
+  const w = t.carWidthM / 4, off = t.carWidthM / 2 + w;
+  for (const st of g.stops) {
+    const ang = Math.atan2(st.dirY, st.dirX);
+    bucket(st.x, st.y).ground.rect(st.x, st.y, ang, -len / 2, -off - w, len / 2, -off + w, Z.tramStop, stopCol);
+  }
 }
 
 function markings(

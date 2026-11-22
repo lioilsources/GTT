@@ -11,6 +11,8 @@ export const CAT_CAR = 2;
 export const CAT_TRAFFIC = 4;
 /** Parked cars (specs/cars.md): dynamic bodies the player and traffic can push. */
 export const CAT_PARKED = 8;
+/** Tram cars (specs/trams.md): kinematic, never pushed; collide with the player in the same layer. */
+export const CAT_TRAM = 64;
 
 const clamp = (v: number, lo: number, hi: number): number => Math.min(hi, Math.max(lo, v));
 
@@ -69,7 +71,7 @@ export class Car {
       friction: t.carFriction,
       restitution: t.carRestitution,
       filterCategoryBits: CAT_CAR,
-      filterMaskBits: CAT_BUILDINGS | CAT_TRAFFIC | CAT_PARKED,
+      filterMaskBits: CAT_BUILDINGS | CAT_TRAFFIC | CAT_PARKED | CAT_TRAM,
     });
     // Same mass as client F: its density over the area of the rounded box, not of the chamfer.
     const density = spec.mass / (4 * this.halfLength * this.halfWidth);
@@ -115,8 +117,8 @@ export class Car {
     if (l === this.layer) return;
     this.layer = l;
     // Buildings only exist on the ground layer; bridges and tunnels use rails instead. Traffic
-    // cars switch their own mask by layer (traffic.ts).
-    this.fixture.setFilterData({ groupIndex: 0, categoryBits: CAT_CAR, maskBits: (l === 0 ? CAT_BUILDINGS | CAT_PARKED : 0) | CAT_TRAFFIC });
+    // cars and trams switch their own masks by layer (traffic.ts, trams.ts).
+    this.fixture.setFilterData({ groupIndex: 0, categoryBits: CAT_CAR, maskBits: (l === 0 ? CAT_BUILDINGS | CAT_PARKED : 0) | CAT_TRAFFIC | CAT_TRAM });
   }
 
   /** Applies controls and tyre forces; call before world.step. */
