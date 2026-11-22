@@ -53,8 +53,8 @@ export function carShape(cls: string, hl: number, hw: number, lengthM = 0): CarR
     out.push(r('detail', -hl * 0.9, -hw * 0.72, -hl * 0.1, hw * 0.72, tokens.colorCarDetailBed));
   }
   if (cls === 'muscle') {
-    for (const s of [-1, 1]) {
-      out.push(r('detail', -hl * 0.98, s * hw * 0.12, hl * 0.98, s * hw * 0.32, tokens.colorCarDetailMuscleStripe));
+    for (const [a, b] of [[-0.32, -0.12], [0.12, 0.32]] as const) {
+      out.push(r('detail', -hl * 0.98, hw * a, hl * 0.98, hw * b, tokens.colorCarDetailMuscleStripe));
     }
   }
   out.push(r('cabin', hl * cab.c0, -hw * 0.78, hl * cab.c1, hw * 0.78));

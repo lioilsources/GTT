@@ -55,6 +55,18 @@ describe('car content (specs/cars.md)', () => {
     expect(carShape('hatchback', 5, 2).some((r) => r.part === 'stripe')).toBe(false);
   });
 
+  it('every part of every class is a proper rectangle (x0 < x1, y0 < y1)', () => {
+    const classes = new Set([...specs.values()].map((s) => s.class));
+    for (const cls of classes) {
+      for (const lengthM of [1, 2, 4.5]) {
+        for (const r of carShape(cls, 5, 2, lengthM)) {
+          expect(r.x0, `${cls} ${r.part}`).toBeLessThan(r.x1);
+          expect(r.y0, `${cls} ${r.part}`).toBeLessThan(r.y1);
+        }
+      }
+    }
+  });
+
   it('draws micro cars as a scooter or a bicycle inside the outline, without lights', () => {
     const scooter = specs.get('kolobezka')!, bike = specs.get('kolo')!;
     expect(scooter.length_m).toBeLessThan(1.5);
