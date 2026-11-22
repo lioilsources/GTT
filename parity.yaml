@@ -212,13 +212,13 @@
   web: done
   checks: {flutter: pass, web: pass}
 - id: F-026
-  name: Save format v4 and migration from v1, v2 and v3
+  name: Save format v5 and migration from v1–v4
   level: P0
-  spec: specs/save.md@3
+  spec: specs/save.md@4
   vectors: vectors/save.json
   lead: web
-  flutter: done
-  web: done
+  flutter: todo
+  web: todo
   checks: {flutter: pass, web: pass}
 - id: F-027
   name: Taxi (engine drive, 4-minute shift, real destinations, fare stars)
@@ -368,4 +368,14 @@
   lead: web
   flutter: done
   web: done
+  checks: {flutter: pass, web: pass}
+
+- id: F-044
+  name: Tuning and cosmetics (upgrade levels, looks, garage tabs)
+  level: P0
+  spec: specs/garage.md@1
+  vectors: vectors/garage.json
+  lead: web
+  flutter: todo
+  web: todo
   checks: {flutter: pass, web: pass}

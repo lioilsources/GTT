@@ -129,6 +129,13 @@ abstract final class Tokens {
   static const int colorShopsSouvenir = 0xFFC2408F;
   static const int colorShopsBar = 0xFF8A5A2B;
   static const int colorShopsDrunk = 0x99E8B830;
+  static const List<int> colorGaragePaints = [0xFFF2F2EE, 0xFF1D1F24, 0xFF2E6FD8, 0xFF1E9E5A, 0xFFF2C230, 0xFFF07A1A, 0xFF8E3BD6, 0xFFE8508F, 0xFF6B7A8F, 0xFF7A3B2E];
+  static const int colorGarageDecal = 0xFFFFFFFF;
+  static const List<int> colorGarageWheels = [0xFF3A3C42, 0xFFC9CDD4, 0xFFF4F4F0];
+  static const List<int> colorGarageGlow = [0xCC3FA9F5, 0xCCFF3FA4, 0xCC5CFF8A, 0xCCFFD23F, 0xCCB04CFF];
+  static const List<int> colorGarageSmoke = [0xFFE8E8E8, 0xFFFF6B6B, 0xFF6BC8FF, 0xFF7DFF8F, 0xFFFFE66B];
+  static const int colorGarageLevel = 0xFFF2BD2C;
+  static const int colorGarageLevelEmpty = 0x33FFFFFF;
   static const int colorWeatherRain = 0x8CC8D8EC;
   static const int colorWeatherFog = 0xFFD9DEE3;
   static const int colorWeatherIcon = 0xFFF2F4F7;

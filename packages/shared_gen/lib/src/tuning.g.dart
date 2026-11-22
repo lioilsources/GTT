@@ -109,7 +109,8 @@ class Tuning {
         style = TuningStyle._(r.sub('style')),
         police = TuningPolice._(r.sub('police')),
         economy = TuningEconomy._(r.sub('economy')),
-        loop = TuningLoop._(r.sub('loop'));
+        loop = TuningLoop._(r.sub('loop')),
+        garage = TuningGarage._(r.sub('garage'));
 
   factory Tuning.fromYaml(String src) {
     final y = loadYaml(src);
@@ -241,6 +242,9 @@ class Tuning {
   /// Loop glue (specs/loop.md): the "Play" context button at a spot without a route.
   final TuningLoop loop;
 
+  /// tuning and cosmetics (specs/garage.md); colours in design/tokens.json color.garage
+  final TuningGarage garage;
+
   Map<String, Object> toJson() => {
         'car_scale': carScale,
         'lane_width_m': laneWidthM,
@@ -284,6 +288,7 @@ class Tuning {
         'police': police.toJson(),
         'economy': economy.toJson(),
         'loop': loop.toJson(),
+        'garage': garage.toJson(),
       };
 
   /// Dotted YAML path → value, for diffs against the loaded file.
@@ -3525,4 +3530,108 @@ class TuningLoop {
       };
 
   static const keys = ['spot_radius_m', 'stop_speed_mps', 'action_hold_s'];
+}
+
+/// tuning and cosmetics (specs/garage.md); colours in design/tokens.json color.garage
+class TuningGarage {
+  TuningGarage._(_R r)
+      : enabled = r.b('enabled'),
+        maxLevel = r.i('max_level'),
+        priceEngine = r.il('price_engine'),
+        priceTyres = r.il('price_tyres'),
+        priceBrakes = r.il('price_brakes'),
+        priceWeight = r.il('price_weight'),
+        priceDrift = r.il('price_drift'),
+        enginePowerStep = r.d('engine_power_step'),
+        engineTopStep = r.d('engine_top_step'),
+        tyresStep = r.d('tyres_step'),
+        brakesStep = r.d('brakes_step'),
+        weightMassStep = r.d('weight_mass_step'),
+        weightPowerStep = r.d('weight_power_step'),
+        weightSteerStep = r.d('weight_steer_step'),
+        driftStep = r.d('drift_step'),
+        lookPricePaint = r.i('look_price_paint'),
+        lookPriceDecal = r.i('look_price_decal'),
+        lookPriceWheels = r.i('look_price_wheels'),
+        lookPriceGlow = r.i('look_price_glow'),
+        lookPriceSmoke = r.i('look_price_smoke'),
+        glowMarginM = r.d('glow_margin_m'),
+        glowDay = r.d('glow_day');
+
+  bool enabled;
+
+  int maxLevel;
+
+  /// price of level 1, 2, 3
+  List<int> priceEngine;
+
+  List<int> priceTyres;
+
+  List<int> priceBrakes;
+
+  List<int> priceWeight;
+
+  List<int> priceDrift;
+
+  /// per level, multiplies power
+  double enginePowerStep;
+
+  /// per level, multiplies top_speed
+  double engineTopStep;
+
+  /// per level, multiplies grip_front and grip_rear
+  double tyresStep;
+
+  double brakesStep;
+
+  /// per level, mass × (1 − step × level)
+  double weightMassStep;
+
+  double weightPowerStep;
+
+  double weightSteerStep;
+
+  /// per level, drift_bias × (1 − step × level)
+  double driftStep;
+
+  int lookPricePaint;
+
+  int lookPriceDecal;
+
+  int lookPriceWheels;
+
+  int lookPriceGlow;
+
+  int lookPriceSmoke;
+
+  /// underglow reaches this far past the car outline
+  double glowMarginM;
+
+  /// underglow strength by day (full at night and in tunnels)
+  double glowDay;
+
+  Map<String, Object> toJson() => {
+        'enabled': enabled,
+        'max_level': maxLevel,
+        'price_engine': priceEngine,
+        'price_tyres': priceTyres,
+        'price_brakes': priceBrakes,
+        'price_weight': priceWeight,
+        'price_drift': priceDrift,
+        'engine_power_step': enginePowerStep,
+        'engine_top_step': engineTopStep,
+        'tyres_step': tyresStep,
+        'brakes_step': brakesStep,
+        'weight_mass_step': weightMassStep,
+        'weight_power_step': weightPowerStep,
+        'weight_steer_step': weightSteerStep,
+        'drift_step': driftStep,
+        'look_price_paint': lookPricePaint,
+        'look_price_decal': lookPriceDecal,
+        'look_price_wheels': lookPriceWheels,
+        'look_price_glow': lookPriceGlow,
+        'look_price_smoke': lookPriceSmoke,
+        'glow_margin_m': glowMarginM,
+        'glow_day': glowDay,
+      };
 }

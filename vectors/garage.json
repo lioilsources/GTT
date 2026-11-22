@@ -1,0 +1,2067 @@
+{
+ "module": "garage",
+ "specVersion": 1,
+ "cases": [
+  {
+   "name": "load keeps known cars and slots, clamps levels, drops zeros",
+   "config": {
+    "cars": {
+     "coupe": [
+      "engine",
+      "tyres",
+      "brakes",
+      "weight",
+      "drift"
+     ],
+     "scooter": [],
+     "truck": [
+      "engine",
+      "tyres"
+     ]
+    },
+    "maxLevel": 3,
+    "prices": {
+     "engine": [
+      2000,
+      4500,
+      8000
+     ],
+     "tyres": [
+      1500,
+      3500,
+      6500
+     ],
+     "brakes": [
+      1000,
+      2500,
+      5000
+     ],
+     "weight": [
+      1500,
+      3500,
+      6000
+     ],
+     "drift": [
+      1000,
+      2500,
+      4500
+     ]
+    },
+    "parts": {
+     "paint": 11,
+     "decal": 4,
+     "wheels": 3,
+     "glow": 6,
+     "smoke": 6
+    },
+    "lookPrices": {
+     "paint": 400,
+     "decal": 300,
+     "wheels": 600,
+     "glow": 800,
+     "smoke": 250
+    }
+   },
+   "seed": 1,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "load",
+      "upgrades": {
+       "coupe": {
+        "engine": 5,
+        "tyres": 0,
+        "turbo": 2,
+        "drift": -1,
+        "brakes": 1
+       },
+       "gone": {
+        "engine": 1
+       },
+       "scooter": {
+        "engine": 2
+       },
+       "truck": {
+        "brakes": 2,
+        "tyres": 3
+       }
+      },
+      "looks": {
+       "coupe": {
+        "paint": 12,
+        "decal": 2,
+        "wheels": 0,
+        "neon": 1,
+        "glow": -1
+       },
+       "scooter": {
+        "paint": 4
+       },
+       "gone": {
+        "paint": 1
+       }
+      }
+     },
+     "state": {
+      "upgrades": {
+       "coupe": {
+        "engine": 3,
+        "brakes": 1
+       },
+       "truck": {
+        "tyres": 3
+       }
+      },
+      "looks": {
+       "coupe": {
+        "decal": 2
+       },
+       "scooter": {
+        "paint": 4
+       }
+      },
+      "last": {
+       "op": "",
+       "amount": 0
+      }
+     }
+    }
+   ],
+   "result": null
+  },
+  {
+   "name": "upgrade engine through all levels",
+   "config": {
+    "cars": {
+     "coupe": [
+      "engine",
+      "tyres",
+      "brakes",
+      "weight",
+      "drift"
+     ],
+     "scooter": [],
+     "truck": [
+      "engine",
+      "tyres"
+     ]
+    },
+    "maxLevel": 3,
+    "prices": {
+     "engine": [
+      2000,
+      4500,
+      8000
+     ],
+     "tyres": [
+      1500,
+      3500,
+      6500
+     ],
+     "brakes": [
+      1000,
+      2500,
+      5000
+     ],
+     "weight": [
+      1500,
+      3500,
+      6000
+     ],
+     "drift": [
+      1000,
+      2500,
+      4500
+     ]
+    },
+    "parts": {
+     "paint": 11,
+     "decal": 4,
+     "wheels": 3,
+     "glow": 6,
+     "smoke": 6
+    },
+    "lookPrices": {
+     "paint": 400,
+     "decal": 300,
+     "wheels": 600,
+     "glow": 800,
+     "smoke": 250
+    }
+   },
+   "seed": 1,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "upgrade",
+      "car": "coupe",
+      "slot": "engine",
+      "cash": 2000
+     },
+     "state": {
+      "upgrades": {
+       "coupe": {
+        "engine": 1
+       }
+      },
+      "looks": {},
+      "last": {
+       "op": "upgrade",
+       "amount": 2000
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "upgrade",
+      "car": "coupe",
+      "slot": "engine",
+      "cash": 5000
+     },
+     "state": {
+      "upgrades": {
+       "coupe": {
+        "engine": 2
+       }
+      },
+      "looks": {},
+      "last": {
+       "op": "upgrade",
+       "amount": 4500
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "upgrade",
+      "car": "coupe",
+      "slot": "engine",
+      "cash": 8000
+     },
+     "state": {
+      "upgrades": {
+       "coupe": {
+        "engine": 3
+       }
+      },
+      "looks": {},
+      "last": {
+       "op": "upgrade",
+       "amount": 8000
+      }
+     }
+    }
+   ],
+   "result": null
+  },
+  {
+   "name": "upgrades of different cars are separate",
+   "config": {
+    "cars": {
+     "coupe": [
+      "engine",
+      "tyres",
+      "brakes",
+      "weight",
+      "drift"
+     ],
+     "scooter": [],
+     "truck": [
+      "engine",
+      "tyres"
+     ]
+    },
+    "maxLevel": 3,
+    "prices": {
+     "engine": [
+      2000,
+      4500,
+      8000
+     ],
+     "tyres": [
+      1500,
+      3500,
+      6500
+     ],
+     "brakes": [
+      1000,
+      2500,
+      5000
+     ],
+     "weight": [
+      1500,
+      3500,
+      6000
+     ],
+     "drift": [
+      1000,
+      2500,
+      4500
+     ]
+    },
+    "parts": {
+     "paint": 11,
+     "decal": 4,
+     "wheels": 3,
+     "glow": 6,
+     "smoke": 6
+    },
+    "lookPrices": {
+     "paint": 400,
+     "decal": 300,
+     "wheels": 600,
+     "glow": 800,
+     "smoke": 250
+    }
+   },
+   "seed": 1,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "upgrade",
+      "car": "truck",
+      "slot": "tyres",
+      "cash": 1500
+     },
+     "state": {
+      "upgrades": {
+       "truck": {
+        "tyres": 1
+       }
+      },
+      "looks": {},
+      "last": {
+       "op": "upgrade",
+       "amount": 1500
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "upgrade",
+      "car": "coupe",
+      "slot": "tyres",
+      "cash": 9999
+     },
+     "state": {
+      "upgrades": {
+       "truck": {
+        "tyres": 1
+       },
+       "coupe": {
+        "tyres": 1
+       }
+      },
+      "looks": {},
+      "last": {
+       "op": "upgrade",
+       "amount": 1500
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "upgrade",
+      "car": "truck",
+      "slot": "tyres",
+      "cash": 3500
+     },
+     "state": {
+      "upgrades": {
+       "truck": {
+        "tyres": 2
+       },
+       "coupe": {
+        "tyres": 1
+       }
+      },
+      "looks": {},
+      "last": {
+       "op": "upgrade",
+       "amount": 3500
+      }
+     }
+    }
+   ],
+   "result": null
+  },
+  {
+   "name": "every slot once",
+   "config": {
+    "cars": {
+     "coupe": [
+      "engine",
+      "tyres",
+      "brakes",
+      "weight",
+      "drift"
+     ],
+     "scooter": [],
+     "truck": [
+      "engine",
+      "tyres"
+     ]
+    },
+    "maxLevel": 3,
+    "prices": {
+     "engine": [
+      2000,
+      4500,
+      8000
+     ],
+     "tyres": [
+      1500,
+      3500,
+      6500
+     ],
+     "brakes": [
+      1000,
+      2500,
+      5000
+     ],
+     "weight": [
+      1500,
+      3500,
+      6000
+     ],
+     "drift": [
+      1000,
+      2500,
+      4500
+     ]
+    },
+    "parts": {
+     "paint": 11,
+     "decal": 4,
+     "wheels": 3,
+     "glow": 6,
+     "smoke": 6
+    },
+    "lookPrices": {
+     "paint": 400,
+     "decal": 300,
+     "wheels": 600,
+     "glow": 800,
+     "smoke": 250
+    }
+   },
+   "seed": 1,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "upgrade",
+      "car": "coupe",
+      "slot": "engine",
+      "cash": 100000
+     },
+     "state": {
+      "upgrades": {
+       "coupe": {
+        "engine": 1
+       }
+      },
+      "looks": {},
+      "last": {
+       "op": "upgrade",
+       "amount": 2000
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "upgrade",
+      "car": "coupe",
+      "slot": "tyres",
+      "cash": 100000
+     },
+     "state": {
+      "upgrades": {
+       "coupe": {
+        "engine": 1,
+        "tyres": 1
+       }
+      },
+      "looks": {},
+      "last": {
+       "op": "upgrade",
+       "amount": 1500
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "upgrade",
+      "car": "coupe",
+      "slot": "brakes",
+      "cash": 100000
+     },
+     "state": {
+      "upgrades": {
+       "coupe": {
+        "engine": 1,
+        "tyres": 1,
+        "brakes": 1
+       }
+      },
+      "looks": {},
+      "last": {
+       "op": "upgrade",
+       "amount": 1000
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "upgrade",
+      "car": "coupe",
+      "slot": "weight",
+      "cash": 100000
+     },
+     "state": {
+      "upgrades": {
+       "coupe": {
+        "engine": 1,
+        "tyres": 1,
+        "brakes": 1,
+        "weight": 1
+       }
+      },
+      "looks": {},
+      "last": {
+       "op": "upgrade",
+       "amount": 1500
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "upgrade",
+      "car": "coupe",
+      "slot": "drift",
+      "cash": 100000
+     },
+     "state": {
+      "upgrades": {
+       "coupe": {
+        "engine": 1,
+        "tyres": 1,
+        "brakes": 1,
+        "weight": 1,
+        "drift": 1
+       }
+      },
+      "looks": {},
+      "last": {
+       "op": "upgrade",
+       "amount": 1000
+      }
+     }
+    }
+   ],
+   "result": null
+  },
+  {
+   "name": "paint then back to stock for free",
+   "config": {
+    "cars": {
+     "coupe": [
+      "engine",
+      "tyres",
+      "brakes",
+      "weight",
+      "drift"
+     ],
+     "scooter": [],
+     "truck": [
+      "engine",
+      "tyres"
+     ]
+    },
+    "maxLevel": 3,
+    "prices": {
+     "engine": [
+      2000,
+      4500,
+      8000
+     ],
+     "tyres": [
+      1500,
+      3500,
+      6500
+     ],
+     "brakes": [
+      1000,
+      2500,
+      5000
+     ],
+     "weight": [
+      1500,
+      3500,
+      6000
+     ],
+     "drift": [
+      1000,
+      2500,
+      4500
+     ]
+    },
+    "parts": {
+     "paint": 11,
+     "decal": 4,
+     "wheels": 3,
+     "glow": 6,
+     "smoke": 6
+    },
+    "lookPrices": {
+     "paint": 400,
+     "decal": 300,
+     "wheels": 600,
+     "glow": 800,
+     "smoke": 250
+    }
+   },
+   "seed": 1,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "look",
+      "car": "coupe",
+      "part": "paint",
+      "value": 4,
+      "cash": 400
+     },
+     "state": {
+      "upgrades": {},
+      "looks": {
+       "coupe": {
+        "paint": 4
+       }
+      },
+      "last": {
+       "op": "look",
+       "amount": 400
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "look",
+      "car": "coupe",
+      "part": "paint",
+      "value": 0,
+      "cash": 0
+     },
+     "state": {
+      "upgrades": {},
+      "looks": {},
+      "last": {
+       "op": "look",
+       "amount": 0
+      }
+     }
+    }
+   ],
+   "result": null
+  },
+  {
+   "name": "all parts on a scooter",
+   "config": {
+    "cars": {
+     "coupe": [
+      "engine",
+      "tyres",
+      "brakes",
+      "weight",
+      "drift"
+     ],
+     "scooter": [],
+     "truck": [
+      "engine",
+      "tyres"
+     ]
+    },
+    "maxLevel": 3,
+    "prices": {
+     "engine": [
+      2000,
+      4500,
+      8000
+     ],
+     "tyres": [
+      1500,
+      3500,
+      6500
+     ],
+     "brakes": [
+      1000,
+      2500,
+      5000
+     ],
+     "weight": [
+      1500,
+      3500,
+      6000
+     ],
+     "drift": [
+      1000,
+      2500,
+      4500
+     ]
+    },
+    "parts": {
+     "paint": 11,
+     "decal": 4,
+     "wheels": 3,
+     "glow": 6,
+     "smoke": 6
+    },
+    "lookPrices": {
+     "paint": 400,
+     "decal": 300,
+     "wheels": 600,
+     "glow": 800,
+     "smoke": 250
+    }
+   },
+   "seed": 1,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "look",
+      "car": "scooter",
+      "part": "paint",
+      "value": 10,
+      "cash": 1000
+     },
+     "state": {
+      "upgrades": {},
+      "looks": {
+       "scooter": {
+        "paint": 10
+       }
+      },
+      "last": {
+       "op": "look",
+       "amount": 400
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "look",
+      "car": "scooter",
+      "part": "decal",
+      "value": 3,
+      "cash": 1000
+     },
+     "state": {
+      "upgrades": {},
+      "looks": {
+       "scooter": {
+        "paint": 10,
+        "decal": 3
+       }
+      },
+      "last": {
+       "op": "look",
+       "amount": 300
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "look",
+      "car": "scooter",
+      "part": "wheels",
+      "value": 2,
+      "cash": 1000
+     },
+     "state": {
+      "upgrades": {},
+      "looks": {
+       "scooter": {
+        "paint": 10,
+        "decal": 3,
+        "wheels": 2
+       }
+      },
+      "last": {
+       "op": "look",
+       "amount": 600
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "look",
+      "car": "scooter",
+      "part": "glow",
+      "value": 5,
+      "cash": 1000
+     },
+     "state": {
+      "upgrades": {},
+      "looks": {
+       "scooter": {
+        "paint": 10,
+        "decal": 3,
+        "wheels": 2,
+        "glow": 5
+       }
+      },
+      "last": {
+       "op": "look",
+       "amount": 800
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "look",
+      "car": "scooter",
+      "part": "smoke",
+      "value": 1,
+      "cash": 1000
+     },
+     "state": {
+      "upgrades": {},
+      "looks": {
+       "scooter": {
+        "paint": 10,
+        "decal": 3,
+        "wheels": 2,
+        "glow": 5,
+        "smoke": 1
+       }
+      },
+      "last": {
+       "op": "look",
+       "amount": 250
+      }
+     }
+    }
+   ],
+   "result": null
+  },
+  {
+   "name": "switching a decal pays again",
+   "config": {
+    "cars": {
+     "coupe": [
+      "engine",
+      "tyres",
+      "brakes",
+      "weight",
+      "drift"
+     ],
+     "scooter": [],
+     "truck": [
+      "engine",
+      "tyres"
+     ]
+    },
+    "maxLevel": 3,
+    "prices": {
+     "engine": [
+      2000,
+      4500,
+      8000
+     ],
+     "tyres": [
+      1500,
+      3500,
+      6500
+     ],
+     "brakes": [
+      1000,
+      2500,
+      5000
+     ],
+     "weight": [
+      1500,
+      3500,
+      6000
+     ],
+     "drift": [
+      1000,
+      2500,
+      4500
+     ]
+    },
+    "parts": {
+     "paint": 11,
+     "decal": 4,
+     "wheels": 3,
+     "glow": 6,
+     "smoke": 6
+    },
+    "lookPrices": {
+     "paint": 400,
+     "decal": 300,
+     "wheels": 600,
+     "glow": 800,
+     "smoke": 250
+    }
+   },
+   "seed": 1,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "look",
+      "car": "coupe",
+      "part": "decal",
+      "value": 1,
+      "cash": 300
+     },
+     "state": {
+      "upgrades": {},
+      "looks": {
+       "coupe": {
+        "decal": 1
+       }
+      },
+      "last": {
+       "op": "look",
+       "amount": 300
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "look",
+      "car": "coupe",
+      "part": "decal",
+      "value": 2,
+      "cash": 300
+     },
+     "state": {
+      "upgrades": {},
+      "looks": {
+       "coupe": {
+        "decal": 2
+       }
+      },
+      "last": {
+       "op": "look",
+       "amount": 300
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "look",
+      "car": "coupe",
+      "part": "decal",
+      "value": 3,
+      "cash": 1000
+     },
+     "state": {
+      "upgrades": {},
+      "looks": {
+       "coupe": {
+        "decal": 3
+       }
+      },
+      "last": {
+       "op": "look",
+       "amount": 300
+      }
+     }
+    }
+   ],
+   "result": null
+  },
+  {
+   "name": "load after purchases replaces the state",
+   "config": {
+    "cars": {
+     "coupe": [
+      "engine",
+      "tyres",
+      "brakes",
+      "weight",
+      "drift"
+     ],
+     "scooter": [],
+     "truck": [
+      "engine",
+      "tyres"
+     ]
+    },
+    "maxLevel": 3,
+    "prices": {
+     "engine": [
+      2000,
+      4500,
+      8000
+     ],
+     "tyres": [
+      1500,
+      3500,
+      6500
+     ],
+     "brakes": [
+      1000,
+      2500,
+      5000
+     ],
+     "weight": [
+      1500,
+      3500,
+      6000
+     ],
+     "drift": [
+      1000,
+      2500,
+      4500
+     ]
+    },
+    "parts": {
+     "paint": 11,
+     "decal": 4,
+     "wheels": 3,
+     "glow": 6,
+     "smoke": 6
+    },
+    "lookPrices": {
+     "paint": 400,
+     "decal": 300,
+     "wheels": 600,
+     "glow": 800,
+     "smoke": 250
+    }
+   },
+   "seed": 1,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "upgrade",
+      "car": "coupe",
+      "slot": "brakes",
+      "cash": 1000
+     },
+     "state": {
+      "upgrades": {
+       "coupe": {
+        "brakes": 1
+       }
+      },
+      "looks": {},
+      "last": {
+       "op": "upgrade",
+       "amount": 1000
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "look",
+      "car": "truck",
+      "part": "glow",
+      "value": 2,
+      "cash": 800
+     },
+     "state": {
+      "upgrades": {
+       "coupe": {
+        "brakes": 1
+       }
+      },
+      "looks": {
+       "truck": {
+        "glow": 2
+       }
+      },
+      "last": {
+       "op": "look",
+       "amount": 800
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "load",
+      "upgrades": {
+       "truck": {
+        "engine": 1
+       }
+      },
+      "looks": {}
+     },
+     "state": {
+      "upgrades": {
+       "truck": {
+        "engine": 1
+       }
+      },
+      "looks": {},
+      "last": {
+       "op": "",
+       "amount": 0
+      }
+     }
+    }
+   ],
+   "result": null
+  },
+  {
+   "name": "buy, then the last amount resets on load",
+   "config": {
+    "cars": {
+     "coupe": [
+      "engine",
+      "tyres",
+      "brakes",
+      "weight",
+      "drift"
+     ],
+     "scooter": [],
+     "truck": [
+      "engine",
+      "tyres"
+     ]
+    },
+    "maxLevel": 3,
+    "prices": {
+     "engine": [
+      2000,
+      4500,
+      8000
+     ],
+     "tyres": [
+      1500,
+      3500,
+      6500
+     ],
+     "brakes": [
+      1000,
+      2500,
+      5000
+     ],
+     "weight": [
+      1500,
+      3500,
+      6000
+     ],
+     "drift": [
+      1000,
+      2500,
+      4500
+     ]
+    },
+    "parts": {
+     "paint": 11,
+     "decal": 4,
+     "wheels": 3,
+     "glow": 6,
+     "smoke": 6
+    },
+    "lookPrices": {
+     "paint": 400,
+     "decal": 300,
+     "wheels": 600,
+     "glow": 800,
+     "smoke": 250
+    }
+   },
+   "seed": 1,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "look",
+      "car": "truck",
+      "part": "wheels",
+      "value": 1,
+      "cash": 600
+     },
+     "state": {
+      "upgrades": {},
+      "looks": {
+       "truck": {
+        "wheels": 1
+       }
+      },
+      "last": {
+       "op": "look",
+       "amount": 600
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "load",
+      "upgrades": {},
+      "looks": {
+       "truck": {
+        "wheels": 1
+       }
+      }
+     },
+     "state": {
+      "upgrades": {},
+      "looks": {
+       "truck": {
+        "wheels": 1
+       }
+      },
+      "last": {
+       "op": "",
+       "amount": 0
+      }
+     }
+    }
+   ],
+   "result": null
+  },
+  {
+   "name": "exact cash is enough",
+   "config": {
+    "cars": {
+     "coupe": [
+      "engine",
+      "tyres",
+      "brakes",
+      "weight",
+      "drift"
+     ],
+     "scooter": [],
+     "truck": [
+      "engine",
+      "tyres"
+     ]
+    },
+    "maxLevel": 3,
+    "prices": {
+     "engine": [
+      2000,
+      4500,
+      8000
+     ],
+     "tyres": [
+      1500,
+      3500,
+      6500
+     ],
+     "brakes": [
+      1000,
+      2500,
+      5000
+     ],
+     "weight": [
+      1500,
+      3500,
+      6000
+     ],
+     "drift": [
+      1000,
+      2500,
+      4500
+     ]
+    },
+    "parts": {
+     "paint": 11,
+     "decal": 4,
+     "wheels": 3,
+     "glow": 6,
+     "smoke": 6
+    },
+    "lookPrices": {
+     "paint": 400,
+     "decal": 300,
+     "wheels": 600,
+     "glow": 800,
+     "smoke": 250
+    }
+   },
+   "seed": 1,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "upgrade",
+      "car": "coupe",
+      "slot": "drift",
+      "cash": 1000
+     },
+     "state": {
+      "upgrades": {
+       "coupe": {
+        "drift": 1
+       }
+      },
+      "looks": {},
+      "last": {
+       "op": "upgrade",
+       "amount": 1000
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "upgrade",
+      "car": "coupe",
+      "slot": "drift",
+      "cash": 2500
+     },
+     "state": {
+      "upgrades": {
+       "coupe": {
+        "drift": 2
+       }
+      },
+      "looks": {},
+      "last": {
+       "op": "upgrade",
+       "amount": 2500
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "look",
+      "car": "coupe",
+      "part": "smoke",
+      "value": 3,
+      "cash": 250
+     },
+     "state": {
+      "upgrades": {
+       "coupe": {
+        "drift": 2
+       }
+      },
+      "looks": {
+       "coupe": {
+        "smoke": 3
+       }
+      },
+      "last": {
+       "op": "look",
+       "amount": 250
+      }
+     }
+    }
+   ],
+   "result": null
+  },
+  {
+   "name": "load from a maxed save",
+   "config": {
+    "cars": {
+     "coupe": [
+      "engine",
+      "tyres",
+      "brakes",
+      "weight",
+      "drift"
+     ],
+     "scooter": [],
+     "truck": [
+      "engine",
+      "tyres"
+     ]
+    },
+    "maxLevel": 3,
+    "prices": {
+     "engine": [
+      2000,
+      4500,
+      8000
+     ],
+     "tyres": [
+      1500,
+      3500,
+      6500
+     ],
+     "brakes": [
+      1000,
+      2500,
+      5000
+     ],
+     "weight": [
+      1500,
+      3500,
+      6000
+     ],
+     "drift": [
+      1000,
+      2500,
+      4500
+     ]
+    },
+    "parts": {
+     "paint": 11,
+     "decal": 4,
+     "wheels": 3,
+     "glow": 6,
+     "smoke": 6
+    },
+    "lookPrices": {
+     "paint": 400,
+     "decal": 300,
+     "wheels": 600,
+     "glow": 800,
+     "smoke": 250
+    }
+   },
+   "seed": 1,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "load",
+      "upgrades": {
+       "coupe": {
+        "engine": 3,
+        "tyres": 3,
+        "brakes": 3,
+        "weight": 3,
+        "drift": 3
+       }
+      },
+      "looks": {
+       "coupe": {
+        "paint": 1,
+        "decal": 1,
+        "wheels": 1,
+        "glow": 1,
+        "smoke": 1
+       }
+      }
+     },
+     "state": {
+      "upgrades": {
+       "coupe": {
+        "engine": 3,
+        "tyres": 3,
+        "brakes": 3,
+        "weight": 3,
+        "drift": 3
+       }
+      },
+      "looks": {
+       "coupe": {
+        "paint": 1,
+        "decal": 1,
+        "wheels": 1,
+        "glow": 1,
+        "smoke": 1
+       }
+      },
+      "last": {
+       "op": "",
+       "amount": 0
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "look",
+      "car": "coupe",
+      "part": "glow",
+      "value": 0,
+      "cash": 0
+     },
+     "state": {
+      "upgrades": {
+       "coupe": {
+        "engine": 3,
+        "tyres": 3,
+        "brakes": 3,
+        "weight": 3,
+        "drift": 3
+       }
+      },
+      "looks": {
+       "coupe": {
+        "paint": 1,
+        "decal": 1,
+        "wheels": 1,
+        "smoke": 1
+       }
+      },
+      "last": {
+       "op": "look",
+       "amount": 0
+      }
+     }
+    }
+   ],
+   "result": null
+  },
+  {
+   "name": "empty load",
+   "config": {
+    "cars": {
+     "coupe": [
+      "engine",
+      "tyres",
+      "brakes",
+      "weight",
+      "drift"
+     ],
+     "scooter": [],
+     "truck": [
+      "engine",
+      "tyres"
+     ]
+    },
+    "maxLevel": 3,
+    "prices": {
+     "engine": [
+      2000,
+      4500,
+      8000
+     ],
+     "tyres": [
+      1500,
+      3500,
+      6500
+     ],
+     "brakes": [
+      1000,
+      2500,
+      5000
+     ],
+     "weight": [
+      1500,
+      3500,
+      6000
+     ],
+     "drift": [
+      1000,
+      2500,
+      4500
+     ]
+    },
+    "parts": {
+     "paint": 11,
+     "decal": 4,
+     "wheels": 3,
+     "glow": 6,
+     "smoke": 6
+    },
+    "lookPrices": {
+     "paint": 400,
+     "decal": 300,
+     "wheels": 600,
+     "glow": 800,
+     "smoke": 250
+    }
+   },
+   "seed": 1,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "load",
+      "upgrades": {},
+      "looks": {}
+     },
+     "state": {
+      "upgrades": {},
+      "looks": {},
+      "last": {
+       "op": "",
+       "amount": 0
+      }
+     }
+    }
+   ],
+   "result": null
+  },
+  {
+   "name": "weight and brakes levels",
+   "config": {
+    "cars": {
+     "coupe": [
+      "engine",
+      "tyres",
+      "brakes",
+      "weight",
+      "drift"
+     ],
+     "scooter": [],
+     "truck": [
+      "engine",
+      "tyres"
+     ]
+    },
+    "maxLevel": 3,
+    "prices": {
+     "engine": [
+      2000,
+      4500,
+      8000
+     ],
+     "tyres": [
+      1500,
+      3500,
+      6500
+     ],
+     "brakes": [
+      1000,
+      2500,
+      5000
+     ],
+     "weight": [
+      1500,
+      3500,
+      6000
+     ],
+     "drift": [
+      1000,
+      2500,
+      4500
+     ]
+    },
+    "parts": {
+     "paint": 11,
+     "decal": 4,
+     "wheels": 3,
+     "glow": 6,
+     "smoke": 6
+    },
+    "lookPrices": {
+     "paint": 400,
+     "decal": 300,
+     "wheels": 600,
+     "glow": 800,
+     "smoke": 250
+    }
+   },
+   "seed": 1,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "upgrade",
+      "car": "coupe",
+      "slot": "weight",
+      "cash": 1500
+     },
+     "state": {
+      "upgrades": {
+       "coupe": {
+        "weight": 1
+       }
+      },
+      "looks": {},
+      "last": {
+       "op": "upgrade",
+       "amount": 1500
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "upgrade",
+      "car": "coupe",
+      "slot": "brakes",
+      "cash": 1000
+     },
+     "state": {
+      "upgrades": {
+       "coupe": {
+        "weight": 1,
+        "brakes": 1
+       }
+      },
+      "looks": {},
+      "last": {
+       "op": "upgrade",
+       "amount": 1000
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "upgrade",
+      "car": "coupe",
+      "slot": "weight",
+      "cash": 3500
+     },
+     "state": {
+      "upgrades": {
+       "coupe": {
+        "weight": 2,
+        "brakes": 1
+       }
+      },
+      "looks": {},
+      "last": {
+       "op": "upgrade",
+       "amount": 3500
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "upgrade",
+      "car": "coupe",
+      "slot": "brakes",
+      "cash": 2500
+     },
+     "state": {
+      "upgrades": {
+       "coupe": {
+        "weight": 2,
+        "brakes": 2
+       }
+      },
+      "looks": {},
+      "last": {
+       "op": "upgrade",
+       "amount": 2500
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "upgrade",
+      "car": "coupe",
+      "slot": "brakes",
+      "cash": 5000
+     },
+     "state": {
+      "upgrades": {
+       "coupe": {
+        "weight": 2,
+        "brakes": 3
+       }
+      },
+      "looks": {},
+      "last": {
+       "op": "upgrade",
+       "amount": 5000
+      }
+     }
+    }
+   ],
+   "result": null
+  },
+  {
+   "name": "truck looks and tyres to max",
+   "config": {
+    "cars": {
+     "coupe": [
+      "engine",
+      "tyres",
+      "brakes",
+      "weight",
+      "drift"
+     ],
+     "scooter": [],
+     "truck": [
+      "engine",
+      "tyres"
+     ]
+    },
+    "maxLevel": 3,
+    "prices": {
+     "engine": [
+      2000,
+      4500,
+      8000
+     ],
+     "tyres": [
+      1500,
+      3500,
+      6500
+     ],
+     "brakes": [
+      1000,
+      2500,
+      5000
+     ],
+     "weight": [
+      1500,
+      3500,
+      6000
+     ],
+     "drift": [
+      1000,
+      2500,
+      4500
+     ]
+    },
+    "parts": {
+     "paint": 11,
+     "decal": 4,
+     "wheels": 3,
+     "glow": 6,
+     "smoke": 6
+    },
+    "lookPrices": {
+     "paint": 400,
+     "decal": 300,
+     "wheels": 600,
+     "glow": 800,
+     "smoke": 250
+    }
+   },
+   "seed": 1,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "look",
+      "car": "truck",
+      "part": "paint",
+      "value": 2,
+      "cash": 400
+     },
+     "state": {
+      "upgrades": {},
+      "looks": {
+       "truck": {
+        "paint": 2
+       }
+      },
+      "last": {
+       "op": "look",
+       "amount": 400
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "upgrade",
+      "car": "truck",
+      "slot": "tyres",
+      "cash": 1500
+     },
+     "state": {
+      "upgrades": {
+       "truck": {
+        "tyres": 1
+       }
+      },
+      "looks": {
+       "truck": {
+        "paint": 2
+       }
+      },
+      "last": {
+       "op": "upgrade",
+       "amount": 1500
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "upgrade",
+      "car": "truck",
+      "slot": "tyres",
+      "cash": 3500
+     },
+     "state": {
+      "upgrades": {
+       "truck": {
+        "tyres": 2
+       }
+      },
+      "looks": {
+       "truck": {
+        "paint": 2
+       }
+      },
+      "last": {
+       "op": "upgrade",
+       "amount": 3500
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "upgrade",
+      "car": "truck",
+      "slot": "tyres",
+      "cash": 6500
+     },
+     "state": {
+      "upgrades": {
+       "truck": {
+        "tyres": 3
+       }
+      },
+      "looks": {
+       "truck": {
+        "paint": 2
+       }
+      },
+      "last": {
+       "op": "upgrade",
+       "amount": 6500
+      }
+     }
+    }
+   ],
+   "result": null
+  },
+  {
+   "name": "removing the last look removes the car entry",
+   "config": {
+    "cars": {
+     "coupe": [
+      "engine",
+      "tyres",
+      "brakes",
+      "weight",
+      "drift"
+     ],
+     "scooter": [],
+     "truck": [
+      "engine",
+      "tyres"
+     ]
+    },
+    "maxLevel": 3,
+    "prices": {
+     "engine": [
+      2000,
+      4500,
+      8000
+     ],
+     "tyres": [
+      1500,
+      3500,
+      6500
+     ],
+     "brakes": [
+      1000,
+      2500,
+      5000
+     ],
+     "weight": [
+      1500,
+      3500,
+      6000
+     ],
+     "drift": [
+      1000,
+      2500,
+      4500
+     ]
+    },
+    "parts": {
+     "paint": 11,
+     "decal": 4,
+     "wheels": 3,
+     "glow": 6,
+     "smoke": 6
+    },
+    "lookPrices": {
+     "paint": 400,
+     "decal": 300,
+     "wheels": 600,
+     "glow": 800,
+     "smoke": 250
+    }
+   },
+   "seed": 1,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "look",
+      "car": "coupe",
+      "part": "wheels",
+      "value": 2,
+      "cash": 600
+     },
+     "state": {
+      "upgrades": {},
+      "looks": {
+       "coupe": {
+        "wheels": 2
+       }
+      },
+      "last": {
+       "op": "look",
+       "amount": 600
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "look",
+      "car": "coupe",
+      "part": "wheels",
+      "value": 0,
+      "cash": 0
+     },
+     "state": {
+      "upgrades": {},
+      "looks": {},
+      "last": {
+       "op": "look",
+       "amount": 0
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "look",
+      "car": "coupe",
+      "part": "decal",
+      "value": 1,
+      "cash": 300
+     },
+     "state": {
+      "upgrades": {},
+      "looks": {
+       "coupe": {
+        "decal": 1
+       }
+      },
+      "last": {
+       "op": "look",
+       "amount": 300
+      }
+     }
+    }
+   ],
+   "result": null
+  }
+ ]
+}

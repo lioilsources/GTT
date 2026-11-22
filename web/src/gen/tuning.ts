@@ -163,6 +163,8 @@ export class Tuning {
   readonly economy: TuningEconomy;
   /** Loop glue (specs/loop.md): the "Play" context button at a spot without a route. */
   readonly loop: TuningLoop;
+  /** tuning and cosmetics (specs/garage.md); colours in design/tokens.json color.garage */
+  readonly garage: TuningGarage;
 
   private constructor(r: R) {
     this.carScale = r.d('car_scale');
@@ -207,6 +209,7 @@ export class Tuning {
     this.police = new TuningPolice(r.sub('police'));
     this.economy = new TuningEconomy(r.sub('economy'));
     this.loop = new TuningLoop(r.sub('loop'));
+    this.garage = new TuningGarage(r.sub('garage'));
   }
 
   toJson(): Record<string, unknown> {
@@ -253,6 +256,7 @@ export class Tuning {
       police: this.police.toJson(),
       economy: this.economy.toJson(),
       loop: this.loop.toJson(),
+      garage: this.garage.toJson(),
     };
   }
 
@@ -3298,4 +3302,90 @@ export class TuningLoop {
   }
 
   static readonly keys = ['spot_radius_m', 'stop_speed_mps', 'action_hold_s'] as const;
+}
+
+/** tuning and cosmetics (specs/garage.md); colours in design/tokens.json color.garage */
+export class TuningGarage {
+  enabled: boolean;
+  maxLevel: number;
+  /** price of level 1, 2, 3 */
+  priceEngine: number[];
+  priceTyres: number[];
+  priceBrakes: number[];
+  priceWeight: number[];
+  priceDrift: number[];
+  /** per level, multiplies power */
+  enginePowerStep: number;
+  /** per level, multiplies top_speed */
+  engineTopStep: number;
+  /** per level, multiplies grip_front and grip_rear */
+  tyresStep: number;
+  brakesStep: number;
+  /** per level, mass × (1 − step × level) */
+  weightMassStep: number;
+  weightPowerStep: number;
+  weightSteerStep: number;
+  /** per level, drift_bias × (1 − step × level) */
+  driftStep: number;
+  lookPricePaint: number;
+  lookPriceDecal: number;
+  lookPriceWheels: number;
+  lookPriceGlow: number;
+  lookPriceSmoke: number;
+  /** underglow reaches this far past the car outline */
+  glowMarginM: number;
+  /** underglow strength by day (full at night and in tunnels) */
+  glowDay: number;
+
+  constructor(r: R) {
+    this.enabled = r.b('enabled');
+    this.maxLevel = r.i('max_level');
+    this.priceEngine = r.il('price_engine');
+    this.priceTyres = r.il('price_tyres');
+    this.priceBrakes = r.il('price_brakes');
+    this.priceWeight = r.il('price_weight');
+    this.priceDrift = r.il('price_drift');
+    this.enginePowerStep = r.d('engine_power_step');
+    this.engineTopStep = r.d('engine_top_step');
+    this.tyresStep = r.d('tyres_step');
+    this.brakesStep = r.d('brakes_step');
+    this.weightMassStep = r.d('weight_mass_step');
+    this.weightPowerStep = r.d('weight_power_step');
+    this.weightSteerStep = r.d('weight_steer_step');
+    this.driftStep = r.d('drift_step');
+    this.lookPricePaint = r.i('look_price_paint');
+    this.lookPriceDecal = r.i('look_price_decal');
+    this.lookPriceWheels = r.i('look_price_wheels');
+    this.lookPriceGlow = r.i('look_price_glow');
+    this.lookPriceSmoke = r.i('look_price_smoke');
+    this.glowMarginM = r.d('glow_margin_m');
+    this.glowDay = r.d('glow_day');
+  }
+
+  toJson(): Record<string, unknown> {
+    return {
+      enabled: this.enabled,
+      max_level: this.maxLevel,
+      price_engine: this.priceEngine,
+      price_tyres: this.priceTyres,
+      price_brakes: this.priceBrakes,
+      price_weight: this.priceWeight,
+      price_drift: this.priceDrift,
+      engine_power_step: this.enginePowerStep,
+      engine_top_step: this.engineTopStep,
+      tyres_step: this.tyresStep,
+      brakes_step: this.brakesStep,
+      weight_mass_step: this.weightMassStep,
+      weight_power_step: this.weightPowerStep,
+      weight_steer_step: this.weightSteerStep,
+      drift_step: this.driftStep,
+      look_price_paint: this.lookPricePaint,
+      look_price_decal: this.lookPriceDecal,
+      look_price_wheels: this.lookPriceWheels,
+      look_price_glow: this.lookPriceGlow,
+      look_price_smoke: this.lookPriceSmoke,
+      glow_margin_m: this.glowMarginM,
+      glow_day: this.glowDay,
+    };
+  }
 }

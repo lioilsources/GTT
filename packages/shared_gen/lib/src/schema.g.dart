@@ -268,6 +268,8 @@ class Save {
     required this.settings,
     this.stations,
     this.souvenirs,
+    this.upgrades,
+    this.looks,
   });
 
   factory Save.fromJson(Map<String, Object?> j) => Save(
@@ -284,6 +286,8 @@ class Save {
         settings: SaveSettings.fromJson(_map(j['settings'], 'settings')),
         stations: j['stations'] == null ? null : [for (final e in _list(j['stations'], 'stations')) _str(e, 'stations[]')],
         souvenirs: j['souvenirs'] == null ? null : [for (final e in _list(j['souvenirs'], 'souvenirs')) _str(e, 'souvenirs[]')],
+        upgrades: j['upgrades'] == null ? null : {for (final e in _map(j['upgrades'], 'upgrades').entries) e.key: {for (final e in _map(e.value, 'upgrades{}').entries) e.key: _int(e.value, 'upgrades{}{}')}},
+        looks: j['looks'] == null ? null : {for (final e in _map(j['looks'], 'looks').entries) e.key: {for (final e in _map(e.value, 'looks{}').entries) e.key: _int(e.value, 'looks{}{}')}},
       );
 
   int version;
@@ -306,6 +310,10 @@ class Save {
   List<String>? stations;
   /// Bought souvenirs (spot ids) in purchase order (specs/shops.md); missing = [].
   List<String>? souvenirs;
+  /// Tuning levels per owned car and slot (specs/garage.md); missing = {}.
+  Map<String, Map<String, int>>? upgrades;
+  /// Cosmetic choice per car and part (specs/garage.md); missing = {}.
+  Map<String, Map<String, int>>? looks;
 
   Map<String, Object?> toJson() => {
         'version': version,
@@ -321,6 +329,8 @@ class Save {
         'settings': settings.toJson(),
         if (stations != null) 'stations': stations,
         if (souvenirs != null) 'souvenirs': souvenirs,
+        if (upgrades != null) 'upgrades': {for (final e in upgrades!.entries) e.key: {for (final e in e.value.entries) e.key: e.value}},
+        if (looks != null) 'looks': {for (final e in looks!.entries) e.key: {for (final e in e.value.entries) e.key: e.value}},
       };
 }
 
