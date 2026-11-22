@@ -667,6 +667,49 @@ body {
   stroke: var(--color-ui-text);
   stroke-width: 4;
 }
+/* Kuličky, Čára, Nohejbal reuse the Koulená layout (.koulena, .koulena-lane, -ball, -guide, -mark). */
+.kulicky-ground {
+  fill: var(--color-world-day-land);
+}
+.kulicky-line,
+.cara-line {
+  stroke: var(--color-world-day-marking);
+  stroke-width: 6;
+}
+.kulicky-rival {
+  fill: var(--color-ui-control-hand);
+  stroke: var(--color-ui-text);
+  stroke-width: 4;
+}
+.koulena-ball.burnt,
+.kulicky-rival.burnt {
+  opacity: 0.45;
+}
+.cara-wall {
+  fill: var(--color-world-day-facades-6);
+}
+.nohejbal-half {
+  fill: var(--color-world-day-park);
+  stroke: var(--color-world-day-marking);
+  stroke-width: 8;
+}
+.nohejbal-net {
+  stroke: var(--color-ui-text);
+  stroke-width: 12;
+  stroke-dasharray: 6 6;
+}
+.nohejbal-reach {
+  fill: none;
+  stroke: var(--color-ui-control-hint);
+  stroke-width: 4;
+  stroke-dasharray: 16 14;
+  pointer-events: none;
+}
+.nohejbal-ball {
+  fill: var(--color-brand-accent);
+  stroke: var(--color-ui-label-shadow);
+  stroke-width: 4;
+}
 .strelnice {
   flex: 1;
   min-height: 0;
