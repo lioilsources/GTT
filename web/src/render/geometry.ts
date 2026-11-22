@@ -74,14 +74,15 @@ export class Tris {
 
 /** Heights of the flat layers above the ground plane (m); keeps the draw order of METROPOLE_PLAN 6.3. */
 export const Z = {
-  ground: [0.0, 0.01, 0.02, 0.03] as const, // park, plaza, rail, water
+  ground: [0.0, 0.01, 0.02, 0.03, 0.04] as const, // park, plaza, pedestrian, rail, water
   sidewalk: 0.06, alley: 0.07, asphalt: 0.08, laneLines: 0.09, centerLines: 0.1, roadblock: 0.11,
   skids: 0.12, props: 0.14, car: 0.3,
   tunnelShade: 0.2, tunnel: 0.22, tunnelLines: 0.23,
   bridgeEdge: 0.0, bridgeDeck: 0.02, bridgeLines: 0.04,
 } as const;
 
-const GROUND_ORDER = [GroundKind.PARK, GroundKind.PLAZA, GroundKind.RAIL, GroundKind.WATER];
+// Pedestrian-zone paving sits above parks and plazas, below roads (specs/zones.md).
+const GROUND_ORDER = [GroundKind.PARK, GroundKind.PLAZA, GroundKind.PEDESTRIAN, GroundKind.RAIL, GroundKind.WATER];
 
 export function groundTris(c: ChunkData, pal: Palette, out: Tris): void {
   GROUND_ORDER.forEach((kind, k) => {
@@ -95,6 +96,49 @@ export function groundTris(c: ChunkData, pal: Palette, out: Tris): void {
       }
     }
   });
+}
+
+/**
+ * Bollard positions along the barriers of one chunk (specs/zones.md "Kreslení"), interleaved x, y:
+ * one at the start of each line and then every `spacing` metres along it.
+ */
+export function bollardPoints(c: ChunkData, spacing: number): Float32Array {
+  const out: number[] = [];
+  if (spacing <= 0) return new Float32Array(0);
+  for (const line of c.barriers) {
+    if (line.length < 4) continue;
+    let next = 0, along = 0;
+    for (let i = 0; i + 3 < line.length; i += 2) {
+      const ax = line[i]!, ay = line[i + 1]!, bx = line[i + 2]!, by = line[i + 3]!;
+      const l = Math.hypot(bx - ax, by - ay);
+      while (next <= along + l) {
+        const k = l > 0 ? (next - along) / l : 0;
+        out.push(ax + (bx - ax) * k, ay + (by - ay) * k);
+        next += spacing;
+      }
+      along += l;
+    }
+  }
+  return Float32Array.from(out);
+}
+
+/**
+ * One bollard as a unit cylinder (radius 1, height 1, base at 0): shaded walls like building
+ * walls and a lit top, colour props.bollard. Instances scale it to radius and display height.
+ */
+export function bollardTris(pal: Palette, out: Tris, segs = 8): void {
+  const base = rgba(tokens.colorPropsBollard);
+  for (let i = 0; i < segs; i++) {
+    const a0 = (i * 2 * Math.PI) / segs, a1 = ((i + 1) * 2 * Math.PI) / segs, am = (a0 + a1) / 2;
+    const light = pal.ambient + (1 - pal.ambient) * Math.max(0, Math.cos(am) * pal.sunX + Math.sin(am) * pal.sunY);
+    const col = shade(base, light);
+    const ax = Math.cos(a0), ay = Math.sin(a0), bx = Math.cos(a1), by = Math.sin(a1);
+    const v0 = out.vertex(ax, ay, 0, col), v1 = out.vertex(bx, by, 0, col);
+    const v2 = out.vertex(bx, by, 1, col), v3 = out.vertex(ax, ay, 1, col);
+    // CCW ring: clockwise seen from outside = front face, as building walls.
+    out.idx.push(v0, v2, v1, v0, v3, v2);
+  }
+  out.disc(0, 0, 1, 1, shade(base, pal.roofLight), segs);
 }
 
 /** Road meshes of one chunk, split by layer. */

@@ -13,7 +13,7 @@ export function rgba(hex: string, alpha = 1): Rgba {
 
 /** World colours and lighting from design/tokens.json (port of world_engine palette.dart). */
 export interface Palette {
-  land: Rgba; water: Rgba; park: Rgba; plaza: Rgba; rail: Rgba;
+  land: Rgba; water: Rgba; park: Rgba; plaza: Rgba; pedestrian: Rgba; rail: Rgba;
   sidewalk: Rgba; asphalt: Rgba; alley: Rgba; marking: Rgba; centerLine: Rgba;
   bridgeDeck: Rgba; bridgeEdge: Rgba; tunnel: Rgba; landmark: Rgba;
   facades: Rgba[];
@@ -23,7 +23,7 @@ export interface Palette {
 
 export const dayPalette: Palette = {
   land: rgba(tokens.colorWorldDayLand), water: rgba(tokens.colorWorldDayWater), park: rgba(tokens.colorWorldDayPark),
-  plaza: rgba(tokens.colorWorldDayPlaza), rail: rgba(tokens.colorWorldDayRail), sidewalk: rgba(tokens.colorWorldDaySidewalk),
+  plaza: rgba(tokens.colorWorldDayPlaza), pedestrian: rgba(tokens.colorWorldDayPedestrian), rail: rgba(tokens.colorWorldDayRail), sidewalk: rgba(tokens.colorWorldDaySidewalk),
   asphalt: rgba(tokens.colorWorldDayAsphalt), alley: rgba(tokens.colorWorldDayAlley), marking: rgba(tokens.colorWorldDayMarking),
   centerLine: rgba(tokens.colorWorldDayCenterLine), bridgeDeck: rgba(tokens.colorWorldDayBridgeDeck),
   bridgeEdge: rgba(tokens.colorWorldDayBridgeEdge), tunnel: rgba(tokens.colorWorldDayTunnel), landmark: rgba(tokens.colorWorldDayLandmark),
@@ -34,7 +34,7 @@ export const dayPalette: Palette = {
 
 export const nightPalette: Palette = {
   land: rgba(tokens.colorWorldNightLand), water: rgba(tokens.colorWorldNightWater), park: rgba(tokens.colorWorldNightPark),
-  plaza: rgba(tokens.colorWorldNightPlaza), rail: rgba(tokens.colorWorldNightRail), sidewalk: rgba(tokens.colorWorldNightSidewalk),
+  plaza: rgba(tokens.colorWorldNightPlaza), pedestrian: rgba(tokens.colorWorldNightPedestrian), rail: rgba(tokens.colorWorldNightRail), sidewalk: rgba(tokens.colorWorldNightSidewalk),
   asphalt: rgba(tokens.colorWorldNightAsphalt), alley: rgba(tokens.colorWorldNightAlley), marking: rgba(tokens.colorWorldNightMarking),
   centerLine: rgba(tokens.colorWorldNightCenterLine), bridgeDeck: rgba(tokens.colorWorldNightBridgeDeck),
   bridgeEdge: rgba(tokens.colorWorldNightBridgeEdge), tunnel: rgba(tokens.colorWorldNightTunnel), landmark: rgba(tokens.colorWorldNightLandmark),
@@ -48,6 +48,7 @@ export function groundColor(p: Palette, k: GroundKind): Rgba {
     case GroundKind.WATER: return p.water;
     case GroundKind.PARK: return p.park;
     case GroundKind.PLAZA: return p.plaza;
+    case GroundKind.PEDESTRIAN: return p.pedestrian;
     case GroundKind.RAIL: return p.rail;
     default: return p.land;
   }

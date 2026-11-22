@@ -20,8 +20,8 @@ import type { DriveWorld } from '../drive/driveWorld';
 import { propKinds, type PropKind } from '../drive/props';
 import type { ChunkData } from '../world/chunk';
 import { chunkKey, type City } from '../world/model';
-import { cameraHeight, fovX } from '../world/camera';
-import { buildRoads, buildingTris, groundTris, Tris, Z, type RoadChunk } from './geometry';
+import { cameraHeight, displayHeight, extrusionScale, fovX } from '../world/camera';
+import { bollardPoints, bollardTris, buildRoads, buildingTris, groundTris, Tris, Z, type RoadChunk } from './geometry';
 import { dayPalette, nightPalette, rgba, type Palette, type Rgba } from './palette';
 import { facadeTexture } from './textures';
 import { carTris, parkedTris } from '../cars/carTris';
@@ -97,6 +97,13 @@ interface ChunkMeshes {
   buildings: Mesh | null;
 }
 
+interface ChunkEntry {
+  data: ChunkData;
+  meshes: ChunkMeshes;
+  /** Bollard positions (x, y interleaved), fixed for the chunk's lifetime. */
+  bollards: Float32Array;
+}
+
 interface RoadMeshes {
   ground: Mesh | null;
   bridge: Mesh | null;
@@ -118,7 +125,7 @@ export class WorldView {
   private readonly flatMat: StandardMaterial;
   private readonly buildingMat: StandardMaterial;
   private readonly textures: { day: Texture; night: Texture };
-  private readonly chunks = new Map<number, { data: ChunkData; meshes: ChunkMeshes }>();
+  private readonly chunks = new Map<number, ChunkEntry>();
   private roadGeo: Map<number, RoadChunk>;
   private readonly roads = new Map<number, RoadMeshes>();
   private readonly tunnelShade: Mesh;
@@ -127,6 +134,10 @@ export class WorldView {
   private readonly propMeshes = new Map<PropKind, Mesh>();
   private readonly lampGlow: Mesh;
   private propsVersion = -1;
+  /** All bollards of the loaded chunks as thin instances; rebuilt only when chunks change. */
+  private bollardMesh: Mesh;
+  private bollardsDirty = true;
+  private readonly bollardH: number;
   private readonly skidMesh: Mesh;
   private readonly skidPos: Float32Array;
   private skidsVersion = -1;
@@ -169,6 +180,8 @@ export class WorldView {
     for (const k of propKinds) this.propMeshes.set(k, this.propMesh(k));
     this.lampGlow = this.mesh('lamp-glow', discTris(10, 0.02, rgba(tokens.colorPropsLampGlow)), this.flatMat, true, false);
     this.lampGlow.setEnabled(false);
+    this.bollardH = displayHeight(extrusionScale(tuning.zones.bollardHeightM, tuning), this.H);
+    this.bollardMesh = this.makeBollardMesh();
 
     const n = tuning.skids.maxSegments * 2;
     this.skidPos = new Float32Array(n * 4 * 3);
@@ -242,6 +255,9 @@ export class WorldView {
     for (const m of this.propMeshes.values()) m.dispose();
     for (const k of propKinds) this.propMeshes.set(k, this.propMesh(k));
     this.propsVersion = -1;
+    this.bollardMesh.dispose();
+    this.bollardMesh = this.makeBollardMesh();
+    this.bollardsDirty = true;
   }
 
   // ---------- chunks
@@ -260,7 +276,9 @@ export class WorldView {
   addChunk(c: ChunkData): void {
     const key = chunkKey(c.x, c.y);
     if (this.chunks.has(key)) return;
-    this.chunks.set(key, { data: c, meshes: this.chunkMeshes(c, key) });
+    const bollards = bollardPoints(c, this.tuning.zones.bollardSpacingM);
+    this.chunks.set(key, { data: c, meshes: this.chunkMeshes(c, key), bollards });
+    if (bollards.length > 0) this.bollardsDirty = true;
   }
 
   removeChunk(c: ChunkData): void {
@@ -269,6 +287,7 @@ export class WorldView {
     if (!e) return;
     this.disposeChunk(e.meshes);
     this.chunks.delete(key);
+    if (e.bollards.length > 0) this.bollardsDirty = true;
   }
 
   private disposeChunk(m: ChunkMeshes): void {
@@ -457,6 +476,39 @@ export class WorldView {
     }
   }
 
+  private makeBollardMesh(): Mesh {
+    const t = new Tris();
+    bollardTris(this.palette, t);
+    return this.mesh('bollards', t, this.flatMat, false, false);
+  }
+
+  /** Writes one scale-and-translate matrix per bollard; runs only after a chunk change. */
+  private updateBollards(): void {
+    if (!this.bollardsDirty) return;
+    this.bollardsDirty = false;
+    let n = 0;
+    for (const c of this.chunks.values()) n += c.bollards.length >> 1;
+    const r = this.tuning.zones.bollardRadiusM, h = this.bollardH;
+    const buf = n > 0 ? new Float32Array(n * 16) : null;
+    if (buf) {
+      let o = 0;
+      for (const c of this.chunks.values()) {
+        const p = c.bollards;
+        for (let i = 0; i + 1 < p.length; i += 2, o += 16) {
+          buf[o] = r;
+          buf[o + 5] = h;
+          buf[o + 10] = r;
+          buf[o + 12] = p[i]!;
+          buf[o + 14] = p[i + 1]!;
+          buf[o + 15] = 1;
+        }
+      }
+    }
+    this.bollardMesh.thinInstanceSetBuffer('matrix', buf, 16, false);
+    this.bollardMesh.thinInstanceRefreshBoundingInfo(false);
+    this.bollardMesh.setEnabled(buf !== null);
+  }
+
   private updateSkids(width: number): void {
     const d = this.drive;
     if (d.skidsVersion === this.skidsVersion) return;
@@ -508,6 +560,7 @@ export class WorldView {
     this.updateCamera();
     this.updateCar(car);
     this.updateProps();
+    this.updateBollards();
     this.updateParked();
     this.updateSkids(car.halfWidth * 0.32);
     this.scene.render();
