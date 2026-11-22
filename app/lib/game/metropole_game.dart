@@ -8,6 +8,7 @@ import 'package:flame/game.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/services.dart';
+import 'package:game_loop/game_loop.dart' show CarLook;
 import 'package:meta_progress/meta_progress.dart';
 import 'package:world_engine/world_engine.dart';
 
@@ -237,6 +238,12 @@ class MetropoleGame extends Game {
   /// Drives the camera rig this frame with the real dt (the Camera glide, specs/photo.md); false =
   /// the rig follows the car.
   bool Function(double dt)? cameraHook;
+
+  /// Looks of owned cars (specs/garage.md "Kreslení"), set by the garage: the driven car's look
+  /// (null = the catalog drawing: a stolen car, a Taxi shift) and that of a car the player left
+  /// parked (owner `player`).
+  CarLook? Function()? playerLook;
+  CarLook? Function(ParkedCar p)? parkedLook;
 
   /// Rewrites the player's control input after the scheme and the keyboard (not under the
   /// autopilot or while paused): the drunk driver of specs/shops.md brakes to a stop.
@@ -535,6 +542,12 @@ class MetropoleGame extends Game {
             data.cars,
             tuning,
             shadow: shadow,
+            lookOf: parkedLook == null
+                ? null
+                : (p) => switch (parkedLook!(p)) {
+                    final l? => lookPaint(l, tuning.garage, night: night),
+                    null => null,
+                  },
           );
           paintPedestrians(c, peds);
           paintWorld?.call(c);
@@ -558,13 +571,15 @@ class MetropoleGame extends Game {
         }
         final tm = drive.trams;
         if (tm != null) _tramsPainter?.paintTrams(c, tm, layer, night: night, shadow: shadow);
+        final pl = playerLook?.call();
+        final look = pl == null ? null : lookPaint(pl, tuning.garage, night: night, layer: car.layer);
         if (lift == null) {
-          if (layer == car.layer) paintCar(c, car, night: night, shadow: shadow);
+          if (layer == car.layer) paintCar(c, car, night: night, shadow: shadow, look: look);
         } else if (layer == 0) {
           paintHopShadow(c, car, lift, shadow: shadow);
         } else if (layer == 1) {
           // In the air above everything on the ground, buildings included (specs/hop.md).
-          paintCar(c, car, night: night, lift: lift);
+          paintCar(c, car, night: night, lift: lift, look: look);
         }
       },
     );

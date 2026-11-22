@@ -1,9 +1,9 @@
 import 'package:rules_core/rules_core.dart';
 import 'package:shared_gen/shared_gen.dart';
 
-/// specs/save.md, version 3: save format 4, migration from 1, 2 and 3, normalisation (P0, module `save`).
+/// specs/save.md, version 4: save format 5, migration from 1, 2, 3 and 4, normalisation (P0, module `save`).
 /// Port of web/src/loop/save.ts. States are the JSON maps of the save.
-const saveVersion = 4;
+const saveVersion = 5;
 
 class SaveConfig {
   const SaveConfig({
@@ -53,6 +53,8 @@ class SaveParts {
     this.settings,
     this.stations,
     this.souvenirs,
+    this.upgrades,
+    this.looks,
   });
 
   final int cash;
@@ -70,6 +72,12 @@ class SaveParts {
 
   /// Bought souvenirs in purchase order (specs/shops.md).
   final List<String>? souvenirs;
+
+  /// Tuning levels per car and slot (specs/garage.md).
+  final Map<String, Map<String, int>>? upgrades;
+
+  /// Looks per car and part (specs/garage.md).
+  final Map<String, Map<String, int>>? looks;
 }
 
 // JSON number → int like TS Number.isInteger (5.0 counts, 1.5 does not).
@@ -88,6 +96,18 @@ Map<String, int>? _intMap(Object? v) {
     final n = _asInt(e.value);
     if (e.key is! String || n == null) return null;
     out[e.key as String] = n;
+  }
+  return out;
+}
+
+/// `{carId: {key: int}}`: an object whose values are objects of integers.
+Map<String, Map<String, int>>? _nestedIntMap(Object? v) {
+  if (v is! Map) return null;
+  final out = <String, Map<String, int>>{};
+  for (final e in v.entries) {
+    final m = _intMap(e.value);
+    if (e.key is! String || m == null) return null;
+    out[e.key as String] = m;
   }
   return out;
 }
@@ -157,6 +177,8 @@ Map<String, Object?> composeSave(SaveConfig c, SaveParts p) {
     },
     'stations': _unique(p.stations ?? const []),
     'souvenirs': _unique(p.souvenirs ?? const []),
+    'upgrades': _sorted(p.upgrades ?? const {}, (m) => _sorted(m, _max0)),
+    'looks': _sorted(p.looks ?? const {}, (m) => _sorted(m, _max0)),
   };
 }
 
@@ -165,12 +187,12 @@ Map<String, Object?> freshSave(SaveConfig c) => composeSave(
   SaveParts(cash: c.startCash, cars: const [], car: c.startCar, stamps: const [], best: const {}, plays: const {}),
 );
 
-/// Any JSON value → a normalised version-4 save of this city (specs/save.md "load").
+/// Any JSON value → a normalised version-5 save of this city (specs/save.md "load").
 Map<String, Object?> normalizeSave(SaveConfig c, Object? raw) {
   if (raw is! Map) return freshSave(c);
   final s = raw;
   final version = s['version'];
-  if ((version != 1 && version != 2 && version != 3 && version != 4) || s['cityId'] != c.cityId) return freshSave(c);
+  if ((version != 1 && version != 2 && version != 3 && version != 4 && version != 5) || s['cityId'] != c.cityId) return freshSave(c);
   final cash = _asInt(s['cash']);
   final stamps = _strList(s['stamps']);
   final cars = _strList(s['cars']);
@@ -200,8 +222,13 @@ Map<String, Object?> normalizeSave(SaveConfig c, Object? raw) {
   // Version 3: `stations` is optional (missing = []); migration 2 → 3 sets it to [].
   final stations = version >= 3 && s.containsKey('stations') ? _strList(s['stations']) : const <String>[];
   // Version 4: `souvenirs` is optional (missing = []); migration 3 → 4 sets it to [].
-  final souvenirs = version == 4 && s.containsKey('souvenirs') ? _strList(s['souvenirs']) : const <String>[];
-  if (stations == null || souvenirs == null) return freshSave(c);
+  final souvenirs = version >= 4 && s.containsKey('souvenirs') ? _strList(s['souvenirs']) : const <String>[];
+  // Version 5: `upgrades` and `looks` are optional (missing = {}); migration 4 → 5 sets them to {}.
+  final upgrades = version == 5 && s.containsKey('upgrades')
+      ? _nestedIntMap(s['upgrades'])
+      : const <String, Map<String, int>>{};
+  final looks = version == 5 && s.containsKey('looks') ? _nestedIntMap(s['looks']) : const <String, Map<String, int>>{};
+  if (stations == null || souvenirs == null || upgrades == null || looks == null) return freshSave(c);
   return composeSave(
     c,
     SaveParts(
@@ -216,6 +243,8 @@ Map<String, Object?> normalizeSave(SaveConfig c, Object? raw) {
       settings: (scheme: scheme, night: night),
       stations: stations,
       souvenirs: souvenirs,
+      upgrades: upgrades,
+      looks: looks,
     ),
   );
 }
@@ -234,7 +263,7 @@ class SaveRules extends MgRules<Map<String, Object?>, SaveAction, Map<String, Ob
   @override
   String get id => 'save';
   @override
-  int get specVersion => 3;
+  int get specVersion => 4;
 
   SaveConfig? _cfg;
 

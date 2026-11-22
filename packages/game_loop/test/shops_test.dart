@@ -222,13 +222,13 @@ void main() {
     });
   });
 
-  group('save v4 (specs/save.md v3)', () {
+  group('save souvenirs (specs/save.md v3, format 5 since v4)', () {
     final sc = SaveConfig.fromTuning(tuning, 'nyc', CarId.values.map((c) => c.id));
-    test('fresh save is version 4 with no souvenirs; spec version 3', () {
+    test('fresh save is version 5 with no souvenirs; spec version 4', () {
       final s = freshSave(sc);
-      expect(s['version'], 4);
+      expect(s['version'], 5);
       expect(s['souvenirs'], isEmpty);
-      expect(SaveRules().specVersion, 3);
+      expect(SaveRules().specVersion, 4);
     });
 
     test('round trip of souvenirs through JSON is exact', () {

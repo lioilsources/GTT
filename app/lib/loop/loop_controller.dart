@@ -120,6 +120,17 @@ class LoopController extends ChangeNotifier {
   /// Called by [restore] with the souvenirs of the save (the shops module reloads them).
   void Function(List<String> souvenirs)? onSouvenirsRestored;
 
+  /// Upgrades and looks of the loaded save (specs/garage.md); the garage module `load`s them.
+  CarLevels get savedUpgrades => _savedUpgrades;
+  CarLevels get savedLooks => _savedLooks;
+  CarLevels _savedUpgrades = const {}, _savedLooks = const {};
+
+  /// Live upgrades and looks for the save (set by the garage; null = keep the loaded ones).
+  ({CarLevels upgrades, CarLevels looks}) Function()? garage;
+
+  /// Called by [restore] with the upgrades and looks of the save (the garage reloads them).
+  void Function(CarLevels upgrades, CarLevels looks)? onGarageRestored;
+
   /// Spots where "Play" does not show (a bar with a minigame: its game is in the bar card,
   /// specs/shops.md).
   bool Function(String spotId)? playHidden;
@@ -156,6 +167,8 @@ class LoopController extends ChangeNotifier {
         settings: (scheme: s.scheme, night: s.night),
         stations: stations?.call() ?? _savedStations,
         souvenirs: souvenirs?.call() ?? _savedSouvenirs,
+        upgrades: garage?.call().upgrades ?? _savedUpgrades,
+        looks: garage?.call().looks ?? _savedLooks,
       ),
     );
   }
@@ -171,6 +184,9 @@ class LoopController extends ChangeNotifier {
     onStationsRestored?.call(_savedStations);
     _savedSouvenirs = [...?s.souvenirs];
     onSouvenirsRestored?.call(_savedSouvenirs);
+    _savedUpgrades = {...?s.upgrades};
+    _savedLooks = {...?s.looks};
+    onGarageRestored?.call(_savedUpgrades, _savedLooks);
     final n = npc;
     if (n != null) {
       final known = {for (final c in n.pack.characters) c.id};

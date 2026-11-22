@@ -509,6 +509,9 @@ void main() {
       );
       await tester.tap(find.text('open'));
       await tester.pumpAndSettle();
+      // The shelf is the Polička tab of the garage (specs/garage.md "Garáž").
+      await tester.tap(find.byKey(const ValueKey('garageTab:shelf')));
+      await tester.pumpAndSettle();
       expect(find.byKey(const ValueKey('shopShelf')), findsOneWidget);
       expect(find.text(s.name), findsOneWidget);
       stop(w);
