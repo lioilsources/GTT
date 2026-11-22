@@ -258,6 +258,7 @@ minigames:
     scatter: [40, 55, 70, 85, 100]
     ai_scatter: [160, 130, 100, 80, 60]
     ai_reach: [250, 300, 350, 400, 450]
+    player_reach: 380                  # mm, the player returns balls within this
     ai_margin: [220, 180, 140, 110, 80]
     star_margins: [6, 3, 1]
     flick_mm_per_px: 2.0
