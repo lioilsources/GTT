@@ -11,6 +11,7 @@ import { tokens } from '../gen/tokens';
 import type { Tuning } from '../gen/tuning';
 import { Tris, Z } from '../render/geometry';
 import { rgba, type Rgba } from '../render/palette';
+import { setShadowColour } from '../render/shadow';
 import type { Traffic } from '../traffic/traffic';
 
 /**
@@ -102,6 +103,11 @@ export class PoliceView {
     mesh.isPickable = false;
     mesh.alwaysSelectAsActiveMesh = true;
     return mesh;
+  }
+
+  /** Ground shadow colour (the city skin's `shadow` by day, specs/style.md); the first rect of the body. */
+  setShadow(c: Rgba): void {
+    setShadowColour(this.body, 4, c);
   }
 
   /** Writes the instance buffers; call once per frame before scene.render. */

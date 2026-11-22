@@ -12,6 +12,7 @@ import type { Tuning } from '../gen/tuning';
 import type { Trams } from '../trams/trams';
 import { Tris, Z } from './geometry';
 import { rgba, type Rgba } from './palette';
+import { setShadowColour } from './shadow';
 
 /**
  * Tram cars (specs/trams.md "Kreslení"): rounded rectangles in color.trams.body with a stripe and
@@ -84,6 +85,11 @@ export class TramView {
     mesh.isPickable = false;
     mesh.alwaysSelectAsActiveMesh = true;
     return mesh;
+  }
+
+  /** Ground shadow colour (the city skin's `shadow` by day, specs/style.md); the first rect of the details. */
+  setShadow(c: Rgba): void {
+    setShadowColour(this.details, 4, c);
   }
 
   /** Lit windows at night (color.trams.windowLit). */

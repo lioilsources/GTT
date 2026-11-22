@@ -8,9 +8,9 @@ import { carShape, paintHex, type CarRect } from './shape';
 /** Height step between car parts (painter's order of carShape). */
 export const CAR_PART_DZ = 0.01;
 
-function partColor(r: CarRect, paint: Rgba, night: boolean): Rgba {
+function partColor(r: CarRect, paint: Rgba, night: boolean, shadow: Rgba): Rgba {
   switch (r.part) {
-    case 'shadow': return rgba(tokens.colorCarShadow);
+    case 'shadow': return shadow;
     case 'body': return paint;
     case 'cabin': return rgba(tokens.colorCarCabin);
     case 'glass': {
@@ -28,11 +28,13 @@ function partColor(r: CarRect, paint: Rgba, night: boolean): Rgba {
  * Adds a car's top-down shape at (ox, oy, ang) to [t]; returns the height above [h] of the top part.
  * Tyres are added when [tyres] is set (parked cars; the player's car steers its own wheel nodes);
  * `micro` cars carry their in-line wheels in the shape itself. [shadow] false leaves the ground
- * shadow out (the player's car draws it apart, so it stays on the ground during a hop).
+ * shadow out (the player's car draws it apart, so it stays on the ground during a hop); [shadowCol]
+ * is its colour (the city skin's `shadow` by day, specs/style.md).
  */
 export function carTris(
   t: Tris, spec: CarSpec, hl: number, hw: number, axle: number,
   ox: number, oy: number, ang: number, h: number, night: boolean, tyres: boolean, shadow = true,
+  shadowCol: Rgba = rgba(tokens.colorCarShadow),
 ): number {
   const paint = rgba(paintHex(spec.paint));
   let z = h;
@@ -45,15 +47,15 @@ export function carTris(
   carShape(spec.class, hl, hw, spec.length_m).forEach((r, i) => {
     z = h + (r.part === 'shadow' ? 0 : (i + 2) * CAR_PART_DZ);
     if (r.part === 'shadow' && !shadow) return;
-    t.rect(ox, oy, ang, r.x0, r.y0, r.x1, r.y1, z, partColor(r, paint, night));
+    t.rect(ox, oy, ang, r.x0, r.y0, r.x1, r.y1, z, partColor(r, paint, night, shadowCol));
   });
   return z - h;
 }
 
 /** The ground shadow of a car shape alone (see carTris [shadow]). */
-export function carShadowTris(t: Tris, spec: CarSpec, hl: number, hw: number, h: number): void {
+export function carShadowTris(t: Tris, spec: CarSpec, hl: number, hw: number, h: number, col: Rgba = rgba(tokens.colorCarShadow)): void {
   for (const r of carShape(spec.class, hl, hw, spec.length_m)) {
-    if (r.part === 'shadow') t.rect(0, 0, 0, r.x0, r.y0, r.x1, r.y1, h, rgba(tokens.colorCarShadow));
+    if (r.part === 'shadow') t.rect(0, 0, 0, r.x0, r.y0, r.x1, r.y1, h, col);
   }
 }
 
@@ -63,13 +65,16 @@ export function carUndersideTris(t: Tris, hl: number, hw: number, h: number): vo
 }
 
 /** One mesh's worth of parked cars. */
-export function parkedTris(cars: Iterable<ParkedCar>, specs: ReadonlyMap<string, CarSpec>, scale: number, axleOffset: number, h: number): Tris {
+export function parkedTris(
+  cars: Iterable<ParkedCar>, specs: ReadonlyMap<string, CarSpec>, scale: number, axleOffset: number, h: number,
+  shadow: Rgba = rgba(tokens.colorCarShadow),
+): Tris {
   const t = new Tris();
   for (const p of cars) {
     const s = specs.get(p.carId);
     if (!s) continue;
     const hl = (s.length_m * scale) / 2, hw = (s.width_m * scale) / 2;
-    carTris(t, s, hl, hw, hl * axleOffset, p.x, p.y, p.heading, h, false, true);
+    carTris(t, s, hl, hw, hl * axleOffset, p.x, p.y, p.heading, h, false, true, true, shadow);
   }
   return t;
 }
