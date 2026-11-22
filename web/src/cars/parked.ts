@@ -4,13 +4,19 @@ import { Prng } from '../rules/prng';
 import type { RoadGraph } from '../world/model';
 import type { CarOwner } from './rules';
 
-/** A parked car at a curb (specs/cars.md "Zaparkovaná auta"). Pure data, no physics. */
+/**
+ * A parked car at a curb (specs/cars.md "Zaparkovaná auta"). The fleet keeps the pose in sync with
+ * its dynamic body (it can be pushed) and fills the half extents.
+ */
 export interface ParkedCar {
   carId: string;
   owner: CarOwner;
   x: number;
   y: number;
   heading: number;
+  /** Half length and width in metres (after car_scale); set by the fleet. */
+  hl?: number;
+  hw?: number;
   /** Chunk key it was generated for; null for a car the player left behind (kept until forget_m). */
   chunk: number | null;
 }

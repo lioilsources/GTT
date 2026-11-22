@@ -239,3 +239,24 @@ export function chooseToward(g: RoadGraph, node: number, from: number, gx: numbe
   }
   return best < 0 && g.edges[from]?.kept ? from : best;
 }
+
+/**
+ * Sideways shift of a traffic car's lane point round parked cars (specs/traffic.md step 8).
+ * `obs` holds `n` quads (lx, ly, ext, phl): position ahead / to the right of the lane point,
+ * lateral half extent and half length of each parked car. Negative = to the left.
+ */
+export function swerveShift(
+  obs: ArrayLike<number>, n: number, hl: number, hw: number,
+  t: { swerveAheadM: number; swerveMarginM: number; swerveMaxM: number },
+): number {
+  let shift = 0;
+  for (let i = 0; i < n; i++) {
+    const lx = obs[4 * i]!, ly = obs[4 * i + 1]!, ext = obs[4 * i + 2]!, phl = obs[4 * i + 3]!;
+    if (lx < -(hl + phl) || lx > t.swerveAheadM + hl + phl) continue;
+    const need = hw + ext + t.swerveMarginM;
+    if (Math.abs(ly) >= need) continue;
+    const s = ly >= 0 ? ly - need : ly + need;
+    if (Math.abs(s) > Math.abs(shift)) shift = s;
+  }
+  return Math.abs(shift) > t.swerveMaxM ? 0 : shift;
+}

@@ -4,7 +4,7 @@ import type { CarSpec } from '../gen/schema';
 import type { Tuning, TuningLayers } from '../gen/tuning';
 import type { ChunkData } from '../world/chunk';
 import { chunkKey, type City, type EdgeHit, type RoadEdge, type RoadGraph } from '../world/model';
-import { CAT_BUILDINGS, CAT_CAR, Car } from './car';
+import { CAT_BUILDINGS, CAT_CAR, CAT_PARKED, CAT_TRAFFIC, Car } from './car';
 import { ControlInput } from './controls';
 import { generateProps, type Prop, type PropSet } from './props';
 import { Traffic } from '../traffic/traffic';
@@ -129,7 +129,7 @@ export class DriveWorld {
       friction: d.buildingFriction,
       restitution: d.buildingRestitution,
       filterCategoryBits: CAT_BUILDINGS,
-      filterMaskBits: CAT_CAR,
+      filterMaskBits: CAT_CAR | CAT_PARKED | CAT_TRAFFIC, // pushed parked and loose traffic cars stop at walls
     };
     for (const b of c.buildings) {
       if (!b.collide) continue;

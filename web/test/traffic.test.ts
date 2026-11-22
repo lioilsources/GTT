@@ -12,7 +12,7 @@ import { Tuning } from '../src/gen/tuning';
 import { Prng } from '../src/rules/prng';
 import {
   buildSignals, chooseNext, cycleMs, laneOffset, lanesPerDir, LIGHT_AMBER, LIGHT_GREEN, LIGHT_RED, lightState,
-  signalClockMs, signalOffset,
+  signalClockMs, signalOffset, swerveShift,
 } from '../src/traffic/roadRules';
 import { obbOverlap } from '../src/traffic/traffic';
 import { chunkPath, type PackSource } from '../src/world/citypack';
@@ -123,6 +123,21 @@ describe('traffic rules (specs/traffic.md)', () => {
     expect(obbOverlap(0, 0, 1, 0, 5, 2, 10.5, 0, 1, 0, 5, 2, 0.6)).toBe(true);
     expect(obbOverlap(0, 0, 1, 0, 5, 2, 0, 6.9, 0, 1, 5, 2, 0)).toBe(true);
     expect(obbOverlap(0, 0, 1, 0, 5, 2, 0, 7.1, 0, 1, 5, 2, 0)).toBe(false);
+  });
+
+  it('swerves round parked cars (step 8); same table as traffic_test.dart', () => {
+    const st = { swerveAheadM: 22, swerveMarginM: 0.6, swerveMaxM: 7 };
+    const sh = (...o: number[]): number => swerveShift(o, o.length / 4, 5.75, 2.375, st);
+    expect(sh(10, 3, 2.4, 6)).toBeCloseTo(-2.375, 9); // parked on the right: move left
+    expect(sh(10, -1, 2.4, 6)).toBeCloseTo(4.375, 9); // on the left: move right
+    expect(sh(0, 0, 2.4, 6)).toBeCloseTo(-5.375, 9);
+    expect(sh(40, 3, 2.4, 6)).toBe(0); // too far ahead
+    expect(sh(-12, 3, 2.4, 6)).toBe(0); // passed
+    expect(sh(10, 6, 2.4, 6)).toBe(0); // clear of the lane
+    expect(sh(10, 3, 2.4, 6, 5, -1, 2.4, 6)).toBeCloseTo(4.375, 9); // the bigger shift wins
+    expect(sh(10, 0, 4, 6)).toBeCloseTo(-6.975, 9);
+    expect(sh(10, 0, 4.1, 6)).toBe(0); // over swerve_max_m: not attempted
+    expect(sh()).toBe(0);
   });
 });
 
@@ -248,5 +263,68 @@ describe.skipIf(!existsSync(pack))('traffic in the NYC pack', () => {
     }
     expect(stopped).toBe(true);
     expect(target.hitTimer).toBeGreaterThan(0);
+  });
+
+  it('the player pushes a car it touches; it settles back into its lane (step 7)', () => {
+    const d = world();
+    const tr = d.traffic!;
+    const hit = city.graph.nearest(d.car.x, d.car.y, 300, (e) => e.kept && e.isGround && e.oneway >= 0 && e.length > 80)!;
+    const e = hit.edge;
+    d.spawn(hit.x, hit.y, 0);
+    d.update(1 / 60);
+    tr.reset();
+    const target = tr.addCar(e.index, 1, Math.min(e.length - 10, hit.t * e.length + 25), 0)!;
+    const hx = Math.cos(target.heading), hy = Math.sin(target.heading);
+    d.spawn(target.x - hx * 25, target.y - hy * 25, target.heading);
+    let loose = false;
+    let x0 = 0, y0 = 0;
+    for (let i = 0; i < 6 * 60; i++) {
+      d.input.reset();
+      d.input.boost = true;
+      d.update(1 / 60);
+      if (!loose && target.loose) {
+        loose = true;
+        x0 = target.x;
+        y0 = target.y;
+      }
+      // Keep pushing for two seconds after the first touch.
+      if (loose && Math.hypot(target.x - x0, target.y - y0) > 3) break;
+    }
+    expect(loose).toBe(true);
+    expect(Math.hypot(target.x - x0, target.y - y0)).toBeGreaterThan(3);
+    // Back off: the car turns kinematic again and drives on.
+    for (let i = 0; i < 8 * 60; i++) {
+      d.input.reset();
+      d.input.brake = 1;
+      d.update(1 / 60);
+    }
+    expect(target.loose).toBe(false);
+  });
+
+  it('cars drive round a parked car in their lane instead of through it (step 8)', () => {
+    const d = world();
+    const tr = d.traffic!;
+    const hit = city.graph.nearest(d.car.x, d.car.y, 300, (e) => e.kept && e.isGround && e.oneway >= 0 && e.length > 120)!;
+    const e = hit.edge;
+    d.spawn(hit.x, hit.y, 0);
+    d.update(1 / 60);
+    tr.reset();
+    tr.solid = false; // the player is a ghost to traffic here
+    const c = tr.addCar(e.index, 1, 5, 0)!;
+    // A parked car right in the lane 40 m ahead, shifted a little to the curb side.
+    const probe = tr.addCar(e.index, 1, 45, 0)!;
+    const px = probe.x + Math.sin(probe.heading) * 1.5, py = probe.y - Math.cos(probe.heading) * 1.5, ph = probe.heading;
+    tr.cars.splice(tr.cars.indexOf(probe), 1);
+    d.world.destroyBody(probe.body);
+    tr.parked = [{ x: px, y: py, heading: ph, hl: 5.6, hw: 2.4 }];
+    let overlaps = 0, passed = false;
+    for (let i = 0; i < 10 * 60 && !passed; i++) {
+      d.update(1 / 60);
+      if (!tr.cars.includes(c)) break;
+      if (obbOverlap(c.x, c.y, Math.cos(c.heading), Math.sin(c.heading), c.halfLength, c.halfWidth, px, py, Math.cos(ph), Math.sin(ph), 5.6, 2.4, 0)) overlaps++;
+      if ((c.x - px) * Math.cos(ph) + (c.y - py) * Math.sin(ph) > 15) passed = true;
+    }
+    expect(passed).toBe(true);
+    expect(overlaps).toBe(0);
   });
 });
