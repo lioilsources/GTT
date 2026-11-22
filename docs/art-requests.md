@@ -133,6 +133,8 @@ vzorem). Do té doby klient kreslí ikonu a jméno.
   alfa. `paint_mask.png` a `wheel.png` zatím chybí, ostatní auta taky (zatím jen test postupu).
 - `assets/postcards/nyc/*.png`, 22. 11. 2026, všech 34 (amnh z ostrého úhlu se štítem bez nápisu).
 - `assets/postcards/prague/*.png`, 22. 11. 2026, všech 20.
+- `assets/souvenirs/<id>.png`, 23. 11. 2026, všech 5 (times_sq, canal, battery, dumbo, soho), 512², průhledné
+  pozadí, styl A, bez textu.
 - Postup: `tools/art/make_batch1.py` (prompty, seedy) + `tools/art/run_board.py` (workflow ComfyUI).
 - `assets/cities/prague/{cobblestone,mosaic_sidewalk,roof_tiles}.png` a `assets/cities/nyc/asphalt.png`,
   22. 11. 2026, tileable 512×512, 256 barev.
