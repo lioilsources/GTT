@@ -317,6 +317,12 @@ export type MessageKey =
   | "policeBusted"
   | "policeFine"
   | "policeRoadblock"
+  | "boothRinging"
+  | "boothAnswer"
+  | "boothCall"
+  | "boothGo"
+  | "boothSkip"
+  | "loopBooth"
   | "loopPlay"
   | "loopSoon"
   | "loopTitle"
@@ -666,6 +672,12 @@ export const messages: Record<Locale, Record<MessageKey, string>> = {
     policeBusted: "Dopaden!",
     policeFine: "Pokuta: {amount}",
     policeRoadblock: "Zátaras před tebou!",
+    boothRinging: "Zvoní telefonní budka",
+    boothAnswer: "Zvednout",
+    boothCall: "{host}: Mám pro tebe kšeft – {game} u {place}. Bonus {bonus}.",
+    boothGo: "Jedu",
+    boothSkip: "Nechat být",
+    loopBooth: "Bonus z budky {cash}",
     loopPlay: "Hrát {name}",
     loopSoon: "{name} už brzy",
     loopTitle: "Výsledek",
@@ -1013,6 +1025,12 @@ export const messages: Record<Locale, Record<MessageKey, string>> = {
     policeBusted: "Busted!",
     policeFine: "Fine: {amount}",
     policeRoadblock: "Roadblock ahead!",
+    boothRinging: "A phone booth is ringing",
+    boothAnswer: "Pick up",
+    boothCall: "{host}: Got a job for you – {game} at {place}. Bonus {bonus}.",
+    boothGo: "On my way",
+    boothSkip: "Not now",
+    loopBooth: "Booth bonus {cash}",
     loopPlay: "Play {name}",
     loopSoon: "{name}: coming soon",
     loopTitle: "Result",

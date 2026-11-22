@@ -304,3 +304,11 @@
   flutter: done
   web: done
   checks: {flutter: pass, web: pass}
+- id: F-037
+  name: Ringing phone booths (offer a minigame with a cash bonus)
+  level: P0
+  spec: specs/booths.md@1
+  vectors: vectors/booths.json
+  lead: web
+  flutter: todo
+  web: todo
