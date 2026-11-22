@@ -12,3 +12,10 @@ není uvedeno jinak. Reprodukce: `tools/art/` (prompty, seedy, parametry workflo
 
 Nepoužívat pro herní assety: modely s nekomerční licencí (např. FLUX.1-dev, RMBG-2.0) a modely
 s omezující licencí (Illustrious-XL).
+
+## Textury měst
+
+| Cesta | Model / nástroj | Licence modelu | Licence výstupu | Poznámka |
+|---|---|---|---|---|
+| `cities/prague/{cobblestone,mosaic_sidewalk,roof_tiles}.png` | Qwen-Image (fp8), ComfyUI | Apache 2.0 | vlastní dílo projektu GTT | dávka tex1, seedy 403, 401, 402 (`tools/art/make_tex1.py`), 512², bezešvé (roll + prolnutí) |
+| `cities/nyc/asphalt.png` | Qwen-Image (fp8), ComfyUI | Apache 2.0 | vlastní dílo projektu GTT | oprava 2, seed 413 (`tools/art/make_fix2.py`), 512², bezešvé (`tools/art/post_fix2.py`) |

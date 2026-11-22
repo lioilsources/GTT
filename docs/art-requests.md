@@ -126,3 +126,6 @@ nyc/sidewalk_concrete, nyc/roof_tar, prague/cobblestone, prague/mosaic_sidewalk,
   budovách): amnh, guggenheim, msg.
 - `assets/postcards/prague/*.png`, 22. 11. 2026, 19 z 20. Chybí old_new_synagogue (přegenerovává se).
 - Postup: `tools/art/make_batch1.py` (prompty, seedy) + `tools/art/run_board.py` (workflow ComfyUI).
+- `assets/cities/prague/{cobblestone,mosaic_sidewalk,roof_tiles}.png` a `assets/cities/nyc/asphalt.png`,
+  22. 11. 2026, tileable 512×512, 256 barev. Chybí nyc/sidewalk_concrete a nyc/roof_tar (výsledky
+  s perspektivou a viditelným opakováním, budou potřeba nové prompty).
