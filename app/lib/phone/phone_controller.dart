@@ -11,7 +11,7 @@ import '../game/metropole_game.dart';
 import '../game/pause.dart';
 
 /// Phone apps in home-screen order (specs/phone.md "Telefon").
-enum PhoneAppId { feed, map, garage, passport, camera, contacts, wallet, travel, settings }
+enum PhoneAppId { feed, map, taxi, garage, passport, camera, contacts, wallet, travel, settings }
 
 /// What the navigation pill shows; refreshed ~10× a second.
 class NavHudState {

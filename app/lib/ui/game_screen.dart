@@ -25,6 +25,8 @@ import '../phone/phone_controller.dart';
 import '../phone/phone_sheet.dart';
 import '../taxi/taxi_controller.dart';
 import '../taxi/taxi_hud.dart';
+import '../travel/fast_travel.dart';
+import '../travel/fast_travel_layer.dart';
 import 'garage_sheet.dart';
 import 'hud.dart';
 import 'passport.dart';
@@ -53,6 +55,7 @@ class _GameScreenState extends State<GameScreen> {
   LoopController? _finesWired;
   TaxiController? _taxi;
   BoothsController? _booths;
+  FastTravelController? _fastTravel;
   final SaveStore _store = FileSaveStore();
   final CityStore _cities = FileCityStore();
   Object? _saved;
@@ -67,6 +70,7 @@ class _GameScreenState extends State<GameScreen> {
     // one is released by the GameWidget (onRemove: streamer, police, physics).
     if (!_shown) _game.then((g) => g.onRemove(), onError: (_) {});
     _loop?.save();
+    _fastTravel?.dispose();
     _booths?.dispose();
     _loop?.dispose();
     _taxi?.dispose();
@@ -199,6 +203,9 @@ class _GameScreenState extends State<GameScreen> {
           TaxiGame.startInCity = () => _startTaxi(game, loop);
           // Ringing phone booths (specs/booths.md): offer a minigame with a cash bonus.
           final booths = _booths ??= BoothsController(game, phone, loop);
+          // Fast travel by metro and taxi (specs/travel.md): stations unlock by passing, the move
+          // resets traffic, patrols and pedestrians like a teleport.
+          final fastTravel = _fastTravel ??= FastTravelController(game, phone, loop);
           return Stack(
             fit: StackFit.expand,
             children: [
@@ -244,6 +251,7 @@ class _GameScreenState extends State<GameScreen> {
               PhoneLayer(phone: phone),
               LoopLayer(loop: loop),
               BoothsLayer(booths: booths),
+              FastTravelLayer(travel: fastTravel),
               PassportOverlay(
                 events: game.passportEvent,
                 seconds: game.tuning.passport.postcardS,
