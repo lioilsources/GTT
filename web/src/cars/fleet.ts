@@ -2,7 +2,7 @@ import { Body, Box } from 'planck';
 
 import type { CarSpec } from '../gen/schema';
 import type { Tuning } from '../gen/tuning';
-import { CAT_BUILDINGS, CAT_CAR } from '../drive/car';
+import { CAT_BUILDINGS, CAT_CAR, CAT_PARKED, CAT_TRAFFIC } from '../drive/car';
 import type { DriveWorld } from '../drive/driveWorld';
 import type { ChunkData } from '../world/chunk';
 import { chunkKey } from '../world/model';
@@ -28,7 +28,7 @@ export interface GaragePoint {
 }
 
 /**
- * Cars of one session (specs/cars.md): the P0 ownership state, parked cars as static bodies,
+ * Cars of one session (specs/cars.md): the P0 ownership state, parked cars as dynamic bodies,
  * boarding and the garage. No UI; the HUD asks `candidate()` / `atGarage()` and calls `board` / `select`.
  */
 export class CarFleet {
@@ -49,6 +49,8 @@ export class CarFleet {
     const prices: Record<string, number> = {};
     for (const [id, s] of specs) prices[id] = s.price;
     this.state = this.rules.init(carsConfig(tuning.cars, prices), 0);
+    // Traffic drives round parked cars (specs/traffic.md step 8).
+    if (drive.traffic) drive.traffic.parked = this.parked;
   }
 
   get spec(): CarSpec {
@@ -88,6 +90,16 @@ export class CarFleet {
 
   /** Forgets cars the player left behind once they are far away (cars.parked.forget_m). */
   update(): void {
+    // Pushed cars: copy the pose of awake bodies back (specs/cars.md v2).
+    for (const [p, b] of this.bodies) {
+      if (!b.isAwake()) continue;
+      const q = b.getPosition(), a = b.getAngle();
+      if (Math.abs(q.x - p.x) + Math.abs(q.y - p.y) + Math.abs(a - p.heading) < 1e-3) continue;
+      p.x = q.x;
+      p.y = q.y;
+      p.heading = a;
+      this.version++;
+    }
     const c = this.drive.car, f = this.tuning.cars.parked.forgetM;
     for (const p of [...this.parked]) {
       if (p.chunk === null && (p.x - c.x) ** 2 + (p.y - c.y) ** 2 > f * f) this.removeParked(p);
@@ -97,14 +109,23 @@ export class CarFleet {
   private addParked(p: ParkedCar): void {
     const spec = this.specs.get(p.carId);
     if (!spec) return;
-    const s = this.tuning.carScale, d = this.tuning.drive;
-    const body = this.drive.world.createBody({ type: 'static', position: { x: p.x, y: p.y }, angle: p.heading });
+    const s = this.tuning.carScale, d = this.tuning.drive, t = this.tuning.cars.parked;
+    p.hl = (spec.length_m * s) / 2;
+    p.hw = (spec.width_m * s) / 2;
+    const body = this.drive.world.createBody({
+      type: 'dynamic',
+      position: { x: p.x, y: p.y },
+      angle: p.heading,
+      linearDamping: t.linearDamping,
+      angularDamping: t.angularDamping,
+    });
     body.createFixture({
-      shape: new Box((spec.length_m * s) / 2, (spec.width_m * s) / 2),
-      friction: d.buildingFriction,
-      restitution: d.buildingRestitution,
-      filterCategoryBits: CAT_BUILDINGS,
-      filterMaskBits: CAT_CAR,
+      shape: new Box(p.hl, p.hw),
+      density: (spec.mass * t.massFactor) / (4 * p.hl * p.hw),
+      friction: d.carFriction,
+      restitution: d.carRestitution,
+      filterCategoryBits: CAT_PARKED,
+      filterMaskBits: CAT_CAR | CAT_BUILDINGS | CAT_PARKED | CAT_TRAFFIC,
     });
     this.bodies.set(p, body);
     this.parked.push(p);

@@ -7,8 +7,10 @@ import type { ControlInput } from './controls';
 /** Collision categories. */
 export const CAT_BUILDINGS = 1;
 export const CAT_CAR = 2;
-/** AI traffic (specs/traffic.md): collides with the player's car only. */
+/** AI traffic (specs/traffic.md): collides with the player's car and, on the ground, parked cars. */
 export const CAT_TRAFFIC = 4;
+/** Parked cars (specs/cars.md v2): dynamic bodies the player and traffic can push. */
+export const CAT_PARKED = 8;
 
 const clamp = (v: number, lo: number, hi: number): number => Math.min(hi, Math.max(lo, v));
 
@@ -67,7 +69,7 @@ export class Car {
       friction: t.carFriction,
       restitution: t.carRestitution,
       filterCategoryBits: CAT_CAR,
-      filterMaskBits: CAT_BUILDINGS | CAT_TRAFFIC,
+      filterMaskBits: CAT_BUILDINGS | CAT_TRAFFIC | CAT_PARKED,
     });
     // Same mass as client F: its density over the area of the rounded box, not of the chamfer.
     const density = spec.mass / (4 * this.halfLength * this.halfWidth);
@@ -114,7 +116,7 @@ export class Car {
     this.layer = l;
     // Buildings only exist on the ground layer; bridges and tunnels use rails instead. Traffic
     // cars switch their own mask by layer (traffic.ts).
-    this.fixture.setFilterData({ groupIndex: 0, categoryBits: CAT_CAR, maskBits: (l === 0 ? CAT_BUILDINGS : 0) | CAT_TRAFFIC });
+    this.fixture.setFilterData({ groupIndex: 0, categoryBits: CAT_CAR, maskBits: (l === 0 ? CAT_BUILDINGS | CAT_PARKED : 0) | CAT_TRAFFIC });
   }
 
   /** Applies controls and tyre forces; call before world.step. */

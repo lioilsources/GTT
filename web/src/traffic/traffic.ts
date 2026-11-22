@@ -2,13 +2,22 @@ import { Box, type Body, type Fixture, type Vec2Value, type World } from 'planck
 
 import { tokens } from '../gen/tokens';
 import type { Tuning } from '../gen/tuning';
-import { CAT_CAR, CAT_TRAFFIC, type Car } from '../drive/car';
+import { CAT_BUILDINGS, CAT_CAR, CAT_PARKED, CAT_TRAFFIC, type Car } from '../drive/car';
 import { Prng } from '../rules/prng';
 import type { City, RoadEdge, RoadGraph } from '../world/model';
 import {
   buildSignals, canLeave, chooseNext, chooseToward, laneOffset, lanesPerDir, LIGHT_AMBER, LIGHT_GREEN, lightState,
-  signalClockMs, type Signals,
+  signalClockMs, swerveShift, type Signals,
 } from './roadRules';
+
+/** What traffic needs of a parked car (specs/traffic.md step 8); hl/hw default to a traffic car. */
+export interface ParkedPose {
+  x: number;
+  y: number;
+  heading: number;
+  hl?: number;
+  hw?: number;
+}
 
 /** One AI car (specs/traffic.md "Stav"). Read-only for other features. */
 export class TrafficCar {
@@ -21,6 +30,10 @@ export class TrafficCar {
   braking = false;
   /** Seconds left standing still after the player hit it. */
   hitTimer = 0;
+  /** Seconds left loose after the last touch (specs/traffic.md step 7). */
+  pushTimer = 0;
+  /** Dynamic body: pushed or hit; the pose comes from physics. */
+  loose = false;
   /** Police hooks (specs/police.md), set by the police module: a patrol car, chasing a goal. */
   police = false;
   pursuing = false;
@@ -38,7 +51,8 @@ export class TrafficCar {
   seg = 0;
   segStart = 0;
   touching = false;
-  collides = true;
+  /** Current filter mask (switched by layer, solidity and looseness). */
+  mask = -1;
 
   constructor(
     readonly id: number,
@@ -90,12 +104,15 @@ export class Traffic {
   solid = true;
   /** Fixed steps since start: the signal clock. */
   stepCount = 0;
+  /** Parked cars to drive round (set by the car fleet, specs/traffic.md step 8). */
+  parked: ReadonlyArray<ParkedPose> = [];
 
   private readonly graph: RoadGraph;
   private readonly rng: Prng;
   private readonly listeners: TrafficHitListener[] = [];
   private readonly scratch: number[] = [];
   private readonly v: Vec2Value = { x: 0, y: 0 };
+  private readonly obs: number[] = [];
   private readonly halfLength: number;
   private readonly halfWidth: number;
   private spawnTimer = 0;
@@ -186,10 +203,6 @@ export class Traffic {
     const phl = player.halfLength + round, phw = player.halfWidth + round;
     for (const c of this.cars) {
       const same = this.solid && c.layer === player.layer;
-      if (same !== c.collides) {
-        c.collides = same;
-        c.fixture.setFilterData({ groupIndex: 0, categoryBits: CAT_TRAFFIC, maskBits: same ? CAT_CAR : 0 });
-      }
       const touch = same && obbOverlap(
         player.x, player.y, pc, ps, phl, phw,
         c.x, c.y, Math.cos(c.heading), Math.sin(c.heading), c.halfLength, c.halfWidth, t.hitMarginM,
@@ -204,8 +217,49 @@ export class Traffic {
           for (const fn of this.listeners) fn(c, impact);
         }
       }
+      if (touch) c.pushTimer = t.pushHoldS;
       c.touching = touch;
+      this.setLoose(c, c.hitTimer > 0 || c.pushTimer > 0);
+      this.setMask(c, same);
     }
+  }
+
+  /** Dynamic while loose, kinematic otherwise (specs/traffic.md step 7). */
+  private setLoose(c: TrafficCar, loose: boolean): void {
+    if (loose === c.loose) return;
+    c.loose = loose;
+    if (loose) {
+      c.body.setDynamic();
+      c.body.setLinearDamping(this.tuning.traffic.pushLinearDamping);
+      c.body.setAngularDamping(this.tuning.traffic.pushAngularDamping);
+      c.body.setAwake(true);
+      c.speed = 0;
+    } else {
+      c.body.setKinematic();
+      c.s = this.projectS(c);
+    }
+  }
+
+  private setMask(c: TrafficCar, same: boolean): void {
+    const ground = c.layer === 0;
+    const mask = (same ? CAT_CAR : 0) | (ground ? CAT_PARKED : 0) | (ground && c.loose ? CAT_BUILDINGS : 0);
+    if (mask === c.mask) return;
+    c.mask = mask;
+    c.fixture.setFilterData({ groupIndex: 0, categoryBits: CAT_TRAFFIC, maskBits: mask });
+  }
+
+  /** Distance along the travel direction of the car's own edge nearest to its position. */
+  private projectS(c: TrafficCar): number {
+    const e = c.edge;
+    let best = Infinity, d = 0;
+    for (let seg = 0; seg + 1 < e.pointCount; seg++) {
+      const h = this.graph.project(e, seg, c.x, c.y);
+      if (h.dist < best) {
+        best = h.dist;
+        d = h.t * e.length;
+      }
+    }
+    return c.dir > 0 ? d : e.length - d;
   }
 
   // ---------- spawning
@@ -263,10 +317,11 @@ export class Traffic {
     const body = this.world.createBody({ type: 'kinematic', position: { x: 0, y: 0 }, angle: 0 });
     const fixture = body.createFixture({
       shape: new Box(this.halfLength, this.halfWidth),
+      density: this.tuning.traffic.massKg / (4 * this.halfLength * this.halfWidth),
       friction: this.tuning.drive.carFriction,
       restitution: this.tuning.drive.carRestitution,
       filterCategoryBits: CAT_TRAFFIC,
-      filterMaskBits: CAT_CAR,
+      filterMaskBits: CAT_CAR | CAT_PARKED,
     });
     const ln = Math.max(0, Math.min(lane, lanesPerDir(e, this.tuning) - 1));
     const c = new TrafficCar(this.nextId++, e, dir, Math.max(0, Math.min(s, e.length)), ln, carRng, colour, this.halfLength, this.halfWidth, body, fixture);
@@ -296,6 +351,18 @@ export class Traffic {
   /** One step of one car; false = it has to disappear. */
   private drive(c: TrafficCar, dt: number, k: number, player: Car): boolean {
     const t = this.tuning.traffic;
+    c.pushTimer = Math.max(0, c.pushTimer - dt);
+    if (c.loose) {
+      // Pushed or knocked: physics owns the pose until it settles (specs/traffic.md step 7).
+      c.hitTimer = Math.max(0, c.hitTimer - dt);
+      c.speed = 0;
+      c.braking = false;
+      const p = c.body.getPosition();
+      c.x = p.x;
+      c.y = p.y;
+      c.heading = c.body.getAngle();
+      return true;
+    }
     if (c.hitTimer > 0) {
       c.hitTimer = Math.max(0, c.hitTimer - dt);
       c.speed = 0;
@@ -363,9 +430,15 @@ export class Traffic {
       ux = -ux;
       uy = -uy;
     }
-    const off = laneOffset(e, c.lane, this.tuning, this.leftHand);
+    let off = laneOffset(e, c.lane, this.tuning, this.leftHand);
     // Right of the travel direction (ux, uy) is (uy, −ux).
-    const tx = ax + (bx - ax) * f + uy * off, ty = ay + (by - ay) * f - ux * off;
+    let tx = ax + (bx - ax) * f + uy * off, ty = ay + (by - ay) * f - ux * off;
+    c.layer = e.layerAt(e.length > 0 ? d / e.length : 0);
+    if (c.layer === 0 && this.parked.length > 0) {
+      off = this.swerve(c, tx, ty, ux, uy);
+      tx += uy * off;
+      ty -= ux * off;
+    }
     const th = Math.atan2(uy, ux);
     if (k >= 1) {
       c.x = tx;
@@ -376,7 +449,27 @@ export class Traffic {
       c.y += (ty - c.y) * k;
       c.heading = wrap(c.heading + wrap(th - c.heading) * k);
     }
-    c.layer = e.layerAt(e.length > 0 ? d / e.length : 0);
+  }
+
+  /** Sideways shift round parked cars near the lane point (tx, ty) heading (ux, uy). */
+  private swerve(c: TrafficCar, tx: number, ty: number, ux: number, uy: number): number {
+    const t = this.tuning.traffic;
+    const o = this.obs;
+    const reach = t.swerveAheadM + 4 * c.halfLength;
+    let n = 0;
+    for (const p of this.parked) {
+      const dx = p.x - tx, dy = p.y - ty;
+      if (dx * dx + dy * dy > reach * reach) continue;
+      const phl = p.hl ?? c.halfLength, phw = p.hw ?? c.halfWidth;
+      const da = p.heading - Math.atan2(uy, ux);
+      // Ahead of the car itself (its pose lags the lane point), sideways from the lane point.
+      o[4 * n] = (p.x - c.x) * ux + (p.y - c.y) * uy;
+      o[4 * n + 1] = dx * uy - dy * ux;
+      o[4 * n + 2] = phl * Math.abs(Math.sin(da)) + phw * Math.abs(Math.cos(da));
+      o[4 * n + 3] = phl;
+      n++;
+    }
+    return n === 0 ? 0 : swerveShift(o, n, c.halfLength, c.halfWidth, t);
   }
 
   /** Free distance to the nearest obstacle ahead: the player, a car going our way, a stop line. */
