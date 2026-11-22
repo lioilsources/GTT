@@ -1725,27 +1725,51 @@
      "state": {
       "version": 4,
       "cityId": "nyc",
-      "cash": 0,
+      "cash": 300,
       "cars": [
+       "hatch_pip",
        "m0_coupe"
       ],
       "car": "m0_coupe",
-      "stamps": [],
-      "best": {},
-      "plays": {},
+      "stamps": [
+       "district:soho"
+      ],
+      "best": {
+       "dama": {
+        "stars": 3,
+        "score": 1200
+       }
+      },
+      "plays": {
+       "spot_a": 0,
+       "spot_b": 2
+      },
       "feed": {
-       "prefs": {},
-       "visits": {},
-       "districts": []
+       "prefs": {
+        "cards": 3,
+        "flick": -2
+       },
+       "visits": {
+        "spot_b": 2
+       },
+       "districts": [
+        "SoHo"
+       ]
       },
       "npc": {
-       "vibe": {},
-       "contacts": [],
-       "recent": []
+       "vibe": {
+        "mia": 7
+       },
+       "contacts": [
+        "mia"
+       ],
+       "recent": [
+        "mia_street_1"
+       ]
       },
       "settings": {
-       "scheme": "a",
-       "night": false
+       "scheme": "c",
+       "night": true
       },
       "stations": [],
       "souvenirs": []
