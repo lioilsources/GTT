@@ -19,13 +19,15 @@ function partColor(r: CarRect, paint: Rgba, night: boolean): Rgba {
     }
     case 'head': return rgba(night ? tokens.colorCarHeadlightNight : tokens.colorCarHeadlightDay);
     case 'tail': return rgba(tokens.colorCarTail);
+    case 'tyre': return rgba(tokens.colorCarTyre);
     default: return rgba(r.color ?? tokens.colorCarStripe);
   }
 }
 
 /**
  * Adds a car's top-down shape at (ox, oy, ang) to [t]; returns the height above [h] of the top part.
- * Tyres are added when [tyres] is set (parked cars; the player's car steers its own wheel nodes).
+ * Tyres are added when [tyres] is set (parked cars; the player's car steers its own wheel nodes);
+ * `micro` cars carry their in-line wheels in the shape itself.
  */
 export function carTris(
   t: Tris, spec: CarSpec, hl: number, hw: number, axle: number,
@@ -33,13 +35,13 @@ export function carTris(
 ): number {
   const paint = rgba(paintHex(spec.paint));
   let z = h;
-  if (tyres) {
+  if (tyres && spec.class !== 'micro') {
     const ww = hl * 0.36, wt = hw * 0.32, c = rgba(tokens.colorCarTyre);
     for (const fx of [axle, -axle]) {
       for (const sy of [hw * 0.92, -hw * 0.92]) t.rect(ox, oy, ang, fx - ww / 2, sy - wt / 2, fx + ww / 2, sy + wt / 2, h + CAR_PART_DZ, c);
     }
   }
-  carShape(spec.class, hl, hw).forEach((r, i) => {
+  carShape(spec.class, hl, hw, spec.length_m).forEach((r, i) => {
     z = h + (r.part === 'shadow' ? 0 : (i + 2) * CAR_PART_DZ);
     t.rect(ox, oy, ang, r.x0, r.y0, r.x1, r.y1, z, partColor(r, paint, night));
   });
