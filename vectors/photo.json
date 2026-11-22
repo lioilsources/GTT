@@ -1,0 +1,906 @@
+{
+ "module": "photo",
+ "specVersion": 1,
+ "cases": [
+  {
+   "name": "load drops unknown and duplicate spots",
+   "config": {
+    "spots": [
+     {
+      "id": "photo_a",
+      "x": 1000,
+      "y": 2000,
+      "r": 300
+     },
+     {
+      "id": "photo_b",
+      "x": -500,
+      "y": 400,
+      "r": 100
+     },
+     {
+      "id": "photo_c",
+      "x": 0,
+      "y": 0,
+      "r": 50
+     }
+    ],
+    "loosePct": 400
+   },
+   "seed": 1,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "load",
+      "taken": [
+       "photo_b",
+       "photo_gone",
+       "photo_a",
+       "photo_b"
+      ]
+     },
+     "state": {
+      "taken": [
+       "photo_b",
+       "photo_a"
+      ],
+      "last": {
+       "spot": "",
+       "verdict": ""
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "load",
+      "taken": []
+     },
+     "state": {
+      "taken": [],
+      "last": {
+       "spot": "",
+       "verdict": ""
+      }
+     }
+    }
+   ],
+   "result": null
+  },
+  {
+   "name": "load keeps the list order, not the spot order",
+   "config": {
+    "spots": [
+     {
+      "id": "photo_a",
+      "x": 1000,
+      "y": 2000,
+      "r": 300
+     },
+     {
+      "id": "photo_b",
+      "x": -500,
+      "y": 400,
+      "r": 100
+     },
+     {
+      "id": "photo_c",
+      "x": 0,
+      "y": 0,
+      "r": 50
+     }
+    ],
+    "loosePct": 400
+   },
+   "seed": 1,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "load",
+      "taken": [
+       "photo_c",
+       "photo_a"
+      ]
+     },
+     "state": {
+      "taken": [
+       "photo_c",
+       "photo_a"
+      ],
+      "last": {
+       "spot": "",
+       "verdict": ""
+      }
+     }
+    }
+   ],
+   "result": null
+  },
+  {
+   "name": "shoot ok on the exact view",
+   "config": {
+    "spots": [
+     {
+      "id": "photo_a",
+      "x": 1000,
+      "y": 2000,
+      "r": 300
+     },
+     {
+      "id": "photo_b",
+      "x": -500,
+      "y": 400,
+      "r": 100
+     },
+     {
+      "id": "photo_c",
+      "x": 0,
+      "y": 0,
+      "r": 50
+     }
+    ],
+    "loosePct": 400
+   },
+   "seed": 1,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "shoot",
+      "spot": "photo_a",
+      "cx": 1000,
+      "cy": 2000,
+      "hw": 300,
+      "hh": 300
+     },
+     "state": {
+      "taken": [
+       "photo_a"
+      ],
+      "last": {
+       "spot": "photo_a",
+       "verdict": "ok"
+      }
+     }
+    }
+   ],
+   "result": null
+  },
+  {
+   "name": "shoot ok then again",
+   "config": {
+    "spots": [
+     {
+      "id": "photo_a",
+      "x": 1000,
+      "y": 2000,
+      "r": 300
+     },
+     {
+      "id": "photo_b",
+      "x": -500,
+      "y": 400,
+      "r": 100
+     },
+     {
+      "id": "photo_c",
+      "x": 0,
+      "y": 0,
+      "r": 50
+     }
+    ],
+    "loosePct": 400
+   },
+   "seed": 1,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "shoot",
+      "spot": "photo_a",
+      "cx": 1000,
+      "cy": 2000,
+      "hw": 300,
+      "hh": 300
+     },
+     "state": {
+      "taken": [
+       "photo_a"
+      ],
+      "last": {
+       "spot": "photo_a",
+       "verdict": "ok"
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "shoot",
+      "spot": "photo_a",
+      "cx": 1000,
+      "cy": 2000,
+      "hw": 400,
+      "hh": 500
+     },
+     "state": {
+      "taken": [
+       "photo_a"
+      ],
+      "last": {
+       "spot": "photo_a",
+       "verdict": "again"
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "shoot",
+      "spot": "photo_b",
+      "cx": -500,
+      "cy": 400,
+      "hw": 150,
+      "hh": 120
+     },
+     "state": {
+      "taken": [
+       "photo_a",
+       "photo_b"
+      ],
+      "last": {
+       "spot": "photo_b",
+       "verdict": "ok"
+      }
+     }
+    }
+   ],
+   "result": null
+  },
+  {
+   "name": "again after load",
+   "config": {
+    "spots": [
+     {
+      "id": "photo_a",
+      "x": 1000,
+      "y": 2000,
+      "r": 300
+     },
+     {
+      "id": "photo_b",
+      "x": -500,
+      "y": 400,
+      "r": 100
+     },
+     {
+      "id": "photo_c",
+      "x": 0,
+      "y": 0,
+      "r": 50
+     }
+    ],
+    "loosePct": 400
+   },
+   "seed": 1,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "load",
+      "taken": [
+       "photo_b"
+      ]
+     },
+     "state": {
+      "taken": [
+       "photo_b"
+      ],
+      "last": {
+       "spot": "",
+       "verdict": ""
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "shoot",
+      "spot": "photo_b",
+      "cx": -500,
+      "cy": 400,
+      "hw": 100,
+      "hh": 100
+     },
+     "state": {
+      "taken": [
+       "photo_b"
+      ],
+      "last": {
+       "spot": "photo_b",
+       "verdict": "again"
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "shoot",
+      "spot": "photo_c",
+      "cx": 0,
+      "cy": 0,
+      "hw": 60,
+      "hh": 60
+     },
+     "state": {
+      "taken": [
+       "photo_b",
+       "photo_c"
+      ],
+      "last": {
+       "spot": "photo_c",
+       "verdict": "ok"
+      }
+     }
+    }
+   ],
+   "result": null
+  },
+  {
+   "name": "cut off centre by one dm",
+   "config": {
+    "spots": [
+     {
+      "id": "photo_a",
+      "x": 1000,
+      "y": 2000,
+      "r": 300
+     },
+     {
+      "id": "photo_b",
+      "x": -500,
+      "y": 400,
+      "r": 100
+     },
+     {
+      "id": "photo_c",
+      "x": 0,
+      "y": 0,
+      "r": 50
+     }
+    ],
+    "loosePct": 400
+   },
+   "seed": 1,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "shoot",
+      "spot": "photo_a",
+      "cx": 1001,
+      "cy": 2000,
+      "hw": 300,
+      "hh": 300
+     },
+     "state": {
+      "taken": [],
+      "last": {
+       "spot": "photo_a",
+       "verdict": "cut"
+      }
+     }
+    }
+   ],
+   "result": null
+  },
+  {
+   "name": "cut far from the view",
+   "config": {
+    "spots": [
+     {
+      "id": "photo_a",
+      "x": 1000,
+      "y": 2000,
+      "r": 300
+     },
+     {
+      "id": "photo_b",
+      "x": -500,
+      "y": 400,
+      "r": 100
+     },
+     {
+      "id": "photo_c",
+      "x": 0,
+      "y": 0,
+      "r": 50
+     }
+    ],
+    "loosePct": 400
+   },
+   "seed": 1,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "shoot",
+      "spot": "photo_a",
+      "cx": -500,
+      "cy": 400,
+      "hw": 1000,
+      "hh": 1000
+     },
+     "state": {
+      "taken": [],
+      "last": {
+       "spot": "photo_a",
+       "verdict": "cut"
+      }
+     }
+    }
+   ],
+   "result": null
+  },
+  {
+   "name": "cut too small",
+   "config": {
+    "spots": [
+     {
+      "id": "photo_a",
+      "x": 1000,
+      "y": 2000,
+      "r": 300
+     },
+     {
+      "id": "photo_b",
+      "x": -500,
+      "y": 400,
+      "r": 100
+     },
+     {
+      "id": "photo_c",
+      "x": 0,
+      "y": 0,
+      "r": 50
+     }
+    ],
+    "loosePct": 400
+   },
+   "seed": 1,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "shoot",
+      "spot": "photo_a",
+      "cx": 1000,
+      "cy": 2000,
+      "hw": 299,
+      "hh": 299
+     },
+     "state": {
+      "taken": [],
+      "last": {
+       "spot": "photo_a",
+       "verdict": "cut"
+      }
+     }
+    }
+   ],
+   "result": null
+  },
+  {
+   "name": "cut by the short side",
+   "config": {
+    "spots": [
+     {
+      "id": "photo_a",
+      "x": 1000,
+      "y": 2000,
+      "r": 300
+     },
+     {
+      "id": "photo_b",
+      "x": -500,
+      "y": 400,
+      "r": 100
+     },
+     {
+      "id": "photo_c",
+      "x": 0,
+      "y": 0,
+      "r": 50
+     }
+    ],
+    "loosePct": 400
+   },
+   "seed": 1,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "shoot",
+      "spot": "photo_a",
+      "cx": 1000,
+      "cy": 2000,
+      "hw": 1000,
+      "hh": 250
+     },
+     "state": {
+      "taken": [],
+      "last": {
+       "spot": "photo_a",
+       "verdict": "cut"
+      }
+     }
+    }
+   ],
+   "result": null
+  },
+  {
+   "name": "off centre fits with a floor distance",
+   "config": {
+    "spots": [
+     {
+      "id": "photo_a",
+      "x": 1000,
+      "y": 2000,
+      "r": 300
+     },
+     {
+      "id": "photo_b",
+      "x": -500,
+      "y": 400,
+      "r": 100
+     },
+     {
+      "id": "photo_c",
+      "x": 0,
+      "y": 0,
+      "r": 50
+     }
+    ],
+    "loosePct": 400
+   },
+   "seed": 1,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "shoot",
+      "spot": "photo_c",
+      "cx": 1,
+      "cy": 1,
+      "hw": 51,
+      "hh": 51
+     },
+     "state": {
+      "taken": [
+       "photo_c"
+      ],
+      "last": {
+       "spot": "photo_c",
+       "verdict": "ok"
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "shoot",
+      "spot": "photo_b",
+      "cx": -497,
+      "cy": 404,
+      "hw": 105,
+      "hh": 200
+     },
+     "state": {
+      "taken": [
+       "photo_c",
+       "photo_b"
+      ],
+      "last": {
+       "spot": "photo_b",
+       "verdict": "ok"
+      }
+     }
+    }
+   ],
+   "result": null
+  },
+  {
+   "name": "loose at one past the limit",
+   "config": {
+    "spots": [
+     {
+      "id": "photo_a",
+      "x": 1000,
+      "y": 2000,
+      "r": 300
+     },
+     {
+      "id": "photo_b",
+      "x": -500,
+      "y": 400,
+      "r": 100
+     },
+     {
+      "id": "photo_c",
+      "x": 0,
+      "y": 0,
+      "r": 50
+     }
+    ],
+    "loosePct": 400
+   },
+   "seed": 1,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "shoot",
+      "spot": "photo_a",
+      "cx": 1000,
+      "cy": 2000,
+      "hw": 1201,
+      "hh": 1300
+     },
+     "state": {
+      "taken": [],
+      "last": {
+       "spot": "photo_a",
+       "verdict": "loose"
+      }
+     }
+    }
+   ],
+   "result": null
+  },
+  {
+   "name": "loose limit is inclusive",
+   "config": {
+    "spots": [
+     {
+      "id": "photo_a",
+      "x": 1000,
+      "y": 2000,
+      "r": 300
+     },
+     {
+      "id": "photo_b",
+      "x": -500,
+      "y": 400,
+      "r": 100
+     },
+     {
+      "id": "photo_c",
+      "x": 0,
+      "y": 0,
+      "r": 50
+     }
+    ],
+    "loosePct": 400
+   },
+   "seed": 1,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "shoot",
+      "spot": "photo_a",
+      "cx": 1000,
+      "cy": 2000,
+      "hw": 1200,
+      "hh": 1500
+     },
+     "state": {
+      "taken": [
+       "photo_a"
+      ],
+      "last": {
+       "spot": "photo_a",
+       "verdict": "ok"
+      }
+     }
+    }
+   ],
+   "result": null
+  },
+  {
+   "name": "loose with a tight loosePct",
+   "config": {
+    "spots": [
+     {
+      "id": "photo_a",
+      "x": 1000,
+      "y": 2000,
+      "r": 300
+     }
+    ],
+    "loosePct": 100
+   },
+   "seed": 1,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "shoot",
+      "spot": "photo_a",
+      "cx": 1000,
+      "cy": 2000,
+      "hw": 301,
+      "hh": 301
+     },
+     "state": {
+      "taken": [],
+      "last": {
+       "spot": "photo_a",
+       "verdict": "loose"
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "shoot",
+      "spot": "photo_a",
+      "cx": 1000,
+      "cy": 2000,
+      "hw": 300,
+      "hh": 300
+     },
+     "state": {
+      "taken": [
+       "photo_a"
+      ],
+      "last": {
+       "spot": "photo_a",
+       "verdict": "ok"
+      }
+     }
+    }
+   ],
+   "result": null
+  },
+  {
+   "name": "cut and loose keep taken, load clears last",
+   "config": {
+    "spots": [
+     {
+      "id": "photo_a",
+      "x": 1000,
+      "y": 2000,
+      "r": 300
+     },
+     {
+      "id": "photo_b",
+      "x": -500,
+      "y": 400,
+      "r": 100
+     },
+     {
+      "id": "photo_c",
+      "x": 0,
+      "y": 0,
+      "r": 50
+     }
+    ],
+    "loosePct": 400
+   },
+   "seed": 1,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "shoot",
+      "spot": "photo_a",
+      "cx": 1000,
+      "cy": 2000,
+      "hw": 300,
+      "hh": 300
+     },
+     "state": {
+      "taken": [
+       "photo_a"
+      ],
+      "last": {
+       "spot": "photo_a",
+       "verdict": "ok"
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "shoot",
+      "spot": "photo_b",
+      "cx": 0,
+      "cy": 0,
+      "hw": 10,
+      "hh": 10
+     },
+     "state": {
+      "taken": [
+       "photo_a"
+      ],
+      "last": {
+       "spot": "photo_b",
+       "verdict": "cut"
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "shoot",
+      "spot": "photo_b",
+      "cx": -500,
+      "cy": 400,
+      "hw": 5000,
+      "hh": 5000
+     },
+     "state": {
+      "taken": [
+       "photo_a"
+      ],
+      "last": {
+       "spot": "photo_b",
+       "verdict": "loose"
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "load",
+      "taken": [
+       "photo_a",
+       "photo_b"
+      ]
+     },
+     "state": {
+      "taken": [
+       "photo_a",
+       "photo_b"
+      ],
+      "last": {
+       "spot": "",
+       "verdict": ""
+      }
+     }
+    }
+   ],
+   "result": null
+  },
+  {
+   "name": "city without photo spots",
+   "config": {
+    "spots": [],
+    "loosePct": 400
+   },
+   "seed": 1,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "load",
+      "taken": [
+       "photo_a"
+      ]
+     },
+     "state": {
+      "taken": [],
+      "last": {
+       "spot": "",
+       "verdict": ""
+      }
+     }
+    }
+   ],
+   "result": null
+  }
+ ]
+}
