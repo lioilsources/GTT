@@ -60,6 +60,8 @@ class GroundKind extends $pb.ProtobufEnum {
   static const GroundKind RAIL = GroundKind._(4, _omitEnumNames ? '' : 'RAIL');
   static const GroundKind PLAZA =
       GroundKind._(5, _omitEnumNames ? '' : 'PLAZA');
+  static const GroundKind PEDESTRIAN =
+      GroundKind._(6, _omitEnumNames ? '' : 'PEDESTRIAN');
 
   static const $core.List<GroundKind> values = <GroundKind>[
     GROUND_UNKNOWN,
@@ -68,10 +70,11 @@ class GroundKind extends $pb.ProtobufEnum {
     PARK,
     RAIL,
     PLAZA,
+    PEDESTRIAN,
   ];
 
   static final $core.List<GroundKind?> _byValue =
-      $pb.ProtobufEnum.$_initByValueList(values, 5);
+      $pb.ProtobufEnum.$_initByValueList(values, 6);
   static GroundKind? valueOf($core.int value) =>
       value < 0 || value >= _byValue.length ? null : _byValue[value];
 

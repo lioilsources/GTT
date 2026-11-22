@@ -125,6 +125,11 @@ func Validate(e *Env) error {
 		fail("%d road sample points lie inside buildings", overlaps)
 	}
 
+	// 4b. No pedestrian-zone bollard line crosses a road centreline (specs/zones.md).
+	if n := barrierRoadCrossings(p); n > 0 {
+		fail("%d bollard lines cross a road centreline", n)
+	}
+
 	// 5. Chunk size limit.
 	maxB := uint32(e.C.City.MaxChunkKB) * 1024
 	for _, r := range p.Manifest.Chunks {
@@ -255,4 +260,54 @@ func inAnyRing(q geo.Pt, rings [][]geo.Pt) bool {
 		}
 	}
 	return false
+}
+
+// barrierRoadCrossings counts ground-level road segments that intersect a zone barrier.
+func barrierRoadCrossings(p *PackData) int {
+	const cell = 64.0
+	type seg struct{ a, b geo.Pt }
+	grid := map[[2]int][]seg{}
+	for _, c := range p.Chunks {
+		for _, br := range c.Barriers {
+			for i := 2; i+1 < len(br.Points); i += 2 {
+				s := seg{geo.Pt{X: float64(br.Points[i-2]) / 10, Y: float64(br.Points[i-1]) / 10}, geo.Pt{X: float64(br.Points[i]) / 10, Y: float64(br.Points[i+1]) / 10}}
+				for x := int(math.Floor(math.Min(s.a.X, s.b.X) / cell)); x <= int(math.Floor(math.Max(s.a.X, s.b.X)/cell)); x++ {
+					for y := int(math.Floor(math.Min(s.a.Y, s.b.Y) / cell)); y <= int(math.Floor(math.Max(s.a.Y, s.b.Y)/cell)); y++ {
+						grid[[2]int{x, y}] = append(grid[[2]int{x, y}], s)
+					}
+				}
+			}
+		}
+	}
+	if len(grid) == 0 {
+		return 0
+	}
+	bad := 0
+	for _, ed := range p.Graph.Edges {
+		if ed.Tunnel || ed.LayerFrom != 0 || ed.LayerTo != 0 {
+			continue
+		}
+		pts := EdgePts(ed)
+		for j := 1; j < len(pts); j++ {
+			a, b := pts[j-1], pts[j]
+			hit := false
+			for x := int(math.Floor(math.Min(a.X, b.X) / cell)); x <= int(math.Floor(math.Max(a.X, b.X)/cell)) && !hit; x++ {
+				for y := int(math.Floor(math.Min(a.Y, b.Y) / cell)); y <= int(math.Floor(math.Max(a.Y, b.Y)/cell)) && !hit; y++ {
+					for _, s := range grid[[2]int{x, y}] {
+						if _, ok := geo.SegmentIntersect(a, b, s.a, s.b); ok {
+							hit = true
+							break
+						}
+					}
+				}
+			}
+			if hit {
+				bad++
+				if bad <= 20 {
+					slog.Warn("validate: bollards across a road", "name", p.Graph.Names[ed.Name], "x", int(a.X), "y", int(a.Y))
+				}
+			}
+		}
+	}
+	return bad
 }

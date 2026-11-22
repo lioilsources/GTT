@@ -79,6 +79,7 @@ class Tuning {
         roads = TuningRoads._(r.sub('roads')),
         buildings = TuningBuildings._(r.sub('buildings')),
         ground = TuningGround._(r.sub('ground')),
+        zones = TuningZones._(r.sub('zones')),
         streaming = TuningStreaming._(r.sub('streaming')),
         camera = TuningCamera._(r.sub('camera')),
         drive = TuningDrive._(r.sub('drive')),
@@ -134,6 +135,9 @@ class Tuning {
   final TuningBuildings buildings;
 
   final TuningGround ground;
+
+  /// Pedestrian zones and bollards (specs/zones.md): citypack uses the first three, clients the rest.
+  final TuningZones zones;
 
   /// Chunk streaming (METROPOLE_PLAN 6.4): window in chunks around the player.
   final TuningStreaming streaming;
@@ -216,6 +220,7 @@ class Tuning {
         'roads': roads.toJson(),
         'buildings': buildings.toJson(),
         'ground': ground.toJson(),
+        'zones': zones.toJson(),
         'streaming': streaming.toJson(),
         'camera': camera.toJson(),
         'drive': drive.toJson(),
@@ -506,6 +511,54 @@ class TuningGround {
       };
 
   static const keys = ['simplify_m', 'min_area_m2'];
+}
+
+/// Pedestrian zones and bollards (specs/zones.md): citypack uses the first three, clients the rest.
+class TuningZones {
+  TuningZones._(_R r)
+      : streetWidthM = r.d('street_width_m'),
+        gapMarginM = r.d('gap_margin_m'),
+        minBarrierM = r.d('min_barrier_m'),
+        bollardSpacingM = r.d('bollard_spacing_m'),
+        bollardRadiusM = r.d('bollard_radius_m'),
+        bollardHeightM = r.d('bollard_height_m');
+
+  /// corridor around a pedestrian street segment
+  double streetWidthM;
+
+  /// clearance kept around every road corridor (roads stay drivable)
+  double gapMarginM;
+
+  /// shorter bollard pieces are dropped
+  double minBarrierM;
+
+  double bollardSpacingM;
+
+  double bollardRadiusM;
+
+  double bollardHeightM;
+
+  Map<String, Object> toJson() => {
+        'street_width_m': streetWidthM,
+        'gap_margin_m': gapMarginM,
+        'min_barrier_m': minBarrierM,
+        'bollard_spacing_m': bollardSpacingM,
+        'bollard_radius_m': bollardRadiusM,
+        'bollard_height_m': bollardHeightM,
+      };
+
+  /// Value by YAML key, null when the key is unknown.
+  double? operator [](String key) => switch (key) {
+        'street_width_m' => streetWidthM,
+        'gap_margin_m' => gapMarginM,
+        'min_barrier_m' => minBarrierM,
+        'bollard_spacing_m' => bollardSpacingM,
+        'bollard_radius_m' => bollardRadiusM,
+        'bollard_height_m' => bollardHeightM,
+        _ => null,
+      };
+
+  static const keys = ['street_width_m', 'gap_margin_m', 'min_barrier_m', 'bollard_spacing_m', 'bollard_radius_m', 'bollard_height_m'];
 }
 
 /// Chunk streaming (METROPOLE_PLAN 6.4): window in chunks around the player.

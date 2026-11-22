@@ -78,12 +78,30 @@ func (e *Env) chunkRange() (x0, y0, x1, y1 int) {
 	return int(math.Floor(minX / cm)), int(math.Floor(minY / cm)), int(math.Floor(maxX / cm)), int(math.Floor(maxY / cm))
 }
 
+// LoadGround reads ground.jsonl plus the pedestrian-zone paving (zones_ground.jsonl, if built).
 func (e *Env) LoadGround() ([]GroundRow, error) {
 	f, err := os.Open(e.W("ground.jsonl"))
 	if err != nil {
 		return nil, fmt.Errorf("ground.jsonl missing, run ground first: %w", err)
 	}
-	defer f.Close()
+	out, err := readGround(f)
+	f.Close()
+	if err != nil {
+		return nil, err
+	}
+	z, err := os.Open(e.W("zones_ground.jsonl"))
+	if os.IsNotExist(err) {
+		return out, nil
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer z.Close()
+	more, err := readGround(z)
+	return append(out, more...), err
+}
+
+func readGround(f *os.File) ([]GroundRow, error) {
 	var out []GroundRow
 	sc := bufio.NewScanner(f)
 	sc.Buffer(make([]byte, 1<<20), 1<<28)

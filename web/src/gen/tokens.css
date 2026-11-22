@@ -23,6 +23,7 @@
   --color-world-day-water: #4F8CC9;
   --color-world-day-park: #79B35F;
   --color-world-day-plaza: #DCCFB9;
+  --color-world-day-pedestrian: #D6CBB8;
   --color-world-day-rail: #9C9087;
   --color-world-day-sidewalk: #C9C1B4;
   --color-world-day-asphalt: #55565E;
@@ -44,6 +45,7 @@
   --color-world-night-water: #12223D;
   --color-world-night-park: #1E3426;
   --color-world-night-plaza: #3A3846;
+  --color-world-night-pedestrian: #45424F;
   --color-world-night-rail: #2D2B30;
   --color-world-night-sidewalk: #4A4A57;
   --color-world-night-asphalt: #1D1E25;
@@ -92,6 +94,7 @@
   --color-props-newsbox: #285AAA;
   --color-props-planter: #786050;
   --color-props-planter-green: #468C46;
+  --color-props-bollard: #3A3A40;
   --color-pedestrians-shirts-0: #D2483C;
   --color-pedestrians-shirts-1: #3C78C8;
   --color-pedestrians-shirts-2: #E6B43C;

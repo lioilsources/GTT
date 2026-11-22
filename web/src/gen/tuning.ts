@@ -83,6 +83,8 @@ export class Tuning {
   readonly roads: TuningRoads;
   readonly buildings: TuningBuildings;
   readonly ground: TuningGround;
+  /** Pedestrian zones and bollards (specs/zones.md): citypack uses the first three, clients the rest. */
+  readonly zones: TuningZones;
   /** Chunk streaming (METROPOLE_PLAN 6.4): window in chunks around the player. */
   readonly streaming: TuningStreaming;
   readonly camera: TuningCamera;
@@ -155,6 +157,7 @@ export class Tuning {
     this.roads = new TuningRoads(r.sub('roads'));
     this.buildings = new TuningBuildings(r.sub('buildings'));
     this.ground = new TuningGround(r.sub('ground'));
+    this.zones = new TuningZones(r.sub('zones'));
     this.streaming = new TuningStreaming(r.sub('streaming'));
     this.camera = new TuningCamera(r.sub('camera'));
     this.drive = new TuningDrive(r.sub('drive'));
@@ -192,6 +195,7 @@ export class Tuning {
       roads: this.roads.toJson(),
       buildings: this.buildings.toJson(),
       ground: this.ground.toJson(),
+      zones: this.zones.toJson(),
       streaming: this.streaming.toJson(),
       camera: this.camera.toJson(),
       drive: this.drive.toJson(),
@@ -518,6 +522,61 @@ export class TuningGround {
   }
 
   static readonly keys = ['simplify_m', 'min_area_m2'] as const;
+}
+
+/** Pedestrian zones and bollards (specs/zones.md): citypack uses the first three, clients the rest. */
+export class TuningZones {
+  /** corridor around a pedestrian street segment */
+  streetWidthM: number;
+  /** clearance kept around every road corridor (roads stay drivable) */
+  gapMarginM: number;
+  /** shorter bollard pieces are dropped */
+  minBarrierM: number;
+  bollardSpacingM: number;
+  bollardRadiusM: number;
+  bollardHeightM: number;
+
+  constructor(r: R) {
+    this.streetWidthM = r.d('street_width_m');
+    this.gapMarginM = r.d('gap_margin_m');
+    this.minBarrierM = r.d('min_barrier_m');
+    this.bollardSpacingM = r.d('bollard_spacing_m');
+    this.bollardRadiusM = r.d('bollard_radius_m');
+    this.bollardHeightM = r.d('bollard_height_m');
+  }
+
+  toJson(): Record<string, unknown> {
+    return {
+      street_width_m: this.streetWidthM,
+      gap_margin_m: this.gapMarginM,
+      min_barrier_m: this.minBarrierM,
+      bollard_spacing_m: this.bollardSpacingM,
+      bollard_radius_m: this.bollardRadiusM,
+      bollard_height_m: this.bollardHeightM,
+    };
+  }
+
+  /** Value by YAML key, undefined when the key is unknown. */
+  get(key: string): number | undefined {
+    switch (key) {
+      case 'street_width_m':
+        return this.streetWidthM;
+      case 'gap_margin_m':
+        return this.gapMarginM;
+      case 'min_barrier_m':
+        return this.minBarrierM;
+      case 'bollard_spacing_m':
+        return this.bollardSpacingM;
+      case 'bollard_radius_m':
+        return this.bollardRadiusM;
+      case 'bollard_height_m':
+        return this.bollardHeightM;
+      default:
+        return undefined;
+    }
+  }
+
+  static readonly keys = ['street_width_m', 'gap_margin_m', 'min_barrier_m', 'bollard_spacing_m', 'bollard_radius_m', 'bollard_height_m'] as const;
 }
 
 /** Chunk streaming (METROPOLE_PLAN 6.4): window in chunks around the player. */

@@ -17,7 +17,7 @@ import type { Message } from "@bufbuild/protobuf";
  * Describes the file citypack.proto.
  */
 export const file_citypack: GenFile = /*@__PURE__*/
-  fileDesc("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");
+  fileDesc("Cg5jaXR5cGFjay5wcm90bxIIY2l0eXBhY2si9wIKCE1hbmlmZXN0EhYKDmZvcm1hdF92ZXJzaW9uGAEgASgNEg8KB2NpdHlfaWQYAiABKAkSDAoEbmFtZRgDIAEoCRISCgpvcmlnaW5fbGF0GAQgASgBEhIKCm9yaWdpbl9sb24YBSABKAESEgoKZHJpdmVfc2lkZRgGIAEoCRINCgV1bml0cxgHIAEoCRIYChBvdmVydHVyZV9yZWxlYXNlGAggASgJEg8KB2NodW5rX20YCSABKA0SHgoGYm91bmRzGAogASgLMg4uY2l0eXBhY2suUmVjdBIMCgRhcmVhGAsgAygREiIKBmNodW5rcxgMIAMoCzISLmNpdHlwYWNrLkNodW5rUmVmEh4KBXN0YXJ0GA0gASgLMg8uY2l0eXBhY2suU3Bhd24SJQoJZGlzdHJpY3RzGA4gAygLMhIuY2l0eXBhY2suRGlzdHJpY3QSEwoLYXR0cmlidXRpb24YDyADKAkSEAoIYnVpbHRfYXQYECABKAkiQgoEUmVjdBINCgVtaW5feBgBIAEoERINCgVtaW5feRgCIAEoERINCgVtYXhfeBgDIAEoERINCgVtYXhfeRgEIAEoESJCCghDaHVua1JlZhIJCgF4GAEgASgREgkKAXkYAiABKBESDQoFYnl0ZXMYAyABKA0SEQoJYnVpbGRpbmdzGAQgASgNIjIKBVNwYXduEgkKAXgYASABKBESCQoBeRgCIAEoERITCgtoZWFkaW5nX3JhZBgDIAEoAiImCghEaXN0cmljdBIMCgRuYW1lGAEgASgJEgwKBHJpbmcYAiADKBEiVAoFR3JhcGgSHQoFbm9kZXMYASADKAsyDi5jaXR5cGFjay5Ob2RlEh0KBWVkZ2VzGAIgAygLMg4uY2l0eXBhY2suRWRnZRINCgVuYW1lcxgDIAMoCSIsCgROb2RlEgkKAXgYASABKBESCQoBeRgCIAEoERIOCgZib3JkZXIYAyABKAgi5gEKBEVkZ2USDAoEZnJvbRgBIAEoDRIKCgJ0bxgCIAEoDRIOCgZwb2ludHMYAyADKBESIgoFY2xhc3MYBCABKA4yEy5jaXR5cGFjay5Sb2FkQ2xhc3MSDAoEbmFtZRgFIAEoDRINCgVsYW5lcxgGIAEoDRIOCgZvbmV3YXkYByABKBESEgoKbGF5ZXJfZnJvbRgIIAEoERIQCghsYXllcl90bxgJIAEoERIOCgZicmlkZ2UYCiABKAgSDgoGdHVubmVsGAsgASgIEgwKBGtlcHQYDCABKAgSDwoHd2lkdGhfbRgNIAEoAiKJAQoFQ2h1bmsSCQoBeBgBIAEoERIJCgF5GAIgASgREiUKCWJ1aWxkaW5ncxgDIAMoCzISLmNpdHlwYWNrLkJ1aWxkaW5nEh4KBmdyb3VuZBgEIAMoCzIOLmNpdHlwYWNrLk1lc2gSIwoIYmFycmllcnMYBSADKAsyES5jaXR5cGFjay5CYXJyaWVyIhkKB0JhcnJpZXISDgoGcG9pbnRzGAEgAygRIpgBCghCdWlsZGluZxINCgVyaW5ncxgBIAMoERIRCglyaW5nX2VuZHMYAiADKA0SDAoEcm9vZhgDIAMoDRIQCghoZWlnaHRfbRgEIAEoAhIUCgxtaW5faGVpZ2h0X20YBSABKAISEAoIbGFuZG1hcmsYBiABKA0SDwoHY29sbGlkZRgHIAEoCBIRCgl3YWxsX3NlZWQYCCABKA0iTQoETWVzaBIiCgRraW5kGAEgASgOMhQuY2l0eXBhY2suR3JvdW5kS2luZBIQCgh2ZXJ0aWNlcxgCIAMoERIPCgdpbmRpY2VzGAMgAygNIi4KCUxhbmRtYXJrcxIhCgVpdGVtcxgBIAMoCzISLmNpdHlwYWNrLkxhbmRtYXJrImkKCExhbmRtYXJrEgoKAmlkGAEgASgJEgwKBG5hbWUYAiABKAkSCQoBeBgDIAEoERIJCgF5GAQgASgREhAKCGhlaWdodF9tGAUgASgCEgwKBGhlcm8YBiABKAgSDQoFYmx1cmIYByABKAkiJgoFU3BvdHMSHQoFaXRlbXMYASADKAsyDi5jaXR5cGFjay5TcG90IpoBCgRTcG90EgoKAmlkGAEgASgJEgwKBGtpbmQYAiABKAkSDAoEbmFtZRgDIAEoCRIJCgF4GAQgASgREgkKAXkYBSABKBESDAoEZWRnZRgGIAEoDRIOCgZwYXJrX3gYByABKBESDgoGcGFya195GAggASgREhQKDHBhcmtfaGVhZGluZxgJIAEoAhIQCghtaW5pZ2FtZRgKIAEoCSp+CglSb2FkQ2xhc3MSEAoMUk9BRF9VTktOT1dOEAASDAoITU9UT1JXQVkQARIJCgVUUlVOSxACEgsKB1BSSU1BUlkQAxINCglTRUNPTkRBUlkQBBIMCghURVJUSUFSWRAFEg8KC1JFU0lERU5USUFMEAYSCwoHU0VSVklDRRAHKmQKCkdyb3VuZEtpbmQSEgoOR1JPVU5EX1VOS05PV04QABIICgRMQU5EEAESCQoFV0FURVIQAhIICgRQQVJLEAMSCAoEUkFJTBAEEgkKBVBMQVpBEAUSDgoKUEVERVNUUklBThAGQhZaFGNpdHlwYWNrL2ludGVybmFsL3BiYgZwcm90bzM");
 
 /**
  * manifest.pb
@@ -416,6 +416,13 @@ export type Chunk = Message<"citypack.Chunk"> & {
    * @generated from field: repeated citypack.Mesh ground = 4;
    */
   ground: Mesh[];
+
+  /**
+   * pedestrian-zone bollard lines (specs/zones.md), layer 0
+   *
+   * @generated from field: repeated citypack.Barrier barriers = 5;
+   */
+  barriers: Barrier[];
 };
 
 /**
@@ -424,6 +431,27 @@ export type Chunk = Message<"citypack.Chunk"> & {
  */
 export const ChunkSchema: GenMessage<Chunk> = /*@__PURE__*/
   messageDesc(file_citypack, 8);
+
+/**
+ * A bollard line: cars (not micro vehicles) collide with it as with a wall.
+ *
+ * @generated from message citypack.Barrier
+ */
+export type Barrier = Message<"citypack.Barrier"> & {
+  /**
+   * open polyline, dm
+   *
+   * @generated from field: repeated sint32 points = 1;
+   */
+  points: number[];
+};
+
+/**
+ * Describes the message citypack.Barrier.
+ * Use `create(BarrierSchema)` to create a new message.
+ */
+export const BarrierSchema: GenMessage<Barrier> = /*@__PURE__*/
+  messageDesc(file_citypack, 9);
 
 /**
  * @generated from message citypack.Building
@@ -489,7 +517,7 @@ export type Building = Message<"citypack.Building"> & {
  * Use `create(BuildingSchema)` to create a new message.
  */
 export const BuildingSchema: GenMessage<Building> = /*@__PURE__*/
-  messageDesc(file_citypack, 9);
+  messageDesc(file_citypack, 10);
 
 /**
  * @generated from message citypack.Mesh
@@ -518,7 +546,7 @@ export type Mesh = Message<"citypack.Mesh"> & {
  * Use `create(MeshSchema)` to create a new message.
  */
 export const MeshSchema: GenMessage<Mesh> = /*@__PURE__*/
-  messageDesc(file_citypack, 10);
+  messageDesc(file_citypack, 11);
 
 /**
  * landmarks.pb
@@ -537,7 +565,7 @@ export type Landmarks = Message<"citypack.Landmarks"> & {
  * Use `create(LandmarksSchema)` to create a new message.
  */
 export const LandmarksSchema: GenMessage<Landmarks> = /*@__PURE__*/
-  messageDesc(file_citypack, 11);
+  messageDesc(file_citypack, 12);
 
 /**
  * @generated from message citypack.Landmark
@@ -586,7 +614,7 @@ export type Landmark = Message<"citypack.Landmark"> & {
  * Use `create(LandmarkSchema)` to create a new message.
  */
 export const LandmarkSchema: GenMessage<Landmark> = /*@__PURE__*/
-  messageDesc(file_citypack, 12);
+  messageDesc(file_citypack, 13);
 
 /**
  * spots.pb
@@ -605,7 +633,7 @@ export type Spots = Message<"citypack.Spots"> & {
  * Use `create(SpotsSchema)` to create a new message.
  */
 export const SpotsSchema: GenMessage<Spots> = /*@__PURE__*/
-  messageDesc(file_citypack, 13);
+  messageDesc(file_citypack, 14);
 
 /**
  * @generated from message citypack.Spot
@@ -673,7 +701,7 @@ export type Spot = Message<"citypack.Spot"> & {
  * Use `create(SpotSchema)` to create a new message.
  */
 export const SpotSchema: GenMessage<Spot> = /*@__PURE__*/
-  messageDesc(file_citypack, 14);
+  messageDesc(file_citypack, 15);
 
 /**
  * @generated from enum citypack.RoadClass
@@ -759,6 +787,13 @@ export enum GroundKind {
    * @generated from enum value: PLAZA = 5;
    */
   PLAZA = 5,
+
+  /**
+   * pedestrian zone paving (specs/zones.md)
+   *
+   * @generated from enum value: PEDESTRIAN = 6;
+   */
+  PEDESTRIAN = 6,
 }
 
 /**

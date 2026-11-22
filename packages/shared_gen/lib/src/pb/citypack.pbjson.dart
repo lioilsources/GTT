@@ -46,13 +46,14 @@ const GroundKind$json = {
     {'1': 'PARK', '2': 3},
     {'1': 'RAIL', '2': 4},
     {'1': 'PLAZA', '2': 5},
+    {'1': 'PEDESTRIAN', '2': 6},
   ],
 };
 
 /// Descriptor for `GroundKind`. Decode as a `google.protobuf.EnumDescriptorProto`.
 final $typed_data.Uint8List groundKindDescriptor = $convert.base64Decode(
     'CgpHcm91bmRLaW5kEhIKDkdST1VORF9VTktOT1dOEAASCAoETEFORBABEgkKBVdBVEVSEAISCA'
-    'oEUEFSSxADEggKBFJBSUwQBBIJCgVQTEFaQRAF');
+    'oEUEFSSxADEggKBFJBSUwQBBIJCgVQTEFaQRAFEg4KClBFREVTVFJJQU4QBg==');
 
 @$core.Deprecated('Use manifestDescriptor instead')
 const Manifest$json = {
@@ -280,6 +281,14 @@ const Chunk$json = {
       '6': '.citypack.Mesh',
       '10': 'ground'
     },
+    {
+      '1': 'barriers',
+      '3': 5,
+      '4': 3,
+      '5': 11,
+      '6': '.citypack.Barrier',
+      '10': 'barriers'
+    },
   ],
 };
 
@@ -287,7 +296,20 @@ const Chunk$json = {
 final $typed_data.Uint8List chunkDescriptor = $convert.base64Decode(
     'CgVDaHVuaxIMCgF4GAEgASgRUgF4EgwKAXkYAiABKBFSAXkSMAoJYnVpbGRpbmdzGAMgAygLMh'
     'IuY2l0eXBhY2suQnVpbGRpbmdSCWJ1aWxkaW5ncxImCgZncm91bmQYBCADKAsyDi5jaXR5cGFj'
-    'ay5NZXNoUgZncm91bmQ=');
+    'ay5NZXNoUgZncm91bmQSLQoIYmFycmllcnMYBSADKAsyES5jaXR5cGFjay5CYXJyaWVyUghiYX'
+    'JyaWVycw==');
+
+@$core.Deprecated('Use barrierDescriptor instead')
+const Barrier$json = {
+  '1': 'Barrier',
+  '2': [
+    {'1': 'points', '3': 1, '4': 3, '5': 17, '10': 'points'},
+  ],
+};
+
+/// Descriptor for `Barrier`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List barrierDescriptor =
+    $convert.base64Decode('CgdCYXJyaWVyEhYKBnBvaW50cxgBIAMoEVIGcG9pbnRz');
 
 @$core.Deprecated('Use buildingDescriptor instead')
 const Building$json = {
