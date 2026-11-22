@@ -226,5 +226,6 @@
   spec: specs/minigames/taxi.md@1
   vectors: vectors/taxi.json
   lead: web
-  flutter: todo
-  web: todo
+  flutter: done
+  web: done
+  checks: {flutter: pass, web: pass}
