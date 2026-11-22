@@ -193,6 +193,11 @@
   --color-loop-best: #F4C430;
   --color-loop-muted: #FFFFFFA0;
   --color-loop-play: #2BA6A0;
+  --color-taxi-pill: #F7C531;
+  --color-taxi-pill-text: #1B1B1F;
+  --color-taxi-passenger: #F7C531;
+  --color-taxi-passenger-ring: #1B1B1F;
+  --color-taxi-low: #E0533A;
   --light-day-roof-light: 1.12;
   --light-day-sun-x: -0.6;
   --light-day-sun-y: 0.8;

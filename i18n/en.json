@@ -688,5 +688,82 @@
       }
     }
   },
-  "saveReset": "Reset save"
+  "saveReset": "Reset save",
+  "taxiLine1": "To {place}, please.",
+  "@taxiLine1": {
+    "placeholders": {
+      "place": {
+        "type": "String"
+      }
+    }
+  },
+  "taxiLine2": "{place}, and step on it!",
+  "@taxiLine2": {
+    "placeholders": {
+      "place": {
+        "type": "String"
+      }
+    }
+  },
+  "taxiLine3": "Take me to {place}.",
+  "@taxiLine3": {
+    "placeholders": {
+      "place": {
+        "type": "String"
+      }
+    }
+  },
+  "taxiLine4": "{place}. I'm running late!",
+  "@taxiLine4": {
+    "placeholders": {
+      "place": {
+        "type": "String"
+      }
+    }
+  },
+  "taxiLine5": "Could you drop me at {place}?",
+  "@taxiLine5": {
+    "placeholders": {
+      "place": {
+        "type": "String"
+      }
+    }
+  },
+  "taxiLine6": "{place}, the scenic way is fine.",
+  "@taxiLine6": {
+    "placeholders": {
+      "place": {
+        "type": "String"
+      }
+    }
+  },
+  "taxiStart": "Shift started: pick up passengers at the curb",
+  "taxiTime": "Shift {time}",
+  "@taxiTime": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "taxiFare": "Fares {fare}",
+  "@taxiFare": {
+    "placeholders": {
+      "fare": {
+        "type": "int"
+      }
+    }
+  },
+  "taxiPassenger": "Passenger",
+  "taxiPaid": "Fare {fare}",
+  "@taxiPaid": {
+    "placeholders": {
+      "fare": {
+        "type": "int"
+      }
+    }
+  },
+  "taxiEnd": "End shift",
+  "taxiGallery": "Taxi is played in the city: a 4-minute shift from the taxi stand.",
+  "taxiGalleryGo": "Start the shift in the city"
 }

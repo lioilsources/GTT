@@ -1116,6 +1116,8 @@ export class TuningMinigames {
   readonly sipky: TuningMinigamesSipky;
   readonly koulena: TuningMinigamesKoulena;
   readonly strelnice: TuningMinigamesStrelnice;
+  /** Taxi shift (specs/minigames/taxi.md): a world minigame in the taxi_metro car. */
+  readonly taxi: TuningMinigamesTaxi;
 
   constructor(r: R) {
     this.timeCapS = r.i('time_cap_s');
@@ -1126,6 +1128,7 @@ export class TuningMinigames {
     this.sipky = new TuningMinigamesSipky(r.sub('sipky'));
     this.koulena = new TuningMinigamesKoulena(r.sub('koulena'));
     this.strelnice = new TuningMinigamesStrelnice(r.sub('strelnice'));
+    this.taxi = new TuningMinigamesTaxi(r.sub('taxi'));
   }
 
   toJson(): Record<string, unknown> {
@@ -1138,6 +1141,7 @@ export class TuningMinigames {
       sipky: this.sipky.toJson(),
       koulena: this.koulena.toJson(),
       strelnice: this.strelnice.toJson(),
+      taxi: this.taxi.toJson(),
     };
   }
 }
@@ -1400,6 +1404,108 @@ export class TuningMinigamesStrelnice {
       reload_ticks: this.reloadTicks,
       star_scores: this.starScores,
       time_cap_s: this.timeCapS,
+    };
+  }
+}
+
+/** Taxi shift (specs/minigames/taxi.md): a world minigame in the taxi_metro car. */
+export class TuningMinigamesTaxi {
+  shiftS: number;
+  fareBase: number;
+  farePerKm: number;
+  /** expected ride = base + route dm / expect_dm_per_s */
+  expectBaseS: number;
+  expectDmPerS: number;
+  /** per second faster than expected, capped at bonus_max_pct of the meter */
+  bonusPerS: number;
+  bonusMaxPct: number;
+  /** per second slower, capped at late_max_pct of the meter */
+  latePerS: number;
+  lateMaxPct: number;
+  /** tip in % of the meter, minus hit_tip_pct per crash into traffic */
+  tipPct: number;
+  hitTipPct: number;
+  /** shift fare for 3, 2, 1 stars */
+  starFares: number[];
+  /** passenger lines taxiLine1..N in i18n */
+  lines: number;
+  pickupMinM: number;
+  pickupMaxM: number;
+  pickupRadiusM: number;
+  dropRadiusM: number;
+  stopSpeedMps: number;
+  destMinM: number;
+  destMaxM: number;
+  destSearchM: number;
+  renavS: number;
+  lineS: number;
+  /** the shift timer turns red below this (UI only) */
+  lowS: number;
+  /** passenger marker radius (min passenger_px) */
+  passengerM: number;
+  passengerPx: number;
+  /** passenger beyond the corridor edge */
+  curbM: number;
+
+  constructor(r: R) {
+    this.shiftS = r.i('shift_s');
+    this.fareBase = r.i('fare_base');
+    this.farePerKm = r.i('fare_per_km');
+    this.expectBaseS = r.i('expect_base_s');
+    this.expectDmPerS = r.i('expect_dm_per_s');
+    this.bonusPerS = r.i('bonus_per_s');
+    this.bonusMaxPct = r.i('bonus_max_pct');
+    this.latePerS = r.i('late_per_s');
+    this.lateMaxPct = r.i('late_max_pct');
+    this.tipPct = r.i('tip_pct');
+    this.hitTipPct = r.i('hit_tip_pct');
+    this.starFares = r.il('star_fares');
+    this.lines = r.i('lines');
+    this.pickupMinM = r.d('pickup_min_m');
+    this.pickupMaxM = r.d('pickup_max_m');
+    this.pickupRadiusM = r.d('pickup_radius_m');
+    this.dropRadiusM = r.d('drop_radius_m');
+    this.stopSpeedMps = r.d('stop_speed_mps');
+    this.destMinM = r.d('dest_min_m');
+    this.destMaxM = r.d('dest_max_m');
+    this.destSearchM = r.d('dest_search_m');
+    this.renavS = r.d('renav_s');
+    this.lineS = r.d('line_s');
+    this.lowS = r.d('low_s');
+    this.passengerM = r.d('passenger_m');
+    this.passengerPx = r.d('passenger_px');
+    this.curbM = r.d('curb_m');
+  }
+
+  toJson(): Record<string, unknown> {
+    return {
+      shift_s: this.shiftS,
+      fare_base: this.fareBase,
+      fare_per_km: this.farePerKm,
+      expect_base_s: this.expectBaseS,
+      expect_dm_per_s: this.expectDmPerS,
+      bonus_per_s: this.bonusPerS,
+      bonus_max_pct: this.bonusMaxPct,
+      late_per_s: this.latePerS,
+      late_max_pct: this.lateMaxPct,
+      tip_pct: this.tipPct,
+      hit_tip_pct: this.hitTipPct,
+      star_fares: this.starFares,
+      lines: this.lines,
+      pickup_min_m: this.pickupMinM,
+      pickup_max_m: this.pickupMaxM,
+      pickup_radius_m: this.pickupRadiusM,
+      drop_radius_m: this.dropRadiusM,
+      stop_speed_mps: this.stopSpeedMps,
+      dest_min_m: this.destMinM,
+      dest_max_m: this.destMaxM,
+      dest_search_m: this.destSearchM,
+      renav_s: this.renavS,
+      line_s: this.lineS,
+      low_s: this.lowS,
+      passenger_m: this.passengerM,
+      passenger_px: this.passengerPx,
+      curb_m: this.curbM,
     };
   }
 }

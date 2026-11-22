@@ -1,0 +1,1041 @@
+{
+ "module": "taxi",
+ "specVersion": 1,
+ "$comment": "specs/minigames/taxi.md; recorded by web (metro vectors record --client web --module taxi).",
+ "cases": [
+  {
+   "name": "full shift: fast ride, crashes, late ride, passenger lost at the end",
+   "config": {
+    "dests": [
+     "empire_state",
+     "chrysler",
+     "grand_central",
+     "times_square",
+     "one_wtc"
+    ],
+    "lines": 6,
+    "fareBase": 6,
+    "farePerKm": 20,
+    "expectBaseS": 15,
+    "expectDmPerS": 70,
+    "bonusPerS": 1,
+    "bonusMaxPct": 30,
+    "latePerS": 1,
+    "lateMaxPct": 50,
+    "tipPct": 20,
+    "hitTipPct": 5,
+    "starFares": [
+     200,
+     120,
+     50
+    ]
+   },
+   "seed": 7,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "pickup",
+      "atMs": 4200,
+      "allow": []
+     },
+     "state": {
+      "rng": 470389255,
+      "phase": "ride",
+      "clockMs": 4200,
+      "fare": 0,
+      "rides": 0,
+      "dest": "times_square",
+      "line": 1,
+      "pickMs": 4200,
+      "hits": 0,
+      "lastDest": "",
+      "last": {
+       "dest": "",
+       "distDm": 0,
+       "rideS": 0,
+       "expectS": 0,
+       "meter": 0,
+       "time": 0,
+       "tip": 0,
+       "fare": 0
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "dropoff",
+      "atMs": 64200,
+      "distDm": 12000
+     },
+     "state": {
+      "rng": 470389255,
+      "phase": "wait",
+      "clockMs": 64200,
+      "fare": 45,
+      "rides": 1,
+      "dest": "",
+      "line": -1,
+      "pickMs": 4200,
+      "hits": 0,
+      "lastDest": "times_square",
+      "last": {
+       "dest": "times_square",
+       "distDm": 12000,
+       "rideS": 60,
+       "expectS": 186,
+       "meter": 30,
+       "time": 9,
+       "tip": 6,
+       "fare": 45
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "pickup",
+      "atMs": 80000,
+      "allow": [
+       "chrysler",
+       "one_wtc",
+       "times_square"
+      ]
+     },
+     "state": {
+      "rng": 3069989445,
+      "phase": "ride",
+      "clockMs": 80000,
+      "fare": 45,
+      "rides": 1,
+      "dest": "one_wtc",
+      "line": 3,
+      "pickMs": 80000,
+      "hits": 0,
+      "lastDest": "times_square",
+      "last": {
+       "dest": "times_square",
+       "distDm": 12000,
+       "rideS": 60,
+       "expectS": 186,
+       "meter": 30,
+       "time": 9,
+       "tip": 6,
+       "fare": 45
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "hit"
+     },
+     "state": {
+      "rng": 3069989445,
+      "phase": "ride",
+      "clockMs": 80000,
+      "fare": 45,
+      "rides": 1,
+      "dest": "one_wtc",
+      "line": 3,
+      "pickMs": 80000,
+      "hits": 1,
+      "lastDest": "times_square",
+      "last": {
+       "dest": "times_square",
+       "distDm": 12000,
+       "rideS": 60,
+       "expectS": 186,
+       "meter": 30,
+       "time": 9,
+       "tip": 6,
+       "fare": 45
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "hit"
+     },
+     "state": {
+      "rng": 3069989445,
+      "phase": "ride",
+      "clockMs": 80000,
+      "fare": 45,
+      "rides": 1,
+      "dest": "one_wtc",
+      "line": 3,
+      "pickMs": 80000,
+      "hits": 2,
+      "lastDest": "times_square",
+      "last": {
+       "dest": "times_square",
+       "distDm": 12000,
+       "rideS": 60,
+       "expectS": 186,
+       "meter": 30,
+       "time": 9,
+       "tip": 6,
+       "fare": 45
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "dropoff",
+      "atMs": 300000,
+      "distDm": 9000
+     },
+     "state": {
+      "rng": 3069989445,
+      "phase": "wait",
+      "clockMs": 300000,
+      "fare": 59,
+      "rides": 2,
+      "dest": "",
+      "line": -1,
+      "pickMs": 80000,
+      "hits": 0,
+      "lastDest": "one_wtc",
+      "last": {
+       "dest": "one_wtc",
+       "distDm": 9000,
+       "rideS": 220,
+       "expectS": 143,
+       "meter": 24,
+       "time": -12,
+       "tip": 2,
+       "fare": 14
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "pickup",
+      "atMs": 301000,
+      "allow": [
+       "grand_central"
+      ]
+     },
+     "state": {
+      "rng": 2098155156,
+      "phase": "ride",
+      "clockMs": 301000,
+      "fare": 59,
+      "rides": 2,
+      "dest": "grand_central",
+      "line": 0,
+      "pickMs": 301000,
+      "hits": 0,
+      "lastDest": "one_wtc",
+      "last": {
+       "dest": "one_wtc",
+       "distDm": 9000,
+       "rideS": 220,
+       "expectS": 143,
+       "meter": 24,
+       "time": -12,
+       "tip": 2,
+       "fare": 14
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "timeout"
+     },
+     "state": {
+      "rng": 2098155156,
+      "phase": "over",
+      "clockMs": 301000,
+      "fare": 59,
+      "rides": 2,
+      "dest": "grand_central",
+      "line": 0,
+      "pickMs": 301000,
+      "hits": 0,
+      "lastDest": "one_wtc",
+      "last": {
+       "dest": "one_wtc",
+       "distDm": 9000,
+       "rideS": 220,
+       "expectS": 143,
+       "meter": 24,
+       "time": -12,
+       "tip": 2,
+       "fare": 14
+      }
+     }
+    }
+   ],
+   "result": {
+    "winner": "player",
+    "stars": 1,
+    "score": 59,
+    "rides": 2
+   }
+  },
+  {
+   "name": "three stars from long rides",
+   "config": {
+    "dests": [
+     "empire_state",
+     "chrysler",
+     "grand_central",
+     "times_square",
+     "one_wtc"
+    ],
+    "lines": 6,
+    "fareBase": 6,
+    "farePerKm": 20,
+    "expectBaseS": 15,
+    "expectDmPerS": 70,
+    "bonusPerS": 1,
+    "bonusMaxPct": 30,
+    "latePerS": 1,
+    "lateMaxPct": 50,
+    "tipPct": 20,
+    "hitTipPct": 5,
+    "starFares": [
+     200,
+     120,
+     50
+    ]
+   },
+   "seed": 12345,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "pickup",
+      "atMs": 0,
+      "allow": []
+     },
+     "state": {
+      "rng": 1697253807,
+      "phase": "ride",
+      "clockMs": 0,
+      "fare": 0,
+      "rides": 0,
+      "dest": "empire_state",
+      "line": 3,
+      "pickMs": 0,
+      "hits": 0,
+      "lastDest": "",
+      "last": {
+       "dest": "",
+       "distDm": 0,
+       "rideS": 0,
+       "expectS": 0,
+       "meter": 0,
+       "time": 0,
+       "tip": 0,
+       "fare": 0
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "dropoff",
+      "atMs": 90000,
+      "distDm": 25000
+     },
+     "state": {
+      "rng": 1697253807,
+      "phase": "wait",
+      "clockMs": 90000,
+      "fare": 83,
+      "rides": 1,
+      "dest": "",
+      "line": -1,
+      "pickMs": 0,
+      "hits": 0,
+      "lastDest": "empire_state",
+      "last": {
+       "dest": "empire_state",
+       "distDm": 25000,
+       "rideS": 90,
+       "expectS": 372,
+       "meter": 56,
+       "time": 16,
+       "tip": 11,
+       "fare": 83
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "pickup",
+      "atMs": 95000,
+      "allow": []
+     },
+     "state": {
+      "rng": 1955480042,
+      "phase": "ride",
+      "clockMs": 95000,
+      "fare": 83,
+      "rides": 1,
+      "dest": "chrysler",
+      "line": 2,
+      "pickMs": 95000,
+      "hits": 0,
+      "lastDest": "empire_state",
+      "last": {
+       "dest": "empire_state",
+       "distDm": 25000,
+       "rideS": 90,
+       "expectS": 372,
+       "meter": 56,
+       "time": 16,
+       "tip": 11,
+       "fare": 83
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "dropoff",
+      "atMs": 170000,
+      "distDm": 24000
+     },
+     "state": {
+      "rng": 1955480042,
+      "phase": "wait",
+      "clockMs": 170000,
+      "fare": 163,
+      "rides": 2,
+      "dest": "",
+      "line": -1,
+      "pickMs": 95000,
+      "hits": 0,
+      "lastDest": "chrysler",
+      "last": {
+       "dest": "chrysler",
+       "distDm": 24000,
+       "rideS": 75,
+       "expectS": 357,
+       "meter": 54,
+       "time": 16,
+       "tip": 10,
+       "fare": 80
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "pickup",
+      "atMs": 172000,
+      "allow": []
+     },
+     "state": {
+      "rng": 3283620450,
+      "phase": "ride",
+      "clockMs": 172000,
+      "fare": 163,
+      "rides": 2,
+      "dest": "one_wtc",
+      "line": 0,
+      "pickMs": 172000,
+      "hits": 0,
+      "lastDest": "chrysler",
+      "last": {
+       "dest": "chrysler",
+       "distDm": 24000,
+       "rideS": 75,
+       "expectS": 357,
+       "meter": 54,
+       "time": 16,
+       "tip": 10,
+       "fare": 80
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "dropoff",
+      "atMs": 235000,
+      "distDm": 20000
+     },
+     "state": {
+      "rng": 3283620450,
+      "phase": "wait",
+      "clockMs": 235000,
+      "fare": 231,
+      "rides": 3,
+      "dest": "",
+      "line": -1,
+      "pickMs": 172000,
+      "hits": 0,
+      "lastDest": "one_wtc",
+      "last": {
+       "dest": "one_wtc",
+       "distDm": 20000,
+       "rideS": 63,
+       "expectS": 300,
+       "meter": 46,
+       "time": 13,
+       "tip": 9,
+       "fare": 68
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "timeout"
+     },
+     "state": {
+      "rng": 3283620450,
+      "phase": "over",
+      "clockMs": 235000,
+      "fare": 231,
+      "rides": 3,
+      "dest": "",
+      "line": -1,
+      "pickMs": 172000,
+      "hits": 0,
+      "lastDest": "one_wtc",
+      "last": {
+       "dest": "one_wtc",
+       "distDm": 20000,
+       "rideS": 63,
+       "expectS": 300,
+       "meter": 46,
+       "time": 13,
+       "tip": 9,
+       "fare": 68
+      }
+     }
+    }
+   ],
+   "result": {
+    "winner": "player",
+    "stars": 3,
+    "score": 231,
+    "rides": 3
+   }
+  },
+  {
+   "name": "single allowed destination repeats, caps hit both ends",
+   "config": {
+    "dests": [
+     "empire_state",
+     "chrysler",
+     "grand_central",
+     "times_square",
+     "one_wtc"
+    ],
+    "lines": 6,
+    "fareBase": 6,
+    "farePerKm": 20,
+    "expectBaseS": 15,
+    "expectDmPerS": 70,
+    "bonusPerS": 1,
+    "bonusMaxPct": 30,
+    "latePerS": 1,
+    "lateMaxPct": 50,
+    "tipPct": 20,
+    "hitTipPct": 5,
+    "starFares": [
+     200,
+     120,
+     50
+    ]
+   },
+   "seed": 99,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "pickup",
+      "atMs": 1000,
+      "allow": [
+       "one_wtc"
+      ]
+     },
+     "state": {
+      "rng": 2399245289,
+      "phase": "ride",
+      "clockMs": 1000,
+      "fare": 0,
+      "rides": 0,
+      "dest": "one_wtc",
+      "line": 5,
+      "pickMs": 1000,
+      "hits": 0,
+      "lastDest": "",
+      "last": {
+       "dest": "",
+       "distDm": 0,
+       "rideS": 0,
+       "expectS": 0,
+       "meter": 0,
+       "time": 0,
+       "tip": 0,
+       "fare": 0
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "dropoff",
+      "atMs": 2000,
+      "distDm": 7000
+     },
+     "state": {
+      "rng": 2399245289,
+      "phase": "wait",
+      "clockMs": 2000,
+      "fare": 30,
+      "rides": 1,
+      "dest": "",
+      "line": -1,
+      "pickMs": 1000,
+      "hits": 0,
+      "lastDest": "one_wtc",
+      "last": {
+       "dest": "one_wtc",
+       "distDm": 7000,
+       "rideS": 1,
+       "expectS": 115,
+       "meter": 20,
+       "time": 6,
+       "tip": 4,
+       "fare": 30
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "pickup",
+      "atMs": 3000,
+      "allow": [
+       "one_wtc"
+      ]
+     },
+     "state": {
+      "rng": 2028006716,
+      "phase": "ride",
+      "clockMs": 3000,
+      "fare": 30,
+      "rides": 1,
+      "dest": "one_wtc",
+      "line": 2,
+      "pickMs": 3000,
+      "hits": 0,
+      "lastDest": "one_wtc",
+      "last": {
+       "dest": "one_wtc",
+       "distDm": 7000,
+       "rideS": 1,
+       "expectS": 115,
+       "meter": 20,
+       "time": 6,
+       "tip": 4,
+       "fare": 30
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "hit"
+     },
+     "state": {
+      "rng": 2028006716,
+      "phase": "ride",
+      "clockMs": 3000,
+      "fare": 30,
+      "rides": 1,
+      "dest": "one_wtc",
+      "line": 2,
+      "pickMs": 3000,
+      "hits": 1,
+      "lastDest": "one_wtc",
+      "last": {
+       "dest": "one_wtc",
+       "distDm": 7000,
+       "rideS": 1,
+       "expectS": 115,
+       "meter": 20,
+       "time": 6,
+       "tip": 4,
+       "fare": 30
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "hit"
+     },
+     "state": {
+      "rng": 2028006716,
+      "phase": "ride",
+      "clockMs": 3000,
+      "fare": 30,
+      "rides": 1,
+      "dest": "one_wtc",
+      "line": 2,
+      "pickMs": 3000,
+      "hits": 2,
+      "lastDest": "one_wtc",
+      "last": {
+       "dest": "one_wtc",
+       "distDm": 7000,
+       "rideS": 1,
+       "expectS": 115,
+       "meter": 20,
+       "time": 6,
+       "tip": 4,
+       "fare": 30
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "hit"
+     },
+     "state": {
+      "rng": 2028006716,
+      "phase": "ride",
+      "clockMs": 3000,
+      "fare": 30,
+      "rides": 1,
+      "dest": "one_wtc",
+      "line": 2,
+      "pickMs": 3000,
+      "hits": 3,
+      "lastDest": "one_wtc",
+      "last": {
+       "dest": "one_wtc",
+       "distDm": 7000,
+       "rideS": 1,
+       "expectS": 115,
+       "meter": 20,
+       "time": 6,
+       "tip": 4,
+       "fare": 30
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "hit"
+     },
+     "state": {
+      "rng": 2028006716,
+      "phase": "ride",
+      "clockMs": 3000,
+      "fare": 30,
+      "rides": 1,
+      "dest": "one_wtc",
+      "line": 2,
+      "pickMs": 3000,
+      "hits": 4,
+      "lastDest": "one_wtc",
+      "last": {
+       "dest": "one_wtc",
+       "distDm": 7000,
+       "rideS": 1,
+       "expectS": 115,
+       "meter": 20,
+       "time": 6,
+       "tip": 4,
+       "fare": 30
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "hit"
+     },
+     "state": {
+      "rng": 2028006716,
+      "phase": "ride",
+      "clockMs": 3000,
+      "fare": 30,
+      "rides": 1,
+      "dest": "one_wtc",
+      "line": 2,
+      "pickMs": 3000,
+      "hits": 5,
+      "lastDest": "one_wtc",
+      "last": {
+       "dest": "one_wtc",
+       "distDm": 7000,
+       "rideS": 1,
+       "expectS": 115,
+       "meter": 20,
+       "time": 6,
+       "tip": 4,
+       "fare": 30
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "dropoff",
+      "atMs": 500000,
+      "distDm": 7000
+     },
+     "state": {
+      "rng": 2028006716,
+      "phase": "wait",
+      "clockMs": 500000,
+      "fare": 40,
+      "rides": 2,
+      "dest": "",
+      "line": -1,
+      "pickMs": 3000,
+      "hits": 0,
+      "lastDest": "one_wtc",
+      "last": {
+       "dest": "one_wtc",
+       "distDm": 7000,
+       "rideS": 497,
+       "expectS": 115,
+       "meter": 20,
+       "time": -10,
+       "tip": 0,
+       "fare": 10
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "timeout"
+     },
+     "state": {
+      "rng": 2028006716,
+      "phase": "over",
+      "clockMs": 500000,
+      "fare": 40,
+      "rides": 2,
+      "dest": "",
+      "line": -1,
+      "pickMs": 3000,
+      "hits": 0,
+      "lastDest": "one_wtc",
+      "last": {
+       "dest": "one_wtc",
+       "distDm": 7000,
+       "rideS": 497,
+       "expectS": 115,
+       "meter": 20,
+       "time": -10,
+       "tip": 0,
+       "fare": 10
+      }
+     }
+    }
+   ],
+   "result": {
+    "winner": "draw",
+    "stars": 0,
+    "score": 40,
+    "rides": 2
+   }
+  },
+  {
+   "name": "empty shift",
+   "config": {
+    "dests": [
+     "empire_state",
+     "chrysler",
+     "grand_central",
+     "times_square",
+     "one_wtc"
+    ],
+    "lines": 6,
+    "fareBase": 6,
+    "farePerKm": 20,
+    "expectBaseS": 15,
+    "expectDmPerS": 70,
+    "bonusPerS": 1,
+    "bonusMaxPct": 30,
+    "latePerS": 1,
+    "lateMaxPct": 50,
+    "tipPct": 20,
+    "hitTipPct": 5,
+    "starFares": [
+     200,
+     120,
+     50
+    ]
+   },
+   "seed": 0,
+   "steps": [
+    {
+     "action": {
+      "by": "timeout"
+     },
+     "state": {
+      "rng": 2654435769,
+      "phase": "over",
+      "clockMs": 0,
+      "fare": 0,
+      "rides": 0,
+      "dest": "",
+      "line": -1,
+      "pickMs": 0,
+      "hits": 0,
+      "lastDest": "",
+      "last": {
+       "dest": "",
+       "distDm": 0,
+       "rideS": 0,
+       "expectS": 0,
+       "meter": 0,
+       "time": 0,
+       "tip": 0,
+       "fare": 0
+      }
+     }
+    }
+   ],
+   "result": {
+    "winner": "draw",
+    "stars": 0,
+    "score": 0,
+    "rides": 0
+   }
+  },
+  {
+   "name": "timeout with a passenger aboard",
+   "config": {
+    "dests": [
+     "empire_state",
+     "chrysler",
+     "grand_central",
+     "times_square",
+     "one_wtc"
+    ],
+    "lines": 6,
+    "fareBase": 6,
+    "farePerKm": 20,
+    "expectBaseS": 15,
+    "expectDmPerS": 70,
+    "bonusPerS": 1,
+    "bonusMaxPct": 30,
+    "latePerS": 1,
+    "lateMaxPct": 50,
+    "tipPct": 20,
+    "hitTipPct": 5,
+    "starFares": [
+     200,
+     120,
+     50
+    ]
+   },
+   "seed": 3,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "pickup",
+      "atMs": 10,
+      "allow": []
+     },
+     "state": {
+      "rng": 201886211,
+      "phase": "ride",
+      "clockMs": 10,
+      "fare": 0,
+      "rides": 0,
+      "dest": "grand_central",
+      "line": 5,
+      "pickMs": 10,
+      "hits": 0,
+      "lastDest": "",
+      "last": {
+       "dest": "",
+       "distDm": 0,
+       "rideS": 0,
+       "expectS": 0,
+       "meter": 0,
+       "time": 0,
+       "tip": 0,
+       "fare": 0
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "hit"
+     },
+     "state": {
+      "rng": 201886211,
+      "phase": "ride",
+      "clockMs": 10,
+      "fare": 0,
+      "rides": 0,
+      "dest": "grand_central",
+      "line": 5,
+      "pickMs": 10,
+      "hits": 1,
+      "lastDest": "",
+      "last": {
+       "dest": "",
+       "distDm": 0,
+       "rideS": 0,
+       "expectS": 0,
+       "meter": 0,
+       "time": 0,
+       "tip": 0,
+       "fare": 0
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "timeout"
+     },
+     "state": {
+      "rng": 201886211,
+      "phase": "over",
+      "clockMs": 10,
+      "fare": 0,
+      "rides": 0,
+      "dest": "grand_central",
+      "line": 5,
+      "pickMs": 10,
+      "hits": 1,
+      "lastDest": "",
+      "last": {
+       "dest": "",
+       "distDm": 0,
+       "rideS": 0,
+       "expectS": 0,
+       "meter": 0,
+       "time": 0,
+       "tip": 0,
+       "fare": 0
+      }
+     }
+    }
+   ],
+   "result": {
+    "winner": "draw",
+    "stars": 0,
+    "score": 0,
+    "rides": 0
+   }
+  }
+ ]
+}

@@ -266,5 +266,19 @@
   "cashHud": "{cash} hotovosti",
   "garageForSale": "Na prodej",
   "garageBuy": "Koupit · {price}",
-  "saveReset": "Smazat uložení"
+  "saveReset": "Smazat uložení",
+  "taxiLine1": "Na {place}, prosím.",
+  "taxiLine2": "{place}, a šlápněte na to!",
+  "taxiLine3": "Cíl: {place}. Jedeme!",
+  "taxiLine4": "{place}. Mám zpoždění!",
+  "taxiLine5": "Hodíte mě na {place}?",
+  "taxiLine6": "{place}, klidně tou hezčí cestou.",
+  "taxiStart": "Směna začala: naber cestující u chodníku",
+  "taxiTime": "Směna {time}",
+  "taxiFare": "Tržba {fare}",
+  "taxiPassenger": "Cestující",
+  "taxiPaid": "Jízdné {fare}",
+  "taxiEnd": "Ukončit směnu",
+  "taxiGallery": "Taxi se hraje ve městě: 4minutová směna od stanoviště taxi.",
+  "taxiGalleryGo": "Začít směnu ve městě"
 }

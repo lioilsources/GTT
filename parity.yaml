@@ -220,3 +220,11 @@
   flutter: done
   web: done
   checks: {flutter: pass, web: pass}
+- id: F-027
+  name: Taxi (engine drive, 4-minute shift, real destinations, fare stars)
+  level: P0
+  spec: specs/minigames/taxi.md@1
+  vectors: vectors/taxi.json
+  lead: web
+  flutter: todo
+  web: todo
