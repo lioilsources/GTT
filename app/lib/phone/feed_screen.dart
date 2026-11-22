@@ -1,5 +1,8 @@
 import 'package:feed_hub/feed_hub.dart' hide Navigator;
 import 'package:flutter/material.dart';
+import 'package:game_loop/game_loop.dart' show opponentIndex;
+import 'package:mg_api/mg_api.dart';
+import 'package:npc_dialogue/npc_dialogue.dart';
 import 'package:shared_gen/shared_gen.dart';
 
 import 'phone_controller.dart';
@@ -84,98 +87,104 @@ class _FeedScreenState extends State<FeedScreen> with SingleTickerProviderStateM
       (tx(MessageKey.feedReward, {'cash': c.reward}), false),
       (tx(MessageKey.difficulty, {'level': c.difficulty}), false),
     ];
-    return GestureDetector(
-      behavior: HitTestBehavior.opaque,
-      onPanUpdate: (u) => setState(() => _drag += u.delta),
-      onPanEnd: (_) => _end(),
-      onPanCancel: () => setState(() => _drag = Offset.zero),
-      onTapUp: (_) => _tap(),
-      child: Transform.translate(
-        offset: Offset(_drag.dx * 0.5, (_drag.dy < 0 ? _drag.dy : 0) * 0.5),
-        child: DecoratedBox(
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [Color(Tokens.colorPhoneCardTop), Color(Tokens.colorPhoneCard)],
+    final chars = dialogueSession?.pack.characters ?? const [];
+    // Host = characters[fnv1a(spotId) mod n], as the minigame rival and the booth host.
+    final hi = opponentIndex(c.spot, chars.length);
+    final hostId = hi < 0 ? null : chars[hi].id;
+    return LayoutBuilder(
+      builder: (context, box) => GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onPanUpdate: (u) => setState(() => _drag += u.delta),
+        onPanEnd: (_) => _end(),
+        onPanCancel: () => setState(() => _drag = Offset.zero),
+        onTapUp: (_) => _tap(),
+        child: Transform.translate(
+          offset: Offset(_drag.dx * 0.5, (_drag.dy < 0 ? _drag.dy : 0) * 0.5),
+          child: DecoratedBox(
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [Color(Tokens.colorPhoneCardTop), Color(Tokens.colorPhoneCard)],
+              ),
             ),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(Tokens.spaceLg),
-            child: Column(
-              children: [
-                Expanded(
-                  child: AnimatedBuilder(
-                    animation: _bob,
-                    builder: (context, child) => Transform.translate(
-                      offset: Offset(0, -5 * Curves.easeInOut.transform(_bob.value)),
-                      child: child,
+            child: Padding(
+              padding: const EdgeInsets.all(Tokens.spaceLg),
+              child: Column(
+                children: [
+                  Expanded(
+                    child: AnimatedBuilder(
+                      animation: _bob,
+                      builder: (context, child) => Transform.translate(
+                        offset: Offset(0, -5 * Curves.easeInOut.transform(_bob.value)),
+                        child: child,
+                      ),
+                      child: _HostPortrait(id: hostId, cardHeight: box.maxHeight),
                     ),
-                    child: const _HostPortrait(),
                   ),
-                ),
-                const SizedBox(height: Tokens.spaceSm),
-                Text(
-                  tx(messageKey('feedHost${c.host + 1}')),
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(
-                    color: Color(Tokens.colorUiText),
-                    fontSize: Tokens.fontHud,
-                    fontStyle: FontStyle.italic,
+                  const SizedBox(height: Tokens.spaceSm),
+                  Text(
+                    tx(messageKey('feedHost${c.host + 1}')),
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      color: Color(Tokens.colorUiText),
+                      fontSize: Tokens.fontHud,
+                      fontStyle: FontStyle.italic,
+                    ),
                   ),
-                ),
-                const SizedBox(height: Tokens.spaceXs),
-                Text.rich(
-                  TextSpan(
-                    text: name,
-                    children: [
-                      if (liked)
-                        TextSpan(
-                          text: '  ♥ ${tx(MessageKey.feedLiked)}',
-                          style: const TextStyle(color: Color(Tokens.colorPhoneLiked), fontSize: Tokens.fontHudSmall),
+                  const SizedBox(height: Tokens.spaceXs),
+                  Text.rich(
+                    TextSpan(
+                      text: name,
+                      children: [
+                        if (liked)
+                          TextSpan(
+                            text: '  ♥ ${tx(MessageKey.feedLiked)}',
+                            style: const TextStyle(color: Color(Tokens.colorPhoneLiked), fontSize: Tokens.fontHudSmall),
+                          ),
+                      ],
+                    ),
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      color: Color(Tokens.colorUiText),
+                      fontSize: Tokens.fontSpeed,
+                      fontWeight: FontWeight.w800,
+                    ),
+                  ),
+                  const SizedBox(height: Tokens.spaceSm),
+                  Wrap(
+                    alignment: WrapAlignment.center,
+                    spacing: Tokens.spaceXs,
+                    runSpacing: Tokens.spaceXs,
+                    children: [for (final (text, local) in tags) _Tag(text: text, local: local)],
+                  ),
+                  const SizedBox(height: Tokens.spaceMd),
+                  FractionallySizedBox(
+                    widthFactor: 0.7,
+                    child: FilledButton(
+                      style: FilledButton.styleFrom(
+                        backgroundColor: const Color(Tokens.colorPhoneGo),
+                        minimumSize: const Size.fromHeight(48),
+                      ),
+                      onPressed: () => phone.act(FeedOp.accept),
+                      child: Text(
+                        tx(MessageKey.feedGo),
+                        style: const TextStyle(
+                          color: Color(Tokens.colorUiText),
+                          fontSize: Tokens.fontHud,
+                          fontWeight: FontWeight.w800,
                         ),
-                    ],
-                  ),
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(
-                    color: Color(Tokens.colorUiText),
-                    fontSize: Tokens.fontSpeed,
-                    fontWeight: FontWeight.w800,
-                  ),
-                ),
-                const SizedBox(height: Tokens.spaceSm),
-                Wrap(
-                  alignment: WrapAlignment.center,
-                  spacing: Tokens.spaceXs,
-                  runSpacing: Tokens.spaceXs,
-                  children: [for (final (text, local) in tags) _Tag(text: text, local: local)],
-                ),
-                const SizedBox(height: Tokens.spaceMd),
-                FractionallySizedBox(
-                  widthFactor: 0.7,
-                  child: FilledButton(
-                    style: FilledButton.styleFrom(
-                      backgroundColor: const Color(Tokens.colorPhoneGo),
-                      minimumSize: const Size.fromHeight(48),
-                    ),
-                    onPressed: () => phone.act(FeedOp.accept),
-                    child: Text(
-                      tx(MessageKey.feedGo),
-                      style: const TextStyle(
-                        color: Color(Tokens.colorUiText),
-                        fontSize: Tokens.fontHud,
-                        fontWeight: FontWeight.w800,
                       ),
                     ),
                   ),
-                ),
-                const SizedBox(height: Tokens.spaceSm),
-                Text(
-                  '${tx(MessageKey.feedCount, {'n': s.at + 1, 'total': s.deck.length})} · ${tx(MessageKey.feedHint)}',
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(color: Color(Tokens.colorUiTextFaint), fontSize: Tokens.fontHudSmall),
-                ),
-              ],
+                  const SizedBox(height: Tokens.spaceSm),
+                  Text(
+                    '${tx(MessageKey.feedCount, {'n': s.at + 1, 'total': s.deck.length})} · ${tx(MessageKey.feedHint)}',
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(color: Color(Tokens.colorUiTextFaint), fontSize: Tokens.fontHudSmall),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
@@ -203,12 +212,20 @@ class _Tag extends StatelessWidget {
   );
 }
 
-/// M1 placeholder host: a soft silhouette (head and shoulders) until manga portraits exist.
+/// The host (specs/phone.md, specs/art.md): `npc/<id>_bust.png` anchored at the bottom, about
+/// [hostBustHeight] of the card tall; without the file a soft silhouette (head and shoulders).
 class _HostPortrait extends StatelessWidget {
-  const _HostPortrait();
+  const _HostPortrait({required this.id, required this.cardHeight});
+  final String? id;
+  final double cardHeight;
 
   @override
-  Widget build(BuildContext context) => CustomPaint(painter: _HostPainter(), child: const SizedBox.expand());
+  Widget build(BuildContext context) {
+    final silhouette = CustomPaint(painter: _HostPainter(), child: const SizedBox.expand());
+    final path = id == null ? null : artIndex.bust(id!);
+    if (path == null) return silhouette;
+    return HostBust(path: path, height: cardHeight * hostBustHeight, fallback: silhouette);
+  }
 }
 
 class _HostPainter extends CustomPainter {

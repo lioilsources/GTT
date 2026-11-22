@@ -78,3 +78,8 @@ flutter:
     - assets/shared/packs/nyc/chunks/
     - assets/shared/packs/prague/
     - assets/shared/packs/prague/chunks/
+    # Generated art (specs/art.md); asset dirs are not recursive, one line per folder.
+    - assets/shared/assets/
+    - assets/shared/assets/npc/
+    - assets/shared/assets/postcards/nyc/
+    - assets/shared/assets/postcards/prague/

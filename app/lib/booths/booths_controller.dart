@@ -167,6 +167,13 @@ class BoothsController extends ChangeNotifier {
     return i >= 0 ? chars[i].name : b.name;
   }
 
+  /// Host character id (the same pick as [hostName]), null without characters.
+  String? hostId(Booth b) {
+    final chars = loop.npc?.pack.characters ?? const [];
+    final i = boothHost(b.id, chars.length);
+    return i >= 0 ? chars[i].id : null;
+  }
+
   /// Minigame id of the offered spot ('' when unknown).
   String gameOf(BoothOffer o) => game.city.spots.items.where((s) => s.id == o.spot).firstOrNull?.minigame ?? '';
 

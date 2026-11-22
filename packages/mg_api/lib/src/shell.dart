@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:shared_gen/shared_gen.dart';
 
+import 'art.dart';
 import 'contract.dart';
 
 /// Lets a game body talk to the shell.
@@ -287,8 +288,8 @@ class _MinigameShellState extends State<MinigameShell> with WidgetsBindingObserv
   }
 }
 
-/// The opponent's short line on the result screen: placeholder portrait (initials on a token
-/// colour; manga portraits come later via ComfyUI) and a speech bubble.
+/// The opponent's short line on the result screen: portrait (`npc/<id>.png`, specs/art.md, else
+/// initials on a token colour) and a speech bubble.
 class OpponentLine extends StatelessWidget {
   const OpponentLine({super.key, required this.opponent, required this.winner});
 
@@ -297,17 +298,12 @@ class OpponentLine extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = Tokens.colorNpcPortraits;
     final initial = opponent.name.isEmpty ? '?' : opponent.name[0].toUpperCase();
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: Tokens.spaceSm),
       child: Row(
         children: [
-          CircleAvatar(
-            radius: 20,
-            backgroundColor: Color(colors[opponent.portrait % colors.length]),
-            child: Text(initial, style: const TextStyle(color: Color(Tokens.colorNpcPortraitText), fontWeight: FontWeight.w700)),
-          ),
+          NpcAvatar(id: opponent.id, initials: initial, index: opponent.portrait, size: 40),
           const SizedBox(width: Tokens.spaceSm),
           Expanded(
             child: Container(
@@ -319,7 +315,10 @@ class OpponentLine extends StatelessWidget {
               child: Text.rich(
                 TextSpan(
                   children: [
-                    TextSpan(text: '${opponent.name} ', style: const TextStyle(fontWeight: FontWeight.w700)),
+                    TextSpan(
+                      text: '${opponent.name} ',
+                      style: const TextStyle(fontWeight: FontWeight.w700),
+                    ),
                     TextSpan(text: opponent.line(winner)),
                   ],
                 ),

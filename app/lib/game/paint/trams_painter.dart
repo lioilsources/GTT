@@ -127,15 +127,21 @@ class TramsPainter {
     }
   }
 
-  /// Articulated tram cars of [layer].
-  void paintTrams(Canvas canvas, Trams trams, int layer, {required bool night}) {
+  /// Articulated tram cars of [layer]. [shadow] is the city's ground shadow by day (specs/style.md).
+  void paintTrams(
+    Canvas canvas,
+    Trams trams,
+    int layer, {
+    required bool night,
+    Color shadow = const Color(Tokens.colorCarShadow),
+  }) {
     final window = night ? const Color(Tokens.colorTramsWindowLit) : const Color(Tokens.colorTramsWindow);
     for (final c in trams.items) {
       if (c.layer != layer) continue;
       canvas.save();
       canvas.translate(c.x, c.y);
       canvas.rotate(c.heading);
-      _p.color = const Color(Tokens.colorCarShadow);
+      _p.color = shadow;
       canvas.drawRRect(_shadow, _p);
       _p.color = const Color(Tokens.colorTramsBody);
       canvas.drawRRect(_body, _p);
