@@ -45,6 +45,7 @@ export function pointInMesh(xy: Float32Array, indices: Uint32Array, px: number, 
 export class ZoneWorld {
   private readonly bodies = new Map<number, Body>();
   private readonly meshes = new Map<number, ZoneMesh[]>();
+  private readonly lines = new Map<number, Float32Array[]>();
 
   constructor(
     readonly world: World,
@@ -79,6 +80,7 @@ export class ZoneWorld {
     }
     if (zones.length > 0) this.meshes.set(key, zones);
     if (c.barriers.length === 0) return;
+    this.lines.set(key, c.barriers);
     const body = this.world.createBody({ type: 'static' });
     // Cars bounce off bollards as off buildings (specs/zones.md).
     const opt = {
@@ -111,6 +113,33 @@ export class ZoneWorld {
     if (body) this.world.destroyBody(body);
     this.bodies.delete(key);
     this.meshes.delete(key);
+    this.lines.delete(key);
+  }
+
+  /** True when a loaded bollard line passes closer than r to (x, y). */
+  nearBarrier(x: number, y: number, r: number): boolean {
+    const r2 = r * r;
+    for (const list of this.lines.values()) {
+      for (const line of list) {
+        for (let i = 2; i + 1 < line.length; i += 2) {
+          const ax = line[i - 2]!, ay = line[i - 1]!, bx = line[i]!, by = line[i + 1]!;
+          const dx = bx - ax, dy = by - ay;
+          const l2 = dx * dx + dy * dy;
+          const t = l2 > 0 ? Math.max(0, Math.min(1, ((x - ax) * dx + (y - ay) * dy) / l2)) : 0;
+          const ex = ax + dx * t - x, ey = ay + dy * t - y;
+          if (ex * ex + ey * ey < r2) return true;
+        }
+      }
+    }
+    return false;
+  }
+
+  /**
+   * The zone test for the player's mask (specs/zones.md): inside a zone, or was inside and a
+   * bollard line is still within the car's circumscribed radius, so the car is never held on it.
+   */
+  insideFor(x: number, y: number, radius: number, wasInside: boolean): boolean {
+    return this.inside(x, y) || (wasInside && this.nearBarrier(x, y, radius));
   }
 
   /** True when (x, y) is inside a loaded pedestrian zone (ground layer). */
