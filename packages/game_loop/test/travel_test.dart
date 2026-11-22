@@ -102,9 +102,9 @@ void main() {
       }
     });
 
-    test('ids and spec versions: travel 1, save 3', () {
+    test('ids and spec versions: travel 1, save 4', () {
       expect((TravelRules().id, TravelRules().specVersion), ('travel', 1));
-      expect(SaveRules().specVersion, 3);
+      expect(SaveRules().specVersion, 4);
     });
   });
 
@@ -238,7 +238,7 @@ void main() {
     });
   });
 
-  group('save stations (specs/save.md v2, format 4 since v3)', () {
+  group('save stations (specs/save.md v2, format 5 since v4)', () {
     final sc = SaveConfig.fromTuning(tuning, 'nyc', CarId.values.map((c) => c.id));
     final v2 = <String, Object?>{
       'version': 2,
@@ -255,15 +255,15 @@ void main() {
     };
     String fresh() => canonical(freshSave(sc));
 
-    test('fresh save is version 4 with no stations', () {
+    test('fresh save is version 5 with no stations', () {
       final s = freshSave(sc);
-      expect(s['version'], 4);
+      expect(s['version'], 5);
       expect(s['stations'], isEmpty);
     });
 
     test('migration 2 → 3: everything kept, stations = [] (even when a v2 save carries some)', () {
       final s = normalizeSave(sc, v2);
-      expect(s['version'], 4);
+      expect(s['version'], 5);
       expect([s['cash'], (s['settings'] as Map)['scheme'], s['stations']], [300, 'b', <String>[]]);
       expect(
         normalizeSave(sc, {
@@ -295,7 +295,7 @@ void main() {
         fresh(),
       );
       expect(canonical(normalizeSave(sc, {...v2, 'version': 3, 'stations': 'a'})), fresh());
-      expect(canonical(normalizeSave(sc, {...v2, 'version': 5})), fresh());
+      expect(canonical(normalizeSave(sc, {...v2, 'version': 6})), fresh());
     });
 
     test('round trip of a v3 save through JSON is exact', () {

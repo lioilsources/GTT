@@ -15,6 +15,7 @@ import '../cities/cities.dart';
 import '../cities/passport_percent.dart';
 import '../game/metropole_game.dart';
 import '../game/pause.dart';
+import '../garage/garage_controller.dart';
 import '../l10n/app_localizations.dart';
 import '../loop/loop_controller.dart';
 import '../loop/loop_layer.dart';
@@ -65,6 +66,7 @@ class _GameScreenState extends State<GameScreen> {
   PhotoController? _photo;
   ShopsController? _shops;
   WeatherController? _weather;
+  GarageController? _garage;
   final SaveStore _store = FileSaveStore();
   final CityStore _cities = FileCityStore();
   Object? _saved;
@@ -80,6 +82,7 @@ class _GameScreenState extends State<GameScreen> {
     if (!_shown) _game.then((g) => g.onRemove(), onError: (_) {});
     _loop?.save();
     _weather?.dispose();
+    _garage?.dispose();
     _shops?.dispose();
     _photo?.dispose();
     _fastTravel?.dispose();
@@ -227,6 +230,8 @@ class _GameScreenState extends State<GameScreen> {
           final shops = _shops ??= ShopsController(game, phone, loop);
           // Weather (specs/weather.md): a new module per game, so a city switch starts clear.
           final weather = _weather ??= WeatherController(game);
+          // Tuning and cosmetics (specs/garage.md): the garage tabs, the tuned body, the looks.
+          final garage = _garage ??= GarageController(game, loop, phone: phone)..shelf = shops.shelf;
           return Stack(
             fit: StackFit.expand,
             children: [
@@ -247,8 +252,9 @@ class _GameScreenState extends State<GameScreen> {
                   if (a == CarAction.board) return game.boardCandidate();
                   await game.pauseOverlays.hold(
                     GameOverlay.garage,
-                    showGarage(context, game.fleet, shelf: shops.shelf),
+                    showGarage(context, game.fleet, shelf: shops.shelf, garage: garage),
                   );
+                  garage.leave();
                 },
                 onHop: game.hop,
                 onTuning: () => showTuningPanel(

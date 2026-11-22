@@ -126,6 +126,13 @@ class DriveWorld {
 
   double _gripScale = 1;
 
+  /// The parameters the body of the player's car is built from (specs/garage.md "Účinek na jízdu"):
+  /// the client maps the catalog [spec] to the tuned one of an owned car; null or the same spec =
+  /// the catalog. Applied at every spawn, car switch and rebuild; [spec] stays the catalog car.
+  CarSpec Function(CarSpec spec)? bodySpec;
+
+  CarSpec get _bodySpec => bodySpec?.call(spec) ?? spec;
+
   /// Called before every fixed step (the benchmark autopilot sets the input here).
   void Function(double step)? beforeStep;
 
@@ -136,7 +143,7 @@ class DriveWorld {
     hop
       ..air = 0
       ..t = 0;
-    car = Car(world, spec, _d, x: x, y: y, heading: heading, scale: tuning.carScale)..gripScale = _gripScale;
+    car = Car(world, _bodySpec, _d, x: x, y: y, heading: heading, scale: tuning.carScale)..gripScale = _gripScale;
     _spawned = true;
     layers.reset(x, y);
     car.setLayer(layers.layer);
@@ -170,12 +177,18 @@ class DriveWorld {
   }
 
   /// Rebuilds the car after `car_scale` changed in the debug panel.
-  void rescaleCar() {
-    final x = car.x, y = car.y, h = car.heading, v = car.velocity;
+  void rescaleCar() => _rebuild(keepVelocity: true);
+
+  /// Builds the body again from [bodySpec] in the same place at speed 0 (leaving the garage with
+  /// new upgrades, specs/garage.md).
+  void rebuildCar() => _rebuild(keepVelocity: false);
+
+  void _rebuild({required bool keepVelocity}) {
+    final x = car.x, y = car.y, h = car.heading, v = car.velocity.clone();
     final l = car.layer;
     car.destroy();
-    car = Car(world, spec, _d, x: x, y: y, heading: h, scale: tuning.carScale)..gripScale = _gripScale;
-    car.body.linearVelocity = v;
+    car = Car(world, _bodySpec, _d, x: x, y: y, heading: h, scale: tuning.carScale)..gripScale = _gripScale;
+    if (keepVelocity) car.body.linearVelocity = v;
     car.setLayer(l);
     car.setAirborne(hop.airborne);
     _zoneMask();

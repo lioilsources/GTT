@@ -77,7 +77,7 @@ void main() {
         },
       });
       final typed = saveOf(s);
-      expect((typed.version, typed.cash, typed.car, typed.best['oko']!.stars), (4, 90, 'taxi_metro', 3));
+      expect((typed.version, typed.cash, typed.car, typed.best['oko']!.stars), (5, 90, 'taxi_metro', 3));
       expect(typed.cars, ['taxi_metro']);
     });
     test('a JSON round trip is exact', () {
