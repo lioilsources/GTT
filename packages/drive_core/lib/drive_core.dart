@@ -19,6 +19,7 @@ export 'src/gps.dart';
 export 'src/hop.dart';
 export 'src/pedestrians.dart';
 export 'src/police/police.dart';
+export 'src/police/roadblock.dart';
 export 'src/police/rules.dart';
 export 'src/police/sense.dart';
 export 'src/props.dart';

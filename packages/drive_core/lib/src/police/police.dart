@@ -5,6 +5,7 @@ import 'package:world_engine/core.dart';
 import '../drive_world.dart';
 import '../fleet.dart';
 import '../traffic/traffic.dart';
+import 'roadblock.dart';
 import 'rules.dart';
 import 'sense.dart';
 
@@ -48,6 +49,17 @@ class Police {
   final List<void Function(String kind)> onOffence = [];
   final List<void Function(int amount)> onFined = [];
 
+  /// `roadblock {x, y}`: a roadblock was put up there (specs/roadblock.md "HUD"); the HUD shows
+  /// `policeRoadblock`.
+  final List<void Function(double x, double y)> onRoadblock = [];
+
+  /// The two standing patrols of the current roadblock; empty when none stands.
+  List<TrafficCar> get roadblock => List.unmodifiable(_block);
+
+  /// Where the current roadblock stands (meaningful only while [roadblock] is not empty).
+  double get roadblockX => _blockX;
+  double get roadblockY => _blockY;
+
   final Map<int, List<BuildingData>> _buildings = {};
   final Expando<double> _uturnAt = Expando();
   final List<void Function()> _unsub = [];
@@ -58,6 +70,14 @@ class Police {
   bool _sidewalkArmed = true;
   double _crashX = 0;
   double _crashY = 0;
+
+  // Roadblock (specs/roadblock.md): its cars and point, age, cooldown left, time since the last try.
+  final List<TrafficCar> _block = [];
+  double _blockX = 0;
+  double _blockY = 0;
+  double _blockAge = 0;
+  double _blockCool = 0;
+  double _blockTry = double.infinity;
 
   int get wantedLevel => state.level;
   bool get enabled => tuning.police.enabled;
@@ -150,6 +170,7 @@ class Police {
   void _tick(double step) {
     final t = tuning.police, c = drive.car;
     _time += step;
+    _roadblocks(step);
     _patrols(step);
     seen = _anySees();
 
@@ -193,7 +214,8 @@ class Police {
     final want = t.patrols.isEmpty ? 0 : t.patrols[math.min(level, t.patrols.length - 1)];
     var n = 0;
     for (final p in tr.cars) {
-      if (!p.police) continue;
+      // Roadblock patrols stand: they neither count towards patrols[level] nor chase.
+      if (!p.police || p.blocking) continue;
       n++;
       final dx = c.x - p.x, dy = c.y - p.y;
       final d2 = dx * dx + dy * dy;
@@ -220,6 +242,85 @@ class Police {
       if (p.police || dx * dx + dy * dy < min2) continue;
       p.police = true;
       return;
+    }
+  }
+
+  // ---------- roadblock (specs/roadblock.md)
+
+  /// Removes the roadblock (if any) and starts its cooldown. The client calls it on a player
+  /// respawn (not on a car swap); a traffic reset is noticed by the police itself.
+  void clearRoadblock() {
+    if (_block.isEmpty) return;
+    final tr = drive.traffic;
+    for (final c in _block) {
+      tr?.removeCar(c);
+    }
+    _block.clear();
+    _blockCool = tuning.police.roadblock.cooldownS;
+  }
+
+  void _roadblocks(double step) {
+    final rb = tuning.police.roadblock, tr = drive.traffic!, c = drive.car;
+    final level = state.level;
+    _blockCool = math.max(0, _blockCool - step);
+    _blockTry += step;
+    if (_block.isNotEmpty) {
+      _blockAge += step;
+      final dx = c.x - _blockX, dy = c.y - _blockY;
+      final gone = _block.any((b) => !tr.cars.contains(b));
+      if (gone || dx * dx + dy * dy > rb.clearM * rb.clearM || level < rb.level || _blockAge > rb.ttlS) {
+        clearRoadblock();
+      }
+      return;
+    }
+    if (level < rb.level || _blockCool > 0 || _blockTry < tuning.police.pickIntervalS) return;
+    _blockTry = 0;
+    _tryRoadblock();
+  }
+
+  void _tryRoadblock() {
+    final rb = tuning.police.roadblock, tr = drive.traffic!, c = drive.car;
+    final spot = roadblockSpot(
+      drive.city.graph,
+      c.x,
+      c.y,
+      c.heading,
+      c.layer,
+      tuning.layers.searchM,
+      rb.aheadM,
+      rb.probeM,
+    );
+    // A spot in a pedestrian zone gives up too.
+    if (spot == null || drive.zones.contains(spot.x, spot.y)) return;
+    final half = drive.city.graph.edges[spot.edge].length / 2;
+    // The pose is set below; addCar refuses a one-way edge against its direction, so try both.
+    TrafficCar? add() => tr.addCar(spot.edge, 1, half, 0) ?? tr.addCar(spot.edge, -1, half, 0);
+    final a = add();
+    if (a == null) return;
+    final b = add();
+    if (b == null) {
+      tr.removeCar(a);
+      return;
+    }
+    // Normal of the edge (left of from → to) and the heading across the road.
+    final nx = -spot.uy, ny = spot.ux;
+    final h = math.atan2(spot.uy, spot.ux) + math.pi / 2;
+    final l = rb.lateralM;
+    for (final (car, side) in [(a, 1.0), (b, -1.0)]) {
+      car
+        ..police = true
+        ..blocking = true
+        ..pursuing = false;
+      tr.setPose(car, spot.x + nx * l * side, spot.y + ny * l * side, h);
+    }
+    _block
+      ..add(a)
+      ..add(b);
+    _blockX = spot.x;
+    _blockY = spot.y;
+    _blockAge = 0;
+    for (final f in onRoadblock) {
+      f(spot.x, spot.y);
     }
   }
 }

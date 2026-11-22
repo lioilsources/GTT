@@ -62,6 +62,10 @@ class TrafficCar {
   /// A chasing patrol brakes to stop this far from its goal.
   double goalStopM = 0;
 
+  /// Roadblock patrol (specs/roadblock.md): stands where it was put, never drives, turns or
+  /// despawns with the traffic; the police module removes it.
+  bool blocking = false;
+
   // Path state.
   RoadEdge edge;
   int dir;
@@ -203,7 +207,7 @@ class Traffic {
     for (var i = cars.length - 1; i >= 0; i--) {
       final c = cars[i];
       final dx = c.x - px, dy = c.y - py;
-      if (dx * dx + dy * dy > d2) _remove(i);
+      if (!c.blocking && dx * dx + dy * dy > d2) _remove(i);
     }
     _spawn(dt, px, py);
 
@@ -376,6 +380,30 @@ class Traffic {
     return c;
   }
 
+  /// Removes [car] (a roadblock patrol); false when it is no longer in the traffic.
+  bool removeCar(TrafficCar car) {
+    final i = cars.indexOf(car);
+    if (i < 0) return false;
+    _remove(i);
+    return true;
+  }
+
+  /// Puts [c] standing at (x, y) facing [heading], body included (a roadblock patrol,
+  /// specs/roadblock.md).
+  void setPose(TrafficCar c, double x, double y, double heading) {
+    c
+      ..x = x
+      ..y = y
+      ..heading = heading
+      ..speed = 0
+      ..braking = false;
+    _p.setValues(x, y);
+    c.body
+      ..setTransform(_p, Rot.fromAngle(heading))
+      ..linearVelocity = Vector2.zero()
+      ..angularVelocity = 0;
+  }
+
   void _remove(int i) {
     final c = cars[i];
     c.body.destroy();
@@ -398,6 +426,18 @@ class Traffic {
         ..x = c.body.position.x
         ..y = c.body.position.y
         ..heading = c.body.angle;
+      return true;
+    }
+    if (c.blocking) {
+      // A roadblock patrol stands still (specs/roadblock.md).
+      c
+        ..hitTimer = math.max(0, c.hitTimer - dt)
+        ..speed = 0
+        ..braking = false;
+      _v.setZero();
+      c.body
+        ..linearVelocity = _v
+        ..angularVelocity = 0;
       return true;
     }
     if (c.hitTimer > 0) {
