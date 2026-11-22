@@ -1,0 +1,26 @@
+/* Weather (specs/weather.md): HUD icon and the toast on a change; colours from design/tokens.json. */
+#weather-icon {
+  position: absolute;
+  left: calc(env(safe-area-inset-left) + 12px);
+  top: calc(env(safe-area-inset-top) + 8px);
+  display: flex;
+  align-items: center;
+  padding: var(--space-sm);
+  color: var(--color-weather-icon);
+}
+#weather-icon svg {
+  width: var(--font-hud);
+  height: var(--font-hud);
+}
+#weather-toast[hidden] {
+  display: none;
+}
+#weather-toast {
+  position: fixed;
+  left: 50%;
+  top: calc(env(safe-area-inset-top) + 184px);
+  transform: translateX(-50%);
+  z-index: 25;
+  font-weight: 700;
+  color: var(--color-weather-icon);
+}

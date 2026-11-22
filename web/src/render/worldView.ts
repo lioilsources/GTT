@@ -153,6 +153,9 @@ export class WorldView {
 
   private readonly H: number;
   private readonly flatMat: StandardMaterial;
+  /** Roads, sidewalks and alleys (with their markings): own material for the wet look (specs/weather.md). */
+  private readonly roadMat: StandardMaterial;
+  private wet = 1;
   private readonly buildingMat: StandardMaterial;
   private readonly shadowMat: StandardMaterial;
   private readonly textures: { day: Texture; night: Texture };
@@ -215,6 +218,7 @@ export class WorldView {
     this.palette = this.dayPalette;
 
     this.flatMat = this.unlit('flat');
+    this.roadMat = this.unlit('roads');
     this.buildingMat = this.unlit('buildings');
     // Cast shadows must not add up where they overlap (specs/style.md v2): all shadow triangles
     // lie in one plane and write depth, and a fragment at equal depth fails LESS, so each pixel
@@ -361,6 +365,16 @@ export class WorldView {
     this.scene.clearColor = new Color4(l[0], l[1], l[2], 1);
   }
 
+  /**
+   * Wet roads (specs/weather.md "Déšť"): road, sidewalk and alley colours × [f] (1 − wet_darken
+   * in full rain, 1 dry). A material colour, so no geometry is rebuilt during the blend.
+   */
+  setWet(f: number): void {
+    if (f === this.wet) return;
+    this.wet = f;
+    this.roadMat.emissiveColor.set(f, f, f);
+  }
+
   setNight(night: boolean): void {
     this.palette = night ? nightPalette : this.dayPalette;
     this.applyClearColor();
@@ -445,9 +459,9 @@ export class WorldView {
         if (this.roads.has(k)) continue;
         const g = this.roadGeo.get(k);
         const m: RoadMeshes = {
-          ground: g && !g.ground.empty ? this.world(this.mesh(`roads-${k}`, g.ground, this.flatMat), false) : null,
-          bridge: g && !g.bridge.empty ? this.world(this.mesh(`bridges-${k}`, g.bridge, this.flatMat), true) : null,
-          tunnel: g && !g.tunnel.empty ? this.world(this.mesh(`tunnels-${k}`, g.tunnel, this.flatMat), false) : null,
+          ground: g && !g.ground.empty ? this.world(this.mesh(`roads-${k}`, g.ground, this.roadMat), false) : null,
+          bridge: g && !g.bridge.empty ? this.world(this.mesh(`bridges-${k}`, g.bridge, this.roadMat), true) : null,
+          tunnel: g && !g.tunnel.empty ? this.world(this.mesh(`tunnels-${k}`, g.tunnel, this.roadMat), false) : null,
         };
         m.tunnel?.setEnabled(this.inTunnel);
         this.roads.set(k, m);

@@ -27,6 +27,7 @@ import { installPolice } from './police';
 import { installBooths } from './booths';
 import { installPhoto } from './photo';
 import { installShops } from './shops';
+import { installWeather } from './weather';
 import { installLoop } from './loop';
 import { opponentIndex } from './loop/logic';
 import { loadArt } from './art';
@@ -292,6 +293,8 @@ async function main(): Promise<void> {
   const shops = installShops({
     city, tuning, locale, t, drive, fleet, phone, loop, carsHud, npcPack, hud: $('hud'), rig: view.rig,
   });
+  // Weather (specs/weather.md): random seed per start, starts clear; ?weather= sets a kind.
+  const weather = installWeather({ cityId, tuning, t, drive, view, hud: $('hud'), params });
   installTravel({ cityId, tuning, t, phone, tracker: passport.tracker, store: loop.store, save: () => loop.save(), onSwitch: () => booths.clear() });
   // Fast travel by metro and taxi (specs/travel.md): stations unlock by passing, the move resets
   // traffic, patrols and pedestrians like a teleport.
@@ -330,6 +333,8 @@ async function main(): Promise<void> {
       // Too many beers (specs/shops.md "Piva"): input ignored, the car brakes to a stop.
       shops.brake();
     }
+    // Ticks with the game clock; the grip multiplier goes into this frame's drive step.
+    weather.update(stepDt, dt);
     drive.update(stepDt);
     police.update(stepDt, dt);
     phone.update(dt);
@@ -537,7 +542,7 @@ async function main(): Promise<void> {
 
   if (import.meta.env.DEV || params.has('debug')) {
     (window as unknown as Record<string, unknown>)['metro'] = {
-      engine, view, drive, fleet, city, tuning, frameTimes, pilot, bench, peds, phone, passport, loop, taxi, police: police.police, booths, fastTravel, photo, shops,
+      engine, view, drive, fleet, city, tuning, frameTimes, pilot, bench, peds, phone, passport, loop, taxi, police: police.police, booths, fastTravel, photo, shops, weather,
       timing: () => ({ firstFrameMs, loadMs }),
     };
   }
