@@ -6,7 +6,7 @@ import type { CarOwner } from './rules';
 
 /**
  * A parked car at a curb (specs/cars.md "Zaparkovaná auta"). The fleet keeps the pose in sync with
- * its dynamic body (v2: it can be pushed) and fills the half extents.
+ * its dynamic body (it can be pushed) and fills the half extents.
  */
 export interface ParkedCar {
   carId: string;

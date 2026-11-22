@@ -90,7 +90,7 @@ export class CarFleet {
 
   /** Forgets cars the player left behind once they are far away (cars.parked.forget_m). */
   update(): void {
-    // Pushed cars: copy the pose of awake bodies back (specs/cars.md v2).
+    // Pushed cars: copy the pose of awake bodies back (specs/cars.md).
     for (const [p, b] of this.bodies) {
       if (!b.isAwake()) continue;
       const q = b.getPosition(), a = b.getAngle();

@@ -9,7 +9,7 @@ export const CAT_BUILDINGS = 1;
 export const CAT_CAR = 2;
 /** AI traffic (specs/traffic.md): collides with the player's car and, on the ground, parked cars. */
 export const CAT_TRAFFIC = 4;
-/** Parked cars (specs/cars.md v2): dynamic bodies the player and traffic can push. */
+/** Parked cars (specs/cars.md): dynamic bodies the player and traffic can push. */
 export const CAT_PARKED = 8;
 
 const clamp = (v: number, lo: number, hi: number): number => Math.min(hi, Math.max(lo, v));
