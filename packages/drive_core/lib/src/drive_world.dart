@@ -7,6 +7,7 @@ import 'car.dart';
 import 'controls.dart';
 import 'props.dart';
 import 'traffic/traffic.dart';
+import 'trams/trams.dart';
 
 /// Tracks which road edge the car is on, and with it the layer (−1 tunnel, 0, +1 bridge).
 ///
@@ -70,6 +71,12 @@ class DriveWorld {
     layers = LayerTracker(city.graph, tuning.layers);
     spawn(city.startX, city.startY, city.startHeading);
     traffic = tuning.traffic.enabled ? Traffic(world, city, tuning) : null;
+    trams = tuning.trams.enabled && !city.trams.isEmpty ? Trams(world, city.trams, tuning) : null;
+    final tr = traffic, tm = trams;
+    if (tr != null && tm != null) {
+      tr.tramCars = tm.items;
+      tm.traffic = tr.cars;
+    }
   }
 
   final City city;
@@ -83,6 +90,10 @@ class DriveWorld {
 
   /// AI traffic and lights (specs/traffic.md); null when `traffic.enabled` is off.
   late final Traffic? traffic;
+
+  /// Trams on the track graph (specs/trams.md); null when `trams.enabled` is off or the city has
+  /// no tracks.
+  late final Trams? trams;
   final input = ControlInput();
   final Map<int, Body> _colliders = {};
   final Map<int, PropSet> props = {};
@@ -175,10 +186,12 @@ class DriveWorld {
     beforeStep?.call(step);
     car.drive(input, step, cruise: tuning.speedMps.cruise, top: tuning.speedMps.topDefault);
     traffic?.preStep(step, car);
+    trams?.preStep(step, car);
     world.step(step, subStepCount: _d.substeps);
     layers.update(car.x, car.y);
     car.setLayer(layers.layer);
     traffic?.postStep(car);
+    trams?.postStep(car);
     if (car.layer != 0) _rails();
     _props(step);
     _skidMarks();
@@ -296,6 +309,7 @@ class DriveWorld {
 
   void dispose() {
     traffic?.dispose();
+    trams?.dispose();
     world.destroy();
   }
 }

@@ -105,7 +105,7 @@ class CarFleet {
       Polygon.box(hl, hw),
       ShapeDef(
         density: s.mass * t.massFactor / (4 * hl * hw),
-        filter: Filter(categoryBits: catParked, maskBits: catCar | catBuildings | catParked | catTraffic),
+        filter: Filter(categoryBits: catParked, maskBits: catCar | catBuildings | catParked | catTraffic | catTram),
         material: SurfaceMaterial(friction: d.carFriction, restitution: d.carRestitution),
       ),
     );

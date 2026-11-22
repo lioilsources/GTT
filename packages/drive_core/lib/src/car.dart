@@ -15,6 +15,10 @@ const int catTraffic = 4;
 /// Parked cars (specs/cars.md): dynamic bodies the player and traffic can push.
 const int catParked = 8;
 
+/// Tram cars (specs/trams.md): kinematic, never pushed; collide with the player, traffic and parked
+/// cars in the same layer.
+const int catTram = 64;
+
 /// Player car on a Box2D body with a custom tyre model (METROPOLE_PLAN 7.2):
 /// each step the lateral velocity at each axle is cancelled by an impulse capped by
 /// that axle's grip; past the cap the axle slides, which is the drift.
@@ -35,7 +39,7 @@ class Car {
       ShapeDef(
         density: spec.mass / (4 * halfLength * halfWidth),
         material: SurfaceMaterial(friction: t.carFriction, restitution: t.carRestitution),
-        filter: Filter(categoryBits: catCar, maskBits: catBuildings | catTraffic | catParked),
+        filter: Filter(categoryBits: catCar, maskBits: catBuildings | catTraffic | catParked | catTram),
         enableContactEvents: true,
       ),
     );
@@ -89,7 +93,8 @@ class Car {
     layer = l;
     // Buildings only exist on the ground layer; bridges and tunnels use rails instead. Traffic
     // cars switch their own mask by layer (traffic.dart).
-    _shape.filter = Filter(categoryBits: catCar, maskBits: (l == 0 ? catBuildings | catParked : 0) | catTraffic);
+    _shape.filter =
+        Filter(categoryBits: catCar, maskBits: (l == 0 ? catBuildings | catParked : 0) | catTraffic | catTram);
   }
 
   /// Applies controls and tyre forces; call before `world.step`.

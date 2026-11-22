@@ -17,6 +17,7 @@ import 'paint/pedestrians_painter.dart';
 import 'paint/police_painter.dart';
 import 'paint/props_painter.dart';
 import 'paint/traffic_painter.dart';
+import 'paint/trams_painter.dart';
 import '../ui/passport.dart' show passportCityOf;
 
 /// Everything loaded before the first frame.
@@ -141,6 +142,8 @@ class MetropoleGame extends Game {
       tuning: tuning,
       textures: data.textures,
     );
+    // Tracks are part of the city even with trams switched off (specs/trams.md).
+    _tramsPainter = city.trams.isEmpty ? null : TramsPainter(city.trams, tuning.trams);
     camera.snap(drive.car.x, drive.car.y, drive.car.heading, tuning);
     peds = PedestrianWorld(city, tuning);
     _pedBubbles = PedBubblePainter(
@@ -160,6 +163,7 @@ class MetropoleGame extends Game {
   double _policeClock = 0;
   late final ChunkStreamer streamer;
   late final WorldRenderer renderer;
+  late final TramsPainter? _tramsPainter;
   final camera = CameraRig();
   late ControlScheme scheme;
   final hud = ValueNotifier<HudState>(const HudState());
@@ -361,9 +365,10 @@ class MetropoleGame extends Game {
       camera,
       playerLayer: car.layer,
       drawDynamic: (c, layer) {
+        final r = camera.visibleRadius(_size, tuning);
+        _tramsPainter?.paintTracks(c, layer, camera.x, camera.y, r);
         if (layer == 0) {
           paintSkids(c, drive.skids, car.halfWidth * 0.32);
-          final r = camera.visibleRadius(_size, tuning);
           paintProps(c, drive.propsNear(car.x, car.y, r), night: night);
           paintParked(c, fleet.parked.where((p) => (p.x - car.x).abs() < r && (p.y - car.y).abs() < r), data.cars, tuning);
           paintPedestrians(c, peds);
@@ -378,6 +383,8 @@ class MetropoleGame extends Game {
           paintTraffic(c, tr, layer, night: night);
           paintPolice(c, tr, layer, timeS: _policeClock, blinkS: tuning.police.lightBlinkS, night: night);
         }
+        final tm = drive.trams;
+        if (tm != null) _tramsPainter?.paintTrams(c, tm, layer, night: night);
         if (layer == car.layer) paintCar(c, car, night: night);
       },
     );
