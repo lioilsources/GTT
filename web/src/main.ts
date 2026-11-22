@@ -132,6 +132,13 @@ async function main(): Promise<void> {
   const tramView = drive.trams ? new TramView(view.scene, drive.trams, tuning) : null;
   // Police and wanted level (specs/police.md).
   const police = installPolice({ drive, cars: fleet, tuning, t, hud: $('hud'), scene: view.scene });
+  // Vehicle ground shadows in the city skin's colour by day (specs/style.md).
+  const applyShadows = (): void => {
+    trafficView?.setShadow(view.palette.shadow);
+    tramView?.setShadow(view.palette.shadow);
+    police.setShadow(view.palette.shadow);
+  };
+  applyShadows();
   const streamer = new ChunkStreamer(city, source, tuning, (c) => {
     drive.addChunk(c);
     fleet.addChunk(c);
@@ -187,6 +194,7 @@ async function main(): Promise<void> {
     view.setNight(night);
     if (drive.traffic) drive.traffic.night = night;
     tramView?.setNight(night);
+    applyShadows();
   });
   $('btn-respawn').title = t('respawn');
   $('btn-respawn').addEventListener('click', () => {
@@ -251,6 +259,7 @@ async function main(): Promise<void> {
         view.setNight(night);
         if (drive.traffic) drive.traffic.night = night;
         tramView?.setNight(night);
+        applyShadows();
       },
     },
   });

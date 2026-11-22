@@ -13,6 +13,7 @@ import { LIGHT_AMBER, LIGHT_GREEN } from '../traffic/roadRules';
 import type { Traffic } from '../traffic/traffic';
 import { Tris, Z } from './geometry';
 import { rgba, type Rgba } from './palette';
+import { setShadowColour } from './shadow';
 
 /**
  * Traffic cars and traffic-light indicators (specs/traffic.md "Kreslení"): thin instances with
@@ -105,6 +106,11 @@ export class TrafficView {
     mesh.isPickable = false;
     mesh.alwaysSelectAsActiveMesh = true;
     return mesh;
+  }
+
+  /** Ground shadow colour (the city skin's `shadow` by day, specs/style.md); the first rect of the details. */
+  setShadow(c: Rgba): void {
+    setShadowColour(this.details, 4, c);
   }
 
   /** Writes the instance buffers; call once per frame before scene.render. */

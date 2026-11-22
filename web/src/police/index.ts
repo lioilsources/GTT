@@ -4,6 +4,7 @@ import type { MessageKey } from '../gen/i18n';
 import type { Tuning } from '../gen/tuning';
 import type { DriveWorld } from '../drive/driveWorld';
 import type { ChunkData } from '../world/chunk';
+import type { Rgba } from '../render/palette';
 import { PoliceHud } from './hud';
 import { Police, type StolenSource } from './police';
 import { PoliceView } from './view';
@@ -17,6 +18,8 @@ export interface PoliceFeature {
   removeChunk(c: ChunkData): void;
   /** Per frame: `stepDt` = driving dt (0 while the world is paused), `dt` = real frame dt. */
   update(stepDt: number, dt: number): void;
+  /** Patrol ground shadow colour (specs/style.md). */
+  setShadow(c: Rgba): void;
 }
 
 export function installPolice(o: {
@@ -40,5 +43,6 @@ export function installPolice(o: {
       view?.update(stepDt, o.drive.car.layer);
       hud?.update(dt);
     },
+    setShadow: (c) => view?.setShadow(c),
   };
 }

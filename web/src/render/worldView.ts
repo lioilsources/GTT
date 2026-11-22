@@ -1,6 +1,9 @@
 import type { AbstractEngine } from '@babylonjs/core/Engines/abstractEngine';
 import { TargetCamera } from '@babylonjs/core/Cameras/targetCamera';
 import { Material } from '@babylonjs/core/Materials/material';
+import { ShaderStore } from '@babylonjs/core/Engines/shaderStore';
+import { PostProcess } from '@babylonjs/core/PostProcesses/postProcess';
+import type { SubMesh } from '@babylonjs/core/Meshes/subMesh';
 import { StandardMaterial } from '@babylonjs/core/Materials/standardMaterial';
 import type { Texture } from '@babylonjs/core/Materials/Textures/texture';
 import { Color3, Color4 } from '@babylonjs/core/Maths/math.color';
@@ -22,7 +25,8 @@ import type { ChunkData } from '../world/chunk';
 import { chunkKey, type City } from '../world/model';
 import { cameraHeight, displayHeight, extrusionScale, fovX } from '../world/camera';
 import { bollardPoints, bollardTris, buildRoads, buildingTris, groundTris, Tris, Z, type RoadChunk } from './geometry';
-import { dayPalette, nightPalette, rgba, type Palette, type Rgba } from './palette';
+import { cityInks, cityPalette, dayPalette, nightPalette, rgba, type Palette, type Rgba } from './palette';
+import { RISOGRAPH_FRAGMENT, RISOGRAPH_UNIFORMS, risographOn, risographUniforms } from './risograph';
 import { facadeTexture } from './textures';
 import { carShadowTris, carTris, carUndersideTris, parkedTris } from '../cars/carTris';
 import { hopArc, hopFlip } from '../drive/hop';
@@ -86,6 +90,28 @@ function wrap(a: number): number {
   return a;
 }
 
+/**
+ * Layer masks for the risograph (specs/style.md): it applies to the world layer only. World meshes
+ * (ground, roads, zones, buildings, rails, tunnel shade) carry WORLD_LAYER; buildings and bridge
+ * decks also DEPTH_LAYER, so the second camera redraws them depth-only and cars still hide behind
+ * them. Everything else keeps Babylon's default mask (0x0FFFFFFF).
+ */
+const WORLD_LAYER = 0x10000000;
+const DEPTH_LAYER = 0x20000000;
+const DYNAMIC_LAYERS = 0x0fffffff;
+const ALL_LAYERS = 0xffffffff;
+
+ShaderStore.ShadersStore['risographFragmentShader'] = RISOGRAPH_FRAGMENT;
+
+/** Opaque order of the dynamic camera: depth-only world casters first, then Babylon's material order. */
+function depthFirst(a: SubMesh, b: SubMesh): number {
+  const ma = a.getMesh(), mb = b.getMesh();
+  const da = (ma.layerMask & DEPTH_LAYER) !== 0 ? 0 : 1, db = (mb.layerMask & DEPTH_LAYER) !== 0 ? 0 : 1;
+  if (da !== db) return da - db;
+  if (ma.material && mb.material) return ma.material.uniqueId - mb.material.uniqueId;
+  return ma.uniqueId - mb.uniqueId;
+}
+
 /** Per-frame numbers for the FPS overlay. */
 export interface RenderStats {
   chunks: number;
@@ -120,6 +146,8 @@ export class WorldView {
   readonly camera: TargetCamera;
   readonly rig = new CameraRig();
   palette: Palette = dayPalette;
+  /** Day palette of the loaded city (specs/style.md); a city switch reloads the page (specs/cities.md). */
+  readonly dayPalette: Palette;
   readonly stats: RenderStats = { chunks: 0, drawCalls: 0, triangles: 0 };
 
   private readonly H: number;
@@ -154,6 +182,10 @@ export class WorldView {
   private fleet: CarFleet | null = null;
   private parkedMesh: Mesh | null = null;
   private parkedVersion = -1;
+  /** Risograph: second camera for everything above the world layer, the pass, depth-only material. */
+  private readonly topCamera: TargetCamera;
+  private readonly depthMat: StandardMaterial;
+  private riso: PostProcess | null = null;
 
   constructor(
     readonly engine: AbstractEngine,
@@ -170,15 +202,23 @@ export class WorldView {
     cam.fovMode = TargetCamera.FOVMODE_HORIZONTAL_FIXED;
     cam.minZ = this.H * 0.25;
     cam.maxZ = this.H * 1.5;
+    const top = (this.topCamera = new TargetCamera('camera-top', new Vector3(0, this.H, 0), scene, false));
+    top.fovMode = TargetCamera.FOVMODE_HORIZONTAL_FIXED;
+    top.minZ = cam.minZ;
+    top.maxZ = cam.maxZ;
+    this.dayPalette = cityPalette(city.id);
+    this.palette = this.dayPalette;
 
     this.flatMat = this.unlit('flat');
     this.buildingMat = this.unlit('buildings');
     this.textures = { day: facadeTexture(scene, false), night: facadeTexture(scene, true) };
     this.buildingMat.diffuseTexture = this.textures.day;
     this.buildingMat.emissiveTexture = this.textures.day;
+    this.depthMat = this.unlit('world-depth');
+    this.depthMat.disableColorWrite = true;
     this.roadGeo = buildRoads(city, tuning, this.palette);
 
-    this.tunnelShade = this.mesh('tunnel-shade', quadTris(4000, Z.tunnelShade, rgba(tokens.colorWorldTunnelShade)), this.flatMat, true, false);
+    this.tunnelShade = this.world(this.mesh('tunnel-shade', quadTris(4000, Z.tunnelShade, rgba(tokens.colorWorldTunnelShade)), this.flatMat, true, false), false);
     this.tunnelShade.setEnabled(false);
     this.carRoot = new TransformNode('car', scene);
     this.buildCar(drive.car);
@@ -206,7 +246,72 @@ export class WorldView {
     this.skidMesh.alwaysSelectAsActiveMesh = true;
 
     this.applyClearColor();
+    this.applyRisograph();
     this.instr = new SceneInstrumentation(scene);
+  }
+
+  /** Puts a mesh in the world layer; [depth]: also drawn depth-only under the dynamic layer. */
+  private world(m: Mesh, depth: boolean): Mesh {
+    m.layerMask = depth ? WORLD_LAYER | DEPTH_LAYER : WORLD_LAYER;
+    if (depth) m.setMaterialForRenderPass(this.topCamera.renderPassId, this.depthMat);
+    return m;
+  }
+
+  /**
+   * Risograph on/off (specs/style.md "Risograf"): by day in a city with style.risograph.<id>. On:
+   * the main camera renders only the world layer through one post-process pass, then the top
+   * camera draws cars, peds, props, trams over it (world buildings and bridges depth-only, so
+   * occlusion stays as without the effect). Off: one camera renders everything, as before.
+   */
+  private applyRisograph(): void {
+    const on = risographOn(this.tuning.style, this.city.id, this.palette.night);
+    if (on === (this.riso !== null)) return;
+    const scene = this.scene, cam = this.camera;
+    if (!on) {
+      cam.detachPostProcess(this.riso!);
+      this.riso!.dispose(cam);
+      this.riso = null;
+      cam.layerMask = ALL_LAYERS;
+      scene.activeCameras = [];
+      scene.activeCamera = cam;
+      scene.setRenderingOrder(0, null);
+      return;
+    }
+    const style = this.tuning.style;
+    const ink = cityInks(this.city.id)[0] ?? this.palette.rail;
+    const pp = new PostProcess('risograph', 'risograph', {
+      uniforms: [...RISOGRAPH_UNIFORMS, 'texelSize'],
+      size: 1,
+      camera: cam,
+      samplingMode: 1, // nearest: the pass samples whole pixels
+      engine: this.engine,
+      reusable: false,
+    });
+    pp.samples = this.engine.getCaps().maxMSAASamples >= 4 ? 4 : 1;
+    pp.autoClear = true;
+    pp.onApply = (fx) => {
+      const u = risographUniforms(style, ink, 1 / this.engine.getHardwareScalingLevel());
+      fx.setFloat2('texelSize', 1 / Math.max(pp.width, 1), 1 / Math.max(pp.height, 1));
+      fx.setFloat3('ink', u.ink[0], u.ink[1], u.ink[2]);
+      fx.setFloat('offsetPx', u.offsetPx);
+      fx.setFloat('fringe', u.fringe);
+      fx.setFloat('cellPx', u.cellPx);
+      fx.setFloat('halftoneStrength', u.halftoneStrength);
+      fx.setFloat('halftoneLow', u.halftoneLow);
+      fx.setFloat('halftoneHigh', u.halftoneHigh);
+      fx.setFloat('grainPx', u.grainPx);
+      fx.setFloat('grainStrength', u.grainStrength);
+    };
+    this.riso = pp;
+    cam.layerMask = WORLD_LAYER;
+    this.updateTopMask();
+    scene.activeCameras = [cam, this.topCamera];
+    scene.setRenderingOrder(0, depthFirst);
+  }
+
+  /** In a tunnel the buildings are see-through, so they must not hide what drives under them. */
+  private updateTopMask(): void {
+    this.topCamera.layerMask = this.inTunnel ? DYNAMIC_LAYERS : DYNAMIC_LAYERS | DEPTH_LAYER;
   }
 
   private unlit(name: string): StandardMaterial {
@@ -246,8 +351,9 @@ export class WorldView {
   }
 
   setNight(night: boolean): void {
-    this.palette = night ? nightPalette : dayPalette;
+    this.palette = night ? nightPalette : this.dayPalette;
     this.applyClearColor();
+    this.applyRisograph();
     const tex = night ? this.textures.night : this.textures.day;
     this.buildingMat.diffuseTexture = tex;
     this.buildingMat.emissiveTexture = tex;
@@ -263,6 +369,7 @@ export class WorldView {
     this.bollardMesh.dispose();
     this.bollardMesh = this.makeBollardMesh();
     this.bollardsDirty = true;
+    this.parkedVersion = -1;
   }
 
   // ---------- chunks
@@ -273,8 +380,8 @@ export class WorldView {
     const b = new Tris();
     buildingTris(c, this.palette, this.tuning, b);
     return {
-      flat: flat.empty ? null : this.mesh(`ground-${key}`, flat, this.flatMat),
-      buildings: b.empty ? null : this.mesh(`buildings-${key}`, b, this.buildingMat),
+      flat: flat.empty ? null : this.world(this.mesh(`ground-${key}`, flat, this.flatMat), false),
+      buildings: b.empty ? null : this.world(this.mesh(`buildings-${key}`, b, this.buildingMat), true),
     };
   }
 
@@ -318,9 +425,9 @@ export class WorldView {
         if (this.roads.has(k)) continue;
         const g = this.roadGeo.get(k);
         const m: RoadMeshes = {
-          ground: g && !g.ground.empty ? this.mesh(`roads-${k}`, g.ground, this.flatMat) : null,
-          bridge: g && !g.bridge.empty ? this.mesh(`bridges-${k}`, g.bridge, this.flatMat) : null,
-          tunnel: g && !g.tunnel.empty ? this.mesh(`tunnels-${k}`, g.tunnel, this.flatMat) : null,
+          ground: g && !g.ground.empty ? this.world(this.mesh(`roads-${k}`, g.ground, this.flatMat), false) : null,
+          bridge: g && !g.bridge.empty ? this.world(this.mesh(`bridges-${k}`, g.bridge, this.flatMat), true) : null,
+          tunnel: g && !g.tunnel.empty ? this.world(this.mesh(`tunnels-${k}`, g.tunnel, this.flatMat), false) : null,
         };
         m.tunnel?.setEnabled(this.inTunnel);
         this.roads.set(k, m);
@@ -360,7 +467,7 @@ export class WorldView {
     const top = carTris(body, car.spec, hl, hw, car.axleOffset, 0, 0, 0, z - 0.01, night, false, false) - 0.01;
     this.mesh('car-body', body, this.flatMat, true, false).parent = root;
     const shadow = new Tris();
-    carShadowTris(shadow, car.spec, hl, hw, z - 0.01);
+    carShadowTris(shadow, car.spec, hl, hw, z - 0.01, this.palette.shadow);
     this.mesh('car-shadow', shadow, this.flatMat, true, false).parent = shadowNode;
     const underTris = new Tris();
     carUndersideTris(underTris, hl, hw, top);
@@ -416,7 +523,7 @@ export class WorldView {
     if (!f || f.version === this.parkedVersion) return;
     this.parkedVersion = f.version;
     this.parkedMesh?.dispose();
-    const t = parkedTris(f.parked, f.specs, this.tuning.carScale, this.tuning.drive.axleOffset, Z.car);
+    const t = parkedTris(f.parked, f.specs, this.tuning.carScale, this.tuning.drive.axleOffset, Z.car, this.palette.shadow);
     this.parkedMesh = t.empty ? null : this.mesh('parked-cars', t, this.flatMat, true, false);
   }
 
@@ -586,6 +693,14 @@ export class WorldView {
     this.projArr[9]! += 1 - 2 * t.carAnchor.y;
     Matrix.FromArrayToRef(this.projArr, 0, this.proj);
     cam.freezeProjectionMatrix(this.proj);
+    if (this.riso) {
+      const top = this.topCamera;
+      top.position.copyFrom(cam.position);
+      top.upVector.copyFrom(cam.upVector);
+      top.setTarget(new Vector3(rig.x, 0, rig.y));
+      top.fov = cam.fov;
+      top.freezeProjectionMatrix(this.proj);
+    }
   }
 
   render(): void {
@@ -596,6 +711,7 @@ export class WorldView {
       this.tunnelShade.setEnabled(tunnel);
       for (const r of this.roads.values()) r.tunnel?.setEnabled(tunnel);
       this.buildingMat.alpha = tunnel ? 90 / 255 : 1;
+      this.updateTopMask();
     }
     if (tunnel) this.tunnelShade.position.set(this.rig.x, 0, this.rig.y);
     this.updateRoads();
