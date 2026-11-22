@@ -86,7 +86,8 @@ export function mountMap(host: HTMLElement, env: MapViewEnv): () => void {
     }
     const target = env.target();
     for (const s of env.spots.items) {
-      if (s.kind === 'booth') continue; // only a ringing booth shows, as an extra point
+      // Only a ringing booth shows, as an extra point; photo spots are extra points in their colour.
+      if (s.kind === 'booth' || s.kind === 'photo') continue;
       const r = env.phone.mapSpotPx * (s.id === target ? 1.6 : 1);
       ctx.fillStyle = s.minigame ? tokens.colorPhoneMapGame : tokens.colorPhoneMapSpot;
       ctx.beginPath();

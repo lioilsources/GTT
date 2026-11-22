@@ -25,6 +25,7 @@ import { WorldView } from './render/worldView';
 import { installPhone } from './phone';
 import { installPolice } from './police';
 import { installBooths } from './booths';
+import { installPhoto } from './photo';
 import { installLoop } from './loop';
 import { opponentIndex } from './loop/logic';
 import { loadArt } from './art';
@@ -281,6 +282,11 @@ async function main(): Promise<void> {
   const booths = installBooths({
     city, tuning, t, drive, phone, loop, carsHud, npcPack, hud: $('hud'), rig: view.rig, wanted: () => police.police.wantedLevel,
   });
+  // Photo spots and the Camera (specs/photo.md): after the booths, whose "Zvednout" goes first.
+  const photo = installPhoto({
+    city, tuning, t, drive, phone, loop, carsHud, tracker: passport.tracker, hud: $('hud'), rig: view.rig,
+    wanted: () => police.police.wantedLevel, size: () => size,
+  });
   installTravel({ cityId, tuning, t, phone, tracker: passport.tracker, store: loop.store, save: () => loop.save(), onSwitch: () => booths.clear() });
   // Fast travel by metro and taxi (specs/travel.md): stations unlock by passing, the move resets
   // traffic, patrols and pedestrians like a teleport.
@@ -323,7 +329,8 @@ async function main(): Promise<void> {
     taxi.update(stepDt);
     booths.update(stepDt, dt);
     const c = drive.car;
-    view.rig.follow(c.x, c.y, c.heading, c.speed, dt, tuning, c.forwardSpeed < -0.5);
+    // The Camera glides the rig to its framing view and back (specs/photo.md); otherwise it follows.
+    if (!photo.camera(dt)) view.rig.follow(c.x, c.y, c.heading, c.speed, dt, tuning, c.forwardSpeed < -0.5);
     streamer.update(c.x, c.y, c.heading, now);
     peds.update(stepDt, [carPose(c)], view.rig.visibleRadius(size.w, size.h, tuning), night);
     pedView.update(peds);
@@ -357,6 +364,7 @@ async function main(): Promise<void> {
   noticeEl.textContent = t('borderNotice');
   function hud(): void {
     booths.hud();
+    photo.hud(0.1);
     fastTravel.hud(0.1);
     fleet.update();
     carsHud.update();
@@ -466,6 +474,8 @@ async function main(): Promise<void> {
     phone.draw(ctx, size.w, size.h);
     taxi.draw(ctx, size.w, size.h);
     drawPedBubbles(ctx, peds, rig, size, tuning, t('pedestrianBubble'));
+    // Camera icons, crosshair, frame and flash above the world labels (specs/photo.md).
+    photo.draw(ctx, size.w, size.h);
     controlHints();
   }
 
@@ -517,7 +527,7 @@ async function main(): Promise<void> {
 
   if (import.meta.env.DEV || params.has('debug')) {
     (window as unknown as Record<string, unknown>)['metro'] = {
-      engine, view, drive, fleet, city, tuning, frameTimes, pilot, bench, peds, phone, passport, loop, taxi, police: police.police, booths, fastTravel,
+      engine, view, drive, fleet, city, tuning, frameTimes, pilot, bench, peds, phone, passport, loop, taxi, police: police.police, booths, fastTravel, photo,
       timing: () => ({ firstFrameMs, loadMs }),
     };
   }

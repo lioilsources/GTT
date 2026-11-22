@@ -7,11 +7,12 @@ import type { ControlInput } from './drive/controls';
 
 /**
  * Overlays that stop the game (specs/pause.md "Co hru zastaví"; `booth` = the booth offer card,
- * specs/booths.md; `travel` = the metro card and the line card of a move, specs/travel.md).
+ * specs/booths.md; `travel` = the metro card and the line card of a move, specs/travel.md; `photo` =
+ * the Camera framing mode, specs/photo.md).
  */
 export const pausingOverlays = [
   'phone', 'garage', 'passport', 'about', 'postcard', 'dialogue', 'arrival', 'minigame', 'result', 'gallery', 'debug', 'bench', 'booth',
-  'travel',
+  'travel', 'photo',
 ] as const;
 /** Short notices that do not wait for a tap (cash, fine, wanted, nav): they never pause. */
 export type ToastKind = 'toast';
