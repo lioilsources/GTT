@@ -153,7 +153,8 @@ items:
      started: 2026-11-22T18:15, done: 2026-11-22T19:00, commit: cc9b95b, evidence: "specs/style.md v1, PR #112, #115–#117, parita F-039; risograf ověřený jen v headless Chromiu, chybí 60 fps na telefonu"}
   - {id: M2-AR, milestone: M2, name: "napojení grafiky: portréty, busty, pohlednice", size: S, status: "čeká na Ol1na",
      started: 2026-11-22T18:50, done: 2026-11-22T19:20, commit: 8b693ac, evidence: "specs/art.md v1, várka 1 (PR #113), PR #114, #118, #120, parita F-040; rozložení na telefonu nevyzkoušené"}
-  - {id: M2-S4, milestone: M2, name: "fotomísta a Foťák", size: M, status: wip, started: 2026-11-22T19:00}
+  - {id: M2-S4, milestone: M2, name: "fotomísta a Foťák", size: M, status: "čeká na Ol1na", started: 2026-11-22T19:00,
+     done: 2026-11-22T19:55, commit: a53eb39, evidence: "specs/photo.md v1, 20 fotomíst v NYC (balíček 25d7bbedbb7e), vektory photo v obou klientech (PR #119, #122–#124), parita F-041; Foťák nevyzkoušený v prohlížeči ani na telefonu"}
   - {id: M2-S5, milestone: M2, name: "obchody a bary", size: L, status: todo}
   - {id: M2-S6, milestone: M2, name: "počasí (jasno, déšť, mlha)", size: M, status: todo}
   - {id: M2-S7, milestone: M2, name: "tuning a kosmetika", size: L, status: todo}
