@@ -2733,7 +2733,7 @@ class TuningPolice {
 
   bool enabled;
 
-  /// M1: wanted 1–2 (3 comes in M2)
+  /// M2: wanted 1–3, roadblock at 3 (specs/roadblock.md)
   int maxLevel;
 
   int tickHz;

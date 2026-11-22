@@ -2522,7 +2522,7 @@ export class TuningCarsParked {
  */
 export class TuningPolice {
   enabled: boolean;
-  /** M1: wanted 1–2 (3 comes in M2) */
+  /** M2: wanted 1–3, roadblock at 3 (specs/roadblock.md) */
   maxLevel: number;
   tickHz: number;
   /** out of sight of every patrol → level − 1 */
