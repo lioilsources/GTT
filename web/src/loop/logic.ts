@@ -76,7 +76,9 @@ export interface LoopOutcome {
   cash: EconomyLast;
   /** Booth bonus of this loop (specs/booths.md "Hotovost"), 0 without one; part of loopCash. */
   booth: number;
-  /** Cash after the reward and the booth bonus. */
+  /** Snack bonus of this loop (specs/shops.md "Hotovost"), 0 without one; part of loopCash. */
+  snack: number;
+  /** Cash after the reward, the booth bonus and the snack bonus. */
   total: number;
   firstTime: boolean;
   newBest: boolean;
@@ -95,6 +97,11 @@ export class LoopBook {
    * returning its `last`. Called right after the reward; the bonus goes to the cars-state cash.
    */
   bonus: ((spot: string, stars: number, aborted: boolean) => number) | null = null;
+  /**
+   * Shops hooks (specs/shops.md "Hotovost"): `reward(amount)` gets the economy's cash reward of the
+   * loop and returns the snack bonus (added to the cash); `finish(stars, aborted)` follows it.
+   */
+  shops: { reward(amount: number): number; finish(stars: number, aborted: boolean): void } | null = null;
 
   constructor(readonly tuning: Tuning, readonly ports: LoopPorts) {
     this.eco = this.economy.init(economyConfig(tuning, ports.getCash()));
@@ -134,12 +141,18 @@ export class LoopBook {
       this.ports.setCash(this.ports.getCash() + booth);
       this.eco = { ...this.eco, cash: this.ports.getCash() };
     }
+    const snack = Math.max(0, this.shops?.reward(cash.amount) ?? 0);
+    if (snack > 0) {
+      this.ports.setCash(this.ports.getCash() + snack);
+      this.eco = { ...this.eco, cash: this.ports.getCash() };
+    }
+    this.shops?.finish(stars, r.aborted);
     const stamp = r.aborted ? false : this.ports.stamp(inp.minigame, stars);
     const newBest = !r.aborted && betterBest(old, stars, r.score);
     if (newBest) this.best = { ...this.best, [inp.minigame]: { stars, score: r.score } };
     if (!r.aborted) this.plays = { ...this.plays, [inp.spot]: (this.plays[inp.spot] ?? 0) + 1 };
     const o: LoopOutcome = {
-      spot: inp.spot, minigame: inp.minigame, stars, score: r.score, aborted: r.aborted, cash, booth, total: this.ports.getCash(),
+      spot: inp.spot, minigame: inp.minigame, stars, score: r.score, aborted: r.aborted, cash, booth, snack, total: this.ports.getCash(),
       firstTime: firstTime && cash.first > 0, newBest, stamp, hasStamp: hasStamp(inp.minigame),
     };
     return o;
