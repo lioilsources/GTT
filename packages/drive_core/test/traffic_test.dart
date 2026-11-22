@@ -132,6 +132,20 @@ void main() {
       expect(obbOverlap(0, 0, 1, 0, 5, 2, 0, 6.9, 0, 1, 5, 2, 0), isTrue);
       expect(obbOverlap(0, 0, 1, 0, 5, 2, 0, 7.1, 0, 1, 5, 2, 0), isFalse);
     });
+
+    test('swerves round parked cars (step 8); same table as traffic.test.ts', () {
+      double sh(List<double> o) => swerveShiftWith(o, o.length ~/ 4, 5.75, 2.375, aheadM: 22, marginM: 0.6, maxM: 7);
+      expect(sh([10, 3, 2.4, 6]), closeTo(-2.375, 1e-9)); // parked on the right: move left
+      expect(sh([10, -1, 2.4, 6]), closeTo(4.375, 1e-9)); // on the left: move right
+      expect(sh([0, 0, 2.4, 6]), closeTo(-5.375, 1e-9));
+      expect(sh([40, 3, 2.4, 6]), 0); // too far ahead
+      expect(sh([-12, 3, 2.4, 6]), 0); // passed
+      expect(sh([10, 6, 2.4, 6]), 0); // clear of the lane
+      expect(sh([10, 3, 2.4, 6, 5, -1, 2.4, 6]), closeTo(4.375, 1e-9)); // the bigger shift wins
+      expect(sh([10, 0, 4, 6]), closeTo(-6.975, 1e-9));
+      expect(sh([10, 0, 4.1, 6]), 0); // over swerve_max_m: not attempted
+      expect(sh([]), 0);
+    });
   });
 
   group('traffic in the NYC pack', () {
@@ -259,6 +273,105 @@ void main() {
       }
       expect(stopped, isTrue);
       expect(target.hitTimer, greaterThan(0));
+      d.dispose();
+    }, skip: !has);
+
+    test('the player pushes a car it touches; it settles back into its lane (step 7)', () {
+      final d = world();
+      final tr = d.traffic!;
+      final hit = city.graph.nearest(
+        d.car.x,
+        d.car.y,
+        maxDist: 300,
+        where: (e) => e.kept && e.isGround && e.oneway >= 0 && e.length > 80,
+      )!;
+      final e = hit.edge;
+      d.spawn(hit.x, hit.y, 0);
+      d.update(1 / 60);
+      tr.reset();
+      final target = tr.addCar(e.index, 1, math.min(e.length - 10, hit.t * e.length + 25), 0)!;
+      final hx = math.cos(target.heading), hy = math.sin(target.heading);
+      d.spawn(target.x - hx * 25, target.y - hy * 25, target.heading);
+      var loose = false;
+      var x0 = 0.0, y0 = 0.0;
+      double moved() => math.sqrt((target.x - x0) * (target.x - x0) + (target.y - y0) * (target.y - y0));
+      for (var i = 0; i < 6 * 60; i++) {
+        d.input
+          ..reset()
+          ..boost = true;
+        d.update(1 / 60);
+        if (!loose && target.loose) {
+          loose = true;
+          x0 = target.x;
+          y0 = target.y;
+        }
+        if (loose && moved() > 3) break;
+      }
+      expect(loose, isTrue);
+      expect(moved(), greaterThan(3));
+      for (var i = 0; i < 8 * 60; i++) {
+        d.input
+          ..reset()
+          ..brake = 1;
+        d.update(1 / 60);
+      }
+      expect(target.loose, isFalse);
+      d.dispose();
+    }, skip: !has);
+
+    test('cars drive round a parked car in their lane instead of through it (step 8)', () {
+      final d = world();
+      final tr = d.traffic!;
+      final hit = city.graph.nearest(
+        d.car.x,
+        d.car.y,
+        maxDist: 300,
+        where: (e) => e.kept && e.isGround && e.oneway >= 0 && e.length > 120,
+      )!;
+      final e = hit.edge;
+      d.spawn(hit.x, hit.y, 0);
+      d.update(1 / 60);
+      tr
+        ..reset()
+        ..solid = false; // the player is a ghost to traffic here
+      final c = tr.addCar(e.index, 1, 5, 0)!;
+      // A parked car right in the lane 40 m ahead, shifted a little to the curb side.
+      final probe = tr.addCar(e.index, 1, 45, 0)!;
+      final ph = probe.heading;
+      final px = probe.x + math.sin(ph) * 1.5, py = probe.y - math.cos(ph) * 1.5;
+      tr.cars.remove(probe);
+      probe.body.destroy();
+      tr.parked = [
+        ParkedCar(carId: 'm0_coupe', owner: 'npc', x: px, y: py, heading: ph)
+          ..hl = 5.6
+          ..hw = 2.4,
+      ];
+      var overlaps = 0;
+      var passed = false;
+      for (var i = 0; i < 10 * 60 && !passed; i++) {
+        d.update(1 / 60);
+        if (!tr.cars.contains(c)) break;
+        if (obbOverlap(
+          c.x,
+          c.y,
+          math.cos(c.heading),
+          math.sin(c.heading),
+          c.halfLength,
+          c.halfWidth,
+          px,
+          py,
+          math.cos(ph),
+          math.sin(ph),
+          5.6,
+          2.4,
+          0,
+        )) {
+          overlaps++;
+        }
+        if ((c.x - px) * math.cos(ph) + (c.y - py) * math.sin(ph) > 15) passed = true;
+      }
+      expect(passed, isTrue);
+      expect(overlaps, 0);
       d.dispose();
     }, skip: !has);
   });

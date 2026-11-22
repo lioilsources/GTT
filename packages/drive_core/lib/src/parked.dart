@@ -3,8 +3,11 @@ import 'dart:math' as math;
 import 'package:rules_core/rules_core.dart' show Prng;
 import 'package:world_engine/core.dart';
 
-/// A parked car at a curb (specs/cars.md "Zaparkovaná auta"). Pure data, no physics.
-class ParkedCar {
+import 'traffic/traffic.dart' show ParkedPose;
+
+/// A parked car at a curb (specs/cars.md "Zaparkovaná auta"). The fleet keeps the pose in sync with
+/// its dynamic body (v2: it can be pushed) and fills the half extents.
+class ParkedCar implements ParkedPose {
   ParkedCar({
     required this.carId,
     required this.owner,
@@ -18,7 +21,12 @@ class ParkedCar {
 
   /// "player" or "npc".
   final String owner;
-  final double x, y, heading;
+  @override
+  double x, y, heading;
+
+  /// Half length and width in metres (after car_scale); set by the fleet.
+  @override
+  double? hl, hw;
 
   /// Chunk key it was generated for; null for a car the player left behind (kept until forget_m).
   final int? chunk;
