@@ -54,6 +54,12 @@ export interface PhoneApi {
   /** Route line and edge arrow on the overlay canvas (CSS pixels). */
   draw(ctx: CanvasRenderingContext2D, w: number, h: number): void;
   navigate(spotId: string): boolean;
+  /**
+   * Navigation to any target (a world minigame's passenger or destination). Silent: on arrival
+   * the route just ends (no toast, no visit, no onArrived).
+   */
+  navigateTo(target: NavTarget, silent: boolean): boolean;
+  cancelNav(): void;
   /** arrived(spotId): the minigame launch hook for a later feature. */
   onArrived: Array<(spotId: string) => void>;
   /** The last accepted feed card (cleared by the loop once used). */
@@ -160,18 +166,25 @@ export function installPhone(env: PhoneEnv): PhoneApi {
     toast.hidden = false;
     toastTimer = tuning.nav.toastS;
   };
+  let silent = false;
   const stopNav = (): void => {
     nav.cancel();
     pill.hidden = true;
+    silent = false;
   };
+
+  function navigateTo(tg: NavTarget, quiet: boolean): boolean {
+    const c = drive.car;
+    const ok = nav.start(tg, c.x, c.y, c.heading, drive.layers.hit);
+    silent = quiet;
+    if (!ok && !quiet) showToast(t('noRoute'));
+    pill.hidden = false;
+    return ok;
+  }
 
   function navigate(id: string): boolean {
     if (!spotById.has(id)) return false;
-    const c = drive.car;
-    const ok = nav.start(target(id), c.x, c.y, c.heading, drive.layers.hit);
-    if (!ok) showToast(t('noRoute'));
-    pill.hidden = false;
-    return ok;
+    return navigateTo(target(id), false);
   }
 
   const api: PhoneApi = {
@@ -190,6 +203,8 @@ export function installPhone(env: PhoneEnv): PhoneApi {
       deck = null;
     },
     navigate,
+    navigateTo,
+    cancelNav: stopNav,
     update(dt) {
       const c = drive.car;
       driven += Math.hypot(c.x - lastX, c.y - lastY);
@@ -198,6 +213,10 @@ export function installPhone(env: PhoneEnv): PhoneApi {
       if (toastTimer > 0 && (toastTimer -= dt) <= 0) toast.hidden = true;
       if (!nav.active) return;
       const ev = nav.update(c.x, c.y, c.heading, drive.layers.hit, dt);
+      if (ev === 'arrived' && silent) {
+        stopNav();
+        return;
+      }
       if (ev === 'arrived') {
         const id = nav.target!.id;
         stopNav();
