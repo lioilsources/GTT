@@ -8,7 +8,7 @@ import { resolveRoute } from './drive/route';
 import { applyKeys, createScheme, SchemeA, SchemeB, SchemeC, type ControlScheme, type ControlSchemeId } from './drive/controls';
 import { DriveWorld } from './drive/driveWorld';
 import { t as tr, type Locale, type MessageKey } from './gen/i18n';
-import { carIdValues, cityIdValues, type CityId } from './gen/ids';
+import { carIdValues, cityIdValues, minigameCatalog, type CityId, type MinigameId } from './gen/ids';
 import { CarFleet } from './cars/fleet';
 import { CarsHud } from './cars/ui';
 import type { BenchResult, BenchRoute, CarSpec, NpcPack } from './gen/schema';
@@ -22,6 +22,7 @@ import { WorldView } from './render/worldView';
 import { installPhone } from './phone';
 import { installPolice } from './police';
 import { installLoop } from './loop';
+import { installTaxi } from './minigames/taxi';
 import { HttpPackSource } from './world/citypack';
 import { City } from './world/model';
 import { ChunkStreamer } from './world/streaming';
@@ -54,7 +55,9 @@ async function json<T>(path: string): Promise<T> {
 async function main(): Promise<void> {
   // ?gallery / ?mg=<id>: minigames without the world (specs/minigames/README.md "Galerie").
   // ?skits: NPC dialogue debug list (specs/dialogue.md); the gallery also gets NPC opponents.
-  if (params.has('gallery') || params.has('mg') || params.has('skits')) {
+  // ?mg=<id> of a world minigame (engine drive, Taxi) opens the world at its spot and starts it there.
+  const worldMg = minigameCatalog[params.get('mg') as MinigameId]?.engine === 'drive' ? params.get('mg') : null;
+  if (params.has('gallery') || (params.has('mg') && !worldMg) || params.has('skits')) {
     const [{ runGallery }, { runSkits }, { DialogueSession, setDialogueSession }, tuning, npcPack] = await Promise.all([
       import('./minigames/gallery'),
       import('./dialogue/skits'),
@@ -95,6 +98,13 @@ async function main(): Promise<void> {
   if (params.has('passport')) passport.openPassport();
   if (params.has('about')) passport.openAbout();
 
+  if (worldMg) {
+    const s = city.spots.items.find((x) => x.minigame === worldMg);
+    if (s) {
+      params.set('spot', s.id);
+      params.set('play', s.id);
+    }
+  }
   // ?spot=<id> puts the player on a spot (DUALSTACK 6.6).
   const spot = city.spots.items.find((s) => s.id === params.get('spot'));
   if (spot) drive.spawn(spot.parkX / 10, spot.parkY / 10, spot.parkHeading);
@@ -213,6 +223,9 @@ async function main(): Promise<void> {
       },
     },
   });
+  // Taxi: a world minigame started by the loop at the taxi stand (specs/minigames/taxi.md).
+  const taxi = installTaxi({ city, tuning, t, drive, fleet, phone, rig: view.rig, cars, hud: $('hud'), onCarChanged: () => view.carChanged() });
+  loop.worldGames.taxi = taxi;
   // Police fines take cash through the economy (specs/economy.md).
   police.police.onFined((e) => loop.fine(e.amount));
 
@@ -236,6 +249,7 @@ async function main(): Promise<void> {
     if (!carsHud.busy) drive.update(stepDt);
     police.update(stepDt, dt);
     phone.update(dt);
+    taxi.update(stepDt);
     const c = drive.car;
     view.rig.follow(c.x, c.y, c.heading, c.speed, dt, tuning, c.forwardSpeed < -0.5);
     streamer.update(c.x, c.y, c.heading, now);
@@ -371,6 +385,7 @@ async function main(): Promise<void> {
       ctx.shadowBlur = 0;
     }
     phone.draw(ctx, size.w, size.h);
+    taxi.draw(ctx, size.w, size.h);
     drawPedBubbles(ctx, peds, rig, size, tuning, t('pedestrianBubble'));
     controlHints();
   }
@@ -423,7 +438,7 @@ async function main(): Promise<void> {
 
   if (import.meta.env.DEV || params.has('debug')) {
     (window as unknown as Record<string, unknown>)['metro'] = {
-      engine, view, drive, fleet, city, tuning, frameTimes, pilot, bench, peds, phone, passport, loop, police: police.police,
+      engine, view, drive, fleet, city, tuning, frameTimes, pilot, bench, peds, phone, passport, loop, taxi, police: police.police,
       timing: () => ({ firstFrameMs, loadMs }),
     };
   }

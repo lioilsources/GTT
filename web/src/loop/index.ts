@@ -7,6 +7,7 @@ import type { Locale, MessageKey } from '../gen/i18n';
 import { carIdValues, minigameCatalog, type MinigameId } from '../gen/ids';
 import type { MinigameResult, NpcPack, Save } from '../gen/schema';
 import type { Tuning } from '../gen/tuning';
+import type { WorldMinigame } from '../minigames/api';
 import { h } from '../minigames/dom';
 import { minigames } from '../minigames/registry';
 import type { PassportHud } from '../passport/hud';
@@ -55,6 +56,8 @@ export interface LoopApi {
   resetSave(): Promise<void>;
   book: LoopBook;
   onOutcome: Array<(o: LoopOutcome) => void>;
+  /** World minigames by id (engine `drive`, e.g. Taxi); without one the spot shows "coming soon". */
+  worldGames: Partial<Record<MinigameId, WorldMinigame>>;
 }
 
 /** Loop glue of client W (specs/loop.md): loads the save, wires arrival → minigame → result → save. */
@@ -150,21 +153,53 @@ export async function installLoop(env: LoopEnv): Promise<LoopApi> {
   // ---------- minigame
   let busy = false;
   const mgName = (id: string): string => t(`mg_${id}` as MessageKey);
+  const inWorldGame = (): boolean => Object.values(api.worldGames).some((g) => g?.active);
+
+  /** Loop result after a minigame (full-screen or in the world). */
+  function finish(spotId: string, id: MinigameId, card: { distDm: number } | null, r: MinigameResult): void {
+    const o = book.finish({ spot: spotId, minigame: id, engine: minigameCatalog[id].engine, result: r, driveDm: card?.distDm ?? 0 }, (m) => tracker.has('minigame', m));
+    for (const f of api.onOutcome) f(o);
+    void save();
+    busy = true;
+    mountLoopResult(document.body, t, o, {
+      drive: () => (busy = false),
+      feed: () => {
+        busy = false;
+        phone.phone.open('feed');
+      },
+    });
+  }
 
   function start(spotId: string): void {
     const spot = spotById.get(spotId);
-    if (busy || !spot || !spot.minigame) return;
+    if (busy || !spot || !spot.minigame || inWorldGame()) return;
     const id = spot.minigame as MinigameId;
     const meta = minigameCatalog[id];
     const make = minigames[id];
     if (!meta) return;
-    if (meta.engine === 'drive' || !make) {
+    const world = meta.engine === 'drive' ? api.worldGames[id] : undefined;
+    if (!world && (meta.engine === 'drive' || !make)) {
       showToast(t('loopSoon', { name: mgName(id) }));
       return;
     }
     const card = phone.accepted && phone.accepted.spot === spotId ? phone.accepted : null;
     phone.accepted = null;
     phone.phone.close();
+    if (world) {
+      // World minigame (specs/minigames/taxi.md): the world keeps running, no full-screen host.
+      phone.nav.cancel();
+      playBtn.hidden = true;
+      playSpot = null;
+      const ctx = {
+        cityId: city.id,
+        difficulty: loopDifficulty(card?.difficulty ?? null, book.plays[spotId] ?? 0, tuning.feed),
+        seed: (Math.random() * 0x100000000) >>> 0,
+        locale: env.locale,
+      };
+      world.start(spotId, ctx, (r) => finish(spotId, id, card, r));
+      return;
+    }
+    if (!make) return;
     const seed = (Math.random() * 0x100000000) >>> 0;
     const chars = npc?.pack.characters ?? [];
     const oi = opponentIndex(spotId, chars.length);
@@ -184,22 +219,13 @@ export async function installLoop(env: LoopEnv): Promise<LoopApi> {
     const unmount = game.mount(host, ctx, (r: MinigameResult) => {
       unmount();
       host.remove();
-      const o = book.finish({ spot: spotId, minigame: id, engine: meta.engine, result: r, driveDm: card?.distDm ?? 0 }, (m) => tracker.has('minigame', m));
-      for (const f of api.onOutcome) f(o);
-      void save();
-      mountLoopResult(document.body, t, o, {
-        drive: () => (busy = false),
-        feed: () => {
-          busy = false;
-          phone.phone.open('feed');
-        },
-      });
+      finish(spotId, id, card, r);
     });
   }
 
   phone.onArrived.push((id) => {
     const s = spotById.get(id);
-    if (s?.minigame) start(id);
+    if (s?.minigame && !inWorldGame()) start(id);
   });
 
   const api: LoopApi = {
@@ -211,7 +237,7 @@ export async function installLoop(env: LoopEnv): Promise<LoopApi> {
       if (toastS > 0 && (toastS -= dt) <= 0) toast.hidden = true;
       const c = env.drive.car;
       let s: LoopSpot | null = null;
-      if (!busy && !phone.phone.isOpen && !phone.nav.active) {
+      if (!busy && !phone.phone.isOpen && !phone.nav.active && !inWorldGame()) {
         const now = spotInReach(loopSpots, c.x, c.y, c.speed, c.layer, tuning.loop);
         if (now) {
           s = now;
@@ -247,11 +273,12 @@ export async function installLoop(env: LoopEnv): Promise<LoopApi> {
     },
     book,
     onOutcome: [],
+    worldGames: {},
   };
 
   // ?play=<spotId> starts that spot's minigame right away (DUALSTACK 6.6 debug parameter).
   const play = env.params.get('play');
-  if (play) start(play);
+  if (play) setTimeout(() => start(play), 0); // after main.ts registered the world minigames
   if (env.params.has('debug')) {
     env.buttons.append(h('button.round', { type: 'button', title: t('saveReset'), onclick: () => void api.resetSave() }, '⌫'));
   }

@@ -18,6 +18,16 @@ export interface MinigameEnv {
   opponent?: MinigameOpponent;
 }
 
+/**
+ * A minigame played in the running world (engine `drive`, e.g. Taxi, specs/minigames/taxi.md):
+ * the loop starts it at its spot instead of mounting a full-screen game; the world keeps running.
+ */
+export interface WorldMinigame {
+  readonly active: boolean;
+  /** Starts at the spot; `onFinish` is called once when it ends (the loop shows its result). */
+  start(spotId: string, ctx: MinigameContext, onFinish: (r: MinigameResult) => void): void;
+}
+
 /** An NPC opponent as the shell needs it (specs/dialogue.md "Hláška soupeře"). */
 export interface MinigameOpponent {
   id: string;

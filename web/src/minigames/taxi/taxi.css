@@ -1,0 +1,45 @@
+/* Taxi shift HUD (specs/minigames/taxi.md); colours from design/tokens.json. */
+#taxi-hud {
+  position: absolute;
+  top: calc(env(safe-area-inset-top) + 140px);
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  pointer-events: auto;
+}
+#taxi-hud[hidden],
+#taxi-line[hidden],
+.taxi-gallery[hidden] {
+  display: none;
+}
+#taxi-hud .pill {
+  background: var(--color-taxi-pill);
+  color: var(--color-taxi-pill-text);
+  font-size: var(--font-hud);
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+#taxi-hud .pill.low {
+  background: var(--color-taxi-low);
+}
+#taxi-line {
+  position: fixed;
+  left: 50%;
+  top: 30%;
+  transform: translateX(-50%);
+  max-width: calc(100% - 32px);
+  white-space: normal;
+  text-align: center;
+  font-size: var(--font-hud);
+  font-weight: 700;
+  z-index: 25;
+}
+.taxi-gallery {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  padding: var(--space-lg);
+  text-align: center;
+}

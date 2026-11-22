@@ -6,6 +6,7 @@ import { DesetitisicRules } from '../minigames/desetitisic/rules';
 import { SipkyRules } from '../minigames/sipky/rules';
 import { KoulenaRules } from '../minigames/koulena/rules';
 import { StrelniceRules } from '../minigames/strelnice/rules';
+import { TaxiRules } from '../minigames/taxi/rules';
 import { RouteRules } from '../drive/gps';
 import { FeedRules } from '../phone/feed';
 import { PassportRules } from '../passport/rules';
@@ -52,6 +53,7 @@ export const rulesModules: Record<string, () => AnyRules> = {
   sipky: () => new SipkyRules() as unknown as AnyRules,
   koulena: () => new KoulenaRules() as unknown as AnyRules,
   strelnice: () => new StrelniceRules() as unknown as AnyRules,
+  taxi: () => new TaxiRules() as unknown as AnyRules,
   passport: () => new PassportRules() as unknown as AnyRules,
   dialogue: () => new DialogueRules() as unknown as AnyRules,
   cars: () => new CarsRules() as unknown as AnyRules,
