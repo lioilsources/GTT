@@ -12,6 +12,34 @@ CarSpec parseCarSpec(String json) => CarSpec.fromJson(jsonDecode(json) as Map<St
 /// Body colour as 0xAARRGGBB: `paint` is a key of `color.carPaint` in design/tokens.json.
 int paintArgb(CarSpec s) => Tokens.colorCarPaint[s.paint] ?? Tokens.colorCarPaint['comet_red']!;
 
+/// Car classes in the order of schema/car.schema.json (`class` enum, plan 10).
+const carClassOrder = [
+  'mini', 'hatchback', 'sedan', 'kombi', 'coupe', 'muscle', 'supersport', 'veteran', //
+  'offroad', 'pickup', 'van', 'taxi', 'limo', 'bus', 'micro', 'special',
+];
+
+/// The garage list of cars for sale (specs/cars.md v2 "Garáž"): every car of [specs] not in
+/// [owned]; first those whose `tags` contain [cityId], then the rest; within each by class in
+/// [carClassOrder], then price, then id.
+List<CarSpec> saleOrder(Iterable<CarSpec> specs, Iterable<String> owned, String cityId) {
+  final own = owned.toSet();
+  int rank(String c) {
+    final i = carClassOrder.indexOf(c);
+    return i < 0 ? carClassOrder.length : i;
+  }
+
+  int key(CarSpec s) => s.tags.contains(cityId) ? 0 : 1;
+  return [
+    for (final s in specs)
+      if (!own.contains(s.id)) s,
+  ]..sort((a, b) {
+    var c = key(a).compareTo(key(b));
+    if (c == 0) c = rank(a.class_).compareTo(rank(b.class_));
+    if (c == 0) c = a.price.compareTo(b.price);
+    return c != 0 ? c : a.id.compareTo(b.id);
+  });
+}
+
 /// Effective parameters of an owned car with tuning [levels] (slot → level, specs/garage.md "Účinek
 /// na jízdu"): the catalog values × the multipliers of `garage` in tuning.yaml; several multipliers
 /// of one parameter multiply. A missing slot is level 0. The drive rules stay those of
