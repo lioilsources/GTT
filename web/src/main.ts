@@ -24,6 +24,7 @@ import { overlays, PauseGate } from './pause';
 import { WorldView } from './render/worldView';
 import { installPhone } from './phone';
 import { installPolice } from './police';
+import { installBooths } from './booths';
 import { installLoop } from './loop';
 import { installTaxi } from './minigames/taxi';
 import { installTravel } from './travel';
@@ -235,9 +236,10 @@ async function main(): Promise<void> {
   });
 
   // Loop glue: arrival → minigame → result → cash, stamp, save (specs/loop.md); loads the save.
+  const npcPack = await json<NpcPack>('content/npc.json').catch(() => null);
   const loop = await installLoop({
     city, tuning, locale, t, drive, fleet, passport, phone, params, hud: $('hud'), buttons: $('buttons'),
-    npcPack: await json<NpcPack>('content/npc.json').catch(() => null),
+    npcPack,
     onCarChanged: () => view.carChanged(),
     settings: {
       get: () => ({ scheme: scheme.id, night }),
@@ -255,7 +257,11 @@ async function main(): Promise<void> {
   const taxi = installTaxi({ city, tuning, t, drive, fleet, phone, rig: view.rig, cars, hud: $('hud'), onCarChanged: () => view.carChanged() });
   loop.worldGames.taxi = taxi;
   // Travel app: switch cities from the phone (specs/cities.md).
-  installTravel({ cityId, tuning, t, phone, tracker: passport.tracker, store: loop.store, save: () => loop.save() });
+  // Ringing phone booths (specs/booths.md): offer a minigame with a cash bonus.
+  const booths = installBooths({
+    city, tuning, t, drive, phone, loop, carsHud, npcPack, hud: $('hud'), rig: view.rig, wanted: () => police.police.wantedLevel,
+  });
+  installTravel({ cityId, tuning, t, phone, tracker: passport.tracker, store: loop.store, save: () => loop.save(), onSwitch: () => booths.clear() });
   // Police fines take cash through the economy (specs/economy.md).
   police.police.onFined((e) => loop.fine(e.amount));
 
@@ -286,6 +292,7 @@ async function main(): Promise<void> {
     police.update(stepDt, dt);
     phone.update(dt);
     taxi.update(stepDt);
+    booths.update(stepDt, dt);
     const c = drive.car;
     view.rig.follow(c.x, c.y, c.heading, c.speed, dt, tuning, c.forwardSpeed < -0.5);
     streamer.update(c.x, c.y, c.heading, now);
@@ -320,6 +327,7 @@ async function main(): Promise<void> {
   const streetEl = $('street'), speedEl = $('speed'), perfEl = $('perf'), noticeEl = $('notice');
   noticeEl.textContent = t('borderNotice');
   function hud(): void {
+    booths.hud();
     fleet.update();
     carsHud.update();
     hopHud.update(0.1);
@@ -423,6 +431,7 @@ async function main(): Promise<void> {
       }
       ctx.shadowBlur = 0;
     }
+    booths.draw(ctx, size.w, size.h);
     phone.draw(ctx, size.w, size.h);
     taxi.draw(ctx, size.w, size.h);
     drawPedBubbles(ctx, peds, rig, size, tuning, t('pedestrianBubble'));
@@ -477,7 +486,7 @@ async function main(): Promise<void> {
 
   if (import.meta.env.DEV || params.has('debug')) {
     (window as unknown as Record<string, unknown>)['metro'] = {
-      engine, view, drive, fleet, city, tuning, frameTimes, pilot, bench, peds, phone, passport, loop, taxi, police: police.police,
+      engine, view, drive, fleet, city, tuning, frameTimes, pilot, bench, peds, phone, passport, loop, taxi, police: police.police, booths,
       timing: () => ({ firstFrameMs, loadMs }),
     };
   }

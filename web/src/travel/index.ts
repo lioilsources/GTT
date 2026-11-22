@@ -21,6 +21,8 @@ export interface TravelEnv {
   store: SaveStore;
   /** Saves the current city (LoopApi.save). */
   save(): Promise<void>;
+  /** Called before leaving the city (booth offer → clear, specs/booths.md). */
+  onSwitch?: () => void;
 }
 
 export function installTravel(env: TravelEnv): void {
@@ -58,6 +60,7 @@ export function installTravel(env: TravelEnv): void {
           if (here || switching) return;
           switching = true;
           env.phone.phone.close();
+          env.onSwitch?.();
           void switchCity(id, { save: env.save, navigate: (url) => location.assign(url), href: location.href });
         },
       },

@@ -61,6 +61,10 @@ export interface LoopApi {
   onOutcome: Array<(o: LoopOutcome) => void>;
   /** World minigames by id (engine `drive`, e.g. Taxi); without one the spot shows "coming soon". */
   worldGames: Partial<Record<MinigameId, WorldMinigame>>;
+  /** True while a world minigame (Taxi) runs. */
+  readonly inWorldGame: boolean;
+  /** A context button with priority ("Zvednout", specs/booths.md): while true, "Hrát" hides. */
+  yieldTo: (() => boolean) | null;
 }
 
 /** Loop glue of client W (specs/loop.md): loads the save, wires arrival → minigame → result → save. */
@@ -242,7 +246,7 @@ export async function installLoop(env: LoopEnv): Promise<LoopApi> {
       if (toastS > 0 && (toastS -= dt) <= 0) toast.hidden = true;
       const c = env.drive.car;
       let s: LoopSpot | null = null;
-      if (!busy && !phone.phone.isOpen && !phone.nav.active && !inWorldGame()) {
+      if (!busy && !phone.phone.isOpen && !phone.nav.active && !inWorldGame() && !api.yieldTo?.()) {
         const now = spotInReach(loopSpots, c.x, c.y, c.speed, c.layer, tuning.loop);
         if (now) {
           s = now;
@@ -280,6 +284,10 @@ export async function installLoop(env: LoopEnv): Promise<LoopApi> {
     book,
     onOutcome: [],
     worldGames: {},
+    get inWorldGame() {
+      return inWorldGame();
+    },
+    yieldTo: null,
   };
 
   // ?play=<spotId> starts that spot's minigame right away (DUALSTACK 6.6 debug parameter).

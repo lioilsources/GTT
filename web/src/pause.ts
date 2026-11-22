@@ -5,9 +5,9 @@ import type { ControlInput } from './drive/controls';
  * it opens and releases when it closes; the main loop steps the world with `paused ? 0 : dt`.
  */
 
-/** Overlays that stop the game (specs/pause.md "Co hru zastaví"). */
+/** Overlays that stop the game (specs/pause.md "Co hru zastaví"; `booth` = the booth offer card, specs/booths.md). */
 export const pausingOverlays = [
-  'phone', 'garage', 'passport', 'about', 'postcard', 'dialogue', 'arrival', 'minigame', 'result', 'gallery', 'debug', 'bench',
+  'phone', 'garage', 'passport', 'about', 'postcard', 'dialogue', 'arrival', 'minigame', 'result', 'gallery', 'debug', 'bench', 'booth',
 ] as const;
 /** Short notices that do not wait for a tap (cash, fine, wanted, nav): they never pause. */
 export type ToastKind = 'toast';
