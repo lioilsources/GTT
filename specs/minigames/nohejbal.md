@@ -24,7 +24,7 @@ dozadu). Hráč i soupeř stojí na středu své poloviny `(0, depth / 2)`.
 | `win_points`, `win_by`, `max_points` | hraje se do 10 s rozdílem 2, nejvýš do 15 | 10, 2, 15 |
 | `scatter` | rozptyl hráče pro obtížnost 1–5 (mm) | [40, 55, 70, 85, 100] |
 | `ai_scatter` | rozptyl soupeře pro obtížnost 1–5 (mm) | [160, 130, 100, 80, 60] |
-| `ai_reach` | dosah soupeře od středu jeho poloviny (mm) | [250, 300, 350, 400, 450] |
+| `ai_reach` | dosah soupeře od středu jeho poloviny (mm) | [380, 420, 460, 500, 540] |
 | `player_reach` | dosah hráče od středu jeho poloviny (mm), nezávisí na obtížnosti | 380 |
 | `ai_margin` | jak daleko od čar soupeř míří (mm) | [220, 180, 140, 110, 80] |
 | `star_margins` | náskok bodů pro 3★, 2★, 1★ | [6, 3, 1] |
