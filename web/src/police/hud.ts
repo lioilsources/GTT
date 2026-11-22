@@ -15,8 +15,8 @@ const reasonKeys: Record<OffenceKind, MessageKey> = {
 };
 
 /**
- * Police HUD (specs/police.md "Kreslení a HUD"): wanted badges top centre, a short reason toast
- * and the "busted" card. Thin DOM over the Police events.
+ * Police HUD (specs/police.md "Kreslení a HUD"): wanted badges top centre, a short reason toast,
+ * the roadblock toast and the "busted" card. Thin DOM over the Police events.
  */
 export class PoliceHud {
   private readonly stars = h('div', { id: 'police-stars', hidden: true });
@@ -39,6 +39,7 @@ export class PoliceHud {
       if (e.reason === 'escape' && e.level === 0) this.say(t('policeEscaped'));
     });
     police.onFined((e) => this.busted(e.amount));
+    police.on('roadblock', () => this.say(t('policeRoadblock')));
   }
 
   private render(level: number): void {

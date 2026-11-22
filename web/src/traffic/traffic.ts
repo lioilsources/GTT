@@ -52,6 +52,11 @@ export class TrafficCar {
   pursuitMps = 0;
   /** A chasing patrol brakes to stop this far from its goal. */
   goalStopM = 0;
+  /**
+   * Roadblock patrol (specs/roadblock.md): stands still across the road, never drives,
+   * never despawns with distance; the police module removes it.
+   */
+  blocking = false;
 
   /** @internal path state */
   edge: RoadEdge;
@@ -200,7 +205,7 @@ export class Traffic {
     for (let i = this.cars.length - 1; i >= 0; i--) {
       const c = this.cars[i]!;
       const dx = c.x - px, dy = c.y - py;
-      if (dx * dx + dy * dy > d2) this.remove(i);
+      if (!c.blocking && dx * dx + dy * dy > d2) this.remove(i);
     }
     this.spawn(dt, px, py);
 
@@ -358,6 +363,28 @@ export class Traffic {
     c.s = Math.max(0, c.edge.length - c.s);
   }
 
+  /**
+   * Puts a car at an exact pose (x, y, heading) off its lane, e.g. a roadblock patrol across the
+   * road (specs/roadblock.md); the car keeps its edge for the layer and later projection.
+   */
+  setPose(c: TrafficCar, x: number, y: number, heading: number): void {
+    c.x = x;
+    c.y = y;
+    c.heading = heading;
+    c.speed = 0;
+    c.body.setTransform({ x, y }, heading);
+    c.body.setLinearVelocity({ x: 0, y: 0 });
+    c.body.setAngularVelocity(0);
+  }
+
+  /** Removes one car (e.g. a cleared roadblock); false when it is not in the traffic any more. */
+  removeCar(c: TrafficCar): boolean {
+    const i = this.cars.indexOf(c);
+    if (i < 0) return false;
+    this.remove(i);
+    return true;
+  }
+
   private remove(i: number): void {
     const c = this.cars[i]!;
     this.world.destroyBody(c.body);
@@ -380,6 +407,17 @@ export class Traffic {
       c.x = p.x;
       c.y = p.y;
       c.heading = c.body.getAngle();
+      return true;
+    }
+    if (c.blocking) {
+      // A roadblock patrol stands where it was put (or where a push left it).
+      c.hitTimer = Math.max(0, c.hitTimer - dt);
+      c.speed = 0;
+      c.braking = false;
+      this.v.x = 0;
+      this.v.y = 0;
+      c.body.setLinearVelocity(this.v);
+      c.body.setAngularVelocity(0);
       return true;
     }
     if (c.hitTimer > 0) {
