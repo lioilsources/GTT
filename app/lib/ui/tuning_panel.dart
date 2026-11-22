@@ -7,6 +7,8 @@ import '../game/pause.dart';
 import '../l10n/app_localizations.dart';
 import '../minigames/gallery.dart';
 import '../dialogue/skits.dart';
+import '../weather/weather_controller.dart';
+import '../weather/weather_layer.dart';
 import 'package:shared_gen/shared_gen.dart';
 
 /// Live editor for tuning.yaml and the car parameters (M0 dogfooding).
@@ -17,6 +19,7 @@ void showTuningPanel(
   required void Function(ControlSchemeId) onScheme,
   required Future<void> Function()? onBench,
   Future<void> Function()? onResetSave,
+  WeatherController? weather,
 }) {
   // The debug panel pauses the game while open (specs/pause.md).
   game.pauseOverlays.hold(
@@ -26,13 +29,20 @@ void showTuningPanel(
       isScrollControlled: true,
       backgroundColor: const Color(Tokens.colorUiSheet),
       barrierColor: Colors.transparent,
-      builder: (_) => _TuningPanel(game: game, onScheme: onScheme, onBench: onBench, onResetSave: onResetSave),
+      builder: (_) =>
+          _TuningPanel(game: game, onScheme: onScheme, onBench: onBench, onResetSave: onResetSave, weather: weather),
     ),
   );
 }
 
 class _TuningPanel extends StatefulWidget {
-  const _TuningPanel({required this.game, required this.onScheme, required this.onBench, this.onResetSave});
+  const _TuningPanel({
+    required this.game,
+    required this.onScheme,
+    required this.onBench,
+    this.onResetSave,
+    this.weather,
+  });
   final MetropoleGame game;
   final void Function(ControlSchemeId) onScheme;
 
@@ -41,6 +51,9 @@ class _TuningPanel extends StatefulWidget {
 
   /// Debug "reset save" (specs/save.md).
   final Future<void> Function()? onResetSave;
+
+  /// Weather of the city (specs/weather.md "Ladění"): the button cycles the kinds (`set`).
+  final WeatherController? weather;
 
   @override
   State<_TuningPanel> createState() => _TuningPanelState();
@@ -221,6 +234,13 @@ class _TuningPanelState extends State<_TuningPanel> {
                   null => null,
                 },
               ),
+              if (widget.weather?.kind.value case final kind?)
+                OutlinedButton.icon(
+                  key: const ValueKey('weatherCycle'),
+                  icon: Icon(weatherIcon(kind), size: 16),
+                  label: Text(weatherText(l, kind)),
+                  onPressed: () => setState(() => widget.weather!.cycle()),
+                ),
               if (widget.onResetSave case final reset?)
                 OutlinedButton.icon(
                   icon: const Icon(Icons.delete_forever, size: 16),

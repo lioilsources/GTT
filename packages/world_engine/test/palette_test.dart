@@ -87,4 +87,21 @@ void main() {
       expect(risographEnabled(s, 'nyc', night: false), isFalse);
     });
   });
+
+  test('wet (specs/weather.md): road, sidewalk and alley × (1 − k), the rest unchanged', () {
+    final p = Palette.forCity('nyc');
+    expect(identical(p.wet(0), p), isTrue);
+    final w = p.wet(0.25);
+    for (final (a, b) in [(p.asphalt, w.asphalt), (p.sidewalk, w.sidewalk), (p.alley, w.alley)]) {
+      expect(b.r, closeTo(a.r * 0.75, 1e-6));
+      expect(b.g, closeTo(a.g * 0.75, 1e-6));
+      expect(b.b, closeTo(a.b * 0.75, 1e-6));
+      expect(b.a, a.a);
+    }
+    expect(
+      [w.land, w.water, w.marking, w.bridgeDeck, w.roof, w.shadow, w.night],
+      [p.land, p.water, p.marking, p.bridgeDeck, p.roof, p.shadow, p.night],
+    );
+    expect(Palette.forCity('prague').wet(0.2).inks, Palette.forCity('prague').inks);
+  });
 }

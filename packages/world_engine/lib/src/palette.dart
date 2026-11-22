@@ -65,6 +65,42 @@ class Palette {
   /// Style A flat roofs: both `roof` and `roofEdge` are set (otherwise roofs stay v1).
   bool get flatRoofs => roof != null && roofEdge != null;
 
+  /// The wet look of rain (specs/weather.md): road, sidewalk and alley colours × (1 − [k]),
+  /// everything else as it is. [k] = `weather.wet_darken` × the rain amount of the blend.
+  Palette wet(double k) {
+    if (k <= 0) return this;
+    final f = (1 - k).clamp(0.0, 1.0);
+    Color dark(Color c) => Color.from(alpha: c.a, red: c.r * f, green: c.g * f, blue: c.b * f);
+    return Palette._(
+      land: land,
+      water: water,
+      park: park,
+      plaza: plaza,
+      rail: rail,
+      pedestrian: pedestrian,
+      sidewalk: dark(sidewalk),
+      asphalt: dark(asphalt),
+      alley: dark(alley),
+      marking: marking,
+      centerLine: centerLine,
+      bridgeDeck: bridgeDeck,
+      bridgeEdge: bridgeEdge,
+      tunnel: tunnel,
+      facades: facades,
+      landmark: landmark,
+      roofLight: roofLight,
+      sunX: sunX,
+      sunY: sunY,
+      ambient: ambient,
+      night: night,
+      shadow: shadow,
+      inks: inks,
+      roof: roof,
+      roofEdge: roofEdge,
+      castShadow: castShadow,
+    );
+  }
+
   Color ground(GroundKind k) => switch (k) {
     GroundKind.WATER => water,
     GroundKind.PARK => park,

@@ -116,6 +116,16 @@ class DriveWorld {
   final List<double> skids = [];
   (double, double, double, double)? _lastSkid;
 
+  /// Grip multiplier of the player's car set by the client (rain, specs/weather.md); kept across
+  /// respawns and car switches. The drive rules themselves stay those of specs/drive.md.
+  double get gripScale => _gripScale;
+  set gripScale(double v) {
+    _gripScale = v;
+    if (_spawned) car.gripScale = v;
+  }
+
+  double _gripScale = 1;
+
   /// Called before every fixed step (the benchmark autopilot sets the input here).
   void Function(double step)? beforeStep;
 
@@ -126,7 +136,7 @@ class DriveWorld {
     hop
       ..air = 0
       ..t = 0;
-    car = Car(world, spec, _d, x: x, y: y, heading: heading, scale: tuning.carScale);
+    car = Car(world, spec, _d, x: x, y: y, heading: heading, scale: tuning.carScale)..gripScale = _gripScale;
     _spawned = true;
     layers.reset(x, y);
     car.setLayer(layers.layer);
@@ -164,7 +174,7 @@ class DriveWorld {
     final x = car.x, y = car.y, h = car.heading, v = car.velocity;
     final l = car.layer;
     car.destroy();
-    car = Car(world, spec, _d, x: x, y: y, heading: h, scale: tuning.carScale);
+    car = Car(world, spec, _d, x: x, y: y, heading: h, scale: tuning.carScale)..gripScale = _gripScale;
     car.body.linearVelocity = v;
     car.setLayer(l);
     car.setAirborne(hop.airborne);
