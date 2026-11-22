@@ -70,7 +70,7 @@ zapíná po městech v `city.yaml`.
 | N3 | Grafika 40 aut | procedurální kresba podle třídy a rozměrů, lak tónovaný za běhu |
 | N4 | Rádio | kostra se stanicemi a ticho; zdroj hudby (vlastní / volná licence) určí Ol1n |
 | N5 | Ceny tuningu a aut | v `tuning.yaml`, první návrh: auto 5 000–60 000, díl tuningu 1 000–8 000 |
-| N6 | Bar a pivo | po pivu jen taxi nebo metro, auto zůstane zaparkované u baru |
+| N6 | Bar a pivo | rozhodl Ol1n 2026-11-22: pár piv se řídit smí, po víc než `shops.beer_limit` musí hráč vyhrát minihru (`specs/shops.md`) |
 
 ## Stav (2026-11-22)
 

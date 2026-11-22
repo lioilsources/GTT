@@ -83,6 +83,8 @@ export interface Save {
   settings: SaveSettings;
   /** Unlocked metro stations (spot ids) in unlock order (specs/travel.md); missing = []. */
   stations?: string[];
+  /** Bought souvenirs (spot ids) in purchase order (specs/shops.md); missing = []. */
+  souvenirs?: string[];
 }
 
 export interface SaveFeed {

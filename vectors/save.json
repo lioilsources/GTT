@@ -1,6 +1,6 @@
 {
  "module": "save",
- "specVersion": 2,
+ "specVersion": 3,
  "cases": [
   {
    "name": "migrate version 1",
@@ -52,7 +52,7 @@
       }
      },
      "state": {
-      "version": 3,
+      "version": 4,
       "cityId": "nyc",
       "cash": 1250,
       "cars": [
@@ -89,7 +89,8 @@
        "scheme": "a",
        "night": false
       },
-      "stations": []
+      "stations": [],
+      "souvenirs": []
      }
     }
    ],
@@ -171,7 +172,7 @@
       }
      },
      "state": {
-      "version": 3,
+      "version": 4,
       "cityId": "nyc",
       "cash": 300,
       "cars": [
@@ -219,7 +220,8 @@
        "scheme": "c",
        "night": true
       },
-      "stations": []
+      "stations": [],
+      "souvenirs": []
      }
     },
     {
@@ -279,7 +281,7 @@
       }
      },
      "state": {
-      "version": 3,
+      "version": 4,
       "cityId": "nyc",
       "cash": 0,
       "cars": [
@@ -327,7 +329,8 @@
        "scheme": "c",
        "night": true
       },
-      "stations": []
+      "stations": [],
+      "souvenirs": []
      }
     },
     {
@@ -387,7 +390,7 @@
       }
      },
      "state": {
-      "version": 3,
+      "version": 4,
       "cityId": "nyc",
       "cash": 300,
       "cars": [
@@ -435,7 +438,8 @@
        "scheme": "a",
        "night": false
       },
-      "stations": []
+      "stations": [],
+      "souvenirs": []
      }
     },
     {
@@ -493,7 +497,7 @@
       }
      },
      "state": {
-      "version": 3,
+      "version": 4,
       "cityId": "nyc",
       "cash": 300,
       "cars": [
@@ -540,7 +544,8 @@
        "scheme": "c",
        "night": true
       },
-      "stations": []
+      "stations": [],
+      "souvenirs": []
      }
     }
    ],
@@ -572,7 +577,7 @@
       "save": null
      },
      "state": {
-      "version": 3,
+      "version": 4,
       "cityId": "nyc",
       "cash": 0,
       "cars": [
@@ -596,7 +601,8 @@
        "scheme": "a",
        "night": false
       },
-      "stations": []
+      "stations": [],
+      "souvenirs": []
      }
     },
     {
@@ -606,7 +612,7 @@
       "save": "text"
      },
      "state": {
-      "version": 3,
+      "version": 4,
       "cityId": "nyc",
       "cash": 0,
       "cars": [
@@ -630,7 +636,8 @@
        "scheme": "a",
        "night": false
       },
-      "stations": []
+      "stations": [],
+      "souvenirs": []
      }
     },
     {
@@ -643,7 +650,7 @@
       }
      },
      "state": {
-      "version": 3,
+      "version": 4,
       "cityId": "nyc",
       "cash": 0,
       "cars": [
@@ -667,7 +674,8 @@
        "scheme": "a",
        "night": false
       },
-      "stations": []
+      "stations": [],
+      "souvenirs": []
      }
     },
     {
@@ -701,7 +709,7 @@
       }
      },
      "state": {
-      "version": 3,
+      "version": 4,
       "cityId": "nyc",
       "cash": 0,
       "cars": [
@@ -725,7 +733,8 @@
        "scheme": "a",
        "night": false
       },
-      "stations": []
+      "stations": [],
+      "souvenirs": []
      }
     },
     {
@@ -759,7 +768,7 @@
       }
      },
      "state": {
-      "version": 3,
+      "version": 4,
       "cityId": "nyc",
       "cash": 0,
       "cars": [
@@ -783,7 +792,8 @@
        "scheme": "a",
        "night": false
       },
-      "stations": []
+      "stations": [],
+      "souvenirs": []
      }
     },
     {
@@ -842,7 +852,7 @@
       }
      },
      "state": {
-      "version": 3,
+      "version": 4,
       "cityId": "nyc",
       "cash": 0,
       "cars": [
@@ -866,7 +876,8 @@
        "scheme": "a",
        "night": false
       },
-      "stations": []
+      "stations": [],
+      "souvenirs": []
      }
     },
     {
@@ -915,7 +926,7 @@
       }
      },
      "state": {
-      "version": 3,
+      "version": 4,
       "cityId": "nyc",
       "cash": 0,
       "cars": [
@@ -939,7 +950,8 @@
        "scheme": "a",
        "night": false
       },
-      "stations": []
+      "stations": [],
+      "souvenirs": []
      }
     }
    ],
@@ -1021,7 +1033,7 @@
       }
      },
      "state": {
-      "version": 3,
+      "version": 4,
       "cityId": "nyc",
       "cash": 300,
       "cars": [
@@ -1069,7 +1081,8 @@
        "scheme": "c",
        "night": true
       },
-      "stations": []
+      "stations": [],
+      "souvenirs": []
      }
     },
     {
@@ -1132,7 +1145,7 @@
       }
      },
      "state": {
-      "version": 3,
+      "version": 4,
       "cityId": "nyc",
       "cash": 300,
       "cars": [
@@ -1180,7 +1193,8 @@
        "scheme": "c",
        "night": true
       },
-      "stations": []
+      "stations": [],
+      "souvenirs": []
      }
     }
    ],
@@ -1268,7 +1282,7 @@
       }
      },
      "state": {
-      "version": 3,
+      "version": 4,
       "cityId": "nyc",
       "cash": 300,
       "cars": [
@@ -1320,7 +1334,8 @@
        "subway_union_sq",
        "subway_times_sq",
        "subway_gone"
-      ]
+      ],
+      "souvenirs": []
      }
     }
    ],
@@ -1402,7 +1417,7 @@
       }
      },
      "state": {
-      "version": 3,
+      "version": 4,
       "cityId": "nyc",
       "cash": 300,
       "cars": [
@@ -1450,7 +1465,8 @@
        "scheme": "c",
        "night": true
       },
-      "stations": []
+      "stations": [],
+      "souvenirs": []
      }
     }
    ],
@@ -1536,7 +1552,7 @@
       }
      },
      "state": {
-      "version": 3,
+      "version": 4,
       "cityId": "nyc",
       "cash": 0,
       "cars": [
@@ -1560,7 +1576,8 @@
        "scheme": "a",
        "night": false
       },
-      "stations": []
+      "stations": [],
+      "souvenirs": []
      }
     },
     {
@@ -1621,7 +1638,7 @@
       }
      },
      "state": {
-      "version": 3,
+      "version": 4,
       "cityId": "nyc",
       "cash": 0,
       "cars": [
@@ -1645,7 +1662,8 @@
        "scheme": "a",
        "night": false
       },
-      "stations": []
+      "stations": [],
+      "souvenirs": []
      }
     },
     {
@@ -1705,7 +1723,7 @@
       }
      },
      "state": {
-      "version": 3,
+      "version": 4,
       "cityId": "nyc",
       "cash": 0,
       "cars": [
@@ -1729,7 +1747,467 @@
        "scheme": "a",
        "night": false
       },
-      "stations": []
+      "stations": [],
+      "souvenirs": []
+     }
+    }
+   ],
+   "result": null
+  },
+  {
+   "name": "migrate version 3 to 4",
+   "config": {
+    "cityId": "nyc",
+    "startCash": 0,
+    "startOwned": [
+     "m0_coupe"
+    ],
+    "startCar": "m0_coupe",
+    "cars": [
+     "hatch_pip",
+     "m0_coupe",
+     "muscle_brute",
+     "pickup_hauler",
+     "taxi_metro"
+    ]
+   },
+   "seed": 1,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "load",
+      "save": {
+       "version": 3,
+       "cityId": "nyc",
+       "cash": 300,
+       "cars": [
+        "m0_coupe"
+       ],
+       "car": "m0_coupe",
+       "stamps": [
+        "district:soho"
+       ],
+       "best": {},
+       "plays": {},
+       "feed": {
+        "prefs": {},
+        "visits": {},
+        "districts": []
+       },
+       "npc": {
+        "vibe": {},
+        "contacts": [],
+        "recent": []
+       },
+       "settings": {
+        "scheme": "a",
+        "night": false
+       },
+       "stations": [
+        "subway_times_sq"
+       ]
+      }
+     },
+     "state": {
+      "version": 4,
+      "cityId": "nyc",
+      "cash": 300,
+      "cars": [
+       "m0_coupe"
+      ],
+      "car": "m0_coupe",
+      "stamps": [
+       "district:soho"
+      ],
+      "best": {},
+      "plays": {},
+      "feed": {
+       "prefs": {},
+       "visits": {},
+       "districts": []
+      },
+      "npc": {
+       "vibe": {},
+       "contacts": [],
+       "recent": []
+      },
+      "settings": {
+       "scheme": "a",
+       "night": false
+      },
+      "stations": [
+       "subway_times_sq"
+      ],
+      "souvenirs": []
+     }
+    }
+   ],
+   "result": null
+  },
+  {
+   "name": "version 4 souvenirs keep the first of duplicates",
+   "config": {
+    "cityId": "nyc",
+    "startCash": 0,
+    "startOwned": [
+     "m0_coupe"
+    ],
+    "startCar": "m0_coupe",
+    "cars": [
+     "hatch_pip",
+     "m0_coupe",
+     "muscle_brute",
+     "pickup_hauler",
+     "taxi_metro"
+    ]
+   },
+   "seed": 1,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "load",
+      "save": {
+       "version": 4,
+       "cityId": "nyc",
+       "cash": 300,
+       "cars": [
+        "m0_coupe"
+       ],
+       "car": "m0_coupe",
+       "stamps": [
+        "district:soho"
+       ],
+       "best": {},
+       "plays": {},
+       "feed": {
+        "prefs": {},
+        "visits": {},
+        "districts": []
+       },
+       "npc": {
+        "vibe": {},
+        "contacts": [],
+        "recent": []
+       },
+       "settings": {
+        "scheme": "a",
+        "night": false
+       },
+       "stations": [
+        "subway_times_sq"
+       ],
+       "souvenirs": [
+        "souvenir_canal",
+        "souvenir_dumbo",
+        "souvenir_canal"
+       ]
+      }
+     },
+     "state": {
+      "version": 4,
+      "cityId": "nyc",
+      "cash": 300,
+      "cars": [
+       "m0_coupe"
+      ],
+      "car": "m0_coupe",
+      "stamps": [
+       "district:soho"
+      ],
+      "best": {},
+      "plays": {},
+      "feed": {
+       "prefs": {},
+       "visits": {},
+       "districts": []
+      },
+      "npc": {
+       "vibe": {},
+       "contacts": [],
+       "recent": []
+      },
+      "settings": {
+       "scheme": "a",
+       "night": false
+      },
+      "stations": [
+       "subway_times_sq"
+      ],
+      "souvenirs": [
+       "souvenir_canal",
+       "souvenir_dumbo"
+      ]
+     }
+    }
+   ],
+   "result": null
+  },
+  {
+   "name": "version 4 without souvenirs",
+   "config": {
+    "cityId": "nyc",
+    "startCash": 0,
+    "startOwned": [
+     "m0_coupe"
+    ],
+    "startCar": "m0_coupe",
+    "cars": [
+     "hatch_pip",
+     "m0_coupe",
+     "muscle_brute",
+     "pickup_hauler",
+     "taxi_metro"
+    ]
+   },
+   "seed": 1,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "load",
+      "save": {
+       "version": 4,
+       "cityId": "nyc",
+       "cash": 300,
+       "cars": [
+        "m0_coupe"
+       ],
+       "car": "m0_coupe",
+       "stamps": [
+        "district:soho"
+       ],
+       "best": {},
+       "plays": {},
+       "feed": {
+        "prefs": {},
+        "visits": {},
+        "districts": []
+       },
+       "npc": {
+        "vibe": {},
+        "contacts": [],
+        "recent": []
+       },
+       "settings": {
+        "scheme": "a",
+        "night": false
+       },
+       "stations": [
+        "subway_times_sq"
+       ]
+      }
+     },
+     "state": {
+      "version": 4,
+      "cityId": "nyc",
+      "cash": 300,
+      "cars": [
+       "m0_coupe"
+      ],
+      "car": "m0_coupe",
+      "stamps": [
+       "district:soho"
+      ],
+      "best": {},
+      "plays": {},
+      "feed": {
+       "prefs": {},
+       "visits": {},
+       "districts": []
+      },
+      "npc": {
+       "vibe": {},
+       "contacts": [],
+       "recent": []
+      },
+      "settings": {
+       "scheme": "a",
+       "night": false
+      },
+      "stations": [
+       "subway_times_sq"
+      ],
+      "souvenirs": []
+     }
+    }
+   ],
+   "result": null
+  },
+  {
+   "name": "version 4 with a bad souvenirs list gives a fresh save",
+   "config": {
+    "cityId": "nyc",
+    "startCash": 0,
+    "startOwned": [
+     "m0_coupe"
+    ],
+    "startCar": "m0_coupe",
+    "cars": [
+     "hatch_pip",
+     "m0_coupe",
+     "muscle_brute",
+     "pickup_hauler",
+     "taxi_metro"
+    ]
+   },
+   "seed": 1,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "load",
+      "save": {
+       "version": 4,
+       "cityId": "nyc",
+       "cash": 300,
+       "cars": [
+        "m0_coupe"
+       ],
+       "car": "m0_coupe",
+       "stamps": [
+        "district:soho"
+       ],
+       "best": {},
+       "plays": {},
+       "feed": {
+        "prefs": {},
+        "visits": {},
+        "districts": []
+       },
+       "npc": {
+        "vibe": {},
+        "contacts": [],
+        "recent": []
+       },
+       "settings": {
+        "scheme": "a",
+        "night": false
+       },
+       "stations": [
+        "subway_times_sq"
+       ],
+       "souvenirs": [
+        "souvenir_canal",
+        3
+       ]
+      }
+     },
+     "state": {
+      "version": 4,
+      "cityId": "nyc",
+      "cash": 0,
+      "cars": [
+       "m0_coupe"
+      ],
+      "car": "m0_coupe",
+      "stamps": [],
+      "best": {},
+      "plays": {},
+      "feed": {
+       "prefs": {},
+       "visits": {},
+       "districts": []
+      },
+      "npc": {
+       "vibe": {},
+       "contacts": [],
+       "recent": []
+      },
+      "settings": {
+       "scheme": "a",
+       "night": false
+      },
+      "stations": [],
+      "souvenirs": []
+     }
+    }
+   ],
+   "result": null
+  },
+  {
+   "name": "version 5 gives a fresh save",
+   "config": {
+    "cityId": "nyc",
+    "startCash": 0,
+    "startOwned": [
+     "m0_coupe"
+    ],
+    "startCar": "m0_coupe",
+    "cars": [
+     "hatch_pip",
+     "m0_coupe",
+     "muscle_brute",
+     "pickup_hauler",
+     "taxi_metro"
+    ]
+   },
+   "seed": 1,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "load",
+      "save": {
+       "version": 5,
+       "cityId": "nyc",
+       "cash": 300,
+       "cars": [
+        "m0_coupe"
+       ],
+       "car": "m0_coupe",
+       "stamps": [
+        "district:soho"
+       ],
+       "best": {},
+       "plays": {},
+       "feed": {
+        "prefs": {},
+        "visits": {},
+        "districts": []
+       },
+       "npc": {
+        "vibe": {},
+        "contacts": [],
+        "recent": []
+       },
+       "settings": {
+        "scheme": "a",
+        "night": false
+       },
+       "stations": [
+        "subway_times_sq"
+       ]
+      }
+     },
+     "state": {
+      "version": 4,
+      "cityId": "nyc",
+      "cash": 0,
+      "cars": [
+       "m0_coupe"
+      ],
+      "car": "m0_coupe",
+      "stamps": [],
+      "best": {},
+      "plays": {},
+      "feed": {
+       "prefs": {},
+       "visits": {},
+       "districts": []
+      },
+      "npc": {
+       "vibe": {},
+       "contacts": [],
+       "recent": []
+      },
+      "settings": {
+       "scheme": "a",
+       "night": false
+      },
+      "stations": [],
+      "souvenirs": []
      }
     }
    ],

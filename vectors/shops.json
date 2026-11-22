@@ -1,0 +1,1852 @@
+{
+ "module": "shops",
+ "specVersion": 1,
+ "cases": [
+  {
+   "name": "load keeps known souvenirs, first of duplicates, list order",
+   "config": {
+    "snackPct": 25,
+    "beerLimit": 2,
+    "beerS": 3,
+    "snackS": 4,
+    "items": [
+     {
+      "id": "food_a",
+      "kind": "food",
+      "price": 15
+     },
+     {
+      "id": "souvenir_a",
+      "kind": "souvenir",
+      "price": 120
+     },
+     {
+      "id": "bar_a",
+      "kind": "bar",
+      "price": 10
+     },
+     {
+      "id": "souvenir_b",
+      "kind": "souvenir",
+      "price": 80
+     }
+    ]
+   },
+   "seed": 1,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "load",
+      "owned": [
+       "souvenir_b",
+       "food_a",
+       "gone",
+       "souvenir_a",
+       "souvenir_b"
+      ]
+     },
+     "state": {
+      "snackLeft": 0,
+      "beers": 0,
+      "beerLeft": 0,
+      "drunk": false,
+      "owned": [
+       "souvenir_b",
+       "souvenir_a"
+      ],
+      "last": {
+       "op": "",
+       "amount": 0
+      }
+     }
+    }
+   ],
+   "result": null
+  },
+  {
+   "name": "load empty",
+   "config": {
+    "snackPct": 25,
+    "beerLimit": 2,
+    "beerS": 3,
+    "snackS": 4,
+    "items": [
+     {
+      "id": "food_a",
+      "kind": "food",
+      "price": 15
+     },
+     {
+      "id": "souvenir_a",
+      "kind": "souvenir",
+      "price": 120
+     },
+     {
+      "id": "bar_a",
+      "kind": "bar",
+      "price": 10
+     },
+     {
+      "id": "souvenir_b",
+      "kind": "souvenir",
+      "price": 80
+     }
+    ]
+   },
+   "seed": 1,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "load",
+      "owned": []
+     },
+     "state": {
+      "snackLeft": 0,
+      "beers": 0,
+      "beerLeft": 0,
+      "drunk": false,
+      "owned": [],
+      "last": {
+       "op": "",
+       "amount": 0
+      }
+     }
+    }
+   ],
+   "result": null
+  },
+  {
+   "name": "buy food sets the snack",
+   "config": {
+    "snackPct": 25,
+    "beerLimit": 2,
+    "beerS": 3,
+    "snackS": 4,
+    "items": [
+     {
+      "id": "food_a",
+      "kind": "food",
+      "price": 15
+     },
+     {
+      "id": "souvenir_a",
+      "kind": "souvenir",
+      "price": 120
+     },
+     {
+      "id": "bar_a",
+      "kind": "bar",
+      "price": 10
+     },
+     {
+      "id": "souvenir_b",
+      "kind": "souvenir",
+      "price": 80
+     }
+    ]
+   },
+   "seed": 1,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "buy",
+      "shop": "food_a",
+      "cash": 100
+     },
+     "state": {
+      "snackLeft": 4,
+      "beers": 0,
+      "beerLeft": 0,
+      "drunk": false,
+      "owned": [],
+      "last": {
+       "op": "buy",
+       "amount": 15
+      }
+     }
+    }
+   ],
+   "result": null
+  },
+  {
+   "name": "buy with exactly the price",
+   "config": {
+    "snackPct": 25,
+    "beerLimit": 2,
+    "beerS": 3,
+    "snackS": 4,
+    "items": [
+     {
+      "id": "food_a",
+      "kind": "food",
+      "price": 15
+     },
+     {
+      "id": "souvenir_a",
+      "kind": "souvenir",
+      "price": 120
+     },
+     {
+      "id": "bar_a",
+      "kind": "bar",
+      "price": 10
+     },
+     {
+      "id": "souvenir_b",
+      "kind": "souvenir",
+      "price": 80
+     }
+    ]
+   },
+   "seed": 1,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "buy",
+      "shop": "food_a",
+      "cash": 15
+     },
+     "state": {
+      "snackLeft": 4,
+      "beers": 0,
+      "beerLeft": 0,
+      "drunk": false,
+      "owned": [],
+      "last": {
+       "op": "buy",
+       "amount": 15
+      }
+     }
+    }
+   ],
+   "result": null
+  },
+  {
+   "name": "snack replaces, does not add up",
+   "config": {
+    "snackPct": 25,
+    "beerLimit": 2,
+    "beerS": 3,
+    "snackS": 4,
+    "items": [
+     {
+      "id": "food_a",
+      "kind": "food",
+      "price": 15
+     },
+     {
+      "id": "souvenir_a",
+      "kind": "souvenir",
+      "price": 120
+     },
+     {
+      "id": "bar_a",
+      "kind": "bar",
+      "price": 10
+     },
+     {
+      "id": "souvenir_b",
+      "kind": "souvenir",
+      "price": 80
+     }
+    ]
+   },
+   "seed": 1,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "buy",
+      "shop": "food_a",
+      "cash": 100
+     },
+     "state": {
+      "snackLeft": 4,
+      "beers": 0,
+      "beerLeft": 0,
+      "drunk": false,
+      "owned": [],
+      "last": {
+       "op": "buy",
+       "amount": 15
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick"
+     },
+     "state": {
+      "snackLeft": 3,
+      "beers": 0,
+      "beerLeft": 0,
+      "drunk": false,
+      "owned": [],
+      "last": {
+       "op": "",
+       "amount": 0
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick"
+     },
+     "state": {
+      "snackLeft": 2,
+      "beers": 0,
+      "beerLeft": 0,
+      "drunk": false,
+      "owned": [],
+      "last": {
+       "op": "",
+       "amount": 0
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "buy",
+      "shop": "food_a",
+      "cash": 100
+     },
+     "state": {
+      "snackLeft": 4,
+      "beers": 0,
+      "beerLeft": 0,
+      "drunk": false,
+      "owned": [],
+      "last": {
+       "op": "buy",
+       "amount": 15
+      }
+     }
+    }
+   ],
+   "result": null
+  },
+  {
+   "name": "snack wears off",
+   "config": {
+    "snackPct": 25,
+    "beerLimit": 2,
+    "beerS": 3,
+    "snackS": 4,
+    "items": [
+     {
+      "id": "food_a",
+      "kind": "food",
+      "price": 15
+     },
+     {
+      "id": "souvenir_a",
+      "kind": "souvenir",
+      "price": 120
+     },
+     {
+      "id": "bar_a",
+      "kind": "bar",
+      "price": 10
+     },
+     {
+      "id": "souvenir_b",
+      "kind": "souvenir",
+      "price": 80
+     }
+    ]
+   },
+   "seed": 1,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "buy",
+      "shop": "food_a",
+      "cash": 100
+     },
+     "state": {
+      "snackLeft": 4,
+      "beers": 0,
+      "beerLeft": 0,
+      "drunk": false,
+      "owned": [],
+      "last": {
+       "op": "buy",
+       "amount": 15
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick"
+     },
+     "state": {
+      "snackLeft": 3,
+      "beers": 0,
+      "beerLeft": 0,
+      "drunk": false,
+      "owned": [],
+      "last": {
+       "op": "",
+       "amount": 0
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick"
+     },
+     "state": {
+      "snackLeft": 2,
+      "beers": 0,
+      "beerLeft": 0,
+      "drunk": false,
+      "owned": [],
+      "last": {
+       "op": "",
+       "amount": 0
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick"
+     },
+     "state": {
+      "snackLeft": 1,
+      "beers": 0,
+      "beerLeft": 0,
+      "drunk": false,
+      "owned": [],
+      "last": {
+       "op": "",
+       "amount": 0
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick"
+     },
+     "state": {
+      "snackLeft": 0,
+      "beers": 0,
+      "beerLeft": 0,
+      "drunk": false,
+      "owned": [],
+      "last": {
+       "op": "",
+       "amount": 0
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick"
+     },
+     "state": {
+      "snackLeft": 0,
+      "beers": 0,
+      "beerLeft": 0,
+      "drunk": false,
+      "owned": [],
+      "last": {
+       "op": "",
+       "amount": 0
+      }
+     }
+    }
+   ],
+   "result": null
+  },
+  {
+   "name": "reward with a snack gives the bonus and uses it",
+   "config": {
+    "snackPct": 25,
+    "beerLimit": 2,
+    "beerS": 3,
+    "snackS": 4,
+    "items": [
+     {
+      "id": "food_a",
+      "kind": "food",
+      "price": 15
+     },
+     {
+      "id": "souvenir_a",
+      "kind": "souvenir",
+      "price": 120
+     },
+     {
+      "id": "bar_a",
+      "kind": "bar",
+      "price": 10
+     },
+     {
+      "id": "souvenir_b",
+      "kind": "souvenir",
+      "price": 80
+     }
+    ]
+   },
+   "seed": 1,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "buy",
+      "shop": "food_a",
+      "cash": 100
+     },
+     "state": {
+      "snackLeft": 4,
+      "beers": 0,
+      "beerLeft": 0,
+      "drunk": false,
+      "owned": [],
+      "last": {
+       "op": "buy",
+       "amount": 15
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick"
+     },
+     "state": {
+      "snackLeft": 3,
+      "beers": 0,
+      "beerLeft": 0,
+      "drunk": false,
+      "owned": [],
+      "last": {
+       "op": "",
+       "amount": 0
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "reward",
+      "amount": 250
+     },
+     "state": {
+      "snackLeft": 0,
+      "beers": 0,
+      "beerLeft": 0,
+      "drunk": false,
+      "owned": [],
+      "last": {
+       "op": "reward",
+       "amount": 62
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "reward",
+      "amount": 250
+     },
+     "state": {
+      "snackLeft": 0,
+      "beers": 0,
+      "beerLeft": 0,
+      "drunk": false,
+      "owned": [],
+      "last": {
+       "op": "reward",
+       "amount": 0
+      }
+     }
+    }
+   ],
+   "result": null
+  },
+  {
+   "name": "reward bonus rounds down",
+   "config": {
+    "snackPct": 25,
+    "beerLimit": 2,
+    "beerS": 3,
+    "snackS": 4,
+    "items": [
+     {
+      "id": "food_a",
+      "kind": "food",
+      "price": 15
+     },
+     {
+      "id": "souvenir_a",
+      "kind": "souvenir",
+      "price": 120
+     },
+     {
+      "id": "bar_a",
+      "kind": "bar",
+      "price": 10
+     },
+     {
+      "id": "souvenir_b",
+      "kind": "souvenir",
+      "price": 80
+     }
+    ]
+   },
+   "seed": 1,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "buy",
+      "shop": "food_a",
+      "cash": 15
+     },
+     "state": {
+      "snackLeft": 4,
+      "beers": 0,
+      "beerLeft": 0,
+      "drunk": false,
+      "owned": [],
+      "last": {
+       "op": "buy",
+       "amount": 15
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "reward",
+      "amount": 7
+     },
+     "state": {
+      "snackLeft": 0,
+      "beers": 0,
+      "beerLeft": 0,
+      "drunk": false,
+      "owned": [],
+      "last": {
+       "op": "reward",
+       "amount": 1
+      }
+     }
+    }
+   ],
+   "result": null
+  },
+  {
+   "name": "reward without a snack",
+   "config": {
+    "snackPct": 25,
+    "beerLimit": 2,
+    "beerS": 3,
+    "snackS": 4,
+    "items": [
+     {
+      "id": "food_a",
+      "kind": "food",
+      "price": 15
+     },
+     {
+      "id": "souvenir_a",
+      "kind": "souvenir",
+      "price": 120
+     },
+     {
+      "id": "bar_a",
+      "kind": "bar",
+      "price": 10
+     },
+     {
+      "id": "souvenir_b",
+      "kind": "souvenir",
+      "price": 80
+     }
+    ]
+   },
+   "seed": 1,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "reward",
+      "amount": 400
+     },
+     "state": {
+      "snackLeft": 0,
+      "beers": 0,
+      "beerLeft": 0,
+      "drunk": false,
+      "owned": [],
+      "last": {
+       "op": "reward",
+       "amount": 0
+      }
+     }
+    }
+   ],
+   "result": null
+  },
+  {
+   "name": "buy souvenirs appends in order",
+   "config": {
+    "snackPct": 25,
+    "beerLimit": 2,
+    "beerS": 3,
+    "snackS": 4,
+    "items": [
+     {
+      "id": "food_a",
+      "kind": "food",
+      "price": 15
+     },
+     {
+      "id": "souvenir_a",
+      "kind": "souvenir",
+      "price": 120
+     },
+     {
+      "id": "bar_a",
+      "kind": "bar",
+      "price": 10
+     },
+     {
+      "id": "souvenir_b",
+      "kind": "souvenir",
+      "price": 80
+     }
+    ]
+   },
+   "seed": 1,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "buy",
+      "shop": "souvenir_b",
+      "cash": 500
+     },
+     "state": {
+      "snackLeft": 0,
+      "beers": 0,
+      "beerLeft": 0,
+      "drunk": false,
+      "owned": [
+       "souvenir_b"
+      ],
+      "last": {
+       "op": "buy",
+       "amount": 80
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "buy",
+      "shop": "souvenir_a",
+      "cash": 500
+     },
+     "state": {
+      "snackLeft": 0,
+      "beers": 0,
+      "beerLeft": 0,
+      "drunk": false,
+      "owned": [
+       "souvenir_b",
+       "souvenir_a"
+      ],
+      "last": {
+       "op": "buy",
+       "amount": 120
+      }
+     }
+    }
+   ],
+   "result": null
+  },
+  {
+   "name": "load then buy another souvenir",
+   "config": {
+    "snackPct": 25,
+    "beerLimit": 2,
+    "beerS": 3,
+    "snackS": 4,
+    "items": [
+     {
+      "id": "food_a",
+      "kind": "food",
+      "price": 15
+     },
+     {
+      "id": "souvenir_a",
+      "kind": "souvenir",
+      "price": 120
+     },
+     {
+      "id": "bar_a",
+      "kind": "bar",
+      "price": 10
+     },
+     {
+      "id": "souvenir_b",
+      "kind": "souvenir",
+      "price": 80
+     }
+    ]
+   },
+   "seed": 1,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "load",
+      "owned": [
+       "souvenir_a"
+      ]
+     },
+     "state": {
+      "snackLeft": 0,
+      "beers": 0,
+      "beerLeft": 0,
+      "drunk": false,
+      "owned": [
+       "souvenir_a"
+      ],
+      "last": {
+       "op": "",
+       "amount": 0
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "buy",
+      "shop": "souvenir_b",
+      "cash": 80
+     },
+     "state": {
+      "snackLeft": 0,
+      "beers": 0,
+      "beerLeft": 0,
+      "drunk": false,
+      "owned": [
+       "souvenir_a",
+       "souvenir_b"
+      ],
+      "last": {
+       "op": "buy",
+       "amount": 80
+      }
+     }
+    }
+   ],
+   "result": null
+  },
+  {
+   "name": "beers up to the limit stay sober",
+   "config": {
+    "snackPct": 25,
+    "beerLimit": 2,
+    "beerS": 3,
+    "snackS": 4,
+    "items": [
+     {
+      "id": "food_a",
+      "kind": "food",
+      "price": 15
+     },
+     {
+      "id": "souvenir_a",
+      "kind": "souvenir",
+      "price": 120
+     },
+     {
+      "id": "bar_a",
+      "kind": "bar",
+      "price": 10
+     },
+     {
+      "id": "souvenir_b",
+      "kind": "souvenir",
+      "price": 80
+     }
+    ]
+   },
+   "seed": 1,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "buy",
+      "shop": "bar_a",
+      "cash": 50
+     },
+     "state": {
+      "snackLeft": 0,
+      "beers": 1,
+      "beerLeft": 3,
+      "drunk": false,
+      "owned": [],
+      "last": {
+       "op": "buy",
+       "amount": 10
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "buy",
+      "shop": "bar_a",
+      "cash": 50
+     },
+     "state": {
+      "snackLeft": 0,
+      "beers": 2,
+      "beerLeft": 3,
+      "drunk": false,
+      "owned": [],
+      "last": {
+       "op": "buy",
+       "amount": 10
+      }
+     }
+    }
+   ],
+   "result": null
+  },
+  {
+   "name": "one beer over the limit is drunk",
+   "config": {
+    "snackPct": 25,
+    "beerLimit": 2,
+    "beerS": 3,
+    "snackS": 4,
+    "items": [
+     {
+      "id": "food_a",
+      "kind": "food",
+      "price": 15
+     },
+     {
+      "id": "souvenir_a",
+      "kind": "souvenir",
+      "price": 120
+     },
+     {
+      "id": "bar_a",
+      "kind": "bar",
+      "price": 10
+     },
+     {
+      "id": "souvenir_b",
+      "kind": "souvenir",
+      "price": 80
+     }
+    ]
+   },
+   "seed": 1,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "buy",
+      "shop": "bar_a",
+      "cash": 50
+     },
+     "state": {
+      "snackLeft": 0,
+      "beers": 1,
+      "beerLeft": 3,
+      "drunk": false,
+      "owned": [],
+      "last": {
+       "op": "buy",
+       "amount": 10
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "buy",
+      "shop": "bar_a",
+      "cash": 50
+     },
+     "state": {
+      "snackLeft": 0,
+      "beers": 2,
+      "beerLeft": 3,
+      "drunk": false,
+      "owned": [],
+      "last": {
+       "op": "buy",
+       "amount": 10
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "buy",
+      "shop": "bar_a",
+      "cash": 50
+     },
+     "state": {
+      "snackLeft": 0,
+      "beers": 3,
+      "beerLeft": 3,
+      "drunk": true,
+      "owned": [],
+      "last": {
+       "op": "buy",
+       "amount": 10
+      }
+     }
+    }
+   ],
+   "result": null
+  },
+  {
+   "name": "beers wear off one per beerS",
+   "config": {
+    "snackPct": 25,
+    "beerLimit": 2,
+    "beerS": 3,
+    "snackS": 4,
+    "items": [
+     {
+      "id": "food_a",
+      "kind": "food",
+      "price": 15
+     },
+     {
+      "id": "souvenir_a",
+      "kind": "souvenir",
+      "price": 120
+     },
+     {
+      "id": "bar_a",
+      "kind": "bar",
+      "price": 10
+     },
+     {
+      "id": "souvenir_b",
+      "kind": "souvenir",
+      "price": 80
+     }
+    ]
+   },
+   "seed": 1,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "buy",
+      "shop": "bar_a",
+      "cash": 50
+     },
+     "state": {
+      "snackLeft": 0,
+      "beers": 1,
+      "beerLeft": 3,
+      "drunk": false,
+      "owned": [],
+      "last": {
+       "op": "buy",
+       "amount": 10
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "buy",
+      "shop": "bar_a",
+      "cash": 50
+     },
+     "state": {
+      "snackLeft": 0,
+      "beers": 2,
+      "beerLeft": 3,
+      "drunk": false,
+      "owned": [],
+      "last": {
+       "op": "buy",
+       "amount": 10
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick"
+     },
+     "state": {
+      "snackLeft": 0,
+      "beers": 2,
+      "beerLeft": 2,
+      "drunk": false,
+      "owned": [],
+      "last": {
+       "op": "",
+       "amount": 0
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick"
+     },
+     "state": {
+      "snackLeft": 0,
+      "beers": 2,
+      "beerLeft": 1,
+      "drunk": false,
+      "owned": [],
+      "last": {
+       "op": "",
+       "amount": 0
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick"
+     },
+     "state": {
+      "snackLeft": 0,
+      "beers": 1,
+      "beerLeft": 3,
+      "drunk": false,
+      "owned": [],
+      "last": {
+       "op": "",
+       "amount": 0
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick"
+     },
+     "state": {
+      "snackLeft": 0,
+      "beers": 1,
+      "beerLeft": 2,
+      "drunk": false,
+      "owned": [],
+      "last": {
+       "op": "",
+       "amount": 0
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick"
+     },
+     "state": {
+      "snackLeft": 0,
+      "beers": 1,
+      "beerLeft": 1,
+      "drunk": false,
+      "owned": [],
+      "last": {
+       "op": "",
+       "amount": 0
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick"
+     },
+     "state": {
+      "snackLeft": 0,
+      "beers": 0,
+      "beerLeft": 0,
+      "drunk": false,
+      "owned": [],
+      "last": {
+       "op": "",
+       "amount": 0
+      }
+     }
+    }
+   ],
+   "result": null
+  },
+  {
+   "name": "a beer while one wears off keeps the countdown",
+   "config": {
+    "snackPct": 25,
+    "beerLimit": 2,
+    "beerS": 3,
+    "snackS": 4,
+    "items": [
+     {
+      "id": "food_a",
+      "kind": "food",
+      "price": 15
+     },
+     {
+      "id": "souvenir_a",
+      "kind": "souvenir",
+      "price": 120
+     },
+     {
+      "id": "bar_a",
+      "kind": "bar",
+      "price": 10
+     },
+     {
+      "id": "souvenir_b",
+      "kind": "souvenir",
+      "price": 80
+     }
+    ]
+   },
+   "seed": 1,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "buy",
+      "shop": "bar_a",
+      "cash": 50
+     },
+     "state": {
+      "snackLeft": 0,
+      "beers": 1,
+      "beerLeft": 3,
+      "drunk": false,
+      "owned": [],
+      "last": {
+       "op": "buy",
+       "amount": 10
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick"
+     },
+     "state": {
+      "snackLeft": 0,
+      "beers": 1,
+      "beerLeft": 2,
+      "drunk": false,
+      "owned": [],
+      "last": {
+       "op": "",
+       "amount": 0
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick"
+     },
+     "state": {
+      "snackLeft": 0,
+      "beers": 1,
+      "beerLeft": 1,
+      "drunk": false,
+      "owned": [],
+      "last": {
+       "op": "",
+       "amount": 0
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "buy",
+      "shop": "bar_a",
+      "cash": 50
+     },
+     "state": {
+      "snackLeft": 0,
+      "beers": 2,
+      "beerLeft": 1,
+      "drunk": false,
+      "owned": [],
+      "last": {
+       "op": "buy",
+       "amount": 10
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick"
+     },
+     "state": {
+      "snackLeft": 0,
+      "beers": 1,
+      "beerLeft": 3,
+      "drunk": false,
+      "owned": [],
+      "last": {
+       "op": "",
+       "amount": 0
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick"
+     },
+     "state": {
+      "snackLeft": 0,
+      "beers": 1,
+      "beerLeft": 2,
+      "drunk": false,
+      "owned": [],
+      "last": {
+       "op": "",
+       "amount": 0
+      }
+     }
+    }
+   ],
+   "result": null
+  },
+  {
+   "name": "drunk: nothing wears off",
+   "config": {
+    "snackPct": 25,
+    "beerLimit": 2,
+    "beerS": 3,
+    "snackS": 4,
+    "items": [
+     {
+      "id": "food_a",
+      "kind": "food",
+      "price": 15
+     },
+     {
+      "id": "souvenir_a",
+      "kind": "souvenir",
+      "price": 120
+     },
+     {
+      "id": "bar_a",
+      "kind": "bar",
+      "price": 10
+     },
+     {
+      "id": "souvenir_b",
+      "kind": "souvenir",
+      "price": 80
+     }
+    ]
+   },
+   "seed": 1,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "buy",
+      "shop": "bar_a",
+      "cash": 50
+     },
+     "state": {
+      "snackLeft": 0,
+      "beers": 1,
+      "beerLeft": 3,
+      "drunk": false,
+      "owned": [],
+      "last": {
+       "op": "buy",
+       "amount": 10
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "buy",
+      "shop": "bar_a",
+      "cash": 50
+     },
+     "state": {
+      "snackLeft": 0,
+      "beers": 2,
+      "beerLeft": 3,
+      "drunk": false,
+      "owned": [],
+      "last": {
+       "op": "buy",
+       "amount": 10
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "buy",
+      "shop": "bar_a",
+      "cash": 50
+     },
+     "state": {
+      "snackLeft": 0,
+      "beers": 3,
+      "beerLeft": 3,
+      "drunk": true,
+      "owned": [],
+      "last": {
+       "op": "buy",
+       "amount": 10
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick"
+     },
+     "state": {
+      "snackLeft": 0,
+      "beers": 3,
+      "beerLeft": 3,
+      "drunk": true,
+      "owned": [],
+      "last": {
+       "op": "",
+       "amount": 0
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick"
+     },
+     "state": {
+      "snackLeft": 0,
+      "beers": 3,
+      "beerLeft": 3,
+      "drunk": true,
+      "owned": [],
+      "last": {
+       "op": "",
+       "amount": 0
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick"
+     },
+     "state": {
+      "snackLeft": 0,
+      "beers": 3,
+      "beerLeft": 3,
+      "drunk": true,
+      "owned": [],
+      "last": {
+       "op": "",
+       "amount": 0
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick"
+     },
+     "state": {
+      "snackLeft": 0,
+      "beers": 3,
+      "beerLeft": 3,
+      "drunk": true,
+      "owned": [],
+      "last": {
+       "op": "",
+       "amount": 0
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick"
+     },
+     "state": {
+      "snackLeft": 0,
+      "beers": 3,
+      "beerLeft": 3,
+      "drunk": true,
+      "owned": [],
+      "last": {
+       "op": "",
+       "amount": 0
+      }
+     }
+    }
+   ],
+   "result": null
+  },
+  {
+   "name": "drunk: loss and abort keep you drunk, a win sobers",
+   "config": {
+    "snackPct": 25,
+    "beerLimit": 2,
+    "beerS": 3,
+    "snackS": 4,
+    "items": [
+     {
+      "id": "food_a",
+      "kind": "food",
+      "price": 15
+     },
+     {
+      "id": "souvenir_a",
+      "kind": "souvenir",
+      "price": 120
+     },
+     {
+      "id": "bar_a",
+      "kind": "bar",
+      "price": 10
+     },
+     {
+      "id": "souvenir_b",
+      "kind": "souvenir",
+      "price": 80
+     }
+    ]
+   },
+   "seed": 1,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "buy",
+      "shop": "bar_a",
+      "cash": 50
+     },
+     "state": {
+      "snackLeft": 0,
+      "beers": 1,
+      "beerLeft": 3,
+      "drunk": false,
+      "owned": [],
+      "last": {
+       "op": "buy",
+       "amount": 10
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "buy",
+      "shop": "bar_a",
+      "cash": 50
+     },
+     "state": {
+      "snackLeft": 0,
+      "beers": 2,
+      "beerLeft": 3,
+      "drunk": false,
+      "owned": [],
+      "last": {
+       "op": "buy",
+       "amount": 10
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "buy",
+      "shop": "bar_a",
+      "cash": 50
+     },
+     "state": {
+      "snackLeft": 0,
+      "beers": 3,
+      "beerLeft": 3,
+      "drunk": true,
+      "owned": [],
+      "last": {
+       "op": "buy",
+       "amount": 10
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "finish",
+      "stars": 0,
+      "aborted": false
+     },
+     "state": {
+      "snackLeft": 0,
+      "beers": 3,
+      "beerLeft": 3,
+      "drunk": true,
+      "owned": [],
+      "last": {
+       "op": "",
+       "amount": 0
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "finish",
+      "stars": 3,
+      "aborted": true
+     },
+     "state": {
+      "snackLeft": 0,
+      "beers": 3,
+      "beerLeft": 3,
+      "drunk": true,
+      "owned": [],
+      "last": {
+       "op": "",
+       "amount": 0
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "finish",
+      "stars": 1,
+      "aborted": false
+     },
+     "state": {
+      "snackLeft": 0,
+      "beers": 0,
+      "beerLeft": 0,
+      "drunk": false,
+      "owned": [],
+      "last": {
+       "op": "",
+       "amount": 0
+      }
+     }
+    }
+   ],
+   "result": null
+  },
+  {
+   "name": "finish when sober changes nothing",
+   "config": {
+    "snackPct": 25,
+    "beerLimit": 2,
+    "beerS": 3,
+    "snackS": 4,
+    "items": [
+     {
+      "id": "food_a",
+      "kind": "food",
+      "price": 15
+     },
+     {
+      "id": "souvenir_a",
+      "kind": "souvenir",
+      "price": 120
+     },
+     {
+      "id": "bar_a",
+      "kind": "bar",
+      "price": 10
+     },
+     {
+      "id": "souvenir_b",
+      "kind": "souvenir",
+      "price": 80
+     }
+    ]
+   },
+   "seed": 1,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "buy",
+      "shop": "bar_a",
+      "cash": 50
+     },
+     "state": {
+      "snackLeft": 0,
+      "beers": 1,
+      "beerLeft": 3,
+      "drunk": false,
+      "owned": [],
+      "last": {
+       "op": "buy",
+       "amount": 10
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "finish",
+      "stars": 3,
+      "aborted": false
+     },
+     "state": {
+      "snackLeft": 0,
+      "beers": 1,
+      "beerLeft": 3,
+      "drunk": false,
+      "owned": [],
+      "last": {
+       "op": "",
+       "amount": 0
+      }
+     }
+    }
+   ],
+   "result": null
+  },
+  {
+   "name": "tick and finish clear last",
+   "config": {
+    "snackPct": 25,
+    "beerLimit": 2,
+    "beerS": 3,
+    "snackS": 4,
+    "items": [
+     {
+      "id": "food_a",
+      "kind": "food",
+      "price": 15
+     },
+     {
+      "id": "souvenir_a",
+      "kind": "souvenir",
+      "price": 120
+     },
+     {
+      "id": "bar_a",
+      "kind": "bar",
+      "price": 10
+     },
+     {
+      "id": "souvenir_b",
+      "kind": "souvenir",
+      "price": 80
+     }
+    ]
+   },
+   "seed": 1,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "buy",
+      "shop": "food_a",
+      "cash": 100
+     },
+     "state": {
+      "snackLeft": 4,
+      "beers": 0,
+      "beerLeft": 0,
+      "drunk": false,
+      "owned": [],
+      "last": {
+       "op": "buy",
+       "amount": 15
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick"
+     },
+     "state": {
+      "snackLeft": 3,
+      "beers": 0,
+      "beerLeft": 0,
+      "drunk": false,
+      "owned": [],
+      "last": {
+       "op": "",
+       "amount": 0
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "reward",
+      "amount": 100
+     },
+     "state": {
+      "snackLeft": 0,
+      "beers": 0,
+      "beerLeft": 0,
+      "drunk": false,
+      "owned": [],
+      "last": {
+       "op": "reward",
+       "amount": 25
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "finish",
+      "stars": 2,
+      "aborted": false
+     },
+     "state": {
+      "snackLeft": 0,
+      "beers": 0,
+      "beerLeft": 0,
+      "drunk": false,
+      "owned": [],
+      "last": {
+       "op": "",
+       "amount": 0
+      }
+     }
+    }
+   ],
+   "result": null
+  }
+ ]
+}

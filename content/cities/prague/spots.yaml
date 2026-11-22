@@ -1,4 +1,4 @@
-# Curated Prague spots (same rules as nyc/spots.yaml). Koulená is New York only (catalog cities).
+# Curated Prague spots (same rules as nyc/spots.yaml, kinds there incl. food|souvenir). Koulená is New York only (catalog cities).
 spots:
   - {id: old_town_square, kind: plaza, name: Staroměstské náměstí, lat: 50.08750, lon: 14.42130}
   - {id: wenceslas_square, kind: plaza, name: Václavské náměstí, lat: 50.08150, lon: 14.42800}

@@ -506,6 +506,18 @@ travel:
   cut_s: 1.2                    # the line card shown while moving
   entry_w_m: 3.0
   entry_l_m: 4.5
+# Shops and bars (specs/shops.md).
+shops:                          # colours in design/tokens.json color.shops
+  enabled: true
+  cities: {nyc: true, prague: false}
+  price_food: 15
+  price_souvenir: 120
+  price_beer: 10
+  snack_pct: 25                 # snack bonus on the next loop reward, percent
+  snack_s: 300                  # a snack lasts this many game seconds
+  beer_limit: 2                 # beers you may drive with; one more and you must win a minigame
+  beer_s: 300                   # one beer wears off per this many game seconds (not while drunk)
+  icon_m: 3.0                   # shop icon diameter at the parking point
 # Photo spots and the Camera app (specs/photo.md).
 photo:
   enabled: true

@@ -2,14 +2,14 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "save.schema.json",
   "title": "Save",
-  "description": "Local save, the same JSON in both clients (specs/save.md): a JSON file in F, IndexedDB in W. Version 3; versions 1 (M1 skeleton) and 2 (before metro stations) are migrated on load.",
+  "description": "Local save, the same JSON in both clients (specs/save.md): a JSON file in F, IndexedDB in W. Version 4; versions 1 (M1 skeleton), 2 (before metro stations) and 3 (before souvenirs) are migrated on load.",
   "$defs": {
     "Save": {
       "type": "object",
       "additionalProperties": false,
       "required": ["version", "cityId", "cash", "cars", "car", "stamps", "best", "plays", "feed", "npc", "settings"],
       "properties": {
-        "version": {"type": "integer", "const": 3},
+        "version": {"type": "integer", "const": 4},
         "cityId": {"type": "string"},
         "cash": {"type": "integer", "minimum": 0},
         "cars": {"type": "array", "items": {"type": "string"}, "description": "Owned cars in the order acquired."},
@@ -20,7 +20,8 @@
         "feed": {"$ref": "#/$defs/SaveFeed"},
         "npc": {"$ref": "#/$defs/SaveNpc"},
         "settings": {"$ref": "#/$defs/SaveSettings"},
-        "stations": {"type": "array", "items": {"type": "string"}, "description": "Unlocked metro stations (spot ids) in unlock order (specs/travel.md); missing = []."}
+        "stations": {"type": "array", "items": {"type": "string"}, "description": "Unlocked metro stations (spot ids) in unlock order (specs/travel.md); missing = []."},
+        "souvenirs": {"type": "array", "items": {"type": "string"}, "description": "Bought souvenirs (spot ids) in purchase order (specs/shops.md); missing = []."}
       }
     },
     "BestResult": {

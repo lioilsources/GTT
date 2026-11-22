@@ -1,4 +1,4 @@
-# Curated points snapped to the nearest kept road (5.5). kind: plaza|station|park|landmark|bar|pier|stand|garage|booth|subway|photo.
+# Curated points snapped to the nearest kept road (5.5). kind: plaza|station|park|landmark|bar|pier|stand|garage|booth|subway|photo|food|souvenir.
 # minigame: the M1 minigame played at the spot (9.5, "každá se spotem na autentickém místě").
 # Commercial places keep a fictional name (R10); the point is a real location of that kind.
 spots:
@@ -63,3 +63,16 @@ spots:
   - {id: photo_riverside_drive, kind: photo, name: The Hudson from Riverside Drive, lat: 40.79320, lon: -73.98020, look: {lat: 40.79350, lon: -73.98300}, subject_m: 90}
   - {id: photo_harlem_meer, kind: photo, name: Harlem Meer from Fifth Avenue, lat: 40.79300, lon: -73.95100, look: {lat: 40.79550, lon: -73.95200}, subject_m: 70}
   - {id: photo_east_river_23, kind: photo, name: East River from Stuyvesant Cove, lat: 40.73500, lon: -73.97500, look: {lat: 40.73450, lon: -73.97000}, subject_m: 90}
+  # Shops and bars (specs/shops.md): fictional names (R10), real kind of place. No minigame.
+  - {id: food_hotdog_columbus, kind: food, name: Uncle Sal's Franks, lat: 40.76650, lon: -73.97900}
+  - {id: food_bagel_uws, kind: food, name: Big Ring Bagels, lat: 40.78400, lon: -73.98000}
+  - {id: food_slice_bleecker, kind: food, name: Bleecker Corner Slice, lat: 40.73050, lon: -74.00250}
+  - {id: food_pretzel_fifth, kind: food, name: Twisted Fifth Pretzels, lat: 40.75900, lon: -73.97750}
+  - {id: food_coffee_union, kind: food, name: Union Brew Cart, lat: 40.73500, lon: -73.98900}
+  - {id: food_deli_houston, kind: food, name: Houston Street Deli, lat: 40.72220, lon: -73.98750}
+  - {id: souvenir_times_sq, kind: souvenir, name: Big Apple Gifts, lat: 40.75900, lon: -73.98500}
+  - {id: souvenir_canal, kind: souvenir, name: Canal Street Treasures, lat: 40.71700, lon: -73.99900}
+  - {id: souvenir_battery, kind: souvenir, name: Harbor Keepsakes, lat: 40.70300, lon: -74.01400}
+  - {id: souvenir_dumbo, kind: souvenir, name: Under the Bridge Shop, lat: 40.70330, lon: -73.98900}
+  - {id: souvenir_soho, kind: souvenir, name: SoHo Street Finds, lat: 40.72450, lon: -73.99750}
+  - {id: bar_third_ave, kind: bar, name: The Third Avenue Tap, lat: 40.75600, lon: -73.97000}
