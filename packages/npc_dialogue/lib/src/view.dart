@@ -12,15 +12,21 @@ import 'session.dart';
 Future<NpcPack> loadNpcPack(AssetBundle bundle, {String shared = 'assets/shared/'}) async =>
     NpcPack.fromJson(jsonDecode(await bundle.loadString('${shared}content/npc.json')) as Map<String, Object?>);
 
-/// The app-wide session (kept in memory until saving arrives with M1 item 11).
+/// The app-wide session of the current city (its state is restored from that city's save).
 DialogueSession? dialogueSession;
+String? _sessionCity;
+NpcPack? _pack;
 
-/// Loads the content once and creates the app-wide session.
+/// Loads the content once and creates the app-wide session; a different city (specs/cities.md)
+/// gets a fresh session, skits are picked by `city`.
 Future<DialogueSession> ensureDialogueSession(Tuning tuning, {String city = 'nyc', int? seed}) async {
   final existing = dialogueSession;
-  if (existing != null) return existing;
-  final pack = await loadNpcPack(rootBundle);
-  return dialogueSession ??= DialogueSession(pack, tuning.npc, city, seed ?? DateTime.now().microsecondsSinceEpoch);
+  if (existing != null && _sessionCity == city) return existing;
+  final pack = _pack ??= await loadNpcPack(rootBundle);
+  final again = dialogueSession;
+  if (again != null && _sessionCity == city) return again;
+  _sessionCity = city;
+  return dialogueSession = DialogueSession(pack, tuning.npc, city, seed ?? DateTime.now().microsecondsSinceEpoch);
 }
 
 /// The opponent for a minigame result screen (MinigameContext.opponentId), or null.

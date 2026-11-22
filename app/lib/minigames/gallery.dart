@@ -10,9 +10,12 @@ import 'registry.dart';
 
 /// Debug Gallery (METROPOLE_PLAN 9.2): every catalog minigame, playable without driving.
 class GalleryScreen extends StatefulWidget {
-  const GalleryScreen({super.key, required this.tuning});
+  const GalleryScreen({super.key, required this.tuning, required this.cityId});
 
   final Tuning tuning;
+
+  /// The current city (specs/cities.md "Co je po městech").
+  final String cityId;
 
   @override
   State<GalleryScreen> createState() => _GalleryScreenState();
@@ -33,7 +36,7 @@ class _GalleryScreenState extends State<GalleryScreen> {
   @override
   void initState() {
     super.initState();
-    ensureDialogueSession(widget.tuning).then((s) {
+    ensureDialogueSession(widget.tuning, city: widget.cityId).then((s) {
       if (mounted) setState(() => _npc = s);
     });
   }
@@ -50,7 +53,7 @@ class _GalleryScreenState extends State<GalleryScreen> {
       opponent: opponentFor(_npc, opponentId.isEmpty ? null : opponentId, _seed, lang),
     );
     final ctx = MinigameContext(
-      cityId: CityId.nyc.id,
+      cityId: widget.cityId,
       difficulty: _level,
       seed: _seed,
       locale: env.locale,

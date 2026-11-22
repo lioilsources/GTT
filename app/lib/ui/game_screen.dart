@@ -1,12 +1,16 @@
+import 'dart:async';
+import 'dart:convert';
+
 import 'package:drive_core/drive_core.dart';
 import 'package:flame/game.dart';
-import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:npc_dialogue/npc_dialogue.dart';
 import 'package:shared_gen/shared_gen.dart';
 
+import '../cities/cities.dart';
+import '../cities/passport_percent.dart';
 import '../game/metropole_game.dart';
 import '../l10n/app_localizations.dart';
 import '../loop/loop_controller.dart';
@@ -25,10 +29,13 @@ import 'police_hud.dart';
 import 'tuning_panel.dart';
 
 class GameScreen extends StatefulWidget {
-  const GameScreen({super.key, this.city = CityId.nyc, this.car = CarId.m0Coupe});
+  const GameScreen({super.key, this.city = CityId.nyc, this.car = CarId.m0Coupe, this.from});
 
   final CityId city;
   final CarId car;
+
+  /// The city the player travelled from; a failed load offers the way back (specs/cities.md).
+  final CityId? from;
 
   @override
   State<GameScreen> createState() => _GameScreenState();
@@ -43,11 +50,18 @@ class _GameScreenState extends State<GameScreen> {
   LoopController? _finesWired;
   TaxiController? _taxi;
   final SaveStore _store = FileSaveStore();
+  final CityStore _cities = FileCityStore();
   Object? _saved;
   DialogueSession? _npc;
+  bool _hasBench = false;
+  bool _leaving = false;
+  bool _shown = false;
 
   @override
   void dispose() {
+    // A game that never reached the GameWidget (still loading) is released when it arrives; a shown
+    // one is released by the GameWidget (onRemove: streamer, police, physics).
+    if (!_shown) _game.then((g) => g.onRemove(), onError: (_) {});
     _loop?.save();
     _loop?.dispose();
     _taxi?.dispose();
@@ -58,12 +72,42 @@ class _GameScreenState extends State<GameScreen> {
 
   Future<MetropoleGame> _load() async {
     final assets = await GameAssets.load(widget.city, widget.car);
+    // The last city is written on every city start, after its pack loaded (specs/cities.md).
+    unawaited(_cities.write(widget.city.id));
+    _hasBench = await _assetExists('${GameAssets.shared}content/bench/${widget.city.id}.json');
     _saved = await _store.read(widget.city.id);
     _npc = await ensureDialogueSession(assets.tuning, city: widget.city.id).then<DialogueSession?>((s) => s, onError: (_) => null);
     final game = MetropoleGame(assets);
     await game.preload();
     return game;
   }
+
+  static Future<bool> _assetExists(String path) async {
+    try {
+      return (await AssetManifest.loadFromAssetBundle(rootBundle)).listAssets().contains(path);
+    } catch (_) {
+      return false;
+    }
+  }
+
+  /// Travel app (specs/cities.md): close the phone, save this city as on pause, then replace the
+  /// screen with the chosen city; dispose releases this game. A running loop is dropped unscored.
+  Future<void> _travel(CityId to) async {
+    if (_leaving || to == widget.city) return;
+    _leaving = true;
+    _phone?.close();
+    await switchCity(widget.city, to, saveCurrent: () => _loop?.save() ?? Future.value());
+    if (!mounted) return;
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute<void>(
+        builder: (_) => GameScreen(city: to, car: widget.car, from: widget.city),
+      ),
+    );
+  }
+
+  Future<int> _passportPercent(MetropoleGame game, CityId c) => c.id == game.city.id
+      ? Future.value(game.passport.result.percent)
+      : cityPassportPercent(c, _store, game.tuning).then((p) => p, onError: (_) => 0);
 
   /// Gallery: teleport to the taxi stand and start the shift there.
   void _startTaxi(MetropoleGame game, LoopController loop) {
@@ -92,10 +136,25 @@ class _GameScreenState extends State<GameScreen> {
         future: _game,
         builder: (context, snap) {
           if (snap.hasError) {
+            final back = widget.from;
             return Center(
               child: Padding(
                 padding: const EdgeInsets.all(24),
-                child: Text(l.loadFailed('${snap.error}'), style: const TextStyle(color: Color(Tokens.colorUiText))),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(l.loadFailed('${snap.error}'), style: const TextStyle(color: Color(Tokens.colorUiText))),
+                    if (back != null)
+                      IconButton(
+                        icon: const Icon(Icons.arrow_back, color: Color(Tokens.colorUiText)),
+                        onPressed: () => Navigator.of(context).pushReplacement(
+                          MaterialPageRoute<void>(
+                            builder: (_) => GameScreen(city: back, car: widget.car),
+                          ),
+                        ),
+                      ),
+                  ],
+                ),
               ),
             );
           }
@@ -110,7 +169,10 @@ class _GameScreenState extends State<GameScreen> {
               child: Text(l.loading(widget.city.name), style: const TextStyle(color: Color(Tokens.colorUiTextMuted))),
             );
           }
-          final phone = _phone ??= PhoneController(game);
+          _shown = true;
+          final phone = _phone ??= PhoneController(game)
+            ..onTravel = _travel
+            ..passportPercent = ((c) => _passportPercent(game, c));
           final loop = _loop ??= LoopController(
             game,
             phone,
@@ -158,7 +220,7 @@ class _GameScreenState extends State<GameScreen> {
                     setState(() => _scheme = id);
                     game.setScheme(id);
                   },
-                  onBench: game.startBench,
+                  onBench: _hasBench ? game.startBench : null,
                   onResetSave: loop.resetSave,
                 ),
                 onPassport: () =>
@@ -228,7 +290,10 @@ class _BenchOverlay extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Text(l.benchDone, style: const TextStyle(color: Color(Tokens.colorUiText), fontWeight: FontWeight.w700)),
+                Text(
+                  l.benchDone,
+                  style: const TextStyle(color: Color(Tokens.colorUiText), fontWeight: FontWeight.w700),
+                ),
                 const SizedBox(height: 8),
                 Flexible(
                   child: SingleChildScrollView(
