@@ -112,6 +112,11 @@ export class Traffic {
    * The D1 benchmark autopilot sets this, it does not avoid cars (specs/traffic.md).
    */
   solid = true;
+  /**
+   * The player hops over traffic (specs/hop.md): no collisions and no hits while it flies; cars
+   * it overlaps on landing count as already touching, so they are pushed, not hit.
+   */
+  playerAirborne = false;
   /** Fixed steps since start: the signal clock. */
   stepCount = 0;
   /** Parked cars to drive round (set by the car fleet, specs/traffic.md step 8). */
@@ -213,13 +218,14 @@ export class Traffic {
     const ph = player.heading, pc = Math.cos(ph), ps = Math.sin(ph);
     const round = this.tuning.drive.bodyRoundM;
     const phl = player.halfLength + round, phw = player.halfWidth + round;
+    const air = this.playerAirborne;
     for (const c of this.cars) {
       const same = this.solid && c.layer === player.layer;
       const touch = same && obbOverlap(
         player.x, player.y, pc, ps, phl, phw,
         c.x, c.y, Math.cos(c.heading), Math.sin(c.heading), c.halfLength, c.halfWidth, t.hitMarginM,
       );
-      if (touch && !c.touching) {
+      if (touch && !c.touching && !air) {
         const rvx = pv.x - Math.cos(c.heading) * c.speed, rvy = pv.y - Math.sin(c.heading) * c.speed;
         const impact = Math.sqrt(rvx * rvx + rvy * rvy);
         if (impact >= t.hitMinMps) {
@@ -229,10 +235,10 @@ export class Traffic {
           for (const fn of this.listeners) fn(c, impact);
         }
       }
-      if (touch) c.pushTimer = t.pushHoldS;
+      if (touch && !air) c.pushTimer = t.pushHoldS;
       c.touching = touch;
       this.setLoose(c, c.hitTimer > 0 || c.pushTimer > 0);
-      this.setMask(c, same);
+      this.setMask(c, same && !air);
     }
   }
 
@@ -492,7 +498,7 @@ export class Traffic {
     const hc = Math.cos(c.heading), hs = Math.sin(c.heading);
     let gap = look;
     // The player, whatever its heading.
-    if (this.solid && player.layer === c.layer) {
+    if (this.solid && !this.playerAirborne && player.layer === c.layer) {
       const g = this.gapTo(c, hc, hs, player.x, player.y, player.halfLength, player.halfWidth, look);
       if (g < gap) gap = g;
     }

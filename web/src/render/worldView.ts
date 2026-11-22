@@ -24,7 +24,8 @@ import { cameraHeight, displayHeight, extrusionScale, fovX } from '../world/came
 import { bollardPoints, bollardTris, buildRoads, buildingTris, groundTris, Tris, Z, type RoadChunk } from './geometry';
 import { dayPalette, nightPalette, rgba, type Palette, type Rgba } from './palette';
 import { facadeTexture } from './textures';
-import { carTris, parkedTris } from '../cars/carTris';
+import { carShadowTris, carTris, carUndersideTris, parkedTris } from '../cars/carTris';
+import { hopArc, hopFlip } from '../drive/hop';
 import type { CarFleet } from '../cars/fleet';
 
 /** Rotating follow camera state (port of world_engine camera.dart). */
@@ -130,7 +131,11 @@ export class WorldView {
   private readonly roads = new Map<number, RoadMeshes>();
   private readonly tunnelShade: Mesh;
   private readonly carRoot: TransformNode;
-  private carParts!: { wheels: TransformNode[]; brake: Mesh; reverse: Mesh; cone: Mesh; root: TransformNode; lights: boolean };
+  private carParts!: {
+    wheels: TransformNode[]; brake: Mesh; reverse: Mesh; cone: Mesh; root: TransformNode; lights: boolean;
+    /** Hop (specs/hop.md): the lifted, flipped body; its top and underside; the ground shadow. */
+    lift: TransformNode; top: TransformNode; under: Mesh; shadow: TransformNode;
+  };
   private readonly propMeshes = new Map<PropKind, Mesh>();
   private readonly lampGlow: Mesh;
   private propsVersion = -1;
@@ -336,8 +341,15 @@ export class WorldView {
 
   private buildCar(car: Car): void {
     if (this.carParts) this.carParts.root.dispose();
+    const holder = new TransformNode('car-parts', this.scene);
+    holder.parent = this.carRoot;
+    // The shadow stays on the ground during a hop; the body is lifted and flipped (specs/hop.md).
+    const shadowNode = new TransformNode('car-shadow', this.scene);
+    shadowNode.parent = holder;
+    const lift = new TransformNode('car-lift', this.scene);
+    lift.parent = holder;
     const root = new TransformNode('car-body', this.scene);
-    root.parent = this.carRoot;
+    root.parent = lift;
     const hl = car.halfLength, hw = car.halfWidth;
     const night = this.palette.night;
     // Scooters and bicycles have no lights, cone or side wheels (specs/cars.md).
@@ -345,8 +357,16 @@ export class WorldView {
     const body = new Tris();
     const z = 0.0;
     // Class-specific vector shape (specs/cars.md "Kreslení"); lights go above its top part.
-    const top = carTris(body, car.spec, hl, hw, car.axleOffset, 0, 0, 0, z - 0.01, night, false) - 0.01;
+    const top = carTris(body, car.spec, hl, hw, car.axleOffset, 0, 0, 0, z - 0.01, night, false, false) - 0.01;
     this.mesh('car-body', body, this.flatMat, true, false).parent = root;
+    const shadow = new Tris();
+    carShadowTris(shadow, car.spec, hl, hw, z - 0.01);
+    this.mesh('car-shadow', shadow, this.flatMat, true, false).parent = shadowNode;
+    const underTris = new Tris();
+    carUndersideTris(underTris, hl, hw, top);
+    const under = this.mesh('car-under', underTris, this.flatMat, false, false);
+    under.parent = lift;
+    under.setEnabled(false);
 
     const lights = (c: string): Mesh => {
       const t = new Tris();
@@ -383,7 +403,7 @@ export class WorldView {
         if (fx > 0) wheels.push(w);
       }
     }
-    this.carParts = { wheels, brake, reverse, cone: coneMesh, root, lights: !micro };
+    this.carParts = { wheels, brake, reverse, cone: coneMesh, root: holder, lights: !micro, lift, top: root, under, shadow: shadowNode };
   }
 
   setFleet(f: CarFleet): void {
@@ -413,6 +433,26 @@ export class WorldView {
     for (const w of this.carParts.wheels) w.rotation.y = -car.wheelAngle;
     this.carParts.brake.setEnabled(this.carParts.lights && car.braking && !car.reversing);
     this.carParts.reverse.setEnabled(this.carParts.lights && car.reversing);
+    this.updateHop();
+  }
+
+  /**
+   * Hop drawing (specs/hop.md "Kreslení", P2): the body rises by hopArc, shown at the display height
+   * of an extruded building that tall (so it grows like roofs); the ground shadow shrinks by the
+   * same roof scale; the flip squeezes the body width by cos(2π·flips·t/air_s) and past a quarter
+   * turn shows the underside.
+   */
+  private updateHop(): void {
+    const p = this.carParts, hop = this.drive.hop, ht = this.tuning.hop;
+    const arc = hop.airborne ? hopArc(hop.t, ht.airS, ht.heightM) : 0;
+    const flip = hop.airborne ? hopFlip(hop.t, ht.airS, ht.flips) : 1;
+    const s = extrusionScale(arc, this.tuning);
+    p.lift.position.y = displayHeight(s, this.H);
+    p.lift.scaling.z = Math.abs(flip);
+    p.shadow.scaling.x = p.shadow.scaling.z = 1 / s;
+    const upside = flip < 0;
+    if (p.top.isEnabled(false) === upside) p.top.setEnabled(!upside);
+    if (p.under.isEnabled(false) !== upside) p.under.setEnabled(upside);
   }
 
   // ---------- props and skids

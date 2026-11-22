@@ -4,6 +4,7 @@ import type { Locale, MessageKey } from '../gen/i18n';
 import type { NpcCharacter } from '../gen/schema';
 import type { MinigameOpponent } from '../minigames/api';
 import { h } from '../minigames/dom';
+import { overlays } from '../pause';
 import { text, tones, type Tone } from './rules';
 import { initials, type DialogueSession } from './session';
 
@@ -61,9 +62,12 @@ export function mountDialogue(host: HTMLElement, session: DialogueSession, env: 
     log.scrollTop = log.scrollHeight;
   };
 
+  // The game stands while the dialogue is open (specs/pause.md).
+  const release = overlays.open('dialogue');
   const close = (): void => {
     if (closed) return;
     closed = true;
+    release();
     session.leave();
     onClose();
   };
@@ -108,6 +112,7 @@ export function mountDialogue(host: HTMLElement, session: DialogueSession, env: 
   host.append(root);
   return () => {
     closed = true;
+    release();
     root.remove();
   };
 }

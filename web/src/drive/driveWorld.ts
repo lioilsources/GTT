@@ -6,6 +6,7 @@ import type { ChunkData } from '../world/chunk';
 import { chunkKey, type City, type EdgeHit, type RoadEdge, type RoadGraph } from '../world/model';
 import { CAT_BUILDINGS, CAT_CAR, CAT_PARKED, CAT_TRAFFIC, Car, zoneMask } from './car';
 import { ControlInput } from './controls';
+import { canHop, HopState } from './hop';
 import { generateProps, type Prop, type PropSet } from './props';
 import { Traffic } from '../traffic/traffic';
 import { Trams } from '../trams/trams';
@@ -94,6 +95,8 @@ export class DriveWorld {
   readonly trams: Trams | null;
   /** Pedestrian zones and bollards (specs/zones.md). */
   readonly zones: ZoneWorld;
+  /** Air-tank hop (specs/hop.md): charges and flight, per session. */
+  readonly hop = new HopState();
 
   constructor(
     readonly city: City,
@@ -109,6 +112,7 @@ export class DriveWorld {
     this.traffic = tuning.traffic.enabled ? new Traffic(this.world, city, tuning) : null;
     this.trams = tuning.trams.enabled && !city.trams.isEmpty ? new Trams(this.world, city.trams, tuning, this.traffic) : null;
     if (this.traffic && this.trams) this.traffic.trams = this.trams.items;
+    this.hop.fill(spec);
   }
 
   private makeCar(x: number, y: number, h: number): Car {
@@ -121,12 +125,37 @@ export class DriveWorld {
     this.layers.reset(x, y);
     this.car.setLayer(this.layers.layer);
     this.lastSkid = null;
+    // A new body starts on the ground; the tank stays (replaceCar fills it for a hop car).
+    this.hop.air = 0;
+    this.hop.t = 0;
+    this.setPlayerAirborne(false);
   }
 
   /** Switches to another car (specs/cars.md): a new body with that car's parameters, at rest. */
   replaceCar(spec: CarSpec, x: number, y: number, heading: number): void {
     this.spec = spec;
     this.spawn(x, y, heading);
+    this.hop.fill(spec);
+  }
+
+  /** The driven car can hop now (specs/hop.md canHop). */
+  get canHop(): boolean {
+    const c = this.car;
+    return canHop(this.spec, this.hop.charges, this.hop.air, c.layer, c.speed, this.tuning.hop);
+  }
+
+  /** "Skok": takes off when canHop allows it; false otherwise (the HUD shows why). */
+  tryHop(): boolean {
+    const c = this.car;
+    if (!this.hop.start(this.spec, c.layer, c.speed, this.tuning.hop)) return false;
+    c.setAirborne(true);
+    this.setPlayerAirborne(true);
+    return true;
+  }
+
+  private setPlayerAirborne(on: boolean): void {
+    if (this.traffic) this.traffic.playerAirborne = on;
+    if (this.trams) this.trams.playerAirborne = on;
   }
 
   addChunk(c: ChunkData): void {
@@ -191,18 +220,44 @@ export class DriveWorld {
     const d = this.tuning.drive;
     this.time += step;
     this.beforeStep?.(step);
-    this.updateZoneMask();
-    this.car.drive(this.input, step, this.tuning.speedMps.cruise, this.tuning.speedMps.topDefault);
+    const air = this.hop.airborne;
+    if (air) {
+      // In the air (specs/hop.md): no input, no tyres, buildings only, the layer stays.
+      this.car.fly();
+    } else {
+      this.updateZoneMask();
+      this.car.drive(this.input, step, this.tuning.speedMps.cruise, this.tuning.speedMps.topDefault);
+    }
     this.traffic?.preStep(step, this.car);
     this.trams?.preStep(step, this.car);
     this.world.step(step, d.velocityIterations, d.positionIterations);
-    this.layers.update(this.car.x, this.car.y);
-    this.car.setLayer(this.layers.layer);
+    if (air) {
+      this.car.body.setAngularVelocity(0);
+      if (this.hop.step(step)) this.land();
+    } else {
+      this.layers.update(this.car.x, this.car.y);
+      this.car.setLayer(this.layers.layer);
+    }
     this.traffic?.postStep(this.car);
     this.trams?.postStep(this.car);
     if (this.car.layer !== 0) this.rails();
     this.stepProps(step);
     this.skidMarks();
+  }
+
+  /**
+   * Landing: the layer mask comes back and the zone test runs with the hold-off (a car landing on
+   * bollards gets out first, specs/zones.md); overlapping traffic is pushed (traffic step 7).
+   */
+  private land(): void {
+    const car = this.car;
+    this.layers.update(car.x, car.y);
+    car.setLayer(this.layers.layer);
+    const r = Math.hypot(car.halfLength, car.halfWidth) + this.tuning.drive.bodyRoundM;
+    this.inZone = car.layer === 0 && this.zones.insideFor(car.x, car.y, r, true);
+    car.setZone(zoneMask(car.spec.class, this.inZone));
+    car.setAirborne(false);
+    this.setPlayerAirborne(false);
   }
 
   /** CAT_ZONE in the player's mask (specs/zones.md); the inside test only counts on layer 0. */
@@ -263,7 +318,7 @@ export class DriveWorld {
           }
           continue;
         }
-        if (car.layer !== 0 || speed < t.knockMinMps) continue;
+        if (car.layer !== 0 || car.airborne || speed < t.knockMinMps) continue;
         const dx = p.x - cx, dy = p.y - cy;
         const reachX = car.halfLength + p.radius, reachY = car.halfWidth + p.radius;
         if (Math.abs(dx) > reachX + reachY || Math.abs(dy) > reachX + reachY) continue;

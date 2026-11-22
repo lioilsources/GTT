@@ -1,5 +1,6 @@
 import type { MessageKey } from '../gen/i18n';
 import { h } from '../minigames/dom';
+import { overlays } from '../pause';
 import type { LoopOutcome } from './logic';
 
 type T = (k: MessageKey, a?: Record<string, string | number>) => string;
@@ -30,6 +31,10 @@ export function mountLoopResult(
       h('button.mg-btn.ghost', { type: 'button', onclick: () => { close(); on.feed(); } }, t('loopFeed'))),
   );
   parent.append(sheet);
-  const close = (): void => sheet.remove();
+  const release = overlays.open('result');
+  const close = (): void => {
+    release();
+    sheet.remove();
+  };
   return close;
 }

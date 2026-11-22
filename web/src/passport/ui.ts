@@ -2,6 +2,7 @@
 // Each is a DOM component with mount → unmount, so the phone app can host it later.
 import type { MessageKey } from '../gen/i18n';
 import { h, svg } from '../minigames/dom';
+import { overlays } from '../pause';
 import { POSTCARD_H, POSTCARD_W, postcardShapes } from './postcard';
 import { stampKinds, type StampKind } from './rules';
 import { postcardTextKey, postcardTitleKey, type PassportLandmark, type PassportTracker } from './tracker';
@@ -40,9 +41,12 @@ export function mountPostcard(
   );
   host.append(card);
   requestAnimationFrame(() => card.classList.add('in'));
+  // The game stands until the card closes or auto-closes (specs/pause.md).
+  const release = overlays.open('postcard');
   let timer = 0;
   const close = (): void => {
     window.clearTimeout(timer);
+    release();
     card.remove();
     onClose?.();
   };
@@ -124,7 +128,11 @@ export function mountPassport(host: HTMLElement, env: PassportEnv, tracker: Pass
       h('button.pp-link', { type: 'button', onclick: o.onAbout }, t('aboutTitle'))),
   );
   host.append(root);
-  return () => root.remove();
+  const release = overlays.open('passport');
+  return () => {
+    release();
+    root.remove();
+  };
 }
 
 export interface AboutInfo {
@@ -156,5 +164,9 @@ export function mountAbout(host: HTMLElement, env: PassportEnv, info: AboutInfo,
     ),
   );
   host.append(root);
-  return () => root.remove();
+  const release = overlays.open('about');
+  return () => {
+    release();
+    root.remove();
+  };
 }

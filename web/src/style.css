@@ -785,3 +785,53 @@ body {
   position: fixed;
   z-index: 20;
 }
+
+/* Hop over traffic (specs/hop.md): "Skok" button with the air-tank pips, "tank empty" note. */
+#hop {
+  position: absolute;
+  right: calc(env(safe-area-inset-right) + 8px);
+  bottom: calc(env(safe-area-inset-bottom) + 72px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  height: auto;
+  min-height: 48px;
+  padding: var(--space-sm) var(--space-md);
+  background: var(--color-brand-accent);
+  color: var(--color-ui-background);
+  pointer-events: auto;
+}
+#hop[hidden] {
+  display: none;
+}
+#hop.off {
+  background: var(--color-ui-pill);
+  color: var(--color-ui-text-faint);
+}
+.hop-pips {
+  display: flex;
+  gap: 3px;
+}
+.hop-pips span {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--color-ui-text-faint);
+}
+.hop-pips span.on {
+  background: var(--color-ui-background);
+}
+#hop.off .hop-pips span.on {
+  background: var(--color-ui-text-muted);
+}
+#hop-toast {
+  position: absolute;
+  left: 50%;
+  bottom: calc(env(safe-area-inset-bottom) + 200px);
+  transform: translateX(-50%);
+}
+#hop-toast[hidden] {
+  display: none;
+}

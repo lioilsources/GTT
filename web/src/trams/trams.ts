@@ -95,6 +95,8 @@ export class Trams {
   hits = 0;
   /** False = the player is a ghost to trams (benchmark autopilot), as Traffic.solid. */
   solid = true;
+  /** The player hops over trams (specs/hop.md), as Traffic.playerAirborne. */
+  playerAirborne = false;
   /** Fixed steps since start. */
   stepCount = 0;
 
@@ -196,11 +198,11 @@ export class Trams {
       let touch = false;
       for (const c of tr.cars) {
         const same = this.solid && c.layer === player.layer;
-        this.setMask(c, same);
+        this.setMask(c, same && !this.playerAirborne);
         if (!same || touch) continue;
         touch = obbOverlap(px, py, pc, ps, phl, phw, c.x, c.y, Math.cos(c.heading), Math.sin(c.heading), c.halfLength, c.halfWidth, margin);
       }
-      if (touch && !tr.touching) {
+      if (touch && !tr.touching && !this.playerAirborne) {
         const h = tr.cars[0]!.heading;
         const rvx = this.pvx - Math.cos(h) * tr.speed, rvy = this.pvy - Math.sin(h) * tr.speed;
         const impact = Math.sqrt(rvx * rvx + rvy * rvy);
@@ -440,7 +442,7 @@ export class Trams {
     const hc = Math.cos(h.heading), hs = Math.sin(h.heading);
     const look = t.lookAheadM;
     let gap = look;
-    if (this.solid && player.layer === tr.layer) {
+    if (this.solid && !this.playerAirborne && player.layer === tr.layer) {
       gap = Math.min(gap, this.gapTo(h, hc, hs, player.x, player.y, player.halfLength, look));
     }
     if (this.traffic) {

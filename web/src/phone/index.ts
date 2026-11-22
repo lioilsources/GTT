@@ -47,8 +47,6 @@ export interface AcceptedCard {
 }
 
 export interface PhoneApi {
-  /** Multiplier for the driving dt (specs/phone.md). */
-  timeScale(): number;
   /** Once per frame with the real dt. */
   update(dt: number): void;
   /** Route line and edge arrow on the overlay canvas (CSS pixels). */
@@ -188,7 +186,6 @@ export function installPhone(env: PhoneEnv): PhoneApi {
   }
 
   const api: PhoneApi = {
-    timeScale: () => phone.timeScale,
     phone,
     nav,
     onArrived: [],

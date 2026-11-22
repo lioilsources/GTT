@@ -4,6 +4,7 @@ import type { CarSpec } from '../gen/schema';
 import type { Tuning } from '../gen/tuning';
 import { CAT_BUILDINGS, CAT_CAR, CAT_PARKED, CAT_TRAFFIC, CAT_TRAM } from '../drive/car';
 import type { DriveWorld } from '../drive/driveWorld';
+import { hopCharges } from '../drive/hop';
 import type { ChunkData } from '../world/chunk';
 import { chunkKey } from '../world/model';
 import { boardCandidate, generateParked, type ParkedCar } from './parked';
@@ -256,6 +257,17 @@ export class CarFleet {
       this.drive.replaceCar(this.spec, c.x, c.y, c.heading);
       this.emit('carChanged', { car: driving });
     }
+  }
+
+  /** "Doplnit vzduch" is offered: the driven car has `hop` and its tank is not full (specs/hop.md). */
+  canRefillHop(): boolean {
+    const full = hopCharges(this.drive.spec);
+    return full !== null && this.drive.hop.charges < full;
+  }
+
+  /** Refills the air tank to full, for free; false when there was nothing to refill. */
+  refillHop(): boolean {
+    return this.drive.hop.refill(this.drive.spec);
   }
 
   /** Drive out of the garage with an owned car; the current one stays inside (or is towed away). */

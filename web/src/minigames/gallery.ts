@@ -3,6 +3,7 @@ import type { MessageKey } from '../gen/i18n';
 import type { MinigameResult } from '../gen/schema';
 import type { DialogueSession } from '../dialogue/session';
 import type { MinigameEnv } from './api';
+import { overlays } from '../pause';
 import { h } from './dom';
 import { minigames } from './registry';
 
@@ -16,6 +17,8 @@ export function runGallery(
   cityId: string,
 ): void {
   const { t } = env;
+  // The gallery runs without the world; it still counts as a pausing overlay (specs/pause.md).
+  overlays.open('gallery');
   // NPC opponent for the result-screen line (specs/dialogue.md); ?opponent=<characterId>.
   const opponents = ['', ...(npc?.pack.characters.map((c) => c.id) ?? [])];
   let opponent = Math.max(0, opponents.indexOf(params.get('opponent') ?? ''));
