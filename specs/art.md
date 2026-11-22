@@ -16,12 +16,14 @@ zkoušení cest za běhu). Chybějící `index.json` = žádná grafika.
 ## Portréty postav (`specs/dialogue.md`)
 - **Výraz podle vibe** postavy `c`: `vibe[c] ≥ contactMinVibe` → `happy`; `vibe[c] < vibeStart`
   → `annoyed`; jinak `neutral`.
-- **Dialog:** místo kruhu s iniciálami `npc/<id>_<výraz>.png` ořezaný do kruhu (střed obrázku,
-  horní třetina = obličej; ořez `cover` na čtverec). Bez souboru výrazu `npc/<id>.png`, bez něj
+- **Dialog:** místo kruhu s iniciálami `npc/<id>_<výraz>.png` ořezaný do kruhu (ořez `cover` na
+  čtverec kolem středu). Bez souboru výrazu `npc/<id>.png`, bez něj
   iniciály.
-- **Karta feedu a nabídka budky** (`specs/phone.md`, `specs/booths.md`): hostitel jako
+- **Karta feedu a nabídka budky** (`specs/phone.md`, `specs/booths.md`): hostitel karty feedu =
+  `characters[fnv1a(spotId) mod počet postav]` (jako soupeř a hostitel budky), zobrazený jako
   `npc/<id>_bust.png` (768 × 1280, průhledné pozadí) místo siluety, ukotvený dole, výška ≈ 45 %
-  karty; jemný pohyb siluety zůstává. Bez souboru silueta.
+  karty; jemný pohyb siluety zůstává. Bez souboru silueta (budka bez busty jen text, siluetu nemá). U budky busta nad textem
+  nabídky.
 - **Kontakty a soupeř** (všude, kde je dnes kruh s iniciálami): `npc/<id>.png` v kruhu.
 
 ## Pohlednice (`specs/passport.md`)
