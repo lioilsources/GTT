@@ -40,6 +40,13 @@ zones:
   bollard_radius_m: 0.6
   bollard_height_m: 2.0
 
+# Hop over traffic with an air tank (specs/hop.md); charges per car live in content/cars/<id>.json.
+hop:
+  air_s: 1.4
+  height_m: 7.0                 # top of the arc (drawing only)
+  min_speed_mps: 8.0
+  flips: 1
+
 # Trams (specs/trams.md): citypack uses min_track_m and the stop_* pair, clients the rest.
 trams:
   enabled: true
@@ -351,7 +358,7 @@ pedestrians:
 
 # In-game phone (specs/phone.md): opening gesture, slowed driving, feed gestures, map.
 phone:
-  time_scale: 0.35          # driving runs this much slower while the phone is open
+  time_scale: 0.35          # unused since specs/phone.md v3 (the phone pauses the game, specs/pause.md)
   height_pct: 88            # phone height, % of the screen
   edge_px: 28.0             # bottom-edge grab zone
   pull_px: 48.0             # swipe up this far to open

@@ -1,0 +1,22 @@
+{
+  "id": "vega_roadster",
+  "name": "Vega Roadster",
+  "class": "supersport",
+  "length_m": 4.0,
+  "width_m": 1.85,
+  "mass": 1350,
+  "power": 13.0,
+  "brake": 18.0,
+  "grip_front": 26.0,
+  "grip_rear": 25.0,
+  "drift_bias": 0.3,
+  "steer_speed": 5.2,
+  "top_speed": 50.0,
+  "seats": 2,
+  "tags": ["nyc", "prague"],
+  "price": 45000,
+  "rarity": "epic",
+  "tuning_slots": ["engine", "tyres", "brakes", "weight", "drift"],
+  "paint": "vega_cherry",
+  "hop": {"charges": 3}
+}

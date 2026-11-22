@@ -145,7 +145,7 @@
 - id: F-023
   name: Phone, Map and GPS navigation UI
   level: P2
-  spec: specs/phone.md@2
+  spec: specs/phone.md@3
   lead: web
   flutter: done
   web: done
@@ -280,3 +280,17 @@
   flutter: done
   web: done
   checks: {flutter: pass, web: pass}
+- id: F-034
+  name: Pause under overlays (phone, garage, postcard, dialogue, minigame)
+  level: P2
+  spec: specs/pause.md@1
+  lead: web
+  flutter: todo
+  web: todo
+- id: F-035
+  name: Hop over traffic (Vega Roadster air tank, garage refill)
+  level: P1
+  spec: specs/hop.md@1
+  lead: web
+  flutter: todo
+  web: todo

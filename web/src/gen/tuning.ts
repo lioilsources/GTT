@@ -85,6 +85,8 @@ export class Tuning {
   readonly ground: TuningGround;
   /** Pedestrian zones and bollards (specs/zones.md): citypack uses the first three, clients the rest. */
   readonly zones: TuningZones;
+  /** Hop over traffic with an air tank (specs/hop.md); charges per car live in content/cars/<id>.json. */
+  readonly hop: TuningHop;
   /** Trams (specs/trams.md): citypack uses min_track_m and the stop_* pair, clients the rest. */
   readonly trams: TuningTrams;
   /** Chunk streaming (METROPOLE_PLAN 6.4): window in chunks around the player. */
@@ -160,6 +162,7 @@ export class Tuning {
     this.buildings = new TuningBuildings(r.sub('buildings'));
     this.ground = new TuningGround(r.sub('ground'));
     this.zones = new TuningZones(r.sub('zones'));
+    this.hop = new TuningHop(r.sub('hop'));
     this.trams = new TuningTrams(r.sub('trams'));
     this.streaming = new TuningStreaming(r.sub('streaming'));
     this.camera = new TuningCamera(r.sub('camera'));
@@ -199,6 +202,7 @@ export class Tuning {
       buildings: this.buildings.toJson(),
       ground: this.ground.toJson(),
       zones: this.zones.toJson(),
+      hop: this.hop.toJson(),
       trams: this.trams.toJson(),
       streaming: this.streaming.toJson(),
       camera: this.camera.toJson(),
@@ -581,6 +585,31 @@ export class TuningZones {
   }
 
   static readonly keys = ['street_width_m', 'gap_margin_m', 'min_barrier_m', 'bollard_spacing_m', 'bollard_radius_m', 'bollard_height_m'] as const;
+}
+
+/** Hop over traffic with an air tank (specs/hop.md); charges per car live in content/cars/<id>.json. */
+export class TuningHop {
+  airS: number;
+  /** top of the arc (drawing only) */
+  heightM: number;
+  minSpeedMps: number;
+  flips: number;
+
+  constructor(r: R) {
+    this.airS = r.d('air_s');
+    this.heightM = r.d('height_m');
+    this.minSpeedMps = r.d('min_speed_mps');
+    this.flips = r.i('flips');
+  }
+
+  toJson(): Record<string, unknown> {
+    return {
+      air_s: this.airS,
+      height_m: this.heightM,
+      min_speed_mps: this.minSpeedMps,
+      flips: this.flips,
+    };
+  }
 }
 
 /** Trams (specs/trams.md): citypack uses min_track_m and the stop_* pair, clients the rest. */
@@ -1963,7 +1992,7 @@ export class TuningPedestrians {
 
 /** In-game phone (specs/phone.md): opening gesture, slowed driving, feed gestures, map. */
 export class TuningPhone {
-  /** driving runs this much slower while the phone is open */
+  /** unused since specs/phone.md v3 (the phone pauses the game, specs/pause.md) */
   timeScale: number;
   /** phone height, % of the screen */
   heightPct: number;

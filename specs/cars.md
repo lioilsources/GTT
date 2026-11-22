@@ -16,6 +16,8 @@ s hotovostí (M1-S11); pravidla na něj jsou připravená už teď.
 - M3 (Praha, `plans/M3_PRAHA.md` bod 6): `lidovka` (malý sedan „Lidka 105“), `kolobezka` a `kolo`
   (třída `micro`, `specs/zones.md`). `tags` = id měst, kde auto parkuje; `hatch_pip` parkuje
   v obou městech. Koupit jde každé auto v kterékoli garáži.
+- `vega_roadster` („Vega Roadster“, supersport) má kontejner vzduchu na skok přes kolonu
+  (`hop`, `specs/hop.md`); garáž ho zdarma doplní.
 - Kreslení podle třídy: `micro` se kreslí jako koloběžka (`length_m` < 1,5) nebo kolo shora
   (rám, dvě kola, jezdec), bez světlometů a kuželu; ostatní třídy jako dosud.
 - `paint` v autě je klíč do `design/tokens.json` → `color.carPaint` (mapa klíč → barva). Barva

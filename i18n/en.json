@@ -672,6 +672,9 @@
   "carClassPickup": "Pick-up",
   "carClassSedan": "Sedan",
   "carClassMicro": "Micro",
+  "hopButton": "Hop",
+  "hopRefill": "Refill air",
+  "hopEmpty": "Air tank empty",
   "policeWanted": "Wanted level {level}",
   "@policeWanted": {
     "placeholders": {

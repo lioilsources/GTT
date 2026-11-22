@@ -34,6 +34,7 @@ enum CarId {
   muscleBrute('muscle_brute'),
   pickupHauler('pickup_hauler'),
   taxiMetro('taxi_metro'),
+  vegaRoadster('vega_roadster'),
   ;
 
   const CarId(this.id);

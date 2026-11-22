@@ -1,6 +1,6 @@
 # Herní telefon, mapa a navigace
 
-**version: 2** · P2 · plán: METROPOLE_PLAN 8, M1 body 1 a 7 · navazuje na `specs/feed.md`, `specs/route.md`
+**version: 3** · P2 · plán: METROPOLE_PLAN 8, M1 body 1 a 7 · navazuje na `specs/feed.md`, `specs/route.md`
 
 ## Účel
 
@@ -14,8 +14,8 @@ lomená čára trasy, postup po ní, formát vzdálenosti, šipka na okraji) maj
 
 - Otevření: tah nahoru od spodního okraje (pruh vysoký `phone.edge_px`, tah aspoň `phone.pull_px`)
   nebo tlačítko v HUD. Zavření: tah dolů po horní liště telefonu, tlačítko ✕ nebo Esc (web).
-- Telefon zabírá spodní část obrazovky (`phone.height_pct` % výšky), jízda pod ním běží
-  zpomaleně: krok fyziky dostává `dt × phone.time_scale`.
+- Telefon zabírá spodní část obrazovky (`phone.height_pct` % výšky); dokud je otevřený, hra stojí
+  (v3, `specs/pause.md`; dřív jízda jen zpomalila na `phone.time_scale`).
 - Domovská obrazovka: mřížka aplikací v pořadí Feed, Mapa, Garáž, Pas, Foťák, Kontakty,
   Peněženka, Cesty, Nastavení. V M1 fungují Feed a Mapa, ostatní jsou šedé. Cesty (v2, M3)
   přepínají města (`specs/cities.md`). Klient má registr aplikací

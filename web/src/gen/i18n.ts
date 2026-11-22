@@ -304,6 +304,9 @@ export type MessageKey =
   | "carClassPickup"
   | "carClassSedan"
   | "carClassMicro"
+  | "hopButton"
+  | "hopRefill"
+  | "hopEmpty"
   | "policeWanted"
   | "policeReason_crash"
   | "policeReason_sidewalk"
@@ -648,6 +651,9 @@ export const messages: Record<Locale, Record<MessageKey, string>> = {
     carClassPickup: "Pick-up",
     carClassSedan: "Sedan",
     carClassMicro: "Mikro",
+    hopButton: "Skok",
+    hopRefill: "Doplnit vzduch",
+    hopEmpty: "Kontejner vzduchu je prázdný",
     policeWanted: "Hledanost {level}",
     policeReason_crash: "Hlídka viděla, jak jsi narazil do auta",
     policeReason_sidewalk: "Viděl tě, jak jedeš po chodníku",
@@ -990,6 +996,9 @@ export const messages: Record<Locale, Record<MessageKey, string>> = {
     carClassPickup: "Pick-up",
     carClassSedan: "Sedan",
     carClassMicro: "Micro",
+    hopButton: "Hop",
+    hopRefill: "Refill air",
+    hopEmpty: "Air tank empty",
     policeWanted: "Wanted level {level}",
     policeReason_crash: "A patrol saw you crash into a car",
     policeReason_sidewalk: "A patrol saw you driving on the sidewalk",
