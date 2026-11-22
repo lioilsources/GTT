@@ -22,8 +22,13 @@ Katalog města skládá klient z dat města, stejně v obou klientech:
 
 - Památka s pohlednicí má v `i18n/` klíče `lm_<id>_title` (jméno jako v `landmarks.yaml`, obchodní
   věže adresou podle R10) a `lm_<id>_text` (2 krátké věty vlastními slovy). V M1 je jich 20.
-- `districtId(name)`: malá písmena, apostrofy (`'`, `’`) a tečky se vypustí, každý úsek jiných
-  znaků než `a–z0–9` se nahradí jedním `_`, `_` na krajích se ořízne. „Hell's Kitchen“ →
+- `districtId(name)`: malá písmena, písmena s diakritikou se přepíšou na základní podle tabulky
+  níže (M3, Praha), apostrofy (`'`, `’`) a tečky se vypustí, každý úsek jiných znaků než `a–z0–9`
+  se nahradí jedním `_`, `_` na krajích se ořízne. Tabulka (po převodu na malá písmena):
+  `á→a ä→a à→a â→a č→c ç→c ď→d é→e ě→e è→e ê→e ë→e í→i î→i ï→i ľ→l ĺ→l ň→n ñ→n ó→o ô→o ö→o
+  ő→o ř→r ŕ→r š→s ť→t ú→u ů→u ü→u ű→u û→u ý→y ÿ→y ž→z ß→ss`. Jiný znak mimo `a–z0–9` je oddělovač.
+  „Žižkov“ → `zizkov`, „Malá Strana“ → `mala_strana`. Jména bez diakritiky (New York) dávají
+  stejné id jako dřív, uložená razítka platí dál. „Hell's Kitchen“ →
   `hells_kitchen`, „DUMBO“ → `dumbo`. Stejné jméno dvakrát (Kips Bay) = jedno razítko.
 - V každém druhu se duplicity vypustí, platí první výskyt.
 

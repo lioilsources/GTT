@@ -122,6 +122,10 @@ export type MessageKey =
   | "app_camera"
   | "app_contacts"
   | "app_wallet"
+  | "app_travel"
+  | "travelTitle"
+  | "travelHere"
+  | "travelPassport"
   | "app_settings"
   | "feedGo"
   | "feedDone"
@@ -212,6 +216,46 @@ export type MessageKey =
   | "lm_met_museum_text"
   | "lm_brooklyn_bridge_title"
   | "lm_brooklyn_bridge_text"
+  | "lm_prague_castle_title"
+  | "lm_prague_castle_text"
+  | "lm_old_town_square_title"
+  | "lm_old_town_square_text"
+  | "lm_old_town_hall_title"
+  | "lm_old_town_hall_text"
+  | "lm_tyn_church_title"
+  | "lm_tyn_church_text"
+  | "lm_bridge_tower_title"
+  | "lm_bridge_tower_text"
+  | "lm_st_nicholas_title"
+  | "lm_st_nicholas_text"
+  | "lm_wenceslas_square_title"
+  | "lm_wenceslas_square_text"
+  | "lm_national_museum_title"
+  | "lm_national_museum_text"
+  | "lm_national_theatre_title"
+  | "lm_national_theatre_text"
+  | "lm_dancing_house_title"
+  | "lm_dancing_house_text"
+  | "lm_powder_tower_title"
+  | "lm_powder_tower_text"
+  | "lm_municipal_house_title"
+  | "lm_municipal_house_text"
+  | "lm_rudolfinum_title"
+  | "lm_rudolfinum_text"
+  | "lm_petrin_tower_title"
+  | "lm_petrin_tower_text"
+  | "lm_zizkov_tower_title"
+  | "lm_zizkov_tower_text"
+  | "lm_vysehrad_title"
+  | "lm_vysehrad_text"
+  | "lm_main_station_title"
+  | "lm_main_station_text"
+  | "lm_old_new_synagogue_title"
+  | "lm_old_new_synagogue_text"
+  | "lm_klementinum_title"
+  | "lm_klementinum_text"
+  | "lm_vitkov_title"
+  | "lm_vitkov_text"
   | "npcToneFlirt"
   | "npcToneJoke"
   | "npcToneDry"
@@ -406,6 +450,10 @@ export const messages: Record<Locale, Record<MessageKey, string>> = {
     app_camera: "Foťák",
     app_contacts: "Kontakty",
     app_wallet: "Peněženka",
+    app_travel: "Cesty",
+    travelTitle: "Města",
+    travelHere: "Tady jsi",
+    travelPassport: "Pas {pct} %",
     app_settings: "Nastavení",
     feedGo: "Jedu",
     feedDone: "Běž si zajezdit",
@@ -496,6 +544,46 @@ export const messages: Record<Locale, Record<MessageKey, string>> = {
     lm_met_museum_text: "Jedno z největších muzeí umění na světě s pěti tisíci lety umění. Jeho široké schody na Páté avenue jsou oblíbeným místem schůzek.",
     lm_brooklyn_bridge_title: "Brooklyn Bridge",
     lm_brooklyn_bridge_text: "Žulové pilíře a pavučina ocelových lan nesou tenhle most přes East River od roku 1883. Nad provozem vede dřevěná lávka pro pěší.",
+    lm_prague_castle_title: "Pražský hrad",
+    lm_prague_castle_text: "Největší starobylý hradní komplex na světě, z jehož nádvoří vyrůstá katedrála svatého Víta. Vládli odsud knížata, císaři i prezidenti přes tisíc let.",
+    lm_old_town_square_title: "Staroměstské náměstí",
+    lm_old_town_square_text: "Srdce Starého Města už od středověku, lemované pastelovými domy a gotickými věžemi. Konaly se tu trhy, korunovační průvody i demonstrace.",
+    lm_old_town_hall_title: "Staroměstská radnice",
+    lm_old_town_hall_text: "Její orloj ukazuje čas, Slunce i Měsíc už od roku 1410. Každou celou hodinu tu dav čeká, až se v okénkách objeví apoštolové.",
+    lm_tyn_church_title: "Týnský chrám",
+    lm_tyn_church_text: "Dvě zubaté gotické věže se tyčí osmdesát metrů nad náměstím jako z pohádky. Chrám se schovává za řadou domů, vchod musíte hledat.",
+    lm_bridge_tower_title: "Staroměstská mostecká věž",
+    lm_bridge_tower_text: "Gotická brána hlídá konec Karlova mostu od čtrnáctého století. Z jejího ochozu vidíte sochy mostu seřazené až k Hradu.",
+    lm_st_nicholas_title: "Chrám svatého Mikuláše",
+    lm_st_nicholas_text: "Zelená kopule a zvonice korunují nejkrásnější barokní kostel na Malé Straně. Na jeho varhany hrál i Mozart.",
+    lm_wenceslas_square_title: "Václavské náměstí",
+    lm_wenceslas_square_text: "Spíš široký bulvár než náměstí, stoupá až k Národnímu muzeu. Davy se tu shromáždily v letech 1918, 1968 i 1989.",
+    lm_national_museum_title: "Národní muzeum",
+    lm_national_museum_text: "Mohutný novorenesanční palác se skleněnou kopulí uzavírá horní konec Václaváku. Uvnitř jsou zkameněliny, minerály i pantheon slavných Čechů.",
+    lm_national_theatre_title: "Národní divadlo",
+    lm_national_theatre_text: "Postavené ze sbírek obyčejných lidí a otevřené roku 1881, jeho zlatá střecha září nad řekou. Když brzy vyhořelo, národ se složil znovu.",
+    lm_dancing_house_title: "Tančící dům",
+    lm_dancing_house_text: "Dvě věže se na nábřeží k sobě naklánějí jako pár v tanci. Otevřel se v roce 1996 a dodnes rozděluje názory.",
+    lm_powder_tower_title: "Prašná brána",
+    lm_powder_tower_text: "Tmavá gotická brána kdysi označovala začátek královské korunovační cesty. Jméno má po střelném prachu, který se v ní v sedmnáctém století skladoval.",
+    lm_municipal_house_title: "Obecní dům",
+    lm_municipal_house_text: "Secesní klenot plný mozaik, vitráží a zlacených sálů. V roce 1918 tu byla vyhlášena samostatnost Československa.",
+    lm_rudolfinum_title: "Rudolfinum",
+    lm_rudolfinum_text: "Novorenesanční koncertní dům na nábřeží, domov České filharmonie. Na střeše stojí řada soch skladatelů.",
+    lm_petrin_tower_title: "Petřínská rozhledna",
+    lm_petrin_tower_text: "Ocelová příhradová věž na Petříně, inspirovaná tou pařížskou a dokončená roku 1891. Po 299 schodech uvidíte všechny červené střechy.",
+    lm_zizkov_tower_title: "Žižkovský vysílač",
+    lm_zizkov_tower_text: "Věž ve tvaru rakety se tyčí 216 metrů nad Žižkovem. Po jejích nohách lezou obří plastiky miminek.",
+    lm_vysehrad_title: "Bazilika svatého Petra a Pavla",
+    lm_vysehrad_text: "Dvě štíhlé novogotické věže označují starou pevnost Vyšehrad na skále nad Vltavou. Na hřbitově vedle odpočívá řada velkých umělců.",
+    lm_main_station_title: "Hlavní nádraží",
+    lm_main_station_text: "Za moderní halou se skrývá secesní nádražní budova s kopulovitou kavárnou. Vlaky odsud jezdí od roku 1871.",
+    lm_old_new_synagogue_title: "Staronová synagoga",
+    lm_old_new_synagogue_text: "Nejstarší dosud činná synagoga v Evropě, postavená ve třináctém století. Podle legendy na její půdě dodnes spí Golem.",
+    lm_klementinum_title: "Klementinum",
+    lm_klementinum_text: "Rozlehlá bývalá jezuitská kolej s barokní knihovnou a astronomickou věží. Počasí se tu měří každý den od roku 1775.",
+    lm_vitkov_title: "Národní památník na Vítkově",
+    lm_vitkov_text: "Jedna z největších bronzových jezdeckých soch na světě shlíží na město z vrchu Vítkov. Připomíná husitského vojevůdce Jana Žižku.",
     npcToneFlirt: "Flirt",
     npcToneJoke: "Vtip",
     npcToneDry: "Suchar",
@@ -688,6 +776,10 @@ export const messages: Record<Locale, Record<MessageKey, string>> = {
     app_camera: "Camera",
     app_contacts: "Contacts",
     app_wallet: "Wallet",
+    app_travel: "Travel",
+    travelTitle: "Cities",
+    travelHere: "You are here",
+    travelPassport: "Passport {pct} %",
     app_settings: "Settings",
     feedGo: "Go",
     feedDone: "Go for a drive",
@@ -778,6 +870,46 @@ export const messages: Record<Locale, Record<MessageKey, string>> = {
     lm_met_museum_text: "One of the largest art museums in the world, holding five thousand years of art. Its wide steps on Fifth Avenue are a favourite meeting spot.",
     lm_brooklyn_bridge_title: "Brooklyn Bridge",
     lm_brooklyn_bridge_text: "Granite towers and a web of steel cables have carried this bridge across the East River since 1883. A wooden walkway runs above the traffic.",
+    lm_prague_castle_title: "Pražský hrad",
+    lm_prague_castle_text: "The largest ancient castle complex in the world, with St Vitus Cathedral rising from its courtyards. Kings, emperors and presidents have ruled from here for over a thousand years.",
+    lm_old_town_square_title: "Staroměstské náměstí",
+    lm_old_town_square_text: "The heart of the old town since the Middle Ages, framed by pastel houses and Gothic spires. Markets, coronations and protests have all filled this square.",
+    lm_old_town_hall_title: "Staroměstská radnice",
+    lm_old_town_hall_text: "Its astronomical clock has told the time, the sun and the moon since 1410. Every hour a small crowd waits for the apostles to appear.",
+    lm_tyn_church_title: "Týnský chrám",
+    lm_tyn_church_text: "Two jagged Gothic towers rise eighty metres above the square like something from a fairy tale. The church hides behind a row of houses, so you have to find its door.",
+    lm_bridge_tower_title: "Staroměstská mostecká věž",
+    lm_bridge_tower_text: "This Gothic gate has guarded the end of Charles Bridge since the fourteenth century. From its gallery you see the bridge's statues lined up toward the castle.",
+    lm_st_nicholas_title: "Chrám svatého Mikuláše",
+    lm_st_nicholas_text: "A green dome and a bell tower crown the finest Baroque church in Malá Strana. Mozart once played its organ.",
+    lm_wenceslas_square_title: "Václavské náměstí",
+    lm_wenceslas_square_text: "Less a square than a broad boulevard sloping up to the National Museum. Crowds gathered here in 1918, 1968 and 1989.",
+    lm_national_museum_title: "Národní muzeum",
+    lm_national_museum_text: "A grand neo-Renaissance palace with a glass dome closes off the top of Wenceslas Square. Inside are fossils, minerals and a pantheon of famous Czechs.",
+    lm_national_theatre_title: "Národní divadlo",
+    lm_national_theatre_text: "Built with money collected from ordinary people and opened in 1881, its golden roof shines over the river. When it burned down soon after, the nation paid to build it again.",
+    lm_dancing_house_title: "Tančící dům",
+    lm_dancing_house_text: "Two towers lean into each other on the embankment like a couple in mid-dance. It opened in 1996 and still divides opinions.",
+    lm_powder_tower_title: "Prašná brána",
+    lm_powder_tower_text: "This dark Gothic gate once marked the start of the royal coronation route. Its name comes from the gunpowder stored inside in the seventeenth century.",
+    lm_municipal_house_title: "Obecní dům",
+    lm_municipal_house_text: "An Art Nouveau jewel full of mosaics, stained glass and gilded halls. Czechoslovak independence was proclaimed here in 1918.",
+    lm_rudolfinum_title: "Rudolfinum",
+    lm_rudolfinum_text: "A neo-Renaissance concert hall on the riverbank, home of the Czech Philharmonic. Statues of composers line its roof.",
+    lm_petrin_tower_title: "Petřínská rozhledna",
+    lm_petrin_tower_text: "A steel lattice tower on Petřín hill, inspired by the one in Paris and finished in 1891. Climb its 299 steps for a view over all the red roofs.",
+    lm_zizkov_tower_title: "Žižkovský vysílač",
+    lm_zizkov_tower_text: "A rocket-shaped tower that soars 216 metres above Žižkov. Giant sculpted babies crawl up its legs.",
+    lm_vysehrad_title: "Bazilika svatého Petra a Pavla",
+    lm_vysehrad_text: "Two slender neo-Gothic spires mark the old fortress of Vyšehrad on its rock above the Vltava. Next door, the cemetery holds many of the nation's great artists.",
+    lm_main_station_title: "Hlavní nádraží",
+    lm_main_station_text: "Behind the modern hall hides an Art Nouveau station building with a domed café. Trains have run from here since 1871.",
+    lm_old_new_synagogue_title: "Staronová synagoga",
+    lm_old_new_synagogue_text: "The oldest working synagogue in Europe, built in the thirteenth century. Legend says the Golem still sleeps in its attic.",
+    lm_klementinum_title: "Klementinum",
+    lm_klementinum_text: "A vast former Jesuit college with a Baroque library and an astronomical tower. Weather has been measured here every day since 1775.",
+    lm_vitkov_title: "Národní památník na Vítkově",
+    lm_vitkov_text: "One of the largest bronze equestrian statues in the world watches over the city from Vítkov hill. It honours the Hussite general Jan Žižka.",
     npcToneFlirt: "Flirt",
     npcToneJoke: "Joke",
     npcToneDry: "Deadpan",
