@@ -372,6 +372,21 @@ export type MessageKey =
   | "photoNoSpot"
   | "photoWanted"
   | "taxiGalleryGo"
+  | "shopOpen"
+  | "barOpen"
+  | "shopBuy"
+  | "shopBack"
+  | "shopOwned"
+  | "shopNoCash"
+  | "shopSnack"
+  | "shopBeer"
+  | "shopPlay"
+  | "shopBeers"
+  | "shopsDrunk"
+  | "shopsSober"
+  | "shopShelf"
+  | "shopShelfEmpty"
+  | "loopSnack"
 ;
 
 export const messages: Record<Locale, Record<MessageKey, string>> = {
@@ -744,6 +759,21 @@ export const messages: Record<Locale, Record<MessageKey, string>> = {
     photoNoSpot: "Najdi fotomísto (ikona foťáku) a zastav u něj",
     photoWanted: "S policií v zádech ne",
     taxiGalleryGo: "Začít směnu ve městě",
+    shopOpen: "Koupit",
+    barOpen: "Bar",
+    shopBuy: "Koupit",
+    shopBack: "Zpět",
+    shopOwned: "Už máš na poličce",
+    shopNoCash: "Nemáš dost hotovosti",
+    shopSnack: "Svačina: +{pct} % k odměně příští minihry",
+    shopBeer: "Pivo",
+    shopPlay: "Zahrát {game}",
+    shopBeers: "Piva: {n}",
+    shopsDrunk: "Moc piv – vyhraj minihru a vystřízlivíš",
+    shopsSober: "Zase střízlivý – můžeš jet",
+    shopShelf: "Polička",
+    shopShelfEmpty: "Zatím žádné suvenýry – najdi obchod se suvenýry",
+    loopSnack: "Bonus za svačinu {cash}",
   },
   "en": {
     appTitle: "Metropole",
@@ -1114,6 +1144,21 @@ export const messages: Record<Locale, Record<MessageKey, string>> = {
     photoNoSpot: "Find a photo spot (camera icon) and stop there",
     photoWanted: "Not with the police on your tail",
     taxiGalleryGo: "Start the shift in the city",
+    shopOpen: "Buy",
+    barOpen: "Bar",
+    shopBuy: "Buy",
+    shopBack: "Back",
+    shopOwned: "Already on your shelf",
+    shopNoCash: "Not enough cash",
+    shopSnack: "Snack: +{pct} % on your next minigame reward",
+    shopBeer: "Beer",
+    shopPlay: "Play {game}",
+    shopBeers: "Beers: {n}",
+    shopsDrunk: "Too many beers – win a minigame to sober up",
+    shopsSober: "Sober again – off you go",
+    shopShelf: "Shelf",
+    shopShelfEmpty: "No souvenirs yet – find a gift shop",
+    loopSnack: "Snack bonus {cash}",
   },
 };
 

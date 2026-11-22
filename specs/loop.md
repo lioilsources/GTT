@@ -1,6 +1,6 @@
 # Herní smyčka: příjezd → minihra → výsledek
 
-**version: 1** · P2 (průběh, UI) + čisté pomocné funkce s unit testy · plán: METROPOLE_PLAN 4, 8, 9,
+**version: 2** · P2 (průběh, UI) + čisté pomocné funkce s unit testy · plán: METROPOLE_PLAN 4, 8, 9,
 M1 body 6 a 11, akceptace „10 smyček za sebou bez pádu a bez zaseknutí“ · parita F-025 ·
 navazuje na `specs/phone.md` (`arrived`), `specs/economy.md`, `specs/save.md`, `specs/passport.md`
 
@@ -23,6 +23,9 @@ uloží hru a vrátí hráče do jízdy s nabídkou Feedu.
   běžícím světě (bez pauzy a bez celoobrazovkové hry), po jejím konci ukáže normální výsledek smyčky.
   Klient bez světové minihry pro daný engine ukáže toast „<název> už brzy“ (`loopSoon`).
 - Minihra, kterou klient nemá v registru, se chová stejně jako `drive`.
+- **Zvolená minihra (v2):** karta baru (`specs/shops.md`) spustí smyčku na spotu baru s minihrou
+  vybranou hráčem místo `spot.minigame`. Všechno ostatní (soupeř, obtížnost, `plays[spot]`,
+  výsledek) se dál počítá podle spotu; `best`, razítko a ekonomika podle zvolené minihry.
 
 ## Kontext minihry
 

@@ -267,6 +267,7 @@ class Save {
     required this.npc,
     required this.settings,
     this.stations,
+    this.souvenirs,
   });
 
   factory Save.fromJson(Map<String, Object?> j) => Save(
@@ -282,6 +283,7 @@ class Save {
         npc: SaveNpc.fromJson(_map(j['npc'], 'npc')),
         settings: SaveSettings.fromJson(_map(j['settings'], 'settings')),
         stations: j['stations'] == null ? null : [for (final e in _list(j['stations'], 'stations')) _str(e, 'stations[]')],
+        souvenirs: j['souvenirs'] == null ? null : [for (final e in _list(j['souvenirs'], 'souvenirs')) _str(e, 'souvenirs[]')],
       );
 
   int version;
@@ -302,6 +304,8 @@ class Save {
   SaveSettings settings;
   /// Unlocked metro stations (spot ids) in unlock order (specs/travel.md); missing = [].
   List<String>? stations;
+  /// Bought souvenirs (spot ids) in purchase order (specs/shops.md); missing = [].
+  List<String>? souvenirs;
 
   Map<String, Object?> toJson() => {
         'version': version,
@@ -316,6 +320,7 @@ class Save {
         'npc': npc.toJson(),
         'settings': settings.toJson(),
         if (stations != null) 'stations': stations,
+        if (souvenirs != null) 'souvenirs': souvenirs,
       };
 }
 

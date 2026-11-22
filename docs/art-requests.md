@@ -114,6 +114,13 @@ Navíc provoz (bez jména, náhodný lak): 6 generických aut `assets/cars/traff
 `assets/cities/<city>/<id>.png`, tileable 512×512, shora, neutrální světlo: nyc/asphalt,
 nyc/sidewalk_concrete, nyc/roof_tar, prague/cobblestone, prague/mosaic_sidewalk, prague/roof_tiles.
 
+### 7. Suvenýry na poličku (M2-S5, `specs/shops.md`)
+`assets/souvenirs/<id>.png`, 512×512, průhledné pozadí, jeden předmět zepředu ve stylu A, bez
+textu a log (R10). Id = spot obchodu: `souvenir_times_sq` (sněžítko s mrakodrapy),
+`souvenir_canal` (porcelánová kočka mávající tlapkou), `souvenir_battery` (soška ženy s pochodní,
+bez nápisu), `souvenir_dumbo` (malý model visutého mostu), `souvenir_soho` (taška s abstraktním
+vzorem). Do té doby klient kreslí ikonu a jméno.
+
 ## Hotovo
 
 (sem připisovat dodané položky: cesta, datum, poznámka)

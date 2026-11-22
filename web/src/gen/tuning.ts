@@ -138,6 +138,11 @@ export class Tuning {
   readonly cars: TuningCars;
   /** Fast travel by metro and taxi (specs/travel.md). Fares: base + distance (dm) × per_km ÷ 10000. */
   readonly travel: TuningTravel;
+  /**
+   * Shops and bars (specs/shops.md).
+   * colours in design/tokens.json color.shops
+   */
+  readonly shops: TuningShops;
   /** Photo spots and the Camera app (specs/photo.md). */
   readonly photo: TuningPhoto;
   /** Ringing phone booths (specs/booths.md). P0 rules tick once per game second. */
@@ -192,6 +197,7 @@ export class Tuning {
     this.npc = new TuningNpc(r.sub('npc'));
     this.cars = new TuningCars(r.sub('cars'));
     this.travel = new TuningTravel(r.sub('travel'));
+    this.shops = new TuningShops(r.sub('shops'));
     this.photo = new TuningPhoto(r.sub('photo'));
     this.booths = new TuningBooths(r.sub('booths'));
     this.style = new TuningStyle(r.sub('style'));
@@ -236,6 +242,7 @@ export class Tuning {
       npc: this.npc.toJson(),
       cars: this.cars.toJson(),
       travel: this.travel.toJson(),
+      shops: this.shops.toJson(),
       photo: this.photo.toJson(),
       booths: this.booths.toJson(),
       style: this.style.toJson(),
@@ -2570,6 +2577,73 @@ export class TuningTravel {
       cut_s: this.cutS,
       entry_w_m: this.entryWM,
       entry_l_m: this.entryLM,
+    };
+  }
+}
+
+/**
+ * Shops and bars (specs/shops.md).
+ * colours in design/tokens.json color.shops
+ */
+export class TuningShops {
+  enabled: boolean;
+  readonly cities: TuningShopsCities;
+  priceFood: number;
+  priceSouvenir: number;
+  priceBeer: number;
+  /** snack bonus on the next loop reward, percent */
+  snackPct: number;
+  /** a snack lasts this many game seconds */
+  snackS: number;
+  /** beers you may drive with; one more and you must win a minigame */
+  beerLimit: number;
+  /** one beer wears off per this many game seconds (not while drunk) */
+  beerS: number;
+  /** shop icon diameter at the parking point */
+  iconM: number;
+
+  constructor(r: R) {
+    this.enabled = r.b('enabled');
+    this.cities = new TuningShopsCities(r.sub('cities'));
+    this.priceFood = r.i('price_food');
+    this.priceSouvenir = r.i('price_souvenir');
+    this.priceBeer = r.i('price_beer');
+    this.snackPct = r.i('snack_pct');
+    this.snackS = r.i('snack_s');
+    this.beerLimit = r.i('beer_limit');
+    this.beerS = r.i('beer_s');
+    this.iconM = r.d('icon_m');
+  }
+
+  toJson(): Record<string, unknown> {
+    return {
+      enabled: this.enabled,
+      cities: this.cities.toJson(),
+      price_food: this.priceFood,
+      price_souvenir: this.priceSouvenir,
+      price_beer: this.priceBeer,
+      snack_pct: this.snackPct,
+      snack_s: this.snackS,
+      beer_limit: this.beerLimit,
+      beer_s: this.beerS,
+      icon_m: this.iconM,
+    };
+  }
+}
+
+export class TuningShopsCities {
+  nyc: boolean;
+  prague: boolean;
+
+  constructor(r: R) {
+    this.nyc = r.b('nyc');
+    this.prague = r.b('prague');
+  }
+
+  toJson(): Record<string, unknown> {
+    return {
+      nyc: this.nyc,
+      prague: this.prague,
     };
   }
 }

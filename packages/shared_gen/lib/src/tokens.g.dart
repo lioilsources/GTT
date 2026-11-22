@@ -125,6 +125,10 @@ abstract final class Tokens {
   static const int colorTravelCard = 0xFF14181F;
   static const int colorTravelCardText = 0xFFFFFFFF;
   static const int colorTravelLine = 0xFFF2BD2C;
+  static const int colorShopsFood = 0xFFE8892B;
+  static const int colorShopsSouvenir = 0xFFC2408F;
+  static const int colorShopsBar = 0xFF8A5A2B;
+  static const int colorShopsDrunk = 0x99E8B830;
   static const int colorBoothBody = 0xFFB8202A;
   static const int colorBoothRoof = 0xFF7A1218;
   static const int colorBoothGlass = 0xFFCFE4EE;

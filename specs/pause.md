@@ -23,6 +23,7 @@ Hra je pozastavená, dokud je otevřený aspoň jeden z těchto překryvů:
 | nabídka zvonící budky | `specs/booths.md` |
 | karta linky metra / taxi | `specs/travel.md` |
 | Foťák (rámování snímku) | `specs/photo.md` |
+| karta obchodu a baru | `specs/shops.md` |
 | ladicí panel | `docs/m0.md` |
 | výsledek benchmarku | `specs/bench.md` |
 

@@ -102,6 +102,7 @@ class Tuning {
         npc = TuningNpc._(r.sub('npc')),
         cars = TuningCars._(r.sub('cars')),
         travel = TuningTravel._(r.sub('travel')),
+        shops = TuningShops._(r.sub('shops')),
         photo = TuningPhoto._(r.sub('photo')),
         booths = TuningBooths._(r.sub('booths')),
         style = TuningStyle._(r.sub('style')),
@@ -212,6 +213,10 @@ class Tuning {
   /// Fast travel by metro and taxi (specs/travel.md). Fares: base + distance (dm) × per_km ÷ 10000.
   final TuningTravel travel;
 
+  /// Shops and bars (specs/shops.md).
+  /// colours in design/tokens.json color.shops
+  final TuningShops shops;
+
   /// Photo spots and the Camera app (specs/photo.md).
   final TuningPhoto photo;
 
@@ -267,6 +272,7 @@ class Tuning {
         'npc': npc.toJson(),
         'cars': cars.toJson(),
         'travel': travel.toJson(),
+        'shops': shops.toJson(),
         'photo': photo.toJson(),
         'booths': booths.toJson(),
         'style': style.toJson(),
@@ -2763,6 +2769,75 @@ class TuningTravel {
         'cut_s': cutS,
         'entry_w_m': entryWM,
         'entry_l_m': entryLM,
+      };
+}
+
+/// Shops and bars (specs/shops.md).
+/// colours in design/tokens.json color.shops
+class TuningShops {
+  TuningShops._(_R r)
+      : enabled = r.b('enabled'),
+        cities = TuningShopsCities._(r.sub('cities')),
+        priceFood = r.i('price_food'),
+        priceSouvenir = r.i('price_souvenir'),
+        priceBeer = r.i('price_beer'),
+        snackPct = r.i('snack_pct'),
+        snackS = r.i('snack_s'),
+        beerLimit = r.i('beer_limit'),
+        beerS = r.i('beer_s'),
+        iconM = r.d('icon_m');
+
+  bool enabled;
+
+  final TuningShopsCities cities;
+
+  int priceFood;
+
+  int priceSouvenir;
+
+  int priceBeer;
+
+  /// snack bonus on the next loop reward, percent
+  int snackPct;
+
+  /// a snack lasts this many game seconds
+  int snackS;
+
+  /// beers you may drive with; one more and you must win a minigame
+  int beerLimit;
+
+  /// one beer wears off per this many game seconds (not while drunk)
+  int beerS;
+
+  /// shop icon diameter at the parking point
+  double iconM;
+
+  Map<String, Object> toJson() => {
+        'enabled': enabled,
+        'cities': cities.toJson(),
+        'price_food': priceFood,
+        'price_souvenir': priceSouvenir,
+        'price_beer': priceBeer,
+        'snack_pct': snackPct,
+        'snack_s': snackS,
+        'beer_limit': beerLimit,
+        'beer_s': beerS,
+        'icon_m': iconM,
+      };
+}
+
+class TuningShopsCities {
+  TuningShopsCities._(_R r)
+      : nyc = r.b('nyc'),
+        prague = r.b('prague');
+
+  bool nyc;
+
+  bool prague;
+
+  Map<String, Object> toJson() => {
+        'nyc': nyc,
+        'prague': prague,
       };
 }
 
