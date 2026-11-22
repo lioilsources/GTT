@@ -1,0 +1,1923 @@
+{
+ "module": "booths",
+ "specVersion": 1,
+ "cases": [
+  {
+   "name": "ticks without near only retry",
+   "config": {
+    "booths": 3,
+    "gapMin": 2,
+    "gapMax": 4,
+    "retry": 2,
+    "ringS": 3,
+    "bonus": 150,
+    "games": [
+     "pier_62",
+     "east_village_bar",
+     "penn_taxi_stand"
+    ]
+   },
+   "seed": 1,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "near": []
+     },
+     "state": {
+      "ringing": -1,
+      "left": 0,
+      "next": 1,
+      "answered": 0,
+      "missed": 0,
+      "offer": {
+       "spot": "",
+       "bonus": 0
+      },
+      "paid": 0,
+      "last": 0,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "near": []
+     },
+     "state": {
+      "ringing": -1,
+      "left": 0,
+      "next": 2,
+      "answered": 0,
+      "missed": 0,
+      "offer": {
+       "spot": "",
+       "bonus": 0
+      },
+      "paid": 0,
+      "last": 0,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "near": []
+     },
+     "state": {
+      "ringing": -1,
+      "left": 0,
+      "next": 1,
+      "answered": 0,
+      "missed": 0,
+      "offer": {
+       "spot": "",
+       "bonus": 0
+      },
+      "paid": 0,
+      "last": 0,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "near": []
+     },
+     "state": {
+      "ringing": -1,
+      "left": 0,
+      "next": 2,
+      "answered": 0,
+      "missed": 0,
+      "offer": {
+       "spot": "",
+       "bonus": 0
+      },
+      "paid": 0,
+      "last": 0,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "near": []
+     },
+     "state": {
+      "ringing": -1,
+      "left": 0,
+      "next": 1,
+      "answered": 0,
+      "missed": 0,
+      "offer": {
+       "spot": "",
+       "bonus": 0
+      },
+      "paid": 0,
+      "last": 0,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "near": []
+     },
+     "state": {
+      "ringing": -1,
+      "left": 0,
+      "next": 2,
+      "answered": 0,
+      "missed": 0,
+      "offer": {
+       "spot": "",
+       "bonus": 0
+      },
+      "paid": 0,
+      "last": 0,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "near": []
+     },
+     "state": {
+      "ringing": -1,
+      "left": 0,
+      "next": 1,
+      "answered": 0,
+      "missed": 0,
+      "offer": {
+       "spot": "",
+       "bonus": 0
+      },
+      "paid": 0,
+      "last": 0,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "near": []
+     },
+     "state": {
+      "ringing": -1,
+      "left": 0,
+      "next": 2,
+      "answered": 0,
+      "missed": 0,
+      "offer": {
+       "spot": "",
+       "bonus": 0
+      },
+      "paid": 0,
+      "last": 0,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "near": []
+     },
+     "state": {
+      "ringing": -1,
+      "left": 0,
+      "next": 1,
+      "answered": 0,
+      "missed": 0,
+      "offer": {
+       "spot": "",
+       "bonus": 0
+      },
+      "paid": 0,
+      "last": 0,
+      "rng": 270369
+     }
+    }
+   ],
+   "result": null
+  },
+  {
+   "name": "rings after the gap among near booths",
+   "config": {
+    "booths": 3,
+    "gapMin": 2,
+    "gapMax": 4,
+    "retry": 2,
+    "ringS": 3,
+    "bonus": 150,
+    "games": [
+     "pier_62",
+     "east_village_bar",
+     "penn_taxi_stand"
+    ]
+   },
+   "seed": 7,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "near": [
+       0,
+       2
+      ]
+     },
+     "state": {
+      "ringing": -1,
+      "left": 0,
+      "next": 1,
+      "answered": 0,
+      "missed": 0,
+      "offer": {
+       "spot": "",
+       "bonus": 0
+      },
+      "paid": 0,
+      "last": 0,
+      "rng": 1892583
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "near": [
+       0,
+       2
+      ]
+     },
+     "state": {
+      "ringing": 2,
+      "left": 3,
+      "next": 0,
+      "answered": 0,
+      "missed": 0,
+      "offer": {
+       "spot": "",
+       "bonus": 0
+      },
+      "paid": 0,
+      "last": 0,
+      "rng": 470389255
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "near": [
+       0,
+       2
+      ]
+     },
+     "state": {
+      "ringing": 2,
+      "left": 2,
+      "next": 0,
+      "answered": 0,
+      "missed": 0,
+      "offer": {
+       "spot": "",
+       "bonus": 0
+      },
+      "paid": 0,
+      "last": 0,
+      "rng": 470389255
+     }
+    }
+   ],
+   "result": null
+  },
+  {
+   "name": "ringing runs out: missed and a new gap",
+   "config": {
+    "booths": 3,
+    "gapMin": 2,
+    "gapMax": 4,
+    "retry": 2,
+    "ringS": 3,
+    "bonus": 150,
+    "games": [
+     "pier_62",
+     "east_village_bar",
+     "penn_taxi_stand"
+    ]
+   },
+   "seed": 42,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "near": [
+       1
+      ]
+     },
+     "state": {
+      "ringing": -1,
+      "left": 0,
+      "next": 1,
+      "answered": 0,
+      "missed": 0,
+      "offer": {
+       "spot": "",
+       "bonus": 0
+      },
+      "paid": 0,
+      "last": 0,
+      "rng": 11355432
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "near": [
+       1
+      ]
+     },
+     "state": {
+      "ringing": 1,
+      "left": 3,
+      "next": 0,
+      "answered": 0,
+      "missed": 0,
+      "offer": {
+       "spot": "",
+       "bonus": 0
+      },
+      "paid": 0,
+      "last": 0,
+      "rng": 2836018348
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "near": []
+     },
+     "state": {
+      "ringing": 1,
+      "left": 2,
+      "next": 0,
+      "answered": 0,
+      "missed": 0,
+      "offer": {
+       "spot": "",
+       "bonus": 0
+      },
+      "paid": 0,
+      "last": 0,
+      "rng": 2836018348
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "near": []
+     },
+     "state": {
+      "ringing": 1,
+      "left": 1,
+      "next": 0,
+      "answered": 0,
+      "missed": 0,
+      "offer": {
+       "spot": "",
+       "bonus": 0
+      },
+      "paid": 0,
+      "last": 0,
+      "rng": 2836018348
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "near": []
+     },
+     "state": {
+      "ringing": -1,
+      "left": 0,
+      "next": 2,
+      "answered": 0,
+      "missed": 1,
+      "offer": {
+       "spot": "",
+       "bonus": 0
+      },
+      "paid": 0,
+      "last": 0,
+      "rng": 476557059
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "near": [
+       1
+      ]
+     },
+     "state": {
+      "ringing": -1,
+      "left": 0,
+      "next": 1,
+      "answered": 0,
+      "missed": 1,
+      "offer": {
+       "spot": "",
+       "bonus": 0
+      },
+      "paid": 0,
+      "last": 0,
+      "rng": 476557059
+     }
+    }
+   ],
+   "result": null
+  },
+  {
+   "name": "answer gives an offer with the bonus",
+   "config": {
+    "booths": 3,
+    "gapMin": 2,
+    "gapMax": 4,
+    "retry": 2,
+    "ringS": 3,
+    "bonus": 150,
+    "games": [
+     "pier_62",
+     "east_village_bar",
+     "penn_taxi_stand"
+    ]
+   },
+   "seed": 99,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "near": [
+       0,
+       1,
+       2
+      ]
+     },
+     "state": {
+      "ringing": -1,
+      "left": 0,
+      "next": 3,
+      "answered": 0,
+      "missed": 0,
+      "offer": {
+       "spot": "",
+       "bonus": 0
+      },
+      "paid": 0,
+      "last": 0,
+      "rng": 25193669
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "near": [
+       0,
+       1,
+       2
+      ]
+     },
+     "state": {
+      "ringing": -1,
+      "left": 0,
+      "next": 2,
+      "answered": 0,
+      "missed": 0,
+      "offer": {
+       "spot": "",
+       "bonus": 0
+      },
+      "paid": 0,
+      "last": 0,
+      "rng": 25193669
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "near": [
+       0,
+       1,
+       2
+      ]
+     },
+     "state": {
+      "ringing": -1,
+      "left": 0,
+      "next": 1,
+      "answered": 0,
+      "missed": 0,
+      "offer": {
+       "spot": "",
+       "bonus": 0
+      },
+      "paid": 0,
+      "last": 0,
+      "rng": 25193669
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "near": [
+       0,
+       1,
+       2
+      ]
+     },
+     "state": {
+      "ringing": 2,
+      "left": 3,
+      "next": 0,
+      "answered": 0,
+      "missed": 0,
+      "offer": {
+       "spot": "",
+       "bonus": 0
+      },
+      "paid": 0,
+      "last": 0,
+      "rng": 2399245289
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "answer",
+      "booth": 2
+     },
+     "state": {
+      "ringing": -1,
+      "left": 0,
+      "next": 4,
+      "answered": 1,
+      "missed": 0,
+      "offer": {
+       "spot": "penn_taxi_stand",
+       "bonus": 150
+      },
+      "paid": 0,
+      "last": 0,
+      "rng": 2028006716
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "near": []
+     },
+     "state": {
+      "ringing": -1,
+      "left": 0,
+      "next": 3,
+      "answered": 1,
+      "missed": 0,
+      "offer": {
+       "spot": "penn_taxi_stand",
+       "bonus": 150
+      },
+      "paid": 0,
+      "last": 0,
+      "rng": 2028006716
+     }
+    }
+   ],
+   "result": null
+  },
+  {
+   "name": "finish on the offered spot with 1 star pays the bonus",
+   "config": {
+    "booths": 3,
+    "gapMin": 2,
+    "gapMax": 4,
+    "retry": 2,
+    "ringS": 3,
+    "bonus": 150,
+    "games": [
+     "pier_62",
+     "east_village_bar",
+     "penn_taxi_stand"
+    ]
+   },
+   "seed": 5,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "near": [
+       2
+      ]
+     },
+     "state": {
+      "ringing": -1,
+      "left": 0,
+      "next": 1,
+      "answered": 0,
+      "missed": 0,
+      "offer": {
+       "spot": "",
+       "bonus": 0
+      },
+      "paid": 0,
+      "last": 0,
+      "rng": 1351845
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "near": [
+       2
+      ]
+     },
+     "state": {
+      "ringing": 2,
+      "left": 3,
+      "next": 0,
+      "answered": 0,
+      "missed": 0,
+      "offer": {
+       "spot": "",
+       "bonus": 0
+      },
+      "paid": 0,
+      "last": 0,
+      "rng": 336141829
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "answer",
+      "booth": 2
+     },
+     "state": {
+      "ringing": -1,
+      "left": 0,
+      "next": 2,
+      "answered": 1,
+      "missed": 0,
+      "offer": {
+       "spot": "penn_taxi_stand",
+       "bonus": 150
+      },
+      "paid": 0,
+      "last": 0,
+      "rng": 3580160835
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "finish",
+      "spot": "penn_taxi_stand",
+      "stars": 1,
+      "aborted": false
+     },
+     "state": {
+      "ringing": -1,
+      "left": 0,
+      "next": 2,
+      "answered": 1,
+      "missed": 0,
+      "offer": {
+       "spot": "",
+       "bonus": 0
+      },
+      "paid": 150,
+      "last": 150,
+      "rng": 3580160835
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "near": []
+     },
+     "state": {
+      "ringing": -1,
+      "left": 0,
+      "next": 1,
+      "answered": 1,
+      "missed": 0,
+      "offer": {
+       "spot": "",
+       "bonus": 0
+      },
+      "paid": 150,
+      "last": 0,
+      "rng": 3580160835
+     }
+    }
+   ],
+   "result": null
+  },
+  {
+   "name": "finish with 0 stars or aborted: no bonus, offer gone",
+   "config": {
+    "booths": 3,
+    "gapMin": 2,
+    "gapMax": 4,
+    "retry": 2,
+    "ringS": 3,
+    "bonus": 150,
+    "games": [
+     "pier_62",
+     "east_village_bar",
+     "penn_taxi_stand"
+    ]
+   },
+   "seed": 11,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "near": [
+       0,
+       1
+      ]
+     },
+     "state": {
+      "ringing": -1,
+      "left": 0,
+      "next": 1,
+      "answered": 0,
+      "missed": 0,
+      "offer": {
+       "spot": "",
+       "bonus": 0
+      },
+      "paid": 0,
+      "last": 0,
+      "rng": 2974059
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "near": [
+       0,
+       1
+      ]
+     },
+     "state": {
+      "ringing": 1,
+      "left": 3,
+      "next": 0,
+      "answered": 0,
+      "missed": 0,
+      "offer": {
+       "spot": "",
+       "bonus": 0
+      },
+      "paid": 0,
+      "last": 0,
+      "rng": 738900491
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "answer",
+      "booth": 1
+     },
+     "state": {
+      "ringing": -1,
+      "left": 0,
+      "next": 3,
+      "answered": 1,
+      "missed": 0,
+      "offer": {
+       "spot": "pier_62",
+       "bonus": 150
+      },
+      "paid": 0,
+      "last": 0,
+      "rng": 4281327667
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "finish",
+      "spot": "pier_62",
+      "stars": 0,
+      "aborted": false
+     },
+     "state": {
+      "ringing": -1,
+      "left": 0,
+      "next": 3,
+      "answered": 1,
+      "missed": 0,
+      "offer": {
+       "spot": "",
+       "bonus": 0
+      },
+      "paid": 0,
+      "last": 0,
+      "rng": 4281327667
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "near": [
+       0,
+       1
+      ]
+     },
+     "state": {
+      "ringing": -1,
+      "left": 0,
+      "next": 2,
+      "answered": 1,
+      "missed": 0,
+      "offer": {
+       "spot": "",
+       "bonus": 0
+      },
+      "paid": 0,
+      "last": 0,
+      "rng": 4281327667
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "near": [
+       0,
+       1
+      ]
+     },
+     "state": {
+      "ringing": -1,
+      "left": 0,
+      "next": 1,
+      "answered": 1,
+      "missed": 0,
+      "offer": {
+       "spot": "",
+       "bonus": 0
+      },
+      "paid": 0,
+      "last": 0,
+      "rng": 4281327667
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "near": [
+       0,
+       1
+      ]
+     },
+     "state": {
+      "ringing": 1,
+      "left": 3,
+      "next": 0,
+      "answered": 1,
+      "missed": 0,
+      "offer": {
+       "spot": "",
+       "bonus": 0
+      },
+      "paid": 0,
+      "last": 0,
+      "rng": 1712960839
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "answer",
+      "booth": 1
+     },
+     "state": {
+      "ringing": -1,
+      "left": 0,
+      "next": 3,
+      "answered": 2,
+      "missed": 0,
+      "offer": {
+       "spot": "pier_62",
+       "bonus": 150
+      },
+      "paid": 0,
+      "last": 0,
+      "rng": 896498623
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "finish",
+      "spot": "pier_62",
+      "stars": 3,
+      "aborted": true
+     },
+     "state": {
+      "ringing": -1,
+      "left": 0,
+      "next": 3,
+      "answered": 2,
+      "missed": 0,
+      "offer": {
+       "spot": "",
+       "bonus": 0
+      },
+      "paid": 0,
+      "last": 0,
+      "rng": 896498623
+     }
+    }
+   ],
+   "result": null
+  },
+  {
+   "name": "finish on another spot keeps the offer",
+   "config": {
+    "booths": 3,
+    "gapMin": 2,
+    "gapMax": 4,
+    "retry": 2,
+    "ringS": 3,
+    "bonus": 150,
+    "games": [
+     "pier_62",
+     "east_village_bar",
+     "penn_taxi_stand"
+    ]
+   },
+   "seed": 23,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "near": [
+       1,
+       2
+      ]
+     },
+     "state": {
+      "ringing": -1,
+      "left": 0,
+      "next": 1,
+      "answered": 0,
+      "missed": 0,
+      "offer": {
+       "spot": "",
+       "bonus": 0
+      },
+      "paid": 0,
+      "last": 0,
+      "rng": 6218454
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "near": [
+       1,
+       2
+      ]
+     },
+     "state": {
+      "ringing": 1,
+      "left": 3,
+      "next": 0,
+      "answered": 0,
+      "missed": 0,
+      "offer": {
+       "spot": "",
+       "bonus": 0
+      },
+      "paid": 0,
+      "last": 0,
+      "rng": 1552799316
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "answer",
+      "booth": 1
+     },
+     "state": {
+      "ringing": -1,
+      "left": 0,
+      "next": 4,
+      "answered": 1,
+      "missed": 0,
+      "offer": {
+       "spot": "east_village_bar",
+       "bonus": 150
+      },
+      "paid": 0,
+      "last": 0,
+      "rng": 2784611231
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "finish",
+      "spot": "pier_62",
+      "stars": 3,
+      "aborted": false
+     },
+     "state": {
+      "ringing": -1,
+      "left": 0,
+      "next": 4,
+      "answered": 1,
+      "missed": 0,
+      "offer": {
+       "spot": "east_village_bar",
+       "bonus": 150
+      },
+      "paid": 0,
+      "last": 0,
+      "rng": 2784611231
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "finish",
+      "spot": "east_village_bar",
+      "stars": 2,
+      "aborted": false
+     },
+     "state": {
+      "ringing": -1,
+      "left": 0,
+      "next": 4,
+      "answered": 1,
+      "missed": 0,
+      "offer": {
+       "spot": "",
+       "bonus": 0
+      },
+      "paid": 150,
+      "last": 150,
+      "rng": 2784611231
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "finish",
+      "spot": "pier_62",
+      "stars": 3,
+      "aborted": false
+     },
+     "state": {
+      "ringing": -1,
+      "left": 0,
+      "next": 4,
+      "answered": 1,
+      "missed": 0,
+      "offer": {
+       "spot": "",
+       "bonus": 0
+      },
+      "paid": 150,
+      "last": 0,
+      "rng": 2784611231
+     }
+    }
+   ],
+   "result": null
+  },
+  {
+   "name": "clear drops the offer, ringing goes on",
+   "config": {
+    "booths": 3,
+    "gapMin": 2,
+    "gapMax": 4,
+    "retry": 2,
+    "ringS": 3,
+    "bonus": 150,
+    "games": [
+     "pier_62",
+     "east_village_bar",
+     "penn_taxi_stand"
+    ]
+   },
+   "seed": 31,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "near": [
+       0
+      ]
+     },
+     "state": {
+      "ringing": -1,
+      "left": 0,
+      "next": 1,
+      "answered": 0,
+      "missed": 0,
+      "offer": {
+       "spot": "",
+       "bonus": 0
+      },
+      "paid": 0,
+      "last": 0,
+      "rng": 8381406
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "near": [
+       0
+      ]
+     },
+     "state": {
+      "ringing": 0,
+      "left": 3,
+      "next": 0,
+      "answered": 0,
+      "missed": 0,
+      "offer": {
+       "spot": "",
+       "bonus": 0
+      },
+      "paid": 0,
+      "last": 0,
+      "rng": 2089805404
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "answer",
+      "booth": 0
+     },
+     "state": {
+      "ringing": -1,
+      "left": 0,
+      "next": 3,
+      "answered": 1,
+      "missed": 0,
+      "offer": {
+       "spot": "east_village_bar",
+       "bonus": 150
+      },
+      "paid": 0,
+      "last": 0,
+      "rng": 723192805
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "clear"
+     },
+     "state": {
+      "ringing": -1,
+      "left": 0,
+      "next": 3,
+      "answered": 1,
+      "missed": 0,
+      "offer": {
+       "spot": "",
+       "bonus": 0
+      },
+      "paid": 0,
+      "last": 0,
+      "rng": 723192805
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "near": [
+       0,
+       1
+      ]
+     },
+     "state": {
+      "ringing": -1,
+      "left": 0,
+      "next": 2,
+      "answered": 1,
+      "missed": 0,
+      "offer": {
+       "spot": "",
+       "bonus": 0
+      },
+      "paid": 0,
+      "last": 0,
+      "rng": 723192805
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "near": [
+       0,
+       1
+      ]
+     },
+     "state": {
+      "ringing": -1,
+      "left": 0,
+      "next": 1,
+      "answered": 1,
+      "missed": 0,
+      "offer": {
+       "spot": "",
+       "bonus": 0
+      },
+      "paid": 0,
+      "last": 0,
+      "rng": 723192805
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "near": [
+       0,
+       1
+      ]
+     },
+     "state": {
+      "ringing": 0,
+      "left": 3,
+      "next": 0,
+      "answered": 1,
+      "missed": 0,
+      "offer": {
+       "spot": "",
+       "bonus": 0
+      },
+      "paid": 0,
+      "last": 0,
+      "rng": 110515222
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "clear"
+     },
+     "state": {
+      "ringing": 0,
+      "left": 3,
+      "next": 0,
+      "answered": 1,
+      "missed": 0,
+      "offer": {
+       "spot": "",
+       "bonus": 0
+      },
+      "paid": 0,
+      "last": 0,
+      "rng": 110515222
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "near": [
+       0,
+       1
+      ]
+     },
+     "state": {
+      "ringing": 0,
+      "left": 2,
+      "next": 0,
+      "answered": 1,
+      "missed": 0,
+      "offer": {
+       "spot": "",
+       "bonus": 0
+      },
+      "paid": 0,
+      "last": 0,
+      "rng": 110515222
+     }
+    }
+   ],
+   "result": null
+  },
+  {
+   "name": "no games: retry even with near booths",
+   "config": {
+    "booths": 3,
+    "gapMin": 2,
+    "gapMax": 4,
+    "retry": 2,
+    "ringS": 3,
+    "bonus": 150,
+    "games": []
+   },
+   "seed": 3,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "near": [
+       0,
+       1,
+       2
+      ]
+     },
+     "state": {
+      "ringing": -1,
+      "left": 0,
+      "next": 1,
+      "answered": 0,
+      "missed": 0,
+      "offer": {
+       "spot": "",
+       "bonus": 0
+      },
+      "paid": 0,
+      "last": 0,
+      "rng": 811107
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "near": [
+       0,
+       1,
+       2
+      ]
+     },
+     "state": {
+      "ringing": -1,
+      "left": 0,
+      "next": 2,
+      "answered": 0,
+      "missed": 0,
+      "offer": {
+       "spot": "",
+       "bonus": 0
+      },
+      "paid": 0,
+      "last": 0,
+      "rng": 811107
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "near": [
+       0,
+       1,
+       2
+      ]
+     },
+     "state": {
+      "ringing": -1,
+      "left": 0,
+      "next": 1,
+      "answered": 0,
+      "missed": 0,
+      "offer": {
+       "spot": "",
+       "bonus": 0
+      },
+      "paid": 0,
+      "last": 0,
+      "rng": 811107
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "near": [
+       0,
+       1,
+       2
+      ]
+     },
+     "state": {
+      "ringing": -1,
+      "left": 0,
+      "next": 2,
+      "answered": 0,
+      "missed": 0,
+      "offer": {
+       "spot": "",
+       "bonus": 0
+      },
+      "paid": 0,
+      "last": 0,
+      "rng": 811107
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "near": [
+       0,
+       1,
+       2
+      ]
+     },
+     "state": {
+      "ringing": -1,
+      "left": 0,
+      "next": 1,
+      "answered": 0,
+      "missed": 0,
+      "offer": {
+       "spot": "",
+       "bonus": 0
+      },
+      "paid": 0,
+      "last": 0,
+      "rng": 811107
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "near": [
+       0,
+       1,
+       2
+      ]
+     },
+     "state": {
+      "ringing": -1,
+      "left": 0,
+      "next": 2,
+      "answered": 0,
+      "missed": 0,
+      "offer": {
+       "spot": "",
+       "bonus": 0
+      },
+      "paid": 0,
+      "last": 0,
+      "rng": 811107
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "near": [
+       0,
+       1,
+       2
+      ]
+     },
+     "state": {
+      "ringing": -1,
+      "left": 0,
+      "next": 1,
+      "answered": 0,
+      "missed": 0,
+      "offer": {
+       "spot": "",
+       "bonus": 0
+      },
+      "paid": 0,
+      "last": 0,
+      "rng": 811107
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "near": [
+       0,
+       1,
+       2
+      ]
+     },
+     "state": {
+      "ringing": -1,
+      "left": 0,
+      "next": 2,
+      "answered": 0,
+      "missed": 0,
+      "offer": {
+       "spot": "",
+       "bonus": 0
+      },
+      "paid": 0,
+      "last": 0,
+      "rng": 811107
+     }
+    }
+   ],
+   "result": null
+  },
+  {
+   "name": "empty near at the attempt retries, then rings",
+   "config": {
+    "booths": 3,
+    "gapMin": 2,
+    "gapMax": 4,
+    "retry": 2,
+    "ringS": 3,
+    "bonus": 150,
+    "games": [
+     "pier_62",
+     "east_village_bar",
+     "penn_taxi_stand"
+    ]
+   },
+   "seed": 17,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "near": []
+     },
+     "state": {
+      "ringing": -1,
+      "left": 0,
+      "next": 1,
+      "answered": 0,
+      "missed": 0,
+      "offer": {
+       "spot": "",
+       "bonus": 0
+      },
+      "paid": 0,
+      "last": 0,
+      "rng": 4596240
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "near": []
+     },
+     "state": {
+      "ringing": -1,
+      "left": 0,
+      "next": 2,
+      "answered": 0,
+      "missed": 0,
+      "offer": {
+       "spot": "",
+       "bonus": 0
+      },
+      "paid": 0,
+      "last": 0,
+      "rng": 4596240
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "near": []
+     },
+     "state": {
+      "ringing": -1,
+      "left": 0,
+      "next": 1,
+      "answered": 0,
+      "missed": 0,
+      "offer": {
+       "spot": "",
+       "bonus": 0
+      },
+      "paid": 0,
+      "last": 0,
+      "rng": 4596240
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "near": []
+     },
+     "state": {
+      "ringing": -1,
+      "left": 0,
+      "next": 2,
+      "answered": 0,
+      "missed": 0,
+      "offer": {
+       "spot": "",
+       "bonus": 0
+      },
+      "paid": 0,
+      "last": 0,
+      "rng": 4596240
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "near": []
+     },
+     "state": {
+      "ringing": -1,
+      "left": 0,
+      "next": 1,
+      "answered": 0,
+      "missed": 0,
+      "offer": {
+       "spot": "",
+       "bonus": 0
+      },
+      "paid": 0,
+      "last": 0,
+      "rng": 4596240
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "near": []
+     },
+     "state": {
+      "ringing": -1,
+      "left": 0,
+      "next": 2,
+      "answered": 0,
+      "missed": 0,
+      "offer": {
+       "spot": "",
+       "bonus": 0
+      },
+      "paid": 0,
+      "last": 0,
+      "rng": 4596240
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "near": [
+       1
+      ]
+     },
+     "state": {
+      "ringing": -1,
+      "left": 0,
+      "next": 1,
+      "answered": 0,
+      "missed": 0,
+      "offer": {
+       "spot": "",
+       "bonus": 0
+      },
+      "paid": 0,
+      "last": 0,
+      "rng": 4596240
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "near": [
+       1
+      ]
+     },
+     "state": {
+      "ringing": 1,
+      "left": 3,
+      "next": 0,
+      "answered": 0,
+      "missed": 0,
+      "offer": {
+       "spot": "",
+       "bonus": 0
+      },
+      "paid": 0,
+      "last": 0,
+      "rng": 1150042706
+     }
+    }
+   ],
+   "result": null
+  },
+  {
+   "name": "seed 0 and a single booth",
+   "config": {
+    "booths": 1,
+    "gapMin": 3,
+    "gapMax": 3,
+    "retry": 2,
+    "ringS": 3,
+    "bonus": 150,
+    "games": [
+     "pier_62"
+    ]
+   },
+   "seed": 0,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "near": [
+       0
+      ]
+     },
+     "state": {
+      "ringing": -1,
+      "left": 0,
+      "next": 2,
+      "answered": 0,
+      "missed": 0,
+      "offer": {
+       "spot": "",
+       "bonus": 0
+      },
+      "paid": 0,
+      "last": 0,
+      "rng": 1359758873
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "near": [
+       0
+      ]
+     },
+     "state": {
+      "ringing": -1,
+      "left": 0,
+      "next": 1,
+      "answered": 0,
+      "missed": 0,
+      "offer": {
+       "spot": "",
+       "bonus": 0
+      },
+      "paid": 0,
+      "last": 0,
+      "rng": 1359758873
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "near": [
+       0
+      ]
+     },
+     "state": {
+      "ringing": 0,
+      "left": 3,
+      "next": 0,
+      "answered": 0,
+      "missed": 0,
+      "offer": {
+       "spot": "",
+       "bonus": 0
+      },
+      "paid": 0,
+      "last": 0,
+      "rng": 3761132862
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "near": [
+       0
+      ]
+     },
+     "state": {
+      "ringing": 0,
+      "left": 2,
+      "next": 0,
+      "answered": 0,
+      "missed": 0,
+      "offer": {
+       "spot": "",
+       "bonus": 0
+      },
+      "paid": 0,
+      "last": 0,
+      "rng": 3761132862
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "answer",
+      "booth": 0
+     },
+     "state": {
+      "ringing": -1,
+      "left": 0,
+      "next": 3,
+      "answered": 1,
+      "missed": 0,
+      "offer": {
+       "spot": "pier_62",
+       "bonus": 150
+      },
+      "paid": 0,
+      "last": 0,
+      "rng": 25405621
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "finish",
+      "spot": "pier_62",
+      "stars": 3,
+      "aborted": false
+     },
+     "state": {
+      "ringing": -1,
+      "left": 0,
+      "next": 3,
+      "answered": 1,
+      "missed": 0,
+      "offer": {
+       "spot": "",
+       "bonus": 0
+      },
+      "paid": 150,
+      "last": 150,
+      "rng": 25405621
+     }
+    }
+   ],
+   "result": null
+  }
+ ]
+}
