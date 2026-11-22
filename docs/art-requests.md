@@ -128,3 +128,6 @@ nyc/sidewalk_concrete, nyc/roof_tar, prague/cobblestone, prague/mosaic_sidewalk,
   variantách, bude potřeba jiný postup).
 - `assets/postcards/prague/*.png`, 22. 11. 2026, všech 20.
 - Postup: `tools/art/make_batch1.py` (prompty, seedy) + `tools/art/run_board.py` (workflow ComfyUI).
+- `assets/cities/prague/{cobblestone,mosaic_sidewalk,roof_tiles}.png` a `assets/cities/nyc/asphalt.png`,
+  22. 11. 2026, tileable 512×512, 256 barev. Chybí nyc/sidewalk_concrete a nyc/roof_tar (výsledky
+  s perspektivou a viditelným opakováním, budou potřeba nové prompty).
