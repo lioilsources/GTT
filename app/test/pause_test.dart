@@ -35,7 +35,7 @@ void main() {
       }
     });
 
-    test('every pausing overlay of specs/pause.md has a kind, the booth offer card included', () {
+    test('every pausing overlay of specs/pause.md has a kind, the booth and travel cards included', () {
       expect(GameOverlay.values.map((o) => o.name).toList()..sort(), [
         'about',
         'bench',
@@ -48,6 +48,7 @@ void main() {
         'phone',
         'postcard',
         'result',
+        'travel',
         'tuning',
       ]);
     });

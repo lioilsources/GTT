@@ -100,6 +100,16 @@ class LoopController extends ChangeNotifier {
   /// A context button with priority ("Zvednout", specs/booths.md): while true, "Play" hides.
   bool Function()? yieldTo;
 
+  /// Metro stations of the loaded save (specs/travel.md); the travel module `load`s them.
+  List<String> get savedStations => _savedStations;
+  List<String> _savedStations = const [];
+
+  /// Live unlocked stations for the save (set by the travel module; null = keep the loaded ones).
+  List<String> Function()? stations;
+
+  /// Called by [restore] with the stations of the save (the travel module reloads them).
+  void Function(List<String> stations)? onStationsRestored;
+
   /// Minigame id of the "coming soon" toast, or null.
   final soon = ValueNotifier<String?>(null);
   Timer? _soonTimer;
@@ -130,6 +140,7 @@ class LoopController extends ChangeNotifier {
             ? _savedNpc
             : (vibe: {...n.state.vibe}, contacts: [...n.state.contacts], recent: [...n.state.recent]),
         settings: (scheme: s.scheme, night: s.night),
+        stations: stations?.call() ?? _savedStations,
       ),
     );
   }
@@ -141,6 +152,8 @@ class LoopController extends ChangeNotifier {
     book.restore({for (final e in s.best.entries) e.key: (stars: e.value.stars, score: e.value.score)}, s.plays);
     phone.feedRestore((prefs: s.feed.prefs, visits: s.feed.visits, districts: s.feed.districts));
     _savedNpc = (vibe: s.npc.vibe, contacts: s.npc.contacts, recent: s.npc.recent);
+    _savedStations = [...?s.stations];
+    onStationsRestored?.call(_savedStations);
     final n = npc;
     if (n != null) {
       final known = {for (final c in n.pack.characters) c.id};

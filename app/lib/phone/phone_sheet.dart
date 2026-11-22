@@ -29,6 +29,7 @@ void registerPhoneApp(PhoneAppId id, PhoneAppBuilder builder) => phoneApps[id] =
 const _icons = {
   PhoneAppId.feed: Icons.dynamic_feed,
   PhoneAppId.map: Icons.map,
+  PhoneAppId.taxi: Icons.local_taxi,
   PhoneAppId.garage: Icons.garage,
   PhoneAppId.passport: Icons.badge,
   PhoneAppId.camera: Icons.photo_camera,
