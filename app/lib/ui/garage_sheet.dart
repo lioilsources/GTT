@@ -26,6 +26,7 @@ Future<void> showGarage(BuildContext context, CarFleet fleet) => showModalBottom
       'pickup' => l.carClassPickup,
       'sedan' => l.carClassSedan,
       'micro' => l.carClassMicro,
+      'supersport' => l.carClassSupersport,
       _ => '',
     };
     final drive = fleet.drive;
