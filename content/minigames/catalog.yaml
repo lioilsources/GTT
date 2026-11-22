@@ -10,3 +10,7 @@ minigames:
   - {id: strelnice, engine: flick, target_min: 5, casino_like: false}
   - {id: taxi, engine: drive, target_min: 4, casino_like: false}
   - {id: koulena, engine: flick, target_min: 6, cities: [nyc], casino_like: false}
+  # M3 Prague local games (plans/M3_PRAHA.md bod 7)
+  - {id: kulicky, engine: flick, target_min: 5, cities: [prague], casino_like: false}
+  - {id: cara, engine: flick, target_min: 4, cities: [prague], casino_like: false}
+  - {id: nohejbal, engine: sport, target_min: 6, cities: [prague], casino_like: false}

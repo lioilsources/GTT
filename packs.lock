@@ -7,8 +7,8 @@ packs:
         sha256: 0fea242bb98630bc8423f3ff9e587e32c3e6ee130a586d3af540d0980ecaa7ee
         overture_release: 2026-11-18.0
     prague:
-        version: 64058dda237d
-        tag: pack-prague-64058dda237d
-        asset: prague-64058dda237d.tar.gz
-        sha256: 64058dda237d782198a322537754bc5ad9d388502c7a52fff2d666916b9d7487
+        version: abb19fb621d2
+        tag: pack-prague-abb19fb621d2
+        asset: prague-abb19fb621d2.tar.gz
+        sha256: abb19fb621d29bf295e2b33181213b27bd46c675d1dab46d002c57b6b9b24521
         overture_release: 2026-11-18.0

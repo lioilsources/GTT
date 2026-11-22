@@ -84,6 +84,9 @@ enum MinigameId {
   strelnice('strelnice'),
   taxi('taxi'),
   koulena('koulena'),
+  kulicky('kulicky'),
+  cara('cara'),
+  nohejbal('nohejbal'),
   ;
 
   const MinigameId(this.id);
@@ -109,4 +112,7 @@ final Map<MinigameId, MinigameMeta> minigameCatalog = {
   MinigameId.strelnice: MinigameMeta(id: 'strelnice', engine: 'flick', targetLengthS: 300, cities: [], casinoLike: false),
   MinigameId.taxi: MinigameMeta(id: 'taxi', engine: 'drive', targetLengthS: 240, cities: [], casinoLike: false),
   MinigameId.koulena: MinigameMeta(id: 'koulena', engine: 'flick', targetLengthS: 360, cities: ['nyc'], casinoLike: false),
+  MinigameId.kulicky: MinigameMeta(id: 'kulicky', engine: 'flick', targetLengthS: 300, cities: ['prague'], casinoLike: false),
+  MinigameId.cara: MinigameMeta(id: 'cara', engine: 'flick', targetLengthS: 240, cities: ['prague'], casinoLike: false),
+  MinigameId.nohejbal: MinigameMeta(id: 'nohejbal', engine: 'sport', targetLengthS: 360, cities: ['prague'], casinoLike: false),
 };

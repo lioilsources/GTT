@@ -1289,6 +1289,9 @@ class TuningMinigames {
         desetitisic = TuningMinigamesDesetitisic._(r.sub('desetitisic')),
         sipky = TuningMinigamesSipky._(r.sub('sipky')),
         koulena = TuningMinigamesKoulena._(r.sub('koulena')),
+        kulicky = TuningMinigamesKulicky._(r.sub('kulicky')),
+        cara = TuningMinigamesCara._(r.sub('cara')),
+        nohejbal = TuningMinigamesNohejbal._(r.sub('nohejbal')),
         strelnice = TuningMinigamesStrelnice._(r.sub('strelnice')),
         taxi = TuningMinigamesTaxi._(r.sub('taxi'));
 
@@ -1307,6 +1310,12 @@ class TuningMinigames {
 
   final TuningMinigamesKoulena koulena;
 
+  final TuningMinigamesKulicky kulicky;
+
+  final TuningMinigamesCara cara;
+
+  final TuningMinigamesNohejbal nohejbal;
+
   final TuningMinigamesStrelnice strelnice;
 
   /// Taxi shift (specs/minigames/taxi.md): a world minigame in the taxi_metro car.
@@ -1320,6 +1329,9 @@ class TuningMinigames {
         'desetitisic': desetitisic.toJson(),
         'sipky': sipky.toJson(),
         'koulena': koulena.toJson(),
+        'kulicky': kulicky.toJson(),
+        'cara': cara.toJson(),
+        'nohejbal': nohejbal.toJson(),
         'strelnice': strelnice.toJson(),
         'taxi': taxi.toJson(),
       };
@@ -1555,6 +1567,152 @@ class TuningMinigamesKoulena {
         'pocket_points': pocketPoints,
         'scatter': scatter,
         'star_scores': starScores,
+        'flick_mm_per_px': flickMmPerPx,
+        'time_cap_s': timeCapS,
+      };
+}
+
+class TuningMinigamesKulicky {
+  TuningMinigamesKulicky._(_R r)
+      : rounds = r.i('rounds'),
+        holeR = r.i('hole_r'),
+        holePoints = r.i('hole_points'),
+        closerPoints = r.i('closer_points'),
+        scatter = r.il('scatter'),
+        aiScatter = r.il('ai_scatter'),
+        starMargins = r.il('star_margins'),
+        flickMmPerPx = r.d('flick_mm_per_px'),
+        timeCapS = r.i('time_cap_s');
+
+  int rounds;
+
+  /// mm
+  int holeR;
+
+  int holePoints;
+
+  int closerPoints;
+
+  /// mm per difficulty 1..5 (player)
+  List<int> scatter;
+
+  List<int> aiScatter;
+
+  List<int> starMargins;
+
+  /// swipe length to aim distance (UI only)
+  double flickMmPerPx;
+
+  int timeCapS;
+
+  Map<String, Object> toJson() => {
+        'rounds': rounds,
+        'hole_r': holeR,
+        'hole_points': holePoints,
+        'closer_points': closerPoints,
+        'scatter': scatter,
+        'ai_scatter': aiScatter,
+        'star_margins': starMargins,
+        'flick_mm_per_px': flickMmPerPx,
+        'time_cap_s': timeCapS,
+      };
+}
+
+class TuningMinigamesCara {
+  TuningMinigamesCara._(_R r)
+      : rounds = r.i('rounds'),
+        linePoints = r.i('line_points'),
+        roundPoints = r.i('round_points'),
+        scatter = r.il('scatter'),
+        aiScatter = r.il('ai_scatter'),
+        aiAim = r.il('ai_aim'),
+        starMargins = r.il('star_margins'),
+        flickMmPerPx = r.d('flick_mm_per_px'),
+        timeCapS = r.i('time_cap_s');
+
+  int rounds;
+
+  int linePoints;
+
+  int roundPoints;
+
+  List<int> scatter;
+
+  List<int> aiScatter;
+
+  /// mm short of the line
+  List<int> aiAim;
+
+  List<int> starMargins;
+
+  double flickMmPerPx;
+
+  int timeCapS;
+
+  Map<String, Object> toJson() => {
+        'rounds': rounds,
+        'line_points': linePoints,
+        'round_points': roundPoints,
+        'scatter': scatter,
+        'ai_scatter': aiScatter,
+        'ai_aim': aiAim,
+        'star_margins': starMargins,
+        'flick_mm_per_px': flickMmPerPx,
+        'time_cap_s': timeCapS,
+      };
+}
+
+class TuningMinigamesNohejbal {
+  TuningMinigamesNohejbal._(_R r)
+      : halfWidth = r.i('half_width'),
+        depth = r.i('depth'),
+        winPoints = r.i('win_points'),
+        winBy = r.i('win_by'),
+        maxPoints = r.i('max_points'),
+        scatter = r.il('scatter'),
+        aiScatter = r.il('ai_scatter'),
+        aiReach = r.il('ai_reach'),
+        aiMargin = r.il('ai_margin'),
+        starMargins = r.il('star_margins'),
+        flickMmPerPx = r.d('flick_mm_per_px'),
+        timeCapS = r.i('time_cap_s');
+
+  /// mm
+  int halfWidth;
+
+  int depth;
+
+  int winPoints;
+
+  int winBy;
+
+  int maxPoints;
+
+  List<int> scatter;
+
+  List<int> aiScatter;
+
+  List<int> aiReach;
+
+  List<int> aiMargin;
+
+  List<int> starMargins;
+
+  double flickMmPerPx;
+
+  int timeCapS;
+
+  Map<String, Object> toJson() => {
+        'half_width': halfWidth,
+        'depth': depth,
+        'win_points': winPoints,
+        'win_by': winBy,
+        'max_points': maxPoints,
+        'scatter': scatter,
+        'ai_scatter': aiScatter,
+        'ai_reach': aiReach,
+        'ai_margin': aiMargin,
+        'star_margins': starMargins,
         'flick_mm_per_px': flickMmPerPx,
         'time_cap_s': timeCapS,
       };

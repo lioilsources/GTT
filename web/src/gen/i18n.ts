@@ -58,6 +58,9 @@ export type MessageKey =
   | "mg_strelnice"
   | "mg_taxi"
   | "mg_koulena"
+  | "mg_kulicky"
+  | "mg_cara"
+  | "mg_nohejbal"
   | "sirkyRules1"
   | "sirkyRules2"
   | "sirkyRules3"
@@ -100,6 +103,17 @@ export type MessageKey =
   | "koulenaRules1"
   | "koulenaRules2"
   | "koulenaRules3"
+  | "kulickyRules1"
+  | "kulickyRules2"
+  | "kulickyRules3"
+  | "caraRules1"
+  | "caraRules2"
+  | "caraRules3"
+  | "nohejbalRules1"
+  | "nohejbalRules2"
+  | "nohejbalRules3"
+  | "localScore"
+  | "nohejbalScore"
   | "koulenaSeries"
   | "strelniceRules1"
   | "strelniceRules2"
@@ -288,6 +302,8 @@ export type MessageKey =
   | "carClassMuscle"
   | "carClassTaxi"
   | "carClassPickup"
+  | "carClassSedan"
+  | "carClassMicro"
   | "policeWanted"
   | "policeReason_crash"
   | "policeReason_sidewalk"
@@ -386,6 +402,9 @@ export const messages: Record<Locale, Record<MessageKey, string>> = {
     mg_strelnice: "Střelnice",
     mg_taxi: "Taxi",
     mg_koulena: "Koulená",
+    mg_kulicky: "Kuličky",
+    mg_cara: "Čára",
+    mg_nohejbal: "Nohejbal",
     sirkyRules1: "Berete střídavě 1 až 3 sirky.",
     sirkyRules2: "Kdo vezme poslední sirku, prohrál kolo.",
     sirkyRules3: "Kdo první vyhraje 5 kol, vyhrál hru.",
@@ -428,6 +447,17 @@ export const messages: Record<Locale, Record<MessageKey, string>> = {
     koulenaRules1: "Švihni koulí po dráze do kruhů.",
     koulenaRules2: "Kruhy dávají 10–50, rohové kapsy 100.",
     koulenaRules3: "Tři série po devíti koulích.",
+    kulickyRules1: "Cvrnkni kuličku k důlku.",
+    kulickyRules2: "Kulička v důlku dá 3 body, jinak bere bod ta bližší.",
+    kulickyRules3: "Pět kol, začínáš ty.",
+    caraRules1: "Hoď minci co nejblíž čáře.",
+    caraRules2: "Přes čáru je spálená, přesně na čáře bere 3 body.",
+    caraRules3: "Sedm kol, kolo bere bližší mince.",
+    nohejbalRules1: "Tahem pošli míč do soupeřova pole.",
+    nohejbalRules2: "Míč mimo hřiště je bod pro soupeře, mimo jeho dosah bod pro tebe.",
+    nohejbalRules3: "Hraje se do 10 s rozdílem dvou bodů.",
+    localScore: "Kolo {round}/{rounds} · ty {player} : {ai}",
+    nohejbalScore: "Ty {player} : {ai}",
     koulenaSeries: "Série {series}/3 · koule {ball}/9",
     strelniceRules1: "Klepni na terče, jak jedou kolem.",
     strelniceRules2: "Malé terče dávají nejvíc. Šest ran, pak krátké přebití.",
@@ -616,6 +646,8 @@ export const messages: Record<Locale, Record<MessageKey, string>> = {
     carClassMuscle: "Muscle car",
     carClassTaxi: "Taxi",
     carClassPickup: "Pick-up",
+    carClassSedan: "Sedan",
+    carClassMicro: "Mikro",
     policeWanted: "Hledanost {level}",
     policeReason_crash: "Hlídka viděla, jak jsi narazil do auta",
     policeReason_sidewalk: "Viděl tě, jak jedeš po chodníku",
@@ -712,6 +744,9 @@ export const messages: Record<Locale, Record<MessageKey, string>> = {
     mg_strelnice: "Shooting gallery",
     mg_taxi: "Taxi",
     mg_koulena: "Boardwalk roll",
+    mg_kulicky: "Marbles",
+    mg_cara: "Coin line",
+    mg_nohejbal: "Footnet",
     sirkyRules1: "Take 1 to 3 matches in turn.",
     sirkyRules2: "Whoever takes the last match loses the round.",
     sirkyRules3: "First to win 5 rounds wins the game.",
@@ -754,6 +789,17 @@ export const messages: Record<Locale, Record<MessageKey, string>> = {
     koulenaRules1: "Flick the ball up the lane into the rings.",
     koulenaRules2: "Rings score 10–50, the corner pockets 100.",
     koulenaRules3: "Three series of nine balls.",
+    kulickyRules1: "Flick your marble towards the hole.",
+    kulickyRules2: "A marble in the hole scores 3, otherwise the closer one scores 1.",
+    kulickyRules3: "Five rounds, you shoot first.",
+    caraRules1: "Toss the coin as close to the line as you can.",
+    caraRules2: "Over the line it is burnt; right on the line scores 3.",
+    caraRules3: "Seven rounds, the closer coin takes the round.",
+    nohejbalRules1: "Swipe to send the ball into the other half.",
+    nohejbalRules2: "Out of the court is a point for your rival, out of their reach a point for you.",
+    nohejbalRules3: "First to 10 with a two-point lead.",
+    localScore: "Round {round}/{rounds} · you {player} : {ai}",
+    nohejbalScore: "You {player} : {ai}",
     koulenaSeries: "Series {series}/3 · ball {ball}/9",
     strelniceRules1: "Tap the targets as they glide by.",
     strelniceRules2: "Small ones score most. Six shots, then a short reload.",
@@ -942,6 +988,8 @@ export const messages: Record<Locale, Record<MessageKey, string>> = {
     carClassMuscle: "Muscle car",
     carClassTaxi: "Taxi",
     carClassPickup: "Pick-up",
+    carClassSedan: "Sedan",
+    carClassMicro: "Micro",
     policeWanted: "Wanted level {level}",
     policeReason_crash: "A patrol saw you crash into a car",
     policeReason_sidewalk: "A patrol saw you driving on the sidewalk",
