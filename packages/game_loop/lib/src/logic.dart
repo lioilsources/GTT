@@ -71,6 +71,7 @@ class LoopOutcome {
     required this.aborted,
     required this.cash,
     required this.booth,
+    this.snack = 0,
     required this.total,
     required this.firstTime,
     required this.newBest,
@@ -85,7 +86,10 @@ class LoopOutcome {
   /// Booth bonus of this loop (specs/booths.md "Hotovost"), 0 without one; part of loopCash.
   final int booth;
 
-  /// Cash after the reward and the booth bonus.
+  /// Snack bonus of this loop (specs/shops.md "Hotovost"), 0 without one; part of loopCash.
+  final int snack;
+
+  /// Cash after the reward, the booth bonus and the snack bonus.
   final int total;
   final bool firstTime, newBest, stamp, hasStamp;
 }
@@ -106,6 +110,12 @@ class LoopBook {
   /// Booth bonus hook (specs/booths.md): the booths module's `finish(spot, stars, aborted)`,
   /// returning its `last`. Called right after the reward; the bonus goes to the cars-state cash.
   int Function(String spot, int stars, bool aborted)? bonus;
+
+  /// Shops hooks (specs/shops.md "Hotovost"): [snack] = the shops module's `reward(amount)` with the
+  /// economy's cash reward of the same loop, returning its `last.amount` (added to the cash);
+  /// [shopsFinish] = its `finish(stars, aborted)`, called last.
+  int Function(int reward)? snack;
+  void Function(int stars, bool aborted)? shopsFinish;
 
   void restore(Map<String, BestScore> b, Map<String, int> p) {
     best = {...b};
@@ -152,6 +162,13 @@ class LoopBook {
       ports.setCash(ports.getCash() + booth);
       eco = eco.withCash(ports.getCash());
     }
+    final sn = snack?.call(cash.op == 'reward' ? cash.amount : 0) ?? 0;
+    final snackBonus = sn > 0 ? sn : 0;
+    if (snackBonus > 0) {
+      ports.setCash(ports.getCash() + snackBonus);
+      eco = eco.withCash(ports.getCash());
+    }
+    shopsFinish?.call(stars, r.aborted);
     final stamp = r.aborted ? false : ports.stamp(minigame, stars);
     final newBest = !r.aborted && betterBest(old, stars, r.score);
     if (newBest) best = {...best, minigame: (stars: stars, score: r.score)};
@@ -164,6 +181,7 @@ class LoopBook {
       aborted: r.aborted,
       cash: cash,
       booth: booth,
+      snack: snackBonus,
       total: ports.getCash(),
       firstTime: firstTime && cash.first > 0,
       newBest: newBest,

@@ -1,13 +1,19 @@
 import 'package:drive_core/drive_core.dart';
 import 'package:flutter/material.dart';
+import 'package:mg_api/mg_api.dart';
 import 'package:shared_gen/shared_gen.dart';
 
 import '../l10n/app_localizations.dart';
 
 /// Garage list (specs/cars.md "Garáž"): owned cars; picking one drives out with it.
 /// Below them the cars for sale with prices (specs/economy.md "Nákup auta"), and the free air
-/// refill for a car with a hop tank (specs/hop.md "Doplnění").
-Future<void> showGarage(BuildContext context, CarFleet fleet) => showModalBottomSheet<void>(
+/// refill for a car with a hop tank (specs/hop.md "Doplnění"). Last the souvenir shelf
+/// (specs/shops.md "Polička"): [shelf] = owned souvenirs in purchase order with their names.
+Future<void> showGarage(
+  BuildContext context,
+  CarFleet fleet, {
+  List<({String id, String name})> Function()? shelf,
+}) => showModalBottomSheet<void>(
   context: context,
   backgroundColor: const Color(Tokens.colorUiSheet),
   isScrollControlled: true,
@@ -95,6 +101,10 @@ Future<void> showGarage(BuildContext context, CarFleet fleet) => showModalBottom
                   ),
                 ),
             ],
+            if (shelf != null) ...[
+              const SizedBox(height: Tokens.spaceSm),
+              SouvenirShelf(items: shelf()),
+            ],
             Text(l.cashHud(fleet.state.cash), style: const TextStyle(color: Color(Tokens.colorLoopCash))),
             TextButton(onPressed: () => Navigator.of(context).pop(), child: Text(l.close)),
           ],
@@ -103,3 +113,66 @@ Future<void> showGarage(BuildContext context, CarFleet fleet) => showModalBottom
     );
   }),
 );
+
+/// Size of one souvenir on the shelf (logical px).
+const _souvenirPx = 72.0;
+
+/// The Garage shelf (specs/shops.md "Polička"): the picture `assets/souvenirs/<id>.png` when it is
+/// in assets/index.json, else an icon in `shops.souvenir`, the name below; `shopShelfEmpty` empty.
+class SouvenirShelf extends StatelessWidget {
+  const SouvenirShelf({super.key, required this.items});
+  final List<({String id, String name})> items;
+
+  @override
+  Widget build(BuildContext context) {
+    final l = AppLocalizations.of(context);
+    const icon = Icon(Icons.redeem, size: _souvenirPx * 0.6, color: Color(Tokens.colorShopsSouvenir));
+    return Column(
+      key: const ValueKey('shopShelf'),
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Text(
+          l.shopShelf,
+          style: const TextStyle(color: Color(Tokens.colorUiText), fontWeight: FontWeight.w700),
+        ),
+        const SizedBox(height: Tokens.spaceSm),
+        if (items.isEmpty)
+          Text(l.shopShelfEmpty, style: const TextStyle(color: Color(Tokens.colorUiTextMuted)))
+        else
+          Wrap(
+            spacing: Tokens.spaceMd,
+            runSpacing: Tokens.spaceMd,
+            children: [
+              for (final s in items)
+                SizedBox(
+                  width: _souvenirPx,
+                  child: Column(
+                    children: [
+                      SizedBox.square(
+                        dimension: _souvenirPx,
+                        child: switch (artIndex.souvenir(s.id)) {
+                          final path? => ArtImage(
+                            path: path,
+                            decodeWidth: _souvenirPx,
+                            fit: BoxFit.contain,
+                            fallback: const Center(child: icon),
+                          ),
+                          null => const Center(child: icon),
+                        },
+                      ),
+                      Text(
+                        s.name,
+                        textAlign: TextAlign.center,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(color: Color(Tokens.colorUiTextMuted), fontSize: Tokens.fontFaint),
+                      ),
+                    ],
+                  ),
+                ),
+            ],
+          ),
+      ],
+    );
+  }
+}

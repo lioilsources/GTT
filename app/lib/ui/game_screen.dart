@@ -25,6 +25,8 @@ import '../phone/phone_controller.dart';
 import '../phone/phone_sheet.dart';
 import '../photo/photo_controller.dart';
 import '../photo/photo_layer.dart';
+import '../shops/shops_controller.dart';
+import '../shops/shops_layer.dart';
 import '../taxi/taxi_controller.dart';
 import '../taxi/taxi_hud.dart';
 import '../travel/fast_travel.dart';
@@ -59,6 +61,7 @@ class _GameScreenState extends State<GameScreen> {
   BoothsController? _booths;
   FastTravelController? _fastTravel;
   PhotoController? _photo;
+  ShopsController? _shops;
   final SaveStore _store = FileSaveStore();
   final CityStore _cities = FileCityStore();
   Object? _saved;
@@ -73,6 +76,7 @@ class _GameScreenState extends State<GameScreen> {
     // one is released by the GameWidget (onRemove: streamer, police, physics).
     if (!_shown) _game.then((g) => g.onRemove(), onError: (_) {});
     _loop?.save();
+    _shops?.dispose();
     _photo?.dispose();
     _fastTravel?.dispose();
     _booths?.dispose();
@@ -215,6 +219,8 @@ class _GameScreenState extends State<GameScreen> {
           final fastTravel = _fastTravel ??= FastTravelController(game, phone, loop);
           // Photo spots and the Camera (specs/photo.md): after the booths, whose "Zvednout" goes first.
           final photo = _photo ??= PhotoController(game, phone, loop);
+          // Shops and bars (specs/shops.md): after the Camera, whose "Foťák" goes first.
+          final shops = _shops ??= ShopsController(game, phone, loop);
           return Stack(
             fit: StackFit.expand,
             children: [
@@ -233,7 +239,7 @@ class _GameScreenState extends State<GameScreen> {
                 onPhone: phone.toggle,
                 onCarAction: (a) async {
                   if (a == CarAction.board) return game.boardCandidate();
-                  await game.pauseOverlays.hold(GameOverlay.garage, showGarage(context, game.fleet));
+                  await game.pauseOverlays.hold(GameOverlay.garage, showGarage(context, game.fleet, shelf: shops.shelf));
                 },
                 onHop: game.hop,
                 onTuning: () => showTuningPanel(
@@ -263,6 +269,7 @@ class _GameScreenState extends State<GameScreen> {
               BoothsLayer(booths: booths),
               FastTravelLayer(travel: fastTravel),
               PhotoLayer(photo: photo),
+              ShopsLayer(shops: shops),
               PassportOverlay(
                 events: game.passportEvent,
                 seconds: game.tuning.passport.postcardS,
