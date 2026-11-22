@@ -109,4 +109,4 @@ Výsledný stav = `normalize(save)`:
 
 - Uložení jiného města → čerstvé uložení tohoto města (to druhé zůstává pod svým klíčem).
 - Auto z uložení, které už v katalogu není → zahozeno; žádné nezbude → start z tuningu.
-- Verze vyšší než 2 (novější hra) → čerstvé uložení, v paměti; přepíše se až dalším uložením.
+- Verze vyšší než 3 (novější hra) → čerstvé uložení, v paměti; přepíše se až dalším uložením.

@@ -1,0 +1,791 @@
+{
+ "module": "travel",
+ "specVersion": 1,
+ "cases": [
+  {
+   "name": "load drops unknown and duplicate stations",
+   "config": {
+    "stations": [
+     "subway_times_sq",
+     "subway_grand_central",
+     "subway_herald_sq",
+     "subway_union_sq"
+    ],
+    "fareBase": 30,
+    "farePerKm": 4,
+    "taxiBase": 60,
+    "taxiPerKm": 25
+   },
+   "seed": 1,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "load",
+      "unlocked": [
+       "subway_herald_sq",
+       "subway_gone",
+       "subway_times_sq",
+       "subway_herald_sq",
+       "times_square"
+      ]
+     },
+     "state": {
+      "unlocked": [
+       "subway_herald_sq",
+       "subway_times_sq"
+      ],
+      "paid": 0,
+      "last": {
+       "op": "",
+       "amount": 0
+      }
+     }
+    }
+   ],
+   "result": null
+  },
+  {
+   "name": "load empty after unlocks",
+   "config": {
+    "stations": [
+     "subway_times_sq",
+     "subway_grand_central",
+     "subway_herald_sq",
+     "subway_union_sq"
+    ],
+    "fareBase": 30,
+    "farePerKm": 4,
+    "taxiBase": 60,
+    "taxiPerKm": 25
+   },
+   "seed": 1,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "unlock",
+      "station": "subway_times_sq"
+     },
+     "state": {
+      "unlocked": [
+       "subway_times_sq"
+      ],
+      "paid": 0,
+      "last": {
+       "op": "",
+       "amount": 0
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "load",
+      "unlocked": []
+     },
+     "state": {
+      "unlocked": [],
+      "paid": 0,
+      "last": {
+       "op": "",
+       "amount": 0
+      }
+     }
+    }
+   ],
+   "result": null
+  },
+  {
+   "name": "unlock new then already unlocked",
+   "config": {
+    "stations": [
+     "subway_times_sq",
+     "subway_grand_central",
+     "subway_herald_sq",
+     "subway_union_sq"
+    ],
+    "fareBase": 30,
+    "farePerKm": 4,
+    "taxiBase": 60,
+    "taxiPerKm": 25
+   },
+   "seed": 1,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "unlock",
+      "station": "subway_grand_central"
+     },
+     "state": {
+      "unlocked": [
+       "subway_grand_central"
+      ],
+      "paid": 0,
+      "last": {
+       "op": "",
+       "amount": 0
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "unlock",
+      "station": "subway_times_sq"
+     },
+     "state": {
+      "unlocked": [
+       "subway_grand_central",
+       "subway_times_sq"
+      ],
+      "paid": 0,
+      "last": {
+       "op": "",
+       "amount": 0
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "unlock",
+      "station": "subway_grand_central"
+     },
+     "state": {
+      "unlocked": [
+       "subway_grand_central",
+       "subway_times_sq"
+      ],
+      "paid": 0,
+      "last": {
+       "op": "",
+       "amount": 0
+      }
+     }
+    }
+   ],
+   "result": null
+  },
+  {
+   "name": "unlock every station in order",
+   "config": {
+    "stations": [
+     "subway_times_sq",
+     "subway_grand_central",
+     "subway_herald_sq",
+     "subway_union_sq"
+    ],
+    "fareBase": 30,
+    "farePerKm": 4,
+    "taxiBase": 60,
+    "taxiPerKm": 25
+   },
+   "seed": 1,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "unlock",
+      "station": "subway_times_sq"
+     },
+     "state": {
+      "unlocked": [
+       "subway_times_sq"
+      ],
+      "paid": 0,
+      "last": {
+       "op": "",
+       "amount": 0
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "unlock",
+      "station": "subway_grand_central"
+     },
+     "state": {
+      "unlocked": [
+       "subway_times_sq",
+       "subway_grand_central"
+      ],
+      "paid": 0,
+      "last": {
+       "op": "",
+       "amount": 0
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "unlock",
+      "station": "subway_herald_sq"
+     },
+     "state": {
+      "unlocked": [
+       "subway_times_sq",
+       "subway_grand_central",
+       "subway_herald_sq"
+      ],
+      "paid": 0,
+      "last": {
+       "op": "",
+       "amount": 0
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "unlock",
+      "station": "subway_union_sq"
+     },
+     "state": {
+      "unlocked": [
+       "subway_times_sq",
+       "subway_grand_central",
+       "subway_herald_sq",
+       "subway_union_sq"
+      ],
+      "paid": 0,
+      "last": {
+       "op": "",
+       "amount": 0
+      }
+     }
+    }
+   ],
+   "result": null
+  },
+  {
+   "name": "load replaces the unlocked stations",
+   "config": {
+    "stations": [
+     "subway_times_sq",
+     "subway_grand_central",
+     "subway_herald_sq",
+     "subway_union_sq"
+    ],
+    "fareBase": 30,
+    "farePerKm": 4,
+    "taxiBase": 60,
+    "taxiPerKm": 25
+   },
+   "seed": 1,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "unlock",
+      "station": "subway_times_sq"
+     },
+     "state": {
+      "unlocked": [
+       "subway_times_sq"
+      ],
+      "paid": 0,
+      "last": {
+       "op": "",
+       "amount": 0
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "load",
+      "unlocked": [
+       "subway_union_sq",
+       "subway_grand_central"
+      ]
+     },
+     "state": {
+      "unlocked": [
+       "subway_union_sq",
+       "subway_grand_central"
+      ],
+      "paid": 0,
+      "last": {
+       "op": "",
+       "amount": 0
+      }
+     }
+    }
+   ],
+   "result": null
+  },
+  {
+   "name": "metro with enough cash",
+   "config": {
+    "stations": [
+     "subway_times_sq",
+     "subway_grand_central",
+     "subway_herald_sq",
+     "subway_union_sq"
+    ],
+    "fareBase": 30,
+    "farePerKm": 4,
+    "taxiBase": 60,
+    "taxiPerKm": 25
+   },
+   "seed": 1,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "load",
+      "unlocked": [
+       "subway_times_sq",
+       "subway_grand_central"
+      ]
+     },
+     "state": {
+      "unlocked": [
+       "subway_times_sq",
+       "subway_grand_central"
+      ],
+      "paid": 0,
+      "last": {
+       "op": "",
+       "amount": 0
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "metro",
+      "from": "subway_times_sq",
+      "to": "subway_grand_central",
+      "distDm": 25000,
+      "cash": 1000
+     },
+     "state": {
+      "unlocked": [
+       "subway_times_sq",
+       "subway_grand_central"
+      ],
+      "paid": 40,
+      "last": {
+       "op": "metro",
+       "amount": 40
+      }
+     }
+    }
+   ],
+   "result": null
+  },
+  {
+   "name": "metro with exactly the fare",
+   "config": {
+    "stations": [
+     "subway_times_sq",
+     "subway_grand_central",
+     "subway_herald_sq",
+     "subway_union_sq"
+    ],
+    "fareBase": 30,
+    "farePerKm": 4,
+    "taxiBase": 60,
+    "taxiPerKm": 25
+   },
+   "seed": 1,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "load",
+      "unlocked": [
+       "subway_times_sq",
+       "subway_herald_sq"
+      ]
+     },
+     "state": {
+      "unlocked": [
+       "subway_times_sq",
+       "subway_herald_sq"
+      ],
+      "paid": 0,
+      "last": {
+       "op": "",
+       "amount": 0
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "metro",
+      "from": "subway_herald_sq",
+      "to": "subway_times_sq",
+      "distDm": 12345,
+      "cash": 34
+     },
+     "state": {
+      "unlocked": [
+       "subway_times_sq",
+       "subway_herald_sq"
+      ],
+      "paid": 34,
+      "last": {
+       "op": "metro",
+       "amount": 34
+      }
+     }
+    }
+   ],
+   "result": null
+  },
+  {
+   "name": "metro with fareBase 0",
+   "config": {
+    "stations": [
+     "subway_times_sq",
+     "subway_grand_central",
+     "subway_herald_sq",
+     "subway_union_sq"
+    ],
+    "fareBase": 0,
+    "farePerKm": 4,
+    "taxiBase": 60,
+    "taxiPerKm": 25
+   },
+   "seed": 1,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "load",
+      "unlocked": [
+       "subway_times_sq",
+       "subway_grand_central"
+      ]
+     },
+     "state": {
+      "unlocked": [
+       "subway_times_sq",
+       "subway_grand_central"
+      ],
+      "paid": 0,
+      "last": {
+       "op": "",
+       "amount": 0
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "metro",
+      "from": "subway_times_sq",
+      "to": "subway_grand_central",
+      "distDm": 1000,
+      "cash": 0
+     },
+     "state": {
+      "unlocked": [
+       "subway_times_sq",
+       "subway_grand_central"
+      ],
+      "paid": 0,
+      "last": {
+       "op": "metro",
+       "amount": 0
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "metro",
+      "from": "subway_grand_central",
+      "to": "subway_times_sq",
+      "distDm": 30000,
+      "cash": 50
+     },
+     "state": {
+      "unlocked": [
+       "subway_times_sq",
+       "subway_grand_central"
+      ],
+      "paid": 12,
+      "last": {
+       "op": "metro",
+       "amount": 12
+      }
+     }
+    }
+   ],
+   "result": null
+  },
+  {
+   "name": "taxi",
+   "config": {
+    "stations": [
+     "subway_times_sq",
+     "subway_grand_central",
+     "subway_herald_sq",
+     "subway_union_sq"
+    ],
+    "fareBase": 30,
+    "farePerKm": 4,
+    "taxiBase": 60,
+    "taxiPerKm": 25
+   },
+   "seed": 1,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "taxi",
+      "distDm": 42345,
+      "cash": 500
+     },
+     "state": {
+      "unlocked": [],
+      "paid": 165,
+      "last": {
+       "op": "taxi",
+       "amount": 165
+      }
+     }
+    }
+   ],
+   "result": null
+  },
+  {
+   "name": "taxi at distDm 0",
+   "config": {
+    "stations": [
+     "subway_times_sq",
+     "subway_grand_central",
+     "subway_herald_sq",
+     "subway_union_sq"
+    ],
+    "fareBase": 30,
+    "farePerKm": 4,
+    "taxiBase": 60,
+    "taxiPerKm": 25
+   },
+   "seed": 1,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "taxi",
+      "distDm": 0,
+      "cash": 60
+     },
+     "state": {
+      "unlocked": [],
+      "paid": 60,
+      "last": {
+       "op": "taxi",
+       "amount": 60
+      }
+     }
+    }
+   ],
+   "result": null
+  },
+  {
+   "name": "taxi with a zero tariff and no cash",
+   "config": {
+    "stations": [
+     "subway_times_sq",
+     "subway_grand_central",
+     "subway_herald_sq",
+     "subway_union_sq"
+    ],
+    "fareBase": 30,
+    "farePerKm": 4,
+    "taxiBase": 0,
+    "taxiPerKm": 0
+   },
+   "seed": 1,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "taxi",
+      "distDm": 99999,
+      "cash": 0
+     },
+     "state": {
+      "unlocked": [],
+      "paid": 0,
+      "last": {
+       "op": "taxi",
+       "amount": 0
+      }
+     }
+    }
+   ],
+   "result": null
+  },
+  {
+   "name": "paid adds up, unlock clears last",
+   "config": {
+    "stations": [
+     "subway_times_sq",
+     "subway_grand_central",
+     "subway_herald_sq",
+     "subway_union_sq"
+    ],
+    "fareBase": 30,
+    "farePerKm": 4,
+    "taxiBase": 60,
+    "taxiPerKm": 25
+   },
+   "seed": 1,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "unlock",
+      "station": "subway_times_sq"
+     },
+     "state": {
+      "unlocked": [
+       "subway_times_sq"
+      ],
+      "paid": 0,
+      "last": {
+       "op": "",
+       "amount": 0
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "unlock",
+      "station": "subway_union_sq"
+     },
+     "state": {
+      "unlocked": [
+       "subway_times_sq",
+       "subway_union_sq"
+      ],
+      "paid": 0,
+      "last": {
+       "op": "",
+       "amount": 0
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "metro",
+      "from": "subway_union_sq",
+      "to": "subway_times_sq",
+      "distDm": 123456,
+      "cash": 2000
+     },
+     "state": {
+      "unlocked": [
+       "subway_times_sq",
+       "subway_union_sq"
+      ],
+      "paid": 79,
+      "last": {
+       "op": "metro",
+       "amount": 79
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "taxi",
+      "distDm": 7777,
+      "cash": 1951
+     },
+     "state": {
+      "unlocked": [
+       "subway_times_sq",
+       "subway_union_sq"
+      ],
+      "paid": 158,
+      "last": {
+       "op": "taxi",
+       "amount": 79
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "unlock",
+      "station": "subway_grand_central"
+     },
+     "state": {
+      "unlocked": [
+       "subway_times_sq",
+       "subway_union_sq",
+       "subway_grand_central"
+      ],
+      "paid": 158,
+      "last": {
+       "op": "",
+       "amount": 0
+      }
+     }
+    }
+   ],
+   "result": null
+  },
+  {
+   "name": "city without stations",
+   "config": {
+    "stations": [],
+    "fareBase": 30,
+    "farePerKm": 4,
+    "taxiBase": 60,
+    "taxiPerKm": 25
+   },
+   "seed": 1,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "load",
+      "unlocked": [
+       "subway_times_sq"
+      ]
+     },
+     "state": {
+      "unlocked": [],
+      "paid": 0,
+      "last": {
+       "op": "",
+       "amount": 0
+      }
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "taxi",
+      "distDm": 500,
+      "cash": 100
+     },
+     "state": {
+      "unlocked": [],
+      "paid": 61,
+      "last": {
+       "op": "taxi",
+       "amount": 61
+      }
+     }
+    }
+   ],
+   "result": null
+  }
+ ]
+}
