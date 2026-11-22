@@ -119,14 +119,28 @@ void main() {
     });
   });
 
-  test('20 postcards with title and text', () {
+  test('postcards: 20 per city that has them, each a hero landmark of one city', () {
     final titles = MessageKey.values.where((k) => RegExp(r'^lm_.+_title$').hasMatch(k.key)).toList();
-    expect(titles, hasLength(20));
-    for (final k in titles) {
-      final id = k.key.substring(3, k.key.length - 6);
+    final ids = [for (final k in titles) k.key.substring(3, k.key.length - 6)];
+    // Hero landmark ids per city, from content/cities/<city>/landmarks.yaml (one flow map per line).
+    final heroes = <String, List<String>>{};
+    for (final d in Directory('$repoRoot/content/cities').listSync().whereType<Directory>()) {
+      final f = File('${d.path}/landmarks.yaml');
+      if (!f.existsSync()) continue;
+      heroes[d.uri.pathSegments.where((s) => s.isNotEmpty).last] = [
+        for (final m in RegExp(r'^\s*- \{id: (\w+),.*hero: true', multiLine: true).allMatches(f.readAsStringSync())) m[1]!,
+      ];
+    }
+    for (final id in ids) {
+      expect(heroes.values.where((h) => h.contains(id)), hasLength(1), reason: id);
       expect(postcardTextKey(id), isNotNull, reason: id);
       expect(tr('cs', postcardTextKey(id)!), isNot(tr('en', postcardTextKey(id)!)), reason: id);
     }
+    for (final e in heroes.entries) {
+      final n = e.value.where(ids.contains).length;
+      if (n > 0) expect(n, 20, reason: e.key);
+    }
+    expect(heroes['nyc']!.where(ids.contains), hasLength(20));
   });
 
   test('pure: no Flutter or dart:ui', () {
