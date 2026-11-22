@@ -67,7 +67,7 @@ class CarFleet {
 
   /// Forgets cars the player left behind once they are far away (cars.parked.forget_m).
   void update() {
-    // Pushed cars: copy the pose of awake bodies back (specs/cars.md v2).
+    // Pushed cars: copy the pose of awake bodies back (specs/cars.md).
     for (final MapEntry(key: p, value: b) in _bodies.entries) {
       if (!b.isAwake) continue;
       final q = b.position, a = b.angle;

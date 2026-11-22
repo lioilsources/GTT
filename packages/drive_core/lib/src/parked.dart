@@ -6,7 +6,7 @@ import 'package:world_engine/core.dart';
 import 'traffic/traffic.dart' show ParkedPose;
 
 /// A parked car at a curb (specs/cars.md "Zaparkovaná auta"). The fleet keeps the pose in sync with
-/// its dynamic body (v2: it can be pushed) and fills the half extents.
+/// its dynamic body (it can be pushed) and fills the half extents.
 class ParkedCar implements ParkedPose {
   ParkedCar({
     required this.carId,

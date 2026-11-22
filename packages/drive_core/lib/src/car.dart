@@ -12,7 +12,7 @@ const int catCar = 2;
 /// AI traffic (specs/traffic.md): collides with the player's car and, on the ground, parked cars.
 const int catTraffic = 4;
 
-/// Parked cars (specs/cars.md v2): dynamic bodies the player and traffic can push.
+/// Parked cars (specs/cars.md): dynamic bodies the player and traffic can push.
 const int catParked = 8;
 
 /// Player car on a Box2D body with a custom tyre model (METROPOLE_PLAN 7.2):
