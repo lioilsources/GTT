@@ -92,14 +92,18 @@ void main() {
   });
 
   group('parked model pool per city (specs/cars.md)', () {
-    test('NYC keeps the original M1 pool in order, so its parked cars do not change', () {
-      // The draw is nextInt(pool.length) over this list; same list = same output as before M3.
-      expect(parkedModels(tuning, specs, 'nyc'), [
+    test('NYC keeps the M1 models first and in order; later cars only append', () {
+      final pool = parkedModels(tuning, specs, 'nyc');
+      expect(pool.take(5).toList(), [
         'hatch_pip',
         'muscle_brute',
         'taxi_metro',
         'pickup_hauler',
         'm0_coupe',
+      ]);
+      expect(pool, [
+        for (final id in tuning.cars.parked.models)
+          if (specs[id]!.tags.contains('nyc')) id,
       ]);
     });
 
