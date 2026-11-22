@@ -89,6 +89,10 @@ class LoopController extends ChangeNotifier {
   final outcome = ValueNotifier<LoopOutcome?>(null);
   final playSpot = ValueNotifier<LoopSpot?>(null);
 
+  /// World minigames by id (engine `drive`, e.g. Taxi); without one the spot shows "coming soon".
+  final Map<MinigameId, WorldMinigame> worldGames = {};
+  bool get _inWorldGame => worldGames.values.any((g) => g.active);
+
   /// Minigame id of the "coming soon" toast, or null.
   final soon = ValueNotifier<String?>(null);
   Timer? _soonTimer;
@@ -183,18 +187,19 @@ class LoopController extends ChangeNotifier {
   }
 
   void _arrived(String spotId) {
-    if ((_spots[spotId]?.minigame ?? '').isNotEmpty) start(spotId);
+    if ((_spots[spotId]?.minigame ?? '').isNotEmpty && !_inWorldGame) start(spotId);
   }
 
   /// Starts the minigame of a spot (arrival or the context button).
   void start(String spotId) {
     final spot = _spots[spotId];
-    if (busy || spot == null || spot.minigame.isEmpty) return;
+    if (busy || spot == null || spot.minigame.isEmpty || _inWorldGame) return;
     final id = MinigameId.values.where((m) => m.id == spot.minigame).firstOrNull;
     final meta = id == null ? null : minigameCatalog[id];
     if (id == null || meta == null) return;
     final mg = minigames[id];
-    if (meta.engine == 'drive' || mg == null) {
+    final world = meta.engine == 'drive' ? worldGames[id] : null;
+    if (world == null && (meta.engine == 'drive' || mg == null)) {
       _soonTimer?.cancel();
       soon.value = spot.minigame;
       _soonTimer = Timer(Duration(milliseconds: (tuning.nav.toastS * 1000).round()), () => soon.value = null);
@@ -205,6 +210,17 @@ class LoopController extends ChangeNotifier {
     phone.accepted = null;
     phone.close();
     final seed = _random.nextInt(1 << 32);
+    final difficulty = loopDifficulty(card?.difficulty, book.plays[spotId] ?? 0, tuning.feed);
+    if (world != null) {
+      // World minigame (specs/minigames/taxi.md): the world keeps running, no full-screen route.
+      phone.cancelNav();
+      playSpot.value = null;
+      final ctx = MinigameContext(cityId: game.city.id, difficulty: difficulty, seed: seed, locale: locale);
+      world.start(spotId, ctx, (r) => _complete(spotId, id, card?.distDm ?? 0, r));
+      notifyListeners();
+      return;
+    }
+    if (mg == null) return;
     final chars = npc?.pack.characters ?? const [];
     final oi = opponentIndex(spotId, chars.length);
     final opponentId = oi >= 0 ? chars[oi].id : null;
@@ -215,7 +231,7 @@ class LoopController extends ChangeNotifier {
       game: mg,
       ctx: MinigameContext(
         cityId: game.city.id,
-        difficulty: loopDifficulty(card?.difficulty, book.plays[spotId] ?? 0, tuning.feed),
+        difficulty: difficulty,
         seed: seed,
         locale: locale,
         opponentId: opponentId,
@@ -232,15 +248,21 @@ class LoopController extends ChangeNotifier {
   void finish(MinigameResult r) {
     final q = request.value;
     if (q == null) return;
+    request.value = null;
+    _complete(q.spot, q.id, q.driveDm, r);
+  }
+
+  /// Loop result after a minigame (full-screen or in the world); the world pauses under the card.
+  void _complete(String spot, MinigameId id, int driveDm, MinigameResult r) {
     outcome.value = book.finish(
-      spot: q.spot,
-      minigame: q.id.id,
-      engine: minigameCatalog[q.id]!.engine,
+      spot: spot,
+      minigame: id.id,
+      engine: minigameCatalog[id]!.engine,
       result: r,
-      driveDm: q.driveDm,
+      driveDm: driveDm,
       hasStamp: (m) => game.passport.has('minigame', m),
     );
-    request.value = null;
+    game.pauseEngine();
     save();
     notifyListeners();
   }
@@ -258,7 +280,7 @@ class LoopController extends ChangeNotifier {
     const dt = 0.1;
     final c = game.drive.car;
     LoopSpot? s;
-    if (!busy && !phone.isOpen && !phone.nav.active) {
+    if (!busy && !phone.isOpen && !phone.nav.active && !_inWorldGame) {
       final now = spotInReach(_loopSpots, c.x, c.y, c.speed, c.layer, tuning.loop);
       final prev = playSpot.value;
       if (now != null) {

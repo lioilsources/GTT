@@ -25,6 +25,15 @@ abstract class Minigame {
   Widget build(MinigameContext ctx, MinigameEnv env, void Function(MinigameResult) onFinish);
 }
 
+/// A minigame played in the running world (engine `drive`, e.g. Taxi, specs/minigames/taxi.md): the loop
+/// starts it at its spot instead of pushing a full-screen game; the world keeps running.
+abstract class WorldMinigame {
+  bool get active;
+
+  /// Starts at the spot; [onFinish] is called once when it ends (the loop shows its result).
+  void start(String spotId, MinigameContext ctx, void Function(MinigameResult) onFinish);
+}
+
 /// The fields every rules result carries (specs/minigames/README.md "Výsledek").
 class RulesOutcome {
   const RulesOutcome({required this.winner, required this.stars, required this.score});

@@ -16,6 +16,7 @@ workspace:
   - packages/mg_sipky
   - packages/mg_koulena
   - packages/mg_strelnice
+  - packages/mg_taxi
   - packages/feed_hub
   - packages/meta_progress
   - packages/npc_dialogue

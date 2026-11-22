@@ -38,6 +38,8 @@ dependencies:
     path: ../packages/mg_koulena
   mg_strelnice:
     path: ../packages/mg_strelnice
+  mg_taxi:
+    path: ../packages/mg_taxi
   feed_hub:
     path: ../packages/feed_hub
   meta_progress:

@@ -159,12 +159,21 @@ class PhoneController extends ChangeNotifier {
   }
 
   // ---------- navigation
+  bool _silent = false;
+
   bool navigate(String spotId) {
     final s = _spots[spotId];
     if (s == null) return false;
+    return navigateTo(NavTarget.fromSpot(s), silent: false);
+  }
+
+  /// Navigation to any target (a world minigame's passenger or destination). Silent: on arrival the
+  /// route just ends (no toast, no visit, no onArrived).
+  bool navigateTo(NavTarget target, {required bool silent}) {
     final car = game.drive.car;
-    final ok = nav.start(NavTarget.fromSpot(s), car.x, car.y, car.heading, game.drive.layers.hit);
-    if (!ok) _showToast(MessageKey.noRoute);
+    final ok = nav.start(target, car.x, car.y, car.heading, game.drive.layers.hit);
+    _silent = silent;
+    if (!ok && !silent) _showToast(MessageKey.noRoute);
     _hudS = 1e9;
     notifyListeners();
     return ok;
@@ -173,6 +182,7 @@ class PhoneController extends ChangeNotifier {
   void cancelNav() {
     nav.cancel();
     navHud.value = null;
+    _silent = false;
     notifyListeners();
   }
 
@@ -189,6 +199,10 @@ class PhoneController extends ChangeNotifier {
     if (_toastS > 0 && (_toastS -= dt) <= 0) toast.value = null;
     if (!nav.active) return;
     final ev = nav.update(car.x, car.y, car.heading, game.drive.layers.hit, dt);
+    if (ev == NavEvent.arrived && _silent) {
+      cancelNav();
+      return;
+    }
     if (ev == NavEvent.arrived) {
       final id = nav.target!.id;
       cancelNav();
