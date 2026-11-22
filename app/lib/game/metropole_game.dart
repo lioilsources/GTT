@@ -234,6 +234,10 @@ class MetropoleGame extends Game {
   /// the rig follows the car.
   bool Function(double dt)? cameraHook;
 
+  /// Rewrites the player's control input after the scheme and the keyboard (not under the
+  /// autopilot or while paused): the drunk driver of specs/shops.md brakes to a stop.
+  void Function(ControlInput input)? inputHook;
+
   ui.Size _size = ui.Size.zero;
   double _hudTimer = 0;
   int _frames = 0;
@@ -401,6 +405,7 @@ class MetropoleGame extends Game {
       input.reset();
       scheme.update(input);
       _keyboard(input);
+      inputHook?.call(input);
     }
     final stepDt = worldDt(dt);
     if (!pause) {

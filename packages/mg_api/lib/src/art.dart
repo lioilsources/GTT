@@ -53,6 +53,9 @@ class ArtIndex {
 
   /// Landmark postcard: `postcards/<city>/<id>.png`, else null (placeholder drawing).
   String? postcard(String city, String id) => _first(['postcards/$city/$id.png']);
+
+  /// Souvenir on the Garage shelf (specs/shops.md): `souvenirs/<id>.png`, else null (icon).
+  String? souvenir(String id) => _first(['souvenirs/$id.png']);
 }
 
 /// Bundle prefix of the synced art (`metro sync` → app/assets/shared/assets/).

@@ -195,7 +195,7 @@ class _ResultCard extends StatelessWidget {
                   Text(l.loopAborted, style: muted)
                 else
                   Text(
-                    l.loopCash(c.amount + o.booth),
+                    l.loopCash(c.amount + o.booth + o.snack),
                     style: const TextStyle(
                       color: Color(Tokens.colorLoopCash),
                       fontSize: 22,
@@ -204,6 +204,7 @@ class _ResultCard extends StatelessWidget {
                   ),
                 for (final p in parts) Text(p, style: muted),
                 if (o.booth > 0) Text(l.loopBooth(o.booth), style: muted),
+                if (o.snack > 0) Text(l.loopSnack(o.snack), style: muted),
                 if (o.stamp)
                   Text(
                     l.loopStamp(name),

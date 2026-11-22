@@ -4,7 +4,8 @@ import 'package:flutter/foundation.dart';
 /// fine, wanted level, navigation) are deliberately not here: they never pause. Client F has no
 /// separate arrival card: arriving at a spot opens the minigame ([minigame]) straight away.
 /// [booth] = the offer card of a ringing booth (specs/booths.md); [travel] = the metro card and the
-/// line card of a move (specs/travel.md); [photo] = the Camera framing mode (specs/photo.md).
+/// line card of a move (specs/travel.md); [photo] = the Camera framing mode (specs/photo.md);
+/// [shop] = the shop and bar cards (specs/shops.md).
 enum GameOverlay {
   phone,
   garage,
@@ -20,6 +21,7 @@ enum GameOverlay {
   booth,
   travel,
   photo,
+  shop,
 }
 
 /// The pure rule: the game is paused while at least one overlay is open.

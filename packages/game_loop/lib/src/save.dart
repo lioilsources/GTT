@@ -1,9 +1,9 @@
 import 'package:rules_core/rules_core.dart';
 import 'package:shared_gen/shared_gen.dart';
 
-/// specs/save.md, version 2: save format 3, migration from 1 and 2, normalisation (P0, module `save`).
+/// specs/save.md, version 3: save format 4, migration from 1, 2 and 3, normalisation (P0, module `save`).
 /// Port of web/src/loop/save.ts. States are the JSON maps of the save.
-const saveVersion = 3;
+const saveVersion = 4;
 
 class SaveConfig {
   const SaveConfig({
@@ -52,6 +52,7 @@ class SaveParts {
     this.npc,
     this.settings,
     this.stations,
+    this.souvenirs,
   });
 
   final int cash;
@@ -66,6 +67,9 @@ class SaveParts {
 
   /// Unlocked metro stations in unlock order (specs/travel.md).
   final List<String>? stations;
+
+  /// Bought souvenirs in purchase order (specs/shops.md).
+  final List<String>? souvenirs;
 }
 
 // JSON number → int like TS Number.isInteger (5.0 counts, 1.5 does not).
@@ -152,6 +156,7 @@ Map<String, Object?> composeSave(SaveConfig c, SaveParts p) {
       'night': st.night,
     },
     'stations': _unique(p.stations ?? const []),
+    'souvenirs': _unique(p.souvenirs ?? const []),
   };
 }
 
@@ -160,12 +165,12 @@ Map<String, Object?> freshSave(SaveConfig c) => composeSave(
   SaveParts(cash: c.startCash, cars: const [], car: c.startCar, stamps: const [], best: const {}, plays: const {}),
 );
 
-/// Any JSON value → a normalised version-3 save of this city (specs/save.md "load").
+/// Any JSON value → a normalised version-4 save of this city (specs/save.md "load").
 Map<String, Object?> normalizeSave(SaveConfig c, Object? raw) {
   if (raw is! Map) return freshSave(c);
   final s = raw;
   final version = s['version'];
-  if ((version != 1 && version != 2 && version != 3) || s['cityId'] != c.cityId) return freshSave(c);
+  if ((version != 1 && version != 2 && version != 3 && version != 4) || s['cityId'] != c.cityId) return freshSave(c);
   final cash = _asInt(s['cash']);
   final stamps = _strList(s['stamps']);
   final cars = _strList(s['cars']);
@@ -193,8 +198,10 @@ Map<String, Object?> normalizeSave(SaveConfig c, Object? raw) {
     return freshSave(c);
   }
   // Version 3: `stations` is optional (missing = []); migration 2 → 3 sets it to [].
-  final stations = version == 3 && s.containsKey('stations') ? _strList(s['stations']) : const <String>[];
-  if (stations == null) return freshSave(c);
+  final stations = version >= 3 && s.containsKey('stations') ? _strList(s['stations']) : const <String>[];
+  // Version 4: `souvenirs` is optional (missing = []); migration 3 → 4 sets it to [].
+  final souvenirs = version == 4 && s.containsKey('souvenirs') ? _strList(s['souvenirs']) : const <String>[];
+  if (stations == null || souvenirs == null) return freshSave(c);
   return composeSave(
     c,
     SaveParts(
@@ -208,6 +215,7 @@ Map<String, Object?> normalizeSave(SaveConfig c, Object? raw) {
       npc: (vibe: vibe, contacts: contacts, recent: recent),
       settings: (scheme: scheme, night: night),
       stations: stations,
+      souvenirs: souvenirs,
     ),
   );
 }
@@ -226,7 +234,7 @@ class SaveRules extends MgRules<Map<String, Object?>, SaveAction, Map<String, Ob
   @override
   String get id => 'save';
   @override
-  int get specVersion => 2;
+  int get specVersion => 3;
 
   SaveConfig? _cfg;
 

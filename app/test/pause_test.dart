@@ -35,7 +35,7 @@ void main() {
       }
     });
 
-    test('every pausing overlay of specs/pause.md has a kind, the booth and travel cards and the Camera included', () {
+    test('every pausing overlay of specs/pause.md has a kind, the booth, travel and shop cards and the Camera included', () {
       expect(GameOverlay.values.map((o) => o.name).toList()..sort(), [
         'about',
         'bench',
@@ -49,6 +49,7 @@ void main() {
         'photo',
         'postcard',
         'result',
+        'shop',
         'travel',
         'tuning',
       ]);

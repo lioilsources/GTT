@@ -110,6 +110,20 @@ class LoopController extends ChangeNotifier {
   /// Called by [restore] with the stations of the save (the travel module reloads them).
   void Function(List<String> stations)? onStationsRestored;
 
+  /// Souvenirs of the loaded save (specs/shops.md); the shops module `load`s them.
+  List<String> get savedSouvenirs => _savedSouvenirs;
+  List<String> _savedSouvenirs = const [];
+
+  /// Live owned souvenirs for the save (set by the shops module; null = keep the loaded ones).
+  List<String> Function()? souvenirs;
+
+  /// Called by [restore] with the souvenirs of the save (the shops module reloads them).
+  void Function(List<String> souvenirs)? onSouvenirsRestored;
+
+  /// Spots where "Play" does not show (a bar with a minigame: its game is in the bar card,
+  /// specs/shops.md).
+  bool Function(String spotId)? playHidden;
+
   /// Minigame id of the "coming soon" toast, or null.
   final soon = ValueNotifier<String?>(null);
   Timer? _soonTimer;
@@ -141,6 +155,7 @@ class LoopController extends ChangeNotifier {
             : (vibe: {...n.state.vibe}, contacts: [...n.state.contacts], recent: [...n.state.recent]),
         settings: (scheme: s.scheme, night: s.night),
         stations: stations?.call() ?? _savedStations,
+        souvenirs: souvenirs?.call() ?? _savedSouvenirs,
       ),
     );
   }
@@ -154,6 +169,8 @@ class LoopController extends ChangeNotifier {
     _savedNpc = (vibe: s.npc.vibe, contacts: s.npc.contacts, recent: s.npc.recent);
     _savedStations = [...?s.stations];
     onStationsRestored?.call(_savedStations);
+    _savedSouvenirs = [...?s.souvenirs];
+    onSouvenirsRestored?.call(_savedSouvenirs);
     final n = npc;
     if (n != null) {
       final known = {for (final c in n.pack.characters) c.id};
@@ -210,18 +227,21 @@ class LoopController extends ChangeNotifier {
     if ((_spots[spotId]?.minigame ?? '').isNotEmpty && !_inWorldGame) start(spotId);
   }
 
-  /// Starts the minigame of a spot (arrival or the context button).
-  void start(String spotId) {
+  /// Starts the minigame of a spot (arrival or the context button). [minigame] = the game chosen in
+  /// a bar card instead of `spot.minigame` (specs/loop.md "Zvolená minihra"): opponent, difficulty
+  /// and plays still go by the spot; best, stamp and economy by the chosen game.
+  void start(String spotId, {String? minigame}) {
     final spot = _spots[spotId];
-    if (busy || spot == null || spot.minigame.isEmpty || _inWorldGame) return;
-    final id = MinigameId.values.where((m) => m.id == spot.minigame).firstOrNull;
+    final chosen = minigame ?? spot?.minigame ?? '';
+    if (busy || spot == null || chosen.isEmpty || _inWorldGame) return;
+    final id = MinigameId.values.where((m) => m.id == chosen).firstOrNull;
     final meta = id == null ? null : minigameCatalog[id];
     if (id == null || meta == null) return;
     final mg = minigames[id];
     final world = meta.engine == 'drive' ? worldGames[id] : null;
     if (world == null && (meta.engine == 'drive' || mg == null)) {
       _soonTimer?.cancel();
-      soon.value = spot.minigame;
+      soon.value = chosen;
       _soonTimer = Timer(Duration(milliseconds: (tuning.nav.toastS * 1000).round()), () => soon.value = null);
       return;
     }
@@ -302,7 +322,15 @@ class LoopController extends ChangeNotifier {
     final c = game.drive.car;
     LoopSpot? s;
     if (!busy && !phone.isOpen && !phone.nav.active && !_inWorldGame && !(yieldTo?.call() ?? false)) {
-      final now = spotInReach(_loopSpots, c.x, c.y, c.speed, c.layer, tuning.loop);
+      final hidden = playHidden;
+      final now = spotInReach(
+        hidden == null ? _loopSpots : [for (final p in _loopSpots) if (!hidden(p.id)) p],
+        c.x,
+        c.y,
+        c.speed,
+        c.layer,
+        tuning.loop,
+      );
       final prev = playSpot.value;
       if (now != null) {
         s = now;
