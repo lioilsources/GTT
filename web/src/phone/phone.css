@@ -293,3 +293,57 @@
   font-size: var(--font-hud);
   font-weight: 700;
 }
+
+/* Travel app (specs/cities.md "Aplikace Cesty") */
+.travel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  padding: var(--space-md);
+}
+
+.travel-title {
+  font-size: var(--font-hud);
+  font-weight: 700;
+  color: var(--color-ui-text-muted);
+}
+
+.travel-row {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-xs);
+  padding: var(--space-md);
+  border: 0;
+  border-radius: 16px;
+  background: var(--color-phone-app);
+  color: var(--color-phone-app-text);
+  font-size: var(--font-hud);
+  text-align: left;
+}
+
+.travel-row:disabled {
+  background: var(--color-phone-bar);
+  color: var(--color-ui-text);
+}
+
+.travel-name {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  font-weight: 800;
+}
+
+.travel-here {
+  padding: var(--space-xs) var(--space-sm);
+  border-radius: var(--radius-pill);
+  background: var(--color-phone-tag-local);
+  font-size: var(--font-faint);
+  font-weight: 700;
+}
+
+.travel-pct {
+  min-height: 1em;
+  font-size: var(--font-hud-small);
+  color: var(--color-ui-text-faint);
+}

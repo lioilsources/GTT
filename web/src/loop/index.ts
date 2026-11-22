@@ -54,6 +54,8 @@ export interface LoopApi {
   save(): Promise<void>;
   snapshot(): Save;
   resetSave(): Promise<void>;
+  /** Save storage (one save per city); Travel reads other cities' saves from it. */
+  store: SaveStore;
   book: LoopBook;
   onOutcome: Array<(o: LoopOutcome) => void>;
   /** World minigames by id (engine `drive`, e.g. Taxi); without one the spot shows "coming soon". */
@@ -271,6 +273,7 @@ export async function installLoop(env: LoopEnv): Promise<LoopApi> {
       await store.write(city.id, freshSave(cfg));
       location.reload();
     },
+    store,
     book,
     onOutcome: [],
     worldGames: {},

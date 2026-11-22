@@ -46,10 +46,18 @@ export interface PassportResult {
 
 export const stampId = (kind: StampKind, id: string): string => `${kind}:${id}`;
 
+/** Diacritics transliteration table, applied after lowercasing (specs/passport.md "districtId"). */
+const translit: Record<string, string> = {
+  á: 'a', ä: 'a', à: 'a', â: 'a', č: 'c', ç: 'c', ď: 'd', é: 'e', ě: 'e', è: 'e', ê: 'e', ë: 'e',
+  í: 'i', î: 'i', ï: 'i', ľ: 'l', ĺ: 'l', ň: 'n', ñ: 'n', ó: 'o', ô: 'o', ö: 'o', ő: 'o', ř: 'r',
+  ŕ: 'r', š: 's', ť: 't', ú: 'u', ů: 'u', ü: 'u', ű: 'u', û: 'u', ý: 'y', ÿ: 'y', ž: 'z', ß: 'ss',
+};
+
 /** Stable district id from its display name (specs/passport.md "districtId"). */
 export function districtId(name: string): string {
-  return name
-    .toLowerCase()
+  return [...name.toLowerCase()]
+    .map((c) => translit[c] ?? c)
+    .join('')
     .replace(/['’.]/g, '')
     .replace(/[^a-z0-9]+/g, '_')
     .replace(/^_+|_+$/g, '');

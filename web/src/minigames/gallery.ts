@@ -10,7 +10,11 @@ import { minigames } from './registry';
  * Debug Gallery (METROPOLE_PLAN 9.2): every catalog minigame without driving.
  * `?gallery` lists them; `?mg=<id>&seed=<n>&level=<1-5>` opens one directly (DUALSTACK 6.6).
  */
-export function runGallery(host: HTMLElement, env: MinigameEnv, params: URLSearchParams, npc?: DialogueSession | null): void {
+export function runGallery(
+  host: HTMLElement, env: MinigameEnv, params: URLSearchParams, npc: DialogueSession | null | undefined,
+  /** The default start city (specs/cities.md "Co je po městech"). */
+  cityId: string,
+): void {
   const { t } = env;
   // NPC opponent for the result-screen line (specs/dialogue.md); ?opponent=<characterId>.
   const opponents = ['', ...(npc?.pack.characters.map((c) => c.id) ?? [])];
@@ -48,7 +52,7 @@ export function runGallery(host: HTMLElement, env: MinigameEnv, params: URLSearc
     host.replaceChildren();
     const opponentId = opponents[opponent] || undefined;
     const game = make({ ...env, opponent: npc?.opponent(opponentId, seed, env.locale) });
-    const ctx = { cityId: 'nyc', difficulty: level, seed, locale: env.locale, ...(opponentId ? { opponentId } : {}) };
+    const ctx = { cityId, difficulty: level, seed, locale: env.locale, ...(opponentId ? { opponentId } : {}) };
     const unmount = game.mount(host, ctx, (r: MinigameResult) => {
       console.info('[metro minigame]', id, JSON.stringify(r));
       unmount();
