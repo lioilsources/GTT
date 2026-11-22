@@ -15,6 +15,19 @@ const int catTraffic = 4;
 /// Parked cars (specs/cars.md): dynamic bodies the player and traffic can push.
 const int catParked = 8;
 
+/// Pedestrian-zone bollards (specs/zones.md): static, layer 0, collide only with the player's car.
+const int catZone = 32;
+
+/// Car class that rides through pedestrian zones and gets no handbrake yaw (specs/zones.md).
+const String microClass = 'micro';
+
+/// Whether [s] is a micro vehicle (scooter, bike).
+bool isMicro(CarSpec s) => s.class_ == microClass;
+
+/// The `catZone` bit of the player's mask (specs/zones.md): micro vehicles never have it, and
+/// nobody has it while the car centre is inside a zone, so a car that got in always gets out.
+int zoneMask(String carClass, bool insideZone) => carClass == microClass || insideZone ? 0 : catZone;
+
 /// Player car on a Box2D body with a custom tyre model (METROPOLE_PLAN 7.2):
 /// each step the lateral velocity at each axle is cancelled by an impulse capped by
 /// that axle's grip; past the cap the axle slides, which is the drift.
@@ -35,7 +48,7 @@ class Car {
       ShapeDef(
         density: spec.mass / (4 * halfLength * halfWidth),
         material: SurfaceMaterial(friction: t.carFriction, restitution: t.carRestitution),
-        filter: Filter(categoryBits: catCar, maskBits: catBuildings | catTraffic | catParked),
+        filter: Filter(categoryBits: catCar, maskBits: _mask(0, zoneMask(spec.class_, false))),
         enableContactEvents: true,
       ),
     );
@@ -53,6 +66,9 @@ class Car {
   /// Current front wheel angle (radians, + = left).
   double wheelAngle = 0;
   int layer = 0;
+
+  /// Current `catZone` bit (0 or [catZone]), see [zoneMask].
+  late int zoneBits = zoneMask(spec.class_, false);
 
   /// Lateral slip left over at each axle in the last step, m/s (skid marks).
   double rearSlip = 0;
@@ -84,12 +100,24 @@ class Car {
     return math.atan2(l, f.abs());
   }
 
+  // Buildings, parked cars and zone bollards only exist on the ground layer; bridges and tunnels
+  // use rails instead. Traffic cars switch their own mask by layer (traffic.dart).
+  static int _mask(int layer, int zone) => (layer == 0 ? catBuildings | catParked | zone : 0) | catTraffic;
+
+  int get maskBits => _mask(layer, zoneBits);
+
   void setLayer(int l) {
     if (l == layer) return;
     layer = l;
-    // Buildings only exist on the ground layer; bridges and tunnels use rails instead. Traffic
-    // cars switch their own mask by layer (traffic.dart).
-    _shape.filter = Filter(categoryBits: catCar, maskBits: (l == 0 ? catBuildings | catParked : 0) | catTraffic);
+    _shape.filter = Filter(categoryBits: catCar, maskBits: maskBits);
+  }
+
+  /// Sets the zone bit from [zoneMask]; touches the shape only when it changes.
+  void setInsideZone(bool inside) {
+    final z = zoneMask(spec.class_, inside);
+    if (z == zoneBits) return;
+    zoneBits = z;
+    _shape.filter = Filter(categoryBits: catCar, maskBits: maskBits);
   }
 
   /// Applies controls and tyre forces; call before `world.step`.
@@ -137,7 +165,8 @@ class Car {
     if (input.handbrake) {
       accel = math.min(accel, speedF > t.brakeMinMps ? -t.handbrakeDecelMps2 : 0);
       // Kick the tail out: yaw acceleration towards the steer direction, stronger with speed.
-      if (speedF > t.handbrakeMinMps) {
+      // Micro vehicles only slow down (specs/zones.md: handbrake_yaw x 0).
+      if (speedF > t.handbrakeMinMps && !isMicro(spec)) {
         final k = (speedF / t.handbrakeYawRefMps).clamp(0.0, t.handbrakeYawMax);
         body.applyAngularImpulse(-input.steer * body.rotationalInertia * t.handbrakeYaw * k * dt);
       }
