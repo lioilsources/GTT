@@ -10,14 +10,15 @@ import 'package:test/test.dart';
 void main() {
   final tuning = Tuning.fromYaml(File('$repoRoot/content/tuning.yaml').readAsStringSync());
 
-  // Ungated until parity.yaml marks F-025 done for Flutter (save has no row of its own yet):
-  // proves the Dart port replays the web recording.
-  test('vectors/economy.json (ungated)', () => expect(checkVectors(EconomyRules()), isEmpty));
-  test('vectors/save.json (ungated)', () => expect(checkVectors(SaveRules()), isEmpty));
   test(
     'vectors/economy.json',
     () => expect(checkVectors(EconomyRules()), isEmpty),
     skip: !flutterDone('vectors/economy.json') ? 'pending in parity.yaml' : false,
+  );
+  test(
+    'vectors/save.json',
+    () => expect(checkVectors(SaveRules()), isEmpty),
+    skip: !flutterDone('vectors/save.json') ? 'pending in parity.yaml' : false,
   );
 
   test('the three-star trip money equals the feed card reward', () {

@@ -66,8 +66,6 @@ void main() {
     );
   });
 
-  // Ungated until parity.yaml marks F-027 done for Flutter: proves the port replays the web recording.
-  test('vectors/taxi.json (ungated)', () => expect(checkVectors(TaxiRules()), isEmpty));
   test(
     'vectors/taxi.json',
     () => expect(checkVectors(TaxiRules()), isEmpty),

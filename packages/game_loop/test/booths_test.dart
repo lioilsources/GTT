@@ -22,9 +22,6 @@ void main() {
   }
 
   group('booths vectors', () {
-    // Ungated until parity.yaml marks F-037 done for Flutter: proves the Dart port replays the web
-    // recording.
-    test('vectors/booths.json (ungated)', () => expect(checkVectors(BoothsRules()), isEmpty));
     test(
       'vectors/booths.json',
       () => expect(checkVectors(BoothsRules()), isEmpty),
