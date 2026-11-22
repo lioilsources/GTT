@@ -8,7 +8,7 @@ import { resolveRoute } from './drive/route';
 import { applyKeys, createScheme, SchemeA, SchemeB, SchemeC, type ControlScheme, type ControlSchemeId } from './drive/controls';
 import { DriveWorld } from './drive/driveWorld';
 import { t as tr, type Locale, type MessageKey } from './gen/i18n';
-import { carIdValues, cityIdValues, minigameCatalog, type CityId, type MinigameId } from './gen/ids';
+import { carIdValues, cityIdNames, cityIdValues, minigameCatalog, type CityId, type MinigameId } from './gen/ids';
 import { CarFleet } from './cars/fleet';
 import { CarsHud } from './cars/ui';
 import type { BenchResult, BenchRoute, CarSpec, NpcPack } from './gen/schema';
@@ -23,6 +23,8 @@ import { installPhone } from './phone';
 import { installPolice } from './police';
 import { installLoop } from './loop';
 import { installTaxi } from './minigames/taxi';
+import { installTravel } from './travel';
+import { cityUrl, pickStartCity, readLastCity, writeLastCity } from './travel/cities';
 import { HttpPackSource } from './world/citypack';
 import { City } from './world/model';
 import { ChunkStreamer } from './world/streaming';
@@ -31,6 +33,12 @@ const params = new URLSearchParams(location.search);
 const locale: Locale = navigator.language.startsWith('cs') ? 'cs' : 'en';
 const t = (k: MessageKey, a?: Record<string, string | number>): string => tr(locale, k, a);
 const $ = <T extends HTMLElement>(id: string): T => document.getElementById(id) as T;
+
+// Start city (specs/cities.md "Výchozí město"): ?city → last city → first bundled city.
+const lastCity = readLastCity();
+const cityId: CityId = pickStartCity(params.get('city'), lastCity, cityIdValues);
+/** Where the error screen links back to while the pack is loading (null once it loaded). */
+let backCity: CityId | null = lastCity !== null && lastCity !== cityId ? lastCity : null;
 
 const canvas = $<HTMLCanvasElement>('world');
 const overlay = $<HTMLCanvasElement>('overlay');
@@ -65,18 +73,17 @@ async function main(): Promise<void> {
       json<unknown>('content/tuning.json').then((j) => Tuning.fromJson(j)),
       json<NpcPack>('content/npc.json'),
     ]);
-    const npc = new DialogueSession(npcPack, tuning.npc, 'nyc', (Math.random() * 0xffffffff) >>> 0);
+    const npc = new DialogueSession(npcPack, tuning.npc, cityId, (Math.random() * 0xffffffff) >>> 0);
     setDialogueSession(npc);
     for (const id of ['world', 'overlay', 'hud', 'loading']) $(id).hidden = true;
     const host = document.createElement('div');
     host.id = 'minigames';
     document.body.append(host);
     if (params.has('skits')) runSkits(host, { locale, t }, npc, params.get('skits'));
-    else runGallery(host, { tuning, locale, t }, params, npc);
+    else runGallery(host, { tuning, locale, t }, params, npc, cityId);
     return;
   }
-  const cityId = (cityIdValues as readonly string[]).includes(params.get('city') ?? '') ? (params.get('city') as CityId) : 'nyc';
-  $('loading').textContent = t('loading', { city: cityId });
+  $('loading').textContent = t('loading', { city: cityIdNames[cityId] });
   $('about').textContent = t('aboutMaps');
   const tStart = performance.now();
 
@@ -86,6 +93,9 @@ async function main(): Promise<void> {
     HttpPackSource.open(ASSET_BASE_URL, cityId),
   ]);
   const city = await City.load(source);
+  // The pack loaded: remember the city now, not only when leaving it (specs/cities.md).
+  writeLastCity(cityId);
+  backCity = null;
   const engine = await createEngine();
   const drive = new DriveWorld(city, cars.get(tuning.cars.startCar)!, tuning);
   // Cars, switching and the garage (specs/cars.md).
@@ -127,9 +137,14 @@ async function main(): Promise<void> {
     view.removeChunk(c);
   });
   // ?bench: the autopilot drives the route of specs/bench.md and reports the numbers.
-  const pilot = params.has('bench')
-    ? new Autopilot(resolveRoute(city.graph, await json<BenchRoute>(`content/bench/${cityId}.json`)), tuning)
+  // A city without content/bench/<cityId>.json has no benchmark (specs/cities.md).
+  const benchRoute = params.has('bench')
+    ? await json<BenchRoute>(`content/bench/${cityId}.json`).catch((e: unknown) => {
+      console.warn(`no benchmark for ${cityId}`, e);
+      return null;
+    })
     : null;
+  const pilot = benchRoute ? new Autopilot(resolveRoute(city.graph, benchRoute), tuning) : null;
   if (pilot) {
     pilot.start(drive);
     view.carChanged();
@@ -226,6 +241,8 @@ async function main(): Promise<void> {
   // Taxi: a world minigame started by the loop at the taxi stand (specs/minigames/taxi.md).
   const taxi = installTaxi({ city, tuning, t, drive, fleet, phone, rig: view.rig, cars, hud: $('hud'), onCarChanged: () => view.carChanged() });
   loop.worldGames.taxi = taxi;
+  // Travel app: switch cities from the phone (specs/cities.md).
+  installTravel({ cityId, tuning, t, phone, tracker: passport.tracker, store: loop.store, save: () => loop.save() });
   // Police fines take cash through the economy (specs/economy.md).
   police.police.onFined((e) => loop.fine(e.amount));
 
@@ -449,6 +466,14 @@ main().catch((e: unknown) => {
   if (el) {
     el.hidden = false;
     el.textContent = tr(locale, 'loadFailed', { error: String(e) });
+    // The city pack failed (e.g. offline): offer the previous city (specs/cities.md "Edge cases").
+    if (backCity !== null) {
+      const a = document.createElement('a');
+      a.href = cityUrl(location.href, backCity);
+      a.textContent = `${tr(locale, 'back')} · ${cityIdNames[backCity]}`;
+      a.style.pointerEvents = 'auto';
+      el.append(document.createElement('br'), a);
+    }
   }
   throw e;
 });

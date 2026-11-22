@@ -65,6 +65,14 @@ describe('passport rules', () => {
     expect(districtId('Upper West Side')).toBe('upper_west_side');
     expect(districtId(' St. Mark’s  Place ')).toBe('st_marks_place');
   });
+
+  it('district ids transliterate diacritics', () => {
+    expect(districtId('Žižkov')).toBe('zizkov');
+    expect(districtId('Malá Strana')).toBe('mala_strana');
+    expect(districtId('Staré Město')).toBe('stare_mesto');
+    expect(districtId('Košíře–Motol')).toBe('kosire_motol');
+    expect(districtId('Straße')).toBe('strasse');
+  });
 });
 
 describe('postcard picture', () => {
