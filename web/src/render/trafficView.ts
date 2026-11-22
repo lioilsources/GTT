@@ -13,7 +13,7 @@ import { LIGHT_AMBER, LIGHT_GREEN } from '../traffic/roadRules';
 import type { Traffic } from '../traffic/traffic';
 import { Tris, Z } from './geometry';
 import { rgba, type Rgba } from './palette';
-import { setShadowColour } from './shadow';
+import { setCount, setShadowColour } from './shadow';
 
 /**
  * Traffic cars and traffic-light indicators (specs/traffic.md "Kreslení"): thin instances with
@@ -89,7 +89,7 @@ export class TrafficView {
     this.housing.thinInstanceSetBuffer('matrix', this.housingM, 16, false);
     this.lamp.thinInstanceSetBuffer('matrix', this.lampM, 16, false);
     this.lamp.thinInstanceSetBuffer('color', this.lampC, 4, false);
-    for (const mesh of [this.paint, this.details, this.brake, this.housing, this.lamp]) mesh.thinInstanceCount = 0;
+    for (const mesh of [this.paint, this.details, this.brake, this.housing, this.lamp]) setCount(mesh, 0);
     this.bodies = tokens.colorTrafficBodies.map((c) => rgba(c));
     this.lightCols = [rgba(tokens.colorTrafficLightGreen), rgba(tokens.colorTrafficLightAmber), rgba(tokens.colorTrafficLightRed)];
   }
@@ -131,9 +131,9 @@ export class TrafficView {
       if (c.braking || c.hitTimer > 0) this.m.copyToArray(this.brakeM, 16 * nb++);
       n++;
     }
-    this.paint.thinInstanceCount = n;
-    this.details.thinInstanceCount = n;
-    this.brake.thinInstanceCount = nb;
+    setCount(this.paint, n);
+    setCount(this.details, n);
+    setCount(this.brake, nb);
     this.paint.thinInstanceBufferUpdated('matrix');
     this.paint.thinInstanceBufferUpdated('color');
     this.details.thinInstanceBufferUpdated('matrix');
@@ -154,8 +154,8 @@ export class TrafficView {
         nl++;
       }
     }
-    this.housing.thinInstanceCount = nl;
-    this.lamp.thinInstanceCount = nl;
+    setCount(this.housing, nl);
+    setCount(this.lamp, nl);
     this.housing.thinInstanceBufferUpdated('matrix');
     this.lamp.thinInstanceBufferUpdated('matrix');
     this.lamp.thinInstanceBufferUpdated('color');

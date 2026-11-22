@@ -15,3 +15,13 @@ export function setShadowColour(mesh: Mesh, vertices: number, c: Rgba): void {
   for (let i = 0; i < vertices && 4 * i + 3 < out.length; i++) out.set(c, 4 * i);
   mesh.setVerticesData(VertexBuffer.ColorKind, out, false, 4);
 }
+
+/**
+ * Sets a thin-instance count and hides the mesh while it is 0. With no instances Babylon draws
+ * the mesh as a plain mesh, and a material shared with a mesh that does have instance colours
+ * can then compile without INSTANCES but with INSTANCESCOLOR ('instanceColor' undeclared).
+ */
+export function setCount(mesh: Mesh, n: number): void {
+  mesh.thinInstanceCount = n;
+  mesh.isVisible = n > 0;
+}

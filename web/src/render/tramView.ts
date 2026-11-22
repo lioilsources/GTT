@@ -12,7 +12,7 @@ import type { Tuning } from '../gen/tuning';
 import type { Trams } from '../trams/trams';
 import { Tris, Z } from './geometry';
 import { rgba, type Rgba } from './palette';
-import { setShadowColour } from './shadow';
+import { setCount, setShadowColour } from './shadow';
 
 /**
  * Tram cars (specs/trams.md "Kreslení"): rounded rectangles in color.trams.body with a stripe and
@@ -68,7 +68,7 @@ export class TramView {
     this.details.thinInstanceSetBuffer('matrix', this.carM, 16, false);
     this.windows.thinInstanceSetBuffer('matrix', this.carM, 16, false);
     this.windows.thinInstanceSetBuffer('color', this.winC, 4, false);
-    for (const mesh of [this.body, this.details, this.windows]) mesh.thinInstanceCount = 0;
+    for (const mesh of [this.body, this.details, this.windows]) setCount(mesh, 0);
     this.winDay = rgba(tokens.colorTramsWindow);
     this.winNight = rgba(tokens.colorTramsWindowLit);
   }
@@ -120,9 +120,9 @@ export class TramView {
       for (let i = 0; i < max; i++) this.winC.set(col, 4 * i);
       this.windows.thinInstanceBufferUpdated('color');
     }
-    this.body.thinInstanceCount = n;
-    this.details.thinInstanceCount = n;
-    this.windows.thinInstanceCount = n;
+    setCount(this.body, n);
+    setCount(this.details, n);
+    setCount(this.windows, n);
     this.body.thinInstanceBufferUpdated('matrix');
     this.details.thinInstanceBufferUpdated('matrix');
     this.windows.thinInstanceBufferUpdated('matrix');
