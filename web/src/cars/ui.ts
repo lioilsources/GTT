@@ -14,6 +14,7 @@ const classKeys: Record<string, MessageKey> = {
   pickup: 'carClassPickup',
   sedan: 'carClassSedan',
   micro: 'carClassMicro',
+  supersport: 'carClassSupersport',
 };
 
 /**
