@@ -1,0 +1,121 @@
+# DRAFT for Ol1n's review (specs/dialogue.md). Jules right after the player beat him at nohejbal by the river.
+id: jules_minigame_win_2
+character: jules
+context: minigame_win
+city: prague
+beats:
+  - npc:
+      en: "You beat me at nohejbal! With your feet! I make a living with my hands, and it shows."
+      cs: "Výhra v nohejbalu je tvoje! Nohama! Já se živím rukama a je to znát."
+    replies:
+      flirt:
+        en: "Your hands are great. Your feet, less so."
+        cs: "Ruce máš skvělé. Nohy už méně."
+      joke:
+        en: "Feet are just hands that went to a different school."
+        cs: "Nohy jsou jen ruce, které chodily do jiné školy."
+      dry:
+        en: "Good game. Work on your footwork."
+        cs: "Dobrá hra. Zapracuj na práci nohou."
+    reactions:
+      flirt:
+        en: "Ha! A compliment and an insult. Very musical."
+        cs: "Cha! Kompliment a urážka. Hodně hudební."
+      joke:
+        en: "A different school! My feet got kicked out of it."
+        cs: "Do jiné školy! Moje nohy z ní vyletěly."
+      dry:
+        en: "Footwork. Right. I'll practise between songs."
+        cs: "Práce nohou. Jasně. Budu trénovat mezi písničkami."
+  - npc:
+      en: "The ball went in the river once. We spent ten minutes fishing it out with a guitar strap. Does that count as a timeout?"
+      cs: "Míč jednou spadl do řeky. Deset minut jsme ho lovili popruhem od kytary. Počítá se to jako oddechový čas?"
+    replies:
+      flirt:
+        en: "Best ten minutes of the game."
+        cs: "Nejlepších deset minut zápasu."
+      joke:
+        en: "That was my strategy. Tire you out emotionally."
+        cs: "To byla moje strategie. Vyčerpat tě citově."
+      dry:
+        en: "Timeout. Yes."
+        cs: "Oddechový čas. Ano."
+    reactions:
+      flirt:
+        en: "Wet sleeves, wet shoes, best ten minutes. Sure."
+        cs: "Mokré rukávy, mokré boty, nejlepších deset minut. Jasně."
+      joke:
+        en: "It worked! I'm emotionally exhausted. And wet."
+        cs: "Fungovalo to! Jsem citově vyčerpaný. A mokrý."
+      dry:
+        en: "Fine. Then I can blame the river."
+        cs: "Fajn. Tak to můžu hodit na řeku."
+  - npc:
+      en: "The old guys on the next court play every Sunday. They called your last kick 'decent'. That's their highest mark."
+      cs: "Ti pánové na vedlejším kurtu hrají každou neděli. Tvůj poslední kop nazvali „slušným“. To je jejich nejvyšší známka."
+    replies:
+      flirt:
+        en: "I'd rather have your mark."
+        cs: "Radši chci známku od tebe."
+      joke:
+        en: "Decent! I'm framing that."
+        cs: "Slušný! To si zarámuju."
+      dry:
+        en: "Decent sounds right."
+        cs: "Slušný sedí."
+    reactions:
+      flirt:
+        en: "My mark is a song. Coming soon. Probably bad."
+        cs: "Moje známka je písnička. Brzy. Nejspíš špatná."
+      joke:
+        en: "Frame it next to my lost pride."
+        cs: "Zarámuj to vedle mé ztracené hrdosti."
+      dry:
+        en: "Modest. They'd like that. They'd never say it."
+        cs: "Skromně. Líbilo by se jim to. Nikdy by to neřekli."
+  - npc:
+      en: "The loser buys lemonade, court rules. The kiosk man plays polka on a radio older than the trams. I love it here."
+      cs: "Poražený platí limonádu, takové je pravidlo hřiště. Pán ve stánku pouští polku z rádia staršího než tramvaje. Miluju to tady."
+    replies:
+      flirt:
+        en: "Lemonade with you? That's winning twice."
+        cs: "Limonáda s tebou? To je výhra podruhé."
+      joke:
+        en: "Polka and lemonade. The real victory party."
+        cs: "Polka a limonáda. Pravá vítězná oslava."
+      dry:
+        en: "A large one, please."
+        cs: "Velkou, prosím."
+    reactions:
+      flirt:
+        en: "Twice? Careful, that's greedy. Ha."
+        cs: "Podruhé? Pozor na nenasytnost. Cha."
+      joke:
+        en: "Victory party! I'll join in on air guitar."
+        cs: "Vítězná oslava! Přidám se na vzdušnou kytaru."
+      dry:
+        en: "Large. Of course. Winner's privilege."
+        cs: "Velkou. Samozřejmě. Výsada vítězství."
+  - npc:
+      en: "Rematch on Sunday? I'll bring the guitar. If I lose again, I play you a victory song. If I win, you dance."
+      cs: "Odveta v neděli? Vezmu kytaru. Když zase prohraju, zahraju ti vítěznou písničku. Když vyhraju, tancuješ ty."
+    replies:
+      flirt:
+        en: "Either way, I win."
+        cs: "Tak jako tak vyhrávám."
+      joke:
+        en: "Then I'm winning. Nobody wants to see me dance."
+        cs: "Tak to vyhraju. Můj tanec nikdo vidět nechce."
+      dry:
+        en: "Deal. Sunday."
+        cs: "Platí. V neděli."
+    reactions:
+      flirt:
+        en: "Either way. Okay, that's a good line. See you Sunday."
+        cs: "Tak jako tak. Dobře, to je dobrá věta. V neděli."
+      joke:
+        en: "Now I have to win. For science. Bye!"
+        cs: "Teď musím vyhrát. Pro vědu. Ahoj!"
+      dry:
+        en: "Sunday. Bring good shoes."
+        cs: "V neděli. Vezmi si dobré boty."

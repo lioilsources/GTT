@@ -1,0 +1,121 @@
+# DRAFT for Ol1n's review (specs/dialogue.md). Jules on a boat bar at náplavka after his set. Nobody drives after drinking.
+id: jules_bar_2
+character: jules
+context: bar
+city: prague
+beats:
+  - npc:
+      en: "I just played a set on the boat bar here at náplavka. The deck rocks a bit, so every song comes out slightly seasick."
+      cs: "Zrovna jsem dohrál set na lodi tady na náplavce. Paluba se trochu houpe, takže každá písnička vyjde trochu mořsky nemocná."
+    replies:
+      flirt:
+        en: "I'd get seasick with you any day."
+        cs: "S tebou klidně dostanu mořskou nemoc kdykoli."
+      joke:
+        en: "Seasick rock. A new genre."
+        cs: "Mořsky nemocný rock. Nový žánr."
+      dry:
+        en: "Sounded fine from the shore."
+        cs: "Z břehu to znělo dobře."
+    reactions:
+      flirt:
+        en: "Strange compliment. It's going in a song."
+        cs: "To je zvláštní kompliment. Dám ho do písničky."
+      joke:
+        en: "Seasick rock! I'm printing shirts. Okay, one shirt."
+        cs: "Mořsky nemocný rock! Nechám udělat trička. Dobře, jedno tričko."
+      dry:
+        en: "Fine is good. Fine is honest."
+        cs: "Dobře je dobré. Dobře je upřímné."
+  - npc:
+      en: "The pay was two beers and a plate of fries. I'm having the beers and walking home along the river. You?"
+      cs: "Výplata byly dvě piva a talíř hranolek. Piva si dám a domů půjdu pěšky podél řeky. A ty?"
+    replies:
+      flirt:
+        en: "Whatever keeps me next to you."
+        cs: "Cokoli, co mě udrží vedle tebe."
+      joke:
+        en: "I'll have the fries. Fair split."
+        cs: "Já si dám hranolky. Spravedlivé dělení."
+      dry:
+        en: "Lemonade. I'm driving."
+        cs: "Limonádu. Řídím."
+    reactions:
+      flirt:
+        en: "Then sit. The stools are bolted down. Very loyal."
+        cs: "Tak si sedni. Stoličky jsou přišroubované. Hodně věrné."
+      joke:
+        en: "The fries are my rent money. But okay, half."
+        cs: "Hranolky jsou moje nájemné. Ale dobře, půlka."
+      dry:
+        en: "Good. Cobbles and water, you want a clear head."
+        cs: "Dobře. Kostky a voda, tam se hodí čistá hlava."
+  - npc:
+      en: "Look at the swans. At night they come to the boats like they're waiting for an encore. Best crowd I've had all week."
+      cs: "Koukni na labutě. V noci připlouvají k lodím, jako by čekaly na přídavek. Nejlepší publikum za celý týden."
+    replies:
+      flirt:
+        en: "Play them one. I'll listen too."
+        cs: "Zahraj jim jednu. Poslechnu si taky."
+      joke:
+        en: "They're critics. Very judgmental necks."
+        cs: "Jsou to kritici. Hodně kritické krky."
+      dry:
+        en: "They want the fries."
+        cs: "Chtějí hranolky."
+    reactions:
+      flirt:
+        en: "One for the swans and you. A slow one. Okay."
+        cs: "Jedna pro labutě a pro tebe. Pomalá. Dobře."
+      joke:
+        en: "Judgmental necks! That's tonight's second song."
+        cs: "Kritické krky! To je druhá písnička večera."
+      dry:
+        en: "Yeah, probably. Show business is cruel."
+        cs: "Jo, asi jo. Šoubyznys je krutý."
+  - npc:
+      en: "Someone across the river plays the trumpet. Badly. Every night. I think we're in a feud and only one of us knows it."
+      cs: "Někdo na druhém břehu hraje na trubku. Špatně. Každý večer. Myslím, že spolu vedeme spor a ví o něm jen jeden z nás."
+    replies:
+      flirt:
+        en: "My money's on you."
+        cs: "Já sázím na tebe."
+      joke:
+        en: "Answer with a harmonica."
+        cs: "Odpověz mu na foukací harmoniku."
+      dry:
+        en: "Ignore it."
+        cs: "Nevšímej si toho."
+    reactions:
+      flirt:
+        en: "Thanks. I'll need a fan club. You can run it."
+        cs: "Díky. Budu potřebovat fanklub. Můžeš ho vést."
+      joke:
+        en: "Harmonica at dawn. This feud just escalated."
+        cs: "Harmonika za úsvitu. Spor právě eskaloval."
+      dry:
+        en: "Can't. Same wrong note every time. It's stuck in my head."
+        cs: "Nejde to. Pokaždé stejná špatná nota. Mám ji v hlavě."
+  - npc:
+      en: "Okay, last sip and I'm walking. The embankment at night is the best stage in town and nobody books it. Drive carefully on the cobbles."
+      cs: "Dobře, poslední doušek a jdu pěšky. Nábřeží v noci je nejlepší pódium ve městě a nikdo si ho nerezervuje. Po kostkách jezdi opatrně."
+    replies:
+      flirt:
+        en: "Save me a spot by that stage."
+        cs: "Nech mi místo u toho pódia."
+      joke:
+        en: "Book it. Under the name 'seasick rock'."
+        cs: "Zarezervuj ho. Na jméno „mořsky nemocný rock“."
+      dry:
+        en: "Will do. Good set."
+        cs: "Jasně. Dobrý set."
+    reactions:
+      flirt:
+        en: "Front row, by the swans. Deal."
+        cs: "První řada, u labutí. Platí."
+      joke:
+        en: "Booked! The tour starts tomorrow. One venue. Bye!"
+        cs: "Zarezervováno! Turné začíná zítra. Jedno místo. Ahoj!"
+      dry:
+        en: "Thanks. Good night. Watch out for trumpets."
+        cs: "Díky. Dobrou. Pozor na trubky."

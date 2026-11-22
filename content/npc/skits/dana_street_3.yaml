@@ -1,0 +1,121 @@
+# DRAFT for Ol1n's review (specs/dialogue.md). Dana fresh off the metro escalator, stuck in the astronomical clock crowd.
+id: dana_street_3
+character: dana
+context: street
+city: prague
+beats:
+  - npc:
+      en: "Excuse me. The metro escalator just took four minutes. Four. I answered three emails on it. And now this crowd. What is happening?"
+      cs: "Promiň. Eskalátor z metra jel čtyři minuty. Čtyři. Stihla jsem na něm tři e-maily. A teď tenhle dav. Co se děje?"
+    replies:
+      flirt:
+        en: "The clock's about to strike. You're right on time."
+        cs: "Orloj bude odbíjet. Jdeš přesně včas."
+      joke:
+        en: "The whole square is waiting for a skeleton to ring a bell."
+        cs: "Celé náměstí čeká, až kostlivec zazvoní."
+      dry:
+        en: "The astronomical clock. Go around."
+        cs: "Orloj. Obejdi to."
+    reactions:
+      flirt:
+        en: "I'm always on time. For meetings. Not for clocks."
+        cs: "Já jdu včas vždycky. Na schůzky. Ne na hodiny."
+      joke:
+        en: "A skeleton. Blocking my route. Unacceptable."
+        cs: "Kostlivec. Blokuje mi trasu. Nepřijatelné."
+      dry:
+        en: "Around. Yes. Which way is faster?"
+        cs: "Obejít. Ano. Kudy je to rychlejší?"
+  - npc:
+      en: "I need to get to Karlín. My navigation says walk across the square. My navigation has never met these people."
+      cs: "Potřebuju do Karlína. Navigace říká přes náměstí. Moje navigace tyhle lidi nikdy neviděla."
+    replies:
+      flirt:
+        en: "I'll walk you. Nobody blocks us."
+        cs: "Doprovodím tě. Nás nikdo nezablokuje."
+      joke:
+        en: "Take a tram. The bell clears any crowd."
+        cs: "Jeď tramvají. Zvonek rozežene každý dav."
+      dry:
+        en: "Take the side street. Then the tram."
+        cs: "Vezmi to boční uličkou. Pak tramvají."
+    reactions:
+      flirt:
+        en: "An escort. Efficient, if you walk fast."
+        cs: "Doprovod. Efektivní, jestli chodíš rychle."
+      joke:
+        en: "Trams don't go across the square. Not helpful."
+        cs: "Tramvaje přes náměstí nejezdí. Nepomáhá to."
+      dry:
+        en: "Side street, tram. Two steps. Perfect."
+        cs: "Boční ulička, tramvaj. Dva kroky. Perfektní."
+  - npc:
+      en: "Cobblestones and heels. Somebody designed this city before deadlines existed."
+      cs: "Kostky a podpatky. Tohle město někdo navrhl dřív, než existovaly termíny."
+    replies:
+      flirt:
+        en: "Then it was waiting for you to show it how."
+        cs: "Tak čekalo na tebe, abys mu to ukázala."
+      joke:
+        en: "The cobbles are older than email. Show some respect."
+        cs: "Kostky jsou starší než e-mail. Trochu úcty."
+      dry:
+        en: "Flat shoes in your bag next time."
+        cs: "Příště ploché boty do kabelky."
+    reactions:
+      flirt:
+        en: "Cute. The cobbles don't care, though."
+        cs: "Roztomilé. Kostky to ale nezajímá."
+      joke:
+        en: "Respect is earned. They haven't earned it today."
+        cs: "Úcta se musí zasloužit. Ony si ji dnes nezasloužily."
+      dry:
+        en: "I have them. I just hate admitting I need them. Okay."
+        cs: "Mám je. Jen nerada přiznávám, že je potřebuju. Dobře."
+  - npc:
+      en: "It's striking now and everyone's filming. Two hundred phones in the air. Fine, I'll look. For exactly ten seconds."
+      cs: "Orloj teď bije a všichni natáčejí. Dvě stě telefonů nad hlavami. Dobře, podívám se. Přesně deset vteřin."
+    replies:
+      flirt:
+        en: "I'll count them for you. Slowly."
+        cs: "Napočítám ti je. Pomalu."
+      joke:
+        en: "Ten seconds? Even the skeleton needs longer."
+        cs: "Deset vteřin? I ten kostlivec potřebuje víc."
+      dry:
+        en: "It's short. Worth ten seconds."
+        cs: "Je to krátké. Deset vteřin to stojí."
+    reactions:
+      flirt:
+        en: "Slowly is not how I count. But fine."
+        cs: "Pomalu já nepočítám. Ale dobře."
+      joke:
+        en: "The skeleton doesn't have a call at four."
+        cs: "Kostlivec nemá ve čtyři call."
+      dry:
+        en: "It is. Okay. That was... actually nice. Don't tell anyone."
+        cs: "Stojí. Dobře. Bylo to... vlastně hezké. Nikomu to neříkej."
+  - npc:
+      en: "Right. Side street, tram to Karlín, flat shoes. Thank you. I'm three minutes ahead of schedule, which never happens here."
+      cs: "Tak jo. Boční ulička, tramvaj do Karlína, ploché boty. Děkuju. Jsem tři minuty napřed, což se mi tady nestává."
+    replies:
+      flirt:
+        en: "Spend those three minutes with me?"
+        cs: "Strávíš ty tři minuty se mnou?"
+      joke:
+        en: "Celebrate with a trdelník."
+        cs: "Oslav to trdelníkem."
+      dry:
+        en: "Good luck in Karlín."
+        cs: "Hodně štěstí v Karlíně."
+    reactions:
+      flirt:
+        en: "Two of them. The third belongs to the tram. Bye."
+        cs: "Dvě z nich. Třetí patří tramvaji. Ahoj."
+      joke:
+        en: "That would cost me four minutes and a sleeve. No."
+        cs: "To by mě stálo čtyři minuty a rukáv. Ne."
+      dry:
+        en: "Thank you. You're easy to work with."
+        cs: "Děkuju. S tebou se dá pracovat."
