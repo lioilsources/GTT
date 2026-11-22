@@ -9,6 +9,7 @@ import 'package:shared_gen/shared_gen.dart';
 import 'package:world_engine/world_engine.dart' show Spot;
 
 import '../game/metropole_game.dart';
+import '../game/pause.dart';
 import '../minigames/registry.dart';
 import '../phone/phone_controller.dart';
 import 'save_store.dart';
@@ -240,7 +241,7 @@ class LoopController extends ChangeNotifier {
       driveDm: card?.distDm ?? 0,
     );
     playSpot.value = null;
-    game.pauseEngine();
+    game.pauseOverlays.register(GameOverlay.minigame);
     notifyListeners();
   }
 
@@ -249,6 +250,7 @@ class LoopController extends ChangeNotifier {
     final q = request.value;
     if (q == null) return;
     request.value = null;
+    game.pauseOverlays.unregister(GameOverlay.minigame);
     _complete(q.spot, q.id, q.driveDm, r);
   }
 
@@ -262,7 +264,7 @@ class LoopController extends ChangeNotifier {
       driveDm: driveDm,
       hasStamp: (m) => game.passport.has('minigame', m),
     );
-    game.pauseEngine();
+    game.pauseOverlays.set(GameOverlay.result, true);
     save();
     notifyListeners();
   }
@@ -270,7 +272,7 @@ class LoopController extends ChangeNotifier {
   /// Result card closed: back to driving, optionally with the phone's Feed.
   void closeResult({bool feed = false}) {
     outcome.value = null;
-    game.resumeEngine();
+    game.pauseOverlays.set(GameOverlay.result, false);
     if (feed) phone.open(PhoneAppId.feed);
     notifyListeners();
   }

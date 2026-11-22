@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:meta_progress/meta_progress.dart';
 import 'package:world_engine/world_engine.dart';
 
+import '../game/pause.dart';
 import '../l10n/app_localizations.dart';
 
 /// Plain passport data from a loaded City (specs/passport.md "Katalog razítek").
@@ -136,9 +137,13 @@ class PostcardCard extends StatelessWidget {
 
 /// Shows postcards (landmarks) and stamp labels (districts) as they are stamped.
 class PassportOverlay extends StatefulWidget {
-  const PassportOverlay({super.key, required this.events, required this.seconds});
+  const PassportOverlay({super.key, required this.events, required this.seconds, this.overlays});
   final ValueListenable<StampEvent?> events;
   final double seconds;
+
+  /// The postcard pauses the game until it is closed or times out (specs/pause.md); the stamp
+  /// toast does not.
+  final OverlayRegistry? overlays;
 
   @override
   State<PassportOverlay> createState() => _PassportOverlayState();
@@ -156,9 +161,15 @@ class _PassportOverlayState extends State<PassportOverlay> {
     widget.events.addListener(_onEvent);
   }
 
+  void _setCard(PassportLandmark? c) {
+    setState(() => _card = c);
+    widget.overlays?.set(GameOverlay.postcard, c != null);
+  }
+
   @override
   void dispose() {
     widget.events.removeListener(_onEvent);
+    widget.overlays?.set(GameOverlay.postcard, false);
     _cardTimer?.cancel();
     _toastTimer?.cancel();
     super.dispose();
@@ -171,8 +182,8 @@ class _PassportOverlayState extends State<PassportOverlay> {
     if (e == null) return;
     if (e.landmark != null) {
       _cardTimer?.cancel();
-      setState(() => _card = e.landmark);
-      _cardTimer = Timer(_d, () => mounted ? setState(() => _card = null) : null);
+      _setCard(e.landmark);
+      _cardTimer = Timer(_d, () => mounted ? _setCard(null) : null);
     } else if (e.name != null) {
       _toastTimer?.cancel();
       setState(() => _toast = e.name);
@@ -221,7 +232,7 @@ class _PassportOverlayState extends State<PassportOverlay> {
                       widthFactor: 0.88,
                       child: FittedBox(
                         fit: BoxFit.scaleDown,
-                        child: PostcardCard(landmark: _card!, onTap: () => setState(() => _card = null)),
+                        child: PostcardCard(landmark: _card!, onTap: () => _setCard(null)),
                       ),
                     ),
             ),
@@ -235,17 +246,28 @@ class _PassportOverlayState extends State<PassportOverlay> {
 /// The Passport screen: completion % and a stamp grid per kind. A plain widget, so the phone
 /// app (feed_hub) can host it later.
 class PassportScreen extends StatelessWidget {
-  const PassportScreen({super.key, required this.tracker, required this.cityName, this.about});
+  const PassportScreen({super.key, required this.tracker, required this.cityName, this.about, this.overlays});
   final PassportTracker tracker;
   final String cityName;
   final AboutInfo? about;
 
-  static Future<void> open(BuildContext context, PassportTracker tracker, String cityName, AboutInfo about) =>
-      Navigator.of(context).push(
-        MaterialPageRoute<void>(
-          builder: (_) => PassportScreen(tracker: tracker, cityName: cityName, about: about),
-        ),
-      );
+  /// Passport and About pause the game while open (specs/pause.md).
+  final OverlayRegistry? overlays;
+
+  static Future<void> open(
+    BuildContext context,
+    PassportTracker tracker,
+    String cityName,
+    AboutInfo about, {
+    OverlayRegistry? overlays,
+  }) {
+    final f = Navigator.of(context).push(
+      MaterialPageRoute<void>(
+        builder: (_) => PassportScreen(tracker: tracker, cityName: cityName, about: about, overlays: overlays),
+      ),
+    );
+    return overlays?.hold(GameOverlay.passport, f) ?? f;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -336,7 +358,10 @@ class PassportScreen extends StatelessWidget {
               ],
               if (about != null) ...[
                 const SizedBox(height: Tokens.spaceXl),
-                FilledButton.tonal(onPressed: () => AboutMapsScreen.open(context, about!), child: Text(l.aboutTitle)),
+                FilledButton.tonal(
+                  onPressed: () => AboutMapsScreen.open(context, about!, overlays: overlays),
+                  child: Text(l.aboutTitle),
+                ),
               ],
             ],
           ),
@@ -429,8 +454,10 @@ class AboutMapsScreen extends StatelessWidget {
   const AboutMapsScreen({super.key, required this.info});
   final AboutInfo info;
 
-  static Future<void> open(BuildContext context, AboutInfo info) =>
-      Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => AboutMapsScreen(info: info)));
+  static Future<void> open(BuildContext context, AboutInfo info, {OverlayRegistry? overlays}) {
+    final f = Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => AboutMapsScreen(info: info)));
+    return overlays?.hold(GameOverlay.about, f) ?? f;
+  }
 
   @override
   Widget build(BuildContext context) {

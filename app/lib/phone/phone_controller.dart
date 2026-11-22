@@ -8,6 +8,7 @@ import 'package:flutter/painting.dart';
 import 'package:world_engine/world_engine.dart';
 
 import '../game/metropole_game.dart';
+import '../game/pause.dart';
 
 /// Phone apps in home-screen order (specs/phone.md "Telefon").
 enum PhoneAppId { feed, map, garage, passport, camera, contacts, wallet, travel, settings }
@@ -30,8 +31,8 @@ class PhoneController extends ChangeNotifier {
     _spots = {for (final s in city.spots.items) s.id: s};
     _lastX = game.drive.car.x;
     _lastY = game.drive.car.y;
+    // The open phone pauses the game (phone.md v3, specs/pause.md); no slow motion any more.
     game
-      ..timeScale = (() => isOpen ? tuning.phone.timeScale : 1.0)
       ..afterUpdate = _update
       ..paintWorld = _paintRoute
       ..paintScreen = _paintArrow;
@@ -85,12 +86,14 @@ class PhoneController extends ChangeNotifier {
 
   void open([PhoneAppId? a]) {
     isOpen = true;
+    game.pauseOverlays.set(GameOverlay.phone, true);
     if (a != null) app = a;
     notifyListeners();
   }
 
   void close() {
     isOpen = false;
+    game.pauseOverlays.set(GameOverlay.phone, false);
     notifyListeners();
   }
 
@@ -202,7 +205,8 @@ class PhoneController extends ChangeNotifier {
     _lastX = car.x;
     _lastY = car.y;
     if (_toastS > 0 && (_toastS -= dt) <= 0) toast.value = null;
-    if (!nav.active) return;
+    // Navigation timers are world clocks: they stand while the game is paused.
+    if (!nav.active || game.worldPaused) return;
     final ev = nav.update(car.x, car.y, car.heading, game.drive.layers.hit, dt);
     if (ev == NavEvent.arrived && _silent) {
       cancelNav();
@@ -279,8 +283,8 @@ class PhoneController extends ChangeNotifier {
 
   @override
   void dispose() {
+    game.pauseOverlays.set(GameOverlay.phone, false);
     game
-      ..timeScale = (() => 1.0)
       ..afterUpdate = null
       ..paintWorld = null
       ..paintScreen = null;

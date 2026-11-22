@@ -62,4 +62,14 @@ void main() {
       expect(shape.where((r) => r.part == CarPart.tail).length, 2, reason: s.id);
     }
   });
+
+  test('supersport (Vega Roadster) draws with its own low cabin, not the coupe fallback', () {
+    final s = specs['vega_roadster']!;
+    expect(s.class_, 'supersport');
+    final cabin = shapeOf(s).firstWhere((r) => r.part == CarPart.cabin);
+    final hl = s.lengthM * tuning.carScale / 2, hw = s.widthM * tuning.carScale / 2;
+    final coupe = carShape('coupe', hl, hw).firstWhere((r) => r.part == CarPart.cabin);
+    expect(cabin.x0, isNot(coupe.x0));
+    expect(cabin.x1, lessThan(coupe.x1));
+  });
 }

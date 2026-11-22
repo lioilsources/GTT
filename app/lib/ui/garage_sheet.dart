@@ -5,7 +5,8 @@ import 'package:shared_gen/shared_gen.dart';
 import '../l10n/app_localizations.dart';
 
 /// Garage list (specs/cars.md "Garáž"): owned cars; picking one drives out with it.
-/// Below them the cars for sale with prices (specs/economy.md "Nákup auta").
+/// Below them the cars for sale with prices (specs/economy.md "Nákup auta"), and the free air
+/// refill for a car with a hop tank (specs/hop.md "Doplnění").
 Future<void> showGarage(BuildContext context, CarFleet fleet) => showModalBottomSheet<void>(
   context: context,
   backgroundColor: const Color(Tokens.colorUiSheet),
@@ -27,6 +28,8 @@ Future<void> showGarage(BuildContext context, CarFleet fleet) => showModalBottom
       'micro' => l.carClassMicro,
       _ => '',
     };
+    final drive = fleet.drive;
+    final hopFull = hopCharges(drive.spec);
     return SafeArea(
       child: SingleChildScrollView(
         padding: const EdgeInsets.all(Tokens.spaceLg),
@@ -43,6 +46,15 @@ Future<void> showGarage(BuildContext context, CarFleet fleet) => showModalBottom
               ),
             ),
             const SizedBox(height: Tokens.spaceSm),
+            if (hopFull != null) ...[
+              if (drive.hop.charges == 0)
+                Text(l.hopEmpty, style: const TextStyle(color: Color(Tokens.colorUiTextMuted))),
+              FilledButton.tonal(
+                key: const ValueKey('hopRefill'),
+                onPressed: drive.hop.canRefill(drive.spec) ? () => setState(() => drive.refillHop()) : null,
+                child: Text('${l.hopRefill}  ${drive.hop.charges}/$hopFull'),
+              ),
+            ],
             for (final id in fleet.owned)
               if (fleet.specs[id] case final spec?)
                 ListTile(

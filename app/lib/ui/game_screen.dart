@@ -12,6 +12,7 @@ import 'package:shared_gen/shared_gen.dart';
 import '../cities/cities.dart';
 import '../cities/passport_percent.dart';
 import '../game/metropole_game.dart';
+import '../game/pause.dart';
 import '../l10n/app_localizations.dart';
 import '../loop/loop_controller.dart';
 import '../loop/loop_layer.dart';
@@ -209,10 +210,9 @@ class _GameScreenState extends State<GameScreen> {
                 onPhone: phone.toggle,
                 onCarAction: (a) async {
                   if (a == CarAction.board) return game.boardCandidate();
-                  game.carsPaused = true;
-                  await showGarage(context, game.fleet);
-                  game.carsPaused = false;
+                  await game.pauseOverlays.hold(GameOverlay.garage, showGarage(context, game.fleet));
                 },
+                onHop: game.hop,
                 onTuning: () => showTuningPanel(
                   context,
                   game,
@@ -223,15 +223,24 @@ class _GameScreenState extends State<GameScreen> {
                   onBench: _hasBench ? game.startBench : null,
                   onResetSave: loop.resetSave,
                 ),
-                onPassport: () =>
-                    PassportScreen.open(context, game.passport, game.city.manifest.name, AboutInfo.of(game.city)),
+                onPassport: () => PassportScreen.open(
+                  context,
+                  game.passport,
+                  game.city.manifest.name,
+                  AboutInfo.of(game.city),
+                  overlays: game.pauseOverlays,
+                ),
               ),
               PoliceHud(police: game.police),
               NavHud(phone: phone),
               TaxiHud(taxi: taxi),
               PhoneLayer(phone: phone),
               LoopLayer(loop: loop),
-              PassportOverlay(events: game.passportEvent, seconds: game.tuning.passport.postcardS),
+              PassportOverlay(
+                events: game.passportEvent,
+                seconds: game.tuning.passport.postcardS,
+                overlays: game.pauseOverlays,
+              ),
               _BenchOverlay(game: game),
             ],
           );

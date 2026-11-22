@@ -5,6 +5,7 @@ import 'package:world_engine/core.dart';
 
 import 'car.dart';
 import 'controls.dart';
+import 'hop.dart';
 import 'props.dart';
 import 'traffic/traffic.dart';
 import 'trams/trams.dart';
@@ -72,6 +73,7 @@ class DriveWorld {
     zones = Zones(world, tuning);
     layers = LayerTracker(city.graph, tuning.layers);
     spawn(city.startX, city.startY, city.startHeading);
+    hop.fill(spec);
     traffic = tuning.traffic.enabled ? Traffic(world, city, tuning) : null;
     trams = tuning.trams.enabled && !city.trams.isEmpty ? Trams(world, city.trams, tuning) : null;
     final tr = traffic, tm = trams;
@@ -100,6 +102,9 @@ class DriveWorld {
   /// no tracks.
   late final Trams? trams;
   final input = ControlInput();
+
+  /// Air-tank hop of the driven car (specs/hop.md); full on load and after switching cars.
+  final hop = HopState();
   final Map<int, Body> _colliders = {};
   final Map<int, PropSet> props = {};
   double time = 0;
@@ -118,6 +123,9 @@ class DriveWorld {
 
   void spawn(double x, double y, double heading) {
     if (_spawned) car.destroy();
+    hop
+      ..air = 0
+      ..t = 0;
     car = Car(world, spec, _d, x: x, y: y, heading: heading, scale: tuning.carScale);
     _spawned = true;
     layers.reset(x, y);
@@ -130,6 +138,25 @@ class DriveWorld {
     spec = next;
     _lastSkid = null;
     spawn(x, y, heading);
+    hop.fill(next);
+  }
+
+  /// The HUD "Hop" button (specs/hop.md): takes off when [canHop] allows; true when it did.
+  bool startHop() {
+    if (!hop.start(spec, car.layer, car.speed, tuning.hop)) return false;
+    car.setAirborne(true);
+    _lastSkid = null;
+    return true;
+  }
+
+  /// Whether the hop button is live now.
+  bool get hopReady => canHop(spec, hop.charges, hop.air, car.layer, car.speed, tuning.hop);
+
+  /// Free garage refill (specs/hop.md "Doplnění"); false when there is nothing to refill.
+  bool refillHop() {
+    if (!hop.canRefill(spec)) return false;
+    hop.charges = hopCharges(spec)!;
+    return true;
   }
 
   /// Rebuilds the car after `car_scale` changed in the debug panel.
@@ -140,6 +167,7 @@ class DriveWorld {
     car = Car(world, spec, _d, x: x, y: y, heading: h, scale: tuning.carScale);
     car.body.linearVelocity = v;
     car.setLayer(l);
+    car.setAirborne(hop.airborne);
     _zoneMask();
   }
 
@@ -193,10 +221,24 @@ class DriveWorld {
   void _fixedStep(double step) {
     time += step;
     beforeStep?.call(step);
-    car.drive(input, step, cruise: tuning.speedMps.cruise, top: tuning.speedMps.topDefault);
+    final flying = hop.airborne;
+    if (flying) {
+      car.fly();
+    } else {
+      car.drive(input, step, cruise: tuning.speedMps.cruise, top: tuning.speedMps.topDefault);
+    }
     traffic?.preStep(step, car);
     trams?.preStep(step, car);
     world.step(step, subStepCount: _d.substeps);
+    if (flying) {
+      // In the air the layer, the zone bit and the hit events stay out (specs/hop.md).
+      car.body.angularVelocity = 0;
+      traffic?.postStep(car, airborne: true);
+      trams?.postStep(car, airborne: true);
+      _props(step);
+      if (hop.step(step)) _land();
+      return;
+    }
     layers.update(car.x, car.y);
     car.setLayer(layers.layer);
     _zoneMask();
@@ -205,6 +247,15 @@ class DriveWorld {
     if (car.layer != 0) _rails();
     _props(step);
     _skidMarks();
+  }
+
+  /// Landing: the mask goes back by layer and zones; a car that lands inside a zone or right on its
+  /// bollards keeps the zone bit off until it is clear (the same hold-off as driving out).
+  void _land() {
+    car.setAirborne(false);
+    layers.update(car.x, car.y);
+    car.setLayer(layers.layer);
+    car.setInsideZone(car.layer == 0 && zones.insideFor(car.x, car.y, car.boundingRadius, wasInside: true));
   }
 
   /// Drops the bollards from the player's mask while its centre is inside a zone (specs/zones.md).
@@ -256,7 +307,7 @@ class DriveWorld {
           }
           continue;
         }
-        if (car.layer != 0 || speed < t.knockMinMps) continue;
+        if (car.layer != 0 || car.airborne || speed < t.knockMinMps) continue;
         final dx = p.x - cx, dy = p.y - cy;
         final reachX = car.halfLength + p.radius, reachY = car.halfWidth + p.radius;
         if (dx.abs() > reachX + reachY || dy.abs() > reachX + reachY) continue;
