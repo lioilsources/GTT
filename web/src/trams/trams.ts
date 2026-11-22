@@ -3,7 +3,7 @@ import { Box, type Body, type Fixture, type Vec2Value, type World } from 'planck
 import type { Tuning } from '../gen/tuning';
 import { CAT_CAR, CAT_PARKED, CAT_TRAFFIC, CAT_TRAM, type Car } from '../drive/car';
 import { Prng } from '../rules/prng';
-import type { Traffic } from '../traffic/traffic';
+import { obbOverlap, type Traffic } from '../traffic/traffic';
 import type { TrackEdge, TrackGraph, TrackStop } from '../world/model';
 import { articulate, chooseNextTrack, nextStopAhead, stopTravelS, Trail, type CarPose } from './trackRules';
 
@@ -182,21 +182,23 @@ export class Trams {
     }
   }
 
-  /** After world.step: player hits (a touching contact with any car) and the layer masks. */
+  /**
+   * After world.step: player hits and the layer masks. A hit is an overlap of the player's box
+   * with any car (SAT with traffic.hit_margin_m, as traffic step 6).
+   */
   postStep(player: Car): void {
     const t = this.tuning.trams;
+    const ph = player.heading, pc = Math.cos(ph), ps = Math.sin(ph);
+    const round = this.tuning.drive.bodyRoundM, margin = this.tuning.traffic.hitMarginM;
+    const phl = player.halfLength + round, phw = player.halfWidth + round;
+    const px = player.x, py = player.y;
     for (const tr of this.trams) {
       let touch = false;
       for (const c of tr.cars) {
         const same = this.solid && c.layer === player.layer;
         this.setMask(c, same);
         if (!same || touch) continue;
-        for (let ce = c.body.getContactList(); ce !== null; ce = ce.next) {
-          if (ce.other === player.body && ce.contact.isTouching()) {
-            touch = true;
-            break;
-          }
-        }
+        touch = obbOverlap(px, py, pc, ps, phl, phw, c.x, c.y, Math.cos(c.heading), Math.sin(c.heading), c.halfLength, c.halfWidth, margin);
       }
       if (touch && !tr.touching) {
         const h = tr.cars[0]!.heading;
