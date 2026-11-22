@@ -147,8 +147,9 @@
   level: P2
   spec: specs/phone.md@4
   lead: web
-  flutter: todo
-  web: todo
+  flutter: done
+  web: done
+  checks: {flutter: pass, web: pass}
 - id: F-016
   name: Traffic and two-phase traffic lights
   level: P1
@@ -216,8 +217,9 @@
   spec: specs/save.md@2
   vectors: vectors/save.json
   lead: web
-  flutter: todo
-  web: todo
+  flutter: done
+  web: done
+  checks: {flutter: pass, web: pass}
 - id: F-027
   name: Taxi (engine drive, 4-minute shift, real destinations, fare stars)
   level: P0
@@ -317,5 +319,6 @@
   spec: specs/travel.md@1
   vectors: vectors/travel.json
   lead: web
-  flutter: todo
-  web: todo
+  flutter: done
+  web: done
+  checks: {flutter: pass, web: pass}

@@ -147,7 +147,8 @@ items:
      started: 2026-11-22T14:22, done: 2026-11-22T14:46, commit: 0196bb6, evidence: "specs/roadblock.md, vektory se stropem 3, zátaras v obou klientech s testy (PR #95, #97, #98), parita F-036; chybí vyzkoušet honičku na hledanosti 3 na telefonu"}
   - {id: M2-S2, milestone: M2, name: "zvonící budky", size: M, status: "čeká na Ol1na",
      started: 2026-11-22T14:50, done: 2026-11-22T15:29, commit: 4fe50e6, evidence: "specs/booths.md, vectors/booths.json v obou klientech, budky ve světě, nabídka a bonus s testy (PR #100–#102), parita F-037; balíčky s budkami se publikují zvlášť; chybí vyzkoušet na telefonu"}
-  - {id: M2-S3, milestone: M2, name: "rychlý přesun: metro a taxi", size: L, status: todo}
+  - {id: M2-S3, milestone: M2, name: "rychlý přesun: metro a taxi", size: L, status: "čeká na Ol1na",
+     started: 2026-11-22T15:40, done: 2026-11-22T16:31, commit: 591d2e9, evidence: "specs/travel.md, uložení v3 (save.md v2), aplikace Taxi; vektory travel a save v obou klientech, 12 vstupů do metra v NYC i Praze v balíčcích (PR #106–#110), parita F-023, F-026, F-038; chybí vyzkoušet na telefonu"}
   - {id: M2-S4, milestone: M2, name: "fotomísta a Foťák", size: M, status: todo}
   - {id: M2-S5, milestone: M2, name: "obchody a bary", size: L, status: todo}
   - {id: M2-S6, milestone: M2, name: "počasí (jasno, déšť, mlha)", size: M, status: todo}
