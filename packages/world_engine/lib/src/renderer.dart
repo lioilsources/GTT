@@ -11,6 +11,7 @@ import 'palette.dart';
 import 'package:shared_gen/citypack_pb.dart';
 import 'roads.dart';
 import 'streaming.dart';
+import 'style_geometry.dart';
 import 'textures.dart';
 
 /// Per-frame numbers for the FPS overlay.
@@ -59,6 +60,8 @@ class WorldRenderer {
   final _visible = <BuildingData>[];
   final _dist = <BuildingData, double>{};
   final _paint = ui.Paint()..isAntiAlias = false;
+  final _shadowLayer = ui.Paint();
+  final _shadowFill = ui.Paint()..isAntiAlias = false;
 
   // Pedestrian paving last: above parks and plazas (and water, for bridges), below roads.
   static const _groundOrder = [
@@ -125,8 +128,10 @@ class WorldRenderer {
         if (v != null) canvas.drawVertices(v, ui.BlendMode.dst, _paint);
       }
     }
-    // 2. roads, markings, alleys
+    // 2. roads, markings, alleys, zebras
     _roadPasses(canvas, roadKeys, groundPasses);
+    // 2b. building cast shadows (specs/style.md v2) above the road paint, below everything else
+    _castShadows(canvas, vx, vy, r);
     _roadblocks(canvas, vx, vy, r);
     layer(close: true, open: false);
     // 4. props and vehicles on the ground
@@ -175,8 +180,40 @@ class WorldRenderer {
     canvas.restore();
   }
 
+  /// Shadows are drawn opaque into their own layer that is composited once with the shadow
+  /// alpha, so overlapping shadows give one uniform shade. The meshes are built once per chunk.
+  void _castShadows(ui.Canvas canvas, double vx, double vy, double r) {
+    final pal = palette;
+    final color = pal.castShadow;
+    if (color == null || !castShadowOn(tuning.style, city.id, night: pal.night)) return;
+    final (dx, dy) = shadowDirection(pal.sunX, pal.sunY);
+    final st = tuning.style;
+    final cm = city.chunkM;
+    // A shadow is drawn with its building's chunk, so look up to one shadow length further.
+    final reach = r + st.shadowMaxM;
+    var open = false;
+    for (final c in streamer.chunks) {
+      final x0 = c.data.x * cm, y0 = c.data.y * cm;
+      final ex = math.max(0.0, math.max(x0 - vx, vx - (x0 + cm)));
+      final ey = math.max(0.0, math.max(y0 - vy, vy - (y0 + cm)));
+      if (ex * ex + ey * ey > reach * reach) continue;
+      final meshes = c.shadows(dirX: dx, dirY: dy, ratio: st.shadowRatio, maxM: st.shadowMaxM);
+      if (meshes.isEmpty) continue;
+      if (!open) {
+        canvas.saveLayer(null, _shadowLayer..color = ui.Color.fromARGB((color.a * 255).round(), 0, 0, 0));
+        _shadowFill.color = color.withValues(alpha: 1);
+        open = true;
+      }
+      for (final v in meshes) {
+        canvas.drawVertices(v, ui.BlendMode.dst, _shadowFill);
+      }
+    }
+    if (open) canvas.restore();
+  }
+
   void _roadPasses(ui.Canvas canvas, List<int> keys, List<RoadPass> passes) {
     for (final p in passes) {
+      if (p == RoadPass.crosswalks && palette.night) continue;
       _paint.color = passColor(p, palette);
       for (final k in keys) {
         final v = roads.chunk(k)?[p];

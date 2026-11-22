@@ -29,6 +29,9 @@ class Palette {
     required this.night,
     required this.shadow,
     this.inks = const [],
+    this.roof,
+    this.roofEdge,
+    this.castShadow,
   });
 
   final Color land, water, park, plaza, rail, pedestrian, sidewalk, asphalt, alley, marking, centerLine;
@@ -49,6 +52,18 @@ class Palette {
 
   /// Risograph inks of the city (`color.city.<id>.inks`), empty when the city has none.
   final List<Color> inks;
+
+  /// Flat roof colour (`color.city.<id>.roof`, specs/style.md v2); null = facade × [roofLight].
+  final Color? roof;
+
+  /// Parapet band along the roof outline; null = no band. Used only together with [roof].
+  final Color? roofEdge;
+
+  /// Building cast shadow on the ground (with alpha); null = no cast shadows.
+  final Color? castShadow;
+
+  /// Style A flat roofs: both `roof` and `roofEdge` are set (otherwise roofs stay v1).
+  bool get flatRoofs => roof != null && roofEdge != null;
 
   Color ground(GroundKind k) => switch (k) {
     GroundKind.WATER => water,
@@ -107,6 +122,9 @@ class Palette {
     ambient: Tokens.lightDayAmbient,
     night: false,
     shadow: const Color(Tokens.colorCityNycShadow),
+    roof: const Color(Tokens.colorCityNycRoof),
+    roofEdge: const Color(Tokens.colorCityNycRoofEdge),
+    castShadow: const Color(Tokens.colorCityNycCastShadow),
   );
 
   static final _prague = Palette._(

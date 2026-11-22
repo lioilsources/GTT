@@ -40,6 +40,10 @@ class BuildingData {
   final Float32List wallU;
 
   int get vertexCount => xy.length ~/ 2;
+
+  /// Cache of `roofBand(this, roofBandW)` (style_geometry.dart), filled on first draw.
+  Float32List? roofBandXY;
+  double roofBandW = -1;
 }
 
 /// Ground polygons of one kind merged into a single mesh.

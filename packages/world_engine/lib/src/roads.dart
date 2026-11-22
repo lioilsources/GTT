@@ -4,6 +4,7 @@ import 'dart:ui' as ui;
 
 import 'model.dart';
 import 'palette.dart';
+import 'style_geometry.dart';
 
 /// Draw passes for road geometry; each pass is one colour, drawn across all visible chunks
 /// before the next pass so neighbouring chunks overlap correctly.
@@ -13,6 +14,9 @@ enum RoadPass {
   asphalt,
   laneLines,
   centerLines,
+
+  /// Zebra crossings at junctions (specs/style.md v2), above the lane markings; day only.
+  crosswalks,
   bridgeEdge,
   bridgeDeck,
   bridgeLaneLines,
@@ -21,20 +25,27 @@ enum RoadPass {
   tunnelLaneLines,
 }
 
-const groundPasses = [RoadPass.sidewalk, RoadPass.alley, RoadPass.asphalt, RoadPass.laneLines, RoadPass.centerLines];
+const groundPasses = [
+  RoadPass.sidewalk,
+  RoadPass.alley,
+  RoadPass.asphalt,
+  RoadPass.laneLines,
+  RoadPass.centerLines,
+  RoadPass.crosswalks,
+];
 const bridgePasses = [RoadPass.bridgeEdge, RoadPass.bridgeDeck, RoadPass.bridgeLaneLines, RoadPass.bridgeCenterLines];
 const tunnelPasses = [RoadPass.tunnel, RoadPass.tunnelLaneLines];
 
 ui.Color passColor(RoadPass p, Palette pal) => switch (p) {
-      RoadPass.sidewalk => pal.sidewalk,
-      RoadPass.alley => pal.alley,
-      RoadPass.asphalt => pal.asphalt,
-      RoadPass.laneLines || RoadPass.bridgeLaneLines || RoadPass.tunnelLaneLines => pal.marking,
-      RoadPass.centerLines || RoadPass.bridgeCenterLines => pal.centerLine,
-      RoadPass.bridgeEdge => pal.bridgeEdge,
-      RoadPass.bridgeDeck => pal.bridgeDeck,
-      RoadPass.tunnel => pal.tunnel,
-    };
+  RoadPass.sidewalk => pal.sidewalk,
+  RoadPass.alley => pal.alley,
+  RoadPass.asphalt => pal.asphalt,
+  RoadPass.laneLines || RoadPass.bridgeLaneLines || RoadPass.tunnelLaneLines || RoadPass.crosswalks => pal.marking,
+  RoadPass.centerLines || RoadPass.bridgeCenterLines => pal.centerLine,
+  RoadPass.bridgeEdge => pal.bridgeEdge,
+  RoadPass.bridgeDeck => pal.bridgeDeck,
+  RoadPass.tunnel => pal.tunnel,
+};
 
 class _Tris {
   final pos = <double>[];
@@ -56,6 +67,17 @@ class _Tris {
       ax + nx * o1, ay + ny * o1,
     ]);
     idx.addAll([b, b + 1, b + 2, b, b + 2, b + 3]);
+  }
+
+  /// A convex polygon of [n] points starting at float [at] of [xy].
+  void polygon(List<double> xy, int at, int n) {
+    final b = vertexCount;
+    for (var k = 0; k < 2 * n; k++) {
+      pos.add(xy[at + k]);
+    }
+    for (var k = 1; k + 1 < n; k++) {
+      idx.addAll([b, b + k, b + k + 1]);
+    }
   }
 
   void disc(double cx, double cy, double r, [int segs = 10]) {
@@ -84,14 +106,21 @@ class RoadMeshes {
 
   Map<RoadPass, ui.Vertices>? chunk(int key) => _meshes[key];
 
-  static RoadMeshes build(RoadGraph graph, double chunkM, {required double sidewalkM, required double laneM}) {
+  /// [crosswalks] = zebra parameters when the city has them (`style.crosswalks`), else null.
+  static RoadMeshes build(
+    RoadGraph graph,
+    double chunkM, {
+    required double sidewalkM,
+    required double laneM,
+    CrosswalkParams? crosswalks,
+  }) {
     final acc = <int, Map<RoadPass, _Tris>>{};
     _Tris tris(int key, RoadPass p) => (acc[key] ??= {})[p] ??= _Tris();
 
     for (final e in graph.edges) {
       final layer = e.drawLayer;
       final hw = e.width / 2;
-      final carriage = e.kept ? math.max(e.width - 2 * sidewalkM, laneM) / 2 : hw;
+      final carriage = e.kept ? carriageHalfWidth(e, sidewalkM, laneM) : hw;
       final n = e.pointCount;
       for (var s = 0; s + 1 < n; s++) {
         final ax = e.pts[2 * s], ay = e.pts[2 * s + 1], bx = e.pts[2 * s + 2], by = e.pts[2 * s + 3];
@@ -120,6 +149,13 @@ class RoadMeshes {
       }
       if (e.kept) _markings(e, layer, carriage, laneM, chunkM, tris);
     }
+    if (crosswalks != null) {
+      final q = crosswalkQuads(graph, crosswalks);
+      for (var i = 0; i + 8 <= q.length; i += 8) {
+        final key = _chunkKey((q[i] + q[i + 4]) / 2, (q[i + 1] + q[i + 5]) / 2, chunkM);
+        tris(key, RoadPass.crosswalks).polygon(q, i, 4);
+      }
+    }
     final out = <int, Map<RoadPass, ui.Vertices>>{};
     acc.forEach((key, passes) {
       final m = <RoadPass, ui.Vertices>{};
@@ -132,13 +168,19 @@ class RoadMeshes {
     return RoadMeshes._(out);
   }
 
-  static void _markings(RoadEdge e, int layer, double carriage, double laneM, double chunkM,
-      _Tris Function(int, RoadPass) tris) {
+  static void _markings(
+    RoadEdge e,
+    int layer,
+    double carriage,
+    double laneM,
+    double chunkM,
+    _Tris Function(int, RoadPass) tris,
+  ) {
     final lanePass = layer < 0
         ? RoadPass.tunnelLaneLines
         : layer > 0
-            ? RoadPass.bridgeLaneLines
-            : RoadPass.laneLines;
+        ? RoadPass.bridgeLaneLines
+        : RoadPass.laneLines;
     final centerPass = layer > 0 ? RoadPass.bridgeCenterLines : RoadPass.centerLines;
     final lanes = math.max(1, (2 * carriage / laneM).round());
     final laneW = 2 * carriage / lanes;
@@ -171,6 +213,5 @@ class RoadMeshes {
     }
   }
 
-  static int _chunkKey(double x, double y, double chunkM) =>
-      City.chunkKey((x / chunkM).floor(), (y / chunkM).floor());
+  static int _chunkKey(double x, double y, double chunkM) => City.chunkKey((x / chunkM).floor(), (y / chunkM).floor());
 }

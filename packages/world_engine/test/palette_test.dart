@@ -41,6 +41,19 @@ void main() {
     expect(p.shadow, const Color(Tokens.colorCarShadow));
   });
 
+  test('v2: nyc has flat roofs and cast shadows, the others stay v1', () {
+    final nyc = Palette.forCity('nyc');
+    expect(nyc.roof, const Color(Tokens.colorCityNycRoof));
+    expect(nyc.roofEdge, const Color(Tokens.colorCityNycRoofEdge));
+    expect(nyc.castShadow, const Color(Tokens.colorCityNycCastShadow));
+    expect(nyc.flatRoofs, isTrue);
+    for (final p in [Palette.forCity('prague'), Palette.forCity('atlantis'), Palette.nightPalette]) {
+      expect(p.flatRoofs, isFalse);
+      expect(p.roofEdge, isNull);
+      expect(p.castShadow, isNull);
+    }
+  });
+
   test('night keeps the shared palette and the old shadow', () {
     expect(Palette.nightPalette.night, isTrue);
     expect(Palette.nightPalette.shadow, const Color(Tokens.colorCarShadow));
