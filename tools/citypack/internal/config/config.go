@@ -72,6 +72,11 @@ type Tuning struct {
 		GapMarginM   float64 `yaml:"gap_margin_m"`
 		MinBarrierM  float64 `yaml:"min_barrier_m"`
 	} `yaml:"zones"`
+	Trams struct {
+		MinTrackM     float64 `yaml:"min_track_m"`
+		StopSpacingM  float64 `yaml:"stop_spacing_m"`
+		StopMinChainM float64 `yaml:"stop_min_chain_m"`
+	} `yaml:"trams"`
 }
 
 func (t *Tuning) check() error {
@@ -84,6 +89,7 @@ func (t *Tuning) check() error {
 		"buildings.floor_height_m": b.FloorHeightM, "buildings.landmark_search_m": b.LandmarkSearchM,
 		"buildings.degenerate_m2": b.DegenerateM2, "ground.simplify_m": g.SimplifyM, "ground.min_area_m2": g.MinAreaM2,
 		"zones.street_width_m": t.Zones.StreetWidthM, "zones.gap_margin_m": t.Zones.GapMarginM, "zones.min_barrier_m": t.Zones.MinBarrierM,
+		"trams.min_track_m": t.Trams.MinTrackM, "trams.stop_spacing_m": t.Trams.StopSpacingM, "trams.stop_min_chain_m": t.Trams.StopMinChainM,
 	} {
 		if v <= 0 {
 			return fmt.Errorf("tuning.yaml: %s missing or not positive", name)

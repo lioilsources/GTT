@@ -333,7 +333,7 @@ func Pack(e *Env) error {
 		}
 		totalBytes += n
 	}
-	for _, name := range []string{"landmarks.pb", "spots.pb"} {
+	for _, name := range []string{"landmarks.pb", "spots.pb", "trams.pb"} {
 		b, err := os.ReadFile(e.W(name))
 		if err != nil {
 			return err

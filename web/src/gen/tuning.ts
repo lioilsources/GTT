@@ -85,6 +85,8 @@ export class Tuning {
   readonly ground: TuningGround;
   /** Pedestrian zones and bollards (specs/zones.md): citypack uses the first three, clients the rest. */
   readonly zones: TuningZones;
+  /** Trams (specs/trams.md): citypack uses min_track_m and the stop_* pair, clients the rest. */
+  readonly trams: TuningTrams;
   /** Chunk streaming (METROPOLE_PLAN 6.4): window in chunks around the player. */
   readonly streaming: TuningStreaming;
   readonly camera: TuningCamera;
@@ -158,6 +160,7 @@ export class Tuning {
     this.buildings = new TuningBuildings(r.sub('buildings'));
     this.ground = new TuningGround(r.sub('ground'));
     this.zones = new TuningZones(r.sub('zones'));
+    this.trams = new TuningTrams(r.sub('trams'));
     this.streaming = new TuningStreaming(r.sub('streaming'));
     this.camera = new TuningCamera(r.sub('camera'));
     this.drive = new TuningDrive(r.sub('drive'));
@@ -196,6 +199,7 @@ export class Tuning {
       buildings: this.buildings.toJson(),
       ground: this.ground.toJson(),
       zones: this.zones.toJson(),
+      trams: this.trams.toJson(),
       streaming: this.streaming.toJson(),
       camera: this.camera.toJson(),
       drive: this.drive.toJson(),
@@ -577,6 +581,111 @@ export class TuningZones {
   }
 
   static readonly keys = ['street_width_m', 'gap_margin_m', 'min_barrier_m', 'bollard_spacing_m', 'bollard_radius_m', 'bollard_height_m'] as const;
+}
+
+/** Trams (specs/trams.md): citypack uses min_track_m and the stop_* pair, clients the rest. */
+export class TuningTrams {
+  enabled: boolean;
+  /** dead-end spurs shorter than this are dropped (depots, sidings) */
+  minTrackM: number;
+  stopSpacingM: number;
+  /** only track runs between switches longer than this get stops */
+  stopMinChainM: number;
+  /** a stop closer than this ahead is skipped (already passing) */
+  stopCommitM: number;
+  maxTrams: number;
+  speedMps: number;
+  accelMps2: number;
+  brakeMps2: number;
+  minGapM: number;
+  lookAheadM: number;
+  /** lateral half-width of the track corridor for obstacles */
+  corridorM: number;
+  dwellS: number;
+  carsPerTram: number;
+  /** world metres (already scaled, no car_scale) */
+  carLengthM: number;
+  carWidthM: number;
+  jointGapM: number;
+  trailPoints: number;
+  hitMinMps: number;
+  hitStopS: number;
+  spawnIntervalS: number;
+  spawnTries: number;
+  spawnMinM: number;
+  spawnMaxM: number;
+  initialMinM: number;
+  spawnClearM: number;
+  despawnM: number;
+  seed: number;
+  /** drawn distance between the two rails (world metres) */
+  railGaugeM: number;
+
+  constructor(r: R) {
+    this.enabled = r.b('enabled');
+    this.minTrackM = r.d('min_track_m');
+    this.stopSpacingM = r.d('stop_spacing_m');
+    this.stopMinChainM = r.d('stop_min_chain_m');
+    this.stopCommitM = r.d('stop_commit_m');
+    this.maxTrams = r.i('max_trams');
+    this.speedMps = r.d('speed_mps');
+    this.accelMps2 = r.d('accel_mps2');
+    this.brakeMps2 = r.d('brake_mps2');
+    this.minGapM = r.d('min_gap_m');
+    this.lookAheadM = r.d('look_ahead_m');
+    this.corridorM = r.d('corridor_m');
+    this.dwellS = r.d('dwell_s');
+    this.carsPerTram = r.i('cars_per_tram');
+    this.carLengthM = r.d('car_length_m');
+    this.carWidthM = r.d('car_width_m');
+    this.jointGapM = r.d('joint_gap_m');
+    this.trailPoints = r.i('trail_points');
+    this.hitMinMps = r.d('hit_min_mps');
+    this.hitStopS = r.d('hit_stop_s');
+    this.spawnIntervalS = r.d('spawn_interval_s');
+    this.spawnTries = r.i('spawn_tries');
+    this.spawnMinM = r.d('spawn_min_m');
+    this.spawnMaxM = r.d('spawn_max_m');
+    this.initialMinM = r.d('initial_min_m');
+    this.spawnClearM = r.d('spawn_clear_m');
+    this.despawnM = r.d('despawn_m');
+    this.seed = r.i('seed');
+    this.railGaugeM = r.d('rail_gauge_m');
+  }
+
+  toJson(): Record<string, unknown> {
+    return {
+      enabled: this.enabled,
+      min_track_m: this.minTrackM,
+      stop_spacing_m: this.stopSpacingM,
+      stop_min_chain_m: this.stopMinChainM,
+      stop_commit_m: this.stopCommitM,
+      max_trams: this.maxTrams,
+      speed_mps: this.speedMps,
+      accel_mps2: this.accelMps2,
+      brake_mps2: this.brakeMps2,
+      min_gap_m: this.minGapM,
+      look_ahead_m: this.lookAheadM,
+      corridor_m: this.corridorM,
+      dwell_s: this.dwellS,
+      cars_per_tram: this.carsPerTram,
+      car_length_m: this.carLengthM,
+      car_width_m: this.carWidthM,
+      joint_gap_m: this.jointGapM,
+      trail_points: this.trailPoints,
+      hit_min_mps: this.hitMinMps,
+      hit_stop_s: this.hitStopS,
+      spawn_interval_s: this.spawnIntervalS,
+      spawn_tries: this.spawnTries,
+      spawn_min_m: this.spawnMinM,
+      spawn_max_m: this.spawnMaxM,
+      initial_min_m: this.initialMinM,
+      spawn_clear_m: this.spawnClearM,
+      despawn_m: this.despawnM,
+      seed: this.seed,
+      rail_gauge_m: this.railGaugeM,
+    };
+  }
 }
 
 /** Chunk streaming (METROPOLE_PLAN 6.4): window in chunks around the player. */
