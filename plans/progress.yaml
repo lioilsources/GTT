@@ -6,7 +6,7 @@
 # reopened: list of {date, reason} when an item went back from hotovo/ověřeno (regression).
 # Dropped scope: M0 point 5 (Flutter web build) – replaced by D1, see docs/m0.md.
 
-milestones: [M0, D0, D1, D2, M1, D3, M3]
+milestones: [M0, D0, D1, D2, M1, D3, M3, M2]
 
 items:
   # ---------- M0 – Hračka (scope)
@@ -141,6 +141,27 @@ items:
      started: 2026-11-22T10:25, done: 2026-11-22T10:40, commit: 55fae42, evidence: "soak 10 přepnutí NYC ↔ Praha v obou klientech bez úniku těles (web/test/citySoak.test.ts, app/test/cities_soak_test.dart, PR #84, #85); chybí 10 přepnutí ručně na telefonu"}
   - {id: M3-A4, milestone: M3, name: "matice parity pro rozsah M3 zelená", size: M, status: hotovo,
      started: 2026-11-22T10:40, done: 2026-11-22T10:42, commit: 55fae42, evidence: "metro parity report zelený: F-028–F-033 done/done, vektory Kuliček, Čáry a Nohejbalu v obou klientech"}
+
+  # ---------- M2 – New York naplno (plans/M2_NYC.md; vrací se po M3)
+  - {id: M2-S1, milestone: M2, name: "hledanost 3 se zátarasem", size: M, status: todo}
+  - {id: M2-S2, milestone: M2, name: "zvonící budky", size: M, status: todo}
+  - {id: M2-S3, milestone: M2, name: "rychlý přesun: metro a taxi", size: L, status: todo}
+  - {id: M2-S4, milestone: M2, name: "fotomísta a Foťák", size: M, status: todo}
+  - {id: M2-S5, milestone: M2, name: "obchody a bary", size: L, status: todo}
+  - {id: M2-S6, milestone: M2, name: "počasí (jasno, déšť, mlha)", size: M, status: todo}
+  - {id: M2-S7, milestone: M2, name: "tuning a kosmetika", size: L, status: todo}
+  - {id: M2-S8, milestone: M2, name: "40 aut v NYC", size: L, status: todo}
+  - {id: M2-S9A, milestone: M2, name: "minihry dávka A: Piškvorky, Čtyři v řadě, Mlýn, Reversi, Lodě, Posuvné puzzle, Městský kvíz", size: L, status: todo}
+  - {id: M2-S9B, milestone: M2, name: "minihry dávka B: Prší, Srdce, Kostkový poker, Prase", size: L, status: todo}
+  - {id: M2-S9C, milestone: M2, name: "minihry dávka C: Kulečník, Bowling, Minigolf, Had, Cihly, Bouchni krtka, Vzdušný hokej", size: L, status: todo}
+  - {id: M2-S9D, milestone: M2, name: "minihry dávka D: Drift zóna, Sprint A→B", size: M, status: todo}
+  - {id: M2-S9E, milestone: M2, name: "místní minihry: Stickball, Double Dutch (engine rhythm)", size: L, status: todo}
+  - {id: M2-S10, milestone: M2, name: "rádio (kostra stanic)", size: S, status: todo}
+  - {id: M2-A1, milestone: M2, name: "30 miniher v NYC: testy, vektory, Galerie v obou klientech", size: S, status: todo}
+  - {id: M2-A2, milestone: M2, name: "soak 10 smyček s novými systémy bez pádu", size: S, status: todo}
+  - {id: M2-A3, milestone: M2, name: "60 fps v dešti na Times Square na obou telefonech", size: S, status: todo}
+  - {id: M2-A4, milestone: M2, name: "matice parity pro rozsah M2 zelená", size: M, status: todo}
+  - {id: M2-A5, milestone: M2, name: "soft launch (rozhoduje Ol1n)", size: M, status: todo}
 
 # Content counters with targets. tests and fps are measured; the rest metro progress counts itself.
 counters:
