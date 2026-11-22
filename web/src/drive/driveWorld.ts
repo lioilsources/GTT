@@ -78,6 +78,11 @@ export class DriveWorld {
   readonly props = new Map<number, PropSet>();
   private readonly colliders = new Map<number, Body>();
   time = 0;
+  /**
+   * Client-side grip multiplier of the player's car (specs/weather.md "Přilnavost": rain_grip in
+   * rain); an input to the drive, not its rule, so drive vectors and scenarios keep 1.
+   */
+  gripScale = 1;
   private acc = 0;
   knockedCount = 0;
   /** Bumped when the prop set changes (chunk added or removed). */
@@ -226,6 +231,7 @@ export class DriveWorld {
       this.car.fly();
     } else {
       this.updateZoneMask();
+      this.car.gripScale = this.gripScale;
       this.car.drive(this.input, step, this.tuning.speedMps.cruise, this.tuning.speedMps.topDefault);
     }
     this.traffic?.preStep(step, this.car);

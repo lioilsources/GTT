@@ -48,6 +48,8 @@ export class Car {
   rearSlip = 0;
   frontSlip = 0;
   braking = false;
+  /** Multiplies both axles' grip (weather input, specs/weather.md); 1 = the spec's grip. */
+  gripScale = 1;
   reversing = false;
 
   // Scratch vectors: no allocations in the step.
@@ -224,8 +226,9 @@ export class Car {
     body.applyForceToCenter(this.f, true);
 
     // Lateral tyre impulses.
-    this.frontSlip = this.axle(this.axleOffset, this.wheelAngle, spec.grip_front, dt, fx, fy, vx, vy, w, m, px, py);
-    const rearGrip = input.handbrake ? spec.grip_rear * spec.drift_bias : spec.grip_rear;
+    const g = this.gripScale;
+    this.frontSlip = this.axle(this.axleOffset, this.wheelAngle, spec.grip_front * g, dt, fx, fy, vx, vy, w, m, px, py);
+    const rearGrip = (input.handbrake ? spec.grip_rear * spec.drift_bias : spec.grip_rear) * g;
     this.rearSlip = this.axle(rearOff, 0, rearGrip, dt, fx, fy, vx, vy, w, m, px, py);
     if (speed < t.stopSpeedMps && input.brake === 0 && input.steer === 0) {
       body.setAngularVelocity(w * t.stopSpinDamping);
