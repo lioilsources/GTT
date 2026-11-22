@@ -46,6 +46,8 @@ export interface ShopsFeature {
   readonly world: ShopsWorld | null;
   /** True while too many beers: main.ts replaces the drive input with `brake()`. */
   readonly drunk: boolean;
+  /** The souvenir shelf (Polička) as a fresh element: garage tab and the phone's Garage app. */
+  shelf(): HTMLElement;
   /** Per frame with the game dt (0 while paused): the 1 s tick. */
   update(stepDt: number, dt: number): void;
   /** HUD tick (~10×/s): the "Koupit" / "Bar" button, beers and the drunk bar. Call after the photo HUD. */
@@ -93,9 +95,9 @@ export function installShops(env: ShopsEnv): ShopsFeature {
     host.append(h('div.shop-app', {}, shelf()));
     return () => {};
   });
-  env.carsHud.extras.push(shelf);
+  env.carsHud.tabs.push({ id: 'shelf', label: 'garageTabShelf', order: 3, render: shelf });
   if (!world) {
-    return { world: null, drunk: false, update() {}, hud() {}, brake() {}, draw() {}, open: () => false, close() {} };
+    return { world: null, drunk: false, shelf, update() {}, hud() {}, brake() {}, draw() {}, open: () => false, close() {} };
   }
 
   // Bars with their own minigame play it from the bar card, not from "Hrát".
@@ -212,6 +214,7 @@ export function installShops(env: ShopsEnv): ShopsFeature {
   let shown: Shop | null = null;
   return {
     world,
+    shelf,
     get drunk() {
       return world.drunk;
     },

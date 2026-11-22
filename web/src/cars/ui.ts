@@ -6,6 +6,13 @@ import type { ParkedCar } from './parked';
 
 type T = (k: MessageKey, a?: Record<string, string | number>) => string;
 
+export interface GarageTab {
+  id: string;
+  label: MessageKey;
+  order: number;
+  render(refresh: () => void): HTMLElement | null;
+}
+
 const classKeys: Record<string, MessageKey> = {
   coupe: 'carClassCoupe',
   hatchback: 'carClassHatchback',
@@ -32,8 +39,14 @@ export class CarsHud {
   private release: (() => void) | null = null;
   /** A context button with priority ("Zvednout", specs/booths.md): while true, this one hides. */
   yieldTo: (() => boolean) | null = null;
-  /** Extra sections of the garage list after the cars (the souvenir shelf, specs/shops.md). */
-  extras: Array<() => HTMLElement | null> = [];
+  /**
+   * Tabs of the garage list after "Auta" (specs/garage.md "Garáž"): Tuning and Vzhled from the
+   * garage, Polička from the shops; shown in `order`. `render` gets a re-render callback.
+   */
+  readonly tabs: GarageTab[] = [];
+  /** Called when the garage list closes (the garage rebuilds the car from its upgrades). */
+  readonly onClose: Array<() => void> = [];
+  private tab = 'cars';
 
   /** True while the garage list is open: the world does not step (specs/cars.md, specs/pause.md). */
   get busy(): boolean {
@@ -79,14 +92,44 @@ export class CarsHud {
     }
   }
 
-  private openGarage(): void {
+  /** Closes the garage list (no-op when closed); listeners in `onClose` run once. */
+  closeGarage(): void {
+    if (this.sheet.hidden) return;
+    this.sheet.hidden = true;
+    this.sheet.replaceChildren();
+    this.release?.();
+    this.release = null;
+    this.tab = 'cars';
+    for (const fn of this.onClose) fn();
+  }
+
+  /** Opens the garage list on [tab] (default the last one shown, "Auta" when it was closed). */
+  openGarage(tab: string = this.tab): void {
+    const t = this.t;
+    const tabs = [{ id: 'cars', label: 'garageTabCars' as MessageKey, order: 0, render: () => this.carsTab() }, ...this.tabs]
+      .sort((a, b) => a.order - b.order);
+    this.tab = tabs.some((x) => x.id === tab) ? tab : 'cars';
+    const refresh = (): void => this.openGarage(this.tab);
+    const bar = tabs.length > 1
+      ? h('div.garage-tabs', {}, ...tabs.map((x) => h(x.id === this.tab ? 'button.garage-tab.on' : 'button.garage-tab', {
+        type: 'button',
+        'data-tab': x.id,
+        onclick: () => this.openGarage(x.id),
+      }, t(x.label))))
+      : null;
+    const body = tabs.find((x) => x.id === this.tab)!.render(refresh);
+    this.sheet.replaceChildren(
+      h('div.mg-card.garage-card', {}, bar, body,
+        h('p', {}, t('cashHud', { cash: this.fleet.state.cash })),
+        h('button.mg-btn.ghost', { type: 'button', onclick: () => this.closeGarage() }, t('close'))),
+    );
+    this.sheet.hidden = false;
+    this.release ??= overlays.open('garage');
+  }
+
+  /** "Auta": own cars to drive out with, cars for sale, the hop refill (specs/cars.md). */
+  private carsTab(): HTMLElement {
     const f = this.fleet, t = this.t;
-    const close = (): void => {
-      this.sheet.hidden = true;
-      this.sheet.replaceChildren();
-      this.release?.();
-      this.release = null;
-    };
     const rows = f.owned.map((id) => {
       const spec = f.specs.get(id);
       if (!spec) return null;
@@ -100,7 +143,7 @@ export class CarsHud {
           onclick: () => {
             f.select(id);
             this.onCarChanged();
-            close();
+            this.closeGarage();
             this.update();
           },
         },
@@ -133,14 +176,7 @@ export class CarsHud {
         },
       }, t('hopRefill'))
       : null;
-    this.sheet.replaceChildren(
-      h('div.mg-card', {}, h('h2', {}, t('garageTitle')), refill, ...rows,
-        sale.length ? h('h2', {}, t('garageForSale')) : null, ...sale,
-        ...this.extras.map((f) => f()),
-        h('p', {}, t('cashHud', { cash: f.state.cash })),
-        h('button.mg-btn.ghost', { type: 'button', onclick: close }, t('close'))),
-    );
-    this.sheet.hidden = false;
-    this.release ??= overlays.open('garage');
+    return h('div', {}, h('h2', {}, t('garageTitle')), refill, ...rows,
+      sale.length ? h('h2', {}, t('garageForSale')) : null, ...sale);
   }
 }

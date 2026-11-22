@@ -203,14 +203,14 @@ describe('save v4 (specs/save.md v3)', () => {
     stations: ['st'],
   };
 
-  it('spec version 3, fresh save version 4 with no souvenirs', () => {
-    expect(new SaveRules().specVersion).toBe(3);
-    expect(freshSave(sc)).toMatchObject({ version: 4, souvenirs: [] });
+  it('spec version 4, fresh save version 5 with no souvenirs', () => {
+    expect(new SaveRules().specVersion).toBe(4);
+    expect(freshSave(sc)).toMatchObject({ version: 5, souvenirs: [] });
   });
 
   it('migration 3 → 4 keeps everything, souvenirs = []', () => {
     const s = normalizeSave(sc, { ...v3, souvenirs: ['x'] });
-    expect([s.version, s.cash, s.stations, s.souvenirs]).toEqual([4, 300, ['st'], []]);
+    expect([s.version, s.cash, s.stations, s.souvenirs]).toEqual([5, 300, ['st'], []]);
   });
 
   it('v4: souvenirs without duplicates, missing = [], wrong type = fresh; round trip exact', () => {

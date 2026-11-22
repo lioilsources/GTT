@@ -28,6 +28,7 @@ import { installBooths } from './booths';
 import { installPhoto } from './photo';
 import { installShops } from './shops';
 import { installWeather } from './weather';
+import { installGarage } from './garage';
 import { installLoop } from './loop';
 import { opponentIndex } from './loop/logic';
 import { loadArt } from './art';
@@ -293,6 +294,8 @@ async function main(): Promise<void> {
   const shops = installShops({
     city, tuning, locale, t, drive, fleet, phone, loop, carsHud, npcPack, hud: $('hud'), rig: view.rig,
   });
+  // Tuning and looks (specs/garage.md): after the shops (the shelf tab); rebuilds the car from its upgrades.
+  const garage = installGarage({ tuning, t, fleet, carsHud, loop, view, shops });
   // Weather (specs/weather.md): random seed per start, starts clear; ?weather= sets a kind.
   const weather = installWeather({ cityId, tuning, t, drive, view, hud: $('hud'), params });
   installTravel({ cityId, tuning, t, phone, tracker: passport.tracker, store: loop.store, save: () => loop.save(), onSwitch: () => booths.clear() });
@@ -542,7 +545,7 @@ async function main(): Promise<void> {
 
   if (import.meta.env.DEV || params.has('debug')) {
     (window as unknown as Record<string, unknown>)['metro'] = {
-      engine, view, drive, fleet, city, tuning, frameTimes, pilot, bench, peds, phone, passport, loop, taxi, police: police.police, booths, fastTravel, photo, shops, weather,
+      engine, view, drive, fleet, city, tuning, frameTimes, pilot, bench, peds, phone, passport, loop, taxi, police: police.police, booths, fastTravel, photo, shops, weather, garage, carsHud,
       timing: () => ({ firstFrameMs, loadMs }),
     };
   }

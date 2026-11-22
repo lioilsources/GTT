@@ -96,10 +96,10 @@ describe('travel rules (specs/travel.md)', () => {
     for (const a of bad) expect(() => r.apply(s, a as unknown as TravelAction), JSON.stringify(a)).toThrow();
   });
 
-  it('registered for vectors with specVersion 1; save rules at specVersion 3', () => {
+  it('registered for vectors with specVersion 1; save rules at specVersion 4', () => {
     expect(rulesModules['travel']!().specVersion).toBe(1);
     expect(rulesModules['travel']!().id).toBe('travel');
-    expect(new SaveRules().specVersion).toBe(3);
+    expect(new SaveRules().specVersion).toBe(4);
   });
 });
 
@@ -283,13 +283,13 @@ describe('save v3 (specs/save.md v2)', () => {
     feed: { prefs: {}, visits: {}, districts: [] }, npc: { vibe: {}, contacts: [], recent: [] }, settings: { scheme: 'b', night: false },
   };
 
-  it('fresh save is version 4 with no stations', () => {
-    expect(freshSave(sc)).toMatchObject({ version: 4, stations: [] });
+  it('fresh save is version 5 with no stations', () => {
+    expect(freshSave(sc)).toMatchObject({ version: 5, stations: [] });
   });
 
   it('migration 2 → 3: everything kept, stations = [] (even when a v2 save carries some)', () => {
     const s = normalizeSave(sc, v2);
-    expect(s.version).toBe(4);
+    expect(s.version).toBe(5);
     expect([s.cash, s.settings.scheme, s.stations]).toEqual([300, 'b', []]);
     expect(normalizeSave(sc, { ...v2, stations: ['subway_times_sq'] }).stations).toEqual([]);
   });
@@ -298,7 +298,7 @@ describe('save v3 (specs/save.md v2)', () => {
     expect(normalizeSave(sc, { ...v2, version: 3, stations: ['b', 'a', 'b'] }).stations).toEqual(['b', 'a']);
     expect(normalizeSave(sc, { ...v2, version: 3 }).stations).toEqual([]);
     expect(normalizeSave(sc, { ...v2, version: 3, stations: [1] })).toEqual(freshSave(sc));
-    expect(normalizeSave(sc, { ...v2, version: 5 })).toEqual(freshSave(sc));
+    expect(normalizeSave(sc, { ...v2, version: 6 })).toEqual(freshSave(sc));
   });
 
   it('round trip of a v3 save through JSON is exact', () => {

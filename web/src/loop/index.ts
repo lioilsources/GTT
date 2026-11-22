@@ -76,8 +76,18 @@ export interface LoopApi {
   readonly savedSouvenirs: readonly string[];
   /** Live souvenirs for the save (set by the shops module; null = keep the loaded ones). */
   souvenirs: (() => string[]) | null;
+  /** Upgrades and looks of the loaded save (specs/garage.md); the garage module `load`s them. */
+  readonly savedGarage: GarageSave;
+  /** Live upgrades and looks for the save (set by the garage; null = keep the loaded ones). */
+  garage: (() => GarageSave) | null;
   /** Spots where "Hrát" never shows (bars with a minigame: the game is in the bar card, specs/shops.md). */
   noPlay: Set<string>;
+}
+
+/** Upgrade levels and looks per car as saved (specs/save.md format 5). */
+export interface GarageSave {
+  upgrades: Record<string, Record<string, number>>;
+  looks: Record<string, Record<string, number>>;
 }
 
 /** Loop glue of client W (specs/loop.md): loads the save, wires arrival → minigame → result → save. */
@@ -101,6 +111,7 @@ export async function installLoop(env: LoopEnv): Promise<LoopApi> {
   let savedNpc: Save['npc'] = { vibe: {}, contacts: [], recent: [] };
   let savedStations: string[] = [];
   let savedSouvenirs: string[] = [];
+  let savedGarage: GarageSave = { upgrades: {}, looks: {} };
 
   // ---------- save
   const snapshot = (): Save => {
@@ -117,6 +128,7 @@ export async function installLoop(env: LoopEnv): Promise<LoopApi> {
       settings: env.settings.get(),
       stations: api.stations ? api.stations() : savedStations,
       souvenirs: api.souvenirs ? api.souvenirs() : savedSouvenirs,
+      ...(api.garage ? api.garage() : savedGarage),
     });
   };
   const restore = (s: Save): void => {
@@ -128,6 +140,7 @@ export async function installLoop(env: LoopEnv): Promise<LoopApi> {
     savedNpc = s.npc;
     savedStations = [...(s.stations ?? [])];
     savedSouvenirs = [...(s.souvenirs ?? [])];
+    savedGarage = { upgrades: s.upgrades ?? {}, looks: s.looks ?? {} };
     if (npc) {
       const known = new Set(npc.pack.characters.map((c) => c.id));
       const skits = new Set(npc.pack.skits.map((k) => k.id));
@@ -317,6 +330,10 @@ export async function installLoop(env: LoopEnv): Promise<LoopApi> {
       return savedSouvenirs;
     },
     souvenirs: null,
+    get savedGarage() {
+      return savedGarage;
+    },
+    garage: null,
     noPlay: new Set(),
   };
 
