@@ -58,6 +58,7 @@ class CarSpec {
     required this.rarity,
     required this.tuningSlots,
     required this.paint,
+    this.hop,
   });
 
   factory CarSpec.fromJson(Map<String, Object?> j) => CarSpec(
@@ -80,6 +81,7 @@ class CarSpec {
         rarity: _str(j['rarity'], 'rarity', const ['common', 'rare', 'epic', 'legendary']),
         tuningSlots: [for (final e in _list(j['tuning_slots'], 'tuning_slots')) _str(e, 'tuning_slots[]', const ['engine', 'tyres', 'brakes', 'weight', 'drift'])],
         paint: _str(j['paint'], 'paint'),
+        hop: j['hop'] == null ? null : _map(j['hop'], 'hop'),
       );
 
   String id;
@@ -110,6 +112,8 @@ class CarSpec {
   List<String> tuningSlots;
   /// Key in design/tokens.json color.carPaint (body colour, tinted at runtime).
   String paint;
+  /// Air-tank hop over traffic (specs/hop.md).
+  Map<String, Object?>? hop;
 
   Map<String, Object?> toJson() => {
         'id': id,
@@ -131,6 +135,7 @@ class CarSpec {
         'rarity': rarity,
         'tuning_slots': tuningSlots,
         'paint': paint,
+        if (hop != null) 'hop': hop,
       };
 }
 

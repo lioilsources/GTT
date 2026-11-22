@@ -80,6 +80,7 @@ class Tuning {
         buildings = TuningBuildings._(r.sub('buildings')),
         ground = TuningGround._(r.sub('ground')),
         zones = TuningZones._(r.sub('zones')),
+        hop = TuningHop._(r.sub('hop')),
         trams = TuningTrams._(r.sub('trams')),
         streaming = TuningStreaming._(r.sub('streaming')),
         camera = TuningCamera._(r.sub('camera')),
@@ -139,6 +140,9 @@ class Tuning {
 
   /// Pedestrian zones and bollards (specs/zones.md): citypack uses the first three, clients the rest.
   final TuningZones zones;
+
+  /// Hop over traffic with an air tank (specs/hop.md); charges per car live in content/cars/<id>.json.
+  final TuningHop hop;
 
   /// Trams (specs/trams.md): citypack uses min_track_m and the stop_* pair, clients the rest.
   final TuningTrams trams;
@@ -225,6 +229,7 @@ class Tuning {
         'buildings': buildings.toJson(),
         'ground': ground.toJson(),
         'zones': zones.toJson(),
+        'hop': hop.toJson(),
         'trams': trams.toJson(),
         'streaming': streaming.toJson(),
         'camera': camera.toJson(),
@@ -564,6 +569,31 @@ class TuningZones {
       };
 
   static const keys = ['street_width_m', 'gap_margin_m', 'min_barrier_m', 'bollard_spacing_m', 'bollard_radius_m', 'bollard_height_m'];
+}
+
+/// Hop over traffic with an air tank (specs/hop.md); charges per car live in content/cars/<id>.json.
+class TuningHop {
+  TuningHop._(_R r)
+      : airS = r.d('air_s'),
+        heightM = r.d('height_m'),
+        minSpeedMps = r.d('min_speed_mps'),
+        flips = r.i('flips');
+
+  double airS;
+
+  /// top of the arc (drawing only)
+  double heightM;
+
+  double minSpeedMps;
+
+  int flips;
+
+  Map<String, Object> toJson() => {
+        'air_s': airS,
+        'height_m': heightM,
+        'min_speed_mps': minSpeedMps,
+        'flips': flips,
+      };
 }
 
 /// Trams (specs/trams.md): citypack uses min_track_m and the stop_* pair, clients the rest.
@@ -2082,7 +2112,7 @@ class TuningPhone {
         mapPlayerPx = r.d('map_player_px'),
         mapRoutePx = r.d('map_route_px');
 
-  /// driving runs this much slower while the phone is open
+  /// unused since specs/phone.md v3 (the phone pauses the game, specs/pause.md)
   double timeScale;
 
   /// phone height, % of the screen

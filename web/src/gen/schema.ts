@@ -30,6 +30,8 @@ export interface CarSpec {
   tuning_slots: ('engine' | 'tyres' | 'brakes' | 'weight' | 'drift')[];
   /** Key in design/tokens.json color.carPaint (body colour, tinted at runtime). */
   paint: string;
+  /** Air-tank hop over traffic (specs/hop.md). */
+  hop?: Record<string, unknown>;
 }
 
 export interface MinigameContext {
