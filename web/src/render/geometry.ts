@@ -74,15 +74,15 @@ export class Tris {
 
 /** Heights of the flat layers above the ground plane (m); keeps the draw order of METROPOLE_PLAN 6.3. */
 export const Z = {
-  ground: [0.0, 0.01, 0.02, 0.03, 0.04] as const, // park, plaza, pedestrian, rail, water
+  ground: [0.0, 0.01, 0.02, 0.03, 0.05] as const, // park, plaza, rail, water, pedestrian
   sidewalk: 0.06, alley: 0.07, asphalt: 0.08, laneLines: 0.09, centerLines: 0.1, roadblock: 0.11,
   skids: 0.12, props: 0.14, car: 0.3,
   tunnelShade: 0.2, tunnel: 0.22, tunnelLines: 0.23,
   bridgeEdge: 0.0, bridgeDeck: 0.02, bridgeLines: 0.04,
 } as const;
 
-// Pedestrian-zone paving sits above parks and plazas, below roads (specs/zones.md).
-const GROUND_ORDER = [GroundKind.PARK, GroundKind.PLAZA, GroundKind.PEDESTRIAN, GroundKind.RAIL, GroundKind.WATER];
+// Pedestrian-zone paving sits above parks, plazas, rail yards and water (Charles Bridge), below roads (specs/zones.md).
+const GROUND_ORDER = [GroundKind.PARK, GroundKind.PLAZA, GroundKind.RAIL, GroundKind.WATER, GroundKind.PEDESTRIAN];
 
 export function groundTris(c: ChunkData, pal: Palette, out: Tris): void {
   GROUND_ORDER.forEach((kind, k) => {
