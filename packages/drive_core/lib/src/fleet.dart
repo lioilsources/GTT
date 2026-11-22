@@ -36,6 +36,9 @@ class CarFleet {
   final List<void Function(CarEvent)> onOwnerQuip = [];
   final List<void Function(String car)> onCarChanged = [];
 
+  /// A car bought in the garage (M1-S11: the loop saves).
+  final List<void Function(String car, int price)> onBought = [];
+
   CarSpec get spec => specs[state.driving]!;
 
   // ---------- parked cars
@@ -181,7 +184,38 @@ class CarFleet {
   /// Cars for sale (M1-S11 shows them once there is cash).
   List<String> buyable() => rules.buyable(state);
 
-  void buy(String car) => state = rules.apply(state, CarsAction.buy(car));
+  void buy(String car) {
+    final before = state.cash;
+    state = rules.apply(state, CarsAction.buy(car));
+    for (final f in onBought) {
+      f(car, before - state.cash);
+    }
+  }
+
+  /// Cash lives in the cars state (specs/economy.md); the economy writes it back here.
+  void setCash(int cash) => state = state.copyWith(cash: cash < 0 ? 0 : cash);
+
+  /// Loads a saved ownership state (specs/save.md); swaps the driven body when the car differs.
+  void restore({required int cash, required List<String> owned, required String driving}) {
+    final own = owned.where(specs.containsKey).toList();
+    if (own.isEmpty) return;
+    final car = own.contains(driving) ? driving : own.first;
+    state = rules.start(
+      CarsConfig(
+        prices: {for (final e in specs.entries) e.key: e.value.price},
+        cash: cash < 0 ? 0 : cash,
+        owned: List.unmodifiable(own),
+        driving: car,
+      ),
+    );
+    if (drive.spec.id != car) {
+      final c = drive.car;
+      drive.replaceCar(spec, c.x, c.y, c.heading);
+      for (final f in onCarChanged) {
+        f(car);
+      }
+    }
+  }
 
   /// Drive out of the garage with an owned car; the current one stays inside (or is towed away).
   void select(String car) {

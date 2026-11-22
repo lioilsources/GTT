@@ -48,8 +48,29 @@ class PhoneController extends ChangeNotifier {
   bool isOpen = false;
   PhoneAppId? app;
 
-  /// arrived(spotId): the minigame launch hook for a later feature.
+  /// arrived(spotId): the minigame launch hook (the loop, specs/loop.md).
   final List<void Function(String spotId)> onArrived = [];
+
+  /// The last accepted feed card; the loop reads its distance and difficulty on arrival and clears it.
+  ({String spot, int distDm, int difficulty})? accepted;
+
+  /// Landmarks the player has discovered (passport stamps), for the feed's landmark bonus.
+  Set<String> Function() discovered = () => const {};
+
+  /// The feed state the save keeps (specs/save.md `feed`).
+  ({Map<String, int> prefs, Map<String, int> visits, List<String> districts}) feedSave() =>
+      (prefs: {..._prefs}, visits: {..._visits}, districts: _visitedDistricts.toList());
+
+  void feedRestore(({Map<String, int> prefs, Map<String, int> visits, List<String> districts}) f) {
+    _prefs = {...f.prefs};
+    _visits
+      ..clear()
+      ..addAll(f.visits);
+    _visitedDistricts
+      ..clear()
+      ..addAll(f.districts);
+    _deck = null;
+  }
   final navHud = ValueNotifier<NavHudState?>(null);
 
   /// i18n key of the toast shown now, or null.
@@ -106,7 +127,7 @@ class PhoneController extends ChangeNotifier {
       catalog: {for (final e in minigameCatalog.entries) e.key.id: e.value},
       districtAt: (x, y) => city.districtAt(x / 10, y / 10) ?? '',
       landmarks: [for (final l in city.landmarks.items) (id: l.id, x: l.x, y: l.y)],
-      discovered: const {},
+      discovered: discovered(),
       visits: _visits,
       landmarkRadiusDm: tuning.feed.landmarkRadiusDm,
       distDm: (id) {
@@ -129,6 +150,8 @@ class PhoneController extends ChangeNotifier {
     _deck = next;
     _prefs = next.prefs;
     if (op == FeedOp.accept) {
+      final card = next.deck.where((c) => c.spot == next.accepted).firstOrNull;
+      accepted = card == null ? null : (spot: card.spot, distDm: card.distDm, difficulty: card.difficulty);
       close();
       navigate(next.accepted);
     }

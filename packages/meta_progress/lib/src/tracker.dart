@@ -86,6 +86,20 @@ class PassportTracker {
 
   /// Save.stamps out.
   List<String> get stamps => [...state.stamps];
+
+  /// Loads saved stamps (specs/save.md); unknown ones are dropped by the rules.
+  void restore(List<String> stamps) {
+    final c = state.catalog;
+    state = rules.init({
+      'landmarks': c['landmark']!,
+      'districts': c['district']!,
+      'minigames': c['minigame']!,
+      'photos': c['photo']!,
+      'weights': tuning.weights,
+      'starsForStamp': tuning.starsForStamp,
+      'stamps': stamps,
+    }, 0);
+  }
   PassportResult get result => rules.result(state);
   bool has(String kind, String id) => state.stamps.contains(stampId(kind, id));
   void onStamp(void Function(StampEvent) f) => _listeners.add(f);

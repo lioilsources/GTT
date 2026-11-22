@@ -4,10 +4,14 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:npc_dialogue/npc_dialogue.dart';
 import 'package:shared_gen/shared_gen.dart';
 
 import '../game/metropole_game.dart';
 import '../l10n/app_localizations.dart';
+import '../loop/loop_controller.dart';
+import '../loop/loop_layer.dart';
+import '../loop/save_store.dart';
 import '../main.dart' show appClock;
 import '../phone/nav_hud.dart';
 import '../phone/phone_controller.dart';
@@ -32,18 +36,37 @@ class _GameScreenState extends State<GameScreen> {
   late final Future<MetropoleGame> _game = _load();
   ControlSchemeId _scheme = ControlSchemeId.a;
   PhoneController? _phone;
+  // Loop glue and the save (specs/loop.md, specs/save.md): read before the first frame.
+  LoopController? _loop;
+  LoopController? _finesWired;
+  final SaveStore _store = FileSaveStore();
+  Object? _saved;
+  DialogueSession? _npc;
 
   @override
   void dispose() {
+    _loop?.save();
+    _loop?.dispose();
     _phone?.dispose();
     super.dispose();
   }
 
   Future<MetropoleGame> _load() async {
     final assets = await GameAssets.load(widget.city, widget.car);
+    _saved = await _store.read(widget.city.id);
+    _npc = await ensureDialogueSession(assets.tuning, city: widget.city.id).then<DialogueSession?>((s) => s, onError: (_) => null);
     final game = MetropoleGame(assets);
     await game.preload();
     return game;
+  }
+
+  void _setSettings(MetropoleGame game, LoopSettings s) {
+    _scheme = ControlSchemeId.values.firstWhere((c) => c.name == s.scheme, orElse: () => ControlSchemeId.a);
+    game.setScheme(_scheme);
+    game.setNight(s.night);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) setState(() {});
+    });
   }
 
   @override
@@ -74,6 +97,20 @@ class _GameScreenState extends State<GameScreen> {
             );
           }
           final phone = _phone ??= PhoneController(game);
+          final loop = _loop ??= LoopController(
+            game,
+            phone,
+            store: _store,
+            npc: _npc,
+            saved: _saved,
+            settingsGet: () => (scheme: _scheme.name, night: game.night),
+            settingsSet: (s) => _setSettings(game, s),
+          );
+          // Police fines take cash through the economy (specs/economy.md); wired once per controller.
+          if (_finesWired != loop) {
+            _finesWired = loop;
+            game.police.onFined.add(loop.fine);
+          }
           return Stack(
             fit: StackFit.expand,
             children: [
@@ -104,6 +141,7 @@ class _GameScreenState extends State<GameScreen> {
                     game.setScheme(id);
                   },
                   onBench: game.startBench,
+                  onResetSave: loop.resetSave,
                 ),
                 onPassport: () =>
                     PassportScreen.open(context, game.passport, game.city.manifest.name, AboutInfo.of(game.city)),
@@ -111,6 +149,7 @@ class _GameScreenState extends State<GameScreen> {
               PoliceHud(police: game.police),
               NavHud(phone: phone),
               PhoneLayer(phone: phone),
+              LoopLayer(loop: loop),
               PassportOverlay(events: game.passportEvent, seconds: game.tuning.passport.postcardS),
               _BenchOverlay(game: game),
             ],
