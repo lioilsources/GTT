@@ -310,5 +310,6 @@
   spec: specs/booths.md@1
   vectors: vectors/booths.json
   lead: web
-  flutter: todo
-  web: todo
+  flutter: done
+  web: done
+  checks: {flutter: pass, web: pass}
