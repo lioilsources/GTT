@@ -9,6 +9,9 @@ není uvedeno jinak. Reprodukce: `tools/art/` (prompty, seedy, parametry workflo
 | `npc/*.png` (alfa) | BiRefNet-general přes ComfyUI-RMBG | MIT | vlastní dílo projektu GTT | odstranění pozadí, refine_foreground |
 | `postcards/nyc/*.png` | Qwen-Image (fp8), ComfyUI | Apache 2.0 | vlastní dílo projektu GTT | várka 1, seed 201 (carnegie_hall 203, federal_hall a met_museum 202), styl A, ořez 1080×1350, 256 barev |
 | `postcards/prague/*.png` | Qwen-Image (fp8), ComfyUI | Apache 2.0 | vlastní dílo projektu GTT | várka 1, seed 201, styl C, ořez 1080×1350, 256 barev |
+| `postcards/nyc/{guggenheim,msg}.png` | Qwen-Image (fp8), ComfyUI | Apache 2.0 | vlastní dílo projektu GTT | oprava 2, seed 214 (guggenheim) a 211 (msg), styl A, `tools/art/make_fix2.py` |
+| `postcards/prague/old_new_synagogue.png` | Qwen-Image (fp8), ComfyUI | Apache 2.0 | vlastní dílo projektu GTT | oprava 2, seed 214, styl C, nápis v okraji papíru přebarven (`tools/art/post_fix2.py`) |
+| `cars/lidovka/body.png` | Qwen-Image (fp8), ComfyUI + BiRefNet-general | Apache 2.0 / MIT | vlastní dílo projektu GTT | oprava 1, seed 316 (`tools/art/make_fix1.py`), ručně ořezáno a zmenšeno na 32 px/m |
 
 Nepoužívat pro herní assety: modely s nekomerční licencí (např. FLUX.1-dev, RMBG-2.0) a modely
 s omezující licencí (Illustrious-XL).

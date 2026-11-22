@@ -122,7 +122,9 @@ nyc/sidewalk_concrete, nyc/roof_tar, prague/cobblestone, prague/mosaic_sidewalk,
   Sprity, postavy a UI sdílené ve stylu A. Paleta a parametry risografu předány zvlášť (tokens, tuning).
 - `assets/npc/<id>.png` (= `_neutral`), `<id>_happy|_neutral|_annoyed.png` 1024², `<id>_bust.png`
   768×1280 (výraz happy), 22. 11. 2026, všech 6 postav, průhledné pozadí (BiRefNet-general, `tools/art/run_rmbg.py`).
-- `assets/postcards/nyc/*.png`, 22. 11. 2026, 31 z 34. Chybí (přegenerovávají se kvůli textu na
-  budovách): amnh, guggenheim, msg.
-- `assets/postcards/prague/*.png`, 22. 11. 2026, 19 z 20. Chybí old_new_synagogue (přegenerovává se).
+- `assets/cars/lidovka/body.png`, 22. 11. 2026, karoserie Lidky kolmo shora 56×148 (32 px/m, plátno +10 %),
+  alfa. `paint_mask.png` a `wheel.png` zatím chybí, ostatní auta taky (zatím jen test postupu).
+- `assets/postcards/nyc/*.png`, 22. 11. 2026, 33 z 34. Chybí amnh (Qwen píše nápis na štít ve všech
+  variantách, bude potřeba jiný postup).
+- `assets/postcards/prague/*.png`, 22. 11. 2026, všech 20.
 - Postup: `tools/art/make_batch1.py` (prompty, seedy) + `tools/art/run_board.py` (workflow ComfyUI).
