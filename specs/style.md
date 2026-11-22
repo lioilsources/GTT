@@ -20,7 +20,8 @@ nevzniká, protože barvy a čísla mají svá místa.
 - **Noc** zůstává v1 společná (`color.world.night`), skin se v noci neuplatní.
 - Fasáda budovy: `facades[seed mod len]` jako dosud, památka `landmark`. Střecha = fasáda ×
   `roofLight` jako dosud.
-- `shadow`: stín pod autem hráče, provozem a hlídkami (kde klient stín kreslí). Ve stylu A jsou
+- `shadow`: stín pod autem hráče, zaparkovanými auty, provozem, hlídkami a tramvajemi (kde klient
+  stín kreslí); chodci mají svůj token. Ve stylu A jsou
   stíny modré, ne černé. Kde klient stín nekreslí, v1 nic nepřidává.
 - Přepnutí města (`specs/cities.md`) přestaví geometrii v nové paletě jako přepnutí den/noc.
 - Textury povrchů (`assets/cities/<city>/…`) přijdou později; v1 jen plné barvy.
@@ -30,11 +31,11 @@ Zapíná `style.risograph.<city>`, jen ve dne. Efekt se týká jen **vrstvy svě
 zóny, budovy, koleje); auta, chodci, mobiliář, tramvaje, ikony a HUD se kreslí až po něm a bez
 něj. Inkousty `color.city.<city>.inks`, papír = `land`. Pro každý pixel obrazu světa `c` (px =
 fyzické pixely, `dpr` = poměr pixelů zařízení):
-1. **Posun tisku:** `o = misregistration_px × dpr`. Vzorek `c'` posunutý o `(o, o/2)`. Hrana
+1. **Posun tisku:** `o = misregistration_px × dpr`. Vzorek `c'` na pozici `p + (o, o/2)`. Hrana
    `e = min(1, |lum(c') − lum(c)| × 4)`. `c = mix(c, inks[0], fringe × e)` – tenký okraj prvního
    inkoustu vedle kontur, jako posunutá tisková deska.
-2. **Raster:** v buňkách `halftone_cell_px × dpr`, tečka = kruh s poloměrem úměrným
-   `1 − lum(c)`. Jen když `halftone_low ≤ lum(c) ≤ halftone_high` (polotóny, ne kontury ani
+2. **Raster:** v buňkách `halftone_cell_px × dpr`, tečka = kruh ve středu buňky s poloměrem
+   `(1 − lum(c)) × buňka × 0,7071` (černá vyplní celou buňku). Jen když `halftone_low ≤ lum(c) ≤ halftone_high` (polotóny, ne kontury ani
    papír): uvnitř tečky `c ×= 1 − halftone_strength`.
 3. **Zrno:** `n` = deterministický hash souřadnic buňky `grain_size_px × dpr` (rozsah −1…1,
    stálý mezi snímky, posouvá se se světem nebo je přilepený k obrazovce – obojí v pořádku);
