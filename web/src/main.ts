@@ -26,6 +26,7 @@ import { installPhone } from './phone';
 import { installPolice } from './police';
 import { installBooths } from './booths';
 import { installPhoto } from './photo';
+import { installShops } from './shops';
 import { installLoop } from './loop';
 import { opponentIndex } from './loop/logic';
 import { loadArt } from './art';
@@ -287,6 +288,10 @@ async function main(): Promise<void> {
     city, tuning, t, drive, phone, loop, carsHud, tracker: passport.tracker, hud: $('hud'), rig: view.rig,
     wanted: () => police.police.wantedLevel, size: () => size,
   });
+  // Shops and bars (specs/shops.md): after the photo, whose "Foťák" goes first.
+  const shops = installShops({
+    city, tuning, locale, t, drive, fleet, phone, loop, carsHud, npcPack, hud: $('hud'), rig: view.rig,
+  });
   installTravel({ cityId, tuning, t, phone, tracker: passport.tracker, store: loop.store, save: () => loop.save(), onSwitch: () => booths.clear() });
   // Fast travel by metro and taxi (specs/travel.md): stations unlock by passing, the move resets
   // traffic, patrols and pedestrians like a teleport.
@@ -322,12 +327,15 @@ async function main(): Promise<void> {
       input.reset();
       scheme.update(input);
       applyKeys(keys, input);
+      // Too many beers (specs/shops.md "Piva"): input ignored, the car brakes to a stop.
+      shops.brake();
     }
     drive.update(stepDt);
     police.update(stepDt, dt);
     phone.update(dt);
     taxi.update(stepDt);
     booths.update(stepDt, dt);
+    shops.update(stepDt, dt);
     const c = drive.car;
     // The Camera glides the rig to its framing view and back (specs/photo.md); otherwise it follows.
     if (!photo.camera(dt)) view.rig.follow(c.x, c.y, c.heading, c.speed, dt, tuning, c.forwardSpeed < -0.5);
@@ -365,6 +373,7 @@ async function main(): Promise<void> {
   function hud(): void {
     booths.hud();
     photo.hud(0.1);
+    shops.hud();
     fastTravel.hud(0.1);
     fleet.update();
     carsHud.update();
@@ -470,6 +479,7 @@ async function main(): Promise<void> {
       ctx.shadowBlur = 0;
     }
     booths.draw(ctx, size.w, size.h);
+    shops.draw(ctx, size.w, size.h);
     fastTravel.draw(ctx, size.w, size.h);
     phone.draw(ctx, size.w, size.h);
     taxi.draw(ctx, size.w, size.h);
@@ -527,7 +537,7 @@ async function main(): Promise<void> {
 
   if (import.meta.env.DEV || params.has('debug')) {
     (window as unknown as Record<string, unknown>)['metro'] = {
-      engine, view, drive, fleet, city, tuning, frameTimes, pilot, bench, peds, phone, passport, loop, taxi, police: police.police, booths, fastTravel, photo,
+      engine, view, drive, fleet, city, tuning, frameTimes, pilot, bench, peds, phone, passport, loop, taxi, police: police.police, booths, fastTravel, photo, shops,
       timing: () => ({ firstFrameMs, loadMs }),
     };
   }

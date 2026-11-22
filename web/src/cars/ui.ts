@@ -32,6 +32,8 @@ export class CarsHud {
   private release: (() => void) | null = null;
   /** A context button with priority ("Zvednout", specs/booths.md): while true, this one hides. */
   yieldTo: (() => boolean) | null = null;
+  /** Extra sections of the garage list after the cars (the souvenir shelf, specs/shops.md). */
+  extras: Array<() => HTMLElement | null> = [];
 
   /** True while the garage list is open: the world does not step (specs/cars.md, specs/pause.md). */
   get busy(): boolean {
@@ -134,6 +136,7 @@ export class CarsHud {
     this.sheet.replaceChildren(
       h('div.mg-card', {}, h('h2', {}, t('garageTitle')), refill, ...rows,
         sale.length ? h('h2', {}, t('garageForSale')) : null, ...sale,
+        ...this.extras.map((f) => f()),
         h('p', {}, t('cashHud', { cash: f.state.cash })),
         h('button.mg-btn.ghost', { type: 'button', onclick: close }, t('close'))),
     );

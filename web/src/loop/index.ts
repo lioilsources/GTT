@@ -46,8 +46,11 @@ export interface LoopApi {
   readonly busy: boolean;
   /** HUD tick (~10×/s): cash pill and the "Play" context button. */
   update(dt: number): void;
-  /** Starts the minigame of a spot (arrival or the context button). */
-  start(spotId: string): void;
+  /**
+   * Starts the minigame of a spot (arrival or the context button); `minigame` = a chosen one at a
+   * bar (specs/loop.md "Zvolená minihra"), default the spot's own.
+   */
+  start(spotId: string, minigame?: string): void;
   /** Police fine hook (specs/economy.md). */
   fine(amount: number): void;
   /** Tow fee hook for a wrecked car (specs/economy.md). */
@@ -69,6 +72,12 @@ export interface LoopApi {
   readonly savedStations: readonly string[];
   /** Live unlocked stations for the save (set by the travel module; null = keep the loaded ones). */
   stations: (() => string[]) | null;
+  /** Souvenirs of the loaded save (specs/shops.md); the shops module `load`s them. */
+  readonly savedSouvenirs: readonly string[];
+  /** Live souvenirs for the save (set by the shops module; null = keep the loaded ones). */
+  souvenirs: (() => string[]) | null;
+  /** Spots where "Hrát" never shows (bars with a minigame: the game is in the bar card, specs/shops.md). */
+  noPlay: Set<string>;
 }
 
 /** Loop glue of client W (specs/loop.md): loads the save, wires arrival → minigame → result → save. */
@@ -91,6 +100,7 @@ export async function installLoop(env: LoopEnv): Promise<LoopApi> {
   setDialogueSession(npc);
   let savedNpc: Save['npc'] = { vibe: {}, contacts: [], recent: [] };
   let savedStations: string[] = [];
+  let savedSouvenirs: string[] = [];
 
   // ---------- save
   const snapshot = (): Save => {
@@ -106,6 +116,7 @@ export async function installLoop(env: LoopEnv): Promise<LoopApi> {
       npc: npc ? { vibe: { ...npc.state.vibe }, contacts: [...npc.state.contacts], recent: [...npc.state.recent] } : savedNpc,
       settings: env.settings.get(),
       stations: api.stations ? api.stations() : savedStations,
+      souvenirs: api.souvenirs ? api.souvenirs() : savedSouvenirs,
     });
   };
   const restore = (s: Save): void => {
@@ -116,6 +127,7 @@ export async function installLoop(env: LoopEnv): Promise<LoopApi> {
     phone.feedRestore(s.feed);
     savedNpc = s.npc;
     savedStations = [...(s.stations ?? [])];
+    savedSouvenirs = [...(s.souvenirs ?? [])];
     if (npc) {
       const known = new Set(npc.pack.characters.map((c) => c.id));
       const skits = new Set(npc.pack.skits.map((k) => k.id));
@@ -184,10 +196,12 @@ export async function installLoop(env: LoopEnv): Promise<LoopApi> {
     });
   }
 
-  function start(spotId: string): void {
+  function start(spotId: string, chosen?: string): void {
     const spot = spotById.get(spotId);
-    if (busy || !spot || !spot.minigame || inWorldGame()) return;
-    const id = spot.minigame as MinigameId;
+    const mg = chosen ?? spot?.minigame;
+    if (busy || !spot || !mg || inWorldGame()) return;
+    // Everything but the minigame (opponent, difficulty, plays) still follows the spot.
+    const id = mg as MinigameId;
     const meta = minigameCatalog[id];
     const make = minigames[id];
     if (!meta) return;
@@ -254,7 +268,7 @@ export async function installLoop(env: LoopEnv): Promise<LoopApi> {
       const c = env.drive.car;
       let s: LoopSpot | null = null;
       if (!busy && !phone.phone.isOpen && !phone.nav.active && !inWorldGame() && !api.yieldTo?.()) {
-        const now = spotInReach(loopSpots, c.x, c.y, c.speed, c.layer, tuning.loop);
+        const now = spotInReach(api.noPlay.size ? loopSpots.filter((x) => !api.noPlay.has(x.id)) : loopSpots, c.x, c.y, c.speed, c.layer, tuning.loop);
         if (now) {
           s = now;
           holdS = tuning.loop.actionHoldS;
@@ -299,6 +313,11 @@ export async function installLoop(env: LoopEnv): Promise<LoopApi> {
       return savedStations;
     },
     stations: null,
+    get savedSouvenirs() {
+      return savedSouvenirs;
+    },
+    souvenirs: null,
+    noPlay: new Set(),
   };
 
   // ?play=<spotId> starts that spot's minigame right away (DUALSTACK 6.6 debug parameter).

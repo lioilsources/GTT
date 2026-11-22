@@ -61,6 +61,11 @@ export class ArtIndex {
     return this.first(`npc/${id}_bust.png`);
   }
 
+  /** Souvenir on the Garage shelf (specs/shops.md): `souvenirs/<id>.png` or null (icon). */
+  souvenir(id: string): string | null {
+    return this.first(`souvenirs/${id}.png`);
+  }
+
   /** Landmark postcard: `postcards/<city>/<id>.png` or null (placeholder drawing). */
   postcard(city: string, id: string): string | null {
     return this.first(`postcards/${city}/${id}.png`);
