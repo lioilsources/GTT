@@ -304,6 +304,7 @@ export type MessageKey =
   | "carClassPickup"
   | "carClassSedan"
   | "carClassMicro"
+  | "carClassSupersport"
   | "hopButton"
   | "hopRefill"
   | "hopEmpty"
@@ -651,6 +652,7 @@ export const messages: Record<Locale, Record<MessageKey, string>> = {
     carClassPickup: "Pick-up",
     carClassSedan: "Sedan",
     carClassMicro: "Mikro",
+    carClassSupersport: "Supersport",
     hopButton: "Skok",
     hopRefill: "Doplnit vzduch",
     hopEmpty: "Kontejner vzduchu je prázdný",
@@ -996,6 +998,7 @@ export const messages: Record<Locale, Record<MessageKey, string>> = {
     carClassPickup: "Pick-up",
     carClassSedan: "Sedan",
     carClassMicro: "Micro",
+    carClassSupersport: "Supercar",
     hopButton: "Hop",
     hopRefill: "Refill air",
     hopEmpty: "Air tank empty",

@@ -347,6 +347,7 @@
   "carClassPickup": "Pick-up",
   "carClassSedan": "Sedan",
   "carClassMicro": "Micro",
+  "carClassSupersport": "Supercar",
   "hopButton": "Hop",
   "hopRefill": "Refill air",
   "hopEmpty": "Air tank empty",
