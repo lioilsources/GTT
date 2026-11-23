@@ -163,3 +163,33 @@ export function ridesEdge(e: RoadEdge | null, layer: number, dist: number, margi
   const ground = !e.bridge && !e.tunnel && e.layerFrom === 0 && e.layerTo === 0;
   return !ground && dist <= e.width / 2 + margin;
 }
+
+/**
+ * Collision layer of the player's car on its road edge (specs/terrain.md "Výška pod bodem"): the
+ * tracker's layer, except on the layer-0 half of a structure. A bridge (any part of it) or a ramp
+ * whose surface stands more than `clear` above the terrain counts as +1, a ramp more than `clear`
+ * below it as −1, while the car is on that surface: within width/2 + margin of the axis and at its
+ * height (onSurface: a car on the road under a deck stays on 0). Buildings, bollards, trees,
+ * water and props of the ground then leave the car alone and the rails keep it on the deck.
+ */
+export function structureLayer(
+  e: RoadEdge, layer: number, dist: number, margin: number, edgeZ: number, terrainZ: number | null, carZ: number, clear: number,
+): number {
+  if (layer !== 0 || e.z === null) return layer;
+  if (!e.bridge && !e.tunnel && e.layerFrom === 0 && e.layerTo === 0) return 0;
+  if (dist > e.width / 2 + margin || !onSurface(edgeZ, terrainZ, carZ, clear)) return 0;
+  if (terrainZ !== null && edgeZ < terrainZ - clear) return -1;
+  if (e.bridge || (terrainZ !== null && edgeZ > terrainZ + clear)) return 1;
+  return 0;
+}
+
+/**
+ * The car (body height carZ) is on an edge surface at edgeZ, or over it: not more than `clear`
+ * below it (a car on the road under a deck is not on the deck; one flying over it will land
+ * there). A surface sunk under the terrain (a tunnel mouth) needs both ways, so a car on the
+ * ground above does not drop into it.
+ */
+export function onSurface(edgeZ: number, terrainZ: number | null, carZ: number, clear: number): boolean {
+  if (carZ < edgeZ - clear) return false;
+  return !(terrainZ !== null && edgeZ < terrainZ - clear) || carZ <= edgeZ + clear;
+}
