@@ -262,6 +262,29 @@ func Pack(e *Env) error {
 		return err
 	}
 	if nat != nil {
+		// The terrain step can flag more decks (deck ends in the air) after the trees step:
+		// no tree stays in any final deck footprint.
+		ob := &obstacles{deckGrid: map[[2]int][]int{}}
+		for _, ed := range g.Edges {
+			if !ed.Tunnel && !groundEdge(ed) {
+				ob.addDeck(ed)
+			}
+		}
+		keep, dropped := nat.trees[:0], 0
+		for _, t := range nat.trees {
+			crown := e.C.Tuning.Nature.TreeSizes[[]string{"S", "M", "L"}[t.Size&3]].CrownR
+			if ob.underDeck(geo.Pt{X: t.X, Y: t.Y}, crown+e.C.Tuning.Nature.Pipeline.DeckTreeMarginM) {
+				dropped++
+				continue
+			}
+			keep = append(keep, t)
+		}
+		nat.trees = keep
+		if dropped > 0 {
+			slog.Info("pack: trees under decks flagged by the terrain step dropped", "count", dropped)
+		}
+	}
+	if nat != nil {
 		// Classified water and green replace the ground step's plain WATER and PARK meshes.
 		kept := ground[:0]
 		for _, gr := range ground {
@@ -300,6 +323,7 @@ func Pack(e *Env) error {
 		return err
 	}
 	barriers = append(barriers, alleys.Barriers...)
+	barriers = clipBarriers(barriers, newDriveSurfaces(g, e.C.Tuning.SidewalkWidthM), e.C.Tuning.Zones.MinBarrierM)
 	for i := range barriers {
 		// Canonical direction so the same input packs to the same bytes.
 		b := barriers[i].Pts

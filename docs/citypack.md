@@ -66,6 +66,15 @@ MountainsSimulator/terrain-fetch (`internal/dem/`).
   Praha 53, NYC 61): v jejich půdorysu + `nature.pipeline.deck_tree_margin_m` neroste strom;
   validate hlídá 0 stromů v půdorysu a spojitou výšku desky (konec hrany = výška uzlu, skok
   uvnitř hrany ≤ 0,05 m).
+- T3b: uzel, kde ponechaná silnice na konstrukci potká jen vedlejší silnice na zemi, zůstává na
+  konstrukci; hrany na konstrukci u obou konců mají sklon mostu (Nuselský most: nájezdy 0,20 →
+  0,08, deska neklesá na svah). Pozemní hrana, která z uzlu mostu pokračuje ve vzduchu nad
+  conformovaným terénem (`elevated_flag`), je most (NYC West 38th Street, 2 hrany); profil a
+  conform pak běží znovu. Terén do poloviny šířky silnice + `trench.margin_m` nese výšku silnice
+  (validate: nad silnicí ≤ `trench.max_m` až na `trench.share` vzorků).
+- Sloupky (zóny i uličky) se v kroku `pack` ořežou o vozovky ponechaných silnic a půdorysy mostů a
+  nájezdů (Čechův a Jiráskův most); validate jich tam chce 0. Stromy v půdorysu desky, kterou
+  označil až krok `elevation`, `pack` vypustí.
 - Hrana nad vodou aspoň `bridge_over_water_m` v kuse, napojená na obou koncích, je most i bez
   příznaku (NYC: 2 hrany); slepá hrana nad vodou (molo) zůstane silnicí.
 
@@ -85,8 +94,10 @@ jen LAZ v S-JTSK (ATOM `atom.cuzk.gov.cz/DMR4G-SJTSK`), převod na mřížku pot
 | okraj silnice mimo terén > 0,3 m | 187 z 100 516 (0,2 %) | 240 z 55 429 (0,4 %) |
 | vozovka ponechané silnice vs terén > 0,15 m (T3) | 79 z 187 946, max 0,42 m | 191 z 82 919, max 0,87 m (serpentiny) |
 | body mřížky ve vodě nad hladinou (T3) | 0 | 0 (dřív 357, max 32 m pod mosty) |
-| mosty pod plnou světlostí (varování) | 14 vzorků | 172 vzorků (nábřeží u předmostí) |
-| stromy (žádný v půdorysu mostu či nájezdu) | 60 997 (35 392 ze Street Tree Census) | 32 793 (OSM + parky) |
+| mosty pod plnou světlostí (varování) | 14 vzorků | 171 vzorků (nábřeží u předmostí) |
+| stromy (žádný v půdorysu mostu či nájezdu) | 60 996 (35 392 ze Street Tree Census) | 32 782 (OSM + parky) |
+| sloupky na vozovce či mostě (T3b) | 284 → 0 | 64 → 0 |
+| terén > 0,3 m nad silnicí vedle ní (T3b) | 121 z 451 224 | 686 z 269 091 (Nerudova 8 z 1 062, max 0,68 m) |
 | uzavřené štěrbiny, `micro_only` uličky | 9 080, 57 | 3 655, 99 |
 | balíček | 4,5 MB | 3,1 MB |
 

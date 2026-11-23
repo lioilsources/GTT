@@ -30,6 +30,9 @@ func (r Road) strip() float64 {
 // bilinear sampling anywhere on the strip reads the road profile. Then a blend to the terrain.
 type ConformParams struct {
 	SupportM    float64
+	// MarginM widens the support past the corridor (sidewalks) edge: terrain within road width
+	// / 2 + MarginM reads the road height, so a street never sits in a trench (trench.margin_m).
+	MarginM     float64
 	BlendM      float64
 	UnderwaterM float64
 	// Fit: after the nodes take their road heights, samples every FitStepM along and across each
@@ -76,7 +79,7 @@ func Conform(out *Raster, terrain func(geo.Pt) float64, water func(geo.Pt) (floa
 	}
 	reach := p.SupportM + p.BlendM
 	for _, r := range roads {
-		ext := r.HalfWidthM + reach
+		ext := r.HalfWidthM + p.MarginM + reach
 		i0 := int(math.Floor((math.Min(r.A.X, r.B.X) - ext - out.X0) / out.Step))
 		i1 := int(math.Ceil((math.Max(r.A.X, r.B.X) + ext - out.X0) / out.Step))
 		j0 := int(math.Floor((math.Min(r.A.Y, r.B.Y) - ext - out.Y0) / out.Step))
@@ -88,11 +91,13 @@ func Conform(out *Raster, terrain func(geo.Pt) float64, water func(geo.Pt) (floa
 				dist := c.Dist(q)
 				ds := dist - r.strip()
 				pk := pick{rank: 2, d: dist - r.HalfWidthM, z: r.ZA + (r.ZB-r.ZA)*t, edge: r.Edge}
-				if ds <= p.SupportM {
+				// The carriageway's own cells go to a kept road first; the band out to the corridor
+				// edge + MarginM goes to the nearest road (an alley mouth keeps its own height).
+				switch {
+				case ds <= p.SupportM && r.Kept:
+					pk.rank, pk.d = 0, ds
+				case ds <= p.SupportM || dist-r.HalfWidthM-p.MarginM <= p.SupportM:
 					pk.rank, pk.d = 1, ds
-					if r.Kept {
-						pk.rank = 0
-					}
 				}
 				k := j*out.W + i
 				if better(pk, best[k]) {
@@ -116,8 +121,8 @@ func Conform(out *Raster, terrain func(geo.Pt) float64, water func(geo.Pt) (floa
 			continue
 		}
 		base := terrain(out.Pos(k%out.W, k/out.W))
-		// Blend from the strip support edge: d is measured from the corridor edge here.
-		d := b.d - p.SupportM
+		// Blend from the support edge: d is measured from the corridor edge here.
+		d := b.d - p.MarginM - p.SupportM
 		if b.rank > 2 || d >= p.BlendM {
 			out.Z[k] = base
 			continue

@@ -74,6 +74,7 @@ type Edge struct {
 	DeckM      float64 // > 0: curated deck height above water (iconic bridges), replaces ClearWaterM
 	Bridge     bool    // terrain.bridge.max_grade applies
 	Tunnel     bool    // terrain.tunnel.max_grade applies
+	Kept       bool    // a kept road decides a node's layer over minor roads (see Profile)
 }
 
 // Input is everything the profile needs besides Params.
@@ -186,10 +187,36 @@ func Profile(in Input, p Params) Result {
 			}
 		}
 	}
-	// Bridges and tunnels have their own limit; other elevated ramps keep their class limit.
+	// A kept road running through a node on a structure keeps it there when only minor roads
+	// join at ground level (the service road onto Nuselský most): the minor road climbs, the
+	// deck does not dip to the hillside.
+	keptAt := make([]map[int]int, len(in.Nodes))
+	for _, e := range in.Edges {
+		if !e.Kept {
+			continue
+		}
+		for _, nl := range [2][2]int{{e.From, e.LayerFrom}, {e.To, e.LayerTo}} {
+			if keptAt[nl[0]] == nil {
+				keptAt[nl[0]] = map[int]int{}
+			}
+			keptAt[nl[0]][nl[1]]++
+		}
+	}
+	for i := range in.Nodes {
+		if vs[i].layer != 0 || keptAt[i] == nil || keptAt[i][0] > 0 {
+			continue
+		}
+		for _, l := range []int{1, -1} {
+			if keptAt[i][l] >= 2 {
+				vs[i].layer = l
+			}
+		}
+	}
+	// Bridges and tunnels have their own limit, so does an edge up on a structure at both ends
+	// (a viaduct without the bridge flag: Nuselský most approaches); ramps keep their class limit.
 	for k := range links {
 		e := in.Edges[links[k].edge]
-		if e.Bridge {
+		if e.Bridge || (e.LayerFrom > 0 && e.LayerTo > 0) {
 			links[k].grade = math.Min(links[k].grade, p.BridgeGrade)
 		}
 		if e.Tunnel {

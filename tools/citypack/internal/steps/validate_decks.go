@@ -63,12 +63,44 @@ func (e *Env) validateDecks(p *PackData, fail func(string, ...any)) {
 			}
 		}
 	}
-	slog.Info("validate: decks", "edges", decks, "bridges_with_a_layer_0_end", level0, "max_node_step_m", fmt.Sprintf("%.2f", nodeStep), "max_inner_step_m", fmt.Sprintf("%.2f", inner), "trees_under", under)
+	// Bollards: none on a kept carriageway or a deck (Čechův and Jiráskův bridgeheads).
+	ds := newDriveSurfaces(g, e.C.Tuning.SidewalkWidthM)
+	onRoad := 0
+	var onRoadAt geo.Pt
+	for _, c := range p.Chunks {
+		for _, br := range c.Barriers {
+			for i := 0; i+1 < len(br.Points); i += 2 {
+				q := geo.Pt{X: float64(br.Points[i]) / 10, Y: float64(br.Points[i+1]) / 10}
+				var nx geo.Pt
+				if i+3 < len(br.Points) {
+					nx = geo.Pt{X: float64(br.Points[i+2]) / 10, Y: float64(br.Points[i+3]) / 10}
+				} else {
+					nx = q
+				}
+				l := q.Dist(nx)
+				for s := 0.0; s <= l; s += 0.5 {
+					pt := q
+					if l > 0 {
+						pt = q.Add(nx.Sub(q).Mul(s / l))
+					}
+					if ds.inside(pt, 0.15) { // dm rounding
+						onRoad++
+						onRoadAt = pt
+						break
+					}
+				}
+			}
+		}
+	}
+	slog.Info("validate: decks", "edges", decks, "bridges_with_a_layer_0_end", level0, "max_node_step_m", fmt.Sprintf("%.2f", nodeStep), "max_inner_step_m", fmt.Sprintf("%.2f", inner), "trees_under", under, "bollard_points_on_road", onRoad)
 	if nodeStep > deckStepMaxM {
 		fail("deck height steps %.2f m at a node (%s)", nodeStep, nodeAt)
 	}
 	if inner > deckStepMaxM {
 		fail("deck height jumps %.2f m inside an edge (%s)", inner, innerAt)
+	}
+	if onRoad > 0 {
+		fail("%d bollard segments stand on a kept carriageway or a deck (e.g. at %.0f, %.0f)", onRoad, onRoadAt.X, onRoadAt.Y)
 	}
 	if under > 0 {
 		fail("%d trees stand in a bridge or ramp footprint (e.g. at %.0f, %.0f)", under, underAt.X, underAt.Y)

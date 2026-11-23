@@ -18,6 +18,7 @@ type conformSeg struct {
 	a, b   geo.Pt
 	za, zb float64
 	strip  float64
+	hw     float64
 	kept   bool
 	edge   int
 }
@@ -26,11 +27,12 @@ type conformIndex struct {
 	segs    []conformSeg
 	grid    map[[2]int][]int
 	support float64
+	margin  float64
 }
 
 // newConformIndex: the ground edges, as conform receives them (elevation.go).
-func newConformIndex(p *PackData, sidewalkM, support float64) *conformIndex {
-	ci := &conformIndex{grid: map[[2]int][]int{}, support: support}
+func newConformIndex(p *PackData, sidewalkM, support, margin float64) *conformIndex {
+	ci := &conformIndex{grid: map[[2]int][]int{}, support: support, margin: margin}
 	for i, ed := range p.Graph.Edges {
 		if !groundEdge(ed) {
 			continue
@@ -41,10 +43,10 @@ func newConformIndex(p *PackData, sidewalkM, support float64) *conformIndex {
 		}
 		strip := carriageway(ed, sidewalkM)
 		for k := 1; k < len(pts); k++ {
-			s := conformSeg{a: pts[k-1], b: pts[k], za: zs[k-1], zb: zs[k], strip: strip, kept: ed.Kept, edge: i}
+			s := conformSeg{a: pts[k-1], b: pts[k], za: zs[k-1], zb: zs[k], strip: strip, hw: float64(ed.WidthM) / 2, kept: ed.Kept, edge: i}
 			ci.segs = append(ci.segs, s)
 			n := len(ci.segs) - 1
-			r := strip + support
+			r := math.Max(strip, float64(ed.WidthM)/2+margin) + support
 			cellsOf(math.Min(s.a.X, s.b.X)-r, math.Min(s.a.Y, s.b.Y)-r, math.Max(s.a.X, s.b.X)+r, math.Max(s.a.Y, s.b.Y)+r,
 				func(c [2]int) { ci.grid[c] = append(ci.grid[c], n) })
 		}
@@ -64,12 +66,14 @@ func (ci *conformIndex) assign(c geo.Pt, inWater bool, only int) (edge int, z fl
 			continue
 		}
 		q, t := geo.ClosestOnSegment(c, s.a, s.b)
-		d := q.Dist(c) - s.strip
-		if d > ci.support+0.15 { // pack points and heights are rounded to dm
+		dist := q.Dist(c)
+		d := dist - s.strip
+		// pack points and heights are rounded to dm
+		if d > ci.support+0.15 && dist-s.hw-ci.margin > ci.support+0.15 {
 			continue
 		}
 		rank := 1
-		if s.kept {
+		if s.kept && d <= ci.support+0.15 {
 			rank = 0
 		}
 		sz := s.za + (s.zb-s.za)*t
