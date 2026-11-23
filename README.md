@@ -1,11 +1,49 @@
 # Metropole
 
-Volné ježdění autem po skutečných metropolích – mobilní hra na výšku, ovládaná jedním palcem.
-Úkoly se vybírají ve vertikálním feedu na herním telefonu, každý je minihra na konkrétním místě ve městě.
-Zadání a uzavřená rozhodnutí: [Prompts/00-METROPOLE_PLAN.md](Prompts/00-METROPOLE_PLAN.md).
+Volné ježdění autem po skutečném New Yorku, Praze a Tokiu na telefonu na výšku, s minihrami z vertikálního feedu.
 
-**Stav: M0 – Hračka.** Jezdí se po Midtownu (30.–60. ulice, od řeky k řece). Bez provozu, chodců,
-policie, feedu, miniher a ukládání. Co je hotové a co zbývá k akceptaci: [docs/m0.md](docs/m0.md).
+**Zahraj si v prohlížeči:** <https://lioilsources.github.io/GTT/> (nejlíp na telefonu).
+
+Bez zbraní a bez zabíjení: chodci vždy uskočí, policie jen honí a pokutuje (R7). Žádné reálné
+značky: auta i podniky jsou fiktivní, památky a instituce mají skutečná jména (R10).
+Zadání: [Prompts/](Prompts/) (00–05), postup: [plans/PROGRESS.md](plans/PROGRESS.md).
+
+## Stav
+
+<!-- metro:status -->
+| | |
+|---|---|
+| Města s balíčkem | 3 |
+| Minihry v katalogu | 33 (web 33, Flutter 29) |
+| Auta | 43 |
+| Památky | 87 |
+| Skity NPC | 50 |
+| Testy | 1038 / 1039 prochází (2026-11-23T04:23) |
+| Funkce (`parity.yaml`) | 59 v obou klientech, 8 jen web, 0 jen Flutter, 8 rozpracováno |
+
+_Stav k 2026-11-23, generuje `metro progress`._
+<!-- /metro:status -->
+
+## Parametry URL (web)
+
+| Parametr | Co dělá |
+|---|---|
+| `?city=nyc` · `prague` · `tokyo` | start ve městě |
+| `?spot=<id>` | start u místa z `content/cities/<id>/spots.yaml` |
+| `?gallery` | galerie miniher bez jízdy |
+| `?mg=<id>` | rovnou jedna minihra z `content/minigames/catalog.yaml` |
+| `?debug` | ladicí panel s hodnotami z `tuning.yaml` |
+
+## Jak přidat město
+
+1. `content/cities/<id>/city.yaml` (jméno, počátek projekce, strana provozu) a `area.geojson`
+   s hranicí; vzor je `content/cities/prague/`.
+2. `districts.yaml`, `landmarks.yaml` a `spots.yaml`: čtvrti, památky a místa miniher.
+3. `run/bin/citypack build <id>`: stáhne Overture a výšky a postaví balíček; `citypack validate <id>`
+   musí projít (`docs/citypack.md`).
+4. `run/bin/citypack publish <id>` zapíše verzi do `packs.lock`; id přidej do `bundle_cities`
+   v `metro.yaml`.
+5. `run/bin/metro gen && run/bin/metro sync`, pak `cd web && npm run dev` a `?city=<id>`.
 
 ## Spuštění
 
@@ -20,7 +58,8 @@ cd web && npm ci && npm run dev         # webový klient (Babylon.js)
 Sdílená vrstva (`metro`, generovaný kód, vektory, parita): [docs/metro.md](docs/metro.md).
 
 Ovládání na klávesnici (desktop): šipky / WASD, mezerník = ruční brzda.
-Webový klient je ve `web/` (fáze D0: prázdná scéna; M0 v D1), plán `Prompts/01-METROPOLE_DUALSTACK_PLAN.md`.
+Dva klienti nad jednou sdílenou vrstvou: webový ve `web/` (TypeScript, Babylon.js, GitHub Pages)
+a Flutter v `app/` (pro obchody), plán `Prompts/01-METROPOLE_DUALSTACK_PLAN.md`.
 V aplikaci: ☀︎ přepíná den a noc, ⚙ otevře ladicí panel (schéma ovládání A/B/C, hodnoty z `tuning.yaml`
 a parametry auta za běhu, tlačítko „Kopírovat tuning.yaml“).
 
@@ -59,10 +98,12 @@ Podrobnosti: [docs/citypack.md](docs/citypack.md).
 
 ## Referenční telefony
 
-Brána M0 (60 fps, příprava bufferu budov ≤ 4 ms, RAM < 600 MB) se měří na:
+Výkon (60 fps, RAM < 600 MB) se měří na:
 **Google Pixel 8a** (Android) a **iPhone 12 mini** (iOS).
 
-## Mapová data a licence
+## Licence a zdroje dat
 
-© OpenStreetMap contributors (ODbL) · Overture Maps Foundation. Balíčky měst jsou odvozená databáze
-a podléhají ODbL – zveřejňují se spolu s konfigurací pipeline.
+- Kód a herní data (`content/` mimo `content/npc/`): MIT, viz [LICENSE](LICENSE).
+- `assets/` a dialogy `content/npc/`: CC BY-NC 4.0.
+- Balíčky měst: odvozená databáze pod ODbL. © OpenStreetMap contributors, Overture Maps Foundation,
+  výšky AWS Terrain Tiles. Úplný seznam zdrojů a podmínek: [NOTICE](NOTICE).

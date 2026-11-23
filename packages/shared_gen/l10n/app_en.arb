@@ -817,5 +817,6 @@
   "testDriveOver": "Test drive over, back in your own car",
   "testDriveNoTaxi": "No taxi shift during a test drive",
   "debugCash": "+{amount}",
-  "@debugCash": {"placeholders":{"amount":{"type":"int"}}}
+  "@debugCash": {"placeholders":{"amount":{"type":"int"}}},
+  "garageOpen": "Open garage"
 }
