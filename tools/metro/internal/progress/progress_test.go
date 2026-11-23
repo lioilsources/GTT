@@ -1,6 +1,8 @@
 package progress
 
 import (
+	"os"
+	"path/filepath"
 	"testing"
 	"time"
 )
@@ -35,5 +37,33 @@ func TestCheckRejectsDoneWithoutEvidence(t *testing.T) {
 	f.Items[0].Size = "XL"
 	if f.check() == nil {
 		t.Fatal("unknown size must fail")
+	}
+}
+
+func TestCountContentMinigamesAndSkits(t *testing.T) {
+	root := t.TempDir()
+	write := func(rel, body string) {
+		p := filepath.Join(root, rel)
+		if err := os.MkdirAll(filepath.Dir(p), 0o755); err != nil {
+			t.Fatal(err)
+		}
+		if err := os.WriteFile(p, []byte(body), 0o644); err != nil {
+			t.Fatal(err)
+		}
+	}
+	// Minigames come from the catalog, not from packages/mg_* (engines and shared code live there too).
+	write("content/minigames/catalog.yaml", "engines: [cards]\nminigames:\n  - {id: a, engine: cards}\n  - {id: b, engine: cards}\n")
+	write("packages/mg_a/pubspec.yaml", "name: mg_a\n")
+	write("packages/mg_extra/pubspec.yaml", "name: mg_extra\n")
+	write("content/npc/skits/a_1.yaml", "id: a_1\ncharacter: a\n")
+	write("content/npc/skits/b_1.yaml", "id: b_1\ncharacter: b\n")
+	write("content/npc/skits/README.md", "notes\n")
+	write("content/npc/characters.yaml", "characters: []\n")
+	got := map[string]string{}
+	for _, c := range countContent(root, &File{}) {
+		got[c.name] = c.value
+	}
+	if got["Minihry"] != "2" || got["Skity"] != "2" {
+		t.Fatalf("Minihry=%s Skity=%s, want 2 and 2", got["Minihry"], got["Skity"])
 	}
 }
