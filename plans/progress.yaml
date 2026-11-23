@@ -241,6 +241,8 @@ items:
   - {id: L-S13, milestone: L, name: "regresní testy: průjezd zaparkovanými auty, swipe feedu", size: S, status: hotovo, started: 2026-11-23T10:52, done: 2026-11-23T11:00, evidence: "průjezd zaparkovaným autem: web/test/cars.test.ts a packages/drive_core/test/cars_test.dart (PR #240, #241); swipe feedu hlídají web/test/phone.test.ts a app/test/feed_swipe_test.dart"}
   - {id: L-S14, milestone: L, name: "docs/verify.md z metro progress: průchody po 30 minutách", size: M, status: hotovo, started: 2026-11-23T11:19, done: 2026-11-23T11:23, evidence: "docs/verify.md z metro progress a plans/verify.yaml (průchody po 30 min podle měst, jen F, rozhodnutí, bez návodu); TestVerifyPasses"}
   - {id: L-S15, milestone: L, name: "metro stats → plans/STATS.md", size: S, status: hotovo, started: 2026-11-23T11:02, done: 2026-11-23T11:08, evidence: "run/bin/metro stats → plans/STATS.md; go test ./internal/stats (Summarize, Classify)"}
+  - {id: L-D1, milestone: L, name: "dogfooding: zkušební jízda v garáži, garáž z telefonu, ladicí hotovost (F-075)", size: M, status: "čeká na Ol1na", started: 2026-11-23T10:10,
+     done: 2026-11-23T11:30, evidence: "specs/testdrive.md v2; PR #222/#233 (spec), #226/#239 (W), #229/#238 (F), #245 (parita); testy web/test/cars.test.ts, packages/drive_core/test/cars_test.dart, app/test/garage_test.dart; na Ol1novi: Garáž → Vyzkoušet na Vega Roadster, telefon → Garáž → Otevřít garáž, ?debug → +10000"}
   - {id: L-A1, milestone: L, name: "docs/launch.md, metro progress --check a kouřový test zelené na main, Pages nasazené", size: S, status: todo}
 
 # Content counters with targets. tests and fps are measured; the rest metro progress counts itself.
