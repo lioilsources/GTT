@@ -12,6 +12,7 @@ import type { City } from '../world/model';
 import { buildCandidates, feedConfig, FeedRules, type FeedState } from './feed';
 import { mountFeed } from './feedView';
 import { mountMap } from './mapView';
+import type { MapNatureSource } from './mapNature';
 import { edgeArrow, edgeLengthsDm, feedDistDm, formatDistance, navGoal, navStart, Navigator, type NavTarget } from './nav';
 import { Phone, registerPhoneApp } from './phone';
 
@@ -30,6 +31,8 @@ export interface PhoneEnv {
   params: URLSearchParams;
   /** Landmarks the player has discovered (passport stamps), for the feed's landmark bonus. */
   discovered?: () => ReadonlySet<string>;
+  /** Water and parks for the Map app (specs/nature.md); absent for a pack without nature. */
+  mapNature?: MapNatureSource | null;
 }
 
 /** The feed state the save keeps (specs/save.md `feed`). */
@@ -77,6 +80,8 @@ export interface PhoneApi {
   feedRestore(f: FeedSave): void;
   phone: Phone;
   nav: Navigator;
+  /** Shows a short HUD message (the route toast). */
+  toast(text: string): void;
 }
 
 export function installPhone(env: PhoneEnv): PhoneApi {
@@ -168,6 +173,7 @@ export function installPhone(env: PhoneEnv): PhoneApi {
       route: () => nav.ahead(),
       target: () => nav.target?.id ?? null,
       extra: () => api.mapPoints.flatMap((f) => f()),
+      nature: env.mapNature ?? null,
     }),
   );
 
@@ -207,6 +213,7 @@ export function installPhone(env: PhoneEnv): PhoneApi {
   const api: PhoneApi = {
     phone,
     nav,
+    toast: (text) => showToast(text),
     onArrived: [],
     accepted: null,
     onAccept: [],

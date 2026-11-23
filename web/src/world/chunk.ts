@@ -1,5 +1,6 @@
 import { GroundKind } from '../gen/pb/citypack_pb';
 import { decodeChunk } from './citypack';
+import { prepareNature, type NatureChunk } from './nature';
 
 /** Render- and physics-ready building mass, in world metres (port of world_engine chunk.dart). */
 export interface BuildingData {
@@ -34,10 +35,15 @@ export interface ChunkData {
   ground: GroundData[];
   /** Pedestrian-zone bollard lines (specs/zones.md): open polylines, interleaved metres. */
   barriers: Float32Array[];
+  /** Water, green, trees and labels (specs/nature.md); absent or null for a pack without nature. */
+  nature?: NatureChunk | null;
 }
 
-/** Decodes and prepares one chunk. */
-export async function prepareChunk(gz: Uint8Array): Promise<ChunkData> {
+/**
+ * Decodes and prepares one chunk; [nature] (chunk size and Manifest.nature_version) also prepares
+ * its water, green and trees (specs/nature.md).
+ */
+export async function prepareChunk(gz: Uint8Array, nature?: { chunkM: number; version: number }): Promise<ChunkData> {
   const c = await decodeChunk(gz);
   const buildings: BuildingData[] = [];
   for (const b of c.buildings) {
@@ -88,5 +94,6 @@ export async function prepareChunk(gz: Uint8Array): Promise<ChunkData> {
   const barriers = c.barriers
     .filter((b) => b.points.length >= 4)
     .map((b) => Float32Array.from(b.points, (v) => v / 10));
-  return { x: c.x, y: c.y, buildings, ground, barriers };
+  const nat = nature ? prepareNature(c, nature.chunkM, nature.version) : null;
+  return { x: c.x, y: c.y, buildings, ground, barriers, nature: nat };
 }
