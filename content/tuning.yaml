@@ -249,6 +249,34 @@ minigames:
     star_correct: [9, 7, 5]     # correct answers for 3, 2, 1 stars
     question_s: 20
     time_cap_s: 420
+  prsi:
+    hand: 4
+    rounds_to_win: 3
+    ai_error_pct: [40, 25, 12, 5, 0]
+    time_cap_s: 360
+    ai_think_s: 0.7
+  srdce:
+    target: 50                  # the game ends after a deal where someone has this many points
+    max_deals: 3
+    ai_error_pct: [40, 25, 12, 5, 0]
+    star_margins: [15, 5]       # best AI minus player for 3 and 2 stars
+    time_cap_s: 540
+    ai_think_s: 0.5
+  kostky:
+    bonus_at: 63                # upper section total for the bonus
+    bonus: 35
+    ai_error_pct: [40, 25, 12, 5, 0]
+    star_margins: [60, 20]
+    time_cap_s: 480
+    ai_think_s: 0.7
+  prase:
+    target: 100
+    max_rounds: 15
+    ai_hold_at: [10, 15, 18, 20, 20]
+    ai_error_pct: [35, 20, 10, 5, 0]
+    star_margins: [40, 15]
+    time_cap_s: 300
+    ai_think_s: 0.6
   desetitisic:
     target: 5000
     max_rounds: 10

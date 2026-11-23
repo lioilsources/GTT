@@ -22,3 +22,8 @@ minigames:
   - {id: lode, engine: board, target_min: 6, casino_like: false}
   - {id: posuvne, engine: puzzle, target_min: 4, casino_like: false}
   - {id: kviz, engine: puzzle, target_min: 4, casino_like: false}
+  # M2-S9 batch B (cards, dice), plans/M2_NYC.md bod 9
+  - {id: prsi, engine: cards, target_min: 6, casino_like: false}
+  - {id: srdce, engine: cards, target_min: 9, casino_like: false}
+  - {id: kostky, engine: dice, target_min: 8, casino_like: false}
+  - {id: prase, engine: dice, target_min: 5, casino_like: false}

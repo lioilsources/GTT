@@ -18,6 +18,10 @@ import { reversi } from './reversi/game';
 import { lode } from './lode/game';
 import { posuvne } from './posuvne/game';
 import { kviz } from './kviz/game';
+import { prsi } from './prsi/game';
+import { srdce } from './srdce/game';
+import { kostky } from './kostky/game';
+import { prase } from './prase/game';
 
 /** Minigames this client implements; the Gallery greys out the rest. */
 export const minigames: Partial<Record<MinigameId, (env: MinigameEnv) => Minigame>> = {
@@ -39,4 +43,8 @@ export const minigames: Partial<Record<MinigameId, (env: MinigameEnv) => Minigam
   lode,
   posuvne,
   kviz,
+  prsi,
+  srdce,
+  kostky,
+  prase,
 };

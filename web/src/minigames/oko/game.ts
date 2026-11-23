@@ -4,7 +4,7 @@ import { h } from '../dom';
 import { mountShell } from '../shell';
 import { handTotal, isNatural, OkoRules, okoConfig, rankOf, suitOf, type OkoAction, type OkoLast, type OkoState } from './rules';
 
-/** Rank and suit glyphs (symbols, not texts): rank = c mod 13, suit = c div 13 (♠ ♥ ♦ ♣). */
+/** Rank and suit glyphs (symbols, not texts; Srdce draws the same deck): rank = c mod 13, suit = c div 13 (♠ ♥ ♦ ♣). */
 const RANKS = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'];
 const SUITS = ['♠', '♥', '♦', '♣'];
 const FLASH_MS = 900;
@@ -16,7 +16,7 @@ interface View {
   hole: boolean;
 }
 
-function card(c: number | null): HTMLElement {
+export function card(c: number | null): HTMLElement {
   if (c === null) return h('div.oko-card.back');
   const s = suitOf(c);
   return h(`div.oko-card${s === 1 || s === 2 ? '.red' : ''}`, {}, h('span.rank', {}, RANKS[rankOf(c)]!), h('span.suit', {}, SUITS[s]!));

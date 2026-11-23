@@ -11,16 +11,7 @@ import {
   type DesetitisicAction,
   type DesetitisicState,
 } from './rules';
-
-/** Pip positions on a 0..1 face, per value. */
-const PIPS: Record<number, Array<[number, number]>> = {
-  1: [[0.5, 0.5]],
-  2: [[0.27, 0.27], [0.73, 0.73]],
-  3: [[0.27, 0.27], [0.5, 0.5], [0.73, 0.73]],
-  4: [[0.27, 0.27], [0.73, 0.27], [0.27, 0.73], [0.73, 0.73]],
-  5: [[0.27, 0.27], [0.73, 0.27], [0.5, 0.5], [0.27, 0.73], [0.73, 0.73]],
-  6: [[0.27, 0.25], [0.73, 0.25], [0.27, 0.5], [0.73, 0.5], [0.27, 0.75], [0.73, 0.75]],
-};
+import { PIPS } from '../dice';
 
 /** Desetitisic, specs/minigames/desetitisic.md: tap dice to set them aside, then roll on or bank. */
 export function desetitisic(env: MinigameEnv): Minigame {

@@ -19,6 +19,18 @@ spots:
   - {id: vrchlickeho_marbles, kind: park, name: Vrchlického sady, lat: 50.08420, lon: 14.43220, minigame: kulicky}
   - {id: malostranske_coins, kind: plaza, name: Malostranské náměstí, lat: 50.08800, lon: 14.40330, minigame: cara}
   - {id: letna_footnet, kind: park, name: Letenská pláň, lat: 50.09650, lon: 14.42300, minigame: nohejbal}
+  # M2-S9 batch A and B minigames (board, puzzle, cards, dice); venues are fictional (R10)
+  - {id: frantiskanska_tables, kind: park, name: Františkánská zahrada, lat: 50.08250, lon: 14.42400, minigame: piskvorky}
+  - {id: karlin_game_cafe, kind: cafe, name: Herní kavárna Čtyřka, lat: 50.09250, lon: 14.44400, minigame: ctyri}
+  - {id: kampa_mill, kind: park, name: Kampa, lat: 50.08450, lon: 14.40800, minigame: mlyn}
+  - {id: folimanka_tables, kind: park, name: Folimanka, lat: 50.06800, lon: 14.43000, minigame: reversi}
+  - {id: naplavka_boats, kind: pier, name: Náplavka, lat: 50.07050, lon: 14.41400, minigame: lode}
+  - {id: namesti_republiky, kind: plaza, name: Náměstí Republiky, lat: 50.08800, lon: 14.42800, minigame: posuvne}
+  - {id: marianske_quiz, kind: plaza, name: Mariánské náměstí, lat: 50.08700, lon: 14.41850, minigame: kviz}
+  - {id: zeleny_spodek, kind: bar, name: Hospoda U Zeleného spodka, lat: 50.08050, lon: 14.45200, minigame: prsi}
+  - {id: srdcova_dama, kind: cafe, name: Kavárna U Srdcové dámy, lat: 50.07550, lon: 14.44400, minigame: srdce}
+  - {id: sest_kostek, kind: bar, name: Hostinec U Šesti kostek, lat: 50.07300, lon: 14.40600, minigame: kostky}
+  - {id: grebovka_dice, kind: park, name: Havlíčkovy sady, lat: 50.06950, lon: 14.44750, minigame: prase}
   # Player garage (specs/cars.md)
   - {id: novomestska_garage, kind: garage, name: Parkovací dům Spálená, lat: 50.08000, lon: 14.42050}
   # Ringing phone booths (specs/booths.md): street corners, no minigame.

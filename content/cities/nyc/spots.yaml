@@ -26,6 +26,11 @@ spots:
   - {id: battery_park, kind: park, name: The Battery, lat: 40.70330, lon: -74.01700, minigame: lode}
   - {id: grand_army_plaza, kind: plaza, name: Grand Army Plaza, lat: 40.76440, lon: -73.97330, minigame: posuvne}
   - {id: nypl_steps, kind: plaza, name: Library Steps on Fifth Avenue, lat: 40.75320, lon: -73.98220, minigame: kviz}
+  # M2-S9 batch B minigames (cards, dice)
+  - {id: bohemian_tavern, kind: bar, name: Little Bohemia Tavern, lat: 40.76900, lon: -73.95590, minigame: prsi}
+  - {id: queen_of_spades, kind: bar, name: The Queen of Spades, lat: 40.73350, lon: -74.00270, minigame: srdce}
+  - {id: union_sq_dice, kind: plaza, name: Union Square, lat: 40.73590, lon: -73.99060, minigame: kostky}
+  - {id: lucky_pig_diner, kind: cafe, name: The Lucky Pig Diner, lat: 40.72030, lon: -73.98790, minigame: prase}
   # Player garage (specs/cars.md): one per city in M1; a multi-storey car park on W 44th St.
   - {id: midtown_garage, kind: garage, name: West 44th Street Garage, lat: 40.75990, lon: -73.99410}
   # Ringing phone booths (specs/booths.md): street corners, no minigame.
