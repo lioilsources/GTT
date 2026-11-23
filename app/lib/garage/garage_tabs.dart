@@ -4,6 +4,7 @@ import 'package:game_loop/game_loop.dart';
 import 'package:shared_gen/shared_gen.dart';
 
 import '../game/paint/car_painter.dart';
+import '../game/paint/car_sprites.dart' show carSprites;
 import '../l10n/app_localizations.dart';
 import 'garage_controller.dart';
 
@@ -102,7 +103,8 @@ class CarPreview extends StatelessWidget {
 }
 
 class _PreviewPainter extends CustomPainter {
-  _PreviewPainter(this.spec, this.look, this.tuning, this.sideways);
+  // Repaints when a car sprite finished loading (specs/art.md v2: the preview draws it too).
+  _PreviewPainter(this.spec, this.look, this.tuning, this.sideways) : super(repaint: carSprites);
   final CarSpec spec;
   final CarLook look;
   final Tuning tuning;

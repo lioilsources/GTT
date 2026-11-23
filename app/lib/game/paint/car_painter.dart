@@ -7,6 +7,7 @@ import 'package:shared_gen/shared_gen.dart';
 import 'package:world_engine/world_engine.dart' show extrusionScale;
 
 import 'car_shape.dart';
+import 'car_sprites.dart';
 
 /// How a car in a hop is drawn (specs/hop.md "Kreslení"): centre lifted towards the viewer,
 /// size [scale] (like an extruded height), and [flip] = cos of the roll angle (1 upright, −1 upside
@@ -115,6 +116,8 @@ void paintParked(
   Color shadow = const Color(Tokens.colorCarShadow),
   LookPaint? Function(ParkedCar p)? lookOf,
 }) {
+  // Sprite cars go into one batch (one drawAtlas per image and layer), procedural ones draw now.
+  final batch = CarSpriteBatch();
   for (final p in cars) {
     final s = specs[p.carId];
     if (s == null) continue;
@@ -133,8 +136,10 @@ void paintParked(
       cone: false,
       shadow: shadow,
       look: lookOf?.call(p),
+      batch: batch,
     );
   }
+  batch.flush(canvas);
 }
 
 void _paintShape(
@@ -153,6 +158,7 @@ void _paintShape(
   CarLift? lift,
   Color shadow = const Color(Tokens.colorCarShadow),
   LookPaint? look,
+  CarSpriteBatch? batch,
 }) {
   final p = Paint();
   final lk = look?.look;
@@ -203,6 +209,34 @@ void _paintShape(
     p.color = const Color(Tokens.colorCarHeadlightCone);
     canvas.drawPath(path, p);
   }
+  final sprite = carSprites.sprite(spec.id, wheels: !micro);
+  if (sprite != null) {
+    // Sprite (specs/art.md v2 "Auta"): without a lift into [batch] in world coordinates, otherwise
+    // drawn now in the car's frame (the canvas is already moved, turned and scaled).
+    final b = lift == null ? batch : null;
+    final own = b ?? CarSpriteBatch();
+    final (bx, by, bh) = b == null ? (0.0, 0.0, 0.0) : (x, y, heading);
+    _addSprite(
+      own,
+      sprite,
+      spec,
+      shape,
+      bx,
+      by,
+      bh,
+      hl,
+      hw,
+      axle,
+      paint: paint,
+      look: lk,
+      wheelAngle: wheelAngle,
+      night: night,
+      rear: rear,
+    );
+    if (b == null) own.flush(canvas);
+    canvas.restore();
+    return;
+  }
   p.color = const Color(Tokens.colorCarTyre);
   // Long vehicles (limo, van, bus) keep car-sized wheels: at most hw long.
   final ww = math.min(hl * 0.36, hw), wt = hw * 0.32;
@@ -231,7 +265,7 @@ void _paintShape(
             r.part == CarPart.rider ||
             (r.part == CarPart.wheel && bodyDrawn))) {
       decalDone = true;
-      _paintDecal(canvas, lk!.decal, body, [
+      paintCarDecal(canvas, lk!.decal, body, [
         for (final q in shape)
           if (q.part == CarPart.body) q,
       ], hw);
@@ -292,6 +326,80 @@ void _paintShape(
   canvas.restore();
 }
 
+/// Adds the sprite of a catalog car at (x, y, [heading]) to [b]: the wheels at [carWheels] (plus
+/// the trike's and the rickshaw's front wheel), the body tinted with [paint] and the decal clipped
+/// to the paint mask, the lights (`lights.png` at night whole, by day its rear half when braking;
+/// without it the code's head and tail lights as before).
+void _addSprite(
+  CarSpriteBatch b,
+  CarSprite s,
+  CarSpec spec,
+  List<CarRect> shape,
+  double x,
+  double y,
+  double heading,
+  double hl,
+  double hw,
+  double axle, {
+  required Color paint,
+  required CarLook? look,
+  required double wheelAngle,
+  required bool night,
+  required Color? rear,
+}) {
+  // Metres per sprite px: w ÷ 32 × car_scale, car_scale = hl / (length_m / 2).
+  final k = hl / (spec.lengthM / 2) / carSpritePxPerM;
+  if (s.wheels != null) {
+    final rim = look?.rim;
+    final tint = rim == null || rim == Tokens.colorGarageWheels.first ? null : Color(rim);
+    final kind = drawKind(spec.class_, spec.lengthM);
+    final wheels = [
+      ...carWheels(spec.class_, hl, hw, axle, lengthM: spec.lengthM),
+      if (kind == 'trike' || kind == 'rickshaw') (hl * frontWheelX, 0.0),
+    ];
+    for (final (fx, sy) in wheels) {
+      b.addWheel(s, x, y, heading, fx, sy, fx > 0 ? wheelAngle : 0, k, tint);
+    }
+  }
+  final decal = look?.decal ?? 0;
+  final body = carSprites.body(
+    s,
+    paint.toARGB32(),
+    decal: decal,
+    mPerPx: k,
+    paintDecal: decal == 0
+        ? null
+        : (c) => paintCarDecal(c, decal, bodyBounds(shape), [
+            for (final q in shape)
+              if (q.part == CarPart.body) q,
+          ], hw),
+  );
+  b.addBody(body, x, y, heading, k);
+  final lights = s.lights;
+  if (lights != null) {
+    final braking = rear == const Color(Tokens.colorCarBrake);
+    if (night || braking) b.addLights(lights, x, y, heading, k, rearOnly: !night);
+  } else {
+    b.over((c) {
+      final p = Paint();
+      c.save();
+      c.translate(x, y);
+      c.rotate(heading);
+      for (final r in shape) {
+        if (r.part == CarPart.head) {
+          p.color = night ? const Color(Tokens.colorCarHeadlightNight) : const Color(Tokens.colorCarHeadlightDay);
+        } else if (r.part == CarPart.tail) {
+          p.color = rear ?? const Color(Tokens.colorCarTail);
+        } else {
+          continue;
+        }
+        c.drawRect(Rect.fromLTRB(r.x0, r.y0, r.x1, r.y1), p);
+      }
+      c.restore();
+    });
+  }
+}
+
 /// The outline the looks fit (specs/garage.md: underglow, decal): the bounds of all body parts
 /// (the trike's narrow nose, the rickshaw's frame), for micro its deck (the first body part).
 CarRect bodyBounds(List<CarRect> shape, {bool micro = false}) {
@@ -314,7 +422,7 @@ CarRect bodyBounds(List<CarRect> shape, {bool micro = false}) {
 /// Procedural decal in `color.garage.decal` laid out on [body] (the body bounds) and clipped to the
 /// [bodies] (specs/garage.md "Kreslení"): 1 two lengthwise stripes at ±0.22 hw over the whole car,
 /// 2 three flames from the nose back to 0.35 hl, 3 a band of checker squares along both sides.
-void _paintDecal(Canvas canvas, int decal, CarRect body, List<CarRect> bodies, double hw) {
+void paintCarDecal(Canvas canvas, int decal, CarRect body, List<CarRect> bodies, double hw) {
   final hl = body.x1, w = body.y1 - body.y0;
   final p = Paint()..color = const Color(Tokens.colorGarageDecal);
   canvas.save();

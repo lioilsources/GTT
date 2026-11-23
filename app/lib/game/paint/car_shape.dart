@@ -53,7 +53,7 @@ String drawKind(String cls, double lengthM) => cls != 'special'
     : 'rickshaw';
 
 /// Front wheel of the trike and the rickshaw, centred at this fraction of hl on the centre line.
-const _frontWheelX = 0.75;
+const frontWheelX = 0.75;
 
 /// Wheel centres the painter draws (tyre rectangles, the front ones steer): four wheels at ±[axle]
 /// and ±0.92 hw; the bus at 0.60 and −0.70 hl; the trike and the rickshaw only the two rear ones
@@ -192,7 +192,7 @@ List<CarRect> carShape(String cls, double hl, double hw, {double lengthM = 0, do
 /// The single front wheel of the trike and the rickshaw at 0.75 hl on the centre line, drawn over
 /// the nose (it steers like the painter's wheels); [width] is its half width in hw.
 void _frontWheel(List<CarRect> out, double hl, double hw, {double width = 0.16}) =>
-    out.add(CarRect(CarPart.wheel, hl * (_frontWheelX - 0.18), -hw * width, hl * (_frontWheelX + 0.18), hw * width));
+    out.add(CarRect(CarPart.wheel, hl * (frontWheelX - 0.18), -hw * width, hl * (frontWheelX + 0.18), hw * width));
 
 /// Scooter or bicycle from above: deck / frame (paint), handlebar (tyre), two wheels and a rider
 /// blob (cabin). No lights; everything but the shadow stays inside the body outline.
