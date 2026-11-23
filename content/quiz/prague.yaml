@@ -1,0 +1,482 @@
+# City quiz bank for prague (specs/minigames/kviz.md). answer = index into options as written.
+questions:
+- id: vltava
+  q:
+    en: Which river flows through Prague?
+    cs: Která řeka protéká Prahou?
+  options:
+    en:
+    - Elbe
+    - Vltava
+    - Morava
+    - Danube
+    cs:
+    - Labe
+    - Vltava
+    - Morava
+    - Dunaj
+  answer: 1
+- id: vltava_mouth
+  q:
+    en: Into which river does the Vltava flow?
+    cs: Do které řeky se vlévá Vltava?
+  options:
+    en:
+    - Elbe
+    - Danube
+    - Oder
+    - Rhine
+    cs:
+    - Labe
+    - Dunaj
+    - Odra
+    - Rýn
+  answer: 0
+- id: charles_bridge_year
+  q:
+    en: In which year did building of Charles Bridge begin?
+    cs: Ve kterém roce se začal stavět Karlův most?
+  options:
+    en:
+    - '1212'
+    - '1357'
+    - '1618'
+    - '1741'
+    cs:
+    - '1212'
+    - '1357'
+    - '1618'
+    - '1741'
+  answer: 1
+- id: st_vitus
+  q:
+    en: Which cathedral stands within Prague Castle?
+    cs: Která katedrála stojí na Pražském hradě?
+  options:
+    en:
+    - St. Vitus
+    - St. Stephen
+    - Notre-Dame
+    - St. Peter
+    cs:
+    - Sv. Víta
+    - Sv. Štěpána
+    - Notre-Dame
+    - Sv. Petra
+  answer: 0
+- id: orloj_place
+  q:
+    en: Where is the Prague astronomical clock?
+    cs: Kde je pražský orloj?
+  options:
+    en:
+    - Wenceslas Square
+    - Old Town Hall
+    - Prague Castle
+    - Charles Bridge
+    cs:
+    - Na Václavském náměstí
+    - Na Staroměstské radnici
+    - Na Pražském hradě
+    - Na Karlově mostě
+  answer: 1
+- id: orloj_year
+  q:
+    en: Roughly when was the astronomical clock first installed?
+    cs: Kdy byl orloj zhruba poprvé zprovozněn?
+  options:
+    en:
+    - '1410'
+    - '1610'
+    - '1810'
+    - '1910'
+    cs:
+    - '1410'
+    - '1610'
+    - '1810'
+    - '1910'
+  answer: 0
+- id: wenceslas_statue
+  q:
+    en: Who rides the horse in the statue on Wenceslas Square?
+    cs: Kdo sedí na koni v soše na Václavském náměstí?
+  options:
+    en:
+    - Charles IV
+    - St. Wenceslas
+    - Jan Žižka
+    - Rudolf II
+    cs:
+    - Karel IV.
+    - Sv. Václav
+    - Jan Žižka
+    - Rudolf II.
+  answer: 1
+- id: petrin_tower
+  q:
+    en: Which tower inspired the Petřín lookout tower?
+    cs: Kterou věží se inspirovala Petřínská rozhledna?
+  options:
+    en:
+    - Big Ben
+    - The Eiffel Tower
+    - The Leaning Tower of Pisa
+    - Tokyo Tower
+    cs:
+    - Big Ben
+    - Eiffelovka
+    - Šikmá věž v Pise
+    - Tokyo Tower
+  answer: 1
+- id: petrin_funicular
+  q:
+    en: Which Prague hill has a funicular railway?
+    cs: Na který pražský kopec jezdí lanová dráha?
+  options:
+    en:
+    - Vítkov
+    - Petřín
+    - Letná
+    - Vyšehrad
+    cs:
+    - Vítkov
+    - Petřín
+    - Letná
+    - Vyšehrad
+  answer: 1
+- id: dancing_house
+  q:
+    en: Which architect co-designed the Dancing House with Vlado Milunić?
+    cs: Kdo navrhl Tančící dům spolu s Vlado Milunićem?
+  options:
+    en:
+    - Frank Gehry
+    - Zaha Hadid
+    - Le Corbusier
+    - Jan Kaplický
+    cs:
+    - Frank Gehry
+    - Zaha Hadid
+    - Le Corbusier
+    - Jan Kaplický
+  answer: 0
+- id: metro_lines
+  q:
+    en: How many metro lines does Prague have?
+    cs: Kolik linek má pražské metro?
+  options:
+    en:
+    - '2'
+    - '3'
+    - '4'
+    - '5'
+    cs:
+    - '2'
+    - '3'
+    - '4'
+    - '5'
+  answer: 1
+- id: charles_university
+  q:
+    en: When was Charles University founded?
+    cs: Kdy byla založena Univerzita Karlova?
+  options:
+    en:
+    - '1348'
+    - '1526'
+    - '1781'
+    - '1918'
+    cs:
+    - '1348'
+    - '1526'
+    - '1781'
+    - '1918'
+  answer: 0
+- id: josefov
+  q:
+    en: What is Josefov?
+    cs: Co je Josefov?
+  options:
+    en:
+    - The Jewish Quarter
+    - A castle
+    - A brewery
+    - A park
+    cs:
+    - Židovské Město
+    - Hrad
+    - Pivovar
+    - Park
+  answer: 0
+- id: old_new_synagogue
+  q:
+    en: The Old-New Synagogue is known as…
+    cs: Staronová synagoga je známá jako…
+  options:
+    en:
+    - Europe's oldest active synagogue
+    - The largest synagogue in the world
+    - A museum of clocks
+    - A former castle
+    cs:
+    - Nejstarší činná synagoga v Evropě
+    - Největší synagoga na světě
+    - Muzeum hodin
+    - Bývalý hrad
+  answer: 0
+- id: zizkov_tower
+  q:
+    en: Which landmark rises over Žižkov?
+    cs: Která dominanta se tyčí nad Žižkovem?
+  options:
+    en:
+    - A TV tower
+    - A cathedral
+    - A castle
+    - A lighthouse
+    cs:
+    - Televizní vysílač
+    - Katedrála
+    - Hrad
+    - Maják
+  answer: 0
+- id: golden_chapel
+  q:
+    en: Which building is nicknamed "the Golden Chapel"?
+    cs: Která budova se přezdívá „Zlatá kaplička“?
+  options:
+    en:
+    - The National Theatre
+    - The National Museum
+    - The Rudolfinum
+    - The Municipal House
+    cs:
+    - Národní divadlo
+    - Národní muzeum
+    - Rudolfinum
+    - Obecní dům
+  answer: 0
+- id: kampa
+  q:
+    en: Which island lies beside the Malá Strana end of Charles Bridge?
+    cs: Který ostrov leží u malostranského konce Karlova mostu?
+  options:
+    en:
+    - Kampa
+    - Štvanice
+    - Střelecký ostrov
+    - Císařská louka
+    cs:
+    - Kampa
+    - Štvanice
+    - Střelecký ostrov
+    - Císařská louka
+  answer: 0
+- id: wilson
+  q:
+    en: Prague's main station was once named after which US president?
+    cs: Po kterém americkém prezidentovi se kdysi jmenovalo hlavní nádraží?
+  options:
+    en:
+    - Lincoln
+    - Wilson
+    - Roosevelt
+    - Washington
+    cs:
+    - Lincolnovi
+    - Wilsonovi
+    - Rooseveltovi
+    - Washingtonovi
+  answer: 1
+- id: tram_colours
+  q:
+    en: What are the traditional colours of Prague trams?
+    cs: Jaké jsou tradiční barvy pražských tramvají?
+  options:
+    en:
+    - Red and cream
+    - Blue and white
+    - Green and yellow
+    - Black and gold
+    cs:
+    - Červená a krémová
+    - Modrá a bílá
+    - Zelená a žlutá
+    - Černá a zlatá
+  answer: 0
+- id: lennon_wall
+  q:
+    en: In which part of Prague is the Lennon Wall?
+    cs: Ve které části Prahy je Lennonova zeď?
+  options:
+    en:
+    - Malá Strana
+    - Žižkov
+    - Holešovice
+    - Smíchov
+    cs:
+    - Malá Strana
+    - Žižkov
+    - Holešovice
+    - Smíchov
+  answer: 0
+- id: powder_tower
+  q:
+    en: What was the Powder Tower originally?
+    cs: Čím byla původně Prašná brána?
+  options:
+    en:
+    - A gate of the Old Town
+    - A church tower
+    - A prison
+    - A water tower
+    cs:
+    - Branou Starého Města
+    - Kostelní věží
+    - Vězením
+    - Vodárenskou věží
+  answer: 0
+- id: golden_lane
+  q:
+    en: Where is Golden Lane?
+    cs: Kde je Zlatá ulička?
+  options:
+    en:
+    - At Prague Castle
+    - On Vyšehrad
+    - In the Old Town
+    - In Karlín
+    cs:
+    - Na Pražském hradě
+    - Na Vyšehradě
+    - Na Starém Městě
+    - V Karlíně
+  answer: 0
+- id: kafka
+  q:
+    en: Which writer was born in Prague in 1883?
+    cs: Který spisovatel se narodil v Praze v roce 1883?
+  options:
+    en:
+    - Franz Kafka
+    - Karel Čapek
+    - Jaroslav Hašek
+    - Milan Kundera
+    cs:
+    - Franz Kafka
+    - Karel Čapek
+    - Jaroslav Hašek
+    - Milan Kundera
+  answer: 0
+- id: defenestration_1618
+  q:
+    en: Which war did the 1618 defenestration help start?
+    cs: Kterou válku pomohla rozpoutat defenestrace z roku 1618?
+  options:
+    en:
+    - The Thirty Years' War
+    - The Hundred Years' War
+    - The Seven Years' War
+    - The Hussite Wars
+    cs:
+    - Třicetiletou
+    - Stoletou
+    - Sedmiletou
+    - Husitské
+  answer: 0
+- id: velvet_1989
+  q:
+    en: In which year was the Velvet Revolution?
+    cs: Ve kterém roce proběhla sametová revoluce?
+  options:
+    en:
+    - '1968'
+    - '1977'
+    - '1989'
+    - '1993'
+    cs:
+    - '1968'
+    - '1977'
+    - '1989'
+    - '1993'
+  answer: 2
+- id: metronome
+  q:
+    en: What stands on Letná above the river?
+    cs: Co stojí na Letné nad řekou?
+  options:
+    en:
+    - A giant metronome
+    - A windmill
+    - A lighthouse
+    - A TV tower
+    cs:
+    - Obří metronom
+    - Větrný mlýn
+    - Maják
+    - Vysílač
+  answer: 0
+- id: prague_1
+  q:
+    en: Which district number is the Old Town in?
+    cs: Ve kterém čísle obvodu leží Staré Město?
+  options:
+    en:
+    - Prague 1
+    - Prague 2
+    - Prague 5
+    - Prague 10
+    cs:
+    - Praha 1
+    - Praha 2
+    - Praha 5
+    - Praha 10
+  answer: 0
+- id: vysehrad
+  q:
+    en: What can you find at Vyšehrad?
+    cs: Co najdete na Vyšehradě?
+  options:
+    en:
+    - A cemetery of famous Czechs
+    - An airport
+    - A zoo
+    - A brewery tower
+    cs:
+    - Hřbitov slavných Čechů
+    - Letiště
+    - Zoo
+    - Pivovarskou věž
+  answer: 0
+- id: municipal_house
+  q:
+    en: In which style is the Municipal House built?
+    cs: V jakém stylu je postaven Obecní dům?
+  options:
+    en:
+    - Art Nouveau
+    - Gothic
+    - Baroque
+    - Functionalism
+    cs:
+    - Secese
+    - Gotika
+    - Baroko
+    - Funkcionalismus
+  answer: 0
+- id: hundred_spires
+  q:
+    en: Prague is often called the city of a hundred…
+    cs: Praze se často říká město sta…
+  options:
+    en:
+    - Bridges
+    - Spires
+    - Gardens
+    - Breweries
+    cs:
+    - Mostů
+    - Věží
+    - Zahrad
+    - Pivovarů
+  answer: 1

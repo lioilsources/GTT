@@ -14,3 +14,11 @@ minigames:
   - {id: kulicky, engine: flick, target_min: 5, cities: [prague], casino_like: false}
   - {id: cara, engine: flick, target_min: 4, cities: [prague], casino_like: false}
   - {id: nohejbal, engine: sport, target_min: 6, cities: [prague], casino_like: false}
+  # M2-S9 batch A (board, puzzle), plans/M2_NYC.md bod 9
+  - {id: piskvorky, engine: board, target_min: 6, casino_like: false}
+  - {id: ctyri, engine: board, target_min: 4, casino_like: false}
+  - {id: mlyn, engine: board, target_min: 7, casino_like: false}
+  - {id: reversi, engine: board, target_min: 7, casino_like: false}
+  - {id: lode, engine: board, target_min: 6, casino_like: false}
+  - {id: posuvne, engine: puzzle, target_min: 4, casino_like: false}
+  - {id: kviz, engine: puzzle, target_min: 4, casino_like: false}

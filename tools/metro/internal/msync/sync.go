@@ -15,6 +15,7 @@ import (
 	"gopkg.in/yaml.v3"
 
 	"metro/internal/npc"
+	"metro/internal/quiz"
 	"metro/internal/repo"
 )
 
@@ -75,6 +76,18 @@ func Sync(root string) error {
 	for _, d := range []string{app, web} {
 		if err := writeFile(filepath.Join(d, "content", "npc.json"), b); err != nil {
 			return err
+		}
+	}
+	// City quiz banks, checked and turned into JSON (specs/minigames/kviz.md).
+	banks, err := quiz.Load(filepath.Join(root, repo.Quiz))
+	if err != nil {
+		return err
+	}
+	for city, bank := range banks {
+		for _, d := range []string{app, web} {
+			if err := writeJSON(filepath.Join(d, "content", "quiz", city+".json"), bank); err != nil {
+				return err
+			}
 		}
 	}
 	// assets/ as is (README files excluded), plus assets/index.json listing the PNGs (specs/art.md).
