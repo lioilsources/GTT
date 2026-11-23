@@ -9,9 +9,12 @@ export function hopCharges(spec: Pick<CarSpec, 'hop'>): number | null {
   return typeof c === 'number' && c > 0 ? Math.floor(c) : null;
 }
 
-/** The hop can start: the car has `hop`, a charge left, is on the ground in layer 0 and fast enough. */
-export function canHop(spec: Pick<CarSpec, 'hop'>, charges: number, air: number, layer: number, speed: number, t: TuningHop): boolean {
-  return hopCharges(spec) !== null && charges > 0 && air <= 0 && layer === 0 && speed >= t.minSpeedMps;
+/**
+ * The hop can start: the car has `hop`, a charge left, is on the ground and fast enough; any layer
+ * (hop.md v2: bridges and tunnels too). [layer] stays in the signature of the spec.
+ */
+export function canHop(spec: Pick<CarSpec, 'hop'>, charges: number, air: number, _layer: number, speed: number, t: TuningHop): boolean {
+  return hopCharges(spec) !== null && charges > 0 && air <= 0 && speed >= t.minSpeedMps;
 }
 
 /** Height of the arc after t seconds of an airS flight peaking at heightM (drawing only). */
