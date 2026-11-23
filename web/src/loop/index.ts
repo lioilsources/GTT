@@ -223,6 +223,14 @@ export async function installLoop(env: LoopEnv): Promise<LoopApi> {
       showToast(t('loopSoon', { name: mgName(id) }));
       return;
     }
+    // Test drive (specs/testdrive.md): no taxi shift meanwhile; any other minigame ends it.
+    if (fleet.testing) {
+      if (id === 'taxi') {
+        showToast(t('testDriveNoTaxi'));
+        return;
+      }
+      if (fleet.endTest()) env.onCarChanged();
+    }
     const card = phone.accepted && phone.accepted.spot === spotId ? phone.accepted : null;
     phone.accepted = null;
     phone.phone.close();
@@ -342,6 +350,18 @@ export async function installLoop(env: LoopEnv): Promise<LoopApi> {
   if (play) setTimeout(() => start(play), 0); // after main.ts registered the world minigames
   if (env.params.has('debug')) {
     env.buttons.append(h('button.round', { type: 'button', title: t('saveReset'), onclick: () => void api.resetSave() }, '⌫'));
+    // Debug cash (specs/testdrive.md "Ladicí hotovost"): only with ?debug; written back and saved.
+    const grant = t('debugCash', { amount: tuning.economy.debugGrant });
+    env.buttons.append(h('button.round.debug-cash', {
+      type: 'button',
+      id: 'debug-cash',
+      title: grant,
+      onclick: () => {
+        fleet.grantDebugCash();
+        cashPill.textContent = t('cashHud', { cash: fleet.state.cash });
+        void save();
+      },
+    }, grant));
   }
   return api;
 }
