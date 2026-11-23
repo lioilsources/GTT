@@ -6,6 +6,7 @@ import { describe, expect, it } from 'vitest';
 
 import { LodKind, LodMassSchema, LodSchema, MeshSchema } from '../src/gen/pb/citypack_pb';
 import { Tuning } from '../src/gen/tuning';
+import { hopFlip, hopRoll } from '../src/drive/hop';
 import {
   CAMERA_KEY, chaseFov, chasePitch, chasePose, DOUBLE_TAP_S, fogFactor, FOG_END_M, FOG_START_M, occludes, readCameraMode, TwoFingerTap, writeCameraMode,
 } from '../src/render/chase';
@@ -169,5 +170,14 @@ describe('lod far ring geometry (specs/terrain.md "Upřesnění T2")', () => {
   it('picks the tiles within the ring', () => {
     const refs = [{ x: 0, y: 0 }, { x: 1, y: 0 }, { x: 3, y: 0 }, { x: 0, y: -2 }];
     expect(tilesWithin(refs, 1024, 512, 512, 1500)).toEqual([{ x: 0, y: 0 }, { x: 1, y: 0 }]);
+  });
+});
+
+describe('hop in the chase view', () => {
+  it('rolls 2π · flips over the flight, its cos is the top-down width factor', () => {
+    expect(hopRoll(0.7, 1.4, 1)).toBeCloseTo(Math.PI);
+    expect(hopRoll(1.4, 1.4, 1)).toBeCloseTo(2 * Math.PI);
+    expect(Math.cos(hopRoll(0.3, 1.4, 1))).toBeCloseTo(hopFlip(0.3, 1.4, 1));
+    expect(hopRoll(1, 0, 1)).toBe(0);
   });
 });

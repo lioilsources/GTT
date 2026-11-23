@@ -51,7 +51,8 @@ pozemní hrany (`kept`, ne schody ani tunel); popis a co sledovat v `docs/prague
 Tlačítko „Ladění“ v řadě kulatých tlačítek otevře panel s posuvníky klíčů `content/tuning.yaml`,
 které klient čte každý krok nebo snímek, takže změna platí hned: `slope_physics.gravity`,
 `slope_physics.slope_force_scale`, `slope_physics.suspension_travel`, `slope_physics.hard_landing`,
-`speed_mps.cruise`, `camera.topdown.height_m`, `camera.heading_follow_rate`, `view_width_m.slow`,
+`speed_mps.cruise`, `camera.topdown.height_m`, `camera.chase.distance_m`, `camera.chase.height_m`,
+`camera.chase.look_ahead_m`, `camera.chase.fov_deg`, `camera.heading_follow_rate`, `view_width_m.slow`,
 `view_width_m.fast`. Popisky jsou klíče YAML (jako panel F); „Kopírovat tuning.yaml“ zkopíruje řádky
 `klíč: hodnota` (desetinná čísla vždy s tečkou). Změna se neukládá. Čísla balíčku
 (`terrain.exaggeration`, `terrain.max_grade`, `terrain.pipeline.shade_strength`) panel nemá: platí až

@@ -29,7 +29,7 @@ describe('pause registry (specs/pause.md)', () => {
       expect(paused(['toast', k]), k).toBe(true);
     }
     expect([...pausingOverlays].sort()).toEqual(
-      ['about', 'arrival', 'bench', 'booth', 'debug', 'dialogue', 'gallery', 'garage', 'minigame', 'passport', 'phone', 'photo', 'postcard', 'result', 'shop', 'travel'],
+      ['about', 'arrival', 'bench', 'booth', 'debug', 'dialogue', 'gallery', 'garage', 'intro', 'minigame', 'passport', 'phone', 'photo', 'postcard', 'result', 'shop', 'travel'],
     );
   });
 

@@ -1,0 +1,54 @@
+/* First run intro card (specs/firstrun.md); colours from design/tokens.json. */
+.intro {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-lg);
+  background: color-mix(in srgb, var(--color-ui-background) 55%, transparent);
+  pointer-events: auto;
+}
+.intro-box {
+  width: min(100%, 420px);
+  padding: var(--space-lg);
+  border-radius: var(--radius-button);
+  background: var(--color-ui-sheet);
+  color: var(--color-ui-text);
+}
+.intro-box h2 {
+  margin: 0 0 var(--space-md);
+}
+.intro-box h3 {
+  margin: var(--space-lg) 0 var(--space-sm);
+  color: var(--color-ui-text-muted);
+}
+.intro-box p {
+  margin: var(--space-sm) 0;
+  white-space: normal;
+}
+.intro-cities {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+}
+.intro-box button {
+  min-height: 44px;
+  padding: 0 var(--space-md);
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: var(--color-ui-pill);
+  color: var(--color-ui-text);
+  font: inherit;
+}
+.intro-cities button.current {
+  outline: 2px solid var(--color-ui-route);
+}
+.intro-box .intro-go {
+  width: 100%;
+  margin-top: var(--space-lg);
+  background: var(--color-ui-route);
+  color: var(--color-ui-background);
+  font-weight: 700;
+}

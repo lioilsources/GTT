@@ -78,6 +78,9 @@ trams:
   despawn_m: 520.0
   seed: 20261122
   rail_gauge_m: 3.6             # drawn distance between the two rails (world metres)
+  max_switch_deg: 50.0          # trams.md v2: a node turn sharper than this is not a track connection
+  turn_probe_m: 5.0             # the turn at a node is measured this far along both edges
+  max_turn_deg_per_m: 12.0      # acceptance: max change of a car's axis per metre of travel (test)
 
 # Chunk streaming (METROPOLE_PLAN 6.4): window in chunks around the player.
 streaming: {ahead: 3, behind: 1, side: 1, keep: 3, max_in_flight: 2, retry_s: 2.0}

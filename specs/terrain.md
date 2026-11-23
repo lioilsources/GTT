@@ -51,7 +51,44 @@ groundZ(x, y, surface):
 ```
 Auto si drží `surface`. Na most, do tunelu a na estakádu přechází na nájezdu (hrana s přechodem
 vrstvy, `specs/drive.md` krok 6) a jede po povrchu hrany, jinak po terénu. Kolizní vrstvy platí
-beze změny. Mimo načtené chunky `groundZ` = výška nejbližšího uzlu.
+beze změny (v3: viz „Konstrukce“). Mimo načtené chunky `groundZ` = výška nejbližšího uzlu.
+
+## Konstrukce: most, nájezd, estakáda (v3, L-S11)
+Dogfooding: přes most se nedalo přejet. Nájezd (`01`/`10`) má podle `specs/drive.md` krok 6
+první polovinu ve vrstvě 0, a ta často leží nad řekou. Overture navíc vede řadu mostů celé ve
+vrstvě 0. Auto na mostovce pak narazilo do budov, sloupků a stromů pod ní, spadlo do vody pod
+ní a bez zábradlí sjelo z boku na terén. Pravidla v3 (`clear` =
+`terrain.pipeline.bridge_min_clear_m`, `margin` = `layers.switch_margin_m`, `E` = sledovaná
+hrana, `d` = vzdálenost středu auta od její osy):
+- **Vrstva auta na konstrukci.** Když je `E` most nebo nájezd (ne pozemní hrana) a sledovaná
+  vrstva je 0, auto je na `E` (`d ≤ width/2 + margin` a výška auta `z` není víc než `clear` pod
+  `groundZ(E)`; u povrchu pod terénem nejvýš `clear` i nad ním), pak:
+  `groundZ(E) > terén + clear` → vrstva +1, `groundZ(E) < terén − clear` → vrstva −1, jinak 0
+  (u země, na křižovatce). Vrstva +1 znamená zábradlí, žádné budovy, sloupky, stromy, mobiliář
+  ani vodu, jako na mostě. Balíček bez výšek: polovina nájezdu ve vrstvě 0 má vrstvu nájezdu
+  (`max`, tunel −1), ale jen když auto na hranu přijelo po grafu (ze sousední hrany), nikdy
+  z cesty pod ní.
+- **Povrch jen ve výšce auta.** Z terénu na povrch hrany auto přejde, jen když není víc než
+  `clear` pod ním. Na mostovku se tedy dostane jen nájezdem a cesta pod mostem projede ve vrstvě
+  0. Pozemní hrana, jejíž profil se od terénu liší o víc než `clear` (chybí příznak mostu, schod
+  v datech), se jede po profilu.
+- **Sledování hrany s výškou.** Sousední hrana (`specs/drive.md` krok 6) má přednost, když je
+  ve výšce auta: `|groundZ(hrana) − g| ≤ clear`, kde `g` je země pod autem. Když taková není,
+  platí kterýkoli soused (graf je spojí, schod v datech je malý pád, nikdy zeď). Hrana mimo
+  sousedy se bere jen ve výšce auta. Když auto opustí vozovku své hrany (`d > width/2 − margin`)
+  a stojí na vozovce jiné hrany ve své výšce, převezme ji: souběžné vozovky a rozvětvení na
+  mostovce, bez neviditelné zdi zábradlí.
+- **Voda a stromy.** Pád do vody (`specs/nature.md`) ani zásah stromu (`specs/flow.md`)
+  nenastane, když auto jede po povrchu hrany (most, nájezd, tunel). Strom se počítá, jen když
+  terén u jeho kmene je nejvýš `clear` od země pod autem. Na vozovce mostu nebo nájezdu
+  (`d ≤ width/2`) auto nenarazí do sloupků zón (`specs/zones.md`: silnice je průjezdná celou
+  šířkou).
+- **Vyproštění.** Návrat po stopě na mostovce zůstane na mostovce: hrana pod bodem stopy ve výšce
+  auta (`clear`) má přednost před nejbližší pozemní. Přesun na silnici dál hledá jen vrstvu 0.
+
+Testy W: `web/test/bridges.test.ts` (čisté funkce `structureLayer`, `flatStructureLayer`,
+`onSurface`; přejezdy všech mostů všech balíčků z břehu na břeh, cesty pod mosty a sjezd z břehu
+do vody na skutečných balíčcích). F: parita F-070 (todo do vystřelení, L3).
 
 ## Svah (krok jízdy, po kroku 5 „Pneumatiky“ ve `specs/drive.md`)
 Na zemi (`airborne = false`):
@@ -167,28 +204,37 @@ gestem (dvojí klepnutí dvěma prsty); výchozí je pohled shora (K1 = A). Rozp
 
 ### Upřesnění T2 (klient W, F-074)
 - **Kamera:** směr za autem se vyhlazuje jako shora (`camera.heading_follow_rate`, při couvání se
-  nedotáčí); kamera stojí `distance_m` za autem ve výšce `z_ref + height_m`, cíl je `look_ahead_m`
-  před autem ve výšce `z_ref`. `fov_deg` platí pro kratší stranu obrazovky (na výšku vodorovně).
-  Oddálení na hraně a při tvrdém dopadu násobí `distance_m` i `height_m`, třes posouvá kameru i cíl.
-- **Zprůhlednění:** fragment budovy nebo mostovky, který je blíž kameře než auto a nejvýš 6 m od
-  úsečky kamera–auto, se kreslí rastrem 4 × 4 s pokrytím 0,3 (alfa 0,3 bez řazení průhledných ploch);
-  stejně i v hloubkovém průchodu risografu, aby auto bylo vidět.
+  nedotáčí); kamera stojí `distance_m` za autem ve výšce `z_ref + height_m` (nejméně 4 m nad zemí
+  pod sebou), cíl je `look_ahead_m` před autem ve výšce `z_ref`. `fov_deg` platí pro kratší stranu
+  obrazovky (na výšku vodorovně). Oddálení na hraně a při tvrdém dopadu násobí `distance_m` i
+  `height_m`, třes posouvá kameru i cíl.
+- **Blízko a daleko:** načtený chunk se zblízka (terén, zem, budovy, silnice) kreslí jen do 300 m od
+  auta (nejbližší bod chunku); dál ho kreslí prstenec. Provoz a chodci se drží do 300 m, popisky a
+  ikony nad světem (ulice, stanice, budky, trasa GPS) se kreslí jen do 300 m od auta.
+- **Zprůhlednění:** fragment budovy, mostovky, koruny nebo kmene, který je blíž kameře než auto,
+  nejvýš 6 m od úsečky kamera–auto (auto = 1 m nad svou základnou) a výš než polovina auta, se kreslí
+  rastrem 4 × 4 s pokrytím 0,3 (alfa 0,3 bez řazení průhledných ploch); stejně i v hloubkovém
+  průchodu risografu, aby auto bylo vidět. Mostovka pod autem zůstává plná.
 - **Prstenec:** dlaždice `lod/`, jejichž obdélník zasahuje do 1,5 km od auta, jedna síť a jeden
-  draw call na dlaždici; kreslí se jen mimo načtené chunky (maska chunků v shaderu). Terén z mřížky
-  33 × 33 v barvě `land` × stínování ze sklonu mřížky se sluncem jako `shade` (az. 315°, výška 45°);
-  hmoty bloků od `base_z` do zobrazené výšky budovy (`extrusion`) v barvách fasád; `wood` a
-  `parkland` jako zelené hmoty `color.green.wood` / `color.green.parkland` do `height_m`; voda jako
-  jedna plocha v barvě `water` ve výšce hladiny okolní mřížky.
-- **Mlha a obloha:** lineární mlha od 0,5 do 1,5 km do barvy `color.world.sky.horizon` (v noci
-  `nightHorizon`), obloha přechodem od horizontu k `color.world.sky.zenith` (`nightZenith`). Shora
-  mlha ani obloha nejsou.
+  draw call na dlaždici; maska chunků v shaderu ji skryje pod chunky kreslenými zblízka. Terén z
+  mřížky 33 × 33 v barvě `land` × stínování ze sklonu mřížky se sluncem jako `shade` (az. 315°, výška
+  45°); hmoty bloků od `base_z` do zobrazené výšky budovy (`extrusion`) v barvách fasád; `wood` a
+  `parkland` jako zelené hmoty `color.green.wood` / `color.green.parkland` do zobrazené `height_m`;
+  voda jako jedna plocha v barvě třídy ve výšce `z_dm` + 0,3 m, vzorky mřížky pod vodou nejvýš
+  hladina − `terrain.pipeline.underwater_m` (jako zblízka).
+- **Stromy:** kmeny se v šikmém pohledu kreslí jako sloupky od země ke koruně do 150 m od auta.
+- **Mlha a obloha:** mlha jen na prstenci a vodní ploše, podíl `((d − 0,5 km) / 1 km)²` oříznutý
+  do 0–1, barva `color.world.sky.horizon` (v noci `nightHorizon`); obloha přechodem od horizontu k
+  `color.world.sky.zenith` (`nightZenith`). Shora mlha ani obloha nejsou.
 - **Přepínač:** kulaté tlačítko v HUD, dvojí klepnutí dvěma prsty (druhé do 0,35 s)
   a aplikace Nastavení v telefonu (`cameraTopdown` / `cameraChase`). Přepnutí za jízdy je okamžité,
   dlaždice prstence se načítají na pozadí a staví po jedné za snímek. Volba se pamatuje jen ve W v
   `localStorage` (`metro:camera`); uložení hry (`specs/save.md`, P0) se nemění. Ladění `?camera=chase`.
+  Během záběru Foťáku (`specs/photo.md`) se kreslí shora.
 
 ## Hraniční případy
-- Balíček bez výšek: `groundZ = 0`, `grad = 0`, nikdy `airborne`; vše jako před v1.
+- Balíček bez výšek: `groundZ = 0`, `grad = 0`, nikdy `airborne`; vše jako před v1 kromě vrstvy
+  na nájezdu (v3, „Konstrukce“).
 - Hrana `stairs`: pro auta zeď (jako budova ve vrstvě 0), chodci po ní chodí.
 - Teleport (metro, vyproštění, přesun města): `z = g`, `vz = 0`, `airborne = false`.
 - Chunk se načte pod letícím autem: `g` skočí, auto dosedne podle pravidla `z ≤ g`.
