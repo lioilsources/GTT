@@ -145,7 +145,16 @@ type TerrainTuning struct {
 		BridgeOverWaterM  float64 `yaml:"bridge_over_water_m"`
 		ShadeStrength     float64 `yaml:"shade_strength"`
 		ProfileFairPasses int     `yaml:"profile_fair_passes"`
-		RoadStrip         struct {
+		ElevatedFlag      struct {
+			AboveM float64 `yaml:"above_m"`
+			RunM   float64 `yaml:"run_m"`
+		} `yaml:"elevated_flag"`
+		Trench struct {
+			MarginM float64 `yaml:"margin_m"`
+			MaxM    float64 `yaml:"max_m"`
+			Share   float64 `yaml:"share"`
+		} `yaml:"trench"`
+		RoadStrip struct {
 			TolM  float64 `yaml:"tol_m"`
 			Share float64 `yaml:"share"`
 			MaxM  float64 `yaml:"max_m"`
@@ -236,7 +245,9 @@ func (t *Tuning) check() error {
 		"terrain.pipeline.bridge_min_clear_m": tp.BridgeMinClearM, "terrain.pipeline.bridge_over_water_m": tp.BridgeOverWaterM,
 		"terrain.pipeline.shade_strength": tp.ShadeStrength, "terrain.pipeline.profile_fair_passes": float64(tp.ProfileFairPasses), "terrain.pipeline.conform_fit.step_m": tp.ConformFit.StepM,
 		"terrain.pipeline.road_strip.tol_m": tp.RoadStrip.TolM, "terrain.pipeline.road_strip.share": tp.RoadStrip.Share,
-		"terrain.pipeline.road_strip.max_m":   tp.RoadStrip.MaxM,
+		"terrain.pipeline.road_strip.max_m":      tp.RoadStrip.MaxM,
+		"terrain.pipeline.elevated_flag.above_m": tp.ElevatedFlag.AboveM, "terrain.pipeline.elevated_flag.run_m": tp.ElevatedFlag.RunM,
+		"terrain.pipeline.trench.margin_m": tp.Trench.MarginM, "terrain.pipeline.trench.max_m": tp.Trench.MaxM, "terrain.pipeline.trench.share": tp.Trench.Share,
 		"terrain.pipeline.conform_fit.passes": float64(tp.ConformFit.Passes), "terrain.pipeline.sun.altitude_deg": tp.Sun.AltitudeDeg,
 		"terrain.lod.grid_m": tt.Lod.GridM, "terrain.lod.chunks": float64(tt.Lod.Chunks), "terrain.lod.block_merge_m": tt.Lod.BlockMergeM,
 		"terrain.lod.simplify_m": tt.Lod.SimplifyM, "terrain.lod.parkland_height_m": tt.Lod.ParklandHeightM,

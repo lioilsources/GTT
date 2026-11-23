@@ -236,7 +236,7 @@ func Elevation(e *Env) error {
 	}
 	for _, ed := range g.Edges {
 		te := terrain.Edge{From: int(ed.From), To: int(ed.To), Pts: EdgePts(ed), Class: gradeClass(ed),
-			LayerFrom: profileLayer(ed, ed.LayerFrom), LayerTo: profileLayer(ed, ed.LayerTo), HalfWidthM: float64(ed.WidthM) / 2, Bridge: ed.Bridge, Tunnel: ed.Tunnel}
+			LayerFrom: profileLayer(ed, ed.LayerFrom), LayerTo: profileLayer(ed, ed.LayerTo), HalfWidthM: float64(ed.WidthM) / 2, Bridge: ed.Bridge, Tunnel: ed.Tunnel, Kept: ed.Kept}
 		if ed.Bridge {
 			te.DeckM = decks[g.Names[ed.Name]]
 		}
@@ -245,6 +245,52 @@ func Elevation(e *Env) error {
 		in.Edges = append(in.Edges, te)
 	}
 	res := terrain.Profile(in, params)
+
+	// 7. conform (run here, before graph_z, because the deck check below reads its result).
+	gm := tt.GridM
+	per := int(math.Round(cm / gm))
+	gameWater := func(p geo.Pt) (float64, bool) {
+		l, ok := wi.level(p)
+		return (l - z0) * tt.Exaggeration, ok
+	}
+	// Bathymetry outside the mapped water (past the area, under piers) is never shown deeper than
+	// the water floor.
+	floor := math.Inf(-1)
+	for _, l := range levels {
+		if math.IsInf(floor, -1) || (l-z0)*tt.Exaggeration-tp.UnderwaterM < floor {
+			floor = (l-z0)*tt.Exaggeration - tp.UnderwaterM
+		}
+	}
+	conform := func(res terrain.Result) *terrain.Raster {
+		tg := terrain.NewRaster(float64(cx0)*cm, float64(cy0)*cm, gm, (cx1-cx0+1)*per+1, (cy1-cy0+1)*per+1)
+		var roads []terrain.Road
+		// Only ground edges shape the terrain. Clients ride the edge's own surface on bridges (also
+		// Overture bridges on level 0, Mánesův most), ramps and tunnels (specs/terrain.md groundZ),
+		// so the terrain under them keeps its own shape and the river under a deck stays flat.
+		for ei, pts := range res.EdgePts {
+			te := in.Edges[ei]
+			if te.Bridge || te.Tunnel || te.LayerFrom != 0 || te.LayerTo != 0 {
+				continue
+			}
+			for k := 1; k < len(pts); k++ {
+				if res.GroundPt[ei][k-1] && res.GroundPt[ei][k] {
+					roads = append(roads, terrain.Road{A: pts[k-1], B: pts[k], ZA: res.EdgeZ[ei][k-1], ZB: res.EdgeZ[ei][k], HalfWidthM: te.HalfWidthM,
+						StripM: carriageway(g.Edges[ei], e.C.Tuning.SidewalkWidthM), Kept: g.Edges[ei].Kept, Edge: ei})
+				}
+			}
+		}
+		terrain.Conform(tg, func(p geo.Pt) float64 { return math.Max(floor, (ground(p)-z0)*tt.Exaggeration) }, gameWater, roads,
+			terrain.ConformParams{SupportM: gm * math.Sqrt2, MarginM: tp.Trench.MarginM, BlendM: tt.BlendM, UnderwaterM: tp.UnderwaterM, FitStepM: tp.ConformFit.StepM, FitPasses: tp.ConformFit.Passes})
+		return tg
+	}
+	tg := conform(res)
+	// A ground edge that leaves a deck in the air (its nodes went to another road below, NYC West
+	// 38th Street over the Lincoln Tunnel approach) becomes a bridge; profile and conform again.
+	if n := flagElevated(g, in.Edges, res, tg.Bilinear, tp.ElevatedFlag.AboveM, tp.ElevatedFlag.RunM); n > 0 {
+		slog.Info("elevation: unflagged deck ends flagged as bridges, profile and conform again", "edges", n)
+		res = terrain.Profile(in, params)
+		tg = conform(res)
+	}
 
 	gz := proto.Clone(g).(*pb.Graph)
 	for i, n := range gz.Nodes {
@@ -276,41 +322,6 @@ func Elevation(e *Env) error {
 	for k, l := range levels {
 		rep.WaterLevels[k] = (l - z0) * tt.Exaggeration
 	}
-
-	// 7. conform: the 8 m game grid over the chunk range follows the roads.
-	gm := tt.GridM
-	per := int(math.Round(cm / gm))
-	tg := terrain.NewRaster(float64(cx0)*cm, float64(cy0)*cm, gm, (cx1-cx0+1)*per+1, (cy1-cy0+1)*per+1)
-	var roads []terrain.Road
-	// Only ground edges shape the terrain. Clients ride the edge's own surface on bridges (also
-	// Overture bridges on level 0, Mánesův most), ramps and tunnels (specs/terrain.md groundZ),
-	// so the terrain under them keeps its own shape and the river under a deck stays flat.
-	for ei, pts := range res.EdgePts {
-		te := in.Edges[ei]
-		if te.Bridge || te.Tunnel || te.LayerFrom != 0 || te.LayerTo != 0 {
-			continue
-		}
-		for k := 1; k < len(pts); k++ {
-			if res.GroundPt[ei][k-1] && res.GroundPt[ei][k] {
-				roads = append(roads, terrain.Road{A: pts[k-1], B: pts[k], ZA: res.EdgeZ[ei][k-1], ZB: res.EdgeZ[ei][k], HalfWidthM: te.HalfWidthM,
-					StripM: carriageway(g.Edges[ei], e.C.Tuning.SidewalkWidthM), Kept: g.Edges[ei].Kept, Edge: ei})
-			}
-		}
-	}
-	gameWater := func(p geo.Pt) (float64, bool) {
-		l, ok := wi.level(p)
-		return (l - z0) * tt.Exaggeration, ok
-	}
-	// Bathymetry outside the mapped water (past the area, under piers) is never shown deeper than
-	// the water floor.
-	floor := math.Inf(-1)
-	for _, l := range levels {
-		if math.IsInf(floor, -1) || (l-z0)*tt.Exaggeration-tp.UnderwaterM < floor {
-			floor = (l-z0)*tt.Exaggeration - tp.UnderwaterM
-		}
-	}
-	terrain.Conform(tg, func(p geo.Pt) float64 { return math.Max(floor, (ground(p)-z0)*tt.Exaggeration) }, gameWater, roads,
-		terrain.ConformParams{SupportM: gm * math.Sqrt2, BlendM: tt.BlendM, UnderwaterM: tp.UnderwaterM, FitStepM: tp.ConformFit.StepM, FitPasses: tp.ConformFit.Passes})
 
 	// 8. shade.
 	grid := TerrainGrid{CX0: cx0, CY0: cy0, W: tg.W, H: tg.H, Step: gm, ChunkM: cm, Z: make([]int16, len(tg.Z)),

@@ -14,6 +14,7 @@ export 'src/cars_rules.dart';
 export 'src/fleet.dart';
 export 'src/flow.dart';
 export 'src/parked.dart';
+export 'src/boost_hint.dart';
 export 'src/controls.dart';
 export 'src/drive_world.dart';
 export 'src/gps.dart';

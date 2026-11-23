@@ -66,6 +66,15 @@ MountainsSimulator/terrain-fetch (`internal/dem/`).
   Praha 53, NYC 61): v jejich půdorysu + `nature.pipeline.deck_tree_margin_m` neroste strom;
   validate hlídá 0 stromů v půdorysu a spojitou výšku desky (konec hrany = výška uzlu, skok
   uvnitř hrany ≤ 0,05 m).
+- T3b: uzel, kde ponechaná silnice na konstrukci potká jen vedlejší silnice na zemi, zůstává na
+  konstrukci; hrany na konstrukci u obou konců mají sklon mostu (Nuselský most: nájezdy 0,20 →
+  0,08, deska neklesá na svah). Pozemní hrana, která z uzlu mostu pokračuje ve vzduchu nad
+  conformovaným terénem (`elevated_flag`), je most (NYC West 38th Street, 2 hrany); profil a
+  conform pak běží znovu. Terén do poloviny šířky silnice + `trench.margin_m` nese výšku silnice
+  (validate: nad silnicí ≤ `trench.max_m` až na `trench.share` vzorků).
+- Sloupky (zóny i uličky) se v kroku `pack` ořežou o vozovky ponechaných silnic a půdorysy mostů a
+  nájezdů (Čechův a Jiráskův most); validate jich tam chce 0. Stromy v půdorysu desky, kterou
+  označil až krok `elevation`, `pack` vypustí.
 - Hrana nad vodou aspoň `bridge_over_water_m` v kuse, napojená na obou koncích, je most i bez
   příznaku (NYC: 2 hrany); slepá hrana nad vodou (molo) zůstane silnicí.
 
@@ -85,8 +94,10 @@ jen LAZ v S-JTSK (ATOM `atom.cuzk.gov.cz/DMR4G-SJTSK`), převod na mřížku pot
 | okraj silnice mimo terén > 0,3 m | 187 z 100 516 (0,2 %) | 240 z 55 429 (0,4 %) |
 | vozovka ponechané silnice vs terén > 0,15 m (T3) | 79 z 187 946, max 0,42 m | 191 z 82 919, max 0,87 m (serpentiny) |
 | body mřížky ve vodě nad hladinou (T3) | 0 | 0 (dřív 357, max 32 m pod mosty) |
-| mosty pod plnou světlostí (varování) | 14 vzorků | 172 vzorků (nábřeží u předmostí) |
-| stromy (žádný v půdorysu mostu či nájezdu) | 60 997 (35 392 ze Street Tree Census) | 32 793 (OSM + parky) |
+| mosty pod plnou světlostí (varování) | 14 vzorků | 171 vzorků (nábřeží u předmostí) |
+| stromy (žádný v půdorysu mostu či nájezdu) | 60 996 (35 392 ze Street Tree Census) | 32 782 (OSM + parky) |
+| sloupky na vozovce či mostě (T3b) | 284 → 0 | 64 → 0 |
+| terén > 0,3 m nad silnicí vedle ní (T3b) | 121 z 451 224 | 686 z 269 091 (Nerudova 8 z 1 062, max 0,68 m) |
 | uzavřené štěrbiny, `micro_only` uličky | 9 080, 57 | 3 655, 99 |
 | balíček | 4,5 MB | 3,1 MB |
 
@@ -146,3 +157,26 @@ přepisu zahodí (klienti nemají písmo CJK). Jména jsou po segmentech nejedno
 - Spoty mají pole `minigame` (id z katalogu): na tom místě se minihra hraje (9.5).
 - `validate` bere při kontrole „silnice v budově“ v úvahu dvory (díry v obrysu): příjezd do dvora
   Dakoty na 72nd St není kolize.
+
+
+## Moskva v číslech (M6)
+
+Uvnitř Sadového okruhu i s okruhem + Zamoskvorečje, Gorkého park, Komsomolské náměstí a předmostí
+u Kutuzovského (`plans/M6_MOSKVA.md` X1; sever oříznutý na 55,777° kvůli dvorním rampám u
+Novoslobodské): 28 296 uzlů, 31 834 hran, 15 079 hmot budov, 520 chunků, 48 spotů (13 s minihrou,
+2 budky, 12 vstupů do metra, 8 fotomíst, 8 obchodů a barů), 387 hran tramvají a 34 zastávek,
+balíček 3,8 MB (`pack-moscow-1cabcee6fcf1`). Build s fetch ~12 min.
+
+Terén z AWS Terrain Tiles (z0 = 122 m, převýšení 2,0, 0 schodů): Moskva je mírná, nejprudší
+pojmenovaná ulice je Bolšoj Nikolovorobinskij pereulok 11,5 %, pak Zemljanoj val 9,9 %. Příroda:
+14 170 stromů (OSM 46 %, zbytek Poissonův výsev v parcích), řeka Moskva, Jauza, Obtokový kanál,
+Patriarší a Golicynské rybníky pojmenované; 62 hran mostů, 43 z nich s koncem ve vrstvě 0.
+
+Jména: Overture má v Moskvě `names.primary` azbukou. `name_langs: [en, ru-Latn]` bere anglické
+nebo latinkou přepsané jméno; od M6 platí `name_langs` i pro vodu a zeleň (krok `nature`, dřív
+jen silnice), azbuka by se v klientech nevykreslila. Plochy kanálu bez jména berou jméno
+z nejbližší pojmenované čáry kanálu jako řeky (Obtokový kanál má jméno jen na ose).
+
+- `validate`: `terrain.pipeline.road_strip.max_m` 1,2 m (dvorní obslužné rampy u Novoslobodské
+  a na Taganke 1,04–1,18 m; Praha 0,87, NYC 0,42).
+- Borovická věž nemá v Overture budovu, je bod (`kind: plaza`).

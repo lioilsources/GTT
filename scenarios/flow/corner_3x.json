@@ -8,6 +8,6 @@
     "rescue2_kind": {"value": 2, "tol": 0},
     "rescue3_kind": {"value": 3, "tol": 0},
     "rescue3_on_road": {"value": 1, "tol": 0},
-    "rescue3_t_s": {"value": 12.617, "tol": 0.05}
+    "rescue3_t_s": {"value": 13, "tol": 0.05}
   }
 }

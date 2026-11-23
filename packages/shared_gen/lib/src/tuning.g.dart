@@ -90,6 +90,7 @@ class Tuning {
         props = TuningProps._(r.sub('props')),
         skids = TuningSkids._(r.sub('skids')),
         bench = TuningBench._(r.sub('bench')),
+        smoke = TuningSmoke._(r.sub('smoke')),
         hud = TuningHud._(r.sub('hud')),
         minigames = TuningMinigames._(r.sub('minigames')),
         route = TuningRoute._(r.sub('route')),
@@ -140,7 +141,7 @@ class Tuning {
 
   int chunkM;
 
-  /// cruise = no-input pace; 14.0 with specs/drive.md v2 (flipped in shared/cruise-v2-scenarios)
+  /// cruise = no-input city pace (specs/drive.md v2); boost asks for top
   final TuningSpeedMps speedMps;
 
   /// citypack: road corridors and building masses.
@@ -179,6 +180,9 @@ class Tuning {
 
   /// D1 measurement autopilot (specs/bench.md); route in content/bench/<city>.json.
   final TuningBench bench;
+
+  /// Mobile web smoke test in CI (specs/bench.md "Kouřový test", Prompts/05 L-S6); web only.
+  final TuningSmoke smoke;
 
   final TuningHud hud;
 
@@ -285,6 +289,7 @@ class Tuning {
         'props': props.toJson(),
         'skids': skids.toJson(),
         'bench': bench.toJson(),
+        'smoke': smoke.toJson(),
         'hud': hud.toJson(),
         'minigames': minigames.toJson(),
         'route': route.toJson(),
@@ -415,7 +420,7 @@ class TuningExtrusion {
   static const keys = ['k', 'knee_m', 'exp', 'max_scale'];
 }
 
-/// cruise = no-input pace; 14.0 with specs/drive.md v2 (flipped in shared/cruise-v2-scenarios)
+/// cruise = no-input city pace (specs/drive.md v2); boost asks for top
 class TuningSpeedMps {
   TuningSpeedMps._(_R r)
       : cruise = r.d('cruise'),
@@ -1118,7 +1123,10 @@ class TuningControls {
       : aFullSteerWidth = r.d('a_full_steer_width'),
         aDeadZoneHeight = r.d('a_dead_zone_height'),
         aFullBrakeHeight = r.d('a_full_brake_height'),
-        cMaxWheelRad = r.d('c_max_wheel_rad');
+        cMaxWheelRad = r.d('c_max_wheel_rad'),
+        boostHintAfterS = r.d('boost_hint_after_s'),
+        boostHintMinSpeedMps = r.d('boost_hint_min_speed_mps'),
+        boostHintMax = r.i('boost_hint_max');
 
   /// thumb travel for full lock, fraction of screen width
   double aFullSteerWidth;
@@ -1131,23 +1139,24 @@ class TuningControls {
 
   double cMaxWheelRad;
 
+  /// driving at cruise without boost before the hint shows again
+  double boostHintAfterS;
+
+  /// counts as cruise driving from this speed
+  double boostHintMinSpeedMps;
+
+  /// the boost hint shows at most this many times per device
+  int boostHintMax;
+
   Map<String, Object> toJson() => {
         'a_full_steer_width': aFullSteerWidth,
         'a_dead_zone_height': aDeadZoneHeight,
         'a_full_brake_height': aFullBrakeHeight,
         'c_max_wheel_rad': cMaxWheelRad,
+        'boost_hint_after_s': boostHintAfterS,
+        'boost_hint_min_speed_mps': boostHintMinSpeedMps,
+        'boost_hint_max': boostHintMax,
       };
-
-  /// Value by YAML key, null when the key is unknown.
-  double? operator [](String key) => switch (key) {
-        'a_full_steer_width' => aFullSteerWidth,
-        'a_dead_zone_height' => aDeadZoneHeight,
-        'a_full_brake_height' => aFullBrakeHeight,
-        'c_max_wheel_rad' => cMaxWheelRad,
-        _ => null,
-      };
-
-  static const keys = ['a_full_steer_width', 'a_dead_zone_height', 'a_full_brake_height', 'c_max_wheel_rad'];
 }
 
 /// Street furniture (procedural per chunk, never stored).
@@ -1418,6 +1427,38 @@ class TuningBench {
       };
 
   static const keys = ['lookahead_m', 'lookahead_per_mps', 'steer_gain', 'corner_lookahead_m', 'corner_turn_rad', 'corner_speed_mps', 'brake_per_mps', 'stuck_s', 'stuck_mps', 'respawn_ahead_m', 'arrive_m', 'warmup_s', 'search_back_m', 'search_ahead_m'];
+}
+
+/// Mobile web smoke test in CI (specs/bench.md "Kouřový test", Prompts/05 L-S6); web only.
+class TuningSmoke {
+  TuningSmoke._(_R r)
+      : firstFrameMs = r.i('first_frame_ms'),
+        dragPx = r.i('drag_px'),
+        driveS = r.d('drive_s'),
+        minDriveM = r.d('min_drive_m'),
+        swipePx = r.i('swipe_px');
+
+  /// budget from navigation to the first frame with the car's chunks
+  int firstFrameMs;
+
+  /// thumb dragged up (boost) for the drive step
+  int dragPx;
+
+  double driveS;
+
+  /// the car must cover at least this in drive_s
+  double minDriveM;
+
+  /// feed swipe distance, up and down
+  int swipePx;
+
+  Map<String, Object> toJson() => {
+        'first_frame_ms': firstFrameMs,
+        'drag_px': dragPx,
+        'drive_s': driveS,
+        'min_drive_m': minDriveM,
+        'swipe_px': swipePx,
+      };
 }
 
 class TuningHud {
@@ -4286,7 +4327,8 @@ class TuningWeatherCities {
   TuningWeatherCities._(_R r)
       : nyc = r.b('nyc'),
         prague = r.b('prague'),
-        tokyo = r.b('tokyo');
+        tokyo = r.b('tokyo'),
+        moscow = r.b('moscow');
 
   bool nyc;
 
@@ -4294,10 +4336,13 @@ class TuningWeatherCities {
 
   bool tokyo;
 
+  bool moscow;
+
   Map<String, Object> toJson() => {
         'nyc': nyc,
         'prague': prague,
         'tokyo': tokyo,
+        'moscow': moscow,
       };
 }
 
@@ -4358,7 +4403,8 @@ class TuningShopsCities {
   TuningShopsCities._(_R r)
       : nyc = r.b('nyc'),
         prague = r.b('prague'),
-        tokyo = r.b('tokyo');
+        tokyo = r.b('tokyo'),
+        moscow = r.b('moscow');
 
   bool nyc;
 
@@ -4366,10 +4412,13 @@ class TuningShopsCities {
 
   bool tokyo;
 
+  bool moscow;
+
   Map<String, Object> toJson() => {
         'nyc': nyc,
         'prague': prague,
         'tokyo': tokyo,
+        'moscow': moscow,
       };
 }
 
@@ -4566,7 +4615,8 @@ class TuningStyleRisograph {
   TuningStyleRisograph._(_R r)
       : nyc = r.b('nyc'),
         prague = r.b('prague'),
-        tokyo = r.b('tokyo');
+        tokyo = r.b('tokyo'),
+        moscow = r.b('moscow');
 
   bool nyc;
 
@@ -4574,10 +4624,13 @@ class TuningStyleRisograph {
 
   bool tokyo;
 
+  bool moscow;
+
   Map<String, Object> toJson() => {
         'nyc': nyc,
         'prague': prague,
         'tokyo': tokyo,
+        'moscow': moscow,
       };
 }
 
@@ -4586,7 +4639,8 @@ class TuningStyleCastShadow {
   TuningStyleCastShadow._(_R r)
       : nyc = r.b('nyc'),
         prague = r.b('prague'),
-        tokyo = r.b('tokyo');
+        tokyo = r.b('tokyo'),
+        moscow = r.b('moscow');
 
   bool nyc;
 
@@ -4594,10 +4648,13 @@ class TuningStyleCastShadow {
 
   bool tokyo;
 
+  bool moscow;
+
   Map<String, Object> toJson() => {
         'nyc': nyc,
         'prague': prague,
         'tokyo': tokyo,
+        'moscow': moscow,
       };
 }
 
@@ -4605,7 +4662,8 @@ class TuningStyleCrosswalks {
   TuningStyleCrosswalks._(_R r)
       : nyc = r.b('nyc'),
         prague = r.b('prague'),
-        tokyo = r.b('tokyo');
+        tokyo = r.b('tokyo'),
+        moscow = r.b('moscow');
 
   bool nyc;
 
@@ -4613,10 +4671,13 @@ class TuningStyleCrosswalks {
 
   bool tokyo;
 
+  bool moscow;
+
   Map<String, Object> toJson() => {
         'nyc': nyc,
         'prague': prague,
         'tokyo': tokyo,
+        'moscow': moscow,
       };
 }
 
@@ -5242,6 +5303,8 @@ class TuningTerrainPipeline {
         roadGapMaxM = r.d('road_gap_max_m'),
         roadGapShare = r.d('road_gap_share'),
         roadStrip = TuningTerrainPipelineRoadStrip._(r.sub('road_strip')),
+        trench = TuningTerrainPipelineTrench._(r.sub('trench')),
+        elevatedFlag = TuningTerrainPipelineElevatedFlag._(r.sub('elevated_flag')),
         bridgeMinClearM = r.d('bridge_min_clear_m'),
         bridgeOverWaterM = r.d('bridge_over_water_m'),
         profileFairPasses = r.i('profile_fair_passes'),
@@ -5290,7 +5353,14 @@ class TuningTerrainPipeline {
   double roadGapShare;
 
   /// validate: |terrain − road profile| on kept carriageways (the car rides the terrain there)
+  /// max_m 1.2: Moscow courtyard service ramps (Novoslobodskaya, Taganka) reach 1.18 m; Prague max 0.87, NYC 0.42
   final TuningTerrainPipelineRoadStrip roadStrip;
+
+  /// conform and validate: terrain within road width / 2 + margin_m never above the road + max_m
+  final TuningTerrainPipelineTrench trench;
+
+  /// a ground edge joined to a structure and this far above the terrain this long is a bridge
+  final TuningTerrainPipelineElevatedFlag elevatedFlag;
 
   /// validate fails below water/road + this; below bridge.clear_* it warns
   double bridgeMinClearM;
@@ -5325,6 +5395,8 @@ class TuningTerrainPipeline {
         'road_gap_max_m': roadGapMaxM,
         'road_gap_share': roadGapShare,
         'road_strip': roadStrip.toJson(),
+        'trench': trench.toJson(),
+        'elevated_flag': elevatedFlag.toJson(),
         'bridge_min_clear_m': bridgeMinClearM,
         'bridge_over_water_m': bridgeOverWaterM,
         'profile_fair_passes': profileFairPasses,
@@ -5359,6 +5431,7 @@ class TuningTerrainPipelineProfileWindowM {
 }
 
 /// validate: |terrain − road profile| on kept carriageways (the car rides the terrain there)
+/// max_m 1.2: Moscow courtyard service ramps (Novoslobodskaya, Taganka) reach 1.18 m; Prague max 0.87, NYC 0.42
 class TuningTerrainPipelineRoadStrip {
   TuningTerrainPipelineRoadStrip._(_R r)
       : tolM = r.d('tol_m'),
@@ -5386,6 +5459,61 @@ class TuningTerrainPipelineRoadStrip {
       };
 
   static const keys = ['tol_m', 'share', 'max_m'];
+}
+
+/// conform and validate: terrain within road width / 2 + margin_m never above the road + max_m
+class TuningTerrainPipelineTrench {
+  TuningTerrainPipelineTrench._(_R r)
+      : marginM = r.d('margin_m'),
+        maxM = r.d('max_m'),
+        share = r.d('share');
+
+  double marginM;
+
+  double maxM;
+
+  double share;
+
+  Map<String, Object> toJson() => {
+        'margin_m': marginM,
+        'max_m': maxM,
+        'share': share,
+      };
+
+  /// Value by YAML key, null when the key is unknown.
+  double? operator [](String key) => switch (key) {
+        'margin_m' => marginM,
+        'max_m' => maxM,
+        'share' => share,
+        _ => null,
+      };
+
+  static const keys = ['margin_m', 'max_m', 'share'];
+}
+
+/// a ground edge joined to a structure and this far above the terrain this long is a bridge
+class TuningTerrainPipelineElevatedFlag {
+  TuningTerrainPipelineElevatedFlag._(_R r)
+      : aboveM = r.d('above_m'),
+        runM = r.d('run_m');
+
+  double aboveM;
+
+  double runM;
+
+  Map<String, Object> toJson() => {
+        'above_m': aboveM,
+        'run_m': runM,
+      };
+
+  /// Value by YAML key, null when the key is unknown.
+  double? operator [](String key) => switch (key) {
+        'above_m' => aboveM,
+        'run_m' => runM,
+        _ => null,
+      };
+
+  static const keys = ['above_m', 'run_m'];
 }
 
 /// road strip samples that fit the grid nodes to the road profile

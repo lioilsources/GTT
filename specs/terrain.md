@@ -1,6 +1,6 @@
 # Terén – výšky, svahy a skoky
 
-**version: 3** · data P0 (citypack, shodná v obou klientech) · fyzika P1 (±5 %, scénáře
+**version: 4** · data P0 (citypack, shodná v obou klientech) · fyzika P1 (±5 %, scénáře
 `scenarios/terrain/`) · pohled shora s reliéfem P2 · plán `Prompts/02-METROPOLE_TERRAIN_PLAN.md`,
 pod-plán `plans/M5_TEREN_PRIRODA.md` · parita F-070 (svahy a skoky), F-071 (reliéf shora),
 F-074 (šikmý pohled, jen W)
@@ -28,12 +28,21 @@ Všechny výšky jsou **herní** (po převýšení a omezení sklonu), v decimet
 | `Ground` (voda) | `z_dm` | hladina |
 | `lod/{x}_{y}.pb` | hrubý terén 32 m + hmoty bloků, po 4 × 4 chuncích | jen šikmý pohled |
 
-Záruky dat (v2, `citypack validate`):
+Záruky dat (v2–v4, `citypack validate`):
 - Terén řídí jen pozemní hrany (ne most, ne tunel, vrstva 0 na obou koncích). Pod mostem, nájezdem
   a v tunelu má terén vlastní tvar, auto tam jede po povrchu hrany (`groundZ` výše). Most, který
   Overture vede ve vrstvě 0 (Mánesův most), je pořád most.
 - Most, nájezd a estakáda (netunelová hrana mimo terén) mají spojitou desku: konec hrany má výšku
   svého uzlu, uvnitř hrany žádný skok nad 0,05 m. V jejich půdorysu na zemi neroste strom.
+- Hrana na konstrukci u obou konců (vrstva ≥ 1, i bez příznaku mostu: nájezdy Nuselského mostu)
+  má sklon `terrain.bridge.max_grade`. Uzel, kde se ponechaná silnice na konstrukci potká jen s
+  vedlejšími silnicemi na zemi, zůstává na konstrukci (vedlejší silnice stoupá, deska neklesá).
+- Pozemní hrana, která z uzlu mostu pokračuje ve vzduchu (nad terénem o víc než
+  `elevated_flag.above_m` aspoň `run_m`), je most (v4; NYC West 38th Street).
+- Terén do poloviny šířky silnice + `trench.margin_m` (2 m) není nad silnicí víc než
+  `trench.max_m` (0,3 m), kromě nejvýš `trench.share` vzorků, kde se o buňku mřížky dělí dvě
+  silnice v různé výšce (v4).
+- Na vozovce ponechané silnice ani v půdorysu mostu či nájezdu nestojí sloupky (`Chunk.barriers`, v4).
 - Ve vodě neleží žádný bod mřížky nad hladinou. Výjimka: body, které nese pás pozemní silnice na
   břehu (buňka 8 m nemůže z vozovky spadnout k vodě; hladina je překryje).
 - Na vozovce ponechané pozemní silnice čte bilineární terén profil silnice: odchylka ≤ 0,15 m

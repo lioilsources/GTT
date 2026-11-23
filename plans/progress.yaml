@@ -6,7 +6,7 @@
 # reopened: list of {date, reason} when an item went back from hotovo/ověřeno (regression).
 # Dropped scope: M0 point 5 (Flutter web build) – replaced by D1, see docs/m0.md.
 
-milestones: [M0, D0, D1, D2, M1, D3, M3, M2, M4, M5, L]
+milestones: [M0, D0, D1, D2, M1, D3, M3, M2, M4, M5, L, M6]
 
 items:
   # ---------- M0 – Hračka (scope)
@@ -243,6 +243,8 @@ items:
   - {id: L-S15, milestone: L, name: "metro stats → plans/STATS.md", size: S, status: hotovo, started: 2026-11-23T11:02, done: 2026-11-23T11:08, evidence: "run/bin/metro stats → plans/STATS.md; go test ./internal/stats (Summarize, Classify)"}
   - {id: L-D1, milestone: L, name: "dogfooding: zkušební jízda v garáži, garáž z telefonu, ladicí hotovost (F-075)", size: M, status: "čeká na Ol1na", started: 2026-11-23T10:10,
      done: 2026-11-23T11:30, evidence: "specs/testdrive.md v2; PR #222/#233 (spec), #226/#239 (W), #229/#238 (F), #245 (parita); testy web/test/cars.test.ts, packages/drive_core/test/cars_test.dart, app/test/garage_test.dart; na Ol1novi: Garáž → Vyzkoušet na Vega Roadster, telefon → Garáž → Otevřít garáž, ?debug → +10000"}
+  - {id: L-D2, milestone: L, name: "boost ve schématech B a C, nápověda boostu (F-005, specs/controls.md v2)", size: S, status: "čeká na Ol1na", started: 2026-11-23T12:44,
+     done: 2026-11-23T13:10, evidence: "PR #279 (spec v2, tuning controls.boost_hint_*), #280 (W), #281 (F); tlačítko Boost v B dole uprostřed, v C nad pedálem brzdy; toast boostHintA/B/C/Keys při první jízdě a po 25 s jízdy bez boostu, nejvýš 3×; testy web/test/boost.test.ts, packages/drive_core/test/boost_test.dart, app/test/boost_hint_store_test.dart; na Ol1novi: pocit z tlačítka a nápovědy na telefonu"}
   - {id: L-A1, milestone: L, name: "docs/launch.md, metro progress --check a kouřový test zelené na main, Pages nasazené", size: S, status: todo}
 
 # Content counters with targets. tests and fps are measured; the rest metro progress counts itself.
@@ -252,3 +254,15 @@ counters:
     pixel_8a: {app: null, web: null, measured: null}
     iphone_12_mini: {app: null, web: null, measured: null}
   stuck: {per_10min: null, target: 1, measured: null}   # specs/flow.md, M5-A4 (from stuck.log / overlay)
+  # ---------- M6 – Moskva (plans/M6_MOSKVA.md), po L souběžně s M4
+  - {id: M6-S1, milestone: M6, name: "balíček Moskva: oblast X1, 25 památek, spoty, terén a příroda, validate", size: L, status: wip, started: 2026-11-23T12:30}
+  - {id: M6-S2, milestone: M6, name: "Moskva v klientech: registrace, balíček, paleta (F-078)", size: M, status: todo}
+  - {id: M6-S3, milestone: M6, name: "styl E – konstruktivistický plakát", size: M, status: todo}
+  - {id: M6-S4, milestone: M6, name: "grafika Moskvy: style check, pohlednice, textury, suvenýry (L40S)", size: M, status: todo}
+  - {id: M6-S5, milestone: M6, name: "místní vozidla Moskvy", size: M, status: todo}
+  - {id: M6-S6, milestone: M6, name: "místní minihry Moskvy", size: L, status: todo}
+  - {id: M6-S7, milestone: M6, name: "moskevské skity a pas", size: M, status: todo}
+  - {id: M6-A1, milestone: M6, name: "citypack validate moscow projde", size: S, status: todo}
+  - {id: M6-A2, milestone: M6, name: "60 fps v Moskvě na obou telefonech", size: S, status: todo}
+  - {id: M6-A3, milestone: M6, name: "přepnutí čtyř měst 10× bez pádu", size: S, status: todo}
+  - {id: M6-A4, milestone: M6, name: "matice parity pro rozsah M6 zelená", size: M, status: todo}

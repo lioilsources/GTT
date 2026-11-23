@@ -125,6 +125,8 @@ flutter:
     - assets/shared/packs/prague/chunks/
     - assets/shared/packs/tokyo/
     - assets/shared/packs/tokyo/chunks/
+    - assets/shared/packs/moscow/
+    - assets/shared/packs/moscow/chunks/
     # Generated art (specs/art.md); asset dirs are not recursive, one line per folder.
     - assets/shared/assets/
     - assets/shared/assets/npc/
