@@ -394,7 +394,7 @@
   level: P2
   spec: specs/cities.md@2
   lead: web
-  flutter: todo
+  flutter: done
   web: done
   checks: {flutter: pass, web: pass}
 

@@ -184,7 +184,13 @@ void main() {
           if (const ['food', 'souvenir', 'bar'].contains(s.kind)) s.id,
       ]);
       expect(w.shops.shops.where((s) => s.kind == 'souvenir'), hasLength(5));
-      expect(w.shops.games, ['sirky', 'oko', 'sipky']);
+      // Every distinct minigame of the city's bar spots, in spot order (batch B adds bar games).
+      final barGames = <String>[];
+      for (final s in w.g.city.spots.items) {
+        if (s.kind == 'bar' && s.minigame.isNotEmpty && !barGames.contains(s.minigame)) barGames.add(s.minigame);
+      }
+      expect(w.shops.games, barGames);
+      expect(w.shops.games, containsAll(['sirky', 'oko', 'sipky']));
       final dots = w.phone.mapPoints.expand((f) => f()).where((e) => e.color == Tokens.colorShopsFood);
       expect(dots.length, w.shops.shops.where((s) => s.kind == 'food').length);
       // A bar with a minigame shows "Bar" instead of "Hrát".
@@ -432,7 +438,7 @@ void main() {
       await pumpCard(tester, w, bar, key);
       expect(find.text('Beer'), findsOneWidget);
       expect(find.text('${tuning.shops.priceBeer} cash'), findsOneWidget);
-      for (final g in ['sirky', 'oko', 'sipky']) {
+      for (final g in w.shops.games) {
         expect(find.byKey(ValueKey('shopPlay:$g')), findsOneWidget);
       }
       if (_png) await _shot(tester, key, 'shops_bar_card.png');
