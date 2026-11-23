@@ -226,3 +226,4 @@ vzorem). Do té doby klient kreslí ikonu a jméno.
   rezerva terénních aut uvnitř obrysu.
 - **Lidovka, oprava**, 23. 11. 2026: `assets/cars/lidovka/*` nově procedurálně (`tools/art/cars_proc.py`), 57×148,
   souměrná, karoserie 51 px na šířku, výřezy pro kola, čistě kolmo shora (nahrazuje body.png z ComfyUI).
+- **Ikony HUD a telefonu (dávka ui1):** `assets/ui/<id>.png` 256×256, id podle `phoneAppIds` (feed, map, taxi, garage, passport, camera, contacts, wallet, travel, settings) + radio, weather_clear, weather_rain, weather_fog, wanted_star. Bílý glyf na průhledném pozadí, klient ho tónuje (`color.phone.app`/`appOff`, `color.weather.icon`); `tools/art/ui_icons.py`.
