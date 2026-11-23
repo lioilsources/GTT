@@ -231,7 +231,8 @@ items:
   - {id: L-S7, milestone: L, name: "první spuštění: postup stahování v %, karta ovládání a výběr města", size: S, status: todo}
   - {id: L-S8, milestone: L, name: "náhled odkazu: og: a twitter: metadata", size: S, status: todo}
   - {id: L-S9, milestone: L, name: "demo záběr ?demo=roadster, web/scripts/demo.ts, og.png", size: M, status: todo}
-  - {id: L-S10, milestone: L, name: "tramvaje plynule sledují kolej (test přes celou síť Prahy)", size: M, status: todo}
+  - {id: L-S10, milestone: L, name: "tramvaje plynule sledují kolej (test přes celou síť Prahy)", size: M, status: "čeká na Ol1na", started: 2026-11-23T10:40,
+     done: 2026-11-23T12:00, commit: 55a4075, evidence: "PR #248 (specs/trams.md v2), #265 (W), #266 (F); příčina: volba další koleje brala každou hranu v uzlu (vlásenky ≈160° ve výhybkách, 90° na kříženích, otočka na konečné), max 1 800 °/m, živě 345 °/m; teď jen sjízdné přechody (trams.max_switch_deg) a změna čela na konečné: 9,70 °/m přes 7 412 přechodů a 3 247 hran, živě 7,7 °/m (W) / 7,2 °/m (F), limit trams.max_turn_deg_per_m 12; web/test/tramsSmooth.test.ts, packages/drive_core/test/trams_test.dart; na Ol1novi pohled na telefonu"}
   - {id: L-S11, milestone: L, name: "mosty a voda: na most jen z nájezdu, pod mostem po nábřeží, do vody pád", size: M, status: todo}
   - {id: L-S12, milestone: L, name: "policie nezablokuje hru: police_box, soak 20 dopadení", size: M, status: todo}
   - {id: L-S13, milestone: L, name: "regresní testy: průjezd zaparkovanými auty, swipe feedu", size: S, status: todo}
