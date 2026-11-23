@@ -1418,7 +1418,7 @@ export class TuningDemo {
   queueGapM: number;
   /** hop when the queue's last car is this close ahead of the nose */
   hopAtM: number;
-  /** link preview frame; 0 = mid-air of the hop */
+  /** link preview frame (car rising over the queue); 0 = mid-air of the hop */
   ogAtS: number;
 
   constructor(r: R) {

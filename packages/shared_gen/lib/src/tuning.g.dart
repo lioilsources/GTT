@@ -1448,7 +1448,7 @@ class TuningDemo {
   /// hop when the queue's last car is this close ahead of the nose
   double hopAtM;
 
-  /// link preview frame; 0 = mid-air of the hop
+  /// link preview frame (car rising over the queue); 0 = mid-air of the hop
   double ogAtS;
 
   Map<String, Object> toJson() => {

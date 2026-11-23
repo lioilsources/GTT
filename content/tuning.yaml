@@ -191,7 +191,7 @@ demo:
   queue_stop_m: 5.0             # front of the first queued car before the crossing
   queue_gap_m: 2.5
   hop_at_m: 4.0                 # hop when the queue's last car is this close ahead of the nose
-  og_at_s: 0.0                  # link preview frame; 0 = mid-air of the hop
+  og_at_s: 11.2                 # link preview frame (car rising over the queue); 0 = mid-air of the hop
 
 hud:
   street_labels_below_mps: 9.0
