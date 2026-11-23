@@ -134,7 +134,7 @@ plyn ani brzdění motorem). Testy W: `web/test/terrainScenarios.test.ts`.
 | `jump_30_15` | 0,15·x pro x < 0, jinak −0,15·x | −2, 30,3 m/s | 3 s | `takeoff_mps` (rychlost v 1. kroku `airborne`), `air_s` (součet kroků `airborne`), `air_m` (dráha v nich), `landing_mps` (`dopad`) |
 | `jump_40_20` | 0,2 / −0,2 | −2, 40,4 m/s | 3 s | jako výše + `after_mps` (rychlost na konci) |
 | `hold_20` | 0,2·x | 0, 0 | 5 s | `drift_m` = vzdálenost od startu |
-| `bridge_7` | terén 0; uzly (−400, 0) (−100, 0) (0, 7) (100, 7) (200, 0) (500, 0), hrany ve vrstvách 0→0, 0→1 most, 1→1 most, 1→0 most, 0→0 | −300, `speed_mps.cruise` | 30 s | `v_at_m100_mps`, `v_at_0_mps`, `v_at_100_mps`, `v_at_200_mps`, `v_at_300_mps` = rychlost při prvním x ≥ −100, 0, 100, 200, 300 |
+| `bridge_7` | terén 0; uzly (−400, 0) (−100, 0) (0, 7) (100, 7) (200, 0) (500, 0), hrany ve vrstvách 0→0, 0→1 most, 1→1 most, 1→0 most, 0→0 | −300, `speed_mps.cruise` | 50 s (v3; 30 s nestačí na x = 300 v městském tempu) | `v_at_m100_mps`, `v_at_0_mps`, `v_at_100_mps`, `v_at_200_mps`, `v_at_300_mps` = rychlost při prvním x ≥ −100, 0, 100, 200, 300 |
 
 Kontrolní tabulka skoků platí pro čistý model; skutečné auto ve scénářích ztrácí ve vzduchu
 rychlost odporem (`drag_*`), proto je let o několik procent kratší (40 m/s: délka −10 %).
