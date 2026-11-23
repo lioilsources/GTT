@@ -697,6 +697,7 @@ enum MessageKey {
   testDriveOver('testDriveOver'),
   testDriveNoTaxi('testDriveNoTaxi'),
   debugCash('debugCash'),
+  garageOpen('garageOpen'),
   ;
 
   const MessageKey(this.key);
@@ -1399,6 +1400,7 @@ const Map<String, Map<String, String>> _messages = {
     'testDriveOver': 'Zkušební jízda skončila, sedíš zase ve svém autě',
     'testDriveNoTaxi': 'Při zkušební jízdě taxi směnu nevezmeš',
     'debugCash': '+{amount}',
+    'garageOpen': 'Otevřít garáž',
   },
   'en': {
     'appTitle': 'Metropole',
@@ -2093,6 +2095,7 @@ const Map<String, Map<String, String>> _messages = {
     'testDriveOver': 'Test drive over, back in your own car',
     'testDriveNoTaxi': 'No taxi shift during a test drive',
     'debugCash': '+{amount}',
+    'garageOpen': 'Open garage',
   },
 };
 

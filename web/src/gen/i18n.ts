@@ -696,6 +696,7 @@ export type MessageKey =
   | "testDriveOver"
   | "testDriveNoTaxi"
   | "debugCash"
+  | "garageOpen"
 ;
 
 export const messages: Record<Locale, Record<MessageKey, string>> = {
@@ -1392,6 +1393,7 @@ export const messages: Record<Locale, Record<MessageKey, string>> = {
     testDriveOver: "Zkušební jízda skončila, sedíš zase ve svém autě",
     testDriveNoTaxi: "Při zkušební jízdě taxi směnu nevezmeš",
     debugCash: "+{amount}",
+    garageOpen: "Otevřít garáž",
   },
   "en": {
     appTitle: "Metropole",
@@ -2086,6 +2088,7 @@ export const messages: Record<Locale, Record<MessageKey, string>> = {
     testDriveOver: "Test drive over, back in your own car",
     testDriveNoTaxi: "No taxi shift during a test drive",
     debugCash: "+{amount}",
+    garageOpen: "Open garage",
   },
 };
 

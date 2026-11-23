@@ -44,14 +44,17 @@ void main() {
       expect(() => r.aiAction(r.init(j, 1), 1, Prng(1)), throwsUnsupportedError);
     });
 
-    test('config from tuning and tokens: parts = 1 + colours, decal 4, wheels 3', () {
+    test('config from tuning and tokens: parts = 1 + colours, decal 9, wheels 7 (v2)', () {
       expect(cfg.parts, {
         'paint': 1 + Tokens.colorGaragePaints.length,
-        'decal': 4,
-        'wheels': 3,
+        'decal': 9,
+        'wheels': Tokens.colorGarageWheels.length,
         'glow': 1 + Tokens.colorGarageGlow.length,
         'smoke': 1 + Tokens.colorGarageSmoke.length,
       });
+      expect(Tokens.colorGarageWheels.length, 7);
+      expect(garageDecalIds.length + 1, cfg.parts['decal']);
+      expect(garageWheelIds.length + 1, cfg.parts['wheels']);
       expect(cfg.prices['engine'], tuning.garage.priceEngine);
       expect(cfg.maxLevel, tuning.garage.maxLevel);
       expect(cfg.lookPrices['glow'], tuning.garage.lookPriceGlow);
@@ -88,7 +91,7 @@ void main() {
       expect(next.where((a) => a.car == 'truck' && a.part == 'decal').map((a) => (a.value, a.cash)), [
         (0, 0),
         (1, cfg.lookPrices['decal']),
-        (3, cfg.lookPrices['decal']),
+        for (var v = 3; v < 9; v++) (v, cfg.lookPrices['decal']),
       ]);
     });
 
@@ -186,8 +189,14 @@ void main() {
       expect(l.rim, Tokens.colorGarageWheels[1]);
       expect(l.glow, Tokens.colorGarageGlow[0]);
       expect(l.smoke, Tokens.colorGarageSmoke[1]);
+      expect(l.wheels, 1);
       expect(CarLook.of(const {'paint': 99, 'decal': 7}).paint, isNull);
-      expect(CarLook.of(const {'decal': 7}).decal, 0);
+      expect(CarLook.of(const {'decal': 8}).decal, 8);
+      expect(CarLook.of(const {'decal': 9}).decal, 0);
+      final w6 = CarLook.of(const {'wheels': 6});
+      expect((w6.wheels, w6.rim), (6, Tokens.colorGarageWheels[6]));
+      final w7 = CarLook.of(const {'wheels': 7});
+      expect((w7.wheels, w7.rim), (0, Tokens.colorGarageWheels[0]));
       expect(lookSwatch('paint', 0, 0xFF123456), 0xFF123456);
       expect(lookSwatch('wheels', 0, 0), Tokens.colorGarageWheels[0]);
       expect(lookSwatch('glow', 0, 0), isNull);
@@ -204,12 +213,15 @@ void main() {
 
   group('save v5 (specs/save.md v4)', () {
     final sc = SaveConfig.fromTuning(tuning, 'nyc', CarId.values.map((c) => c.id));
-    final v4 = <String, Object?>{
-      ...freshSave(sc),
-      'version': 4,
-      'cash': 300,
-      'souvenirs': ['souvenir_soho'],
-    }..remove('upgrades')..remove('looks');
+    final v4 =
+        <String, Object?>{
+            ...freshSave(sc),
+            'version': 4,
+            'cash': 300,
+            'souvenirs': ['souvenir_soho'],
+          }
+          ..remove('upgrades')
+          ..remove('looks');
 
     test('fresh save is version 5 with empty upgrades and looks; spec version 4', () {
       final s = freshSave(sc);
@@ -225,7 +237,14 @@ void main() {
           'm0_coupe': {'engine': 1},
         },
       });
-      expect([s['version'], s['cash'], s['souvenirs']], [5, 300, ['souvenir_soho']]);
+      expect(
+        [s['version'], s['cash'], s['souvenirs']],
+        [
+          5,
+          300,
+          ['souvenir_soho'],
+        ],
+      );
       expect([s['upgrades'], s['looks']], [isEmpty, isEmpty]);
     });
 
