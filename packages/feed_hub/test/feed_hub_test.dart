@@ -75,14 +75,44 @@ void main() {
     test('actions and the end of the deck', () {
       final r = FeedRules();
       var s = r.deal(cfg([cand('a', 'board', 9000), cand('b', 'dice', 9000)]), 1);
-      expect(r.legalActions(s), FeedOp.values);
+      expect(r.legalActions(s), [FeedOp.next, FeedOp.like, FeedOp.less, FeedOp.accept]);
       s = r.apply(s, FeedOp.like);
       expect(r.legalActions(s), [FeedOp.next, FeedOp.less, FeedOp.accept]);
       expect(() => r.apply(s, FeedOp.like), throwsA(isA<IllegalAction>()));
-      s = r.apply(r.apply(s, FeedOp.next), FeedOp.less);
+      s = r.apply(s, FeedOp.next);
+      expect(r.legalActions(s), FeedOp.values);
+      s = r.apply(s, FeedOp.less);
       expect(s.over, isTrue);
       expect(r.legalActions(s), isEmpty);
+      expect(() => r.apply(s, FeedOp.prev), throwsA(isA<IllegalAction>()));
       expect(FeedRules().deal(cfg([]), 1).over, isTrue);
+    });
+
+    test('prev goes back without re-counting (v2), illegal on the first card', () {
+      final r = FeedRules();
+      final s0 = r.deal(cfg([cand('a', 'board', 9000), cand('b', 'dice', 9000), cand('c', 'flick', 9000)]), 2);
+      expect(r.legalActions(s0), isNot(contains(FeedOp.prev)));
+      expect(() => r.apply(s0, FeedOp.prev), throwsA(isA<IllegalAction>()));
+      var s = r.apply(s0, FeedOp.like);
+      final liked = s.deck[0].spot;
+      s = r.apply(s, FeedOp.less);
+      final prefs = Map.of(s.prefs);
+      s = r.apply(s, FeedOp.prev);
+      expect(s.at, 0);
+      expect(s.prefs, prefs);
+      expect(s.liked, [liked]);
+      expect(r.legalActions(s), [FeedOp.next, FeedOp.less, FeedOp.accept]);
+      s = r.apply(s, FeedOp.next);
+      expect(s.at, 1);
+      expect(s.prefs, prefs);
+      expect(s.over, isFalse);
+    });
+
+    test('a one-card deck never allows prev', () {
+      final r = FeedRules();
+      final s = r.deal(cfg([cand('a', 'board', 9000)]), 1);
+      expect(r.legalActions(s), [FeedOp.next, FeedOp.like, FeedOp.less, FeedOp.accept]);
+      expect(r.apply(s, FeedOp.next).over, isTrue);
     });
 
     test('candidates: local flag, challenge placeholder, landmark nearby', () {

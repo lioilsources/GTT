@@ -3,7 +3,7 @@ import 'dart:math' as math;
 import 'package:rules_core/rules_core.dart';
 import 'package:shared_gen/shared_gen.dart';
 
-/// Feed deck selection, specs/feed.md version 1 (P0, integers only). Mirrors web/src/phone/feed.ts.
+/// Feed deck selection, specs/feed.md version 2 (P0, integers only). Mirrors web/src/phone/feed.ts.
 class FeedCandidate {
   const FeedCandidate({
     required this.spot,
@@ -149,7 +149,7 @@ class FeedState {
   };
 }
 
-enum FeedOp { next, like, less, accept }
+enum FeedOp { next, prev, like, less, accept }
 
 int _band(FeedConfig c, int driveS) {
   if (driveS < c['bandMinS']) return c['nearPoints'];
@@ -166,7 +166,7 @@ class FeedRules extends MgRules<FeedState, FeedOp, Never> {
   @override
   String get id => 'feed';
   @override
-  int get specVersion => 1;
+  int get specVersion => 2;
 
   FeedConfig get _c => _cfg ?? (throw StateError('feed: init first'));
 
@@ -227,7 +227,7 @@ class FeedRules extends MgRules<FeedState, FeedOp, Never> {
   List<FeedOp> legalActions(FeedState s) {
     if (s.over) return const [];
     final liked = s.liked.contains(s.deck[s.at].spot);
-    return liked ? const [FeedOp.next, FeedOp.less, FeedOp.accept] : FeedOp.values;
+    return [FeedOp.next, if (s.at > 0) FeedOp.prev, if (!liked) FeedOp.like, FeedOp.less, FeedOp.accept];
   }
 
   @override
@@ -239,6 +239,8 @@ class FeedRules extends MgRules<FeedState, FeedOp, Never> {
     switch (a) {
       case FeedOp.next:
         return step(s);
+      case FeedOp.prev:
+        return s.copyWith(at: s.at - 1);
       case FeedOp.like:
         prefs[card.engine] = math.min(_c['prefMax'], (prefs[card.engine] ?? 0) + 1);
         return s.copyWith(prefs: prefs, liked: [...s.liked, card.spot]);
