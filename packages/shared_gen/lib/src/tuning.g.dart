@@ -683,7 +683,10 @@ class TuningTrams {
         spawnClearM = r.d('spawn_clear_m'),
         despawnM = r.d('despawn_m'),
         seed = r.i('seed'),
-        railGaugeM = r.d('rail_gauge_m');
+        railGaugeM = r.d('rail_gauge_m'),
+        maxSwitchDeg = r.d('max_switch_deg'),
+        turnProbeM = r.d('turn_probe_m'),
+        maxTurnDegPerM = r.d('max_turn_deg_per_m');
 
   bool enabled;
 
@@ -749,6 +752,15 @@ class TuningTrams {
   /// drawn distance between the two rails (world metres)
   double railGaugeM;
 
+  /// trams.md v2: a node turn sharper than this is not a track connection
+  double maxSwitchDeg;
+
+  /// the turn at a node is measured this far along both edges
+  double turnProbeM;
+
+  /// acceptance: max change of a car's axis per metre of travel (test)
+  double maxTurnDegPerM;
+
   Map<String, Object> toJson() => {
         'enabled': enabled,
         'min_track_m': minTrackM,
@@ -779,6 +791,9 @@ class TuningTrams {
         'despawn_m': despawnM,
         'seed': seed,
         'rail_gauge_m': railGaugeM,
+        'max_switch_deg': maxSwitchDeg,
+        'turn_probe_m': turnProbeM,
+        'max_turn_deg_per_m': maxTurnDegPerM,
       };
 }
 

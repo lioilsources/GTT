@@ -698,6 +698,12 @@ export class TuningTrams {
   seed: number;
   /** drawn distance between the two rails (world metres) */
   railGaugeM: number;
+  /** trams.md v2: a node turn sharper than this is not a track connection */
+  maxSwitchDeg: number;
+  /** the turn at a node is measured this far along both edges */
+  turnProbeM: number;
+  /** acceptance: max change of a car's axis per metre of travel (test) */
+  maxTurnDegPerM: number;
 
   constructor(r: R) {
     this.enabled = r.b('enabled');
@@ -729,6 +735,9 @@ export class TuningTrams {
     this.despawnM = r.d('despawn_m');
     this.seed = r.i('seed');
     this.railGaugeM = r.d('rail_gauge_m');
+    this.maxSwitchDeg = r.d('max_switch_deg');
+    this.turnProbeM = r.d('turn_probe_m');
+    this.maxTurnDegPerM = r.d('max_turn_deg_per_m');
   }
 
   toJson(): Record<string, unknown> {
@@ -762,6 +771,9 @@ export class TuningTrams {
       despawn_m: this.despawnM,
       seed: this.seed,
       rail_gauge_m: this.railGaugeM,
+      max_switch_deg: this.maxSwitchDeg,
+      turn_probe_m: this.turnProbeM,
+      max_turn_deg_per_m: this.maxTurnDegPerM,
     };
   }
 }
