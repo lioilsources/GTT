@@ -623,6 +623,13 @@ export type MessageKey =
   | "hokejRules3"
   | "hokejGoal"
   | "hokejScore"
+  | "flowToRoad"
+  | "flowStuck10"
+  | "terrainGrade"
+  | "terrainAltitude"
+  | "natureTow"
+  | "cameraChase"
+  | "cameraTopdown"
 ;
 
 export const messages: Record<Locale, Record<MessageKey, string>> = {
@@ -1246,6 +1253,13 @@ export const messages: Record<Locale, Record<MessageKey, string>> = {
     hokejRules3: "Kdo dá první sedm gólů, vyhrál.",
     hokejGoal: "Gól!",
     hokejScore: "{player} : {ai}",
+    flowToRoad: "Na silnici",
+    flowStuck10: "Zaseknutí (10 min): {count}",
+    terrainGrade: "{pct} %",
+    terrainAltitude: "{m} m n. m.",
+    natureTow: "Auto se potopilo. Odtah: {fee}",
+    cameraChase: "Kamera za autem",
+    cameraTopdown: "Kamera shora",
   },
   "en": {
     appTitle: "Metropole",
@@ -1867,6 +1881,13 @@ export const messages: Record<Locale, Record<MessageKey, string>> = {
     hokejRules3: "First to seven goals wins.",
     hokejGoal: "Goal!",
     hokejScore: "{player} : {ai}",
+    flowToRoad: "To the road",
+    flowStuck10: "Stuck (10 min): {count}",
+    terrainGrade: "{pct} %",
+    terrainAltitude: "{m} m a.s.l.",
+    natureTow: "Your car sank. Tow: {fee}",
+    cameraChase: "Chase camera",
+    cameraTopdown: "Top-down camera",
   },
 };
 

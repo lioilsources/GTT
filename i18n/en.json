@@ -1176,5 +1176,16 @@
   "hokejRules3": "First to seven goals wins.",
   "hokejGoal": "Goal!",
   "hokejScore": "{player} : {ai}",
-  "@hokejScore": {"placeholders": {"player": {"type": "int"}, "ai": {"type": "int"}}}
+  "@hokejScore": {"placeholders": {"player": {"type": "int"}, "ai": {"type": "int"}}},
+  "flowToRoad": "To the road",
+  "flowStuck10": "Stuck (10 min): {count}",
+  "@flowStuck10": {"placeholders": {"count": {"type": "int"}}},
+  "terrainGrade": "{pct} %",
+  "@terrainGrade": {"placeholders": {"pct": {"type": "int"}}},
+  "terrainAltitude": "{m} m a.s.l.",
+  "@terrainAltitude": {"placeholders": {"m": {"type": "int"}}},
+  "natureTow": "Your car sank. Tow: {fee}",
+  "@natureTow": {"placeholders": {"fee": {"type": "int"}}},
+  "cameraChase": "Chase camera",
+  "cameraTopdown": "Top-down camera"
 }

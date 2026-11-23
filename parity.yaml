@@ -566,3 +566,55 @@
   lead: web
   flutter: todo
   web: todo
+
+- id: F-069
+  name: Nárazy do zdí a vyproštění (M5-S1, FL1)
+  level: P1
+  spec: specs/flow.md@1
+  scenarios: scenarios/flow
+  lead: web
+  flutter: todo
+  web: todo
+
+- id: F-070
+  name: Svahy a skoky (M5-S6, T1)
+  level: P1
+  spec: specs/terrain.md@1
+  scenarios: scenarios/terrain
+  lead: web
+  flutter: todo
+  web: todo
+
+- id: F-071
+  name: "Reliéf v pohledu shora: promítání, stínování, šipky, HUD (M5-S6)"
+  level: P2
+  spec: specs/terrain.md@1
+  lead: web
+  flutter: todo
+  web: todo
+
+- id: F-072
+  name: "Voda a zeleň: třídy, jména, povrchy, pád do vody (M5-S7, N1)"
+  level: P1
+  spec: specs/nature.md@1
+  scenarios: scenarios/nature
+  lead: web
+  flutter: todo
+  web: todo
+
+- id: F-073
+  name: Les a měkké stromy (M5-S8, FL2)
+  level: P1
+  spec: specs/flow.md@1
+  scenarios: scenarios/flow
+  lead: web
+  flutter: todo
+  web: todo
+
+- id: F-074
+  name: "Šikmý pohled: terén, lod, voda, lodě (M5-S9, jen W; F až T4 po G1)"
+  level: P2
+  spec: specs/terrain.md@1
+  lead: web
+  flutter: todo
+  web: todo

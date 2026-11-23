@@ -619,5 +619,12 @@
   "hokejRules2": "Střílej do branky nahoře, svou dole hlídej.",
   "hokejRules3": "Kdo dá první sedm gólů, vyhrál.",
   "hokejGoal": "Gól!",
-  "hokejScore": "{player} : {ai}"
+  "hokejScore": "{player} : {ai}",
+  "flowToRoad": "Na silnici",
+  "flowStuck10": "Zaseknutí (10 min): {count}",
+  "terrainGrade": "{pct} %",
+  "terrainAltitude": "{m} m n. m.",
+  "natureTow": "Auto se potopilo. Odtah: {fee}",
+  "cameraChase": "Kamera za autem",
+  "cameraTopdown": "Kamera shora"
 }

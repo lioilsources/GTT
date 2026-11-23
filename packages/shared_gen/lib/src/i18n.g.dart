@@ -624,6 +624,13 @@ enum MessageKey {
   hokejRules3('hokejRules3'),
   hokejGoal('hokejGoal'),
   hokejScore('hokejScore'),
+  flowToRoad('flowToRoad'),
+  flowStuck10('flowStuck10'),
+  terrainGrade('terrainGrade'),
+  terrainAltitude('terrainAltitude'),
+  natureTow('natureTow'),
+  cameraChase('cameraChase'),
+  cameraTopdown('cameraTopdown'),
   ;
 
   const MessageKey(this.key);
@@ -1253,6 +1260,13 @@ const Map<String, Map<String, String>> _messages = {
     'hokejRules3': 'Kdo dá první sedm gólů, vyhrál.',
     'hokejGoal': 'Gól!',
     'hokejScore': '{player} : {ai}',
+    'flowToRoad': 'Na silnici',
+    'flowStuck10': 'Zaseknutí (10 min): {count}',
+    'terrainGrade': '{pct} %',
+    'terrainAltitude': '{m} m n. m.',
+    'natureTow': 'Auto se potopilo. Odtah: {fee}',
+    'cameraChase': 'Kamera za autem',
+    'cameraTopdown': 'Kamera shora',
   },
   'en': {
     'appTitle': 'Metropole',
@@ -1874,6 +1888,13 @@ const Map<String, Map<String, String>> _messages = {
     'hokejRules3': 'First to seven goals wins.',
     'hokejGoal': 'Goal!',
     'hokejScore': '{player} : {ai}',
+    'flowToRoad': 'To the road',
+    'flowStuck10': 'Stuck (10 min): {count}',
+    'terrainGrade': '{pct} %',
+    'terrainAltitude': '{m} m a.s.l.',
+    'natureTow': 'Your car sank. Tow: {fee}',
+    'cameraChase': 'Chase camera',
+    'cameraTopdown': 'Top-down camera',
   },
 };
 
