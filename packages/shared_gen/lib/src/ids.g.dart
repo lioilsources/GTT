@@ -137,6 +137,13 @@ enum MinigameId {
   srdce('srdce'),
   kostky('kostky'),
   prase('prase'),
+  kulecnik('kulecnik'),
+  bowling('bowling'),
+  minigolf('minigolf'),
+  had('had'),
+  cihly('cihly'),
+  krtek('krtek'),
+  hokej('hokej'),
   ;
 
   const MinigameId(this.id);
@@ -176,4 +183,11 @@ final Map<MinigameId, MinigameMeta> minigameCatalog = {
   MinigameId.srdce: MinigameMeta(id: 'srdce', engine: 'cards', targetLengthS: 540, cities: [], casinoLike: false),
   MinigameId.kostky: MinigameMeta(id: 'kostky', engine: 'dice', targetLengthS: 480, cities: [], casinoLike: false),
   MinigameId.prase: MinigameMeta(id: 'prase', engine: 'dice', targetLengthS: 300, cities: [], casinoLike: false),
+  MinigameId.kulecnik: MinigameMeta(id: 'kulecnik', engine: 'flick', targetLengthS: 480, cities: [], casinoLike: false),
+  MinigameId.bowling: MinigameMeta(id: 'bowling', engine: 'flick', targetLengthS: 420, cities: [], casinoLike: false),
+  MinigameId.minigolf: MinigameMeta(id: 'minigolf', engine: 'flick', targetLengthS: 420, cities: [], casinoLike: false),
+  MinigameId.had: MinigameMeta(id: 'had', engine: 'arcade', targetLengthS: 240, cities: [], casinoLike: false),
+  MinigameId.cihly: MinigameMeta(id: 'cihly', engine: 'arcade', targetLengthS: 300, cities: [], casinoLike: false),
+  MinigameId.krtek: MinigameMeta(id: 'krtek', engine: 'arcade', targetLengthS: 120, cities: [], casinoLike: false),
+  MinigameId.hokej: MinigameMeta(id: 'hokej', engine: 'sport', targetLengthS: 300, cities: [], casinoLike: false),
 };

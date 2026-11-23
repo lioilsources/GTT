@@ -20,7 +20,7 @@ export const engineIdValues = ['cards', 'board', 'dice', 'tiles', 'flick', 'rhyt
 export type EngineId = (typeof engineIdValues)[number];
 
 /** Minigames in content/minigames/catalog.yaml. */
-export const minigameIdValues = ['sirky', 'oko', 'dama', 'desetitisic', 'sipky', 'strelnice', 'taxi', 'koulena', 'kulicky', 'cara', 'nohejbal', 'piskvorky', 'ctyri', 'mlyn', 'reversi', 'lode', 'posuvne', 'kviz', 'prsi', 'srdce', 'kostky', 'prase'] as const;
+export const minigameIdValues = ['sirky', 'oko', 'dama', 'desetitisic', 'sipky', 'strelnice', 'taxi', 'koulena', 'kulicky', 'cara', 'nohejbal', 'piskvorky', 'ctyri', 'mlyn', 'reversi', 'lode', 'posuvne', 'kviz', 'prsi', 'srdce', 'kostky', 'prase', 'kulecnik', 'bowling', 'minigolf', 'had', 'cihly', 'krtek', 'hokej'] as const;
 export type MinigameId = (typeof minigameIdValues)[number];
 
 /** Contract metadata of every minigame in content/minigames/catalog.yaml. */
@@ -47,4 +47,11 @@ export const minigameCatalog: Record<MinigameId, MinigameMeta> = {
   srdce: { id: 'srdce', engine: 'cards', targetLengthS: 540, cities: [], casinoLike: false },
   kostky: { id: 'kostky', engine: 'dice', targetLengthS: 480, cities: [], casinoLike: false },
   prase: { id: 'prase', engine: 'dice', targetLengthS: 300, cities: [], casinoLike: false },
+  kulecnik: { id: 'kulecnik', engine: 'flick', targetLengthS: 480, cities: [], casinoLike: false },
+  bowling: { id: 'bowling', engine: 'flick', targetLengthS: 420, cities: [], casinoLike: false },
+  minigolf: { id: 'minigolf', engine: 'flick', targetLengthS: 420, cities: [], casinoLike: false },
+  had: { id: 'had', engine: 'arcade', targetLengthS: 240, cities: [], casinoLike: false },
+  cihly: { id: 'cihly', engine: 'arcade', targetLengthS: 300, cities: [], casinoLike: false },
+  krtek: { id: 'krtek', engine: 'arcade', targetLengthS: 120, cities: [], casinoLike: false },
+  hokej: { id: 'hokej', engine: 'sport', targetLengthS: 300, cities: [], casinoLike: false },
 };

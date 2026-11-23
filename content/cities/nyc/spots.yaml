@@ -31,6 +31,14 @@ spots:
   - {id: queen_of_spades, kind: bar, name: The Queen of Spades, lat: 40.73350, lon: -74.00270, minigame: srdce}
   - {id: union_sq_dice, kind: plaza, name: Union Square, lat: 40.73590, lon: -73.99060, minigame: kostky}
   - {id: lucky_pig_diner, kind: cafe, name: The Lucky Pig Diner, lat: 40.72030, lon: -73.98790, minigame: prase}
+  # M2-S9 batch C minigames (flick, arcade, sport); venues are fictional (R10)
+  - {id: chalk_and_cue, kind: bar, name: Chalk and Cue Billiards, lat: 40.73300, lon: -73.98800, minigame: kulecnik}
+  - {id: tenth_ave_lanes, kind: cafe, name: Tenth Avenue Lanes, lat: 40.74700, lon: -74.00400, minigame: bowling}
+  - {id: pier_25_putting, kind: pier, name: Pier 25 Putting Course, lat: 40.72080, lon: -74.01370, minigame: minigolf}
+  - {id: pixel_palace, kind: cafe, name: Pixel Palace Arcade, lat: 40.75700, lon: -73.98700, minigame: had}
+  - {id: canal_st_arcade, kind: cafe, name: Canal Street Arcade, lat: 40.71850, lon: -74.00100, minigame: cihly}
+  - {id: central_park_midway, kind: park, name: Central Park Midway, lat: 40.76750, lon: -73.97100, minigame: krtek}
+  - {id: essex_air_rink, kind: cafe, name: Essex Street Air Rink, lat: 40.71850, lon: -73.98800, minigame: hokej}
   # Player garage (specs/cars.md): one per city in M1; a multi-storey car park on W 44th St.
   - {id: midtown_garage, kind: garage, name: West 44th Street Garage, lat: 40.75990, lon: -73.99410}
   # Ringing phone booths (specs/booths.md): street corners, no minigame.

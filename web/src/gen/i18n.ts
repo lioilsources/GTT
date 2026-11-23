@@ -579,6 +579,50 @@ export type MessageKey =
   | "praseHold"
   | "praseTurn"
   | "praseBust"
+  | "mg_kulecnik"
+  | "mg_bowling"
+  | "mg_minigolf"
+  | "mg_had"
+  | "mg_cihly"
+  | "mg_krtek"
+  | "mg_hokej"
+  | "kulecnikRules1"
+  | "kulecnikRules2"
+  | "kulecnikRules3"
+  | "kulecnikSolids"
+  | "kulecnikStripes"
+  | "kulecnikOpen"
+  | "kulecnikFoul"
+  | "bowlingRules1"
+  | "bowlingRules2"
+  | "bowlingRules3"
+  | "bowlingFrame"
+  | "bowlingStrike"
+  | "bowlingSpare"
+  | "minigolfRules1"
+  | "minigolfRules2"
+  | "minigolfRules3"
+  | "minigolfHole"
+  | "minigolfStrokes"
+  | "minigolfWater"
+  | "minigolfHoled"
+  | "hadRules1"
+  | "hadRules2"
+  | "hadRules3"
+  | "hadLength"
+  | "cihlyRules1"
+  | "cihlyRules2"
+  | "cihlyRules3"
+  | "cihlyLives"
+  | "krtekRules1"
+  | "krtekRules2"
+  | "krtekRules3"
+  | "krtekTime"
+  | "hokejRules1"
+  | "hokejRules2"
+  | "hokejRules3"
+  | "hokejGoal"
+  | "hokejScore"
 ;
 
 export const messages: Record<Locale, Record<MessageKey, string>> = {
@@ -1158,6 +1202,50 @@ export const messages: Record<Locale, Record<MessageKey, string>> = {
     praseHold: "Zapsat",
     praseTurn: "V tahu {n}",
     praseBust: "Jednička! Tah propadl",
+    mg_kulecnik: "Kulečník",
+    mg_bowling: "Bowling",
+    mg_minigolf: "Minigolf",
+    mg_had: "Had",
+    mg_cihly: "Cihly",
+    mg_krtek: "Bouchni krtka",
+    mg_hokej: "Vzdušný hokej",
+    kulecnikRules1: "Táhni od bílé koule: směr míří, délka určuje sílu.",
+    kulecnikRules2: "Potop svou skupinu, plné nebo půlené, a pak černou osmičku.",
+    kulecnikRules3: "Osmička potopená brzy nebo s faulem znamená prohru.",
+    kulecnikSolids: "Plné",
+    kulecnikStripes: "Půlené",
+    kulecnikOpen: "Otevřený stůl",
+    kulecnikFoul: "Faul! Hraje soupeř",
+    bowlingRules1: "Posuň kouli po čáře a pak ji švihni ke kuželkám.",
+    bowlingRules2: "Deset framů po dvou hodech; strike a spare přidají body navíc.",
+    bowlingRules3: "Strike nebo spare v desátém framu dá třetí hod.",
+    bowlingFrame: "Frame {frame}/10",
+    bowlingStrike: "Strike!",
+    bowlingSpare: "Spare!",
+    minigolfRules1: "Táhni od míčku a miř; delší tah = silnější rána.",
+    minigolfRules2: "Písek míček brzdí, voda stojí trestnou ránu.",
+    minigolfRules3: "Šest jamek. Hvězdy za výsledek blízko paru.",
+    minigolfHole: "Jamka {hole}/6 · par {par}",
+    minigolfStrokes: "Rány {n}",
+    minigolfWater: "Žbluňk! Trestná rána",
+    minigolfHoled: "Je tam!",
+    hadRules1: "Tahem prstu hada otočíš.",
+    hadRules2: "Jídlem roste a po pár soustech zrychlí.",
+    hadRules3: "Nenaraz do zdi ani do sebe.",
+    hadLength: "Délka {n}",
+    cihlyRules1: "Pálku posouváš prstem.",
+    cihlyRules2: "Odrážej míček do cihel; okrajem pálky ho pošleš šikmo.",
+    cihlyRules3: "Tři životy. Za celou zeď je bonus.",
+    cihlyLives: "Životy {n}",
+    krtekRules1: "Klepni na krtka, jakmile vykoukne.",
+    krtekRules2: "Zlatý krtek má trojnásobek. Bomby nech být.",
+    krtekRules3: "Na všechno máš minutu.",
+    krtekTime: "{seconds} s",
+    hokejRules1: "Pálku vedeš prstem, puk odpal.",
+    hokejRules2: "Střílej do branky nahoře, svou dole hlídej.",
+    hokejRules3: "Kdo dá první sedm gólů, vyhrál.",
+    hokejGoal: "Gól!",
+    hokejScore: "{player} : {ai}",
   },
   "en": {
     appTitle: "Metropole",
@@ -1735,6 +1823,50 @@ export const messages: Record<Locale, Record<MessageKey, string>> = {
     praseHold: "Bank",
     praseTurn: "This turn {n}",
     praseBust: "One! Turn lost",
+    mg_kulecnik: "Eight-ball",
+    mg_bowling: "Bowling",
+    mg_minigolf: "Mini golf",
+    mg_had: "Snake",
+    mg_cihly: "Bricks",
+    mg_krtek: "Whack-a-mole",
+    mg_hokej: "Air hockey",
+    kulecnikRules1: "Drag back from the white ball: the direction aims, the length sets the power.",
+    kulecnikRules2: "Pot your group, solids or stripes, then the black eight.",
+    kulecnikRules3: "Pot the eight too early, or with a foul, and you lose.",
+    kulecnikSolids: "Solids",
+    kulecnikStripes: "Stripes",
+    kulecnikOpen: "Open table",
+    kulecnikFoul: "Foul! Their turn",
+    bowlingRules1: "Slide the ball along the line, then flick it towards the pins.",
+    bowlingRules2: "Ten frames of two balls; a strike or a spare earns bonus pins.",
+    bowlingRules3: "A spare or strike in the tenth frame gives a third ball.",
+    bowlingFrame: "Frame {frame}/10",
+    bowlingStrike: "Strike!",
+    bowlingSpare: "Spare!",
+    minigolfRules1: "Drag back from the ball to aim; longer means harder.",
+    minigolfRules2: "Sand slows the ball, water costs a stroke.",
+    minigolfRules3: "Six holes. Finish close to par for stars.",
+    minigolfHole: "Hole {hole}/6 · par {par}",
+    minigolfStrokes: "Strokes {n}",
+    minigolfWater: "Splash! One penalty stroke",
+    minigolfHoled: "In the hole!",
+    hadRules1: "Swipe to turn the snake.",
+    hadRules2: "Eat to grow. Every few bites it gets faster.",
+    hadRules3: "Don't hit the walls or yourself.",
+    hadLength: "Length {n}",
+    cihlyRules1: "Slide your finger to move the paddle.",
+    cihlyRules2: "Bounce the ball into the bricks; the edge of the paddle sends it sideways.",
+    cihlyRules3: "Three lives. Clear the wall for a bonus.",
+    cihlyLives: "Lives {n}",
+    krtekRules1: "Tap the moles as they pop up.",
+    krtekRules2: "Golden moles score triple. Leave the bombs alone.",
+    krtekRules3: "One minute on the clock.",
+    krtekTime: "{seconds} s",
+    hokejRules1: "Move your mallet with your finger and strike the puck.",
+    hokejRules2: "Score in the slot at the top; guard the one at the bottom.",
+    hokejRules3: "First to seven goals wins.",
+    hokejGoal: "Goal!",
+    hokejScore: "{player} : {ai}",
   },
 };
 

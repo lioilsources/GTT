@@ -502,3 +502,66 @@
   lead: web
   flutter: todo
   web: done
+
+- id: F-058
+  name: Kulečník 8-ball (M2-S9 batch C)
+  level: P0
+  spec: specs/minigames/kulecnik.md@1
+  vectors: vectors/kulecnik.json
+  lead: web
+  flutter: todo
+  web: todo
+
+- id: F-059
+  name: Bowling (M2-S9 batch C)
+  level: P0
+  spec: specs/minigames/bowling.md@1
+  vectors: vectors/bowling.json
+  lead: web
+  flutter: todo
+  web: todo
+
+- id: F-060
+  name: Minigolf (M2-S9 batch C)
+  level: P0
+  spec: specs/minigames/minigolf.md@1
+  vectors: vectors/minigolf.json
+  lead: web
+  flutter: todo
+  web: todo
+
+- id: F-061
+  name: Had (M2-S9 batch C)
+  level: P0
+  spec: specs/minigames/had.md@1
+  vectors: vectors/had.json
+  lead: web
+  flutter: todo
+  web: todo
+
+- id: F-062
+  name: Cihly (M2-S9 batch C)
+  level: P0
+  spec: specs/minigames/cihly.md@1
+  vectors: vectors/cihly.json
+  lead: web
+  flutter: todo
+  web: todo
+
+- id: F-063
+  name: Bouchni krtka (M2-S9 batch C)
+  level: P0
+  spec: specs/minigames/krtek.md@1
+  vectors: vectors/krtek.json
+  lead: web
+  flutter: todo
+  web: todo
+
+- id: F-064
+  name: Vzdušný hokej (M2-S9 batch C)
+  level: P0
+  spec: specs/minigames/hokej.md@1
+  vectors: vectors/hokej.json
+  lead: web
+  flutter: todo
+  web: todo
