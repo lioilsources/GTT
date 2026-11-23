@@ -1,9 +1,12 @@
+import 'dart:ui' as ui;
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:mg_api/mg_api.dart' show loadArtIndex;
+import 'package:mg_api/mg_api.dart' show artAssetRoot, loadArtIndex;
 
 import 'cities/cities.dart';
+import 'game/paint/car_sprites.dart';
 import 'l10n/app_localizations.dart';
 import 'ui/game_screen.dart';
 import 'package:shared_gen/shared_gen.dart';
@@ -16,7 +19,16 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   // Generated art (specs/art.md): what exists comes from index.json only; missing = placeholders.
-  await loadArtIndex(rootBundle);
+  final art = await loadArtIndex(rootBundle);
+  // Car sprites (specs/art.md v2 "Auta"): decoded lazily on first use, procedural until then.
+  carSprites = CarSprites(
+    has: art.has,
+    load: (path) async {
+      final data = await rootBundle.load('$artAssetRoot$path');
+      final codec = await ui.instantiateImageCodec(data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes));
+      return (await codec.getNextFrame()).image;
+    },
+  );
   // Start city (specs/cities.md): no URL parameter on F, then the last city, then the first
   // bundled one (the app bundles every CityId, metro.yaml bundle_cities).
   final city = pickStartCity(null, await FileCityStore().read(), CityId.values);

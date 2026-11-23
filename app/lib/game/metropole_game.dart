@@ -558,7 +558,7 @@ class MetropoleGame extends Game {
         }
         final tr = drive.traffic;
         if (tr != null) {
-          paintTraffic(c, tr, layer, night: night, shadow: shadow);
+          paintTraffic(c, tr, layer, night: night, tuning: tuning, shadow: shadow);
           paintPolice(
             c,
             tr,
@@ -566,6 +566,7 @@ class MetropoleGame extends Game {
             timeS: _policeClock,
             blinkS: tuning.police.lightBlinkS,
             night: night,
+            tuning: tuning,
             shadow: shadow,
           );
         }
