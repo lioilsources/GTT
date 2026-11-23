@@ -8,6 +8,8 @@ import { Mesh } from '@babylonjs/core/Meshes/mesh';
 import { VertexData } from '@babylonjs/core/Meshes/mesh.vertexData';
 import type { Scene } from '@babylonjs/core/scene';
 import '@babylonjs/core/Meshes/thinInstanceMesh';
+import '@babylonjs/core/Shaders/ShadersInclude/instancesDeclaration';
+import '@babylonjs/core/Shaders/ShadersInclude/instancesVertex';
 
 import { composeBody, loadCarSprite, type CarSprite } from '../cars/spriteArt';
 import { atlasCarIds, packAtlas, POLICE_SPRITE, spriteWheels, uvRect, type AtlasItem, type AtlasLayout } from '../cars/sprites';
