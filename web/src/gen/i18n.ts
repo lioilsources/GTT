@@ -623,6 +623,56 @@ export type MessageKey =
   | "hokejRules3"
   | "hokejGoal"
   | "hokejScore"
+  | "mg_drift"
+  | "mg_sprint"
+  | "mg_stickball"
+  | "mg_doubledutch"
+  | "driftRules1"
+  | "driftRules2"
+  | "driftRules3"
+  | "driftTime"
+  | "driftScore"
+  | "driftChain"
+  | "driftBank"
+  | "driftOutside"
+  | "driftEnd"
+  | "driftGallery"
+  | "driftGalleryGo"
+  | "sprintRules1"
+  | "sprintRules2"
+  | "sprintRules3"
+  | "sprintTo"
+  | "sprintTime"
+  | "sprintPar"
+  | "sprintCp"
+  | "sprintSplit"
+  | "sprintGo"
+  | "sprintEnd"
+  | "sprintGallery"
+  | "sprintGalleryGo"
+  | "stickballRules1"
+  | "stickballRules2"
+  | "stickballRules3"
+  | "stickballRuns"
+  | "stickballCount"
+  | "stickballLast_ball"
+  | "stickballLast_strike"
+  | "stickballLast_foul"
+  | "stickballLast_single"
+  | "stickballLast_double"
+  | "stickballLast_homer"
+  | "stickballLast_catch"
+  | "stickballLast_walk"
+  | "stickballLast_strikeout"
+  | "doubledutchRules1"
+  | "doubledutchRules2"
+  | "doubledutchRules3"
+  | "ddPerfect"
+  | "ddGood"
+  | "ddOk"
+  | "ddMiss"
+  | "ddCombo"
+  | "ddTrips"
 ;
 
 export const messages: Record<Locale, Record<MessageKey, string>> = {
@@ -1246,6 +1296,56 @@ export const messages: Record<Locale, Record<MessageKey, string>> = {
     hokejRules3: "Kdo dá první sedm gólů, vyhrál.",
     hokejGoal: "Gól!",
     hokejScore: "{player} : {ai}",
+    mg_drift: "Drift zóna",
+    mg_sprint: "Sprint A→B",
+    mg_stickball: "Stickball",
+    mg_doubledutch: "Double Dutch",
+    driftRules1: "Driftuj v kruhu: ruční brzdou do smyku a drž úhel.",
+    driftRules2: "Větší úhel a vyšší rychlost dají víc bodů, dlouhý drift zvedne násobič.",
+    driftRules3: "Náraz zahodí rozjetý řetěz.",
+    driftTime: "{time}",
+    driftScore: "Skóre {score}",
+    driftChain: "{points} ×{mult}",
+    driftBank: "+{points}",
+    driftOutside: "Zpátky do kruhu!",
+    driftEnd: "Konec",
+    driftGallery: "Drift zóna se hraje ve městě: 90 sekund v kruhu na prázdném parkovišti.",
+    driftGalleryGo: "Jet do drift zóny",
+    sprintRules1: "Závod do cíle: projeď všemi branami popořadě.",
+    sprintRules2: "Mezi branami můžeš zkracovat, jak chceš.",
+    sprintRules3: "Pod parem jsou tři hvězdy, nárazy přidávají sekundy.",
+    sprintTo: "Sprint do cíle {place}",
+    sprintTime: "{time}",
+    sprintPar: "Par {time}",
+    sprintCp: "Brána {n}/{total}",
+    sprintSplit: "{delta}",
+    sprintGo: "Jeď!",
+    sprintEnd: "Vzdát",
+    sprintGallery: "Sprint se hraje ve městě: ze startu do skutečného cíle.",
+    sprintGalleryGo: "Jet na start",
+    stickballRules1: "Klepni do pásma, kudy míček letí, přesně když doletí.",
+    stickballRules2: "Přesné načasování pošle míček přes ulici, pozdě nebo brzo je faul či minutí.",
+    stickballRules3: "Míčky mimo zónu nech projít. Šest autů a konec.",
+    stickballRuns: "Doběhy {n}",
+    stickballCount: "B {balls} · S {strikes} · A {outs}",
+    stickballLast_ball: "Ball",
+    stickballLast_strike: "Strike!",
+    stickballLast_foul: "Faul",
+    stickballLast_single: "Jednometový!",
+    stickballLast_double: "Dvoumetový!",
+    stickballLast_homer: "Homerun!",
+    stickballLast_catch: "Chyceno! Aut",
+    stickballLast_walk: "Meta zdarma",
+    stickballLast_strikeout: "Strike-out!",
+    doubledutchRules1: "Klepni do rytmu a přeskoč obě švihadla.",
+    doubledutchRules2: "Na trikovém úderu táhni prstem nahoru.",
+    doubledutchRules3: "Tři zakopnutí a konec, lana se pořád zrychlují.",
+    ddPerfect: "Přesně!",
+    ddGood: "Dobře",
+    ddOk: "Ujde",
+    ddMiss: "Zakopnutí!",
+    ddCombo: "{n} v řadě",
+    ddTrips: "Zakopnutí {n}/{max}",
   },
   "en": {
     appTitle: "Metropole",
@@ -1867,6 +1967,56 @@ export const messages: Record<Locale, Record<MessageKey, string>> = {
     hokejRules3: "First to seven goals wins.",
     hokejGoal: "Goal!",
     hokejScore: "{player} : {ai}",
+    mg_drift: "Drift zone",
+    mg_sprint: "Sprint A to B",
+    mg_stickball: "Stickball",
+    mg_doubledutch: "Double Dutch",
+    driftRules1: "Drift inside the ring: handbrake into a slide and hold the angle.",
+    driftRules2: "Bigger angle and more speed score more; a long drift raises the multiplier.",
+    driftRules3: "Any crash loses the combo you are holding.",
+    driftTime: "{time}",
+    driftScore: "Score {score}",
+    driftChain: "{points} ×{mult}",
+    driftBank: "+{points}",
+    driftOutside: "Back into the ring!",
+    driftEnd: "End",
+    driftGallery: "Drift zone is played in the city: 90 seconds in a ring on an empty lot.",
+    driftGalleryGo: "Go to the drift zone",
+    sprintRules1: "Race to the destination; drive through every gate in order.",
+    sprintRules2: "Between gates any shortcut is fine.",
+    sprintRules3: "Beat the par time for three stars; crashes add seconds.",
+    sprintTo: "Sprint to {place}",
+    sprintTime: "{time}",
+    sprintPar: "Par {time}",
+    sprintCp: "Gate {n}/{total}",
+    sprintSplit: "{delta}",
+    sprintGo: "Go!",
+    sprintEnd: "Give up",
+    sprintGallery: "Sprint is played in the city: from the start line to a real destination.",
+    sprintGalleryGo: "Go to the start line",
+    stickballRules1: "Tap the band where the ball comes in, right as it arrives.",
+    stickballRules2: "Perfect timing hits it over the street; late or early is a foul or a miss.",
+    stickballRules3: "Leave balls outside the zone alone. Six outs end the game.",
+    stickballRuns: "Runs {n}",
+    stickballCount: "B {balls} · S {strikes} · O {outs}",
+    stickballLast_ball: "Ball",
+    stickballLast_strike: "Strike!",
+    stickballLast_foul: "Foul",
+    stickballLast_single: "Single!",
+    stickballLast_double: "Two sewers!",
+    stickballLast_homer: "Home run!",
+    stickballLast_catch: "Caught! Out",
+    stickballLast_walk: "Walk",
+    stickballLast_strikeout: "Strikeout!",
+    doubledutchRules1: "Tap on the beat to jump the two ropes.",
+    doubledutchRules2: "On a trick beat swipe up instead.",
+    doubledutchRules3: "Three trips and you are out; the ropes keep getting faster.",
+    ddPerfect: "Perfect!",
+    ddGood: "Good",
+    ddOk: "OK",
+    ddMiss: "Trip!",
+    ddCombo: "{n} combo",
+    ddTrips: "Trips {n}/{max}",
   },
 };
 

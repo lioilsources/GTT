@@ -566,3 +566,39 @@
   lead: web
   flutter: todo
   web: todo
+
+- id: F-065
+  name: Drift zóna (engine drive, world minigame, M2-S9 batch D)
+  level: P0
+  spec: specs/minigames/drift.md@1
+  vectors: vectors/drift.json
+  lead: web
+  flutter: todo
+  web: todo
+
+- id: F-066
+  name: Sprint A→B (engine drive, world minigame, M2-S9 batch D)
+  level: P0
+  spec: specs/minigames/sprint.md@1
+  vectors: vectors/sprint.json
+  lead: web
+  flutter: todo
+  web: todo
+
+- id: F-067
+  name: Stickball (NYC local, engine sport)
+  level: P0
+  spec: specs/minigames/stickball.md@1
+  vectors: vectors/stickball.json
+  lead: web
+  flutter: todo
+  web: todo
+
+- id: F-068
+  name: Double Dutch (NYC local, first engine rhythm)
+  level: P0
+  spec: specs/minigames/doubledutch.md@1
+  vectors: vectors/doubledutch.json
+  lead: web
+  flutter: todo
+  web: todo
