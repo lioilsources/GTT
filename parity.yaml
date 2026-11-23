@@ -460,3 +460,39 @@
   lead: web
   flutter: todo
   web: done
+
+- id: F-054
+  name: Prší (M2-S9 batch B)
+  level: P0
+  spec: specs/minigames/prsi.md@1
+  vectors: vectors/prsi.json
+  lead: web
+  flutter: todo
+  web: todo
+
+- id: F-055
+  name: Srdce (M2-S9 batch B)
+  level: P0
+  spec: specs/minigames/srdce.md@1
+  vectors: vectors/srdce.json
+  lead: web
+  flutter: todo
+  web: todo
+
+- id: F-056
+  name: Kostkový poker (M2-S9 batch B)
+  level: P0
+  spec: specs/minigames/kostky.md@1
+  vectors: vectors/kostky.json
+  lead: web
+  flutter: todo
+  web: todo
+
+- id: F-057
+  name: Prase (M2-S9 batch B)
+  level: P0
+  spec: specs/minigames/prase.md@1
+  vectors: vectors/prase.json
+  lead: web
+  flutter: todo
+  web: todo

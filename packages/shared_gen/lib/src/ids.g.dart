@@ -133,6 +133,10 @@ enum MinigameId {
   lode('lode'),
   posuvne('posuvne'),
   kviz('kviz'),
+  prsi('prsi'),
+  srdce('srdce'),
+  kostky('kostky'),
+  prase('prase'),
   ;
 
   const MinigameId(this.id);
@@ -168,4 +172,8 @@ final Map<MinigameId, MinigameMeta> minigameCatalog = {
   MinigameId.lode: MinigameMeta(id: 'lode', engine: 'board', targetLengthS: 360, cities: [], casinoLike: false),
   MinigameId.posuvne: MinigameMeta(id: 'posuvne', engine: 'puzzle', targetLengthS: 240, cities: [], casinoLike: false),
   MinigameId.kviz: MinigameMeta(id: 'kviz', engine: 'puzzle', targetLengthS: 240, cities: [], casinoLike: false),
+  MinigameId.prsi: MinigameMeta(id: 'prsi', engine: 'cards', targetLengthS: 360, cities: [], casinoLike: false),
+  MinigameId.srdce: MinigameMeta(id: 'srdce', engine: 'cards', targetLengthS: 540, cities: [], casinoLike: false),
+  MinigameId.kostky: MinigameMeta(id: 'kostky', engine: 'dice', targetLengthS: 480, cities: [], casinoLike: false),
+  MinigameId.prase: MinigameMeta(id: 'prase', engine: 'dice', targetLengthS: 300, cities: [], casinoLike: false),
 };

@@ -1359,6 +1359,10 @@ class TuningMinigames {
         lode = TuningMinigamesLode._(r.sub('lode')),
         posuvne = TuningMinigamesPosuvne._(r.sub('posuvne')),
         kviz = TuningMinigamesKviz._(r.sub('kviz')),
+        prsi = TuningMinigamesPrsi._(r.sub('prsi')),
+        srdce = TuningMinigamesSrdce._(r.sub('srdce')),
+        kostky = TuningMinigamesKostky._(r.sub('kostky')),
+        prase = TuningMinigamesPrase._(r.sub('prase')),
         desetitisic = TuningMinigamesDesetitisic._(r.sub('desetitisic')),
         sipky = TuningMinigamesSipky._(r.sub('sipky')),
         koulena = TuningMinigamesKoulena._(r.sub('koulena')),
@@ -1391,6 +1395,14 @@ class TuningMinigames {
 
   final TuningMinigamesKviz kviz;
 
+  final TuningMinigamesPrsi prsi;
+
+  final TuningMinigamesSrdce srdce;
+
+  final TuningMinigamesKostky kostky;
+
+  final TuningMinigamesPrase prase;
+
   final TuningMinigamesDesetitisic desetitisic;
 
   final TuningMinigamesSipky sipky;
@@ -1420,6 +1432,10 @@ class TuningMinigames {
         'lode': lode.toJson(),
         'posuvne': posuvne.toJson(),
         'kviz': kviz.toJson(),
+        'prsi': prsi.toJson(),
+        'srdce': srdce.toJson(),
+        'kostky': kostky.toJson(),
+        'prase': prase.toJson(),
         'desetitisic': desetitisic.toJson(),
         'sipky': sipky.toJson(),
         'koulena': koulena.toJson(),
@@ -1729,6 +1745,133 @@ class TuningMinigamesKviz {
         'star_correct': starCorrect,
         'question_s': questionS,
         'time_cap_s': timeCapS,
+      };
+}
+
+class TuningMinigamesPrsi {
+  TuningMinigamesPrsi._(_R r)
+      : hand = r.i('hand'),
+        roundsToWin = r.i('rounds_to_win'),
+        aiErrorPct = r.il('ai_error_pct'),
+        timeCapS = r.i('time_cap_s'),
+        aiThinkS = r.d('ai_think_s');
+
+  int hand;
+
+  int roundsToWin;
+
+  List<int> aiErrorPct;
+
+  int timeCapS;
+
+  double aiThinkS;
+
+  Map<String, Object> toJson() => {
+        'hand': hand,
+        'rounds_to_win': roundsToWin,
+        'ai_error_pct': aiErrorPct,
+        'time_cap_s': timeCapS,
+        'ai_think_s': aiThinkS,
+      };
+}
+
+class TuningMinigamesSrdce {
+  TuningMinigamesSrdce._(_R r)
+      : target = r.i('target'),
+        maxDeals = r.i('max_deals'),
+        aiErrorPct = r.il('ai_error_pct'),
+        starMargins = r.il('star_margins'),
+        timeCapS = r.i('time_cap_s'),
+        aiThinkS = r.d('ai_think_s');
+
+  /// the game ends after a deal where someone has this many points
+  int target;
+
+  int maxDeals;
+
+  List<int> aiErrorPct;
+
+  /// best AI minus player for 3 and 2 stars
+  List<int> starMargins;
+
+  int timeCapS;
+
+  double aiThinkS;
+
+  Map<String, Object> toJson() => {
+        'target': target,
+        'max_deals': maxDeals,
+        'ai_error_pct': aiErrorPct,
+        'star_margins': starMargins,
+        'time_cap_s': timeCapS,
+        'ai_think_s': aiThinkS,
+      };
+}
+
+class TuningMinigamesKostky {
+  TuningMinigamesKostky._(_R r)
+      : bonusAt = r.i('bonus_at'),
+        bonus = r.i('bonus'),
+        aiErrorPct = r.il('ai_error_pct'),
+        starMargins = r.il('star_margins'),
+        timeCapS = r.i('time_cap_s'),
+        aiThinkS = r.d('ai_think_s');
+
+  /// upper section total for the bonus
+  int bonusAt;
+
+  int bonus;
+
+  List<int> aiErrorPct;
+
+  List<int> starMargins;
+
+  int timeCapS;
+
+  double aiThinkS;
+
+  Map<String, Object> toJson() => {
+        'bonus_at': bonusAt,
+        'bonus': bonus,
+        'ai_error_pct': aiErrorPct,
+        'star_margins': starMargins,
+        'time_cap_s': timeCapS,
+        'ai_think_s': aiThinkS,
+      };
+}
+
+class TuningMinigamesPrase {
+  TuningMinigamesPrase._(_R r)
+      : target = r.i('target'),
+        maxRounds = r.i('max_rounds'),
+        aiHoldAt = r.il('ai_hold_at'),
+        aiErrorPct = r.il('ai_error_pct'),
+        starMargins = r.il('star_margins'),
+        timeCapS = r.i('time_cap_s'),
+        aiThinkS = r.d('ai_think_s');
+
+  int target;
+
+  int maxRounds;
+
+  List<int> aiHoldAt;
+
+  List<int> aiErrorPct;
+
+  List<int> starMargins;
+
+  int timeCapS;
+
+  double aiThinkS;
+
+  Map<String, Object> toJson() => {
+        'target': target,
+        'max_rounds': maxRounds,
+        'ai_hold_at': aiHoldAt,
+        'ai_error_pct': aiErrorPct,
+        'star_margins': starMargins,
+        'time_cap_s': timeCapS,
+        'ai_think_s': aiThinkS,
       };
 }
 

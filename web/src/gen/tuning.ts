@@ -1347,6 +1347,10 @@ export class TuningMinigames {
   readonly lode: TuningMinigamesLode;
   readonly posuvne: TuningMinigamesPosuvne;
   readonly kviz: TuningMinigamesKviz;
+  readonly prsi: TuningMinigamesPrsi;
+  readonly srdce: TuningMinigamesSrdce;
+  readonly kostky: TuningMinigamesKostky;
+  readonly prase: TuningMinigamesPrase;
   readonly desetitisic: TuningMinigamesDesetitisic;
   readonly sipky: TuningMinigamesSipky;
   readonly koulena: TuningMinigamesKoulena;
@@ -1369,6 +1373,10 @@ export class TuningMinigames {
     this.lode = new TuningMinigamesLode(r.sub('lode'));
     this.posuvne = new TuningMinigamesPosuvne(r.sub('posuvne'));
     this.kviz = new TuningMinigamesKviz(r.sub('kviz'));
+    this.prsi = new TuningMinigamesPrsi(r.sub('prsi'));
+    this.srdce = new TuningMinigamesSrdce(r.sub('srdce'));
+    this.kostky = new TuningMinigamesKostky(r.sub('kostky'));
+    this.prase = new TuningMinigamesPrase(r.sub('prase'));
     this.desetitisic = new TuningMinigamesDesetitisic(r.sub('desetitisic'));
     this.sipky = new TuningMinigamesSipky(r.sub('sipky'));
     this.koulena = new TuningMinigamesKoulena(r.sub('koulena'));
@@ -1392,6 +1400,10 @@ export class TuningMinigames {
       lode: this.lode.toJson(),
       posuvne: this.posuvne.toJson(),
       kviz: this.kviz.toJson(),
+      prsi: this.prsi.toJson(),
+      srdce: this.srdce.toJson(),
+      kostky: this.kostky.toJson(),
+      prase: this.prase.toJson(),
       desetitisic: this.desetitisic.toJson(),
       sipky: this.sipky.toJson(),
       koulena: this.koulena.toJson(),
@@ -1687,6 +1699,125 @@ export class TuningMinigamesKviz {
       star_correct: this.starCorrect,
       question_s: this.questionS,
       time_cap_s: this.timeCapS,
+    };
+  }
+}
+
+export class TuningMinigamesPrsi {
+  hand: number;
+  roundsToWin: number;
+  aiErrorPct: number[];
+  timeCapS: number;
+  aiThinkS: number;
+
+  constructor(r: R) {
+    this.hand = r.i('hand');
+    this.roundsToWin = r.i('rounds_to_win');
+    this.aiErrorPct = r.il('ai_error_pct');
+    this.timeCapS = r.i('time_cap_s');
+    this.aiThinkS = r.d('ai_think_s');
+  }
+
+  toJson(): Record<string, unknown> {
+    return {
+      hand: this.hand,
+      rounds_to_win: this.roundsToWin,
+      ai_error_pct: this.aiErrorPct,
+      time_cap_s: this.timeCapS,
+      ai_think_s: this.aiThinkS,
+    };
+  }
+}
+
+export class TuningMinigamesSrdce {
+  /** the game ends after a deal where someone has this many points */
+  target: number;
+  maxDeals: number;
+  aiErrorPct: number[];
+  /** best AI minus player for 3 and 2 stars */
+  starMargins: number[];
+  timeCapS: number;
+  aiThinkS: number;
+
+  constructor(r: R) {
+    this.target = r.i('target');
+    this.maxDeals = r.i('max_deals');
+    this.aiErrorPct = r.il('ai_error_pct');
+    this.starMargins = r.il('star_margins');
+    this.timeCapS = r.i('time_cap_s');
+    this.aiThinkS = r.d('ai_think_s');
+  }
+
+  toJson(): Record<string, unknown> {
+    return {
+      target: this.target,
+      max_deals: this.maxDeals,
+      ai_error_pct: this.aiErrorPct,
+      star_margins: this.starMargins,
+      time_cap_s: this.timeCapS,
+      ai_think_s: this.aiThinkS,
+    };
+  }
+}
+
+export class TuningMinigamesKostky {
+  /** upper section total for the bonus */
+  bonusAt: number;
+  bonus: number;
+  aiErrorPct: number[];
+  starMargins: number[];
+  timeCapS: number;
+  aiThinkS: number;
+
+  constructor(r: R) {
+    this.bonusAt = r.i('bonus_at');
+    this.bonus = r.i('bonus');
+    this.aiErrorPct = r.il('ai_error_pct');
+    this.starMargins = r.il('star_margins');
+    this.timeCapS = r.i('time_cap_s');
+    this.aiThinkS = r.d('ai_think_s');
+  }
+
+  toJson(): Record<string, unknown> {
+    return {
+      bonus_at: this.bonusAt,
+      bonus: this.bonus,
+      ai_error_pct: this.aiErrorPct,
+      star_margins: this.starMargins,
+      time_cap_s: this.timeCapS,
+      ai_think_s: this.aiThinkS,
+    };
+  }
+}
+
+export class TuningMinigamesPrase {
+  target: number;
+  maxRounds: number;
+  aiHoldAt: number[];
+  aiErrorPct: number[];
+  starMargins: number[];
+  timeCapS: number;
+  aiThinkS: number;
+
+  constructor(r: R) {
+    this.target = r.i('target');
+    this.maxRounds = r.i('max_rounds');
+    this.aiHoldAt = r.il('ai_hold_at');
+    this.aiErrorPct = r.il('ai_error_pct');
+    this.starMargins = r.il('star_margins');
+    this.timeCapS = r.i('time_cap_s');
+    this.aiThinkS = r.d('ai_think_s');
+  }
+
+  toJson(): Record<string, unknown> {
+    return {
+      target: this.target,
+      max_rounds: this.maxRounds,
+      ai_hold_at: this.aiHoldAt,
+      ai_error_pct: this.aiErrorPct,
+      star_margins: this.starMargins,
+      time_cap_s: this.timeCapS,
+      ai_think_s: this.aiThinkS,
     };
   }
 }
