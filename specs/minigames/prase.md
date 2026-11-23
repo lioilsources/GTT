@@ -77,3 +77,10 @@ Velká kostka uprostřed, pod ní zisk tahu (`praseTurn`) a skóre obou stran s 
 - Hráč začíná, takže může vyhrát dřív, než AI odehraje stejný počet tahů.
 - `hold` při `turnScore = 0` je nelegální.
 - Po `round > maxRounds` rozhoduje vyšší součet, shoda = remíza.
+
+## Upřesnění v1
+
+- `hold`, který dosáhne `target`: `turn`, `round`, `die` a `bust` zůstanou beze změny.
+- Po jedničce zůstanou `die = 1` a `bust = true`, dokud strana na tahu nehodí; `bust = false`
+  nastaví až hod jiné hodnoty.
+- `timeout` mění jen `over`; rozehraný `turnScore` se nepřičte.

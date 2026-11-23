@@ -115,3 +115,18 @@ stejně jako u Oko bere (barvy jen z existujících tokenů), mariášové barvy
 - Poslední karta sedma nebo eso ukončí kolo; trest už se neplní.
 - Všechny karty v rukou a `pile` o jedné kartě: líznutí nic nepřidá, tah přesto přejde.
 - Otočená sedma při rozdání trestá stranu, která začíná; otočené eso ji nechá stát.
+
+## Upřesnění v1
+
+- Líže se po jedné kartě: před každou kartou, je-li `deck` prázdný a `pile` má víc než jednu
+  kartu, zamíchá se `pile` bez vrchní (`rng.shuffle`); jinak se `rng` nevolá. Trest za sedmy se
+  tak může zamíchat uprostřed líznutí.
+- Rozdání bere vždy `deck[0]`: hráč, AI, hráč, AI, … (`hand`krát), pak otočí `deck[0]`.
+  `starter` a `turn` nového kola jen podle parity `round`, ne podle vítěze.
+- `play`: nejdřív se podle karty nastaví `suit`, `sevens` a `ace`, pak se testuje prázdná ruka.
+  Po konci partie proto zůstane např. `sevens = 1` (sedma jako poslední karta), `turn` = vítěz
+  kola a ruce i `pile` beze změny; `last` se nikdy nenuluje.
+- `apply` přijme jen akci rovnou prvku `legalActions` (`by` = strana na tahu, u jiné karty než
+  svršek `suit = −1`), jinak chyba.
+- AI: `h` = ruka AI bez vyložené karty; u svrška se počítají karty zvolené barvy v `h` (i další
+  svršky podle své barvy).

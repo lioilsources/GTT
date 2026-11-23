@@ -468,7 +468,7 @@
   vectors: vectors/prsi.json
   lead: web
   flutter: todo
-  web: todo
+  web: done
 
 - id: F-055
   name: Srdce (M2-S9 batch B)
@@ -477,7 +477,7 @@
   vectors: vectors/srdce.json
   lead: web
   flutter: todo
-  web: todo
+  web: done
 
 - id: F-056
   name: Kostkový poker (M2-S9 batch B)
@@ -486,7 +486,7 @@
   vectors: vectors/kostky.json
   lead: web
   flutter: todo
-  web: todo
+  web: done
 
 - id: F-057
   name: Prase (M2-S9 batch B)
@@ -495,4 +495,4 @@
   vectors: vectors/prase.json
   lead: web
   flutter: todo
-  web: todo
+  web: done

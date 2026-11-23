@@ -107,3 +107,12 @@ zapíše. Názvy kolonek `kostkyCat0` … `kostkyCat12`, bonus `kostkyBonus`.
 - Poker se počítá i jako trojice, čtveřice a šance; jako full ne.
 - Zápis 0 je legální (škrt).
 - Horní bonus se počítá do výsledku i po `timeout`.
+
+## Upřesnění v1
+
+- `roll` ve 2. a 3. hodu: `keep` vzestupně bez opakování, indexy 0–4, nejvýš 4 (maska 31 je
+  nelegální); v 1. hodu jen `keep = []`. `score` při `rolls = 0` je nelegální.
+- Po posledním zápisu AI: `round = 14`, `turn = "player"`, `dice = []`, `rolls = 0`.
+- AI při `r < err` volí z celého `legalActions` (hody i zápisy). Úprava `+ 50` / `− 50` úrovně ≥ 3
+  platí jen pro `h > 0`.
+- Nezapsaná kolonka (`−1`) se do celku po `timeout` počítá jako 0.

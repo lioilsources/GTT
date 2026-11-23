@@ -1,0 +1,8480 @@
+{
+ "module": "prase",
+ "specVersion": 1,
+ "$comment": "Player moves are written out (seeded random policy, or the AI heuristic playing the player side on its own PRNG); AI moves are {by: ai, level} and decided by aiAction (specs/minigames/README.md). States recorded by the lead client (web).",
+ "cases": [
+  {
+   "name": "steady-player-three-stars-vs-level-1",
+   "config": {
+    "target": 100,
+    "maxRounds": 15,
+    "aiHoldAt": [
+     10,
+     15,
+     18,
+     20,
+     20
+    ],
+    "aiErrorPct": [
+     35,
+     20,
+     10,
+     5,
+     0
+    ],
+    "starMargins": [
+     40,
+     15
+    ]
+   },
+   "seed": 1,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 0,
+      "ai": 0,
+      "turn": "player",
+      "turnScore": 4,
+      "die": 4,
+      "bust": false,
+      "round": 1,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 0,
+      "ai": 0,
+      "turn": "player",
+      "turnScore": 6,
+      "die": 2,
+      "bust": false,
+      "round": 1,
+      "over": false,
+      "rng": 67634689
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 0,
+      "ai": 0,
+      "turn": "player",
+      "turnScore": 10,
+      "die": 4,
+      "bust": false,
+      "round": 1,
+      "over": false,
+      "rng": 2647435461
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 0,
+      "ai": 0,
+      "turn": "player",
+      "turnScore": 16,
+      "die": 6,
+      "bust": false,
+      "round": 1,
+      "over": false,
+      "rng": 307599695
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 0,
+      "ai": 0,
+      "turn": "player",
+      "turnScore": 22,
+      "die": 6,
+      "bust": false,
+      "round": 1,
+      "over": false,
+      "rng": 2398689233
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "hold"
+     },
+     "state": {
+      "player": 22,
+      "ai": 0,
+      "turn": "ai",
+      "turnScore": 0,
+      "die": 6,
+      "bust": false,
+      "round": 1,
+      "over": false,
+      "rng": 2398689233
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "player": 22,
+      "ai": 0,
+      "turn": "ai",
+      "turnScore": 5,
+      "die": 5,
+      "bust": false,
+      "round": 1,
+      "over": false,
+      "rng": 745495504
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "player": 22,
+      "ai": 0,
+      "turn": "ai",
+      "turnScore": 10,
+      "die": 5,
+      "bust": false,
+      "round": 1,
+      "over": false,
+      "rng": 632435482
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "player": 22,
+      "ai": 10,
+      "turn": "player",
+      "turnScore": 0,
+      "die": 5,
+      "bust": false,
+      "round": 2,
+      "over": false,
+      "rng": 632435482
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 22,
+      "ai": 10,
+      "turn": "ai",
+      "turnScore": 0,
+      "die": 1,
+      "bust": true,
+      "round": 2,
+      "over": false,
+      "rng": 435756210
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "player": 22,
+      "ai": 10,
+      "turn": "ai",
+      "turnScore": 6,
+      "die": 6,
+      "bust": false,
+      "round": 2,
+      "over": false,
+      "rng": 2005365029
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "player": 22,
+      "ai": 10,
+      "turn": "ai",
+      "turnScore": 11,
+      "die": 5,
+      "bust": false,
+      "round": 2,
+      "over": false,
+      "rng": 2916098932
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "player": 22,
+      "ai": 21,
+      "turn": "player",
+      "turnScore": 0,
+      "die": 5,
+      "bust": false,
+      "round": 3,
+      "over": false,
+      "rng": 2916098932
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 22,
+      "ai": 21,
+      "turn": "player",
+      "turnScore": 4,
+      "die": 4,
+      "bust": false,
+      "round": 3,
+      "over": false,
+      "rng": 2657092299
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 22,
+      "ai": 21,
+      "turn": "player",
+      "turnScore": 10,
+      "die": 6,
+      "bust": false,
+      "round": 3,
+      "over": false,
+      "rng": 1495045943
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 22,
+      "ai": 21,
+      "turn": "player",
+      "turnScore": 15,
+      "die": 5,
+      "bust": false,
+      "round": 3,
+      "over": false,
+      "rng": 3031976842
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 22,
+      "ai": 21,
+      "turn": "player",
+      "turnScore": 18,
+      "die": 3,
+      "bust": false,
+      "round": 3,
+      "over": false,
+      "rng": 82049198
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 22,
+      "ai": 21,
+      "turn": "player",
+      "turnScore": 24,
+      "die": 6,
+      "bust": false,
+      "round": 3,
+      "over": false,
+      "rng": 87470069
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "hold"
+     },
+     "state": {
+      "player": 46,
+      "ai": 21,
+      "turn": "ai",
+      "turnScore": 0,
+      "die": 6,
+      "bust": false,
+      "round": 3,
+      "over": false,
+      "rng": 87470069
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "player": 46,
+      "ai": 21,
+      "turn": "ai",
+      "turnScore": 4,
+      "die": 4,
+      "bust": false,
+      "round": 3,
+      "over": false,
+      "rng": 3385103793
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "player": 46,
+      "ai": 21,
+      "turn": "ai",
+      "turnScore": 9,
+      "die": 5,
+      "bust": false,
+      "round": 3,
+      "over": false,
+      "rng": 891394312
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "player": 46,
+      "ai": 21,
+      "turn": "player",
+      "turnScore": 0,
+      "die": 1,
+      "bust": true,
+      "round": 4,
+      "over": false,
+      "rng": 3323190024
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 46,
+      "ai": 21,
+      "turn": "player",
+      "turnScore": 4,
+      "die": 4,
+      "bust": false,
+      "round": 4,
+      "over": false,
+      "rng": 321008529
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 46,
+      "ai": 21,
+      "turn": "player",
+      "turnScore": 6,
+      "die": 2,
+      "bust": false,
+      "round": 4,
+      "over": false,
+      "rng": 4283899417
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 46,
+      "ai": 21,
+      "turn": "player",
+      "turnScore": 12,
+      "die": 6,
+      "bust": false,
+      "round": 4,
+      "over": false,
+      "rng": 2383559219
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 46,
+      "ai": 21,
+      "turn": "player",
+      "turnScore": 18,
+      "die": 6,
+      "bust": false,
+      "round": 4,
+      "over": false,
+      "rng": 3822316985
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 46,
+      "ai": 21,
+      "turn": "player",
+      "turnScore": 20,
+      "die": 2,
+      "bust": false,
+      "round": 4,
+      "over": false,
+      "rng": 1391776747
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "hold"
+     },
+     "state": {
+      "player": 66,
+      "ai": 21,
+      "turn": "ai",
+      "turnScore": 0,
+      "die": 2,
+      "bust": false,
+      "round": 4,
+      "over": false,
+      "rng": 1391776747
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "player": 66,
+      "ai": 21,
+      "turn": "ai",
+      "turnScore": 6,
+      "die": 6,
+      "bust": false,
+      "round": 4,
+      "over": false,
+      "rng": 3652395599
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "player": 66,
+      "ai": 21,
+      "turn": "player",
+      "turnScore": 0,
+      "die": 1,
+      "bust": true,
+      "round": 5,
+      "over": false,
+      "rng": 44632818
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 66,
+      "ai": 21,
+      "turn": "player",
+      "turnScore": 2,
+      "die": 2,
+      "bust": false,
+      "round": 5,
+      "over": false,
+      "rng": 1562130985
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 66,
+      "ai": 21,
+      "turn": "player",
+      "turnScore": 4,
+      "die": 2,
+      "bust": false,
+      "round": 5,
+      "over": false,
+      "rng": 2440533925
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 66,
+      "ai": 21,
+      "turn": "player",
+      "turnScore": 9,
+      "die": 5,
+      "bust": false,
+      "round": 5,
+      "over": false,
+      "rng": 333695716
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 66,
+      "ai": 21,
+      "turn": "player",
+      "turnScore": 11,
+      "die": 2,
+      "bust": false,
+      "round": 5,
+      "over": false,
+      "rng": 1028688091
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 66,
+      "ai": 21,
+      "turn": "ai",
+      "turnScore": 0,
+      "die": 1,
+      "bust": true,
+      "round": 5,
+      "over": false,
+      "rng": 2771657022
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "player": 66,
+      "ai": 21,
+      "turn": "ai",
+      "turnScore": 6,
+      "die": 6,
+      "bust": false,
+      "round": 5,
+      "over": false,
+      "rng": 57526103
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "player": 66,
+      "ai": 21,
+      "turn": "ai",
+      "turnScore": 11,
+      "die": 5,
+      "bust": false,
+      "round": 5,
+      "over": false,
+      "rng": 3412600852
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "player": 66,
+      "ai": 21,
+      "turn": "ai",
+      "turnScore": 17,
+      "die": 6,
+      "bust": false,
+      "round": 5,
+      "over": false,
+      "rng": 53684993
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "player": 66,
+      "ai": 21,
+      "turn": "ai",
+      "turnScore": 22,
+      "die": 5,
+      "bust": false,
+      "round": 5,
+      "over": false,
+      "rng": 2889104680
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "player": 66,
+      "ai": 43,
+      "turn": "player",
+      "turnScore": 0,
+      "die": 5,
+      "bust": false,
+      "round": 6,
+      "over": false,
+      "rng": 2889104680
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 66,
+      "ai": 43,
+      "turn": "player",
+      "turnScore": 3,
+      "die": 3,
+      "bust": false,
+      "round": 6,
+      "over": false,
+      "rng": 1504982240
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 66,
+      "ai": 43,
+      "turn": "ai",
+      "turnScore": 0,
+      "die": 1,
+      "bust": true,
+      "round": 6,
+      "over": false,
+      "rng": 975386100
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "player": 66,
+      "ai": 43,
+      "turn": "ai",
+      "turnScore": 5,
+      "die": 5,
+      "bust": false,
+      "round": 6,
+      "over": false,
+      "rng": 3475959034
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "player": 66,
+      "ai": 43,
+      "turn": "player",
+      "turnScore": 0,
+      "die": 1,
+      "bust": true,
+      "round": 7,
+      "over": false,
+      "rng": 1149571554
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 66,
+      "ai": 43,
+      "turn": "player",
+      "turnScore": 3,
+      "die": 3,
+      "bust": false,
+      "round": 7,
+      "over": false,
+      "rng": 832402814
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 66,
+      "ai": 43,
+      "turn": "player",
+      "turnScore": 5,
+      "die": 2,
+      "bust": false,
+      "round": 7,
+      "over": false,
+      "rng": 2037229063
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 66,
+      "ai": 43,
+      "turn": "player",
+      "turnScore": 11,
+      "die": 6,
+      "bust": false,
+      "round": 7,
+      "over": false,
+      "rng": 2013870833
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 66,
+      "ai": 43,
+      "turn": "player",
+      "turnScore": 14,
+      "die": 3,
+      "bust": false,
+      "round": 7,
+      "over": false,
+      "rng": 3048316442
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 66,
+      "ai": 43,
+      "turn": "player",
+      "turnScore": 16,
+      "die": 2,
+      "bust": false,
+      "round": 7,
+      "over": false,
+      "rng": 1210136899
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 66,
+      "ai": 43,
+      "turn": "player",
+      "turnScore": 20,
+      "die": 4,
+      "bust": false,
+      "round": 7,
+      "over": false,
+      "rng": 2384770599
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "hold"
+     },
+     "state": {
+      "player": 86,
+      "ai": 43,
+      "turn": "ai",
+      "turnScore": 0,
+      "die": 4,
+      "bust": false,
+      "round": 7,
+      "over": false,
+      "rng": 2384770599
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "player": 86,
+      "ai": 43,
+      "turn": "ai",
+      "turnScore": 4,
+      "die": 4,
+      "bust": false,
+      "round": 7,
+      "over": false,
+      "rng": 82514103
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "player": 86,
+      "ai": 47,
+      "turn": "player",
+      "turnScore": 0,
+      "die": 4,
+      "bust": false,
+      "round": 8,
+      "over": false,
+      "rng": 82514103
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 86,
+      "ai": 47,
+      "turn": "player",
+      "turnScore": 2,
+      "die": 2,
+      "bust": false,
+      "round": 8,
+      "over": false,
+      "rng": 3108354793
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 86,
+      "ai": 47,
+      "turn": "player",
+      "turnScore": 6,
+      "die": 4,
+      "bust": false,
+      "round": 8,
+      "over": false,
+      "rng": 3440058693
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 86,
+      "ai": 47,
+      "turn": "player",
+      "turnScore": 9,
+      "die": 3,
+      "bust": false,
+      "round": 8,
+      "over": false,
+      "rng": 2371448660
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 86,
+      "ai": 47,
+      "turn": "player",
+      "turnScore": 13,
+      "die": 4,
+      "bust": false,
+      "round": 8,
+      "over": false,
+      "rng": 3066322605
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 86,
+      "ai": 47,
+      "turn": "player",
+      "turnScore": 15,
+      "die": 2,
+      "bust": false,
+      "round": 8,
+      "over": false,
+      "rng": 2670584965
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "hold"
+     },
+     "state": {
+      "player": 101,
+      "ai": 47,
+      "turn": "player",
+      "turnScore": 0,
+      "die": 2,
+      "bust": false,
+      "round": 8,
+      "over": true,
+      "rng": 2670584965
+     }
+    }
+   ],
+   "result": {
+    "winner": "player",
+    "stars": 3,
+    "score": 101,
+    "player": 101,
+    "ai": 47
+   }
+  },
+  {
+   "name": "two-stars-vs-level-3",
+   "config": {
+    "target": 100,
+    "maxRounds": 15,
+    "aiHoldAt": [
+     10,
+     15,
+     18,
+     20,
+     20
+    ],
+    "aiErrorPct": [
+     35,
+     20,
+     10,
+     5,
+     0
+    ],
+    "starMargins": [
+     40,
+     15
+    ]
+   },
+   "seed": 2,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 0,
+      "ai": 0,
+      "turn": "ai",
+      "turnScore": 0,
+      "die": 1,
+      "bust": true,
+      "round": 1,
+      "over": false,
+      "rng": 540738
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 0,
+      "ai": 0,
+      "turn": "player",
+      "turnScore": 0,
+      "die": 1,
+      "bust": true,
+      "round": 2,
+      "over": false,
+      "rng": 134253570
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 0,
+      "ai": 0,
+      "turn": "player",
+      "turnScore": 3,
+      "die": 3,
+      "bust": false,
+      "round": 2,
+      "over": false,
+      "rng": 697882754
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 0,
+      "ai": 0,
+      "turn": "player",
+      "turnScore": 8,
+      "die": 5,
+      "bust": false,
+      "round": 2,
+      "over": false,
+      "rng": 1670953222
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 0,
+      "ai": 0,
+      "turn": "player",
+      "turnScore": 13,
+      "die": 5,
+      "bust": false,
+      "round": 2,
+      "over": false,
+      "rng": 3819972634
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 0,
+      "ai": 0,
+      "turn": "player",
+      "turnScore": 15,
+      "die": 2,
+      "bust": false,
+      "round": 2,
+      "over": false,
+      "rng": 818967331
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 0,
+      "ai": 0,
+      "turn": "player",
+      "turnScore": 17,
+      "die": 2,
+      "bust": false,
+      "round": 2,
+      "over": false,
+      "rng": 3895821145
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 0,
+      "ai": 0,
+      "turn": "player",
+      "turnScore": 22,
+      "die": 5,
+      "bust": false,
+      "round": 2,
+      "over": false,
+      "rng": 1401905590
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "hold"
+     },
+     "state": {
+      "player": 22,
+      "ai": 0,
+      "turn": "ai",
+      "turnScore": 0,
+      "die": 5,
+      "bust": false,
+      "round": 2,
+      "over": false,
+      "rng": 1401905590
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 22,
+      "ai": 0,
+      "turn": "ai",
+      "turnScore": 3,
+      "die": 3,
+      "bust": false,
+      "round": 2,
+      "over": false,
+      "rng": 1216754474
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 22,
+      "ai": 0,
+      "turn": "ai",
+      "turnScore": 7,
+      "die": 4,
+      "bust": false,
+      "round": 2,
+      "over": false,
+      "rng": 1384496955
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 22,
+      "ai": 0,
+      "turn": "ai",
+      "turnScore": 12,
+      "die": 5,
+      "bust": false,
+      "round": 2,
+      "over": false,
+      "rng": 1228348618
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 22,
+      "ai": 0,
+      "turn": "ai",
+      "turnScore": 18,
+      "die": 6,
+      "bust": false,
+      "round": 2,
+      "over": false,
+      "rng": 4285479485
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 22,
+      "ai": 18,
+      "turn": "player",
+      "turnScore": 0,
+      "die": 6,
+      "bust": false,
+      "round": 3,
+      "over": false,
+      "rng": 4285479485
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 22,
+      "ai": 18,
+      "turn": "player",
+      "turnScore": 6,
+      "die": 6,
+      "bust": false,
+      "round": 3,
+      "over": false,
+      "rng": 490361609
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 22,
+      "ai": 18,
+      "turn": "ai",
+      "turnScore": 0,
+      "die": 1,
+      "bust": true,
+      "round": 3,
+      "over": false,
+      "rng": 3157281828
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 22,
+      "ai": 18,
+      "turn": "ai",
+      "turnScore": 3,
+      "die": 3,
+      "bust": false,
+      "round": 3,
+      "over": false,
+      "rng": 52840766
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 22,
+      "ai": 18,
+      "turn": "ai",
+      "turnScore": 8,
+      "die": 5,
+      "bust": false,
+      "round": 3,
+      "over": false,
+      "rng": 2319215614
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 22,
+      "ai": 18,
+      "turn": "ai",
+      "turnScore": 14,
+      "die": 6,
+      "bust": false,
+      "round": 3,
+      "over": false,
+      "rng": 4013335487
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 22,
+      "ai": 18,
+      "turn": "ai",
+      "turnScore": 16,
+      "die": 2,
+      "bust": false,
+      "round": 3,
+      "over": false,
+      "rng": 1399496191
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 22,
+      "ai": 18,
+      "turn": "ai",
+      "turnScore": 20,
+      "die": 4,
+      "bust": false,
+      "round": 3,
+      "over": false,
+      "rng": 444256053
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 22,
+      "ai": 18,
+      "turn": "ai",
+      "turnScore": 24,
+      "die": 4,
+      "bust": false,
+      "round": 3,
+      "over": false,
+      "rng": 806719899
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 22,
+      "ai": 42,
+      "turn": "player",
+      "turnScore": 0,
+      "die": 4,
+      "bust": false,
+      "round": 4,
+      "over": false,
+      "rng": 806719899
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 22,
+      "ai": 42,
+      "turn": "ai",
+      "turnScore": 0,
+      "die": 1,
+      "bust": true,
+      "round": 4,
+      "over": false,
+      "rng": 3337658760
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 22,
+      "ai": 42,
+      "turn": "player",
+      "turnScore": 0,
+      "die": 1,
+      "bust": true,
+      "round": 5,
+      "over": false,
+      "rng": 2331563496
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 22,
+      "ai": 42,
+      "turn": "player",
+      "turnScore": 3,
+      "die": 3,
+      "bust": false,
+      "round": 5,
+      "over": false,
+      "rng": 2566268042
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 22,
+      "ai": 42,
+      "turn": "player",
+      "turnScore": 5,
+      "die": 2,
+      "bust": false,
+      "round": 5,
+      "over": false,
+      "rng": 3498974617
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 22,
+      "ai": 42,
+      "turn": "player",
+      "turnScore": 7,
+      "die": 2,
+      "bust": false,
+      "round": 5,
+      "over": false,
+      "rng": 1956361447
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 22,
+      "ai": 42,
+      "turn": "ai",
+      "turnScore": 0,
+      "die": 1,
+      "bust": true,
+      "round": 5,
+      "over": false,
+      "rng": 1122888036
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 22,
+      "ai": 42,
+      "turn": "ai",
+      "turnScore": 5,
+      "die": 5,
+      "bust": false,
+      "round": 5,
+      "over": false,
+      "rng": 132367876
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 22,
+      "ai": 42,
+      "turn": "ai",
+      "turnScore": 11,
+      "die": 6,
+      "bust": false,
+      "round": 5,
+      "over": false,
+      "rng": 2605468469
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 22,
+      "ai": 42,
+      "turn": "ai",
+      "turnScore": 16,
+      "die": 5,
+      "bust": false,
+      "round": 5,
+      "over": false,
+      "rng": 1467393568
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 22,
+      "ai": 42,
+      "turn": "ai",
+      "turnScore": 18,
+      "die": 2,
+      "bust": false,
+      "round": 5,
+      "over": false,
+      "rng": 4126021849
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 22,
+      "ai": 42,
+      "turn": "ai",
+      "turnScore": 20,
+      "die": 2,
+      "bust": false,
+      "round": 5,
+      "over": false,
+      "rng": 3897644995
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 22,
+      "ai": 62,
+      "turn": "player",
+      "turnScore": 0,
+      "die": 2,
+      "bust": false,
+      "round": 6,
+      "over": false,
+      "rng": 3897644995
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 22,
+      "ai": 62,
+      "turn": "player",
+      "turnScore": 6,
+      "die": 6,
+      "bust": false,
+      "round": 6,
+      "over": false,
+      "rng": 2541978743
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 22,
+      "ai": 62,
+      "turn": "player",
+      "turnScore": 12,
+      "die": 6,
+      "bust": false,
+      "round": 6,
+      "over": false,
+      "rng": 112191953
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 22,
+      "ai": 62,
+      "turn": "player",
+      "turnScore": 18,
+      "die": 6,
+      "bust": false,
+      "round": 6,
+      "over": false,
+      "rng": 2300786555
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "hold"
+     },
+     "state": {
+      "player": 40,
+      "ai": 62,
+      "turn": "ai",
+      "turnScore": 0,
+      "die": 6,
+      "bust": false,
+      "round": 6,
+      "over": false,
+      "rng": 2300786555
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 40,
+      "ai": 62,
+      "turn": "ai",
+      "turnScore": 6,
+      "die": 6,
+      "bust": false,
+      "round": 6,
+      "over": false,
+      "rng": 373830461
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 40,
+      "ai": 62,
+      "turn": "ai",
+      "turnScore": 11,
+      "die": 5,
+      "bust": false,
+      "round": 6,
+      "over": false,
+      "rng": 366804586
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 40,
+      "ai": 62,
+      "turn": "ai",
+      "turnScore": 14,
+      "die": 3,
+      "bust": false,
+      "round": 6,
+      "over": false,
+      "rng": 3358496546
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 40,
+      "ai": 62,
+      "turn": "ai",
+      "turnScore": 18,
+      "die": 4,
+      "bust": false,
+      "round": 6,
+      "over": false,
+      "rng": 1133613735
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 40,
+      "ai": 80,
+      "turn": "player",
+      "turnScore": 0,
+      "die": 4,
+      "bust": false,
+      "round": 7,
+      "over": false,
+      "rng": 1133613735
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 40,
+      "ai": 80,
+      "turn": "player",
+      "turnScore": 2,
+      "die": 2,
+      "bust": false,
+      "round": 7,
+      "over": false,
+      "rng": 1231815397
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 40,
+      "ai": 80,
+      "turn": "player",
+      "turnScore": 8,
+      "die": 6,
+      "bust": false,
+      "round": 7,
+      "over": false,
+      "rng": 4012378589
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 40,
+      "ai": 80,
+      "turn": "player",
+      "turnScore": 11,
+      "die": 3,
+      "bust": false,
+      "round": 7,
+      "over": false,
+      "rng": 745014356
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 40,
+      "ai": 80,
+      "turn": "player",
+      "turnScore": 15,
+      "die": 4,
+      "bust": false,
+      "round": 7,
+      "over": false,
+      "rng": 2964379269
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 40,
+      "ai": 80,
+      "turn": "player",
+      "turnScore": 17,
+      "die": 2,
+      "bust": false,
+      "round": 7,
+      "over": false,
+      "rng": 3865335061
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 40,
+      "ai": 80,
+      "turn": "player",
+      "turnScore": 20,
+      "die": 3,
+      "bust": false,
+      "round": 7,
+      "over": false,
+      "rng": 4095651254
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "hold"
+     },
+     "state": {
+      "player": 60,
+      "ai": 80,
+      "turn": "ai",
+      "turnScore": 0,
+      "die": 3,
+      "bust": false,
+      "round": 7,
+      "over": false,
+      "rng": 4095651254
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 60,
+      "ai": 80,
+      "turn": "ai",
+      "turnScore": 5,
+      "die": 5,
+      "bust": false,
+      "round": 7,
+      "over": false,
+      "rng": 346542370
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 60,
+      "ai": 80,
+      "turn": "ai",
+      "turnScore": 11,
+      "die": 6,
+      "bust": false,
+      "round": 7,
+      "over": false,
+      "rng": 1056909827
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 60,
+      "ai": 80,
+      "turn": "ai",
+      "turnScore": 14,
+      "die": 3,
+      "bust": false,
+      "round": 7,
+      "over": false,
+      "rng": 2891701340
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 60,
+      "ai": 80,
+      "turn": "player",
+      "turnScore": 0,
+      "die": 1,
+      "bust": true,
+      "round": 8,
+      "over": false,
+      "rng": 769048884
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 60,
+      "ai": 80,
+      "turn": "player",
+      "turnScore": 3,
+      "die": 3,
+      "bust": false,
+      "round": 8,
+      "over": false,
+      "rng": 1274495564
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 60,
+      "ai": 80,
+      "turn": "player",
+      "turnScore": 9,
+      "die": 6,
+      "bust": false,
+      "round": 8,
+      "over": false,
+      "rng": 3563905523
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 60,
+      "ai": 80,
+      "turn": "player",
+      "turnScore": 14,
+      "die": 5,
+      "bust": false,
+      "round": 8,
+      "over": false,
+      "rng": 1107697306
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 60,
+      "ai": 80,
+      "turn": "player",
+      "turnScore": 19,
+      "die": 5,
+      "bust": false,
+      "round": 8,
+      "over": false,
+      "rng": 3145126000
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "hold"
+     },
+     "state": {
+      "player": 79,
+      "ai": 80,
+      "turn": "ai",
+      "turnScore": 0,
+      "die": 5,
+      "bust": false,
+      "round": 8,
+      "over": false,
+      "rng": 3145126000
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 79,
+      "ai": 80,
+      "turn": "ai",
+      "turnScore": 3,
+      "die": 3,
+      "bust": false,
+      "round": 8,
+      "over": false,
+      "rng": 1315240268
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 79,
+      "ai": 80,
+      "turn": "ai",
+      "turnScore": 6,
+      "die": 3,
+      "bust": false,
+      "round": 8,
+      "over": false,
+      "rng": 4176424106
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 79,
+      "ai": 80,
+      "turn": "ai",
+      "turnScore": 8,
+      "die": 2,
+      "bust": false,
+      "round": 8,
+      "over": false,
+      "rng": 2989891831
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 79,
+      "ai": 80,
+      "turn": "ai",
+      "turnScore": 14,
+      "die": 6,
+      "bust": false,
+      "round": 8,
+      "over": false,
+      "rng": 3006760835
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 79,
+      "ai": 80,
+      "turn": "player",
+      "turnScore": 0,
+      "die": 1,
+      "bust": true,
+      "round": 9,
+      "over": false,
+      "rng": 993987168
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 79,
+      "ai": 80,
+      "turn": "player",
+      "turnScore": 6,
+      "die": 6,
+      "bust": false,
+      "round": 9,
+      "over": false,
+      "rng": 2485095545
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 79,
+      "ai": 80,
+      "turn": "player",
+      "turnScore": 12,
+      "die": 6,
+      "bust": false,
+      "round": 9,
+      "over": false,
+      "rng": 3615705233
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 79,
+      "ai": 80,
+      "turn": "player",
+      "turnScore": 16,
+      "die": 4,
+      "bust": false,
+      "round": 9,
+      "over": false,
+      "rng": 1823984889
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 79,
+      "ai": 80,
+      "turn": "player",
+      "turnScore": 20,
+      "die": 4,
+      "bust": false,
+      "round": 9,
+      "over": false,
+      "rng": 809266125
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "hold"
+     },
+     "state": {
+      "player": 99,
+      "ai": 80,
+      "turn": "ai",
+      "turnScore": 0,
+      "die": 4,
+      "bust": false,
+      "round": 9,
+      "over": false,
+      "rng": 809266125
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 99,
+      "ai": 80,
+      "turn": "ai",
+      "turnScore": 6,
+      "die": 6,
+      "bust": false,
+      "round": 9,
+      "over": false,
+      "rng": 368523407
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 99,
+      "ai": 80,
+      "turn": "ai",
+      "turnScore": 9,
+      "die": 3,
+      "bust": false,
+      "round": 9,
+      "over": false,
+      "rng": 2922552956
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 99,
+      "ai": 80,
+      "turn": "player",
+      "turnScore": 0,
+      "die": 1,
+      "bust": true,
+      "round": 10,
+      "over": false,
+      "rng": 1112633538
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 99,
+      "ai": 80,
+      "turn": "player",
+      "turnScore": 3,
+      "die": 3,
+      "bust": false,
+      "round": 10,
+      "over": false,
+      "rng": 3848919590
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "hold"
+     },
+     "state": {
+      "player": 102,
+      "ai": 80,
+      "turn": "player",
+      "turnScore": 0,
+      "die": 3,
+      "bust": false,
+      "round": 10,
+      "over": true,
+      "rng": 3848919590
+     }
+    }
+   ],
+   "result": {
+    "winner": "player",
+    "stars": 2,
+    "score": 102,
+    "player": 102,
+    "ai": 80
+   }
+  },
+  {
+   "name": "one-star-vs-level-5",
+   "config": {
+    "target": 100,
+    "maxRounds": 15,
+    "aiHoldAt": [
+     10,
+     15,
+     18,
+     20,
+     20
+    ],
+    "aiErrorPct": [
+     35,
+     20,
+     10,
+     5,
+     0
+    ],
+    "starMargins": [
+     40,
+     15
+    ]
+   },
+   "seed": 38,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 0,
+      "ai": 0,
+      "turn": "ai",
+      "turnScore": 0,
+      "die": 1,
+      "bust": true,
+      "round": 1,
+      "over": false,
+      "rng": 10273956
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "player": 0,
+      "ai": 0,
+      "turn": "ai",
+      "turnScore": 3,
+      "die": 3,
+      "bust": false,
+      "round": 1,
+      "over": false,
+      "rng": 2567511200
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "player": 0,
+      "ai": 0,
+      "turn": "player",
+      "turnScore": 0,
+      "die": 1,
+      "bust": true,
+      "round": 2,
+      "over": false,
+      "rng": 3912596526
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 0,
+      "ai": 0,
+      "turn": "player",
+      "turnScore": 3,
+      "die": 3,
+      "bust": false,
+      "round": 2,
+      "over": false,
+      "rng": 2426630582
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 0,
+      "ai": 0,
+      "turn": "player",
+      "turnScore": 8,
+      "die": 5,
+      "bust": false,
+      "round": 2,
+      "over": false,
+      "rng": 741085564
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 0,
+      "ai": 0,
+      "turn": "player",
+      "turnScore": 10,
+      "die": 2,
+      "bust": false,
+      "round": 2,
+      "over": false,
+      "rng": 1853557213
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 0,
+      "ai": 0,
+      "turn": "player",
+      "turnScore": 12,
+      "die": 2,
+      "bust": false,
+      "round": 2,
+      "over": false,
+      "rng": 3881132509
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 0,
+      "ai": 0,
+      "turn": "ai",
+      "turnScore": 0,
+      "die": 1,
+      "bust": true,
+      "round": 2,
+      "over": false,
+      "rng": 649226538
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "player": 0,
+      "ai": 0,
+      "turn": "ai",
+      "turnScore": 4,
+      "die": 4,
+      "bust": false,
+      "round": 2,
+      "over": false,
+      "rng": 427065537
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "player": 0,
+      "ai": 0,
+      "turn": "ai",
+      "turnScore": 6,
+      "die": 2,
+      "bust": false,
+      "round": 2,
+      "over": false,
+      "rng": 2767219351
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "player": 0,
+      "ai": 0,
+      "turn": "ai",
+      "turnScore": 11,
+      "die": 5,
+      "bust": false,
+      "round": 2,
+      "over": false,
+      "rng": 2650347142
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "player": 0,
+      "ai": 0,
+      "turn": "ai",
+      "turnScore": 16,
+      "die": 5,
+      "bust": false,
+      "round": 2,
+      "over": false,
+      "rng": 1511566162
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "player": 0,
+      "ai": 0,
+      "turn": "ai",
+      "turnScore": 18,
+      "die": 2,
+      "bust": false,
+      "round": 2,
+      "over": false,
+      "rng": 2703970699
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "player": 0,
+      "ai": 0,
+      "turn": "ai",
+      "turnScore": 23,
+      "die": 5,
+      "bust": false,
+      "round": 2,
+      "over": false,
+      "rng": 2823869638
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "player": 0,
+      "ai": 23,
+      "turn": "player",
+      "turnScore": 0,
+      "die": 5,
+      "bust": false,
+      "round": 3,
+      "over": false,
+      "rng": 2823869638
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 0,
+      "ai": 23,
+      "turn": "ai",
+      "turnScore": 0,
+      "die": 1,
+      "bust": true,
+      "round": 3,
+      "over": false,
+      "rng": 3955358178
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "player": 0,
+      "ai": 23,
+      "turn": "ai",
+      "turnScore": 5,
+      "die": 5,
+      "bust": false,
+      "round": 3,
+      "over": false,
+      "rng": 1262985244
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "player": 0,
+      "ai": 23,
+      "turn": "player",
+      "turnScore": 0,
+      "die": 1,
+      "bust": true,
+      "round": 4,
+      "over": false,
+      "rng": 1472956542
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 0,
+      "ai": 23,
+      "turn": "player",
+      "turnScore": 3,
+      "die": 3,
+      "bust": false,
+      "round": 4,
+      "over": false,
+      "rng": 4266604700
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 0,
+      "ai": 23,
+      "turn": "player",
+      "turnScore": 6,
+      "die": 3,
+      "bust": false,
+      "round": 4,
+      "over": false,
+      "rng": 852111986
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 0,
+      "ai": 23,
+      "turn": "player",
+      "turnScore": 11,
+      "die": 5,
+      "bust": false,
+      "round": 4,
+      "over": false,
+      "rng": 3826077232
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 0,
+      "ai": 23,
+      "turn": "player",
+      "turnScore": 17,
+      "die": 6,
+      "bust": false,
+      "round": 4,
+      "over": false,
+      "rng": 4104548981
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 0,
+      "ai": 23,
+      "turn": "player",
+      "turnScore": 19,
+      "die": 2,
+      "bust": false,
+      "round": 4,
+      "over": false,
+      "rng": 1743859489
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 0,
+      "ai": 23,
+      "turn": "player",
+      "turnScore": 23,
+      "die": 4,
+      "bust": false,
+      "round": 4,
+      "over": false,
+      "rng": 11594571
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "hold"
+     },
+     "state": {
+      "player": 23,
+      "ai": 23,
+      "turn": "ai",
+      "turnScore": 0,
+      "die": 4,
+      "bust": false,
+      "round": 4,
+      "over": false,
+      "rng": 11594571
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "player": 23,
+      "ai": 23,
+      "turn": "ai",
+      "turnScore": 4,
+      "die": 4,
+      "bust": false,
+      "round": 4,
+      "over": false,
+      "rng": 2800300359
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "player": 23,
+      "ai": 23,
+      "turn": "ai",
+      "turnScore": 6,
+      "die": 2,
+      "bust": false,
+      "round": 4,
+      "over": false,
+      "rng": 2566108615
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "player": 23,
+      "ai": 23,
+      "turn": "ai",
+      "turnScore": 9,
+      "die": 3,
+      "bust": false,
+      "round": 4,
+      "over": false,
+      "rng": 657424034
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "player": 23,
+      "ai": 23,
+      "turn": "ai",
+      "turnScore": 13,
+      "die": 4,
+      "bust": false,
+      "round": 4,
+      "over": false,
+      "rng": 3616538943
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "player": 23,
+      "ai": 23,
+      "turn": "player",
+      "turnScore": 0,
+      "die": 1,
+      "bust": true,
+      "round": 5,
+      "over": false,
+      "rng": 558290532
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 23,
+      "ai": 23,
+      "turn": "player",
+      "turnScore": 6,
+      "die": 6,
+      "bust": false,
+      "round": 5,
+      "over": false,
+      "rng": 2328846209
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 23,
+      "ai": 23,
+      "turn": "ai",
+      "turnScore": 0,
+      "die": 1,
+      "bust": true,
+      "round": 5,
+      "over": false,
+      "rng": 1188474078
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "player": 23,
+      "ai": 23,
+      "turn": "player",
+      "turnScore": 0,
+      "die": 1,
+      "bust": true,
+      "round": 6,
+      "over": false,
+      "rng": 4209609336
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 23,
+      "ai": 23,
+      "turn": "player",
+      "turnScore": 4,
+      "die": 4,
+      "bust": false,
+      "round": 6,
+      "over": false,
+      "rng": 3212516043
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 23,
+      "ai": 23,
+      "turn": "player",
+      "turnScore": 9,
+      "die": 5,
+      "bust": false,
+      "round": 6,
+      "over": false,
+      "rng": 1482723226
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 23,
+      "ai": 23,
+      "turn": "player",
+      "turnScore": 11,
+      "die": 2,
+      "bust": false,
+      "round": 6,
+      "over": false,
+      "rng": 2079228211
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 23,
+      "ai": 23,
+      "turn": "player",
+      "turnScore": 17,
+      "die": 6,
+      "bust": false,
+      "round": 6,
+      "over": false,
+      "rng": 3537776183
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 23,
+      "ai": 23,
+      "turn": "player",
+      "turnScore": 19,
+      "die": 2,
+      "bust": false,
+      "round": 6,
+      "over": false,
+      "rng": 4093670107
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 23,
+      "ai": 23,
+      "turn": "player",
+      "turnScore": 24,
+      "die": 5,
+      "bust": false,
+      "round": 6,
+      "over": false,
+      "rng": 2973143350
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "hold"
+     },
+     "state": {
+      "player": 47,
+      "ai": 23,
+      "turn": "ai",
+      "turnScore": 0,
+      "die": 5,
+      "bust": false,
+      "round": 6,
+      "over": false,
+      "rng": 2973143350
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "player": 47,
+      "ai": 23,
+      "turn": "ai",
+      "turnScore": 5,
+      "die": 5,
+      "bust": false,
+      "round": 6,
+      "over": false,
+      "rng": 18642814
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "player": 47,
+      "ai": 23,
+      "turn": "ai",
+      "turnScore": 11,
+      "die": 6,
+      "bust": false,
+      "round": 6,
+      "over": false,
+      "rng": 1905123431
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "player": 47,
+      "ai": 23,
+      "turn": "ai",
+      "turnScore": 13,
+      "die": 2,
+      "bust": false,
+      "round": 6,
+      "over": false,
+      "rng": 2108535367
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "player": 47,
+      "ai": 23,
+      "turn": "ai",
+      "turnScore": 19,
+      "die": 6,
+      "bust": false,
+      "round": 6,
+      "over": false,
+      "rng": 3074670869
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "player": 47,
+      "ai": 23,
+      "turn": "ai",
+      "turnScore": 23,
+      "die": 4,
+      "bust": false,
+      "round": 6,
+      "over": false,
+      "rng": 591516165
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "player": 47,
+      "ai": 46,
+      "turn": "player",
+      "turnScore": 0,
+      "die": 4,
+      "bust": false,
+      "round": 7,
+      "over": false,
+      "rng": 591516165
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 47,
+      "ai": 46,
+      "turn": "player",
+      "turnScore": 6,
+      "die": 6,
+      "bust": false,
+      "round": 7,
+      "over": false,
+      "rng": 959360549
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 47,
+      "ai": 46,
+      "turn": "player",
+      "turnScore": 11,
+      "die": 5,
+      "bust": false,
+      "round": 7,
+      "over": false,
+      "rng": 1906668112
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 47,
+      "ai": 46,
+      "turn": "player",
+      "turnScore": 13,
+      "die": 2,
+      "bust": false,
+      "round": 7,
+      "over": false,
+      "rng": 571255111
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 47,
+      "ai": 46,
+      "turn": "player",
+      "turnScore": 17,
+      "die": 4,
+      "bust": false,
+      "round": 7,
+      "over": false,
+      "rng": 1403406453
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 47,
+      "ai": 46,
+      "turn": "player",
+      "turnScore": 19,
+      "die": 2,
+      "bust": false,
+      "round": 7,
+      "over": false,
+      "rng": 3485204737
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 47,
+      "ai": 46,
+      "turn": "player",
+      "turnScore": 23,
+      "die": 4,
+      "bust": false,
+      "round": 7,
+      "over": false,
+      "rng": 3156008751
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "hold"
+     },
+     "state": {
+      "player": 70,
+      "ai": 46,
+      "turn": "ai",
+      "turnScore": 0,
+      "die": 4,
+      "bust": false,
+      "round": 7,
+      "over": false,
+      "rng": 3156008751
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "player": 70,
+      "ai": 46,
+      "turn": "ai",
+      "turnScore": 6,
+      "die": 6,
+      "bust": false,
+      "round": 7,
+      "over": false,
+      "rng": 3638343347
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "player": 70,
+      "ai": 46,
+      "turn": "ai",
+      "turnScore": 11,
+      "die": 5,
+      "bust": false,
+      "round": 7,
+      "over": false,
+      "rng": 2404697974
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "player": 70,
+      "ai": 46,
+      "turn": "ai",
+      "turnScore": 15,
+      "die": 4,
+      "bust": false,
+      "round": 7,
+      "over": false,
+      "rng": 3774585291
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "player": 70,
+      "ai": 46,
+      "turn": "ai",
+      "turnScore": 20,
+      "die": 5,
+      "bust": false,
+      "round": 7,
+      "over": false,
+      "rng": 3952391530
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "player": 70,
+      "ai": 66,
+      "turn": "player",
+      "turnScore": 0,
+      "die": 5,
+      "bust": false,
+      "round": 8,
+      "over": false,
+      "rng": 3952391530
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 70,
+      "ai": 66,
+      "turn": "ai",
+      "turnScore": 0,
+      "die": 1,
+      "bust": true,
+      "round": 8,
+      "over": false,
+      "rng": 3657479478
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "player": 70,
+      "ai": 66,
+      "turn": "ai",
+      "turnScore": 6,
+      "die": 6,
+      "bust": false,
+      "round": 8,
+      "over": false,
+      "rng": 1482981317
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "player": 70,
+      "ai": 66,
+      "turn": "ai",
+      "turnScore": 12,
+      "die": 6,
+      "bust": false,
+      "round": 8,
+      "over": false,
+      "rng": 604648811
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "player": 70,
+      "ai": 66,
+      "turn": "ai",
+      "turnScore": 17,
+      "die": 5,
+      "bust": false,
+      "round": 8,
+      "over": false,
+      "rng": 910943032
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "player": 70,
+      "ai": 66,
+      "turn": "ai",
+      "turnScore": 22,
+      "die": 5,
+      "bust": false,
+      "round": 8,
+      "over": false,
+      "rng": 263455726
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "player": 70,
+      "ai": 88,
+      "turn": "player",
+      "turnScore": 0,
+      "die": 5,
+      "bust": false,
+      "round": 9,
+      "over": false,
+      "rng": 263455726
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 70,
+      "ai": 88,
+      "turn": "player",
+      "turnScore": 3,
+      "die": 3,
+      "bust": false,
+      "round": 9,
+      "over": false,
+      "rng": 1996031306
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 70,
+      "ai": 88,
+      "turn": "player",
+      "turnScore": 8,
+      "die": 5,
+      "bust": false,
+      "round": 9,
+      "over": false,
+      "rng": 2623382050
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 70,
+      "ai": 88,
+      "turn": "player",
+      "turnScore": 11,
+      "die": 3,
+      "bust": false,
+      "round": 9,
+      "over": false,
+      "rng": 723989486
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 70,
+      "ai": 88,
+      "turn": "player",
+      "turnScore": 17,
+      "die": 6,
+      "bust": false,
+      "round": 9,
+      "over": false,
+      "rng": 1711815971
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 70,
+      "ai": 88,
+      "turn": "player",
+      "turnScore": 23,
+      "die": 6,
+      "bust": false,
+      "round": 9,
+      "over": false,
+      "rng": 1411502933
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "hold"
+     },
+     "state": {
+      "player": 93,
+      "ai": 88,
+      "turn": "ai",
+      "turnScore": 0,
+      "die": 6,
+      "bust": false,
+      "round": 9,
+      "over": false,
+      "rng": 1411502933
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "player": 93,
+      "ai": 88,
+      "turn": "player",
+      "turnScore": 0,
+      "die": 1,
+      "bust": true,
+      "round": 10,
+      "over": false,
+      "rng": 2804140656
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 93,
+      "ai": 88,
+      "turn": "player",
+      "turnScore": 3,
+      "die": 3,
+      "bust": false,
+      "round": 10,
+      "over": false,
+      "rng": 332991878
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 93,
+      "ai": 88,
+      "turn": "player",
+      "turnScore": 6,
+      "die": 3,
+      "bust": false,
+      "round": 10,
+      "over": false,
+      "rng": 2136163058
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 93,
+      "ai": 88,
+      "turn": "player",
+      "turnScore": 9,
+      "die": 3,
+      "bust": false,
+      "round": 10,
+      "over": false,
+      "rng": 4138477556
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "hold"
+     },
+     "state": {
+      "player": 102,
+      "ai": 88,
+      "turn": "player",
+      "turnScore": 0,
+      "die": 3,
+      "bust": false,
+      "round": 10,
+      "over": true,
+      "rng": 4138477556
+     }
+    }
+   ],
+   "result": {
+    "winner": "player",
+    "stars": 1,
+    "score": 102,
+    "player": 102,
+    "ai": 88
+   }
+  },
+  {
+   "name": "level-4-chases-near-target",
+   "config": {
+    "target": 100,
+    "maxRounds": 15,
+    "aiHoldAt": [
+     10,
+     15,
+     18,
+     20,
+     20
+    ],
+    "aiErrorPct": [
+     35,
+     20,
+     10,
+     5,
+     0
+    ],
+    "starMargins": [
+     40,
+     15
+    ]
+   },
+   "seed": 3,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 0,
+      "ai": 0,
+      "turn": "player",
+      "turnScore": 4,
+      "die": 4,
+      "bust": false,
+      "round": 1,
+      "over": false,
+      "rng": 811107
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 0,
+      "ai": 0,
+      "turn": "player",
+      "turnScore": 10,
+      "die": 6,
+      "bust": false,
+      "round": 1,
+      "over": false,
+      "rng": 201886211
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 0,
+      "ai": 0,
+      "turn": "player",
+      "turnScore": 14,
+      "die": 4,
+      "bust": false,
+      "round": 1,
+      "over": false,
+      "rng": 3025432647
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 0,
+      "ai": 0,
+      "turn": "player",
+      "turnScore": 18,
+      "die": 4,
+      "bust": false,
+      "round": 1,
+      "over": false,
+      "rng": 1909268553
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 0,
+      "ai": 0,
+      "turn": "player",
+      "turnScore": 20,
+      "die": 2,
+      "bust": false,
+      "round": 1,
+      "over": false,
+      "rng": 1833517003
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 0,
+      "ai": 0,
+      "turn": "player",
+      "turnScore": 22,
+      "die": 2,
+      "bust": false,
+      "round": 1,
+      "over": false,
+      "rng": 482289907
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 0,
+      "ai": 0,
+      "turn": "player",
+      "turnScore": 24,
+      "die": 2,
+      "bust": false,
+      "round": 1,
+      "over": false,
+      "rng": 3448221763
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 0,
+      "ai": 0,
+      "turn": "ai",
+      "turnScore": 0,
+      "die": 1,
+      "bust": true,
+      "round": 1,
+      "over": false,
+      "rng": 1249279236
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "player": 0,
+      "ai": 0,
+      "turn": "ai",
+      "turnScore": 2,
+      "die": 2,
+      "bust": false,
+      "round": 1,
+      "over": false,
+      "rng": 1057047055
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "player": 0,
+      "ai": 0,
+      "turn": "ai",
+      "turnScore": 8,
+      "die": 6,
+      "bust": false,
+      "round": 1,
+      "over": false,
+      "rng": 4283800655
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "player": 0,
+      "ai": 0,
+      "turn": "ai",
+      "turnScore": 12,
+      "die": 4,
+      "bust": false,
+      "round": 1,
+      "over": false,
+      "rng": 3612810753
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "player": 0,
+      "ai": 0,
+      "turn": "ai",
+      "turnScore": 15,
+      "die": 3,
+      "bust": false,
+      "round": 1,
+      "over": false,
+      "rng": 2792598794
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "player": 0,
+      "ai": 0,
+      "turn": "ai",
+      "turnScore": 17,
+      "die": 2,
+      "bust": false,
+      "round": 1,
+      "over": false,
+      "rng": 2843875459
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "player": 0,
+      "ai": 0,
+      "turn": "ai",
+      "turnScore": 20,
+      "die": 3,
+      "bust": false,
+      "round": 1,
+      "over": false,
+      "rng": 3100882058
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "player": 0,
+      "ai": 20,
+      "turn": "player",
+      "turnScore": 0,
+      "die": 3,
+      "bust": false,
+      "round": 2,
+      "over": false,
+      "rng": 3100882058
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 0,
+      "ai": 20,
+      "turn": "player",
+      "turnScore": 6,
+      "die": 6,
+      "bust": false,
+      "round": 2,
+      "over": false,
+      "rng": 101770955
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 0,
+      "ai": 20,
+      "turn": "player",
+      "turnScore": 10,
+      "die": 4,
+      "bust": false,
+      "round": 2,
+      "over": false,
+      "rng": 1140391503
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 0,
+      "ai": 20,
+      "turn": "player",
+      "turnScore": 16,
+      "die": 6,
+      "bust": false,
+      "round": 2,
+      "over": false,
+      "rng": 3658955447
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 0,
+      "ai": 20,
+      "turn": "player",
+      "turnScore": 22,
+      "die": 6,
+      "bust": false,
+      "round": 2,
+      "over": false,
+      "rng": 2507753207
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 0,
+      "ai": 20,
+      "turn": "ai",
+      "turnScore": 0,
+      "die": 1,
+      "bust": true,
+      "round": 2,
+      "over": false,
+      "rng": 156826788
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "player": 0,
+      "ai": 20,
+      "turn": "player",
+      "turnScore": 0,
+      "die": 1,
+      "bust": true,
+      "round": 3,
+      "over": false,
+      "rng": 3477245826
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 0,
+      "ai": 20,
+      "turn": "player",
+      "turnScore": 2,
+      "die": 2,
+      "bust": false,
+      "round": 3,
+      "over": false,
+      "rng": 1222810555
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 0,
+      "ai": 20,
+      "turn": "player",
+      "turnScore": 6,
+      "die": 4,
+      "bust": false,
+      "round": 3,
+      "over": false,
+      "rng": 1764440145
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 0,
+      "ai": 20,
+      "turn": "player",
+      "turnScore": 12,
+      "die": 6,
+      "bust": false,
+      "round": 3,
+      "over": false,
+      "rng": 3389192033
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 0,
+      "ai": 20,
+      "turn": "player",
+      "turnScore": 15,
+      "die": 3,
+      "bust": false,
+      "round": 3,
+      "over": false,
+      "rng": 155008982
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 0,
+      "ai": 20,
+      "turn": "player",
+      "turnScore": 17,
+      "die": 2,
+      "bust": false,
+      "round": 3,
+      "over": false,
+      "rng": 1983036949
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 0,
+      "ai": 20,
+      "turn": "player",
+      "turnScore": 23,
+      "die": 6,
+      "bust": false,
+      "round": 3,
+      "over": false,
+      "rng": 535941965
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 0,
+      "ai": 20,
+      "turn": "player",
+      "turnScore": 27,
+      "die": 4,
+      "bust": false,
+      "round": 3,
+      "over": false,
+      "rng": 2526302625
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "hold"
+     },
+     "state": {
+      "player": 27,
+      "ai": 20,
+      "turn": "ai",
+      "turnScore": 0,
+      "die": 4,
+      "bust": false,
+      "round": 3,
+      "over": false,
+      "rng": 2526302625
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "player": 27,
+      "ai": 20,
+      "turn": "ai",
+      "turnScore": 2,
+      "die": 2,
+      "bust": false,
+      "round": 3,
+      "over": false,
+      "rng": 2293203409
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "player": 27,
+      "ai": 20,
+      "turn": "ai",
+      "turnScore": 6,
+      "die": 4,
+      "bust": false,
+      "round": 3,
+      "over": false,
+      "rng": 1780887291
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "player": 27,
+      "ai": 20,
+      "turn": "ai",
+      "turnScore": 8,
+      "die": 2,
+      "bust": false,
+      "round": 3,
+      "over": false,
+      "rng": 1356478951
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "player": 27,
+      "ai": 20,
+      "turn": "ai",
+      "turnScore": 11,
+      "die": 3,
+      "bust": false,
+      "round": 3,
+      "over": false,
+      "rng": 3946614932
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "player": 27,
+      "ai": 20,
+      "turn": "ai",
+      "turnScore": 13,
+      "die": 2,
+      "bust": false,
+      "round": 3,
+      "over": false,
+      "rng": 1558948963
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "player": 27,
+      "ai": 20,
+      "turn": "ai",
+      "turnScore": 16,
+      "die": 3,
+      "bust": false,
+      "round": 3,
+      "over": false,
+      "rng": 94159568
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "player": 27,
+      "ai": 20,
+      "turn": "ai",
+      "turnScore": 20,
+      "die": 4,
+      "bust": false,
+      "round": 3,
+      "over": false,
+      "rng": 622266963
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "player": 27,
+      "ai": 40,
+      "turn": "player",
+      "turnScore": 0,
+      "die": 4,
+      "bust": false,
+      "round": 4,
+      "over": false,
+      "rng": 622266963
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 27,
+      "ai": 40,
+      "turn": "player",
+      "turnScore": 2,
+      "die": 2,
+      "bust": false,
+      "round": 4,
+      "over": false,
+      "rng": 1341917149
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 27,
+      "ai": 40,
+      "turn": "ai",
+      "turnScore": 0,
+      "die": 1,
+      "bust": true,
+      "round": 4,
+      "over": false,
+      "rng": 805292958
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "player": 27,
+      "ai": 40,
+      "turn": "ai",
+      "turnScore": 5,
+      "die": 5,
+      "bust": false,
+      "round": 4,
+      "over": false,
+      "rng": 117472216
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "player": 27,
+      "ai": 40,
+      "turn": "ai",
+      "turnScore": 11,
+      "die": 6,
+      "bust": false,
+      "round": 4,
+      "over": false,
+      "rng": 118784837
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "player": 27,
+      "ai": 40,
+      "turn": "ai",
+      "turnScore": 17,
+      "die": 6,
+      "bust": false,
+      "round": 4,
+      "over": false,
+      "rng": 2029090715
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "player": 27,
+      "ai": 40,
+      "turn": "player",
+      "turnScore": 0,
+      "die": 1,
+      "bust": true,
+      "round": 5,
+      "over": false,
+      "rng": 2521149402
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 27,
+      "ai": 40,
+      "turn": "player",
+      "turnScore": 4,
+      "die": 4,
+      "bust": false,
+      "round": 5,
+      "over": false,
+      "rng": 1415659173
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 27,
+      "ai": 40,
+      "turn": "player",
+      "turnScore": 8,
+      "die": 4,
+      "bust": false,
+      "round": 5,
+      "over": false,
+      "rng": 83970207
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 27,
+      "ai": 40,
+      "turn": "player",
+      "turnScore": 11,
+      "die": 3,
+      "bust": false,
+      "round": 5,
+      "over": false,
+      "rng": 2923785302
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 27,
+      "ai": 40,
+      "turn": "player",
+      "turnScore": 13,
+      "die": 2,
+      "bust": false,
+      "round": 5,
+      "over": false,
+      "rng": 2050628497
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 27,
+      "ai": 40,
+      "turn": "player",
+      "turnScore": 19,
+      "die": 6,
+      "bust": false,
+      "round": 5,
+      "over": false,
+      "rng": 273465749
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 27,
+      "ai": 40,
+      "turn": "ai",
+      "turnScore": 0,
+      "die": 1,
+      "bust": true,
+      "round": 5,
+      "over": false,
+      "rng": 2277150954
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "player": 27,
+      "ai": 40,
+      "turn": "ai",
+      "turnScore": 6,
+      "die": 6,
+      "bust": false,
+      "round": 5,
+      "over": false,
+      "rng": 1632697625
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "player": 27,
+      "ai": 40,
+      "turn": "player",
+      "turnScore": 0,
+      "die": 1,
+      "bust": true,
+      "round": 6,
+      "over": false,
+      "rng": 2693770848
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 27,
+      "ai": 40,
+      "turn": "player",
+      "turnScore": 6,
+      "die": 6,
+      "bust": false,
+      "round": 6,
+      "over": false,
+      "rng": 4247985377
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 27,
+      "ai": 40,
+      "turn": "player",
+      "turnScore": 9,
+      "die": 3,
+      "bust": false,
+      "round": 6,
+      "over": false,
+      "rng": 1262552438
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 27,
+      "ai": 40,
+      "turn": "player",
+      "turnScore": 11,
+      "die": 2,
+      "bust": false,
+      "round": 6,
+      "over": false,
+      "rng": 370270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 27,
+      "ai": 40,
+      "turn": "player",
+      "turnScore": 13,
+      "die": 2,
+      "bust": false,
+      "round": 6,
+      "over": false,
+      "rng": 1790927299
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 27,
+      "ai": 40,
+      "turn": "player",
+      "turnScore": 18,
+      "die": 5,
+      "bust": false,
+      "round": 6,
+      "over": false,
+      "rng": 1450119808
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 27,
+      "ai": 40,
+      "turn": "player",
+      "turnScore": 22,
+      "die": 4,
+      "bust": false,
+      "round": 6,
+      "over": false,
+      "rng": 869686143
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 27,
+      "ai": 40,
+      "turn": "player",
+      "turnScore": 28,
+      "die": 6,
+      "bust": false,
+      "round": 6,
+      "over": false,
+      "rng": 4018217795
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "hold"
+     },
+     "state": {
+      "player": 55,
+      "ai": 40,
+      "turn": "ai",
+      "turnScore": 0,
+      "die": 6,
+      "bust": false,
+      "round": 6,
+      "over": false,
+      "rng": 4018217795
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "player": 55,
+      "ai": 40,
+      "turn": "ai",
+      "turnScore": 4,
+      "die": 4,
+      "bust": false,
+      "round": 6,
+      "over": false,
+      "rng": 3066949719
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "player": 55,
+      "ai": 40,
+      "turn": "ai",
+      "turnScore": 9,
+      "die": 5,
+      "bust": false,
+      "round": 6,
+      "over": false,
+      "rng": 270897844
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "player": 55,
+      "ai": 40,
+      "turn": "ai",
+      "turnScore": 11,
+      "die": 2,
+      "bust": false,
+      "round": 6,
+      "over": false,
+      "rng": 3961205293
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "player": 55,
+      "ai": 40,
+      "turn": "ai",
+      "turnScore": 14,
+      "die": 3,
+      "bust": false,
+      "round": 6,
+      "over": false,
+      "rng": 3246667586
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "player": 55,
+      "ai": 40,
+      "turn": "ai",
+      "turnScore": 19,
+      "die": 5,
+      "bust": false,
+      "round": 6,
+      "over": false,
+      "rng": 2867251828
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "player": 55,
+      "ai": 40,
+      "turn": "player",
+      "turnScore": 0,
+      "die": 1,
+      "bust": true,
+      "round": 7,
+      "over": false,
+      "rng": 111544224
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 55,
+      "ai": 40,
+      "turn": "player",
+      "turnScore": 4,
+      "die": 4,
+      "bust": false,
+      "round": 7,
+      "over": false,
+      "rng": 203355561
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 55,
+      "ai": 40,
+      "turn": "player",
+      "turnScore": 9,
+      "die": 5,
+      "bust": false,
+      "round": 7,
+      "over": false,
+      "rng": 2279351164
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 55,
+      "ai": 40,
+      "turn": "player",
+      "turnScore": 13,
+      "die": 4,
+      "bust": false,
+      "round": 7,
+      "over": false,
+      "rng": 1976038917
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 55,
+      "ai": 40,
+      "turn": "ai",
+      "turnScore": 0,
+      "die": 1,
+      "bust": true,
+      "round": 7,
+      "over": false,
+      "rng": 3957678918
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "player": 55,
+      "ai": 40,
+      "turn": "ai",
+      "turnScore": 3,
+      "die": 3,
+      "bust": false,
+      "round": 7,
+      "over": false,
+      "rng": 3057488000
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "player": 55,
+      "ai": 40,
+      "turn": "ai",
+      "turnScore": 6,
+      "die": 3,
+      "bust": false,
+      "round": 7,
+      "over": false,
+      "rng": 2174730326
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "player": 55,
+      "ai": 40,
+      "turn": "ai",
+      "turnScore": 11,
+      "die": 5,
+      "bust": false,
+      "round": 7,
+      "over": false,
+      "rng": 1261612828
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "player": 55,
+      "ai": 40,
+      "turn": "ai",
+      "turnScore": 14,
+      "die": 3,
+      "bust": false,
+      "round": 7,
+      "over": false,
+      "rng": 3304402676
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "player": 55,
+      "ai": 40,
+      "turn": "ai",
+      "turnScore": 18,
+      "die": 4,
+      "bust": false,
+      "round": 7,
+      "over": false,
+      "rng": 1146638913
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "player": 55,
+      "ai": 40,
+      "turn": "ai",
+      "turnScore": 20,
+      "die": 2,
+      "bust": false,
+      "round": 7,
+      "over": false,
+      "rng": 2350578793
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "player": 55,
+      "ai": 60,
+      "turn": "player",
+      "turnScore": 0,
+      "die": 2,
+      "bust": false,
+      "round": 8,
+      "over": false,
+      "rng": 2350578793
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 55,
+      "ai": 60,
+      "turn": "player",
+      "turnScore": 3,
+      "die": 3,
+      "bust": false,
+      "round": 8,
+      "over": false,
+      "rng": 2707489250
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 55,
+      "ai": 60,
+      "turn": "player",
+      "turnScore": 8,
+      "die": 5,
+      "bust": false,
+      "round": 8,
+      "over": false,
+      "rng": 2868717772
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 55,
+      "ai": 60,
+      "turn": "player",
+      "turnScore": 13,
+      "die": 5,
+      "bust": false,
+      "round": 8,
+      "over": false,
+      "rng": 4084287742
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 55,
+      "ai": 60,
+      "turn": "player",
+      "turnScore": 17,
+      "die": 4,
+      "bust": false,
+      "round": 8,
+      "over": false,
+      "rng": 2545048809
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 55,
+      "ai": 60,
+      "turn": "player",
+      "turnScore": 22,
+      "die": 5,
+      "bust": false,
+      "round": 8,
+      "over": false,
+      "rng": 1506626878
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 55,
+      "ai": 60,
+      "turn": "player",
+      "turnScore": 24,
+      "die": 2,
+      "bust": false,
+      "round": 8,
+      "over": false,
+      "rng": 4248065131
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 55,
+      "ai": 60,
+      "turn": "player",
+      "turnScore": 26,
+      "die": 2,
+      "bust": false,
+      "round": 8,
+      "over": false,
+      "rng": 2157508951
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "hold"
+     },
+     "state": {
+      "player": 81,
+      "ai": 60,
+      "turn": "ai",
+      "turnScore": 0,
+      "die": 2,
+      "bust": false,
+      "round": 8,
+      "over": false,
+      "rng": 2157508951
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "player": 81,
+      "ai": 60,
+      "turn": "ai",
+      "turnScore": 3,
+      "die": 3,
+      "bust": false,
+      "round": 8,
+      "over": false,
+      "rng": 1777895246
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "player": 81,
+      "ai": 60,
+      "turn": "player",
+      "turnScore": 0,
+      "die": 1,
+      "bust": true,
+      "round": 9,
+      "over": false,
+      "rng": 1530790662
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 81,
+      "ai": 60,
+      "turn": "player",
+      "turnScore": 6,
+      "die": 6,
+      "bust": false,
+      "round": 9,
+      "over": false,
+      "rng": 4035926921
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 81,
+      "ai": 60,
+      "turn": "player",
+      "turnScore": 11,
+      "die": 5,
+      "bust": false,
+      "round": 9,
+      "over": false,
+      "rng": 1680914614
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 81,
+      "ai": 60,
+      "turn": "player",
+      "turnScore": 15,
+      "die": 4,
+      "bust": false,
+      "round": 9,
+      "over": false,
+      "rng": 401499525
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 81,
+      "ai": 60,
+      "turn": "ai",
+      "turnScore": 0,
+      "die": 1,
+      "bust": true,
+      "round": 9,
+      "over": false,
+      "rng": 2961943914
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "player": 81,
+      "ai": 60,
+      "turn": "ai",
+      "turnScore": 2,
+      "die": 2,
+      "bust": false,
+      "round": 9,
+      "over": false,
+      "rng": 1643606233
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "player": 81,
+      "ai": 60,
+      "turn": "ai",
+      "turnScore": 4,
+      "die": 2,
+      "bust": false,
+      "round": 9,
+      "over": false,
+      "rng": 1919873743
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "player": 81,
+      "ai": 60,
+      "turn": "ai",
+      "turnScore": 9,
+      "die": 5,
+      "bust": false,
+      "round": 9,
+      "over": false,
+      "rng": 719314516
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "player": 81,
+      "ai": 60,
+      "turn": "ai",
+      "turnScore": 12,
+      "die": 3,
+      "bust": false,
+      "round": 9,
+      "over": false,
+      "rng": 4088655134
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "player": 81,
+      "ai": 60,
+      "turn": "ai",
+      "turnScore": 15,
+      "die": 3,
+      "bust": false,
+      "round": 9,
+      "over": false,
+      "rng": 1276979414
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "player": 81,
+      "ai": 60,
+      "turn": "ai",
+      "turnScore": 17,
+      "die": 2,
+      "bust": false,
+      "round": 9,
+      "over": false,
+      "rng": 3388217077
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "player": 81,
+      "ai": 60,
+      "turn": "ai",
+      "turnScore": 22,
+      "die": 5,
+      "bust": false,
+      "round": 9,
+      "over": false,
+      "rng": 779681632
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "player": 81,
+      "ai": 60,
+      "turn": "ai",
+      "turnScore": 25,
+      "die": 3,
+      "bust": false,
+      "round": 9,
+      "over": false,
+      "rng": 50860778
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "player": 81,
+      "ai": 60,
+      "turn": "ai",
+      "turnScore": 30,
+      "die": 5,
+      "bust": false,
+      "round": 9,
+      "over": false,
+      "rng": 738138688
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "player": 81,
+      "ai": 60,
+      "turn": "ai",
+      "turnScore": 32,
+      "die": 2,
+      "bust": false,
+      "round": 9,
+      "over": false,
+      "rng": 3730357627
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "player": 81,
+      "ai": 60,
+      "turn": "ai",
+      "turnScore": 35,
+      "die": 3,
+      "bust": false,
+      "round": 9,
+      "over": false,
+      "rng": 4144007552
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "player": 81,
+      "ai": 60,
+      "turn": "ai",
+      "turnScore": 40,
+      "die": 5,
+      "bust": false,
+      "round": 9,
+      "over": false,
+      "rng": 539994520
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "player": 81,
+      "ai": 100,
+      "turn": "ai",
+      "turnScore": 0,
+      "die": 5,
+      "bust": false,
+      "round": 9,
+      "over": true,
+      "rng": 539994520
+     }
+    }
+   ],
+   "result": {
+    "winner": "ai",
+    "stars": 0,
+    "score": 81,
+    "player": 81,
+    "ai": 100
+   }
+  },
+  {
+   "name": "cautious-player-loses-to-level-5",
+   "config": {
+    "target": 100,
+    "maxRounds": 15,
+    "aiHoldAt": [
+     10,
+     15,
+     18,
+     20,
+     20
+    ],
+    "aiErrorPct": [
+     35,
+     20,
+     10,
+     5,
+     0
+    ],
+    "starMargins": [
+     40,
+     15
+    ]
+   },
+   "seed": 1,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 0,
+      "ai": 0,
+      "turn": "player",
+      "turnScore": 4,
+      "die": 4,
+      "bust": false,
+      "round": 1,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 0,
+      "ai": 0,
+      "turn": "player",
+      "turnScore": 6,
+      "die": 2,
+      "bust": false,
+      "round": 1,
+      "over": false,
+      "rng": 67634689
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 0,
+      "ai": 0,
+      "turn": "player",
+      "turnScore": 10,
+      "die": 4,
+      "bust": false,
+      "round": 1,
+      "over": false,
+      "rng": 2647435461
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "hold"
+     },
+     "state": {
+      "player": 10,
+      "ai": 0,
+      "turn": "ai",
+      "turnScore": 0,
+      "die": 4,
+      "bust": false,
+      "round": 1,
+      "over": false,
+      "rng": 2647435461
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "player": 10,
+      "ai": 0,
+      "turn": "ai",
+      "turnScore": 6,
+      "die": 6,
+      "bust": false,
+      "round": 1,
+      "over": false,
+      "rng": 307599695
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "player": 10,
+      "ai": 0,
+      "turn": "ai",
+      "turnScore": 12,
+      "die": 6,
+      "bust": false,
+      "round": 1,
+      "over": false,
+      "rng": 2398689233
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "player": 10,
+      "ai": 0,
+      "turn": "ai",
+      "turnScore": 17,
+      "die": 5,
+      "bust": false,
+      "round": 1,
+      "over": false,
+      "rng": 745495504
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "player": 10,
+      "ai": 0,
+      "turn": "ai",
+      "turnScore": 22,
+      "die": 5,
+      "bust": false,
+      "round": 1,
+      "over": false,
+      "rng": 632435482
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "player": 10,
+      "ai": 22,
+      "turn": "player",
+      "turnScore": 0,
+      "die": 5,
+      "bust": false,
+      "round": 2,
+      "over": false,
+      "rng": 632435482
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 10,
+      "ai": 22,
+      "turn": "ai",
+      "turnScore": 0,
+      "die": 1,
+      "bust": true,
+      "round": 2,
+      "over": false,
+      "rng": 435756210
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "player": 10,
+      "ai": 22,
+      "turn": "ai",
+      "turnScore": 6,
+      "die": 6,
+      "bust": false,
+      "round": 2,
+      "over": false,
+      "rng": 2005365029
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "player": 10,
+      "ai": 22,
+      "turn": "ai",
+      "turnScore": 11,
+      "die": 5,
+      "bust": false,
+      "round": 2,
+      "over": false,
+      "rng": 2916098932
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "player": 10,
+      "ai": 22,
+      "turn": "ai",
+      "turnScore": 15,
+      "die": 4,
+      "bust": false,
+      "round": 2,
+      "over": false,
+      "rng": 2657092299
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "player": 10,
+      "ai": 22,
+      "turn": "ai",
+      "turnScore": 21,
+      "die": 6,
+      "bust": false,
+      "round": 2,
+      "over": false,
+      "rng": 1495045943
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "player": 10,
+      "ai": 43,
+      "turn": "player",
+      "turnScore": 0,
+      "die": 6,
+      "bust": false,
+      "round": 3,
+      "over": false,
+      "rng": 1495045943
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 10,
+      "ai": 43,
+      "turn": "player",
+      "turnScore": 5,
+      "die": 5,
+      "bust": false,
+      "round": 3,
+      "over": false,
+      "rng": 3031976842
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 10,
+      "ai": 43,
+      "turn": "player",
+      "turnScore": 8,
+      "die": 3,
+      "bust": false,
+      "round": 3,
+      "over": false,
+      "rng": 82049198
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "hold"
+     },
+     "state": {
+      "player": 18,
+      "ai": 43,
+      "turn": "ai",
+      "turnScore": 0,
+      "die": 3,
+      "bust": false,
+      "round": 3,
+      "over": false,
+      "rng": 82049198
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "player": 18,
+      "ai": 43,
+      "turn": "ai",
+      "turnScore": 6,
+      "die": 6,
+      "bust": false,
+      "round": 3,
+      "over": false,
+      "rng": 87470069
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "player": 18,
+      "ai": 43,
+      "turn": "ai",
+      "turnScore": 10,
+      "die": 4,
+      "bust": false,
+      "round": 3,
+      "over": false,
+      "rng": 3385103793
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "player": 18,
+      "ai": 43,
+      "turn": "ai",
+      "turnScore": 15,
+      "die": 5,
+      "bust": false,
+      "round": 3,
+      "over": false,
+      "rng": 891394312
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "player": 18,
+      "ai": 43,
+      "turn": "player",
+      "turnScore": 0,
+      "die": 1,
+      "bust": true,
+      "round": 4,
+      "over": false,
+      "rng": 3323190024
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 18,
+      "ai": 43,
+      "turn": "player",
+      "turnScore": 4,
+      "die": 4,
+      "bust": false,
+      "round": 4,
+      "over": false,
+      "rng": 321008529
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 18,
+      "ai": 43,
+      "turn": "player",
+      "turnScore": 6,
+      "die": 2,
+      "bust": false,
+      "round": 4,
+      "over": false,
+      "rng": 4283899417
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 18,
+      "ai": 43,
+      "turn": "player",
+      "turnScore": 12,
+      "die": 6,
+      "bust": false,
+      "round": 4,
+      "over": false,
+      "rng": 2383559219
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "hold"
+     },
+     "state": {
+      "player": 30,
+      "ai": 43,
+      "turn": "ai",
+      "turnScore": 0,
+      "die": 6,
+      "bust": false,
+      "round": 4,
+      "over": false,
+      "rng": 2383559219
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "player": 30,
+      "ai": 43,
+      "turn": "ai",
+      "turnScore": 6,
+      "die": 6,
+      "bust": false,
+      "round": 4,
+      "over": false,
+      "rng": 3822316985
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "player": 30,
+      "ai": 43,
+      "turn": "ai",
+      "turnScore": 8,
+      "die": 2,
+      "bust": false,
+      "round": 4,
+      "over": false,
+      "rng": 1391776747
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "player": 30,
+      "ai": 43,
+      "turn": "ai",
+      "turnScore": 14,
+      "die": 6,
+      "bust": false,
+      "round": 4,
+      "over": false,
+      "rng": 3652395599
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "player": 30,
+      "ai": 43,
+      "turn": "player",
+      "turnScore": 0,
+      "die": 1,
+      "bust": true,
+      "round": 5,
+      "over": false,
+      "rng": 44632818
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 30,
+      "ai": 43,
+      "turn": "player",
+      "turnScore": 2,
+      "die": 2,
+      "bust": false,
+      "round": 5,
+      "over": false,
+      "rng": 1562130985
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 30,
+      "ai": 43,
+      "turn": "player",
+      "turnScore": 4,
+      "die": 2,
+      "bust": false,
+      "round": 5,
+      "over": false,
+      "rng": 2440533925
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 30,
+      "ai": 43,
+      "turn": "player",
+      "turnScore": 9,
+      "die": 5,
+      "bust": false,
+      "round": 5,
+      "over": false,
+      "rng": 333695716
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "hold"
+     },
+     "state": {
+      "player": 39,
+      "ai": 43,
+      "turn": "ai",
+      "turnScore": 0,
+      "die": 5,
+      "bust": false,
+      "round": 5,
+      "over": false,
+      "rng": 333695716
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "player": 39,
+      "ai": 43,
+      "turn": "ai",
+      "turnScore": 2,
+      "die": 2,
+      "bust": false,
+      "round": 5,
+      "over": false,
+      "rng": 1028688091
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "player": 39,
+      "ai": 43,
+      "turn": "player",
+      "turnScore": 0,
+      "die": 1,
+      "bust": true,
+      "round": 6,
+      "over": false,
+      "rng": 2771657022
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 39,
+      "ai": 43,
+      "turn": "player",
+      "turnScore": 6,
+      "die": 6,
+      "bust": false,
+      "round": 6,
+      "over": false,
+      "rng": 57526103
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 39,
+      "ai": 43,
+      "turn": "player",
+      "turnScore": 11,
+      "die": 5,
+      "bust": false,
+      "round": 6,
+      "over": false,
+      "rng": 3412600852
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "hold"
+     },
+     "state": {
+      "player": 50,
+      "ai": 43,
+      "turn": "ai",
+      "turnScore": 0,
+      "die": 5,
+      "bust": false,
+      "round": 6,
+      "over": false,
+      "rng": 3412600852
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "player": 50,
+      "ai": 43,
+      "turn": "ai",
+      "turnScore": 6,
+      "die": 6,
+      "bust": false,
+      "round": 6,
+      "over": false,
+      "rng": 53684993
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "player": 50,
+      "ai": 43,
+      "turn": "ai",
+      "turnScore": 11,
+      "die": 5,
+      "bust": false,
+      "round": 6,
+      "over": false,
+      "rng": 2889104680
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "player": 50,
+      "ai": 43,
+      "turn": "ai",
+      "turnScore": 14,
+      "die": 3,
+      "bust": false,
+      "round": 6,
+      "over": false,
+      "rng": 1504982240
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "player": 50,
+      "ai": 43,
+      "turn": "player",
+      "turnScore": 0,
+      "die": 1,
+      "bust": true,
+      "round": 7,
+      "over": false,
+      "rng": 975386100
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 50,
+      "ai": 43,
+      "turn": "player",
+      "turnScore": 5,
+      "die": 5,
+      "bust": false,
+      "round": 7,
+      "over": false,
+      "rng": 3475959034
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 50,
+      "ai": 43,
+      "turn": "ai",
+      "turnScore": 0,
+      "die": 1,
+      "bust": true,
+      "round": 7,
+      "over": false,
+      "rng": 1149571554
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "player": 50,
+      "ai": 43,
+      "turn": "ai",
+      "turnScore": 3,
+      "die": 3,
+      "bust": false,
+      "round": 7,
+      "over": false,
+      "rng": 832402814
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "player": 50,
+      "ai": 43,
+      "turn": "ai",
+      "turnScore": 5,
+      "die": 2,
+      "bust": false,
+      "round": 7,
+      "over": false,
+      "rng": 2037229063
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "player": 50,
+      "ai": 43,
+      "turn": "ai",
+      "turnScore": 11,
+      "die": 6,
+      "bust": false,
+      "round": 7,
+      "over": false,
+      "rng": 2013870833
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "player": 50,
+      "ai": 43,
+      "turn": "ai",
+      "turnScore": 14,
+      "die": 3,
+      "bust": false,
+      "round": 7,
+      "over": false,
+      "rng": 3048316442
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "player": 50,
+      "ai": 43,
+      "turn": "ai",
+      "turnScore": 16,
+      "die": 2,
+      "bust": false,
+      "round": 7,
+      "over": false,
+      "rng": 1210136899
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "player": 50,
+      "ai": 43,
+      "turn": "ai",
+      "turnScore": 20,
+      "die": 4,
+      "bust": false,
+      "round": 7,
+      "over": false,
+      "rng": 2384770599
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "player": 50,
+      "ai": 63,
+      "turn": "player",
+      "turnScore": 0,
+      "die": 4,
+      "bust": false,
+      "round": 8,
+      "over": false,
+      "rng": 2384770599
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 50,
+      "ai": 63,
+      "turn": "player",
+      "turnScore": 4,
+      "die": 4,
+      "bust": false,
+      "round": 8,
+      "over": false,
+      "rng": 82514103
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 50,
+      "ai": 63,
+      "turn": "player",
+      "turnScore": 6,
+      "die": 2,
+      "bust": false,
+      "round": 8,
+      "over": false,
+      "rng": 3108354793
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 50,
+      "ai": 63,
+      "turn": "player",
+      "turnScore": 10,
+      "die": 4,
+      "bust": false,
+      "round": 8,
+      "over": false,
+      "rng": 3440058693
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "hold"
+     },
+     "state": {
+      "player": 60,
+      "ai": 63,
+      "turn": "ai",
+      "turnScore": 0,
+      "die": 4,
+      "bust": false,
+      "round": 8,
+      "over": false,
+      "rng": 3440058693
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "player": 60,
+      "ai": 63,
+      "turn": "ai",
+      "turnScore": 3,
+      "die": 3,
+      "bust": false,
+      "round": 8,
+      "over": false,
+      "rng": 2371448660
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "player": 60,
+      "ai": 63,
+      "turn": "ai",
+      "turnScore": 7,
+      "die": 4,
+      "bust": false,
+      "round": 8,
+      "over": false,
+      "rng": 3066322605
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "player": 60,
+      "ai": 63,
+      "turn": "ai",
+      "turnScore": 9,
+      "die": 2,
+      "bust": false,
+      "round": 8,
+      "over": false,
+      "rng": 2670584965
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "player": 60,
+      "ai": 63,
+      "turn": "ai",
+      "turnScore": 13,
+      "die": 4,
+      "bust": false,
+      "round": 8,
+      "over": false,
+      "rng": 1410858555
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "player": 60,
+      "ai": 63,
+      "turn": "ai",
+      "turnScore": 15,
+      "die": 2,
+      "bust": false,
+      "round": 8,
+      "over": false,
+      "rng": 3519656371
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "player": 60,
+      "ai": 63,
+      "turn": "player",
+      "turnScore": 0,
+      "die": 1,
+      "bust": true,
+      "round": 9,
+      "over": false,
+      "rng": 403434444
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 60,
+      "ai": 63,
+      "turn": "player",
+      "turnScore": 2,
+      "die": 2,
+      "bust": false,
+      "round": 9,
+      "over": false,
+      "rng": 3409541077
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 60,
+      "ai": 63,
+      "turn": "ai",
+      "turnScore": 0,
+      "die": 1,
+      "bust": true,
+      "round": 9,
+      "over": false,
+      "rng": 1572275124
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "player": 60,
+      "ai": 63,
+      "turn": "ai",
+      "turnScore": 5,
+      "die": 5,
+      "bust": false,
+      "round": 9,
+      "over": false,
+      "rng": 100300756
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "player": 60,
+      "ai": 63,
+      "turn": "ai",
+      "turnScore": 10,
+      "die": 5,
+      "bust": false,
+      "round": 9,
+      "over": false,
+      "rng": 723163348
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "player": 60,
+      "ai": 63,
+      "turn": "ai",
+      "turnScore": 13,
+      "die": 3,
+      "bust": false,
+      "round": 9,
+      "over": false,
+      "rng": 2013576788
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "player": 60,
+      "ai": 63,
+      "turn": "ai",
+      "turnScore": 15,
+      "die": 2,
+      "bust": false,
+      "round": 9,
+      "over": false,
+      "rng": 369590227
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "player": 60,
+      "ai": 63,
+      "turn": "ai",
+      "turnScore": 19,
+      "die": 4,
+      "bust": false,
+      "round": 9,
+      "over": false,
+      "rng": 3327198861
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "player": 60,
+      "ai": 63,
+      "turn": "ai",
+      "turnScore": 25,
+      "die": 6,
+      "bust": false,
+      "round": 9,
+      "over": false,
+      "rng": 916089965
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "player": 60,
+      "ai": 88,
+      "turn": "player",
+      "turnScore": 0,
+      "die": 6,
+      "bust": false,
+      "round": 10,
+      "over": false,
+      "rng": 916089965
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 60,
+      "ai": 88,
+      "turn": "ai",
+      "turnScore": 0,
+      "die": 1,
+      "bust": true,
+      "round": 10,
+      "over": false,
+      "rng": 434752806
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "player": 60,
+      "ai": 88,
+      "turn": "player",
+      "turnScore": 0,
+      "die": 1,
+      "bust": true,
+      "round": 11,
+      "over": false,
+      "rng": 703511808
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 60,
+      "ai": 88,
+      "turn": "player",
+      "turnScore": 2,
+      "die": 2,
+      "bust": false,
+      "round": 11,
+      "over": false,
+      "rng": 932611783
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 60,
+      "ai": 88,
+      "turn": "ai",
+      "turnScore": 0,
+      "die": 1,
+      "bust": true,
+      "round": 11,
+      "over": false,
+      "rng": 244103520
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "player": 60,
+      "ai": 88,
+      "turn": "player",
+      "turnScore": 0,
+      "die": 1,
+      "bust": true,
+      "round": 12,
+      "over": false,
+      "rng": 2914927536
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 60,
+      "ai": 88,
+      "turn": "player",
+      "turnScore": 5,
+      "die": 5,
+      "bust": false,
+      "round": 12,
+      "over": false,
+      "rng": 3703987156
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 60,
+      "ai": 88,
+      "turn": "player",
+      "turnScore": 8,
+      "die": 3,
+      "bust": false,
+      "round": 12,
+      "over": false,
+      "rng": 3760640330
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "hold"
+     },
+     "state": {
+      "player": 68,
+      "ai": 88,
+      "turn": "ai",
+      "turnScore": 0,
+      "die": 3,
+      "bust": false,
+      "round": 12,
+      "over": false,
+      "rng": 3760640330
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "player": 68,
+      "ai": 88,
+      "turn": "ai",
+      "turnScore": 2,
+      "die": 2,
+      "bust": false,
+      "round": 12,
+      "over": false,
+      "rng": 2080245229
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "player": 68,
+      "ai": 88,
+      "turn": "ai",
+      "turnScore": 5,
+      "die": 3,
+      "bust": false,
+      "round": 12,
+      "over": false,
+      "rng": 3543986636
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "player": 68,
+      "ai": 88,
+      "turn": "player",
+      "turnScore": 0,
+      "die": 1,
+      "bust": true,
+      "round": 13,
+      "over": false,
+      "rng": 3987717774
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 68,
+      "ai": 88,
+      "turn": "player",
+      "turnScore": 4,
+      "die": 4,
+      "bust": false,
+      "round": 13,
+      "over": false,
+      "rng": 1437599121
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 68,
+      "ai": 88,
+      "turn": "player",
+      "turnScore": 9,
+      "die": 5,
+      "bust": false,
+      "round": 13,
+      "over": false,
+      "rng": 4114869520
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "hold"
+     },
+     "state": {
+      "player": 77,
+      "ai": 88,
+      "turn": "ai",
+      "turnScore": 0,
+      "die": 5,
+      "bust": false,
+      "round": 13,
+      "over": false,
+      "rng": 4114869520
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "player": 77,
+      "ai": 88,
+      "turn": "ai",
+      "turnScore": 5,
+      "die": 5,
+      "bust": false,
+      "round": 13,
+      "over": false,
+      "rng": 2496955744
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "player": 77,
+      "ai": 88,
+      "turn": "ai",
+      "turnScore": 10,
+      "die": 5,
+      "bust": false,
+      "round": 13,
+      "over": false,
+      "rng": 2338876636
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "player": 77,
+      "ai": 88,
+      "turn": "ai",
+      "turnScore": 14,
+      "die": 4,
+      "bust": false,
+      "round": 13,
+      "over": false,
+      "rng": 1485200133
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "player": 77,
+      "ai": 102,
+      "turn": "ai",
+      "turnScore": 0,
+      "die": 4,
+      "bust": false,
+      "round": 13,
+      "over": true,
+      "rng": 1485200133
+     }
+    }
+   ],
+   "result": {
+    "winner": "ai",
+    "stars": 0,
+    "score": 77,
+    "player": 77,
+    "ai": 102
+   }
+  },
+  {
+   "name": "round-limit-last-turn-level-3",
+   "config": {
+    "target": 100,
+    "maxRounds": 5,
+    "aiHoldAt": [
+     10,
+     15,
+     18,
+     20,
+     20
+    ],
+    "aiErrorPct": [
+     35,
+     20,
+     10,
+     5,
+     0
+    ],
+    "starMargins": [
+     40,
+     15
+    ]
+   },
+   "seed": 1,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 0,
+      "ai": 0,
+      "turn": "player",
+      "turnScore": 4,
+      "die": 4,
+      "bust": false,
+      "round": 1,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 0,
+      "ai": 0,
+      "turn": "player",
+      "turnScore": 6,
+      "die": 2,
+      "bust": false,
+      "round": 1,
+      "over": false,
+      "rng": 67634689
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 0,
+      "ai": 0,
+      "turn": "player",
+      "turnScore": 10,
+      "die": 4,
+      "bust": false,
+      "round": 1,
+      "over": false,
+      "rng": 2647435461
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 0,
+      "ai": 0,
+      "turn": "player",
+      "turnScore": 16,
+      "die": 6,
+      "bust": false,
+      "round": 1,
+      "over": false,
+      "rng": 307599695
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "hold"
+     },
+     "state": {
+      "player": 16,
+      "ai": 0,
+      "turn": "ai",
+      "turnScore": 0,
+      "die": 6,
+      "bust": false,
+      "round": 1,
+      "over": false,
+      "rng": 307599695
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 16,
+      "ai": 0,
+      "turn": "ai",
+      "turnScore": 6,
+      "die": 6,
+      "bust": false,
+      "round": 1,
+      "over": false,
+      "rng": 2398689233
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 16,
+      "ai": 0,
+      "turn": "ai",
+      "turnScore": 11,
+      "die": 5,
+      "bust": false,
+      "round": 1,
+      "over": false,
+      "rng": 745495504
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 16,
+      "ai": 0,
+      "turn": "ai",
+      "turnScore": 16,
+      "die": 5,
+      "bust": false,
+      "round": 1,
+      "over": false,
+      "rng": 632435482
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 16,
+      "ai": 0,
+      "turn": "player",
+      "turnScore": 0,
+      "die": 1,
+      "bust": true,
+      "round": 2,
+      "over": false,
+      "rng": 435756210
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 16,
+      "ai": 0,
+      "turn": "player",
+      "turnScore": 6,
+      "die": 6,
+      "bust": false,
+      "round": 2,
+      "over": false,
+      "rng": 2005365029
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 16,
+      "ai": 0,
+      "turn": "player",
+      "turnScore": 11,
+      "die": 5,
+      "bust": false,
+      "round": 2,
+      "over": false,
+      "rng": 2916098932
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 16,
+      "ai": 0,
+      "turn": "player",
+      "turnScore": 15,
+      "die": 4,
+      "bust": false,
+      "round": 2,
+      "over": false,
+      "rng": 2657092299
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "hold"
+     },
+     "state": {
+      "player": 31,
+      "ai": 0,
+      "turn": "ai",
+      "turnScore": 0,
+      "die": 4,
+      "bust": false,
+      "round": 2,
+      "over": false,
+      "rng": 2657092299
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 31,
+      "ai": 0,
+      "turn": "ai",
+      "turnScore": 6,
+      "die": 6,
+      "bust": false,
+      "round": 2,
+      "over": false,
+      "rng": 1495045943
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 31,
+      "ai": 0,
+      "turn": "ai",
+      "turnScore": 11,
+      "die": 5,
+      "bust": false,
+      "round": 2,
+      "over": false,
+      "rng": 3031976842
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 31,
+      "ai": 0,
+      "turn": "ai",
+      "turnScore": 14,
+      "die": 3,
+      "bust": false,
+      "round": 2,
+      "over": false,
+      "rng": 82049198
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 31,
+      "ai": 0,
+      "turn": "ai",
+      "turnScore": 20,
+      "die": 6,
+      "bust": false,
+      "round": 2,
+      "over": false,
+      "rng": 87470069
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 31,
+      "ai": 20,
+      "turn": "player",
+      "turnScore": 0,
+      "die": 6,
+      "bust": false,
+      "round": 3,
+      "over": false,
+      "rng": 87470069
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 31,
+      "ai": 20,
+      "turn": "player",
+      "turnScore": 4,
+      "die": 4,
+      "bust": false,
+      "round": 3,
+      "over": false,
+      "rng": 3385103793
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 31,
+      "ai": 20,
+      "turn": "player",
+      "turnScore": 9,
+      "die": 5,
+      "bust": false,
+      "round": 3,
+      "over": false,
+      "rng": 891394312
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 31,
+      "ai": 20,
+      "turn": "ai",
+      "turnScore": 0,
+      "die": 1,
+      "bust": true,
+      "round": 3,
+      "over": false,
+      "rng": 3323190024
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 31,
+      "ai": 20,
+      "turn": "ai",
+      "turnScore": 4,
+      "die": 4,
+      "bust": false,
+      "round": 3,
+      "over": false,
+      "rng": 321008529
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 31,
+      "ai": 20,
+      "turn": "ai",
+      "turnScore": 6,
+      "die": 2,
+      "bust": false,
+      "round": 3,
+      "over": false,
+      "rng": 4283899417
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 31,
+      "ai": 20,
+      "turn": "ai",
+      "turnScore": 12,
+      "die": 6,
+      "bust": false,
+      "round": 3,
+      "over": false,
+      "rng": 2383559219
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 31,
+      "ai": 20,
+      "turn": "ai",
+      "turnScore": 18,
+      "die": 6,
+      "bust": false,
+      "round": 3,
+      "over": false,
+      "rng": 3822316985
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 31,
+      "ai": 38,
+      "turn": "player",
+      "turnScore": 0,
+      "die": 6,
+      "bust": false,
+      "round": 4,
+      "over": false,
+      "rng": 3822316985
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 31,
+      "ai": 38,
+      "turn": "player",
+      "turnScore": 2,
+      "die": 2,
+      "bust": false,
+      "round": 4,
+      "over": false,
+      "rng": 1391776747
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 31,
+      "ai": 38,
+      "turn": "player",
+      "turnScore": 8,
+      "die": 6,
+      "bust": false,
+      "round": 4,
+      "over": false,
+      "rng": 3652395599
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 31,
+      "ai": 38,
+      "turn": "ai",
+      "turnScore": 0,
+      "die": 1,
+      "bust": true,
+      "round": 4,
+      "over": false,
+      "rng": 44632818
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 31,
+      "ai": 38,
+      "turn": "ai",
+      "turnScore": 2,
+      "die": 2,
+      "bust": false,
+      "round": 4,
+      "over": false,
+      "rng": 1562130985
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 31,
+      "ai": 38,
+      "turn": "ai",
+      "turnScore": 4,
+      "die": 2,
+      "bust": false,
+      "round": 4,
+      "over": false,
+      "rng": 2440533925
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 31,
+      "ai": 38,
+      "turn": "ai",
+      "turnScore": 9,
+      "die": 5,
+      "bust": false,
+      "round": 4,
+      "over": false,
+      "rng": 333695716
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 31,
+      "ai": 38,
+      "turn": "ai",
+      "turnScore": 11,
+      "die": 2,
+      "bust": false,
+      "round": 4,
+      "over": false,
+      "rng": 1028688091
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 31,
+      "ai": 49,
+      "turn": "player",
+      "turnScore": 0,
+      "die": 2,
+      "bust": false,
+      "round": 5,
+      "over": false,
+      "rng": 1028688091
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 31,
+      "ai": 49,
+      "turn": "ai",
+      "turnScore": 0,
+      "die": 1,
+      "bust": true,
+      "round": 5,
+      "over": false,
+      "rng": 2771657022
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 31,
+      "ai": 49,
+      "turn": "ai",
+      "turnScore": 6,
+      "die": 6,
+      "bust": false,
+      "round": 5,
+      "over": false,
+      "rng": 57526103
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "player": 31,
+      "ai": 55,
+      "turn": "player",
+      "turnScore": 0,
+      "die": 6,
+      "bust": false,
+      "round": 6,
+      "over": true,
+      "rng": 57526103
+     }
+    }
+   ],
+   "result": {
+    "winner": "ai",
+    "stars": 0,
+    "score": 31,
+    "player": 31,
+    "ai": 55
+   }
+  },
+  {
+   "name": "round-limit-tie-draw",
+   "config": {
+    "target": 100,
+    "maxRounds": 3,
+    "aiHoldAt": [
+     10,
+     15,
+     18,
+     20,
+     20
+    ],
+    "aiErrorPct": [
+     35,
+     20,
+     10,
+     5,
+     0
+    ],
+    "starMargins": [
+     40,
+     15
+    ]
+   },
+   "seed": 55,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 0,
+      "ai": 0,
+      "turn": "player",
+      "turnScore": 5,
+      "die": 5,
+      "bust": false,
+      "round": 1,
+      "over": false,
+      "rng": 14345908
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 0,
+      "ai": 0,
+      "turn": "ai",
+      "turnScore": 0,
+      "die": 1,
+      "bust": true,
+      "round": 1,
+      "over": false,
+      "rng": 3716505330
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "player": 0,
+      "ai": 0,
+      "turn": "ai",
+      "turnScore": 6,
+      "die": 6,
+      "bust": false,
+      "round": 1,
+      "over": false,
+      "rng": 3175063103
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "player": 0,
+      "ai": 0,
+      "turn": "ai",
+      "turnScore": 12,
+      "die": 6,
+      "bust": false,
+      "round": 1,
+      "over": false,
+      "rng": 2448650531
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "player": 0,
+      "ai": 0,
+      "turn": "ai",
+      "turnScore": 15,
+      "die": 3,
+      "bust": false,
+      "round": 1,
+      "over": false,
+      "rng": 87734216
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "player": 0,
+      "ai": 15,
+      "turn": "player",
+      "turnScore": 0,
+      "die": 3,
+      "bust": false,
+      "round": 2,
+      "over": false,
+      "rng": 87734216
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 0,
+      "ai": 15,
+      "turn": "player",
+      "turnScore": 2,
+      "die": 2,
+      "bust": false,
+      "round": 2,
+      "over": false,
+      "rng": 732977929
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 0,
+      "ai": 15,
+      "turn": "player",
+      "turnScore": 4,
+      "die": 2,
+      "bust": false,
+      "round": 2,
+      "over": false,
+      "rng": 989595457
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 0,
+      "ai": 15,
+      "turn": "player",
+      "turnScore": 10,
+      "die": 6,
+      "bust": false,
+      "round": 2,
+      "over": false,
+      "rng": 4170920747
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "hold"
+     },
+     "state": {
+      "player": 10,
+      "ai": 15,
+      "turn": "ai",
+      "turnScore": 0,
+      "die": 6,
+      "bust": false,
+      "round": 2,
+      "over": false,
+      "rng": 4170920747
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "player": 10,
+      "ai": 15,
+      "turn": "ai",
+      "turnScore": 3,
+      "die": 3,
+      "bust": false,
+      "round": 2,
+      "over": false,
+      "rng": 1094555348
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "player": 10,
+      "ai": 15,
+      "turn": "ai",
+      "turnScore": 9,
+      "die": 6,
+      "bust": false,
+      "round": 2,
+      "over": false,
+      "rng": 2399833031
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "player": 10,
+      "ai": 15,
+      "turn": "ai",
+      "turnScore": 14,
+      "die": 5,
+      "bust": false,
+      "round": 2,
+      "over": false,
+      "rng": 271751998
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "player": 10,
+      "ai": 15,
+      "turn": "player",
+      "turnScore": 0,
+      "die": 1,
+      "bust": true,
+      "round": 3,
+      "over": false,
+      "rng": 704260116
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 10,
+      "ai": 15,
+      "turn": "player",
+      "turnScore": 3,
+      "die": 3,
+      "bust": false,
+      "round": 3,
+      "over": false,
+      "rng": 4092285800
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 10,
+      "ai": 15,
+      "turn": "player",
+      "turnScore": 7,
+      "die": 4,
+      "bust": false,
+      "round": 3,
+      "over": false,
+      "rng": 2839931595
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 10,
+      "ai": 15,
+      "turn": "player",
+      "turnScore": 9,
+      "die": 2,
+      "bust": false,
+      "round": 3,
+      "over": false,
+      "rng": 2542573669
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 10,
+      "ai": 15,
+      "turn": "player",
+      "turnScore": 15,
+      "die": 6,
+      "bust": false,
+      "round": 3,
+      "over": false,
+      "rng": 2491907717
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "hold"
+     },
+     "state": {
+      "player": 25,
+      "ai": 15,
+      "turn": "ai",
+      "turnScore": 0,
+      "die": 6,
+      "bust": false,
+      "round": 3,
+      "over": false,
+      "rng": 2491907717
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "player": 25,
+      "ai": 15,
+      "turn": "ai",
+      "turnScore": 3,
+      "die": 3,
+      "bust": false,
+      "round": 3,
+      "over": false,
+      "rng": 296453870
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "player": 25,
+      "ai": 15,
+      "turn": "ai",
+      "turnScore": 7,
+      "die": 4,
+      "bust": false,
+      "round": 3,
+      "over": false,
+      "rng": 1337507061
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "player": 25,
+      "ai": 15,
+      "turn": "ai",
+      "turnScore": 10,
+      "die": 3,
+      "bust": false,
+      "round": 3,
+      "over": false,
+      "rng": 1558195238
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "player": 25,
+      "ai": 25,
+      "turn": "player",
+      "turnScore": 0,
+      "die": 3,
+      "bust": false,
+      "round": 4,
+      "over": true,
+      "rng": 1558195238
+     }
+    }
+   ],
+   "result": {
+    "winner": "draw",
+    "stars": 0,
+    "score": 25,
+    "player": 25,
+    "ai": 25
+   }
+  },
+  {
+   "name": "timeout-mid-game",
+   "config": {
+    "target": 100,
+    "maxRounds": 15,
+    "aiHoldAt": [
+     10,
+     15,
+     18,
+     20,
+     20
+    ],
+    "aiErrorPct": [
+     35,
+     20,
+     10,
+     5,
+     0
+    ],
+    "starMargins": [
+     40,
+     15
+    ]
+   },
+   "seed": 1,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 0,
+      "ai": 0,
+      "turn": "player",
+      "turnScore": 4,
+      "die": 4,
+      "bust": false,
+      "round": 1,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 0,
+      "ai": 0,
+      "turn": "player",
+      "turnScore": 6,
+      "die": 2,
+      "bust": false,
+      "round": 1,
+      "over": false,
+      "rng": 67634689
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 0,
+      "ai": 0,
+      "turn": "player",
+      "turnScore": 10,
+      "die": 4,
+      "bust": false,
+      "round": 1,
+      "over": false,
+      "rng": 2647435461
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 0,
+      "ai": 0,
+      "turn": "player",
+      "turnScore": 16,
+      "die": 6,
+      "bust": false,
+      "round": 1,
+      "over": false,
+      "rng": 307599695
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "hold"
+     },
+     "state": {
+      "player": 16,
+      "ai": 0,
+      "turn": "ai",
+      "turnScore": 0,
+      "die": 6,
+      "bust": false,
+      "round": 1,
+      "over": false,
+      "rng": 307599695
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "player": 16,
+      "ai": 0,
+      "turn": "ai",
+      "turnScore": 6,
+      "die": 6,
+      "bust": false,
+      "round": 1,
+      "over": false,
+      "rng": 2398689233
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "player": 16,
+      "ai": 0,
+      "turn": "ai",
+      "turnScore": 11,
+      "die": 5,
+      "bust": false,
+      "round": 1,
+      "over": false,
+      "rng": 745495504
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "player": 16,
+      "ai": 0,
+      "turn": "ai",
+      "turnScore": 16,
+      "die": 5,
+      "bust": false,
+      "round": 1,
+      "over": false,
+      "rng": 632435482
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "player": 16,
+      "ai": 0,
+      "turn": "player",
+      "turnScore": 0,
+      "die": 1,
+      "bust": true,
+      "round": 2,
+      "over": false,
+      "rng": 435756210
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 16,
+      "ai": 0,
+      "turn": "player",
+      "turnScore": 6,
+      "die": 6,
+      "bust": false,
+      "round": 2,
+      "over": false,
+      "rng": 2005365029
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 16,
+      "ai": 0,
+      "turn": "player",
+      "turnScore": 11,
+      "die": 5,
+      "bust": false,
+      "round": 2,
+      "over": false,
+      "rng": 2916098932
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 16,
+      "ai": 0,
+      "turn": "player",
+      "turnScore": 15,
+      "die": 4,
+      "bust": false,
+      "round": 2,
+      "over": false,
+      "rng": 2657092299
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "hold"
+     },
+     "state": {
+      "player": 31,
+      "ai": 0,
+      "turn": "ai",
+      "turnScore": 0,
+      "die": 4,
+      "bust": false,
+      "round": 2,
+      "over": false,
+      "rng": 2657092299
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "player": 31,
+      "ai": 0,
+      "turn": "ai",
+      "turnScore": 6,
+      "die": 6,
+      "bust": false,
+      "round": 2,
+      "over": false,
+      "rng": 1495045943
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "player": 31,
+      "ai": 0,
+      "turn": "ai",
+      "turnScore": 11,
+      "die": 5,
+      "bust": false,
+      "round": 2,
+      "over": false,
+      "rng": 3031976842
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "player": 31,
+      "ai": 0,
+      "turn": "ai",
+      "turnScore": 14,
+      "die": 3,
+      "bust": false,
+      "round": 2,
+      "over": false,
+      "rng": 82049198
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "player": 31,
+      "ai": 0,
+      "turn": "ai",
+      "turnScore": 20,
+      "die": 6,
+      "bust": false,
+      "round": 2,
+      "over": false,
+      "rng": 87470069
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "player": 31,
+      "ai": 20,
+      "turn": "player",
+      "turnScore": 0,
+      "die": 6,
+      "bust": false,
+      "round": 3,
+      "over": false,
+      "rng": 87470069
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 31,
+      "ai": 20,
+      "turn": "player",
+      "turnScore": 4,
+      "die": 4,
+      "bust": false,
+      "round": 3,
+      "over": false,
+      "rng": 3385103793
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll"
+     },
+     "state": {
+      "player": 31,
+      "ai": 20,
+      "turn": "player",
+      "turnScore": 9,
+      "die": 5,
+      "bust": false,
+      "round": 3,
+      "over": false,
+      "rng": 891394312
+     }
+    },
+    {
+     "action": {
+      "by": "timeout"
+     },
+     "state": {
+      "player": 31,
+      "ai": 20,
+      "turn": "player",
+      "turnScore": 9,
+      "die": 5,
+      "bust": false,
+      "round": 3,
+      "over": true,
+      "rng": 891394312
+     }
+    }
+   ],
+   "result": {
+    "winner": "player",
+    "stars": 1,
+    "score": 31,
+    "player": 31,
+    "ai": 20
+   }
+  }
+ ]
+}
