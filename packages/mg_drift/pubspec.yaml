@@ -1,0 +1,20 @@
+name: mg_drift
+description: Drift zone (world minigame, engine drive), specs/minigames/drift.md. Pure Dart, no Flutter or dart:ui imports.
+version: 0.1.0
+publish_to: none
+resolution: workspace
+
+environment:
+  sdk: ^3.12.2
+  flutter: ">=3.44.0"
+
+dependencies:
+  rules_core:
+    path: ../rules_core
+  shared_gen:
+    path: ../shared_gen
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0

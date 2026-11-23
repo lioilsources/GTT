@@ -21,7 +21,7 @@ void main() {
         ),
       ),
     );
-    expect(find.text('Drag back from the ball to aim; longer means harder.'), findsOneWidget);
+    expect(find.text(tr('en', MessageKey.minigolfRules1)), findsOneWidget);
     await tester.tap(find.text('Next'));
     await tester.pump();
     await tester.tap(find.text('Next'));

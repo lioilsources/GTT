@@ -5,6 +5,7 @@ import 'package:mg_cihly/mg_cihly.dart';
 import 'package:mg_ctyri/mg_ctyri.dart';
 import 'package:mg_dama/mg_dama.dart';
 import 'package:mg_desetitisic/mg_desetitisic.dart';
+import 'package:mg_doubledutch/mg_doubledutch.dart';
 import 'package:mg_had/mg_had.dart';
 import 'package:mg_hokej/mg_hokej.dart';
 import 'package:mg_kostky/mg_kostky.dart';
@@ -26,10 +27,12 @@ import 'package:mg_reversi/mg_reversi.dart';
 import 'package:mg_sipky/mg_sipky.dart';
 import 'package:mg_sirky/mg_sirky.dart';
 import 'package:mg_srdce/mg_srdce.dart';
+import 'package:mg_stickball/mg_stickball.dart';
 import 'package:mg_strelnice/mg_strelnice.dart';
 import 'package:shared_gen/shared_gen.dart';
 
 import '../taxi/taxi_hud.dart' show TaxiGame;
+import 'world_hud.dart' show WorldCardGame;
 
 /// Minigames this client implements; the Gallery greys out the rest.
 const Map<MinigameId, Minigame> minigames = {
@@ -66,4 +69,10 @@ const Map<MinigameId, Minigame> minigames = {
   MinigameId.hokej: HokejGame(),
   // World minigame: the Gallery card starts the shift in the city (specs/minigames/taxi.md).
   MinigameId.taxi: TaxiGame(),
+  // M2-S9 batch D: world minigames in the player's own car (specs/minigames/drift.md, sprint.md).
+  MinigameId.drift: WorldCardGame(MinigameId.drift, MessageKey.driftGallery, MessageKey.driftGalleryGo),
+  MinigameId.sprint: WorldCardGame(MinigameId.sprint, MessageKey.sprintGallery, MessageKey.sprintGalleryGo),
+  // NYC local games (specs/minigames/stickball.md, doubledutch.md).
+  MinigameId.stickball: StickballGame(),
+  MinigameId.doubledutch: DoubledutchGame(),
 };
