@@ -42,14 +42,32 @@ describe('piskvorky rules (specs/minigames/piskvorky.md)', () => {
     expect(attack(e, 15, 2, 'x')).toBe(100 + 1 + 1 + 1);
   });
 
-  it('defence weight decides between winning and blocking (spec formula as written)', () => {
+  it('the AI takes its own five before blocking, at every level (v2)', () => {
     const r = new PiskvorkyRules();
     let s = r.init({ ...pisk, aiErrorPct: [0, 0, 0, 0, 0] }, 1);
-    s = { ...s, turn: 'ai', board: boardWith(225, { 30: 'o', 31: 'o', 32: 'o', 33: 'o', 60: 'x', 61: 'x', 62: 'x', 63: 'x' }) };
-    // def 90 %: completing the own five (cell 34) scores highest.
-    expect(r.aiAction(s, 3, aiPrng(1))).toEqual({ by: 'ai', cell: 34 });
-    // def 110 %: blocking the player's five (cell 64) outweighs it.
-    expect(r.aiAction(s, 5, aiPrng(1))).toEqual({ by: 'ai', cell: 64 });
+    s = { ...s, turn: 'ai', board: boardWith(225, { 31: 'o', 32: 'o', 33: 'o', 34: 'o', 61: 'x', 62: 'x', 63: 'x', 64: 'x' }) };
+    // Own five at 30 or 35 (first in order: 30); the v1 formula at def 110 % chose a block (60 / 65).
+    for (const lv of [1, 3, 5]) expect(r.aiAction(s, lv, aiPrng(1))).toEqual({ by: 'ai', cell: 30 });
+  });
+
+  it('the AI blocks the player\'s five when it cannot win (v2)', () => {
+    const r = new PiskvorkyRules();
+    let s = r.init({ ...pisk, aiErrorPct: [0, 0, 0, 0, 0] }, 1);
+    s = { ...s, turn: 'ai', board: boardWith(225, { 31: 'o', 32: 'o', 33: 'o', 62: 'x', 63: 'x', 64: 'x', 65: 'x', 66: 'o' }) };
+    // No own five; x x x x is closed at 66, so the only block is 61.
+    for (const lv of [1, 5]) expect(r.aiAction(s, lv, aiPrng(1))).toEqual({ by: 'ai', cell: 61 });
+  });
+
+  it('an error move stays random even with a win in hand (v2)', () => {
+    const r = new PiskvorkyRules();
+    let s = r.init({ ...pisk, aiErrorPct: [100, 100, 100, 100, 100] }, 1);
+    s = { ...s, turn: 'ai', board: boardWith(225, { 30: 'o', 31: 'o', 32: 'o', 33: 'o' }) };
+    const ai = aiPrng(1);
+    const ref = aiPrng(1);
+    ref.nextInt(100);
+    const cand = candidates(s.board, 15);
+    expect(r.aiAction(s, 5, ai)).toEqual({ by: 'ai', cell: cand[ref.nextInt(cand.length)] });
+    expect(ai.state).toBe(ref.state);
   });
 
   it('timeout is a draw with no stars', () => {

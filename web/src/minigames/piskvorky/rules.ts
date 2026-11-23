@@ -2,7 +2,7 @@ import { Prng } from '../../rules/prng';
 import type { TuningMinigamesPiskvorky } from '../../gen/tuning';
 import { IllegalAction, type Rules, type RulesResult } from '../rules';
 
-/** specs/minigames/piskvorky.md, version 1. */
+/** specs/minigames/piskvorky.md, version 2. */
 export interface PiskvorkyConfig {
   size: number;
   aiErrorPct: number[];
@@ -93,6 +93,12 @@ export function attack(board: string, size: number, cell: number, m: string): nu
   return v;
 }
 
+/** Whether a mark of `m` on `cell` makes a run of five or more in some direction (v2 steps 2 and 3). */
+export function makesFive(board: string, size: number, cell: number, m: string): boolean {
+  for (let d = 0; d < 4; d++) if (runAt(board, size, cell, m, d).len >= 5) return true;
+  return false;
+}
+
 /** AI candidates: empty cells within Chebyshev distance 2 of a mark, ascending; empty board → centre. */
 export function candidates(board: string, size: number): number[] {
   const out: number[] = [];
@@ -120,7 +126,7 @@ export function candidates(board: string, size: number): number[] {
 
 export class PiskvorkyRules implements Rules<PiskvorkyState, PiskvorkyAction, PiskvorkyResult, PiskvorkyConfig> {
   readonly id = 'piskvorky';
-  readonly specVersion = 1;
+  readonly specVersion = 2;
   private cfg: PiskvorkyConfig | null = null;
 
   init(config: PiskvorkyConfig, seed: number): PiskvorkyState {
@@ -169,6 +175,11 @@ export class PiskvorkyRules implements Rules<PiskvorkyState, PiskvorkyAction, Pi
     const r = ai.nextInt(100);
     if (r < err) return { by: s.turn, cell: cand[ai.nextInt(cand.length)]! };
     const own = mark(s.turn), opp = mark(other(s.turn));
+    // v2: take an own five first, else block the player's five (first candidate in order).
+    const win = cand.find((p) => makesFive(s.board, c.size, p, own));
+    if (win !== undefined) return { by: s.turn, cell: win };
+    const block = cand.find((p) => makesFive(s.board, c.size, p, opp));
+    if (block !== undefined) return { by: s.turn, cell: block };
     let best = -1, bestCell = cand[0]!;
     for (const p of cand) {
       const v = attack(s.board, c.size, p, own) + Math.trunc((attack(s.board, c.size, p, opp) * def) / 100);
