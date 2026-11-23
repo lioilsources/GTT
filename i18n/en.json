@@ -1268,5 +1268,13 @@
   "testDriveOver": "Test drive over, back in your own car",
   "testDriveNoTaxi": "No taxi shift during a test drive",
   "debugCash": "+{amount}",
-  "@debugCash": {"placeholders": {"amount": {"type": "int"}}}
+  "@debugCash": {"placeholders": {"amount": {"type": "int"}}},
+  "loadingProgress": "Downloading {city}… {pct} %",
+  "@loadingProgress": {"placeholders": {"city": {"type": "String"}, "pct": {"type": "int"}}},
+  "introTitle": "Welcome to Metropole",
+  "introLine1": "Drag your thumb left and right to steer.",
+  "introLine2": "Drag down to brake, up to boost. A second finger is the handbrake.",
+  "introLine3": "The phone at the top right: a feed of minigames, the map and trips to other cities.",
+  "introCity": "Where do you want to drive?",
+  "introGo": "Let's go"
 }

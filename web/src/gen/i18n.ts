@@ -696,6 +696,13 @@ export type MessageKey =
   | "testDriveOver"
   | "testDriveNoTaxi"
   | "debugCash"
+  | "loadingProgress"
+  | "introTitle"
+  | "introLine1"
+  | "introLine2"
+  | "introLine3"
+  | "introCity"
+  | "introGo"
 ;
 
 export const messages: Record<Locale, Record<MessageKey, string>> = {
@@ -1392,6 +1399,13 @@ export const messages: Record<Locale, Record<MessageKey, string>> = {
     testDriveOver: "Zkušební jízda skončila, sedíš zase ve svém autě",
     testDriveNoTaxi: "Při zkušební jízdě taxi směnu nevezmeš",
     debugCash: "+{amount}",
+    loadingProgress: "Stahuji {city}… {pct} %",
+    introTitle: "Vítej v Metropoli",
+    introLine1: "Táhni palcem doleva a doprava – zatáčíš.",
+    introLine2: "Táhni dolů – brzdíš, nahoru – přidáš. Druhý prst je ruční brzda.",
+    introLine3: "Telefon vpravo nahoře: feed s minihrami, mapa a cesty do jiných měst.",
+    introCity: "Kde chceš jezdit?",
+    introGo: "Jedeme",
   },
   "en": {
     appTitle: "Metropole",
@@ -2086,6 +2100,13 @@ export const messages: Record<Locale, Record<MessageKey, string>> = {
     testDriveOver: "Test drive over, back in your own car",
     testDriveNoTaxi: "No taxi shift during a test drive",
     debugCash: "+{amount}",
+    loadingProgress: "Downloading {city}… {pct} %",
+    introTitle: "Welcome to Metropole",
+    introLine1: "Drag your thumb left and right to steer.",
+    introLine2: "Drag down to brake, up to boost. A second finger is the handbrake.",
+    introLine3: "The phone at the top right: a feed of minigames, the map and trips to other cities.",
+    introCity: "Where do you want to drive?",
+    introGo: "Let's go",
   },
 };
 
