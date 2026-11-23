@@ -1,0 +1,14 @@
+{
+  "module": "nature",
+  "name": "water_fall",
+  "car": "sedan_regent",
+  "inputs": [{"t": 0, "throttle": 0, "steer": 0, "brake": 0}],
+  "expect": {
+    "falls": {"value": 1, "tol": 0},
+    "entry_y_m": {"value": 30.342, "tol": 0.05},
+    "sink_s": {"value": 1.2, "tol": 0.05},
+    "respawn_node": {"value": 1, "tol": 0},
+    "respawn_heading_deg": {"value": 180, "tol": 0.05},
+    "rescues": {"value": 0, "tol": 0}
+  }
+}

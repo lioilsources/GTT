@@ -1,0 +1,10 @@
+{
+  "module": "nature",
+  "name": "brake_grass",
+  "car": "sedan_regent",
+  "inputs": [{"t": 0, "throttle": 0, "steer": 0, "brake": 1}],
+  "expect": {
+    "brake_m": {"value": 15.94, "tol": 0.05},
+    "brake_s": {"value": 1.567, "tol": 0.05}
+  }
+}
