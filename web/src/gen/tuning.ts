@@ -78,7 +78,7 @@ export class Tuning {
   readonly carAnchor: TuningCarAnchor;
   readonly extrusion: TuningExtrusion;
   chunkM: number;
-  /** cruise = no-input pace; 14.0 with specs/drive.md v2 (flipped in shared/cruise-v2-scenarios) */
+  /** cruise = no-input city pace (specs/drive.md v2); boost asks for top */
   readonly speedMps: TuningSpeedMps;
   /** citypack: road corridors and building masses. */
   readonly roads: TuningRoads;
@@ -400,7 +400,7 @@ export class TuningExtrusion {
   static readonly keys = ['k', 'knee_m', 'exp', 'max_scale'] as const;
 }
 
-/** cruise = no-input pace; 14.0 with specs/drive.md v2 (flipped in shared/cruise-v2-scenarios) */
+/** cruise = no-input city pace (specs/drive.md v2); boost asks for top */
 export class TuningSpeedMps {
   cruise: number;
   topDefault: number;

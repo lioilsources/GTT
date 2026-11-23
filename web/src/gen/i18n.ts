@@ -704,6 +704,8 @@ export type MessageKey =
   | "introLine3"
   | "introCity"
   | "introGo"
+  | "ogTitle"
+  | "ogDescription"
 ;
 
 export const messages: Record<Locale, Record<MessageKey, string>> = {
@@ -1408,6 +1410,8 @@ export const messages: Record<Locale, Record<MessageKey, string>> = {
     introLine3: "Telefon vpravo nahoře: feed s minihrami, mapa a cesty do jiných měst.",
     introCity: "Kde chceš jezdit?",
     introGo: "Jedeme",
+    ogTitle: "Metropole (GTT) – volná jízda po skutečných metropolích",
+    ogDescription: "New York, Praha a Tokio v prohlížeči. Minihry z feedu, žádné násilí.",
   },
   "en": {
     appTitle: "Metropole",
@@ -2110,6 +2114,8 @@ export const messages: Record<Locale, Record<MessageKey, string>> = {
     introLine3: "The phone at the top right: a feed of minigames, the map and trips to other cities.",
     introCity: "Where do you want to drive?",
     introGo: "Let's go",
+    ogTitle: "Metropole (GTT) – free driving through real cities",
+    ogDescription: "New York, Prague and Tokyo in your browser. Minigames from a feed, no violence.",
   },
 };
 

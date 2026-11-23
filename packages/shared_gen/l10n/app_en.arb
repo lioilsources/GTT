@@ -826,5 +826,7 @@
   "introLine2": "Drag down to brake, up to boost. A second finger is the handbrake.",
   "introLine3": "The phone at the top right: a feed of minigames, the map and trips to other cities.",
   "introCity": "Where do you want to drive?",
-  "introGo": "Let's go"
+  "introGo": "Let's go",
+  "ogTitle": "Metropole (GTT) – free driving through real cities",
+  "ogDescription": "New York, Prague and Tokyo in your browser. Minigames from a feed, no violence."
 }

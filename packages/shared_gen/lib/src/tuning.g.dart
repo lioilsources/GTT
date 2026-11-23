@@ -140,7 +140,7 @@ class Tuning {
 
   int chunkM;
 
-  /// cruise = no-input pace; 14.0 with specs/drive.md v2 (flipped in shared/cruise-v2-scenarios)
+  /// cruise = no-input city pace (specs/drive.md v2); boost asks for top
   final TuningSpeedMps speedMps;
 
   /// citypack: road corridors and building masses.
@@ -415,7 +415,7 @@ class TuningExtrusion {
   static const keys = ['k', 'knee_m', 'exp', 'max_scale'];
 }
 
-/// cruise = no-input pace; 14.0 with specs/drive.md v2 (flipped in shared/cruise-v2-scenarios)
+/// cruise = no-input city pace (specs/drive.md v2); boost asks for top
 class TuningSpeedMps {
   TuningSpeedMps._(_R r)
       : cruise = r.d('cruise'),

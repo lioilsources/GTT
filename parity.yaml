@@ -29,8 +29,8 @@
   spec: specs/drive.md@2
   scenarios: scenarios/drive
   lead: web
-  flutter: todo
-  web: todo
+  flutter: done
+  web: done
 - id: F-005
   name: M0 controls A/B/C
   level: P1
@@ -620,7 +620,7 @@
   scenarios: scenarios/terrain
   lead: web
   flutter: todo
-  web: todo
+  web: done
 
 - id: F-071
   name: "Reliéf v pohledu shora: promítání, stínování, šipky, HUD (M5-S6)"
