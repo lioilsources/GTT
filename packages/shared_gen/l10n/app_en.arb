@@ -788,5 +788,16 @@
   "ddCombo": "{n} combo",
   "@ddCombo": {"placeholders":{"n":{"type":"int"}}},
   "ddTrips": "Trips {n}/{max}",
-  "@ddTrips": {"placeholders":{"max":{"type":"int"},"n":{"type":"int"}}}
+  "@ddTrips": {"placeholders":{"max":{"type":"int"},"n":{"type":"int"}}},
+  "flowToRoad": "To the road",
+  "flowStuck10": "Stuck (10 min): {count}",
+  "@flowStuck10": {"placeholders":{"count":{"type":"int"}}},
+  "terrainGrade": "{pct} %",
+  "@terrainGrade": {"placeholders":{"pct":{"type":"int"}}},
+  "terrainAltitude": "{m} m a.s.l.",
+  "@terrainAltitude": {"placeholders":{"m":{"type":"int"}}},
+  "natureTow": "Your car sank. Tow: {fee}",
+  "@natureTow": {"placeholders":{"fee":{"type":"int"}}},
+  "cameraChase": "Chase camera",
+  "cameraTopdown": "Top-down camera"
 }

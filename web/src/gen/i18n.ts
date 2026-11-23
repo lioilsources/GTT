@@ -673,6 +673,13 @@ export type MessageKey =
   | "ddMiss"
   | "ddCombo"
   | "ddTrips"
+  | "flowToRoad"
+  | "flowStuck10"
+  | "terrainGrade"
+  | "terrainAltitude"
+  | "natureTow"
+  | "cameraChase"
+  | "cameraTopdown"
 ;
 
 export const messages: Record<Locale, Record<MessageKey, string>> = {
@@ -1346,6 +1353,13 @@ export const messages: Record<Locale, Record<MessageKey, string>> = {
     ddMiss: "Zakopnutí!",
     ddCombo: "{n} v řadě",
     ddTrips: "Zakopnutí {n}/{max}",
+    flowToRoad: "Na silnici",
+    flowStuck10: "Zaseknutí (10 min): {count}",
+    terrainGrade: "{pct} %",
+    terrainAltitude: "{m} m n. m.",
+    natureTow: "Auto se potopilo. Odtah: {fee}",
+    cameraChase: "Kamera za autem",
+    cameraTopdown: "Kamera shora",
   },
   "en": {
     appTitle: "Metropole",
@@ -2017,6 +2031,13 @@ export const messages: Record<Locale, Record<MessageKey, string>> = {
     ddMiss: "Trip!",
     ddCombo: "{n} combo",
     ddTrips: "Trips {n}/{max}",
+    flowToRoad: "To the road",
+    flowStuck10: "Stuck (10 min): {count}",
+    terrainGrade: "{pct} %",
+    terrainAltitude: "{m} m a.s.l.",
+    natureTow: "Your car sank. Tow: {fee}",
+    cameraChase: "Chase camera",
+    cameraTopdown: "Top-down camera",
   },
 };
 

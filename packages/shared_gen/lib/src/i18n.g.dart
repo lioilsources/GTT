@@ -674,6 +674,13 @@ enum MessageKey {
   ddMiss('ddMiss'),
   ddCombo('ddCombo'),
   ddTrips('ddTrips'),
+  flowToRoad('flowToRoad'),
+  flowStuck10('flowStuck10'),
+  terrainGrade('terrainGrade'),
+  terrainAltitude('terrainAltitude'),
+  natureTow('natureTow'),
+  cameraChase('cameraChase'),
+  cameraTopdown('cameraTopdown'),
   ;
 
   const MessageKey(this.key);
@@ -1353,6 +1360,13 @@ const Map<String, Map<String, String>> _messages = {
     'ddMiss': 'Zakopnutí!',
     'ddCombo': '{n} v řadě',
     'ddTrips': 'Zakopnutí {n}/{max}',
+    'flowToRoad': 'Na silnici',
+    'flowStuck10': 'Zaseknutí (10 min): {count}',
+    'terrainGrade': '{pct} %',
+    'terrainAltitude': '{m} m n. m.',
+    'natureTow': 'Auto se potopilo. Odtah: {fee}',
+    'cameraChase': 'Kamera za autem',
+    'cameraTopdown': 'Kamera shora',
   },
   'en': {
     'appTitle': 'Metropole',
@@ -2024,6 +2038,13 @@ const Map<String, Map<String, String>> _messages = {
     'ddMiss': 'Trip!',
     'ddCombo': '{n} combo',
     'ddTrips': 'Trips {n}/{max}',
+    'flowToRoad': 'To the road',
+    'flowStuck10': 'Stuck (10 min): {count}',
+    'terrainGrade': '{pct} %',
+    'terrainAltitude': '{m} m a.s.l.',
+    'natureTow': 'Your car sank. Tow: {fee}',
+    'cameraChase': 'Chase camera',
+    'cameraTopdown': 'Top-down camera',
   },
 };
 

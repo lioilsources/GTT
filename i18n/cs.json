@@ -667,5 +667,12 @@
   "ddOk": "Ujde",
   "ddMiss": "Zakopnutí!",
   "ddCombo": "{n} v řadě",
-  "ddTrips": "Zakopnutí {n}/{max}"
+  "ddTrips": "Zakopnutí {n}/{max}",
+  "flowToRoad": "Na silnici",
+  "flowStuck10": "Zaseknutí (10 min): {count}",
+  "terrainGrade": "{pct} %",
+  "terrainAltitude": "{m} m n. m.",
+  "natureTow": "Auto se potopilo. Odtah: {fee}",
+  "cameraChase": "Kamera za autem",
+  "cameraTopdown": "Kamera shora"
 }

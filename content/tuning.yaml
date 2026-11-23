@@ -85,6 +85,8 @@ streaming: {ahead: 3, behind: 1, side: 1, keep: 3, max_in_flight: 2, retry_s: 2.
 camera:
   heading_follow_rate: 5.5      # 1/s, exponential smoothing of the map rotation
   zoom_follow_rate: 1.8         # 1/s
+  topdown: {height_m: 250.0}    # specs/terrain.md: camera height above the smoothed ground (projection H)
+  chase: {distance_m: 55.0, height_m: 40.0, look_ahead_m: 25.0, fov_deg: 40.0}   # oblique view, web only (T2)
 
 # Tyre model and car handling (METROPOLE_PLAN 7.2). Per-car values live in content/cars/.
 drive:
@@ -929,3 +931,56 @@ garage:                         # tuning and cosmetics (specs/garage.md); colour
   look_price_smoke: 250
   glow_margin_m: 0.35         # underglow reaches this far past the car outline
   glow_day: 0.35              # underglow strength by day (full at night and in tunnels)
+
+# Terrain relief (specs/terrain.md, Prompts/02-METROPOLE_TERRAIN_PLAN.md). Defaults, tuned in T3.
+terrain:
+  exaggeration: 2.0             # game height = z0 + (real − z0) x this (K2)
+  grid_m: 8                     # terrain grid step in chunks (33 x 33 per 256 m chunk)
+  blend_m: 24                   # road-to-terrain blend distance
+  max_grade: {motorway: 0.08, trunk: 0.10, primary: 0.20, secondary: 0.20, tertiary: 0.28, alley: 0.33}
+  bridge: {clear_water_m: 15.0, clear_road_m: 6.0, max_grade: 0.07}
+  tunnel: {depth_water_m: 10.0, depth_land_m: 8.0, max_grade: 0.07}
+slope_physics:
+  gravity: 20.0                 # m/s² in game units
+  slope_force_scale: 0.6
+  suspension_travel: 0.5        # m the wheels follow the ground before the car flies
+  hard_landing: 10.0            # m/s landing speed counted as hard (speed x 0.85, camera shake)
+
+# Water and green (specs/nature.md, Prompts/03-METROPOLE_NATURE_PLAN.md + 04 forest decision).
+# Colours in design/tokens.json color.water and color.green.
+nature:
+  tree_sizes:                   # game metres, not scaled by car_scale
+    S: {crown_r: 4.0, height: 9.0}
+    M: {crown_r: 6.0, height: 14.0}
+    L: {crown_r: 8.0, height: 20.0}
+  trees_per_ha: {wood: 80, parkland: 35, garden: 40, cemetery: 25}
+  trees_per_chunk_max: 600
+  wood: {canopy_height_m: 14.0}   # lod ring only; the forest itself is single trees (FLOW F1)
+  shore_band_m: 6.0
+  trunk_radius_m: 0.8
+  grip: {asphalt: 1.0, dirt: 0.8, grass: 0.75, sand: 0.6}
+  crown_fade: {radius_m: 14.0, alpha: 0.35}
+  water_fall: {sink_s: 1.2}
+
+# Smooth driving: soft trees, wall slide, rescue (specs/flow.md, Prompts/04-METROPOLE_FLOW_PLAN.md).
+flow:
+  forest: {grip: 0.7, speed_factor: 0.6, crown_fade_radius_m: 22.0}
+  tree_hit:
+    speed_keep: 0.75            # medium and large tree
+    sapling_speed_keep: 0.9     # size S
+    min_speed_mps: 4.0          # a hit never drops the speed below this (if it was above)
+    push_mps: 8.0               # sideways push away from the trunk
+    yaw_kick_deg: 6.0
+    cooldown_s: 0.5
+  wall:
+    slide_angle_deg: 45.0       # below: slide along the wall, above: bounce
+    slide_speed_keep: 0.85
+    restitution: 0.15
+    friction: 0.05
+  rescue:
+    stuck_speed_mps: 1.0
+    stuck_time_s: 1.5
+    rewind_m: [8.0, 20.0]       # first and second attempt; the third moves to the road
+    button_after_s: 3.0
+  gap_close_m: 7.0              # citypack: building gaps and alleys narrower than this
+  stuck_limit_per_10min: 1      # acceptance P3

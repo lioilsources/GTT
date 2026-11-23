@@ -140,6 +140,18 @@
   --color-world-tunnel-shade: #00000099;
   --color-world-roadblock-a: #FF7A00;
   --color-world-roadblock-b: #FFFFFF;
+  --color-water-sea: #2F6FB0;
+  --color-water-river: #4A8BD0;
+  --color-water-lake: #6AA6DE;
+  --color-water-small: #9CC8EE;
+  --color-water-shore: #86BDEA;
+  --color-water-line: #2A5A8E;
+  --color-green-wood: #3F7D3A;
+  --color-green-parkland: #6FAF55;
+  --color-green-grass: #8CC46A;
+  --color-green-crown: #4E8F3F;
+  --color-green-trunk: #4A3A2C;
+  --color-green-sand: #E6D3A3;
   --color-facade-day-wall: #FFFFFF;
   --color-facade-day-glass-a: #7D8DA0;
   --color-facade-day-glass-b: #A6B4C4;
