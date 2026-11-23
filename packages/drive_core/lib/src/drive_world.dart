@@ -318,10 +318,13 @@ class DriveWorld {
     if (onWall != null) _walls(Vector2(_preVx, _preVy));
     (double, double)? rail;
     if (flying) {
-      // In the air the layer, the zone bit and the hit events stay out (specs/hop.md).
+      // In the air the layer, the zone bit and the hit events stay out (specs/hop.md); the edge is
+      // still tracked so the rails hold the car on a bridge deck or in a tunnel (v2).
       car.body.angularVelocity = 0;
+      layers.update(car.x, car.y);
       traffic?.postStep(car, airborne: true);
       trams?.postStep(car, airborne: true);
+      if (car.layer != 0) rail = _rails();
       _props(step);
       if (hop.step(step)) _land();
     } else {
@@ -455,7 +458,8 @@ class DriveWorld {
     _freeT = 0;
   }
 
-  /// Landing: the mask goes back by layer and zones; a car that lands inside a zone or right on its
+  /// Landing: the mask goes back by the layer of the tracked edge (deck rails and deck traffic on a
+  /// bridge, specs/hop.md v2) and zones; a car that lands inside a zone or right on its
   /// bollards keeps the zone bit off until it is clear (the same hold-off as driving out).
   void _land() {
     car.setAirborne(false);

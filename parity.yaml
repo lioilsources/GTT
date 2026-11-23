@@ -291,11 +291,10 @@
 - id: F-035
   name: Hop over traffic (Vega Roadster air tank, garage refill)
   level: P1
-  spec: specs/hop.md@1
+  spec: specs/hop.md@2
   lead: web
-  flutter: done
-  web: done
-  checks: {flutter: pass, web: pass}
+  flutter: todo
+  web: todo
 - id: F-036
   name: Wanted level 3 with a roadblock of two standing patrols
   level: P1

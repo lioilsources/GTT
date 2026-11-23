@@ -118,10 +118,10 @@ class Car {
   static int _mask(int layer, int zone) =>
       (layer == 0 ? catBuildings | catParked | zone : 0) | catTraffic | catTram;
 
-  /// Airborne in a hop (specs/hop.md): only buildings collide.
+  /// Airborne in a hop (specs/hop.md v2): only buildings collide, and only on the ground layer.
   bool airborne = false;
 
-  int get maskBits => airborne ? catBuildings : _mask(layer, zoneBits);
+  int get maskBits => airborne ? (layer == 0 ? catBuildings : 0) : _mask(layer, zoneBits);
 
   /// Switches the hop mask on take-off and landing.
   void setAirborne(bool v) {

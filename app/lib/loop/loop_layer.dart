@@ -66,7 +66,7 @@ class _LoopLayerState extends State<LoopLayer> {
   Widget build(BuildContext context) {
     final l = AppLocalizations.of(context);
     return ListenableBuilder(
-      listenable: Listenable.merge([loop, loop.playSpot, loop.soon, loop.outcome, loop.game.hud]),
+      listenable: Listenable.merge([loop, loop.playSpot, loop.soon, loop.noTaxi, loop.outcome, loop.game.hud]),
       builder: (context, _) {
         final o = loop.outcome.value;
         final spot = loop.playSpot.value;
@@ -96,6 +96,11 @@ class _LoopLayerState extends State<LoopLayer> {
                 Align(
                   alignment: const Alignment(0, 0.35),
                   child: _Pill(text: l.loopSoon(_mgName(soon)), color: const Color(Tokens.colorUiText)),
+                ),
+              if (loop.noTaxi.value)
+                Align(
+                  alignment: const Alignment(0, 0.35),
+                  child: _Pill(text: l.testDriveNoTaxi, color: const Color(Tokens.colorUiText)),
                 ),
               if (o != null)
                 Positioned.fill(

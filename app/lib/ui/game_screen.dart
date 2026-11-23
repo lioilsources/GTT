@@ -18,6 +18,7 @@ import '../game/metropole_game.dart';
 import '../game/pause.dart';
 import '../game/stuck_log.dart';
 import '../garage/garage_controller.dart';
+import '../garage/test_drive_hud.dart';
 import '../l10n/app_localizations.dart';
 import '../loop/loop_controller.dart';
 import '../loop/loop_layer.dart';
@@ -290,9 +291,11 @@ class _GameScreenState extends State<GameScreen> {
                 onPhone: phone.toggle,
                 onCarAction: (a) async {
                   if (a == CarAction.board) return game.boardCandidate();
+                  // Opening the garage ends a test drive: back in the own car (specs/testdrive.md).
+                  game.fleet.endTest();
                   await game.pauseOverlays.hold(
                     GameOverlay.garage,
-                    showGarage(context, game.fleet, shelf: shops.shelf, garage: garage),
+                    showGarage(context, game.fleet, shelf: shops.shelf, garage: garage, testBlocked: loop.inWorldGame),
                   );
                   garage.leave();
                 },
@@ -309,6 +312,7 @@ class _GameScreenState extends State<GameScreen> {
                   },
                   onBench: _hasBench ? game.startBench : null,
                   onResetSave: loop.resetSave,
+                  onDebugCash: loop.grantDebugCash,
                   weather: weather,
                 ),
                 onPassport: () => PassportScreen.open(
@@ -323,6 +327,7 @@ class _GameScreenState extends State<GameScreen> {
               PoliceHud(police: game.police),
               NavHud(phone: phone),
               TaxiHud(taxi: taxi),
+              TestDriveHud(game: game),
               DriftHud(drift: drift),
               SprintHud(sprint: sprint),
               PhoneLayer(phone: phone),
