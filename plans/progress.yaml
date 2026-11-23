@@ -228,7 +228,8 @@ items:
   - {id: L-S8, milestone: L, name: "náhled odkazu: og: a twitter: metadata", size: S, status: todo}
   - {id: L-S9, milestone: L, name: "demo záběr ?demo=roadster, web/scripts/demo.ts, og.png", size: M, status: todo}
   - {id: L-S10, milestone: L, name: "tramvaje plynule sledují kolej (test přes celou síť Prahy)", size: M, status: todo}
-  - {id: L-S11, milestone: L, name: "mosty a voda: na most jen z nájezdu, pod mostem po nábřeží, do vody pád", size: M, status: todo}
+  - {id: L-S11, milestone: L, name: "mosty a voda: na most jen z nájezdu, pod mostem po nábřeží, do vody pád", size: M, status: "čeká na Ol1na", started: 2026-11-23T10:15,
+     done: 2026-11-23T11:20, evidence: "specs/terrain.md v3 Konstrukce; W PR #247: web/test/bridges.test.ts – všechny mosty prague/nyc/tokyo z břehu na břeh bez sjetí z mostovky, 65 průjezdů pod mosty ve vrstvě 0, 120 sjezdů z břehu do vody = pád a odtah; F až po vystřelení (L3); projetí mostů v prohlížeči je na Ol1novi"}
   - {id: L-S12, milestone: L, name: "policie nezablokuje hru: police_box, soak 20 dopadení", size: M, status: todo}
   - {id: L-S13, milestone: L, name: "regresní testy: průjezd zaparkovanými auty, swipe feedu", size: S, status: todo}
   - {id: L-S14, milestone: L, name: "docs/verify.md z metro progress: průchody po 30 minutách", size: M, status: todo}
