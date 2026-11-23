@@ -41,8 +41,9 @@ describe('hop rules (specs/hop.md)', () => {
       [vega, 1, 0, 0, v + 10, true],
       [vega, 0, 0, 0, v, false], // empty tank
       [vega, 3, 0.5, 0, v, false], // already in the air
-      [vega, 3, 0, 1, v, false], // on a bridge
-      [vega, 3, 0, -1, v, false], // in a tunnel
+      [vega, 3, 0, 1, v, true], // on a bridge (v2)
+      [vega, 3, 0, -1, v, true], // in a tunnel (v2)
+      [vega, 3, 0, 1, v - 0.01, false], // on a bridge, too slow
       [vega, 3, 0, 0, v - 0.01, false], // too slow
       [coupe, 3, 0, 0, v, false], // no hop
       [{ hop: { charges: 0 } }, 3, 0, 0, v, false],
@@ -98,6 +99,8 @@ describe('hop rules (specs/hop.md)', () => {
 const pack = join(root, 'build', 'packs', 'nyc');
 const source: PackSource = { read: async (p) => new Uint8Array(readFileSync(join(pack, p))) };
 
+const HOP_MPS = 25;
+
 describe.skipIf(!existsSync(pack))('hop over traffic in NYC (planck)', () => {
   let city: City;
   const chunks: ChunkData[] = [];
@@ -118,12 +121,15 @@ describe.skipIf(!existsSync(pack))('hop over traffic in NYC (planck)', () => {
     return d;
   }
 
-  /** At cruise speed, a car-sized kinematic block (traffic category) 22 m ahead across the lane. */
+  /**
+   * At a boosted 25 m/s (above city cruise, specs/drive.md v2), a car-sized kinematic block
+   * (traffic category) 22 m ahead across the lane. Boost keeps the speed, the hop clears 22 m.
+   */
   function run(spec: CarSpec, hop: boolean): { along: number; blockFar: number; blockNear: number; maxAir: number } {
     const d = world(spec);
     const h = d.car.heading, ux = Math.cos(h), uy = Math.sin(h);
     const x0 = d.car.x, y0 = d.car.y;
-    d.car.body.setLinearVelocity({ x: ux * tuning.speedMps.cruise, y: uy * tuning.speedMps.cruise });
+    d.car.body.setLinearVelocity({ x: ux * HOP_MPS, y: uy * HOP_MPS });
     const blockHalf = 4;
     const block = d.world.createBody({ type: 'static', position: { x: x0 + ux * 22, y: y0 + uy * 22 }, angle: h });
     block.createFixture({ shape: new Box(blockHalf, d.car.halfWidth * 2), filterCategoryBits: CAT_TRAFFIC, filterMaskBits: CAT_CAR });
@@ -131,6 +137,7 @@ describe.skipIf(!existsSync(pack))('hop over traffic in NYC (planck)', () => {
     let maxAir = 0;
     for (let i = 0; i < 60 * 3; i++) {
       d.input.reset();
+      d.input.boost = true;
       d.update(1 / 60);
       maxAir = Math.max(maxAir, d.hop.t);
     }

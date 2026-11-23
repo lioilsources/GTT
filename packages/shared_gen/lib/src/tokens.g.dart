@@ -112,6 +112,10 @@ abstract final class Tokens {
   static const int colorWorldNightTunnel = 0xFF14141A;
   static const int colorWorldNightLandmark = 0xFFFFF0D0;
   static const List<int> colorWorldNightFacades = [0xFFE6DCF0, 0xFFE8C8C0, 0xFFC8D8FF, 0xFFDCDCE6, 0xFFB8C8E6, 0xFFE6D8D0, 0xFFD8B8B8];
+  static const int colorWorldSkyZenith = 0xFF8DB8DF;
+  static const int colorWorldSkyHorizon = 0xFFDCE5EC;
+  static const int colorWorldSkyNightZenith = 0xFF0A0F22;
+  static const int colorWorldSkyNightHorizon = 0xFF2A3148;
   static const int colorWorldTunnelShade = 0x99000000;
   static const int colorWorldRoadblockA = 0xFFFF7A00;
   static const int colorWorldRoadblockB = 0xFFFFFFFF;
@@ -163,7 +167,7 @@ abstract final class Tokens {
   static const int colorShopsDrunk = 0x99E8B830;
   static const List<int> colorGaragePaints = [0xFFF2F2EE, 0xFF1D1F24, 0xFF2E6FD8, 0xFF1E9E5A, 0xFFF2C230, 0xFFF07A1A, 0xFF8E3BD6, 0xFFE8508F, 0xFF6B7A8F, 0xFF7A3B2E];
   static const int colorGarageDecal = 0xFFFFFFFF;
-  static const List<int> colorGarageWheels = [0xFF3A3C42, 0xFFC9CDD4, 0xFFF4F4F0];
+  static const List<int> colorGarageWheels = [0xFF3A3C42, 0xFFC9CDD4, 0xFFF4F4F0, 0xFFB8BEC8, 0xFFD9C27A, 0xFF8E959E, 0xFF2B2D31];
   static const List<int> colorGarageGlow = [0xCC3FA9F5, 0xCCFF3FA4, 0xCC5CFF8A, 0xCCFFD23F, 0xCCB04CFF];
   static const List<int> colorGarageSmoke = [0xFFE8E8E8, 0xFFFF6B6B, 0xFF6BC8FF, 0xFF7DFF8F, 0xFFFFE66B];
   static const int colorGarageLevel = 0xFFF2BD2C;
@@ -284,6 +288,9 @@ abstract final class Tokens {
   static const int colorTaxiPassenger = 0xFFF7C531;
   static const int colorTaxiPassengerRing = 0xFF1B1B1F;
   static const int colorTaxiLow = 0xFFE0533A;
+  static const int colorTestDrivePill = 0xFF3A7BD5;
+  static const int colorTestDrivePillText = 0xFFFFFFFF;
+  static const int colorTestDriveLow = 0xFFE0533A;
   static const int colorDriftZone = 0xFFF2A93B;
   static const int colorDriftZoneFill = 0x33F2A93B;
   static const int colorDriftChain = 0xFFF7C531;

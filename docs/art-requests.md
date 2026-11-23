@@ -157,8 +157,9 @@ Lak = klíč barvy v `design/tokens.json` → `color.carPaint` (hra ho dosadí; 
 - Hlídka je v kapitole 3 (`assets/cars/police_patrol/…`).
 
 ### 5. M2 – budou potřeba později (stačí v pořadí)
-- **Ikony HUD a telefonu** `assets/ui/<id>.png` 256×256: aplikace Feed, Mapa, Garáž, Pas, Foťák,
-  Kontakty, Peněženka, Nastavení, Cesty, Rádio; počasí jasno/déšť/mlha; hledanost hvězda.
+- **Ikony HUD a telefonu** `assets/ui/<id>.png` 256×256, bílý glyf na alfě (tónovatelný,
+  `specs/art.md` v3): `feed`, `map`, `taxi`, `garage`, `passport`, `camera`, `contacts`, `wallet`,
+  `travel`, `settings`, `radio`, `weather_clear`, `weather_rain`, `weather_fog`, `wanted_star`.
 - **Obchody a bary** (fiktivní podniky, R10): 6 výloh / vývěsních štítů shora 256×256
   (`assets/shops/`): kavárna, bar, pizzerie, suvenýry, stánek s hot dogy, bodega.
 - **Telefonní budka** shora + zvonící stav (`assets/props/booth.png`, `booth_ring.png`).
@@ -167,7 +168,14 @@ Lak = klíč barvy v `design/tokens.json` → `color.carPaint` (hra ho dosadí; 
   `assets/photos/nyc/<id>.png`, seznam = spoty `kind: photo` v `content/cities/nyc/spots.yaml`
   (jméno = co je na obrázku). Zatím hra obrázek nepotřebuje, jen do zásoby.
 - **Počasí**: textura kapek a kaluží (tileable 512×512), mlha (gradient), odlesk mokré silnice.
-- **Kosmetika**: 8 polepů (vektorové motivy, tónovatelné), 6 typů kol, barvy kouře řeší kód.
+- **Kosmetika** (`specs/garage.md` v2, `specs/art.md` v3, barvy kouře řeší kód):
+  - 8 polepů `assets/garage/decals/<id>.png`, 512×1024, předek nahoru, bílý motiv na alfě
+    (tónuje se `color.garage.decal`, klient ho roztáhne na plátno karoserie a ořízne maskou laku,
+    takže žádné kruhy, které se v dlouhém autě zdeformují): `stripes`, `flames`, `checker`,
+    `stars`, `lightning`, `waves`, `camo`, `halftone`.
+  - 6 kol `assets/garage/wheels/<id>.png`, 128×128, kolmo shora jako `wheel.png`, světlý disk
+    (tónuje se `color.garage.wheels`): `sport`, `whitewall`, `five_spoke`, `mesh`, `turbine`,
+    `offroad`.
 - **Minihry M2 (22):** skiny stolů a herních ploch 1080×1920 (dřevo, plsť, asfalt NYC):
   karty (1 sada 52 + žolík, fiktivní rub „Metropole“), kostky, šachovnice/dáma, kulečník,
   bowling, minigolf (dráhy s motivem NYC), vzdušný hokej, stickball ulice, švihadla Double Dutch.
@@ -211,4 +219,11 @@ vzorem). Do té doby klient kreslí ikonu a jméno.
   traffic_sedan a police_patrol (bez masky), procedurálně (`tools/art/cars_proc.py`), plátna podle tabulky.
   Lidovka: k hotovému body.png lak převeden na šedou, výřezy pro kola, doplněny maska, kolo a světla
   (`tools/art/post_lidovka.py`).
+- **Auta, dávka 2**, 23. 11. 2026: zbylých 33 aut z tabulky (všechna kromě dávky 1 a lidovky), procedurálně
+  (`tools/art/cars_proc.py`). Třída micro (kolo, micro_cruiser, kolobezka, micro_scoot) má kola a jezdce v body.png,
+  bez wheel.png a lights.png; rikša bez lights.png. Rozdíly proti procedurální kresbě kvůli pravidlu „kolo zvenku
+  nezakryté“: markýza food trucku −0,42…0,40 hl (místo −0,60…0,30), blatníky veteránů jen uvnitř a před a za koly,
+  rezerva terénních aut uvnitř obrysu.
+- **Lidovka, oprava**, 23. 11. 2026: `assets/cars/lidovka/*` nově procedurálně (`tools/art/cars_proc.py`), 57×148,
+  souměrná, karoserie 51 px na šířku, výřezy pro kola, čistě kolmo shora (nahrazuje body.png z ComfyUI).
 - **Ikony HUD a telefonu (dávka ui1):** `assets/ui/<id>.png` 256×256, id podle `phoneAppIds` (feed, map, taxi, garage, passport, camera, contacts, wallet, travel, settings) + radio, weather_clear, weather_rain, weather_fog, wanted_star. Bílý glyf na průhledném pozadí, klient ho tónuje (`color.phone.app`/`appOff`, `color.weather.icon`); `tools/art/ui_icons.py`.

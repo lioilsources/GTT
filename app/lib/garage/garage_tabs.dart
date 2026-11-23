@@ -40,10 +40,19 @@ String? optionName(AppLocalizations l, String part, int value) => switch ((part,
   ('decal', 0) => l.garageDecalNone,
   ('decal', 1) => l.garageDecalStripes,
   ('decal', 2) => l.garageDecalFlames,
-  ('decal', _) => l.garageDecalChecker,
+  ('decal', 3) => l.garageDecalChecker,
+  ('decal', 4) => l.garageDecalStars,
+  ('decal', 5) => l.garageDecalLightning,
+  ('decal', 6) => l.garageDecalWaves,
+  ('decal', 7) => l.garageDecalCamo,
+  ('decal', _) => l.garageDecalHalftone,
   ('wheels', 0) => l.garageWheelsStock,
   ('wheels', 1) => l.garageWheelsSport,
-  ('wheels', _) => l.garageWheelsWhite,
+  ('wheels', 2) => l.garageWheelsWhite,
+  ('wheels', 3) => l.garageWheelsFiveSpoke,
+  ('wheels', 4) => l.garageWheelsMesh,
+  ('wheels', 5) => l.garageWheelsTurbine,
+  ('wheels', _) => l.garageWheelsOffroad,
   (_, 0) => l.garageStock,
   _ => null,
 };
@@ -128,6 +137,7 @@ class _PreviewPainter extends CustomPainter {
       old.look.paint != look.paint ||
       old.look.decal != look.decal ||
       old.look.rim != look.rim ||
+      old.look.wheels != look.wheels ||
       old.look.glow != look.glow;
 }
 

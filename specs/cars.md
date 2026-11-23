@@ -116,7 +116,8 @@ Klient po každé úspěšné akci porovná stav před a po a ohlásí:
 
 ## Garáž
 - Hráč je v garáži, když stojí (≤ `cars.garage_speed_mps`) nejvýš `cars.garage_radius_m` od
-  parkovacího bodu spotu `garage`. HUD ukáže tlačítko „Garáž“ (`garage`).
+  parkovacího bodu spotu `garage`. HUD ukáže tlačítko „Garáž“ (`garage`). Z aplikace Garáž
+  v telefonu jde seznam otevřít kdekoli (`specs/testdrive.md` v2 „Garáž z telefonu“).
 - Seznam ukazuje vlastní auta (jméno, třída, vyznačené řízené). Výběr = akce `select`: nové auto
   vznikne na parkovacím bodě garáže natočené podle `park_heading`, řízené auto zajede do garáže
   (vlastní) nebo ho odveze odtahovka (cizí; nezůstane stát). Odstavené vlastní auto jinde ve městě
@@ -126,6 +127,8 @@ Klient po každé úspěšné akci porovná stav před a po a ohlásí:
   Od v2 (40 aut) je seznam na prodej seřazený: nejdřív auta s `tags` aktuálního města, pak ostatní;
   uvnitř podle třídy v pořadí schématu (`mini` … `special`), pak ceny, pak id. U každého auta jméno,
   třída (`carClass.<třída>` v `i18n`), cena a malý náhled kreslený stejně jako ve světě.
+- Zkušební jízda auta na prodej (tlačítko „Vyzkoušet“): `specs/testdrive.md` (P2, pravidla
+  `cars` se nemění).
 
 ## Kreslení (P2)
 Pohled shora, vektorové obdélníky v souřadnicích auta (x dopředu, y doleva, `hl`, `hw` = půldélka

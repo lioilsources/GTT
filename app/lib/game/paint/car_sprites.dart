@@ -4,6 +4,8 @@ import 'dart:ui' as ui;
 import 'dart:ui' show Canvas, Color, Offset, Paint, Rect, RSTransform;
 
 import 'package:flutter/foundation.dart' show ChangeNotifier;
+import 'package:game_loop/game_loop.dart' show garageDecalIds, garageWheelIds;
+import 'package:shared_gen/shared_gen.dart' show Tokens;
 
 // Car sprites (specs/art.md v2 "Auta"): `assets/cars/<id>/{body,paint_mask,wheel,lights}.png`
 // replace only the drawing; sizes, collisions and the shadow stay from the JSON and the code.
@@ -46,6 +48,16 @@ CarSpriteFiles? carSpriteFiles(bool Function(String path) has, String id, {bool 
     lights: has(lights) ? lights : null,
   );
 }
+
+/// Decal sprite of choice [decal] (specs/art.md v3 "Polep"): `garage/decals/<id>.png`, null for 0
+/// or out of range.
+String? garageDecalPath(int decal) =>
+    decal >= 1 && decal <= garageDecalIds.length ? 'garage/decals/${garageDecalIds[decal - 1]}.png' : null;
+
+/// Garage wheel sprite of choice [wheels] (specs/art.md v3 "Kola"): `garage/wheels/<id>.png`, null
+/// for 0 (stock) or out of range.
+String? garageWheelPath(int wheels) =>
+    wheels >= 1 && wheels <= garageWheelIds.length ? 'garage/wheels/${garageWheelIds[wheels - 1]}.png' : null;
 
 /// Luminance weights of the mask brightness `m` (the mask is greyscale, so any weights summing to 1
 /// give the same `m`).
@@ -116,11 +128,17 @@ class CarSprites extends ChangeNotifier {
   final int capacity;
 
   final _cars = <String, CarSprite?>{}; // null value = loading or failed
-  final _bodies = <(String, int?, int, int, int), ui.Image>{}; // insertion order = LRU order
+  final _bodies = <(String, int?, int, bool, int, int), ui.Image>{}; // insertion order = LRU order
   final _lights = <(String, int, int), ui.Image>{}; // stretched lights (traffic, patrol): one size each
 
+  // Garage cosmetics (specs/art.md v3): decoded decal images and garage wheel pairs by choice
+  // (null value = loading or failed), garage wheel pairs scaled to a car's wheel.png size.
+  final _decals = <int, ui.Image?>{};
+  final _garageWheels = <int, ui.Image?>{};
+  final _wheelFits = <(int, int, int), ui.Image>{};
+
   int get cachedBodies => _bodies.length;
-  Iterable<(String, int?, int, int, int)> get cachedKeys => _bodies.keys;
+  Iterable<(String, int?, int, bool, int, int)> get cachedKeys => _bodies.keys;
 
   /// The decoded sprite of [id] or null (procedural): not in the index, still loading, or failed.
   CarSprite? sprite(String id, {bool tinted = true, bool wheels = true}) {
@@ -129,6 +147,47 @@ class CarSprites extends ChangeNotifier {
     _cars[id] = null;
     if (files != null) _load(id, files);
     return null;
+  }
+
+  /// The decal sprite of choice [decal] (as decoded, nose up) or null: not in the index (the
+  /// procedural decal), still loading, or failed. Loads lazily; listeners hear when it is ready.
+  ui.Image? decalArt(int decal) => _cosmetic(_decals, decal, garageDecalPath(decal));
+
+  /// The garage wheel of choice [wheels] (as decoded, nose up) or null: stock, not in the index (the
+  /// car's own wheel in the rim colour), still loading, or failed.
+  ui.Image? wheelArt(int wheels) => _cosmetic(_garageWheels, wheels, garageWheelPath(wheels));
+
+  ui.Image? _cosmetic(Map<int, ui.Image?> m, int i, String? path) {
+    if (m.containsKey(i)) return m[i];
+    m[i] = null;
+    if (path == null || !has(path)) return null;
+    load(path).then((img) {
+      m[i] = img;
+      notifyListeners();
+    }, onError: (Object _) {});
+    return null;
+  }
+
+  /// Puts a decoded decal sprite of choice [decal] in place (tests).
+  void putDecal(int decal, ui.Image img) => _decals[decal] = img;
+
+  /// Puts a decoded garage wheel of choice [wheels] in place (tests).
+  void putWheel(int wheels, ui.Image img) => _garageWheels[wheels] = img;
+
+  /// The garage wheel pair of choice [wheels] scaled to the wheel.png size of [s] (specs/art.md
+  /// v3: the garage wheel takes the car's wheel size), built once per size; null without the art.
+  ui.Image? wheelFor(CarSprite s, int wheels) {
+    final src = wheels > 0 ? wheelArt(wheels) : null;
+    if (src == null) return null;
+    final w = s.wheelW.round(), h = s.wheelH.round();
+    if (w <= 0 || h <= 0) return null;
+    return _wheelFits.putIfAbsent((wheels, w, h), () {
+      final rec = ui.PictureRecorder();
+      Canvas(rec)
+        ..scale(w / src.width, h / src.height)
+        ..drawImage(src, Offset.zero, Paint()..filterQuality = ui.FilterQuality.medium);
+      return _wheelPair(rec.endRecording().toImageSync(w, h));
+    });
   }
 
   /// Puts ready layers in place (the loader, tests).
@@ -179,7 +238,8 @@ class CarSprites extends ChangeNotifier {
     });
   }
 
-  /// The body of [s] tinted with [paint] (null = untinted, the patrol) and decal [decal] drawn by
+  /// The body of [s] tinted with [paint] (null = untinted, the patrol) and decal [decal]: the
+  /// decal sprite [decalImage] stretched over the canvas (specs/art.md v3), else drawn by
   /// [paintDecal] in car space (metres, x forward, y left, [mPerPx] metres per source px), clipped
   /// to the mask; [outW] × [outH] px (a stretched traffic sprite), flipped. Built once per key in a
   /// [ui.PictureRecorder], then kept in the LRU.
@@ -189,14 +249,25 @@ class CarSprites extends ChangeNotifier {
     int decal = 0,
     double mPerPx = 1,
     void Function(Canvas c)? paintDecal,
+    ui.Image? decalImage,
     int? outW,
     int? outH,
   }) {
     final w = outW ?? s.width, h = outH ?? s.height;
-    final key = (s.id, s.mask == null ? null : paint, paintDecal == null ? 0 : decal, w, h);
+    final drawn = s.mask != null && (paintDecal != null || decalImage != null);
+    final key = (s.id, s.mask == null ? null : paint, drawn ? decal : 0, drawn && decalImage != null, w, h);
     final hit = _bodies.remove(key);
     if (hit != null) return _bodies[key] = hit;
-    final img = composeCarBody(s.body, s.mask, key.$2, w, h, mPerPx: mPerPx, paintDecal: key.$3 == 0 ? null : paintDecal);
+    final img = composeCarBody(
+      s.body,
+      s.mask,
+      key.$2,
+      w,
+      h,
+      mPerPx: mPerPx,
+      paintDecal: key.$3 == 0 || key.$4 ? null : paintDecal,
+      decalImage: key.$4 ? decalImage : null,
+    );
     _bodies[key] = img;
     while (_bodies.length > capacity) {
       _bodies.remove(_bodies.keys.first)!.dispose();
@@ -209,7 +280,10 @@ class CarSprites extends ChangeNotifier {
 CarSprites carSprites = CarSprites.none();
 
 /// Composes a body: flipped and scaled to [w] × [h], tinted `body × mix(1, paint, m)` by drawing the
-/// mask through [tintMatrix] with [ui.BlendMode.modulate], with the decal clipped to the mask.
+/// mask through [tintMatrix] with [ui.BlendMode.modulate], with the decal clipped to the mask:
+/// [decalImage] (a decal sprite, specs/art.md v3) stretched over the canvas in `color.garage.decal`
+/// × its alpha, or else [paintDecal]; masked by the paint mask ([ui.BlendMode.dstIn]), then drawn
+/// over the body (srcOver).
 ui.Image composeCarBody(
   ui.Image body,
   ui.Image? mask,
@@ -218,6 +292,7 @@ ui.Image composeCarBody(
   int h, {
   double mPerPx = 1,
   void Function(Canvas c)? paintDecal,
+  ui.Image? decalImage,
 }) {
   final rec = ui.PictureRecorder();
   final c = Canvas(rec);
@@ -236,14 +311,30 @@ ui.Image composeCarBody(
         ..blendMode = ui.BlendMode.modulate,
     );
   }
-  if (mask != null && paintDecal != null) {
+  if (mask != null && decalImage != null) {
+    c.saveLayer(Rect.fromLTWH(0, 0, sw, sh), Paint());
+    c.drawImageRect(
+      decalImage,
+      Rect.fromLTWH(0, 0, decalImage.width.toDouble(), decalImage.height.toDouble()),
+      Rect.fromLTWH(0, 0, sw, sh),
+      Paint()
+        ..filterQuality = ui.FilterQuality.medium
+        ..colorFilter = const ui.ColorFilter.mode(Color(Tokens.colorGarageDecal), ui.BlendMode.srcIn),
+    );
+    c.drawImage(
+      mask,
+      Offset.zero,
+      Paint()
+        ..colorFilter = const ui.ColorFilter.matrix(_maskAlpha)
+        ..blendMode = ui.BlendMode.dstIn,
+    );
+    c.restore();
+  } else if (mask != null && paintDecal != null) {
     c.saveLayer(Rect.fromLTWH(0, 0, sw, sh), Paint());
     c.save();
     // Car space (x forward = up in the source image, y left) → source px.
     c.translate(sw / 2, sh / 2);
-    c.transform(
-      Float64List.fromList([0, -1 / mPerPx, 0, 0, -1 / mPerPx, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]),
-    );
+    c.transform(Float64List.fromList([0, -1 / mPerPx, 0, 0, -1 / mPerPx, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]));
     paintDecal(c);
     c.restore();
     c.drawImage(
@@ -295,7 +386,12 @@ class CarSpriteBatch {
 
   /// The body [img] ([k] metres per px) centred at (x, y) with the nose at [heading].
   void addBody(ui.Image img, double x, double y, double heading, double k) {
-    _add(_bodies, img, _xf(heading, k, img.width / 2, img.height / 2, x, y), Rect.fromLTWH(0, 0, img.width.toDouble(), img.height.toDouble()));
+    _add(
+      _bodies,
+      img,
+      _xf(heading, k, img.width / 2, img.height / 2, x, y),
+      Rect.fromLTWH(0, 0, img.width.toDouble(), img.height.toDouble()),
+    );
   }
 
   /// The lights [img] like [addBody], whole or with [rearOnly] only its rear half.
@@ -307,8 +403,20 @@ class CarSpriteBatch {
 
   /// One wheel of [s] centred at car-space (fx, sy) of a car at (x, y, [heading]), turned by
   /// [steer]; [k] metres per px; [tint] multiplies it (garage wheels).
-  void addWheel(CarSprite s, double x, double y, double heading, double fx, double sy, double steer, double k, Color? tint) {
-    final img = s.wheels!;
+  /// [garage] is a garage wheel pair already scaled to the car's wheel size (replaces wheel.png).
+  void addWheel(
+    CarSprite s,
+    double x,
+    double y,
+    double heading,
+    double fx,
+    double sy,
+    double steer,
+    double k,
+    Color? tint, {
+    ui.Image? garage,
+  }) {
+    final img = garage ?? s.wheels!;
     final ch = math.cos(heading), sh = math.sin(heading);
     final wx = x + fx * ch - sy * sh, wy = y + fx * sh + sy * ch;
     final left = sy > 0;
@@ -342,7 +450,15 @@ class CarSpriteBatch {
     final p = Paint()..filterQuality = ui.FilterQuality.medium;
     void draw(Map<ui.Image, _Runs> m, Paint p) {
       m.forEach((img, r) {
-        canvas.drawAtlas(img, r.xf, r.rects, r.tinted ? r.colors : null, r.tinted ? ui.BlendMode.modulate : null, null, p);
+        canvas.drawAtlas(
+          img,
+          r.xf,
+          r.rects,
+          r.tinted ? r.colors : null,
+          r.tinted ? ui.BlendMode.modulate : null,
+          null,
+          p,
+        );
       });
       m.clear();
     }

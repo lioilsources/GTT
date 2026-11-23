@@ -12,6 +12,7 @@ import type { City } from '../world/model';
 import { buildCandidates, feedConfig, FeedRules, type FeedState } from './feed';
 import { mountFeed } from './feedView';
 import { mountMap } from './mapView';
+import type { MapNatureSource } from './mapNature';
 import { edgeArrow, edgeLengthsDm, feedDistDm, formatDistance, navGoal, navStart, Navigator, type NavTarget } from './nav';
 import { Phone, registerPhoneApp } from './phone';
 
@@ -30,6 +31,8 @@ export interface PhoneEnv {
   params: URLSearchParams;
   /** Landmarks the player has discovered (passport stamps), for the feed's landmark bonus. */
   discovered?: () => ReadonlySet<string>;
+  /** Water and parks for the Map app (specs/nature.md); absent for a pack without nature. */
+  mapNature?: MapNatureSource | null;
 }
 
 /** The feed state the save keeps (specs/save.md `feed`). */
@@ -57,6 +60,8 @@ export interface PhoneApi {
    * the route just ends (no toast, no visit, no onArrived).
    */
   navigateTo(target: NavTarget, silent: boolean): boolean;
+  /** Navigation along a fixed route polyline (`?route=`, specs/bench.md v2); arrival only toasts. */
+  followRoute(target: NavTarget, path: ArrayLike<number>): void;
   cancelNav(): void;
   /** arrived(spotId): the minigame launch hook for a later feature. */
   onArrived: Array<(spotId: string) => void>;
@@ -77,6 +82,8 @@ export interface PhoneApi {
   feedRestore(f: FeedSave): void;
   phone: Phone;
   nav: Navigator;
+  /** Shows a short HUD message (the route toast). */
+  toast(text: string): void;
 }
 
 export function installPhone(env: PhoneEnv): PhoneApi {
@@ -168,6 +175,7 @@ export function installPhone(env: PhoneEnv): PhoneApi {
       route: () => nav.ahead(),
       target: () => nav.target?.id ?? null,
       extra: () => api.mapPoints.flatMap((f) => f()),
+      nature: env.mapNature ?? null,
     }),
   );
 
@@ -184,19 +192,31 @@ export function installPhone(env: PhoneEnv): PhoneApi {
     toastTimer = tuning.nav.toastS;
   };
   let silent = false;
+  // A route of content/bench/ (not a spot): arrival shows the toast only.
+  let routeOnly = false;
   const stopNav = (): void => {
     nav.cancel();
     pill.hidden = true;
     silent = false;
+    routeOnly = false;
   };
 
   function navigateTo(tg: NavTarget, quiet: boolean): boolean {
     const c = drive.car;
     const ok = nav.start(tg, c.x, c.y, c.heading, drive.layers.hit);
     silent = quiet;
+    routeOnly = false;
     if (!ok && !quiet) showToast(t('noRoute'));
     pill.hidden = false;
     return ok;
+  }
+
+  function followRoute(tg: NavTarget, path: ArrayLike<number>): void {
+    const c = drive.car;
+    nav.follow(tg, path, c.x, c.y);
+    silent = false;
+    routeOnly = true;
+    pill.hidden = false;
   }
 
   function navigate(id: string): boolean {
@@ -207,6 +227,7 @@ export function installPhone(env: PhoneEnv): PhoneApi {
   const api: PhoneApi = {
     phone,
     nav,
+    toast: (text) => showToast(text),
     onArrived: [],
     accepted: null,
     onAccept: [],
@@ -231,6 +252,7 @@ export function installPhone(env: PhoneEnv): PhoneApi {
     },
     navigate,
     navigateTo,
+    followRoute,
     cancelNav: stopNav,
     update(dt) {
       const c = drive.car;
@@ -240,7 +262,8 @@ export function installPhone(env: PhoneEnv): PhoneApi {
       if (toastTimer > 0 && (toastTimer -= dt) <= 0) toast.hidden = true;
       if (!nav.active) return;
       const ev = nav.update(c.x, c.y, c.heading, drive.layers.hit, dt);
-      if (ev === 'arrived' && silent) {
+      if (ev === 'arrived' && (silent || routeOnly)) {
+        if (routeOnly) showToast(t('arrived'));
         stopNav();
         return;
       }

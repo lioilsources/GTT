@@ -12,6 +12,11 @@ import { generateProps, type Prop, type PropSet } from './props';
 import { Traffic } from '../traffic/traffic';
 import { Trams } from '../trams/trams';
 import { ZoneWorld } from './zones';
+import { JumpState, slopeAccel, TERRAIN_SPEC } from './slope';
+import { flatStructureLayer, onSurface, ridesEdge, structureLayer, type Terrain } from '../world/terrain';
+import { surfaceEffect, TreeContacts, WaterFall } from './nature';
+import { NatureMap, type SurfaceName, type Tree } from '../world/nature';
+import { WaterClass } from '../gen/pb/citypack_pb';
 
 /**
  * Tracks which road edge the car is on, and with it the layer (−1 tunnel, 0, +1 bridge).
@@ -20,6 +25,12 @@ import { ZoneWorld } from './zones';
 export class LayerTracker {
   edge: RoadEdge | null = null;
   hit: EdgeHit | null = null;
+  /**
+   * The current edge was reached along the graph (a neighbour of the previous one, a spawn, a
+   * deck rewind or a carriageway at the car's height), not re-acquired from off the road. A flat
+   * pack has no heights, so only such an edge puts the car on a bridge: never a road above it.
+   */
+  linked = true;
 
   constructor(
     readonly graph: RoadGraph,
@@ -30,32 +41,64 @@ export class LayerTracker {
     return this.hit === null ? 0 : this.hit.edge.layerAt(this.hit.t);
   }
 
-  reset(x: number, y: number): void {
-    this.hit = this.graph.nearest(x, y, this.t.spawnSearchM, (e) => e.isGround);
+  /**
+   * Spawn: the nearest ground edge. With `onIt` (a rewind on a bridge deck) an edge under (x, y)
+   * that passes it wins first, so the car stays on the deck instead of dropping to the road below.
+   */
+  reset(x: number, y: number, onIt?: (h: EdgeHit) => boolean): void {
+    let best: EdgeHit | null = null;
+    if (onIt) {
+      for (const h of this.graph.near(x, y, this.t.searchM)) {
+        if (h.dist > h.edge.width / 2 + this.t.switchMarginM || !onIt(h)) continue;
+        if (best === null || h.dist < best.dist) best = h;
+      }
+    }
+    this.hit = best ?? this.graph.nearest(x, y, this.t.spawnSearchM, (e) => e.isGround);
     this.edge = this.hit?.edge ?? null;
+    this.linked = true;
   }
 
-  update(x: number, y: number): void {
+  /**
+   * `reach` (optional, terrain packs) is a height test: an edge counts first (a neighbour) or only
+   * (any other edge) at the car's height, so a car on a deck never switches to a road under it.
+   * With it, a car that left its edge's carriageway also takes another edge at its height that it
+   * is on (parallel or overlapping carriageways, a fork on a deck), instead of being held by the
+   * first edge's rails.
+   */
+  update(x: number, y: number, reach?: (h: EdgeHit) => boolean): void {
     const cur = this.edge;
     const cands = this.graph.near(x, y, this.t.searchM);
     const onIt = (h: EdgeHit): boolean => h.dist <= h.edge.width / 2 + this.t.switchMarginM;
     let best: EdgeHit | null = null;
+    let linked = true;
     if (cur !== null) {
       const adj = new Set(this.graph.neighbours(cur.index));
+      // A neighbour at the car's height first; else any neighbour: the graph links them, so a
+      // step in the data at the end of a deck is a small drop, never a wall.
+      for (const strict of reach ? [true, false] : [false]) {
+        for (const h of cands) {
+          if (!adj.has(h.edge.index) || !onIt(h) || (strict && !reach!(h))) continue;
+          if (best === null || h.dist < best.dist) best = h;
+        }
+        if (best !== null) break;
+      }
+    }
+    if (reach && best !== null && best.dist > best.edge.width / 2 - this.t.switchMarginM) {
       for (const h of cands) {
-        if (!adj.has(h.edge.index) || !onIt(h)) continue;
-        if (best === null || h.dist < best.dist) best = h;
+        if (h.dist < best.dist && h.dist <= h.edge.width / 2 && reach(h)) best = h;
       }
     }
     if (best === null) {
       // Off our edge's neighbourhood: re-acquire, staying on the current layer.
+      linked = reach !== undefined;
       const l = this.layer;
       for (const h of cands) {
-        if (h.edge.layerAt(h.t) !== l || !onIt(h)) continue;
+        if (h.edge.layerAt(h.t) !== l || !onIt(h) || (reach && !reach(h))) continue;
         if (best === null || h.dist < best.dist) best = h;
       }
     }
     if (best !== null) {
+      if (best.edge !== cur) this.linked = linked;
       this.edge = best.edge;
       this.hit = best;
     } else if (cur !== null) {
@@ -91,6 +134,8 @@ export class DriveWorld {
 
   /** Skid marks: x0, y0, x1, y1 per segment, newest last. */
   readonly skids: number[] = [];
+  /** Ground height of every skid segment (specs/terrain.md: marks lie on the surface). */
+  readonly skidZ: number[] = [];
   private lastSkid: [number, number, number, number] | null = null;
   skidsVersion = 0;
   /** Called when a bridge or tunnel rail stops the car, with the speed into the rail (m/s). */
@@ -113,6 +158,18 @@ export class DriveWorld {
   routeAhead: () => ArrayLike<number> | null = () => null;
   /** Called after every rescue move (automatic or manual) with its kind. */
   onRescue: ((kind: StuckKind) => void) | null = null;
+  /** Water, green and trees of the loaded chunks (specs/nature.md); empty for a pack without nature. */
+  readonly nature: NatureMap;
+  /** Soft trees (specs/flow.md "Strom jako měkká překážka"). */
+  readonly trees = new TreeContacts();
+  /** Water fall and tow (specs/nature.md "Voda"). */
+  readonly water = new WaterFall();
+  /** Surface under the car in the last step (specs/nature.md "Jízda"). */
+  surface: SurfaceName = 'asphalt';
+  /** Called when the car drives into water (it sinks over nature.water_fall.sink_s). */
+  onWater: (() => void) | null = null;
+  /** Called after the sunk car was put on the nearest road node (graph node index): charge the tow. */
+  onSunk: ((node: number) => void) | null = null;
   /** Static contact in the previous step; a head-on bounce needs a new contact. */
   private wallContact = false;
   /** The head-on bounce (with the 1 m unstick) is armed; see wallStep. */
@@ -121,6 +178,21 @@ export class DriveWorld {
   // Velocity before the step (the "v before contact" of specs/flow.md).
   private preVx = 0;
   private preVy = 0;
+  /** Heights of the city (specs/terrain.md); flat without terrain_version. */
+  readonly terrain: Terrain;
+  /** Vertical state of the player's car: z, vz, airborne (specs/terrain.md "Skok"). */
+  readonly jump = new JumpState();
+  /** The edge whose own surface the car rides (ramp, bridge, tunnel), null = terrain (specs/terrain.md). */
+  rideEdge: RoadEdge | null = null;
+  /** Gradient of the ground under the car in the last step (m/m, world x/y). */
+  readonly grad = { x: 0, y: 0 };
+  /** Game time of the last take-off and hard landing (camera hints), −∞ before any. */
+  takeoffAt = -Infinity;
+  hardLandingAt = -Infinity;
+  /** Landing speed of the last touchdown after a jump (m/s), 0 before any. */
+  lastLanding = 0;
+  private readonly slopeA = { x: 0, y: 0 };
+  private terrainVersion = -1;
 
   constructor(
     readonly city: City,
@@ -131,9 +203,12 @@ export class DriveWorld {
     this.zones = new ZoneWorld(this.world, tuning.drive, tuning.flow.wall);
     this.flow = new FlowState(tuning.flow.rescue);
     this.layers = new LayerTracker(city.graph, tuning.layers);
+    this.terrain = city.terrain;
+    this.nature = new NatureMap(city.chunkM);
     this.car = this.makeCar(city.startX, city.startY, city.startHeading);
     this.layers.reset(this.car.x, this.car.y);
-    this.car.setLayer(this.layers.layer);
+    this.car.setLayer(this.structureLayer(true));
+    this.groundReset();
     this.traffic = tuning.traffic.enabled ? new Traffic(this.world, city, tuning) : null;
     this.trams = tuning.trams.enabled && !city.trams.isEmpty ? new Trams(this.world, city.trams, tuning, this.traffic) : null;
     if (this.traffic && this.trams) this.traffic.trams = this.trams.items;
@@ -148,15 +223,122 @@ export class DriveWorld {
     this.car.destroy();
     this.car = this.makeCar(x, y, heading);
     this.layers.reset(x, y);
-    this.car.setLayer(this.layers.layer);
+    this.car.setLayer(this.structureLayer(true));
     this.lastSkid = null;
     this.flow.reset();
     this.wallContact = false;
     this.bounceArmed = true;
+    this.trees.reset();
+    this.water.reset();
     // A new body starts on the ground; the tank stays (replaceCar fills it for a hop car).
     this.hop.air = 0;
     this.hop.t = 0;
     this.setPlayerAirborne(false);
+    this.groundReset();
+  }
+
+  /**
+   * Picks the surface under the car (specs/terrain.md: an edge on ramps, bridges and in tunnels).
+   * Onto an edge from another surface only at the car's height (`free`: a teleport puts it there),
+   * so a car under a deck or beside a ramp never pops up onto it.
+   */
+  private pickSurface(free = false): RoadEdge | null {
+    const h = this.layers.hit, e = this.layers.edge, car = this.car, t = this.terrain;
+    const margin = this.tuning.layers.switchMarginM;
+    if (e === null || h === null) return null;
+    let rides = ridesEdge(e, car.layer, h.dist, margin);
+    let ez = 0, tz: number | null = null;
+    if (!rides && t.enabled && e.z !== null && h.dist <= e.width / 2 + margin) {
+      // A ground road whose profile leaves the terrain (an elevated street without the bridge
+      // flag, a step in the data): the car keeps to the road where the graph puts it.
+      ez = t.edgeZ(e, car.x, car.y);
+      tz = t.terrainAt(car.x, car.y);
+      rides = tz !== null && Math.abs(ez - tz) > this.clearM;
+    }
+    if (!rides) return null;
+    if (free || e === this.rideEdge || car.layer !== 0) return e;
+    if (tz === null) {
+      ez = t.edgeZ(e, car.x, car.y);
+      tz = t.terrainAt(car.x, car.y);
+    }
+    return onSurface(ez, tz, this.jump.z, this.clearM) ? e : null;
+  }
+
+  /** A deck stands at least this above what it crosses (terrain.pipeline.bridge_min_clear_m). */
+  private get clearM(): number {
+    return this.tuning.terrain.pipeline.bridgeMinClearM;
+  }
+
+  /**
+   * The car's collision layer (structureLayer / flatStructureLayer in world/terrain.ts): the
+   * tracker's, or ±1 on the layer-0 part of a bridge or ramp the car is on. `free` = a teleport:
+   * the car is on its edge.
+   */
+  private structureLayer(free = false): number {
+    const h = this.layers.hit, l = this.layers.layer;
+    if (h === null) return l;
+    const car = this.car, e = h.edge, margin = this.tuning.layers.switchMarginM;
+    if (!this.terrain.enabled || e.z === null) return flatStructureLayer(e, l, h.dist, margin, free || this.layers.linked);
+    const ez = this.terrain.edgeZ(e, car.x, car.y);
+    return structureLayer(e, l, h.dist, margin, ez, this.terrain.terrainAt(car.x, car.y), free ? ez : this.jump.z, this.clearM);
+  }
+
+  /**
+   * Height test of the layer tracker (terrain packs, LayerTracker.update): an edge at the car's
+   * height, so a car on a deck does not drop to the road below or the reverse.
+   */
+  private readonly reachZ = (h: EdgeHit): boolean => {
+    // The edge's own profile (a ground road's follows the terrain), against the ground under the car.
+    const e = h.edge;
+    if (e.z === null) return true;
+    return Math.abs(this.terrain.edgeZ(e, this.car.x, this.car.y) - (this.jump.z - this.jump.gap)) <= this.clearM;
+  };
+
+  private get reach(): ((h: EdgeHit) => boolean) | undefined {
+    return this.terrain.enabled ? this.reachZ : undefined;
+  }
+
+  /** Ground height under the car on its surface (0 in a flat pack). */
+  groundZ(): number {
+    return this.terrain.groundZ(this.car.x, this.car.y, this.rideEdge);
+  }
+
+  /** Teleport, rescue or a new body: z = g, vz = 0, on the ground (specs/terrain.md). */
+  private groundReset(): void {
+    this.rideEdge = this.pickSurface(true);
+    this.jump.reset(this.groundZ());
+    this.terrainVersion = this.terrain.version;
+  }
+
+  /**
+   * Vertical step after the horizontal move (specs/terrain.md "Skok"): a surface change or newly
+   * loaded terrain re-bases g_prev; a hard landing costs speed and shakes the camera.
+   */
+  private jumpStep(step: number): void {
+    const sp = this.tuning.slopePhysics, j = this.jump;
+    const surf = this.pickSurface();
+    if (surf !== this.rideEdge || this.terrain.version !== this.terrainVersion) {
+      this.rideEdge = surf;
+      this.terrainVersion = this.terrain.version;
+      j.rebase(this.groundZ());
+    }
+    const was = j.airborne;
+    const landing = j.step(this.groundZ(), step, sp.gravity, sp.suspensionTravel);
+    if (!was && j.airborne) this.takeoffAt = this.time;
+    if (landing !== null) {
+      this.lastLanding = landing;
+      if (landing > sp.hardLanding) {
+        const v = this.car.body.getLinearVelocity();
+        const k = TERRAIN_SPEC.hardLandingKeep;
+        this.car.body.setLinearVelocity({ x: v.x * k, y: v.y * k });
+        this.hardLandingAt = this.time;
+      }
+    }
+  }
+
+  /** The car flies after a terrain edge (not the hop). */
+  get jumping(): boolean {
+    return this.jump.airborne;
   }
 
   /** Switches to another car (specs/cars.md): a new body with that car's parameters, at rest. */
@@ -179,13 +361,13 @@ export class DriveWorld {
   /** The driven car can hop now (specs/hop.md canHop). */
   get canHop(): boolean {
     const c = this.car;
-    return canHop(this.spec, this.hop.charges, this.hop.air, c.layer, c.speed, this.tuning.hop);
+    return !this.water.sinking && canHop(this.spec, this.hop.charges, this.hop.air, c.layer, c.speed, this.tuning.hop);
   }
 
   /** "Skok": takes off when canHop allows it; false otherwise (the HUD shows why). */
   tryHop(): boolean {
     const c = this.car;
-    if (!this.hop.start(this.spec, c.layer, c.speed, this.tuning.hop)) return false;
+    if (this.water.sinking || !this.hop.start(this.spec, c.layer, c.speed, this.tuning.hop)) return false;
     c.setAirborne(true);
     this.setPlayerAirborne(true);
     return true;
@@ -199,6 +381,7 @@ export class DriveWorld {
   addChunk(c: ChunkData): void {
     const key = chunkKey(c.x, c.y);
     if (this.colliders.has(key)) return;
+    this.terrain.addChunk(c);
     const w = this.tuning.flow.wall;
     const body = this.world.createBody({ type: 'static' });
     // Static contacts use flow.wall friction and restitution (specs/flow.md), not drive.building_*.
@@ -232,6 +415,7 @@ export class DriveWorld {
     }
     this.colliders.set(key, body);
     this.zones.addChunk(c);
+    if (c.nature) this.nature.add(c.nature);
     this.props.set(key, generateProps(this.city.graph, c.x, c.y, this.tuning));
     this.propsVersion++;
   }
@@ -242,6 +426,8 @@ export class DriveWorld {
     if (body) this.world.destroyBody(body);
     this.colliders.delete(key);
     this.zones.removeChunk(c);
+    this.terrain.removeChunk(c);
+    this.nature.remove(c.x, c.y);
     if (this.props.delete(key)) this.propsVersion++;
   }
 
@@ -261,17 +447,29 @@ export class DriveWorld {
     this.beforeStep?.(step);
     const air = this.hop.airborne;
     const frozen = this.flow.animT > 0;
-    if (frozen) {
+    const sinking = this.water.sinking;
+    if (sinking) {
+      // Sinking (specs/nature.md "Voda"): no control, the entry velocity runs out over sink_s.
+      const v = this.water.velocity(this.tuning.nature.waterFall.sinkS);
+      this.car.body.setLinearVelocity(v);
+      this.car.body.setAngularVelocity(0);
+    } else if (frozen) {
       // Rescue animation (specs/flow.md): the car stands where it was put.
       this.car.body.setLinearVelocity({ x: 0, y: 0 });
       this.car.body.setAngularVelocity(0);
     } else if (air) {
       // In the air (specs/hop.md): no input, no tyres, buildings only, the layer stays.
       this.car.fly();
+    } else if (this.jump.airborne) {
+      // Over a terrain edge (specs/terrain.md "Skok"): only drag.
+      this.updateZoneMask();
+      this.car.coast();
     } else {
       this.updateZoneMask();
-      this.car.gripScale = this.gripScale;
-      this.car.drive(this.input, step, this.tuning.speedMps.cruise, this.tuning.speedMps.topDefault);
+      // Surface under the car (specs/nature.md "Jízda", specs/flow.md "Les"); asphalt off the ground layer.
+      const car = this.car;
+      this.surface = car.layer === 0 && !this.nature.empty ? this.nature.surfaceAt(car.x, car.y) : 'asphalt';
+      this.slopeStep(surfaceEffect(this.surface, this.tuning));
     }
     this.traffic?.preStep(step, this.car);
     this.trams?.preStep(step, this.car);
@@ -281,23 +479,61 @@ export class DriveWorld {
     this.world.step(step, d.velocityIterations, d.positionIterations);
     if (air) {
       this.car.body.setAngularVelocity(0);
+      // The edge is still tracked (rails, ride surface) but the car keeps its layer (specs/hop.md v2).
+      this.layers.update(this.car.x, this.car.y, this.reach);
       if (this.hop.step(step)) this.land();
     } else {
-      this.layers.update(this.car.x, this.car.y);
-      this.car.setLayer(this.layers.layer);
+      this.layers.update(this.car.x, this.car.y, this.reach);
+      this.car.setLayer(this.structureLayer());
+    }
+    if (!this.terrain.enabled) {
+      // Flat pack: z = 0, never airborne (specs/terrain.md "Hraniční případy").
+    } else if (air || frozen) {
+      this.groundReset();
+    } else {
+      this.jumpStep(step);
     }
     this.traffic?.postStep(this.car);
     this.trams?.postStep(this.car);
     const rail = this.car.layer !== 0 ? this.rails() : null;
-    if (frozen) {
+    if (sinking) {
+      this.car.body.setAngularVelocity(0);
+      if (this.water.step(step, this.tuning.nature.waterFall.sinkS)) this.sunk();
+    } else if (frozen) {
       this.car.body.setLinearVelocity({ x: 0, y: 0 });
       this.car.body.setAngularVelocity(0);
     } else {
       this.wallStep(step, rail);
+      this.treeStep(step);
+      this.waterStep();
     }
     this.stepProps(step);
     this.skidMarks();
     this.rescueStep(step);
+  }
+
+  /**
+   * Tyres with the slope (specs/terrain.md "Svah", after drive step 5): grip × k and the force
+   * m · a_svah at the centre of mass; below stop_speed without throttle the car holds.
+   */
+  private slopeStep(eff: { grip: number; speed: number }): void {
+    const car = this.car, sp = this.tuning.slopePhysics;
+    let k = 1;
+    if (this.terrain.enabled) {
+      this.terrain.grad(car.x, car.y, this.rideEdge, this.grad);
+      k = slopeAccel(this.grad.x, this.grad.y, sp, this.slopeA);
+    }
+    car.gripScale = this.gripScale * eff.grip * k;
+    car.brakeScale = eff.grip;
+    car.powerScale = eff.speed;
+    // Slope pull along the heading for the cruise hold (specs/drive.md v2 step 2), same a_svah.
+    const h = car.heading;
+    const slopeF = this.terrain.enabled ? this.slopeA.x * Math.cos(h) + this.slopeA.y * Math.sin(h) : 0;
+    car.drive(this.input, 1 / this.tuning.drive.stepHz, this.tuning.speedMps.cruise * eff.speed, this.tuning.speedMps.topDefault * eff.speed, slopeF);
+    if (!this.terrain.enabled) return;
+    if (car.speed < this.tuning.drive.stopSpeedMps && car.accel === 0) return;
+    const m = car.body.getMass();
+    car.body.applyForceToCenter({ x: this.slopeA.x * m, y: this.slopeA.y * m }, true);
   }
 
   /**
@@ -361,16 +597,65 @@ export class DriveWorld {
     }
   }
 
+  /**
+   * Soft trees (specs/flow.md "Strom jako měkká překážka"): trunks are sensors on the ground layer;
+   * the start of an overlap slows the car (and fells a sapling), the overlap pushes it aside.
+   */
+  private treeStep(step: number): void {
+    const car = this.car;
+    // Only a car on the terrain itself meets trees: not on a deck, ramp or tunnel surface.
+    if (car.layer !== 0 || car.airborne || this.rideEdge !== null || this.jump.airborne || this.nature.empty) {
+      this.trees.clear(step);
+      return;
+    }
+    const v = car.body.getLinearVelocity();
+    // A trunk counts only at the car's height (a tree under a deck or down a bank does not).
+    const g = this.jump.z - this.jump.gap, clear = this.clearM, terrain = this.terrain;
+    const atCar = terrain.enabled ? (t: Tree): boolean => Math.abs((terrain.terrainAt(t.x, t.y) ?? g) - g) <= clear : undefined;
+    const r = this.trees.step(step, this.time, this.nature, { x: car.x, y: car.y, vx: v.x, vy: v.y, halfWidth: car.halfWidth }, this.tuning, atCar);
+    if (r === null) return;
+    car.body.setLinearVelocity({ x: r.vx, y: r.vy });
+    if (r.yaw !== 0) car.body.setTransform(car.body.getPosition(), car.body.getAngle() + r.yaw);
+  }
+
+  /**
+   * Water (specs/nature.md "Voda"): the car's centre on the ground layer in water (not `small`) and
+   * off the carriageway of its edge starts the sink. No wall at the bank: quays and piers can be left.
+   */
+  private waterStep(): void {
+    const car = this.car;
+    // Never from a deck, ramp or tunnel surface (the car rides it, specs/terrain.md).
+    if (car.layer !== 0 || car.airborne || this.rideEdge !== null || this.nature.empty) return;
+    const w = this.nature.waterAt(car.x, car.y);
+    if (w === null || w.cls === WaterClass.WATER_SMALL) return;
+    const h = this.layers.hit;
+    if (h !== null && h.edge.isGround && h.dist <= h.edge.width / 2) return;
+    const v = car.body.getLinearVelocity();
+    this.water.start(v.x, v.y);
+    this.trees.clear(0);
+    this.onWater?.();
+  }
+
+  /** The car has sunk: on the nearest kept ground node, facing along its edge, at rest; then the tow. */
+  private sunk(): void {
+    const car = this.car;
+    this.water.reset();
+    const s = roadSpot(this.city.graph, car.x, car.y, null, this.tuning.layers.searchM);
+    if (s !== null) this.place(s.x, s.y, s.heading);
+    this.flow.reset();
+    this.onSunk?.(s?.node ?? -1);
+  }
+
   /** Trail and automatic rescue (specs/flow.md "Vyproštění"); the move itself is place(). */
   private rescueStep(step: number): void {
     const car = this.car, inp = this.input;
     const plan = this.flow.step(step, this.time, {
       x: car.x, y: car.y, heading: car.heading, speed: car.speed,
-      braking: inp.brake > 0 || inp.handbrake, airborne: car.airborne,
-    }, this.flowBlocked());
+      braking: inp.brake > 0 || inp.handbrake, airborne: car.airborne || this.jump.airborne,
+    }, this.flowBlocked() || this.water.sinking);
     if (plan === null) return;
     if (plan.kind === 'road') this.toRoadSpot();
-    else this.place(plan.point.x, plan.point.y, plan.point.heading);
+    else this.place(plan.point.x, plan.point.y, plan.point.heading, true);
     this.onRescue?.(plan.kind);
   }
 
@@ -394,32 +679,40 @@ export class DriveWorld {
     return true;
   }
 
-  /** The rescue move: same body, at rest, on the ground at (x, y). */
-  private place(x: number, y: number, heading: number): void {
+  /**
+   * The rescue move: same body, at rest, on the ground at (x, y). A rewind along the trail
+   * (`onDeck`) keeps a car that was on a bridge deck on that deck (an edge at its height).
+   */
+  private place(x: number, y: number, heading: number, onDeck = false): void {
     const car = this.car, body = car.body;
+    const z = this.jump.z;
     body.setTransform({ x, y }, heading);
     body.setLinearVelocity({ x: 0, y: 0 });
     body.setAngularVelocity(0);
     car.wheelAngle = 0;
-    this.layers.reset(x, y);
-    car.setLayer(this.layers.layer);
+    const deck = onDeck && this.terrain.enabled
+      ? (h: EdgeHit): boolean => !h.edge.isGround && h.edge.z !== null && Math.abs(this.terrain.edgeZ(h.edge, x, y) - z) <= this.clearM
+      : undefined;
+    this.layers.reset(x, y, deck);
+    car.setLayer(this.structureLayer(true));
     this.lastSkid = null;
     this.wallContact = false;
     this.bounceArmed = true;
     this.freeT = 0;
+    this.groundReset();
   }
 
   /**
-   * Landing: the layer mask comes back and the zone test runs with the hold-off (a car landing on
-   * bollards gets out first, specs/zones.md); overlapping traffic is pushed (traffic step 7).
+   * Landing: the layer of the tracked edge and its mask come back (deck rails and deck traffic on a
+   * bridge, specs/hop.md v2); the zone test runs with the hold-off (a car landing on bollards gets
+   * out first, specs/zones.md); overlapping traffic is pushed (traffic step 7).
    */
   private land(): void {
     const car = this.car;
-    this.layers.update(car.x, car.y);
-    car.setLayer(this.layers.layer);
+    car.setLayer(this.structureLayer());
     const r = Math.hypot(car.halfLength, car.halfWidth) + this.tuning.drive.bodyRoundM;
     this.inZone = car.layer === 0 && this.zones.insideFor(car.x, car.y, r, true);
-    car.setZone(zoneMask(car.spec.class, this.inZone));
+    car.setZone(zoneMask(car.spec.class, this.inZone || this.onRamp()));
     car.setAirborne(false);
     this.setPlayerAirborne(false);
   }
@@ -429,7 +722,19 @@ export class DriveWorld {
     const car = this.car;
     const r = Math.hypot(car.halfLength, car.halfWidth) + this.tuning.drive.bodyRoundM;
     this.inZone = car.layer === 0 && this.zones.insideFor(car.x, car.y, r, this.inZone);
-    car.setZone(zoneMask(car.spec.class, this.inZone));
+    car.setZone(zoneMask(car.spec.class, this.inZone || this.onRamp()));
+  }
+
+  /**
+   * On the carriageway of a bridge or ramp edge: bollards never stand there (specs/zones.md, a
+   * road stays passable over its whole width), so a stray barrier line of the pack does not stop
+   * the car at a bridgehead.
+   */
+  private onRamp(): boolean {
+    const h = this.layers.hit;
+    if (h === null) return false;
+    const e = h.edge;
+    return (e.bridge || e.layerFrom !== 0 || e.layerTo !== 0) && !e.tunnel && h.dist <= e.width / 2;
   }
   /** Last zone test result (the hold-off in specs/zones.md). */
   private inZone = false;
@@ -488,7 +793,7 @@ export class DriveWorld {
           }
           continue;
         }
-        if (car.layer !== 0 || car.airborne || speed < t.knockMinMps) continue;
+        if (car.layer !== 0 || car.airborne || this.jump.airborne || speed < t.knockMinMps) continue;
         const dx = p.x - cx, dy = p.y - cy;
         const reachX = car.halfLength + p.radius, reachY = car.halfWidth + p.radius;
         if (Math.abs(dx) > reachX + reachY || Math.abs(dy) > reachX + reachY) continue;
@@ -522,8 +827,11 @@ export class DriveWorld {
     const last = this.lastSkid;
     if (last !== null) {
       this.skids.push(last[0], last[1], lx, ly, last[2], last[3], qx, qy);
+      const g = this.jump.z - this.jump.gap;
+      this.skidZ.push(g, g);
       const max = s.maxSegments * 4;
       if (this.skids.length > max) this.skids.splice(0, this.skids.length - max);
+      if (this.skidZ.length > s.maxSegments) this.skidZ.splice(0, this.skidZ.length - s.maxSegments);
       this.skidsVersion++;
     }
     this.lastSkid = [lx, ly, qx, qy];

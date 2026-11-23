@@ -140,6 +140,7 @@ class Tuning {
 
   int chunkM;
 
+  /// cruise = no-input pace; 14.0 with specs/drive.md v2 (flipped in shared/cruise-v2-scenarios)
   final TuningSpeedMps speedMps;
 
   /// citypack: road corridors and building masses.
@@ -414,6 +415,7 @@ class TuningExtrusion {
   static const keys = ['k', 'knee_m', 'exp', 'max_scale'];
 }
 
+/// cruise = no-input pace; 14.0 with specs/drive.md v2 (flipped in shared/cruise-v2-scenarios)
 class TuningSpeedMps {
   TuningSpeedMps._(_R r)
       : cruise = r.d('cruise'),
@@ -683,7 +685,10 @@ class TuningTrams {
         spawnClearM = r.d('spawn_clear_m'),
         despawnM = r.d('despawn_m'),
         seed = r.i('seed'),
-        railGaugeM = r.d('rail_gauge_m');
+        railGaugeM = r.d('rail_gauge_m'),
+        maxSwitchDeg = r.d('max_switch_deg'),
+        turnProbeM = r.d('turn_probe_m'),
+        maxTurnDegPerM = r.d('max_turn_deg_per_m');
 
   bool enabled;
 
@@ -749,6 +754,15 @@ class TuningTrams {
   /// drawn distance between the two rails (world metres)
   double railGaugeM;
 
+  /// trams.md v2: a node turn sharper than this is not a track connection
+  double maxSwitchDeg;
+
+  /// the turn at a node is measured this far along both edges
+  double turnProbeM;
+
+  /// acceptance: max change of a car's axis per metre of travel (test)
+  double maxTurnDegPerM;
+
   Map<String, Object> toJson() => {
         'enabled': enabled,
         'min_track_m': minTrackM,
@@ -779,6 +793,9 @@ class TuningTrams {
         'despawn_m': despawnM,
         'seed': seed,
         'rail_gauge_m': railGaugeM,
+        'max_switch_deg': maxSwitchDeg,
+        'turn_probe_m': turnProbeM,
+        'max_turn_deg_per_m': maxTurnDegPerM,
       };
 }
 
@@ -915,6 +932,7 @@ class TuningDrive {
         reversePower = r.d('reverse_power'),
         engineBrakeMps2 = r.d('engine_brake_mps2'),
         overspeedMps = r.d('overspeed_mps'),
+        cruiseHoldMps2 = r.d('cruise_hold_mps2'),
         dragLinear = r.d('drag_linear'),
         dragQuadratic = r.d('drag_quadratic'),
         handbrakeDecelMps2 = r.d('handbrake_decel_mps2'),
@@ -972,6 +990,9 @@ class TuningDrive {
   /// engine braking starts this far above the wanted speed
   double overspeedMps;
 
+  /// auto-cruise cancels the downhill slope pull up to this (specs/drive.md v2)
+  double cruiseHoldMps2;
+
   /// 1/s
   double dragLinear;
 
@@ -1024,6 +1045,7 @@ class TuningDrive {
         'reverse_power': reversePower,
         'engine_brake_mps2': engineBrakeMps2,
         'overspeed_mps': overspeedMps,
+        'cruise_hold_mps2': cruiseHoldMps2,
         'drag_linear': dragLinear,
         'drag_quadratic': dragQuadratic,
         'handbrake_decel_mps2': handbrakeDecelMps2,
@@ -4018,6 +4040,8 @@ class TuningCars {
         garageRadiusM = r.d('garage_radius_m'),
         garageSpeedMps = r.d('garage_speed_mps'),
         actionHoldS = r.d('action_hold_s'),
+        testDriveS = r.d('test_drive_s'),
+        testDriveLowS = r.d('test_drive_low_s'),
         parked = TuningCarsParked._(r.sub('parked'));
 
   String startCar;
@@ -4039,6 +4063,12 @@ class TuningCars {
   /// the context button stays this long after the stop (auto-throttle moves on)
   double actionHoldS;
 
+  /// garage test drive of a car for sale, game seconds (specs/testdrive.md)
+  double testDriveS;
+
+  /// the countdown pill turns red below this
+  double testDriveLowS;
+
   final TuningCarsParked parked;
 
   Map<String, Object> toJson() => {
@@ -4050,6 +4080,8 @@ class TuningCars {
         'garage_radius_m': garageRadiusM,
         'garage_speed_mps': garageSpeedMps,
         'action_hold_s': actionHoldS,
+        'test_drive_s': testDriveS,
+        'test_drive_low_s': testDriveLowS,
         'parked': parked.toJson(),
       };
 }
@@ -4801,7 +4833,8 @@ class TuningEconomy {
         bandBonus = r.il('band_bonus'),
         firstBonus = r.i('first_bonus'),
         firstMinStars = r.i('first_min_stars'),
-        towFee = r.i('tow_fee');
+        towFee = r.i('tow_fee'),
+        debugGrant = r.i('debug_grant');
 
   /// game money before engine and star percentages
   int base;
@@ -4825,6 +4858,9 @@ class TuningEconomy {
   /// wrecked car (paid up to the cash the player has)
   int towFee;
 
+  /// debug-only "+10 000" cash button (specs/testdrive.md)
+  int debugGrant;
+
   Map<String, Object> toJson() => {
         'base': base,
         'engine_pct': enginePct.toJson(),
@@ -4834,6 +4870,7 @@ class TuningEconomy {
         'first_bonus': firstBonus,
         'first_min_stars': firstMinStars,
         'tow_fee': towFee,
+        'debug_grant': debugGrant,
       };
 }
 
@@ -5049,7 +5086,9 @@ class TuningTerrain {
         blendM = r.i('blend_m'),
         maxGrade = TuningTerrainMaxGrade._(r.sub('max_grade')),
         bridge = TuningTerrainBridge._(r.sub('bridge')),
-        tunnel = TuningTerrainTunnel._(r.sub('tunnel'));
+        tunnel = TuningTerrainTunnel._(r.sub('tunnel')),
+        pipeline = TuningTerrainPipeline._(r.sub('pipeline')),
+        lod = TuningTerrainLod._(r.sub('lod'));
 
   /// game height = z0 + (real − z0) x this (K2)
   double exaggeration;
@@ -5066,6 +5105,11 @@ class TuningTerrain {
 
   final TuningTerrainTunnel tunnel;
 
+  /// citypack `elevation` and `lod` steps (plan ch. 4); clients do not read these.
+  final TuningTerrainPipeline pipeline;
+
+  final TuningTerrainLod lod;
+
   Map<String, Object> toJson() => {
         'exaggeration': exaggeration,
         'grid_m': gridM,
@@ -5073,6 +5117,8 @@ class TuningTerrain {
         'max_grade': maxGrade.toJson(),
         'bridge': bridge.toJson(),
         'tunnel': tunnel.toJson(),
+        'pipeline': pipeline.toJson(),
+        'lod': lod.toJson(),
       };
 }
 
@@ -5178,6 +5224,237 @@ class TuningTerrainTunnel {
   static const keys = ['depth_water_m', 'depth_land_m', 'max_grade'];
 }
 
+/// citypack `elevation` and `lod` steps (plan ch. 4); clients do not read these.
+class TuningTerrainPipeline {
+  TuningTerrainPipeline._(_R r)
+      : demMarginM = r.d('dem_margin_m'),
+        demGridM = r.d('dem_grid_m'),
+        demZoom = r.i('dem_zoom'),
+        cleanSigmaM = r.d('clean_sigma_m'),
+        cleanSigmaCoarseM = r.d('clean_sigma_coarse_m'),
+        profileStepM = r.d('profile_step_m'),
+        profileWindowM = TuningTerrainPipelineProfileWindowM._(r.sub('profile_window_m')),
+        elevatedM = r.d('elevated_m'),
+        underwaterM = r.d('underwater_m'),
+        gradeToleranceM = r.d('grade_tolerance_m'),
+        gradePasses = r.i('grade_passes'),
+        zToleranceM = r.d('z_tolerance_m'),
+        roadGapMaxM = r.d('road_gap_max_m'),
+        roadGapShare = r.d('road_gap_share'),
+        roadStrip = TuningTerrainPipelineRoadStrip._(r.sub('road_strip')),
+        bridgeMinClearM = r.d('bridge_min_clear_m'),
+        bridgeOverWaterM = r.d('bridge_over_water_m'),
+        profileFairPasses = r.i('profile_fair_passes'),
+        conformFit = TuningTerrainPipelineConformFit._(r.sub('conform_fit')),
+        sun = TuningTerrainPipelineSun._(r.sub('sun')),
+        shadeStrength = r.d('shade_strength');
+
+  /// DEM read around the area
+  double demMarginM;
+
+  /// working grid in local metres
+  double demGridM;
+
+  /// AWS Terrain Tiles zoom (~3.6 m/px at 40° N)
+  int demZoom;
+
+  /// smoothing after removing buildings from a surface model
+  double cleanSigmaM;
+
+  /// the same for a coarse one (~25 m EU-DEM smears blocks into streets)
+  double cleanSigmaCoarseM;
+
+  /// road profile samples (and densified edges)
+  double profileStepM;
+
+  final TuningTerrainPipelineProfileWindowM profileWindowM;
+
+  /// viaduct over land: terrain + this
+  double elevatedM;
+
+  /// terrain under water: level − this
+  double underwaterM;
+
+  /// grade_clamp stops below this excess
+  double gradeToleranceM;
+
+  int gradePasses;
+
+  /// densified samples on a straight profile are dropped
+  double zToleranceM;
+
+  /// validate: road edge vs terrain
+  double roadGapMaxM;
+
+  /// validate: share of road edge samples allowed over road_gap_max_m
+  double roadGapShare;
+
+  /// validate: |terrain − road profile| on kept carriageways (the car rides the terrain there)
+  final TuningTerrainPipelineRoadStrip roadStrip;
+
+  /// validate fails below water/road + this; below bridge.clear_* it warns
+  double bridgeMinClearM;
+
+  /// a ground edge over water this long in one stretch is an (unflagged) bridge
+  double bridgeOverWaterM;
+
+  /// after grade_clamp: smooth the sawtooth on steep hills (then clamp again)
+  int profileFairPasses;
+
+  /// road strip samples that fit the grid nodes to the road profile
+  final TuningTerrainPipelineConformFit conformFit;
+
+  final TuningTerrainPipelineSun sun;
+
+  /// z-factor on game slopes in the Chunk.shade channel only (1 = plain hillshade)
+  double shadeStrength;
+
+  Map<String, Object> toJson() => {
+        'dem_margin_m': demMarginM,
+        'dem_grid_m': demGridM,
+        'dem_zoom': demZoom,
+        'clean_sigma_m': cleanSigmaM,
+        'clean_sigma_coarse_m': cleanSigmaCoarseM,
+        'profile_step_m': profileStepM,
+        'profile_window_m': profileWindowM.toJson(),
+        'elevated_m': elevatedM,
+        'underwater_m': underwaterM,
+        'grade_tolerance_m': gradeToleranceM,
+        'grade_passes': gradePasses,
+        'z_tolerance_m': zToleranceM,
+        'road_gap_max_m': roadGapMaxM,
+        'road_gap_share': roadGapShare,
+        'road_strip': roadStrip.toJson(),
+        'bridge_min_clear_m': bridgeMinClearM,
+        'bridge_over_water_m': bridgeOverWaterM,
+        'profile_fair_passes': profileFairPasses,
+        'conform_fit': conformFit.toJson(),
+        'sun': sun.toJson(),
+        'shade_strength': shadeStrength,
+      };
+}
+
+class TuningTerrainPipelineProfileWindowM {
+  TuningTerrainPipelineProfileWindowM._(_R r)
+      : lidar = r.d('lidar'),
+        coarse = r.d('coarse');
+
+  double lidar;
+
+  double coarse;
+
+  Map<String, Object> toJson() => {
+        'lidar': lidar,
+        'coarse': coarse,
+      };
+
+  /// Value by YAML key, null when the key is unknown.
+  double? operator [](String key) => switch (key) {
+        'lidar' => lidar,
+        'coarse' => coarse,
+        _ => null,
+      };
+
+  static const keys = ['lidar', 'coarse'];
+}
+
+/// validate: |terrain − road profile| on kept carriageways (the car rides the terrain there)
+class TuningTerrainPipelineRoadStrip {
+  TuningTerrainPipelineRoadStrip._(_R r)
+      : tolM = r.d('tol_m'),
+        share = r.d('share'),
+        maxM = r.d('max_m');
+
+  double tolM;
+
+  double share;
+
+  double maxM;
+
+  Map<String, Object> toJson() => {
+        'tol_m': tolM,
+        'share': share,
+        'max_m': maxM,
+      };
+
+  /// Value by YAML key, null when the key is unknown.
+  double? operator [](String key) => switch (key) {
+        'tol_m' => tolM,
+        'share' => share,
+        'max_m' => maxM,
+        _ => null,
+      };
+
+  static const keys = ['tol_m', 'share', 'max_m'];
+}
+
+/// road strip samples that fit the grid nodes to the road profile
+class TuningTerrainPipelineConformFit {
+  TuningTerrainPipelineConformFit._(_R r)
+      : stepM = r.d('step_m'),
+        passes = r.i('passes');
+
+  double stepM;
+
+  int passes;
+
+  Map<String, Object> toJson() => {
+        'step_m': stepM,
+        'passes': passes,
+      };
+}
+
+class TuningTerrainPipelineSun {
+  TuningTerrainPipelineSun._(_R r)
+      : azimuthDeg = r.d('azimuth_deg'),
+        altitudeDeg = r.d('altitude_deg');
+
+  double azimuthDeg;
+
+  double altitudeDeg;
+
+  Map<String, Object> toJson() => {
+        'azimuth_deg': azimuthDeg,
+        'altitude_deg': altitudeDeg,
+      };
+
+  /// Value by YAML key, null when the key is unknown.
+  double? operator [](String key) => switch (key) {
+        'azimuth_deg' => azimuthDeg,
+        'altitude_deg' => altitudeDeg,
+        _ => null,
+      };
+
+  static const keys = ['azimuth_deg', 'altitude_deg'];
+}
+
+class TuningTerrainLod {
+  TuningTerrainLod._(_R r)
+      : gridM = r.i('grid_m'),
+        chunks = r.i('chunks'),
+        blockMergeM = r.d('block_merge_m'),
+        simplifyM = r.d('simplify_m'),
+        parklandHeightM = r.d('parkland_height_m');
+
+  int gridM;
+
+  int chunks;
+
+  double blockMergeM;
+
+  double simplifyM;
+
+  double parklandHeightM;
+
+  Map<String, Object> toJson() => {
+        'grid_m': gridM,
+        'chunks': chunks,
+        'block_merge_m': blockMergeM,
+        'simplify_m': simplifyM,
+        'parkland_height_m': parklandHeightM,
+      };
+}
+
 class TuningSlopePhysics {
   TuningSlopePhysics._(_R r)
       : gravity = r.d('gravity'),
@@ -5227,7 +5504,8 @@ class TuningNature {
         trunkRadiusM = r.d('trunk_radius_m'),
         grip = TuningNatureGrip._(r.sub('grip')),
         crownFade = TuningNatureCrownFade._(r.sub('crown_fade')),
-        waterFall = TuningNatureWaterFall._(r.sub('water_fall'));
+        waterFall = TuningNatureWaterFall._(r.sub('water_fall')),
+        pipeline = TuningNaturePipeline._(r.sub('pipeline'));
 
   /// game metres, not scaled by car_scale
   final TuningNatureTreeSizes treeSizes;
@@ -5249,6 +5527,9 @@ class TuningNature {
 
   final TuningNatureWaterFall waterFall;
 
+  /// citypack `nature` step (plan ch. 4); clients do not read these.
+  final TuningNaturePipeline pipeline;
+
   Map<String, Object> toJson() => {
         'tree_sizes': treeSizes.toJson(),
         'trees_per_ha': treesPerHa.toJson(),
@@ -5259,6 +5540,7 @@ class TuningNature {
         'grip': grip.toJson(),
         'crown_fade': crownFade.toJson(),
         'water_fall': waterFall.toJson(),
+        'pipeline': pipeline.toJson(),
       };
 }
 
@@ -5483,6 +5765,89 @@ class TuningNatureWaterFall {
       };
 
   static const keys = ['sink_s'];
+}
+
+/// citypack `nature` step (plan ch. 4); clients do not read these.
+class TuningNaturePipeline {
+  TuningNaturePipeline._(_R r)
+      : simplifyM = r.d('simplify_m'),
+        smallWaterM2 = r.d('small_water_m2'),
+        streamRiverM = r.d('stream_river_m'),
+        waterNameSearchM = r.d('water_name_search_m'),
+        labelWaterHa = r.d('label_water_ha'),
+        labelGreenHa = r.d('label_green_ha'),
+        namedWaterHa = r.d('named_water_ha'),
+        areaNameWaterM = r.d('area_name_water_m'),
+        areaNameParkM = r.d('area_name_park_m'),
+        bigParkHa = r.d('big_park_ha'),
+        woodCoverHa = r.d('wood_cover_ha'),
+        treeSizeMix = r.dl('tree_size_mix'),
+        streetTreeSnapM = r.d('street_tree_snap_m'),
+        treeMinSpacingM = r.d('tree_min_spacing_m'),
+        treeRowStepM = r.d('tree_row_step_m'),
+        deckTreeMarginM = r.d('deck_tree_margin_m');
+
+  /// outline simplification (river widths kept)
+  double simplifyM;
+
+  /// below: class small
+  double smallWaterM2;
+
+  /// a stream polygon wider than this is a river
+  double streamRiverM;
+
+  /// unnamed river/sea pieces take the nearest named water line
+  double waterNameSearchM;
+
+  double labelWaterHa;
+
+  double labelGreenHa;
+
+  /// validate: bigger water bodies must have a name
+  double namedWaterHa;
+
+  /// spots.area_name: near named water
+  double areaNameWaterM;
+
+  /// spots.area_name: in or next to a named park
+  double areaNameParkM;
+
+  /// parks without inner surfaces are split by land_cover
+  double bigParkHa;
+
+  double woodCoverHa;
+
+  /// S, M, L for scattered trees
+  List<double> treeSizeMix;
+
+  /// inventory and OSM trees this close to a street go to its sidewalk
+  double streetTreeSnapM;
+
+  double treeMinSpacingM;
+
+  double treeRowStepM;
+
+  /// no crown within this of a bridge, ramp or viaduct footprint (on the ground below)
+  double deckTreeMarginM;
+
+  Map<String, Object> toJson() => {
+        'simplify_m': simplifyM,
+        'small_water_m2': smallWaterM2,
+        'stream_river_m': streamRiverM,
+        'water_name_search_m': waterNameSearchM,
+        'label_water_ha': labelWaterHa,
+        'label_green_ha': labelGreenHa,
+        'named_water_ha': namedWaterHa,
+        'area_name_water_m': areaNameWaterM,
+        'area_name_park_m': areaNameParkM,
+        'big_park_ha': bigParkHa,
+        'wood_cover_ha': woodCoverHa,
+        'tree_size_mix': treeSizeMix,
+        'street_tree_snap_m': streetTreeSnapM,
+        'tree_min_spacing_m': treeMinSpacingM,
+        'tree_row_step_m': treeRowStepM,
+        'deck_tree_margin_m': deckTreeMarginM,
+      };
 }
 
 /// Smooth driving: soft trees, wall slide, rescue (specs/flow.md, Prompts/04-METROPOLE_FLOW_PLAN.md).

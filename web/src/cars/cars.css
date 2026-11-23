@@ -4,6 +4,11 @@
   align-items: center;
   gap: var(--space-sm);
   width: 100%;
+  margin-top: var(--space-sm);
+  padding: var(--space-sm);
+  box-sizing: border-box;
+  border: 1px solid var(--color-ui-text-faint);
+  border-radius: var(--radius-button);
   text-align: left;
 }
 .garage-sale-thumb {
@@ -17,11 +22,47 @@
   flex-direction: column;
   min-width: 0;
 }
-.garage-sale-info span,
-.garage-sale-price {
+.garage-sale-info span {
   font-size: var(--font-hud-small);
   color: var(--color-ui-text-muted);
 }
-.garage-sale-price {
+/* "Koupit · cena" and "Vyzkoušet" (specs/testdrive.md "Nabídka"). */
+.garage-sale-actions {
+  display: flex;
   flex: none;
+  flex-direction: column;
+  gap: 4px;
+}
+.garage-sale-actions .mg-btn {
+  box-sizing: border-box;
+  width: 100%;
+  margin-top: 0;
+  padding: 6px 10px;
+  font-size: var(--font-hud-small);
+  white-space: nowrap;
+}
+
+/* Test-drive countdown (specs/testdrive.md); the taxi HUD's place, they never run together. */
+#test-drive-hud {
+  position: absolute;
+  top: calc(env(safe-area-inset-top) + 140px);
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  pointer-events: auto;
+}
+#test-drive-hud[hidden] {
+  display: none;
+}
+#test-drive-hud .pill {
+  background: var(--color-test-drive-pill);
+  color: var(--color-test-drive-pill-text);
+  font-size: var(--font-hud);
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+#test-drive-hud .pill.low {
+  background: var(--color-test-drive-low);
 }

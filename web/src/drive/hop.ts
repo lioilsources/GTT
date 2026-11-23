@@ -9,9 +9,12 @@ export function hopCharges(spec: Pick<CarSpec, 'hop'>): number | null {
   return typeof c === 'number' && c > 0 ? Math.floor(c) : null;
 }
 
-/** The hop can start: the car has `hop`, a charge left, is on the ground in layer 0 and fast enough. */
-export function canHop(spec: Pick<CarSpec, 'hop'>, charges: number, air: number, layer: number, speed: number, t: TuningHop): boolean {
-  return hopCharges(spec) !== null && charges > 0 && air <= 0 && layer === 0 && speed >= t.minSpeedMps;
+/**
+ * The hop can start: the car has `hop`, a charge left, is on the ground and fast enough; any layer
+ * (hop.md v2: bridges and tunnels too). [layer] stays in the signature of the spec.
+ */
+export function canHop(spec: Pick<CarSpec, 'hop'>, charges: number, air: number, _layer: number, speed: number, t: TuningHop): boolean {
+  return hopCharges(spec) !== null && charges > 0 && air <= 0 && speed >= t.minSpeedMps;
 }
 
 /** Height of the arc after t seconds of an airS flight peaking at heightM (drawing only). */
@@ -24,6 +27,11 @@ export function hopArc(t: number, airS: number, heightM: number): number {
 /** Body width factor of the flip (specs/hop.md "Kreslení"): cos(2π · flips · t / air_s). */
 export function hopFlip(t: number, airS: number, flips: number): number {
   return airS > 0 ? Math.cos((2 * Math.PI * flips * t) / airS) : 1;
+}
+
+/** Roll angle of the flip in the chase view (radians): 2π · flips · t / air_s; cos of it is hopFlip. */
+export function hopRoll(t: number, airS: number, flips: number): number {
+  return airS > 0 ? (2 * Math.PI * flips * t) / airS : 0;
 }
 
 /** Session state of the hop (not saved). */

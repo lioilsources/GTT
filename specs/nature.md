@@ -105,9 +105,38 @@ risografickým inkoustem, tokijský asfalt nechat (mimo rozsah). Nic se nemění
 - Provoz a chodci: auta AI zůstávají na silnicích, chodci chodí parkem po cestách.
 - Lodě (N2, jen kulisa): nejvýš 6 viditelných, po trasách trajektů z dat; kde nejsou, nejsou.
 
+### Upřesnění N1 (klient W, F-072)
+- **Povrch:** bere se zelený kus (`Mesh` třídy PARK) pod středem auta v jeho chunku (kusy jsou ořezané
+  mřížkou), při překryvu ten s menší plochou; mimo zeleň `asphalt`. Jen ve vrstvě 0, jinde `asphalt`.
+  Násobí se boční grip obou náprav **a zpomalení brzdy** `brake` (přilnavost omezuje i brzdění, jinak
+  by brzdná dráha na trávě nebyla delší); déšť (`specs/weather.md`) dál jen boční grip. Les: viz
+  `specs/flow.md` „Les“ (grip × `flow.forest.grip`, cílová a maximální rychlost a síla motoru ×
+  `speed_factor`).
+- **Vjezd do vody:** po kroku fyziky (po nárazech do zdí a stromech), když auto není ve vzduchu ani
+  v animaci přesunu; střed auta na vozovce své hrany (`dist ≤ width/2` hrany ve vrstvě 0) pád
+  nespouští (data nábřeží se mohou o kus překrývat s vodou). Potápění: vstup se ignoruje, rychlost
+  = rychlost při vjezdu × (1 − τ/`sink_s`) (lineárně k nule), úhlová rychlost 0, automatické
+  vyproštění a skok neběží. Po `sink_s` přesun jako „Přesun na silnici“ ze `specs/flow.md` bez trasy
+  GPS (uzel, směr první hrany), stejné těleso, stopa vyprázdněna; pak poplatek.
+
 ### Scénáře (`scenarios/nature/`, ±5 %, `sedan_regent`)
 1. `brake_grass`, `brake_sand` proti `brake_asphalt` – brzdná dráha z 20 m/s.
 2. `water_fall` – vjezd do vody: respawn na stejném uzlu (shoda id uzlu), poplatek.
+3. `parkland_trees` – průjezd parkovou zelení z nahraných vstupů: stejný počet nárazů do stromů.
+
+**Syntetická trať:** graf a krok jako `specs/flow.md` „Scénáře“ (uzly 0 (−200, 0), 1 (0, 0),
+2 (200, 0), šířka 20 m), bez budov, mobiliáře a počasí, provoz nepevný. Chunk 256 m,
+`nature_version` 1; zeleň a voda jsou obdélníky ořezané mřížkou chunků (každý kus dva trojúhelníky),
+stromy v chunku svého kmene v uvedeném pořadí. Start = poloha, natočení, rychlost ve směru natočení.
+Testy W: `web/test/nature.test.ts`.
+
+| scénář | plochy a stromy | start, délka | metriky |
+|---|---|---|---|
+| `brake_asphalt` | žádné | (−100, 100), 0°, 20 m/s, 4 s, brzda 1 | `brake_m` = vzdálenost od startu, když rychlost poprvé klesne pod `drive.brake_min_mps`; `brake_s` = čas toho kroku |
+| `brake_grass` | zeleň `grass`/`grass` x −200…200, y 80…120 | jako výše | jako výše |
+| `brake_sand` | zeleň `sand`/`sand` tamtéž | jako výše | jako výše |
+| `water_fall` | voda `river` x −200…200, y 30…200 | (60, 0), 90°, 10 m/s, 5 s, bez vstupu | `falls`; `entry_y_m` = y při vjezdu; `sink_s` = čas přesunu − čas vjezdu; `respawn_node` (1); `respawn_heading_deg` (180); `rescues` |
+| `parkland_trees` | zeleň `parkland`/`grass` x −200…200, y 40…200; stromy mřížka 10 × 10 po 9 m od (−100, 60), index k: x = −100 + 9·(k mod 10), y = 60 + 9·⌊k/10⌋, velikost (k mod 10 + ⌊k/10⌋) mod 3 | (−120, 100), 0°, 12 m/s, 8 s, vstupy ze souboru | `tree_hits`; `saplings_fallen` = padlé S na konci; `min_speed_mps`; `rescues` |
 
 ## Hraniční případy
 - Balíček bez tříd: `ground` kreslení jako dosud, povrch všude `asphalt`.

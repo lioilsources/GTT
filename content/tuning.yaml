@@ -11,7 +11,7 @@ view_width_m: {slow: 50.0, fast: 85.0}     # zoom by speed
 car_anchor: {x: 0.5, y: 0.72}          # car position on screen
 extrusion: {k: 0.004, knee_m: 50.0, exp: 0.85, max_scale: 2.2}
 chunk_m: 256
-speed_mps: {cruise: 25.0, top_default: 40.0}
+speed_mps: {cruise: 25.0, top_default: 40.0}   # cruise = no-input pace; 14.0 with specs/drive.md v2 (flipped in shared/cruise-v2-scenarios)
 
 # citypack: road corridors and building masses.
 roads:
@@ -78,6 +78,9 @@ trams:
   despawn_m: 520.0
   seed: 20261122
   rail_gauge_m: 3.6             # drawn distance between the two rails (world metres)
+  max_switch_deg: 50.0          # trams.md v2: a node turn sharper than this is not a track connection
+  turn_probe_m: 5.0             # the turn at a node is measured this far along both edges
+  max_turn_deg_per_m: 12.0      # acceptance: max change of a car's axis per metre of travel (test)
 
 # Chunk streaming (METROPOLE_PLAN 6.4): window in chunks around the player.
 streaming: {ahead: 3, behind: 1, side: 1, keep: 3, max_in_flight: 2, retry_s: 2.0}
@@ -106,6 +109,7 @@ drive:
   reverse_power: 0.6            # fraction of car power
   engine_brake_mps2: 2.0
   overspeed_mps: 1.0            # engine braking starts this far above the wanted speed
+  cruise_hold_mps2: 4.0         # auto-cruise cancels the downhill slope pull up to this (specs/drive.md v2)
   drag_linear: 0.04             # 1/s
   drag_quadratic: 0.0012        # 1/m
   handbrake_decel_mps2: 3.5
@@ -761,6 +765,8 @@ cars:
   garage_radius_m: 18.0       # around the garage spot's parking point
   garage_speed_mps: 1.5
   action_hold_s: 1.5          # the context button stays this long after the stop (auto-throttle moves on)
+  test_drive_s: 180.0         # garage test drive of a car for sale, game seconds (specs/testdrive.md)
+  test_drive_low_s: 15.0      # the countdown pill turns red below this
   parked:
     salt: 739982445
     per_chunk: 4
@@ -910,6 +916,7 @@ economy:
   first_bonus: 100              # first finish of a minigame with at least first_min_stars
   first_min_stars: 1
   tow_fee: 75                   # wrecked car (paid up to the cash the player has)
+  debug_grant: 10000            # debug-only "+10 000" cash button (specs/testdrive.md)
 # Loop glue (specs/loop.md): the "Play" context button at a spot without a route.
 loop:
   spot_radius_m: 22.0           # around the spot's parking point
@@ -947,6 +954,31 @@ terrain:
   max_grade: {motorway: 0.08, trunk: 0.10, primary: 0.20, secondary: 0.20, tertiary: 0.28, alley: 0.33}
   bridge: {clear_water_m: 15.0, clear_road_m: 6.0, max_grade: 0.07}
   tunnel: {depth_water_m: 10.0, depth_land_m: 8.0, max_grade: 0.07}
+  # citypack `elevation` and `lod` steps (plan ch. 4); clients do not read these.
+  pipeline:
+    dem_margin_m: 500.0         # DEM read around the area
+    dem_grid_m: 4.0             # working grid in local metres
+    dem_zoom: 15                # AWS Terrain Tiles zoom (~3.6 m/px at 40° N)
+    clean_sigma_m: 30.0         # smoothing after removing buildings from a surface model
+    clean_sigma_coarse_m: 60.0  # the same for a coarse one (~25 m EU-DEM smears blocks into streets)
+    profile_step_m: 16.0        # road profile samples (and densified edges)
+    profile_window_m: {lidar: 40.0, coarse: 120.0}
+    elevated_m: 8.0             # viaduct over land: terrain + this
+    underwater_m: 3.0           # terrain under water: level − this
+    grade_tolerance_m: 0.05     # grade_clamp stops below this excess
+    grade_passes: 500
+    z_tolerance_m: 0.1          # densified samples on a straight profile are dropped
+    road_gap_max_m: 0.3         # validate: road edge vs terrain
+    road_gap_share: 0.01        # validate: share of road edge samples allowed over road_gap_max_m
+    # validate: |terrain − road profile| on kept carriageways (the car rides the terrain there)
+    road_strip: {tol_m: 0.15, share: 0.005, max_m: 1.0}
+    bridge_min_clear_m: 2.0     # validate fails below water/road + this; below bridge.clear_* it warns
+    bridge_over_water_m: 25.0   # a ground edge over water this long in one stretch is an (unflagged) bridge
+    profile_fair_passes: 50     # after grade_clamp: smooth the sawtooth on steep hills (then clamp again)
+    conform_fit: {step_m: 2.0, passes: 20}   # road strip samples that fit the grid nodes to the road profile
+    sun: {azimuth_deg: 315.0, altitude_deg: 45.0}
+    shade_strength: 3.0         # z-factor on game slopes in the Chunk.shade channel only (1 = plain hillshade)
+  lod: {grid_m: 32, chunks: 4, block_merge_m: 5.0, simplify_m: 4.0, parkland_height_m: 8.0}
 slope_physics:
   gravity: 20.0                 # m/s² in game units
   slope_force_scale: 0.6
@@ -968,6 +1000,24 @@ nature:
   grip: {asphalt: 1.0, dirt: 0.8, grass: 0.75, sand: 0.6}
   crown_fade: {radius_m: 14.0, alpha: 0.35}
   water_fall: {sink_s: 1.2}
+  # citypack `nature` step (plan ch. 4); clients do not read these.
+  pipeline:
+    simplify_m: 2.0             # outline simplification (river widths kept)
+    small_water_m2: 400.0       # below: class small
+    stream_river_m: 6.0         # a stream polygon wider than this is a river
+    water_name_search_m: 1000.0 # unnamed river/sea pieces take the nearest named water line
+    label_water_ha: 2.0
+    label_green_ha: 1.0
+    named_water_ha: 5.0         # validate: bigger water bodies must have a name
+    area_name_water_m: 150.0    # spots.area_name: near named water
+    area_name_park_m: 25.0      # spots.area_name: in or next to a named park
+    big_park_ha: 5.0            # parks without inner surfaces are split by land_cover
+    wood_cover_ha: 0.5
+    tree_size_mix: [0.2, 0.5, 0.3]   # S, M, L for scattered trees
+    street_tree_snap_m: 15.0    # inventory and OSM trees this close to a street go to its sidewalk
+    tree_min_spacing_m: 3.0
+    tree_row_step_m: 8.0
+    deck_tree_margin_m: 2.0     # no crown within this of a bridge, ramp or viaduct footprint (on the ground below)
 
 # Smooth driving: soft trees, wall slide, rescue (specs/flow.md, Prompts/04-METROPOLE_FLOW_PLAN.md).
 flow:

@@ -13,7 +13,7 @@ import type { CarSpec } from '../src/gen/schema';
 import { Tuning } from '../src/gen/tuning';
 import { Prng } from '../src/rules/prng';
 import { Traffic } from '../src/traffic/traffic';
-import { articulate, chooseNextTrack, nextStopAhead, Trail } from '../src/trams/trackRules';
+import { articulate, chooseNextTrack, feasibleNext, nextStopAhead, straightestPrev, Trail, turnCos } from '../src/trams/trackRules';
 import { Trams } from '../src/trams/trams';
 import type { PackSource } from '../src/world/citypack';
 import { City, RoadGraph, TrackGraph } from '../src/world/model';
@@ -23,6 +23,8 @@ const tuning = Tuning.fromJson(parse(readFileSync(join(root, 'content', 'tuning.
 const t = tuning.trams;
 const spec = JSON.parse(readFileSync(join(root, 'content', 'cars', 'm0_coupe.json'), 'utf8')) as CarSpec;
 const dt = 1 / tuning.drive.stepHz;
+const cosMin = Math.cos((t.maxSwitchDeg * Math.PI) / 180);
+const probeM = t.turnProbeM;
 
 const node = (x: number, y: number, border = false) => create(NodeSchema, { x: x * 10, y: y * 10, border });
 const track = (from: number, to: number, pts: number[]) => create(TramEdgeSchema, { from, to, points: pts.map((v) => v * 10) });
@@ -32,18 +34,18 @@ const stop = (edge: number, sM: number) => create(TramStopSchema, { edge, sM });
  * Tiny track graph (metres). The same graph and expected values belong in the Dart test of F-030.
  *
  *                 3 (100,100) terminus
- *                 | e2 3→1
+ *                 | e2 3→1 (90° to e0 and e1: not a track connection, v2)
  *  0 ──e0── 1 (100,0) ──e1── 2 (200,0) border
- *  (0,0)      \ e3 1→4 (150,-80)      e4: loop at 1
+ *  (0,0)      \ e3 1→4 (200,-40), 21.8° off e0 (a switch)     e4: loop at 1
  */
 function junction(): TrackGraph {
   return TrackGraph.fromPb(create(TramGraphSchema, {
-    nodes: [node(0, 0), node(100, 0), node(200, 0, true), node(100, 100), node(150, -80)],
+    nodes: [node(0, 0), node(100, 0), node(200, 0, true), node(100, 100), node(200, -40)],
     edges: [
       track(0, 1, [0, 0, 100, 0]),
       track(1, 2, [100, 0, 200, 0]),
       track(3, 1, [100, 100, 100, 0]),
-      track(1, 4, [100, 0, 150, -80]),
+      track(1, 4, [100, 0, 200, -40]),
       track(1, 1, [100, 0, 120, 20, 80, 20, 100, 0]),
     ],
   }));
@@ -68,15 +70,37 @@ function step(world: World, player: Car, trams: Trams | null, traffic: Traffic |
 }
 
 describe('tram rules (specs/trams.md)', () => {
-  it('chooses the next track edge with the shared PRNG, never a loop', () => {
+  it('measures the turn at a node and keeps only feasible connections (v2)', () => {
+    const g = junction();
+    expect(turnCos(g, 1, 0, 1, probeM)).toBeCloseTo(1, 9);
+    expect(turnCos(g, 1, 0, 3, probeM)).toBeCloseTo(100 / Math.hypot(100, 40), 6);
+    expect(turnCos(g, 1, 0, 2, probeM)).toBeCloseTo(0, 6); // 90°
+    expect(turnCos(g, 1, 1, 3, probeM)).toBeCloseTo(-100 / Math.hypot(100, 40), 6); // hairpin
+    expect(feasibleNext(g, 1, 0, cosMin, probeM, [])).toEqual([1, 3]);
+    expect(feasibleNext(g, 1, 1, cosMin, probeM, [])).toEqual([0]);
+    expect(feasibleNext(g, 1, 3, cosMin, probeM, [])).toEqual([0]);
+    expect(feasibleNext(g, 1, 2, cosMin, probeM, [])).toEqual([]);
+    expect(feasibleNext(g, 2, 1, cosMin, probeM, [])).toEqual([]); // border
+    // The straightest edge a tram leaving along e1 / e3 / e0 came from.
+    expect(straightestPrev(g, 1, 1, cosMin, probeM)).toBe(0);
+    expect(straightestPrev(g, 1, 3, cosMin, probeM)).toBe(0);
+    expect(straightestPrev(g, 1, 0, cosMin, probeM)).toBe(1);
+    expect(straightestPrev(g, 1, 2, cosMin, probeM)).toBe(-1);
+    expect(straightestPrev(g, 2, 1, cosMin, probeM)).toBe(-1);
+  });
+
+  it('chooses the next track edge with the shared PRNG, never a loop or a sharp turn', () => {
     const g = junction();
     const rng = new Prng(42);
-    expect(Array.from({ length: 12 }, () => chooseNextTrack(g, 1, 0, rng))).toEqual(PICKS_42);
+    expect(Array.from({ length: 12 }, () => chooseNextTrack(g, 1, 0, rng, cosMin, probeM))).toEqual(PICKS_42);
     const r7 = new Prng(7);
-    expect(Array.from({ length: 6 }, () => chooseNextTrack(g, 1, 3, r7))).toEqual(PICKS_7);
-    expect(chooseNextTrack(g, 3, 2, new Prng(1))).toBe(2); // terminus: turn back
-    expect(chooseNextTrack(g, 0, 0, new Prng(1))).toBe(0);
-    expect(chooseNextTrack(g, 2, 1, new Prng(1))).toBe(-1); // border node: the tram disappears
+    expect(Array.from({ length: 6 }, () => chooseNextTrack(g, 1, 0, r7, cosMin, probeM))).toEqual(PICKS_7);
+    // Only one feasible way.
+    expect(chooseNextTrack(g, 1, 3, new Prng(1), cosMin, probeM)).toBe(0);
+    expect(chooseNextTrack(g, 1, 2, new Prng(1), cosMin, probeM)).toBe(2); // only sharp turns: terminus
+    expect(chooseNextTrack(g, 3, 2, new Prng(1), cosMin, probeM)).toBe(2); // terminus: change ends
+    expect(chooseNextTrack(g, 0, 0, new Prng(1), cosMin, probeM)).toBe(0);
+    expect(chooseNextTrack(g, 2, 1, new Prng(1), cosMin, probeM)).toBe(-1); // border node: the tram disappears
   });
 
   it('articulates the cars along a straight trail', () => {
@@ -166,6 +190,52 @@ describe('trams in a planck world', () => {
     expect(tr.speed).toBeGreaterThan(0);
   });
 
+  it('changes ends at a terminus: stops on the end node, cars stay, axis unchanged (v2)', () => {
+    const world = new World({ gravity: { x: 0, y: 0 } });
+    const player = new Car(world, spec, tuning.drive, 150, 60, 0, tuning.carScale);
+    // 0 (border) ── 1 ── 2 (terminus), with a bend at 1 so the trail is not straight.
+    const g = TrackGraph.fromPb(create(TramGraphSchema, {
+      nodes: [node(0, 0, true), node(100, 0), node(160, 30)],
+      edges: [track(0, 1, [0, 0, 50, 0, 100, 0]), track(1, 2, [100, 0, 130, 10, 160, 30])],
+    }));
+    const trams = new Trams(world, g, tuning);
+    const tr = trams.addTram(0, 1, 70)!;
+    // Seeding behind: nothing behind node 0 (border), so no history.
+    expect(tr.histCount).toBe(0);
+    let before: number[][] = [];
+    let at = -1;
+    for (let i = 0; i < 40 / dt && at < 0; i++) {
+      before = tr.cars.map((c) => [c.x, c.y, c.heading]);
+      step(world, player, trams);
+      if (tr.reversals > 0) at = i;
+    }
+    expect(at).toBeGreaterThan(0);
+    expect(trams.trams).toContain(tr);
+    // The nose is now the old tail, on edge 1 driven back; history = nothing between.
+    expect(tr.edge.index).toBe(1);
+    expect(tr.dir).toBe(-1);
+    const D = t.carsPerTram * t.carLengthM + (t.carsPerTram - 1) * t.jointGapM;
+    expect(tr.s).toBeCloseTo(D, 6);
+    expect(tr.speed).toBe(0);
+    expect(tr.dwellTimer).toBeCloseTo(t.dwellS, 9);
+    // Cars in reverse order on the same spots, heading turned by π.
+    const n = tr.cars.length;
+    tr.cars.forEach((c, k) => {
+      expect(c.index).toBe(k);
+      const b = before[n - 1 - k]!;
+      expect(Math.hypot(c.x - b[0]!, c.y - b[1]!)).toBeLessThan(t.speedMps * dt + 1e-6);
+      const d = Math.abs(Math.atan2(Math.sin(c.heading - b[2]! - Math.PI), Math.cos(c.heading - b[2]! - Math.PI)));
+      expect(d).toBeLessThan(0.05);
+    });
+    // It waits dwell_s, then drives back towards node 0 and disappears at the border.
+    let gone = -1;
+    for (let i = 0; i < 60 / dt && gone < 0; i++) {
+      step(world, player, trams);
+      if (!trams.trams.includes(tr)) gone = i;
+    }
+    expect(gone).toBeGreaterThan(t.dwellS / dt - 2);
+  });
+
   it('waits behind the player on the track and cannot be pushed', () => {
     const world = new World({ gravity: { x: 0, y: 0 } });
     const player = new Car(world, spec, tuning.drive, 90, 0, 0, tuning.carScale);
@@ -230,8 +300,8 @@ describe('trams in a planck world', () => {
 });
 
 // Recorded from this client; the Dart test of F-030 should hold the same numbers.
-const PICKS_42 = [1, 2, 1, 3, 1, 1, 1, 2, 2, 3, 2, 2];
-const PICKS_7 = [0, 1, 1, 0, 1, 0];
+const PICKS_42 = [1, 1, 3, 1, 1, 1, 1, 1, 3, 3, 1, 3];
+const PICKS_7 = [3, 3, 3, 3, 3, 1];
 
 const packSource = (dir: string, missing: string[] = []): PackSource => ({
   read: async (p) => {
