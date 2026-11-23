@@ -1,6 +1,9 @@
 package progress
 
 import (
+	"os"
+	"path/filepath"
+	"strings"
 	"testing"
 	"time"
 )
@@ -35,5 +38,52 @@ func TestCheckRejectsDoneWithoutEvidence(t *testing.T) {
 	f.Items[0].Size = "XL"
 	if f.check() == nil {
 		t.Fatal("unknown size must fail")
+	}
+}
+
+func TestCountContentMinigamesAndSkits(t *testing.T) {
+	root := t.TempDir()
+	write := func(rel, body string) {
+		p := filepath.Join(root, rel)
+		if err := os.MkdirAll(filepath.Dir(p), 0o755); err != nil {
+			t.Fatal(err)
+		}
+		if err := os.WriteFile(p, []byte(body), 0o644); err != nil {
+			t.Fatal(err)
+		}
+	}
+	// Minigames come from the catalog, not from packages/mg_* (engines and shared code live there too).
+	write("content/minigames/catalog.yaml", "engines: [cards]\nminigames:\n  - {id: a, engine: cards}\n  - {id: b, engine: cards}\n")
+	write("packages/mg_a/pubspec.yaml", "name: mg_a\n")
+	write("packages/mg_extra/pubspec.yaml", "name: mg_extra\n")
+	write("content/npc/skits/a_1.yaml", "id: a_1\ncharacter: a\n")
+	write("content/npc/skits/b_1.yaml", "id: b_1\ncharacter: b\n")
+	write("content/npc/skits/README.md", "notes\n")
+	write("content/npc/characters.yaml", "characters: []\n")
+	got := map[string]string{}
+	for _, c := range countContent(root, &File{}) {
+		got[c.name] = c.value
+	}
+	if got["Minihry"] != "2" || got["Skity"] != "2" {
+		t.Fatalf("Minihry=%s Skity=%s, want 2 and 2", got["Minihry"], got["Skity"])
+	}
+}
+
+func TestStatusBlockReplaceAndStale(t *testing.T) {
+	readme := "# X\n\n" + StatusOpen + "\nold\n" + StatusClose + "\n\nrest\n"
+	block := StatusOpen + "\n| a | 1 |\n\n_Stav k 2026-11-23, generuje `metro progress`._\n" + StatusClose
+	got, err := ReplaceStatus(readme, block)
+	if err != nil || got != "# X\n\n"+block+"\n\nrest\n" {
+		t.Fatalf("ReplaceStatus = %q, %v", got, err)
+	}
+	if stale, _ := StatusStale(readme, block); !stale {
+		t.Fatal("old block must be stale")
+	}
+	later := strings.Replace(block, "2026-11-23", "2026-12-01", 1)
+	if stale, _ := StatusStale(got, later); stale {
+		t.Fatal("a different date alone must not make the block stale")
+	}
+	if _, err := ReplaceStatus("no markers", block); err == nil {
+		t.Fatal("missing markers must fail")
 	}
 }

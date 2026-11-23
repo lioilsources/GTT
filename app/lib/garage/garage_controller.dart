@@ -123,6 +123,13 @@ class GarageController extends ChangeNotifier {
   /// speed 0 with its new upgrades.
   void leave() => game.drive.rebuildCar();
 
+  /// "Otevřít garáž" in the phone app (specs/testdrive.md v2): closes the phone and opens the full
+  /// garage sheet anywhere; set by the game screen. Null = no button.
+  void Function()? openSheet;
+
+  /// The phone app shows "Otevřít garáž": a garage spot in the city, no world minigame running.
+  bool get canOpenAnywhere => openSheet != null && fleet.garage != null && !loop.inWorldGame;
+
   /// The souvenir shelf for the phone app (set by the shops module's owner); null = no shelf.
   List<({String id, String name})> Function()? shelf;
 

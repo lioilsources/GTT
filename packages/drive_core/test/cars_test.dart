@@ -179,6 +179,32 @@ void main() {
       }
     }, skip: !hasPack);
 
+    // Regression (PR #54–#56, Prompts/05 L-S13): the player used to drive through parked cars.
+    test('the player pushes a parked car it drives into and never passes through it', () {
+      final d = DriveWorld(city: city, spec: specs[tuning.cars.startCar]!, tuning: tuning);
+      final fleet = CarFleet(d, specs, tuning, (id: 'g', x: d.car.x, y: d.car.y, heading: d.car.heading));
+      for (final c in chunks) {
+        d.addChunk(c);
+        fleet.addChunk(c);
+      }
+      final target = fleet.parked.first;
+      final hx = math.cos(target.heading), hy = math.sin(target.heading);
+      final x0 = target.x, y0 = target.y;
+      d.spawn(target.x - hx * 10, target.y - hy * 10, target.heading);
+      var worst = double.negativeInfinity;
+      for (var i = 0; i < 3 * 60; i++) {
+        d.input
+          ..reset()
+          ..boost = true;
+        d.update(1 / 60);
+        fleet.update();
+        // Along the parked car's axis the player's centre stays behind its centre.
+        worst = math.max(worst, (d.car.x - target.x) * hx + (d.car.y - target.y) * hy);
+      }
+      expect(worst, lessThan(0));
+      expect(math.sqrt(math.pow(target.x - x0, 2) + math.pow(target.y - y0, 2)), greaterThan(0.5));
+    }, skip: !hasPack);
+
     test('boards a parked car: new body with its parameters, old car stays parked, events fire', () {
       final d = DriveWorld(city: city, spec: specs[tuning.cars.startCar]!, tuning: tuning);
       final fleet = CarFleet(d, specs, tuning, (id: 'g', x: d.car.x, y: d.car.y, heading: d.car.heading));
@@ -289,6 +315,18 @@ void main() {
       expect(d.spec.id, 'hatch_pip');
       fleet.endTest();
       expect(d.spec.id, 'm0_coupe');
+
+      // The garage from the phone away from the spot: cars appear in place (specs/testdrive.md v2).
+      d.spawn(g.x + 30, g.y - 20, 0.5);
+      fleet.startTest('vega_roadster', here: true);
+      expect(d.car.x, closeTo(g.x + 30, 1e-6));
+      expect(d.car.y, closeTo(g.y - 20, 1e-6));
+      d.spawn(g.x + 50, g.y + 5, 0.2);
+      fleet.state = fleet.state.copyWith(owned: ['m0_coupe', 'pickup_hauler']);
+      fleet.select('pickup_hauler', here: true);
+      expect(fleet.testing, isNull);
+      expect(d.car.x, closeTo(g.x + 50, 1e-6));
+      expect(d.car.y, closeTo(g.y + 5, 1e-6));
 
       // Debug cash: + economy.debug_grant.
       final cash = fleet.state.cash;

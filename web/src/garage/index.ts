@@ -10,7 +10,7 @@ import { tokens } from '../gen/tokens';
 import type { Tuning } from '../gen/tuning';
 import type { LoopApi } from '../loop';
 import { h } from '../minigames/dom';
-import { registerPhoneApp } from '../phone';
+import { registerPhoneApp, type PhoneApi } from '../phone';
 import type { WorldView } from '../render/worldView';
 import type { ShopsFeature } from '../shops';
 import { GarageWorld } from './garage';
@@ -31,6 +31,8 @@ export interface GarageEnv {
   loop: LoopApi;
   view: WorldView;
   shops: ShopsFeature;
+  /** Closed by "Otevřít garáž" in the phone app (specs/testdrive.md v2). */
+  phone?: PhoneApi;
 }
 
 export interface GarageFeature {
@@ -249,7 +251,17 @@ export function installGarage(env: GarageEnv): GarageFeature {
             ? slots.map((s) => h('div.garage-row-head', {}, h('span', {}, t(slotKeys[s].name)), pips(world.level(id, s))))
             : [h('p.garage-muted', {}, t('garageNoSlots'))])));
     });
-    host.append(h('div.shop-app', {}, h('div.garage-app', {}, ...cars), env.shops.shelf()));
+    // "Otevřít garáž" (specs/testdrive.md v2): the full garage list anywhere, not in a world minigame.
+    const open = fleet.garage && !loop.inWorldGame
+      ? h('button.mg-btn.garage-open', {
+        type: 'button',
+        onclick: () => {
+          env.phone?.phone.close();
+          carsHud.openAnywhere();
+        },
+      }, t('garageOpen'))
+      : null;
+    host.append(h('div.shop-app', {}, open, h('div.garage-app', {}, ...cars), env.shops.shelf()));
     return () => {};
   });
   return feature;
