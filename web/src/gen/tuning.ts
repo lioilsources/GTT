@@ -1340,6 +1340,13 @@ export class TuningMinigames {
   readonly sirky: TuningMinigamesSirky;
   readonly oko: TuningMinigamesOko;
   readonly dama: TuningMinigamesDama;
+  readonly piskvorky: TuningMinigamesPiskvorky;
+  readonly ctyri: TuningMinigamesCtyri;
+  readonly mlyn: TuningMinigamesMlyn;
+  readonly reversi: TuningMinigamesReversi;
+  readonly lode: TuningMinigamesLode;
+  readonly posuvne: TuningMinigamesPosuvne;
+  readonly kviz: TuningMinigamesKviz;
   readonly desetitisic: TuningMinigamesDesetitisic;
   readonly sipky: TuningMinigamesSipky;
   readonly koulena: TuningMinigamesKoulena;
@@ -1355,6 +1362,13 @@ export class TuningMinigames {
     this.sirky = new TuningMinigamesSirky(r.sub('sirky'));
     this.oko = new TuningMinigamesOko(r.sub('oko'));
     this.dama = new TuningMinigamesDama(r.sub('dama'));
+    this.piskvorky = new TuningMinigamesPiskvorky(r.sub('piskvorky'));
+    this.ctyri = new TuningMinigamesCtyri(r.sub('ctyri'));
+    this.mlyn = new TuningMinigamesMlyn(r.sub('mlyn'));
+    this.reversi = new TuningMinigamesReversi(r.sub('reversi'));
+    this.lode = new TuningMinigamesLode(r.sub('lode'));
+    this.posuvne = new TuningMinigamesPosuvne(r.sub('posuvne'));
+    this.kviz = new TuningMinigamesKviz(r.sub('kviz'));
     this.desetitisic = new TuningMinigamesDesetitisic(r.sub('desetitisic'));
     this.sipky = new TuningMinigamesSipky(r.sub('sipky'));
     this.koulena = new TuningMinigamesKoulena(r.sub('koulena'));
@@ -1371,6 +1385,13 @@ export class TuningMinigames {
       sirky: this.sirky.toJson(),
       oko: this.oko.toJson(),
       dama: this.dama.toJson(),
+      piskvorky: this.piskvorky.toJson(),
+      ctyri: this.ctyri.toJson(),
+      mlyn: this.mlyn.toJson(),
+      reversi: this.reversi.toJson(),
+      lode: this.lode.toJson(),
+      posuvne: this.posuvne.toJson(),
+      kviz: this.kviz.toJson(),
       desetitisic: this.desetitisic.toJson(),
       sipky: this.sipky.toJson(),
       koulena: this.koulena.toJson(),
@@ -1472,6 +1493,200 @@ export class TuningMinigamesDama {
       fast_plies: this.fastPlies,
       time_cap_s: this.timeCapS,
       ai_think_s: this.aiThinkS,
+    };
+  }
+}
+
+export class TuningMinigamesPiskvorky {
+  size: number;
+  aiErrorPct: number[];
+  /** weight of blocking the player, % */
+  defensePct: number[];
+  /** a win within this many player moves = 3 stars */
+  fastMoves: number;
+  timeCapS: number;
+  aiThinkS: number;
+
+  constructor(r: R) {
+    this.size = r.i('size');
+    this.aiErrorPct = r.il('ai_error_pct');
+    this.defensePct = r.il('defense_pct');
+    this.fastMoves = r.i('fast_moves');
+    this.timeCapS = r.i('time_cap_s');
+    this.aiThinkS = r.d('ai_think_s');
+  }
+
+  toJson(): Record<string, unknown> {
+    return {
+      size: this.size,
+      ai_error_pct: this.aiErrorPct,
+      defense_pct: this.defensePct,
+      fast_moves: this.fastMoves,
+      time_cap_s: this.timeCapS,
+      ai_think_s: this.aiThinkS,
+    };
+  }
+}
+
+export class TuningMinigamesCtyri {
+  /** negamax plies per AI level 1..5 */
+  aiDepth: number[];
+  aiErrorPct: number[];
+  fastMoves: number;
+  timeCapS: number;
+  aiThinkS: number;
+
+  constructor(r: R) {
+    this.aiDepth = r.il('ai_depth');
+    this.aiErrorPct = r.il('ai_error_pct');
+    this.fastMoves = r.i('fast_moves');
+    this.timeCapS = r.i('time_cap_s');
+    this.aiThinkS = r.d('ai_think_s');
+  }
+
+  toJson(): Record<string, unknown> {
+    return {
+      ai_depth: this.aiDepth,
+      ai_error_pct: this.aiErrorPct,
+      fast_moves: this.fastMoves,
+      time_cap_s: this.timeCapS,
+      ai_think_s: this.aiThinkS,
+    };
+  }
+}
+
+export class TuningMinigamesMlyn {
+  aiDepth: number[];
+  aiErrorPct: number[];
+  /** plies of the moving phase without a mill = draw */
+  quietLimit: number;
+  /** three stones left may jump */
+  flying: boolean;
+  /** win with this many stones on the board = 3 stars */
+  star3Pieces: number;
+  timeCapS: number;
+  aiThinkS: number;
+
+  constructor(r: R) {
+    this.aiDepth = r.il('ai_depth');
+    this.aiErrorPct = r.il('ai_error_pct');
+    this.quietLimit = r.i('quiet_limit');
+    this.flying = r.b('flying');
+    this.star3Pieces = r.i('star3_pieces');
+    this.timeCapS = r.i('time_cap_s');
+    this.aiThinkS = r.d('ai_think_s');
+  }
+
+  toJson(): Record<string, unknown> {
+    return {
+      ai_depth: this.aiDepth,
+      ai_error_pct: this.aiErrorPct,
+      quiet_limit: this.quietLimit,
+      flying: this.flying,
+      star3_pieces: this.star3Pieces,
+      time_cap_s: this.timeCapS,
+      ai_think_s: this.aiThinkS,
+    };
+  }
+}
+
+export class TuningMinigamesReversi {
+  aiDepth: number[];
+  aiErrorPct: number[];
+  /** win by this many discs = 3 stars */
+  star3Margin: number;
+  timeCapS: number;
+  aiThinkS: number;
+
+  constructor(r: R) {
+    this.aiDepth = r.il('ai_depth');
+    this.aiErrorPct = r.il('ai_error_pct');
+    this.star3Margin = r.i('star3_margin');
+    this.timeCapS = r.i('time_cap_s');
+    this.aiThinkS = r.d('ai_think_s');
+  }
+
+  toJson(): Record<string, unknown> {
+    return {
+      ai_depth: this.aiDepth,
+      ai_error_pct: this.aiErrorPct,
+      star3_margin: this.star3Margin,
+      time_cap_s: this.timeCapS,
+      ai_think_s: this.aiThinkS,
+    };
+  }
+}
+
+export class TuningMinigamesLode {
+  fleet: number[];
+  /** player re-deals before the first shot */
+  shuffles: number;
+  aiErrorPct: number[];
+  fastShots: number;
+  okShots: number;
+  timeCapS: number;
+  aiThinkS: number;
+
+  constructor(r: R) {
+    this.fleet = r.il('fleet');
+    this.shuffles = r.i('shuffles');
+    this.aiErrorPct = r.il('ai_error_pct');
+    this.fastShots = r.i('fast_shots');
+    this.okShots = r.i('ok_shots');
+    this.timeCapS = r.i('time_cap_s');
+    this.aiThinkS = r.d('ai_think_s');
+  }
+
+  toJson(): Record<string, unknown> {
+    return {
+      fleet: this.fleet,
+      shuffles: this.shuffles,
+      ai_error_pct: this.aiErrorPct,
+      fast_shots: this.fastShots,
+      ok_shots: this.okShots,
+      time_cap_s: this.timeCapS,
+      ai_think_s: this.aiThinkS,
+    };
+  }
+}
+
+export class TuningMinigamesPosuvne {
+  shuffleMoves: number[];
+  timeCapS: number;
+
+  constructor(r: R) {
+    this.shuffleMoves = r.il('shuffle_moves');
+    this.timeCapS = r.i('time_cap_s');
+  }
+
+  toJson(): Record<string, unknown> {
+    return {
+      shuffle_moves: this.shuffleMoves,
+      time_cap_s: this.timeCapS,
+    };
+  }
+}
+
+export class TuningMinigamesKviz {
+  rounds: number;
+  /** correct answers for 3, 2, 1 stars */
+  starCorrect: number[];
+  questionS: number;
+  timeCapS: number;
+
+  constructor(r: R) {
+    this.rounds = r.i('rounds');
+    this.starCorrect = r.il('star_correct');
+    this.questionS = r.i('question_s');
+    this.timeCapS = r.i('time_cap_s');
+  }
+
+  toJson(): Record<string, unknown> {
+    return {
+      rounds: this.rounds,
+      star_correct: this.starCorrect,
+      question_s: this.questionS,
+      time_cap_s: this.timeCapS,
     };
   }
 }

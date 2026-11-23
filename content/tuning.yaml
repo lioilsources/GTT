@@ -206,6 +206,49 @@ minigames:
     fast_plies: 80              # a win within this many plies = 3 stars
     time_cap_s: 480
     ai_think_s: 0.6
+  piskvorky:
+    size: 15
+    ai_error_pct: [40, 25, 12, 5, 0]
+    defense_pct: [50, 70, 90, 100, 110]   # weight of blocking the player, %
+    fast_moves: 15              # a win within this many player moves = 3 stars
+    time_cap_s: 480
+    ai_think_s: 0.5
+  ctyri:
+    ai_depth: [1, 2, 3, 5, 7]   # negamax plies per AI level 1..5
+    ai_error_pct: [35, 20, 10, 5, 0]
+    fast_moves: 12
+    time_cap_s: 300
+    ai_think_s: 0.5
+  mlyn:
+    ai_depth: [1, 2, 2, 3, 4]
+    ai_error_pct: [35, 20, 10, 5, 0]
+    quiet_limit: 50             # plies of the moving phase without a mill = draw
+    flying: true                # three stones left may jump
+    star3_pieces: 6             # win with this many stones on the board = 3 stars
+    time_cap_s: 480
+    ai_think_s: 0.6
+  reversi:
+    ai_depth: [1, 2, 3, 4, 5]
+    ai_error_pct: [35, 20, 10, 5, 0]
+    star3_margin: 20            # win by this many discs = 3 stars
+    time_cap_s: 480
+    ai_think_s: 0.5
+  lode:
+    fleet: [5, 4, 3, 3, 2]
+    shuffles: 3                 # player re-deals before the first shot
+    ai_error_pct: [50, 30, 15, 5, 0]
+    fast_shots: 45
+    ok_shots: 70
+    time_cap_s: 480
+    ai_think_s: 0.5
+  posuvne:
+    shuffle_moves: [10, 20, 35, 60, 100]
+    time_cap_s: 300
+  kviz:
+    rounds: 10
+    star_correct: [9, 7, 5]     # correct answers for 3, 2, 1 stars
+    question_s: 20
+    time_cap_s: 420
   desetitisic:
     target: 5000
     max_rounds: 10

@@ -397,3 +397,66 @@
   flutter: todo
   web: todo
   checks: {flutter: pass, web: pass}
+
+- id: F-047
+  name: Piškvorky (gomoku 15×15) (M2-S9 batch A)
+  level: P0
+  spec: specs/minigames/piskvorky.md@1
+  vectors: vectors/piskvorky.json
+  lead: web
+  flutter: todo
+  web: todo
+
+- id: F-048
+  name: Čtyři v řadě (M2-S9 batch A)
+  level: P0
+  spec: specs/minigames/ctyri.md@1
+  vectors: vectors/ctyri.json
+  lead: web
+  flutter: todo
+  web: todo
+
+- id: F-049
+  name: Mlýn (M2-S9 batch A)
+  level: P0
+  spec: specs/minigames/mlyn.md@1
+  vectors: vectors/mlyn.json
+  lead: web
+  flutter: todo
+  web: todo
+
+- id: F-050
+  name: Reversi (M2-S9 batch A)
+  level: P0
+  spec: specs/minigames/reversi.md@1
+  vectors: vectors/reversi.json
+  lead: web
+  flutter: todo
+  web: todo
+
+- id: F-051
+  name: Lodě (M2-S9 batch A)
+  level: P0
+  spec: specs/minigames/lode.md@1
+  vectors: vectors/lode.json
+  lead: web
+  flutter: todo
+  web: todo
+
+- id: F-052
+  name: Posuvné puzzle (M2-S9 batch A)
+  level: P0
+  spec: specs/minigames/posuvne.md@1
+  vectors: vectors/posuvne.json
+  lead: web
+  flutter: todo
+  web: todo
+
+- id: F-053
+  name: Městský kvíz (M2-S9 batch A)
+  level: P0
+  spec: specs/minigames/kviz.md@1
+  vectors: vectors/kviz.json
+  lead: web
+  flutter: todo
+  web: todo

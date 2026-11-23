@@ -20,7 +20,7 @@ export const engineIdValues = ['cards', 'board', 'dice', 'tiles', 'flick', 'rhyt
 export type EngineId = (typeof engineIdValues)[number];
 
 /** Minigames in content/minigames/catalog.yaml. */
-export const minigameIdValues = ['sirky', 'oko', 'dama', 'desetitisic', 'sipky', 'strelnice', 'taxi', 'koulena', 'kulicky', 'cara', 'nohejbal'] as const;
+export const minigameIdValues = ['sirky', 'oko', 'dama', 'desetitisic', 'sipky', 'strelnice', 'taxi', 'koulena', 'kulicky', 'cara', 'nohejbal', 'piskvorky', 'ctyri', 'mlyn', 'reversi', 'lode', 'posuvne', 'kviz'] as const;
 export type MinigameId = (typeof minigameIdValues)[number];
 
 /** Contract metadata of every minigame in content/minigames/catalog.yaml. */
@@ -36,4 +36,11 @@ export const minigameCatalog: Record<MinigameId, MinigameMeta> = {
   kulicky: { id: 'kulicky', engine: 'flick', targetLengthS: 300, cities: ['prague'], casinoLike: false },
   cara: { id: 'cara', engine: 'flick', targetLengthS: 240, cities: ['prague'], casinoLike: false },
   nohejbal: { id: 'nohejbal', engine: 'sport', targetLengthS: 360, cities: ['prague'], casinoLike: false },
+  piskvorky: { id: 'piskvorky', engine: 'board', targetLengthS: 360, cities: [], casinoLike: false },
+  ctyri: { id: 'ctyri', engine: 'board', targetLengthS: 240, cities: [], casinoLike: false },
+  mlyn: { id: 'mlyn', engine: 'board', targetLengthS: 420, cities: [], casinoLike: false },
+  reversi: { id: 'reversi', engine: 'board', targetLengthS: 420, cities: [], casinoLike: false },
+  lode: { id: 'lode', engine: 'board', targetLengthS: 360, cities: [], casinoLike: false },
+  posuvne: { id: 'posuvne', engine: 'puzzle', targetLengthS: 240, cities: [], casinoLike: false },
+  kviz: { id: 'kviz', engine: 'puzzle', targetLengthS: 240, cities: [], casinoLike: false },
 };

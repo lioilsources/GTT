@@ -1352,6 +1352,13 @@ class TuningMinigames {
         sirky = TuningMinigamesSirky._(r.sub('sirky')),
         oko = TuningMinigamesOko._(r.sub('oko')),
         dama = TuningMinigamesDama._(r.sub('dama')),
+        piskvorky = TuningMinigamesPiskvorky._(r.sub('piskvorky')),
+        ctyri = TuningMinigamesCtyri._(r.sub('ctyri')),
+        mlyn = TuningMinigamesMlyn._(r.sub('mlyn')),
+        reversi = TuningMinigamesReversi._(r.sub('reversi')),
+        lode = TuningMinigamesLode._(r.sub('lode')),
+        posuvne = TuningMinigamesPosuvne._(r.sub('posuvne')),
+        kviz = TuningMinigamesKviz._(r.sub('kviz')),
         desetitisic = TuningMinigamesDesetitisic._(r.sub('desetitisic')),
         sipky = TuningMinigamesSipky._(r.sub('sipky')),
         koulena = TuningMinigamesKoulena._(r.sub('koulena')),
@@ -1369,6 +1376,20 @@ class TuningMinigames {
   final TuningMinigamesOko oko;
 
   final TuningMinigamesDama dama;
+
+  final TuningMinigamesPiskvorky piskvorky;
+
+  final TuningMinigamesCtyri ctyri;
+
+  final TuningMinigamesMlyn mlyn;
+
+  final TuningMinigamesReversi reversi;
+
+  final TuningMinigamesLode lode;
+
+  final TuningMinigamesPosuvne posuvne;
+
+  final TuningMinigamesKviz kviz;
 
   final TuningMinigamesDesetitisic desetitisic;
 
@@ -1392,6 +1413,13 @@ class TuningMinigames {
         'sirky': sirky.toJson(),
         'oko': oko.toJson(),
         'dama': dama.toJson(),
+        'piskvorky': piskvorky.toJson(),
+        'ctyri': ctyri.toJson(),
+        'mlyn': mlyn.toJson(),
+        'reversi': reversi.toJson(),
+        'lode': lode.toJson(),
+        'posuvne': posuvne.toJson(),
+        'kviz': kviz.toJson(),
         'desetitisic': desetitisic.toJson(),
         'sipky': sipky.toJson(),
         'koulena': koulena.toJson(),
@@ -1499,6 +1527,208 @@ class TuningMinigamesDama {
         'fast_plies': fastPlies,
         'time_cap_s': timeCapS,
         'ai_think_s': aiThinkS,
+      };
+}
+
+class TuningMinigamesPiskvorky {
+  TuningMinigamesPiskvorky._(_R r)
+      : size = r.i('size'),
+        aiErrorPct = r.il('ai_error_pct'),
+        defensePct = r.il('defense_pct'),
+        fastMoves = r.i('fast_moves'),
+        timeCapS = r.i('time_cap_s'),
+        aiThinkS = r.d('ai_think_s');
+
+  int size;
+
+  List<int> aiErrorPct;
+
+  /// weight of blocking the player, %
+  List<int> defensePct;
+
+  /// a win within this many player moves = 3 stars
+  int fastMoves;
+
+  int timeCapS;
+
+  double aiThinkS;
+
+  Map<String, Object> toJson() => {
+        'size': size,
+        'ai_error_pct': aiErrorPct,
+        'defense_pct': defensePct,
+        'fast_moves': fastMoves,
+        'time_cap_s': timeCapS,
+        'ai_think_s': aiThinkS,
+      };
+}
+
+class TuningMinigamesCtyri {
+  TuningMinigamesCtyri._(_R r)
+      : aiDepth = r.il('ai_depth'),
+        aiErrorPct = r.il('ai_error_pct'),
+        fastMoves = r.i('fast_moves'),
+        timeCapS = r.i('time_cap_s'),
+        aiThinkS = r.d('ai_think_s');
+
+  /// negamax plies per AI level 1..5
+  List<int> aiDepth;
+
+  List<int> aiErrorPct;
+
+  int fastMoves;
+
+  int timeCapS;
+
+  double aiThinkS;
+
+  Map<String, Object> toJson() => {
+        'ai_depth': aiDepth,
+        'ai_error_pct': aiErrorPct,
+        'fast_moves': fastMoves,
+        'time_cap_s': timeCapS,
+        'ai_think_s': aiThinkS,
+      };
+}
+
+class TuningMinigamesMlyn {
+  TuningMinigamesMlyn._(_R r)
+      : aiDepth = r.il('ai_depth'),
+        aiErrorPct = r.il('ai_error_pct'),
+        quietLimit = r.i('quiet_limit'),
+        flying = r.b('flying'),
+        star3Pieces = r.i('star3_pieces'),
+        timeCapS = r.i('time_cap_s'),
+        aiThinkS = r.d('ai_think_s');
+
+  List<int> aiDepth;
+
+  List<int> aiErrorPct;
+
+  /// plies of the moving phase without a mill = draw
+  int quietLimit;
+
+  /// three stones left may jump
+  bool flying;
+
+  /// win with this many stones on the board = 3 stars
+  int star3Pieces;
+
+  int timeCapS;
+
+  double aiThinkS;
+
+  Map<String, Object> toJson() => {
+        'ai_depth': aiDepth,
+        'ai_error_pct': aiErrorPct,
+        'quiet_limit': quietLimit,
+        'flying': flying,
+        'star3_pieces': star3Pieces,
+        'time_cap_s': timeCapS,
+        'ai_think_s': aiThinkS,
+      };
+}
+
+class TuningMinigamesReversi {
+  TuningMinigamesReversi._(_R r)
+      : aiDepth = r.il('ai_depth'),
+        aiErrorPct = r.il('ai_error_pct'),
+        star3Margin = r.i('star3_margin'),
+        timeCapS = r.i('time_cap_s'),
+        aiThinkS = r.d('ai_think_s');
+
+  List<int> aiDepth;
+
+  List<int> aiErrorPct;
+
+  /// win by this many discs = 3 stars
+  int star3Margin;
+
+  int timeCapS;
+
+  double aiThinkS;
+
+  Map<String, Object> toJson() => {
+        'ai_depth': aiDepth,
+        'ai_error_pct': aiErrorPct,
+        'star3_margin': star3Margin,
+        'time_cap_s': timeCapS,
+        'ai_think_s': aiThinkS,
+      };
+}
+
+class TuningMinigamesLode {
+  TuningMinigamesLode._(_R r)
+      : fleet = r.il('fleet'),
+        shuffles = r.i('shuffles'),
+        aiErrorPct = r.il('ai_error_pct'),
+        fastShots = r.i('fast_shots'),
+        okShots = r.i('ok_shots'),
+        timeCapS = r.i('time_cap_s'),
+        aiThinkS = r.d('ai_think_s');
+
+  List<int> fleet;
+
+  /// player re-deals before the first shot
+  int shuffles;
+
+  List<int> aiErrorPct;
+
+  int fastShots;
+
+  int okShots;
+
+  int timeCapS;
+
+  double aiThinkS;
+
+  Map<String, Object> toJson() => {
+        'fleet': fleet,
+        'shuffles': shuffles,
+        'ai_error_pct': aiErrorPct,
+        'fast_shots': fastShots,
+        'ok_shots': okShots,
+        'time_cap_s': timeCapS,
+        'ai_think_s': aiThinkS,
+      };
+}
+
+class TuningMinigamesPosuvne {
+  TuningMinigamesPosuvne._(_R r)
+      : shuffleMoves = r.il('shuffle_moves'),
+        timeCapS = r.i('time_cap_s');
+
+  List<int> shuffleMoves;
+
+  int timeCapS;
+
+  Map<String, Object> toJson() => {
+        'shuffle_moves': shuffleMoves,
+        'time_cap_s': timeCapS,
+      };
+}
+
+class TuningMinigamesKviz {
+  TuningMinigamesKviz._(_R r)
+      : rounds = r.i('rounds'),
+        starCorrect = r.il('star_correct'),
+        questionS = r.i('question_s'),
+        timeCapS = r.i('time_cap_s');
+
+  int rounds;
+
+  /// correct answers for 3, 2, 1 stars
+  List<int> starCorrect;
+
+  int questionS;
+
+  int timeCapS;
+
+  Map<String, Object> toJson() => {
+        'rounds': rounds,
+        'star_correct': starCorrect,
+        'question_s': questionS,
+        'time_cap_s': timeCapS,
       };
 }
 

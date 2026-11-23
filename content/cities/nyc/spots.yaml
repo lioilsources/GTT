@@ -1,4 +1,4 @@
-# Curated points snapped to the nearest kept road (5.5). kind: plaza|station|park|landmark|bar|pier|stand|garage|booth|subway|photo|food|souvenir.
+# Curated points snapped to the nearest kept road (5.5). kind: plaza|station|park|landmark|bar|cafe|pier|stand|garage|booth|subway|photo|food|souvenir.
 # minigame: the M1 minigame played at the spot (9.5, "každá se spotem na autentickém místě").
 # Commercial places keep a fictional name (R10); the point is a real location of that kind.
 spots:
@@ -18,6 +18,14 @@ spots:
   - {id: pier_62, kind: pier, name: Hudson River Park Pier 62, lat: 40.74930, lon: -74.00980, minigame: strelnice}
   - {id: seaport_boardwalk, kind: pier, name: Seaport Boardwalk, lat: 40.70560, lon: -74.00290, minigame: koulena}
   - {id: penn_taxi_stand, kind: stand, name: Penn Station Taxi Stand, lat: 40.75060, lon: -73.99350, minigame: taxi}
+  # M2-S9 batch A minigames (board, puzzle)
+  - {id: madison_sq_tables, kind: park, name: Madison Square Park, lat: 40.74200, lon: -73.98750, minigame: piskvorky}
+  - {id: game_cafe_village, kind: cafe, name: Corner Piece Game Café, lat: 40.73030, lon: -74.00050, minigame: ctyri}
+  - {id: tompkins_tables, kind: park, name: Tompkins Square Park, lat: 40.72650, lon: -73.98170, minigame: mlyn}
+  - {id: stuyvesant_sq, kind: park, name: Stuyvesant Square, lat: 40.73380, lon: -73.98400, minigame: reversi}
+  - {id: battery_park, kind: park, name: The Battery, lat: 40.70330, lon: -74.01700, minigame: lode}
+  - {id: grand_army_plaza, kind: plaza, name: Grand Army Plaza, lat: 40.76440, lon: -73.97330, minigame: posuvne}
+  - {id: nypl_steps, kind: plaza, name: Library Steps on Fifth Avenue, lat: 40.75320, lon: -73.98220, minigame: kviz}
   # Player garage (specs/cars.md): one per city in M1; a multi-storey car park on W 44th St.
   - {id: midtown_garage, kind: garage, name: West 44th Street Garage, lat: 40.75990, lon: -73.99410}
   # Ringing phone booths (specs/booths.md): street corners, no minigame.
