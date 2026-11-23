@@ -190,8 +190,8 @@
   spec: specs/cars.md@2
   vectors: vectors/cars.json
   lead: web
-  flutter: todo
-  web: todo
+  flutter: done
+  web: done
   checks: {flutter: pass, web: pass}
 - id: F-024
   name: Police and wanted level 1–3 (patrols, escape, fine)
@@ -385,8 +385,8 @@
   level: P2
   spec: specs/cars.md@2
   lead: web
-  flutter: todo
-  web: todo
+  flutter: done
+  web: done
   checks: {flutter: pass, web: pass}
 
 - id: F-046

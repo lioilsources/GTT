@@ -97,6 +97,19 @@ async function main(): Promise<void> {
     else runGallery(host, { tuning, locale, t }, params, npc, cityId);
     return;
   }
+  // ?cars: debug contact sheet of every car shape (specs/cars.md "Kreslení"), without the world.
+  if (params.has('cars')) {
+    const [{ runCarSheet }, tuning, cars] = await Promise.all([
+      import('./cars/sheet'),
+      json<unknown>('content/tuning.json').then((j) => Tuning.fromJson(j)),
+      Promise.all(carIdValues.map(async (id) => [id, await json<CarSpec>(`content/cars/${id}.json`)] as const)).then((e) => new Map<string, CarSpec>(e)),
+    ]);
+    for (const id of ['world', 'overlay', 'hud', 'loading']) $(id).hidden = true;
+    const host = document.createElement('div');
+    document.body.append(host);
+    runCarSheet(host, cars, tuning, t);
+    return;
+  }
   $('loading').textContent = t('loading', { city: cityIdNames[cityId] });
   $('about').textContent = t('aboutMaps');
   const tStart = performance.now();

@@ -2,6 +2,7 @@ import 'dart:math' as math;
 
 import 'package:drive_core/drive_core.dart';
 import 'package:flutter/material.dart';
+import 'package:game_loop/game_loop.dart' show CarLook;
 import 'package:mg_api/mg_api.dart';
 import 'package:shared_gen/shared_gen.dart';
 
@@ -139,25 +140,21 @@ class _GarageSheetState extends State<GarageSheet> {
   Widget _carsTab(BuildContext context, AppLocalizations l) {
     final fleet = widget.fleet;
     final buyable = fleet.buyable().toSet();
-    final sale = [
-      for (final s in fleet.specs.values)
-        if (!fleet.owned.contains(s.id)) s,
-    ]..sort((a, b) => a.price != b.price ? a.price.compareTo(b.price) : a.id.compareTo(b.id));
-    String cls(String c) => switch (c) {
-      'coupe' => l.carClassCoupe,
-      'hatchback' => l.carClassHatchback,
-      'muscle' => l.carClassMuscle,
-      'taxi' => l.carClassTaxi,
-      'pickup' => l.carClassPickup,
-      'sedan' => l.carClassSedan,
-      'micro' => l.carClassMicro,
-      'supersport' => l.carClassSupersport,
-      _ => '',
-    };
+    final sale = saleOrder(fleet.specs.values, fleet.owned, fleet.drive.city.id);
     final drive = fleet.drive;
     final hopFull = hopCharges(drive.spec);
     final g = widget.garage;
-    int paintOf(CarSpec spec) => g?.lookOf(spec.id).paint ?? paintArgb(spec);
+    Widget preview(CarSpec spec, CarLook look) => CarPreview(
+      key: ValueKey('garageCarPreview:${spec.id}'),
+      spec: spec,
+      look: look,
+      tuning: fleet.tuning,
+      width: _previewW,
+      height: _previewH,
+      sideways: true,
+    );
+    Widget subtitle(CarSpec spec) =>
+        Text(carClassName(l, spec.class_), style: const TextStyle(color: Color(Tokens.colorUiTextMuted)));
     return ListView(
       key: const ValueKey('garageCars'),
       children: [
@@ -172,12 +169,9 @@ class _GarageSheetState extends State<GarageSheet> {
         for (final id in fleet.owned)
           if (fleet.specs[id] case final spec?)
             ListTile(
-              leading: CircleAvatar(backgroundColor: Color(paintOf(spec)), radius: 10),
+              leading: preview(spec, g?.lookOf(spec.id) ?? const CarLook()),
               title: Text(spec.name, style: const TextStyle(color: Color(Tokens.colorUiText))),
-              // Classes without a label yet (sedan, micro) show the name only.
-              subtitle: cls(spec.class_).isEmpty
-                  ? null
-                  : Text(cls(spec.class_), style: const TextStyle(color: Color(Tokens.colorUiTextMuted))),
+              subtitle: subtitle(spec),
               trailing: fleet.canSelect(id)
                   ? FilledButton(
                       onPressed: () {
@@ -196,12 +190,10 @@ class _GarageSheetState extends State<GarageSheet> {
           ),
           for (final spec in sale)
             ListTile(
-              leading: CircleAvatar(backgroundColor: Color(paintArgb(spec)), radius: 10),
+              key: ValueKey('garageSale:${spec.id}'),
+              leading: preview(spec, const CarLook()),
               title: Text(spec.name, style: const TextStyle(color: Color(Tokens.colorUiText))),
-              // Classes without a label yet (sedan, micro) show the name only.
-              subtitle: cls(spec.class_).isEmpty
-                  ? null
-                  : Text(cls(spec.class_), style: const TextStyle(color: Color(Tokens.colorUiTextMuted))),
+              subtitle: subtitle(spec),
               trailing: OutlinedButton(
                 onPressed: buyable.contains(spec.id) ? () => setState(() => fleet.buy(spec.id)) : null,
                 child: Text(l.garageBuy(spec.price)),
@@ -212,6 +204,29 @@ class _GarageSheetState extends State<GarageSheet> {
     );
   }
 }
+
+/// Size of the small car preview in the garage list (logical px), the nose to the right.
+const _previewW = 56.0, _previewH = 28.0;
+
+/// The name of a car class (`carClass*` in i18n, specs/cars.md "Garáž").
+String carClassName(AppLocalizations l, String cls) => switch (cls) {
+  'mini' => l.carClassMini,
+  'hatchback' => l.carClassHatchback,
+  'sedan' => l.carClassSedan,
+  'kombi' => l.carClassKombi,
+  'coupe' => l.carClassCoupe,
+  'muscle' => l.carClassMuscle,
+  'supersport' => l.carClassSupersport,
+  'veteran' => l.carClassVeteran,
+  'offroad' => l.carClassOffroad,
+  'pickup' => l.carClassPickup,
+  'van' => l.carClassVan,
+  'taxi' => l.carClassTaxi,
+  'limo' => l.carClassLimo,
+  'bus' => l.carClassBus,
+  'micro' => l.carClassMicro,
+  _ => l.carClassSpecial,
+};
 
 /// Size of one souvenir on the shelf (logical px).
 const _souvenirPx = 72.0;

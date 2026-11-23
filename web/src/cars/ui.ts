@@ -1,4 +1,7 @@
+import './cars.css';
+import { drawCarPreview } from '../garage/preview';
 import type { MessageKey } from '../gen/i18n';
+import type { CarSpec } from '../gen/schema';
 import { h } from '../minigames/dom';
 import { overlays } from '../pause';
 import type { CarFleet } from './fleet';
@@ -13,16 +16,38 @@ export interface GarageTab {
   render(refresh: () => void): HTMLElement | null;
 }
 
-const classKeys: Record<string, MessageKey> = {
-  coupe: 'carClassCoupe',
+/** i18n key of every class, in the schema order (`mini` … `special`, schema/car.schema.json). */
+export const classKeys: Record<CarSpec['class'], MessageKey> = {
+  mini: 'carClassMini',
   hatchback: 'carClassHatchback',
-  muscle: 'carClassMuscle',
-  taxi: 'carClassTaxi',
-  pickup: 'carClassPickup',
   sedan: 'carClassSedan',
-  micro: 'carClassMicro',
+  kombi: 'carClassKombi',
+  coupe: 'carClassCoupe',
+  muscle: 'carClassMuscle',
   supersport: 'carClassSupersport',
+  veteran: 'carClassVeteran',
+  offroad: 'carClassOffroad',
+  pickup: 'carClassPickup',
+  van: 'carClassVan',
+  taxi: 'carClassTaxi',
+  limo: 'carClassLimo',
+  bus: 'carClassBus',
+  micro: 'carClassMicro',
+  special: 'carClassSpecial',
 };
+const classOrder = Object.keys(classKeys);
+
+/**
+ * Cars for sale in list order (specs/cars.md "Garáž", v2): every car not owned, those with the
+ * current city in `tags` first, then by class in the schema order, price and id.
+ */
+export function saleOrder(specs: Iterable<CarSpec>, owned: readonly string[], cityId: string): CarSpec[] {
+  const here = (s: CarSpec): number => (s.tags.includes(cityId) ? 0 : 1);
+  return [...specs]
+    .filter((s) => !owned.includes(s.id))
+    .sort((a, b) => here(a) - here(b) || classOrder.indexOf(a.class) - classOrder.indexOf(b.class)
+      || a.price - b.price || (a.id < b.id ? -1 : a.id > b.id ? 1 : 0));
+}
 
 /**
  * HUD for cars (specs/cars.md): the car name pill, the context button ("Přesednout" / "Garáž")
@@ -151,21 +176,23 @@ export class CarsHud {
       );
     });
     // For sale (specs/economy.md "Nákup auta"): every car not owned, with its price.
+    // Sorted by city, class, price and id, each with its class and a small preview (specs/cars.md "Garáž").
     const buyable = new Set(f.buyable());
-    const sale = [...f.specs.values()]
-      .filter((s) => !f.owned.includes(s.id))
-      .sort((a, b) => a.price - b.price || (a.id < b.id ? -1 : 1))
-      .map((spec) => {
-        const ck = classKeys[spec.class];
-        return h('button.mg-btn.ghost', {
-          type: 'button',
-          disabled: !buyable.has(spec.id),
-          onclick: () => {
-            f.buy(spec.id);
-            this.openGarage();
-          },
-        }, `${spec.name}${ck ? ' · ' + t(ck) : ''} — ${t('garageBuy', { price: spec.price })}`);
-      });
+    const sale = saleOrder(f.specs.values(), f.owned, f.drive.city.id).map((spec) => {
+      const canvas = h('canvas.garage-sale-thumb', { width: 40, height: 56 });
+      requestAnimationFrame(() => drawCarPreview(canvas, spec, null, f.tuning));
+      return h('button.mg-btn.ghost.garage-sale', {
+        type: 'button',
+        'data-car': spec.id,
+        disabled: !buyable.has(spec.id),
+        onclick: () => {
+          f.buy(spec.id);
+          this.openGarage();
+        },
+      }, canvas, h('span.garage-sale-info', {},
+        h('strong', {}, spec.name), h('span', {}, t(classKeys[spec.class]))),
+      h('span.garage-sale-price', {}, t('garageBuy', { price: spec.price })));
+    });
     // Air tank of a hop car (specs/hop.md): refilled to full for free.
     const refill = f.canRefillHop()
       ? h('button.mg-btn', {
