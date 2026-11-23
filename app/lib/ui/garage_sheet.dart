@@ -20,19 +20,30 @@ Future<void> showGarage(
   CarFleet fleet, {
   List<({String id, String name})> Function()? shelf,
   GarageController? garage,
+  bool testBlocked = false,
 }) => showModalBottomSheet<void>(
   context: context,
   backgroundColor: const Color(Tokens.colorUiSheet),
   isScrollControlled: true,
-  builder: (context) => GarageSheet(fleet: fleet, shelf: shelf, garage: garage),
+  builder: (context) => GarageSheet(fleet: fleet, shelf: shelf, garage: garage, testBlocked: testBlocked),
 );
 
 /// Tabs of the garage sheet, in order.
 enum GarageTab { cars, tuning, looks, shelf }
 
 class GarageSheet extends StatefulWidget {
-  const GarageSheet({super.key, required this.fleet, this.shelf, this.garage, this.initialTab = GarageTab.cars});
+  const GarageSheet({
+    super.key,
+    required this.fleet,
+    this.shelf,
+    this.garage,
+    this.initialTab = GarageTab.cars,
+    this.testBlocked = false,
+  });
   final CarFleet fleet;
+
+  /// A world minigame runs: "Vyzkoušet" is grey (specs/testdrive.md "Pořadí").
+  final bool testBlocked;
   final List<({String id, String name})> Function()? shelf;
   final GarageController? garage;
   final GarageTab initialTab;
@@ -191,12 +202,35 @@ class _GarageSheetState extends State<GarageSheet> {
           for (final spec in sale)
             ListTile(
               key: ValueKey('garageSale:${spec.id}'),
+              isThreeLine: true,
               leading: preview(spec, const CarLook()),
               title: Text(spec.name, style: const TextStyle(color: Color(Tokens.colorUiText))),
               subtitle: subtitle(spec),
-              trailing: OutlinedButton(
-                onPressed: buyable.contains(spec.id) ? () => setState(() => fleet.buy(spec.id)) : null,
-                child: Text(l.garageBuy(spec.price)),
+              // "Vyzkoušet" next to "Koupit" (specs/testdrive.md "Nabídka"): the test drive starts
+              // as the sheet closes; the caller's GarageController.leave rebuilds the same body.
+              trailing: IntrinsicWidth(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    OutlinedButton(
+                      style: _compact,
+                      onPressed: buyable.contains(spec.id) ? () => setState(() => fleet.buy(spec.id)) : null,
+                      child: Text(l.garageBuy(spec.price)),
+                    ),
+                    TextButton(
+                      key: ValueKey('garageTestDrive:${spec.id}'),
+                      style: _compact,
+                      onPressed: widget.testBlocked || !fleet.canTest(spec.id)
+                          ? null
+                          : () {
+                              fleet.startTest(spec.id);
+                              Navigator.of(context).pop();
+                            },
+                      child: Text(l.garageTestDrive),
+                    ),
+                  ],
+                ),
               ),
             ),
         ],
@@ -207,6 +241,14 @@ class _GarageSheetState extends State<GarageSheet> {
 
 /// Size of the small car preview in the garage list (logical px), the nose to the right.
 const _previewW = 56.0, _previewH = 28.0;
+
+/// "Koupit" and "Vyzkoušet" stacked in the trailing slot of a sale row.
+const _compact = ButtonStyle(
+  visualDensity: VisualDensity.compact,
+  tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+  minimumSize: WidgetStatePropertyAll(Size(0, 30)),
+  padding: WidgetStatePropertyAll(EdgeInsets.symmetric(horizontal: Tokens.spaceSm)),
+);
 
 /// The name of a car class (`carClass*` in i18n, specs/cars.md "Garáž").
 String carClassName(AppLocalizations l, String cls) => switch (cls) {

@@ -56,6 +56,10 @@ class ArtIndex {
 
   /// Souvenir on the Garage shelf (specs/shops.md): `souvenirs/<id>.png`, else null (icon).
   String? souvenir(String id) => _first(['souvenirs/$id.png']);
+
+  /// UI icon (specs/art.md v3 "Ikony UI"): `ui/<id>.png` (phone apps, `wanted_star`,
+  /// `weather_<kind>`, `radio`), else null (today's drawing).
+  String? uiIcon(String id) => _first(['ui/$id.png']);
 }
 
 /// Bundle prefix of the synced art (`metro sync` → app/assets/shared/assets/).
@@ -132,6 +136,37 @@ class ArtImage extends StatelessWidget {
     filterQuality: FilterQuality.medium,
     errorBuilder: (_, _, _) => fallback,
   );
+}
+
+/// A UI icon (specs/art.md v3 "Ikony UI"): the white glyph `ui/<id>.png` multiplied by [color]
+/// ([BlendMode.modulate]) at [size] × [size], or [fallback] (today's icon) when the file is not in
+/// the index or fails to decode. The icon never changes the layout.
+class ArtIcon extends StatelessWidget {
+  const ArtIcon(this.id, {super.key, required this.size, required this.color, required this.fallback});
+  final String id;
+  final double size;
+  final Color color;
+  final Widget fallback;
+
+  @override
+  Widget build(BuildContext context) {
+    final path = artIndex.uiIcon(id);
+    if (path == null) return fallback;
+    return SizedBox.square(
+      dimension: size,
+      child: Image(
+        key: ValueKey('artIcon:$id'),
+        image: artCache.provider(path, artDecodeWidth(context, size)),
+        width: size,
+        height: size,
+        color: color,
+        colorBlendMode: BlendMode.modulate,
+        filterQuality: FilterQuality.medium,
+        gaplessPlayback: true,
+        errorBuilder: (_, _, _) => fallback,
+      ),
+    );
+  }
 }
 
 /// A character in a circle: the portrait art (`cover` crop to a square) or, without it, initials
