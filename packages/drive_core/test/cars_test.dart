@@ -290,6 +290,18 @@ void main() {
       fleet.endTest();
       expect(d.spec.id, 'm0_coupe');
 
+      // The garage from the phone away from the spot: cars appear in place (specs/testdrive.md v2).
+      d.spawn(g.x + 30, g.y - 20, 0.5);
+      fleet.startTest('vega_roadster', here: true);
+      expect(d.car.x, closeTo(g.x + 30, 1e-6));
+      expect(d.car.y, closeTo(g.y - 20, 1e-6));
+      d.spawn(g.x + 50, g.y + 5, 0.2);
+      fleet.state = fleet.state.copyWith(owned: ['m0_coupe', 'pickup_hauler']);
+      fleet.select('pickup_hauler', here: true);
+      expect(fleet.testing, isNull);
+      expect(d.car.x, closeTo(g.x + 50, 1e-6));
+      expect(d.car.y, closeTo(g.y + 5, 1e-6));
+
       // Debug cash: + economy.debug_grant.
       final cash = fleet.state.cash;
       expect(fleet.grantDebugCash(), cash + tuning.economy.debugGrant);
