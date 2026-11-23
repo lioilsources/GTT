@@ -47,6 +47,9 @@ import { ChunkStreamer } from './world/streaming';
 import { MapNatureSource } from './phone/mapNature';
 import { drawNatureLabels } from './render/natureLabels';
 import { treeHitSound } from './render/treeSound';
+import { readCameraMode, TwoFingerTap, writeCameraMode, type CameraMode } from './render/chase';
+import { registerPhoneApp } from './phone';
+import { h } from './minigames/dom';
 
 const params = new URLSearchParams(location.search);
 const locale: Locale = navigator.language.startsWith('cs') ? 'cs' : 'en';
@@ -159,6 +162,9 @@ async function main(): Promise<void> {
   if (spot) drive.spawn(spot.parkX / 10, spot.parkY / 10, spot.parkHeading);
 
   const view = new WorldView(engine, city, tuning, drive);
+  view.setPackSource(source);
+  // Camera mode (specs/terrain.md "Upřesnění T2"): ?camera=, else the remembered choice, else top-down.
+  view.setCameraMode(readCameraMode(params.get('camera')));
   const peds = new PedestrianWorld(city, tuning);
   const pedView = new PedView(view.scene);
   const trafficView = drive.traffic ? new TrafficView(view.scene, drive.traffic, tuning) : null;
@@ -261,16 +267,54 @@ async function main(): Promise<void> {
     view.rig.snap(drive.car.x, drive.car.y, drive.car.heading, tuning);
   });
 
+  // Camera switch (specs/terrain.md "Upřesnění T2"): HUD button, two-finger double tap, Settings app.
+  const cameraBtn = $('btn-camera');
+  const cameraLabel = (): void => {
+    const chase = view.cameraMode === 'chase';
+    cameraBtn.textContent = chase ? '◢' : '◎';
+    cameraBtn.title = t(chase ? 'cameraTopdown' : 'cameraChase');
+  };
+  const setCamera = (m: CameraMode): void => {
+    view.setCameraMode(m);
+    writeCameraMode(m);
+    cameraLabel();
+  };
+  const toggleCamera = (): void => setCamera(view.cameraMode === 'chase' ? 'topdown' : 'chase');
+  cameraLabel();
+  cameraBtn.addEventListener('click', toggleCamera);
+  registerPhoneApp('settings', (host) => {
+    const modes = ['topdown', 'chase'] as const;
+    const label = (m: CameraMode): string => `${view.cameraMode === m ? '✓ ' : ''}${t(m === 'chase' ? 'cameraChase' : 'cameraTopdown')}`;
+    const names = modes.map((m) => h('span.travel-name', {}, label(m)));
+    const rows = modes.map((m, i) => h('button.travel-row', { type: 'button', onclick: () => {
+      setCamera(m);
+      modes.forEach((k, j) => (names[j]!.textContent = label(k)));
+    } }, names[i]!));
+    host.append(h('div.taxi-app', {}, ...rows));
+    return () => {};
+  });
+
   const size = { w: 1, h: 1 };
   const pt = (e: PointerEvent): { x: number; y: number } => ({ x: e.clientX, y: e.clientY });
+  const taps = new TwoFingerTap();
   canvas.addEventListener('pointerdown', (e) => {
     canvas.setPointerCapture(e.pointerId);
     scheme.down(e.pointerId, pt(e), size.w, size.h);
+    if (e.pointerType === 'touch') taps.pointerDown(e.pointerId, e.clientX, e.clientY, e.timeStamp / 1000);
   });
-  canvas.addEventListener('pointermove', (e) => scheme.move(e.pointerId, pt(e), size.w, size.h));
-  const up = (e: PointerEvent): void => scheme.up(e.pointerId);
+  canvas.addEventListener('pointermove', (e) => {
+    scheme.move(e.pointerId, pt(e), size.w, size.h);
+    taps.pointerMove(e.pointerId, e.clientX, e.clientY);
+  });
+  const up = (e: PointerEvent): void => {
+    scheme.up(e.pointerId);
+    if (taps.pointerUp(e.pointerId, e.timeStamp / 1000)) toggleCamera();
+  };
   canvas.addEventListener('pointerup', up);
-  canvas.addEventListener('pointercancel', up);
+  canvas.addEventListener('pointercancel', (e) => {
+    scheme.up(e.pointerId);
+    taps.cancel(e.pointerId);
+  });
   canvas.addEventListener('contextmenu', (e) => e.preventDefault());
   const keys = new Set<string>();
   window.addEventListener('keydown', (e) => {
@@ -350,7 +394,7 @@ async function main(): Promise<void> {
     city, tuning, locale, t, drive, fleet, phone, loop, carsHud, npcPack, hud: $('hud'), rig: view.rig,
   });
   // Tuning and looks (specs/garage.md): after the shops (the shelf tab); rebuilds the car from its upgrades.
-  const garage = installGarage({ tuning, t, fleet, carsHud, loop, view, shops });
+  const garage = installGarage({ tuning, t, fleet, carsHud, loop, view, shops, phone });
   // Weather (specs/weather.md): random seed per start, starts clear; ?weather= sets a kind.
   const weather = installWeather({ cityId, tuning, t, drive, view, hud: $('hud'), params });
   installTravel({ cityId, tuning, t, phone, tracker: passport.tracker, store: loop.store, save: () => loop.save(), onSwitch: () => booths.clear() });
@@ -424,7 +468,10 @@ async function main(): Promise<void> {
     shops.update(stepDt, dt);
     const c = drive.car;
     // The Camera glides the rig to its framing view and back (specs/photo.md); otherwise it follows.
-    if (!photo.camera(dt)) view.rig.follow(c.x, c.y, c.heading, c.speed, dt, tuning, c.forwardSpeed < -0.5);
+    const framing = photo.camera(dt);
+    // The framing view is a map from above: the chase camera waits until it ends.
+    view.chaseSuspended = framing;
+    if (!framing) view.rig.follow(c.x, c.y, c.heading, c.speed, dt, tuning, c.forwardSpeed < -0.5);
     streamer.update(c.x, c.y, c.heading, now);
     peds.update(stepDt, [carPose(c)], view.rig.visibleRadius(size.w, size.h, tuning), night);
     pedView.update(peds);
@@ -659,6 +706,7 @@ async function main(): Promise<void> {
     (window as unknown as Record<string, unknown>)['metro'] = {
       engine, view, drive, fleet, city, tuning, frameTimes, pilot, bench, peds, phone, passport, loop, taxi, drift, sprint, police: police.police, booths, fastTravel, photo, shops, weather, garage, carsHud, flow,
       timing: () => ({ firstFrameMs, loadMs }),
+      setCamera,
       /** Debug teleport: puts the car at (x, y) heading h (radians) and snaps the camera. */
       teleport: async (x: number, y: number, h = 0) => {
         drive.spawn(x, y, h);

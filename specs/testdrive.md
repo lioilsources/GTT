@@ -1,6 +1,6 @@
 # Zkušební jízda a ladicí hotovost
 
-**version: 1** · P2 (jen UI klientů, bez vektorů a scénářů) · dogfooding Ol1na 2026-11-23
+**version: 2** · P2 (jen UI klientů, bez vektorů a scénářů) · dogfooding Ol1na 2026-11-23
 („jak vyzkouším Roadster a jak Garáž? Furt tam mám jen jedno auto.“) · navazuje na
 `specs/cars.md` v2 („Garáž“), `specs/garage.md` v2, `specs/economy.md` v1, `specs/save.md` v4 ·
 parita F-075
@@ -54,8 +54,19 @@ hotovost: není to herní pravidlo, ekonomika (`specs/economy.md`) se nemění.
 - **Pořadí:** zkušební jízda nejde spustit během světové minihry (garáž se při ní otevřít dá,
   ale tlačítko je šedé).
 
+## Garáž z telefonu (P2, v2)
+- Aplikace **Garáž** v telefonu (`specs/garage.md` „Garáž“) má nahoře hlavní tlačítko
+  `garageOpen` („Otevřít garáž“). Stisk zavře telefon a otevře celý seznam garáže (záložky
+  Auta, Tuning, Vzhled, Polička, auta na prodej, „Vyzkoušet“) **kdekoli**, i mimo spot
+  `garage`. Svět stojí jako u garáže; otevření ukončí zkušební jízdu.
+- Garáž otevřená z telefonu, když hráč není u spotu `garage` (`atGarage` neplatí): vybrané
+  vlastní auto (`select`) i zkoušené auto vzniknou **na místě a s natočením hráčova auta**
+  (garáž je „přiveze“), ne na parkovacím bodě garáže. U spotu se chová jako dosud.
+- Město bez spotu `garage`: tlačítko není (výběr a nákup by neměly kde začít).
+- Tlačítko není během světové minihry (taxi, drift, sprint).
+
 ## Ladicí hotovost (P2, jen ladění)
-- Jen v ladicím režimu: W s `?debug` (nebo vývojový server), F v ladicím panelu (tuning
+- Jen v ladicím režimu: W s `?debug`, F v ladicím panelu (tuning
   panel). Bez něj tlačítko nikde není.
 - Tlačítko `debugCash` („+{amount}“, `amount` = `economy.debug_grant`, 10 000) přidá hotovost
   stejnou cestou jako ekonomika: klient vezme `cash` ze stavu aut, přičte `debug_grant`,
@@ -66,7 +77,7 @@ hotovost: není to herní pravidlo, ekonomika (`specs/economy.md`) se nemění.
 - `content/tuning.yaml`: `cars.test_drive_s` (180.0), `cars.test_drive_low_s` (15.0),
   `economy.debug_grant` (10000).
 - `i18n/`: `garageTestDrive`, `testDriveLeft` (`{time}`), `testDriveEnd`, `testDriveOver`,
-  `testDriveNoTaxi`, `debugCash` (`{amount}`).
+  `testDriveNoTaxi`, `debugCash` (`{amount}`), `garageOpen` (v2).
 - `design/tokens.json`: `color.testDrive.pill`, `color.testDrive.low`.
 
 ## Hraniční případy

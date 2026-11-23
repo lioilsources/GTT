@@ -116,7 +116,8 @@ Klient po každé úspěšné akci porovná stav před a po a ohlásí:
 
 ## Garáž
 - Hráč je v garáži, když stojí (≤ `cars.garage_speed_mps`) nejvýš `cars.garage_radius_m` od
-  parkovacího bodu spotu `garage`. HUD ukáže tlačítko „Garáž“ (`garage`).
+  parkovacího bodu spotu `garage`. HUD ukáže tlačítko „Garáž“ (`garage`). Z aplikace Garáž
+  v telefonu jde seznam otevřít kdekoli (`specs/testdrive.md` v2 „Garáž z telefonu“).
 - Seznam ukazuje vlastní auta (jméno, třída, vyznačené řízené). Výběr = akce `select`: nové auto
   vznikne na parkovacím bodě garáže natočené podle `park_heading`, řízené auto zajede do garáže
   (vlastní) nebo ho odveze odtahovka (cizí; nezůstane stát). Odstavené vlastní auto jinde ve městě
