@@ -6,6 +6,7 @@ import { ASSET_BASE_URL } from './config';
 import { Autopilot, frameStats } from './drive/autopilot';
 import { resolveRoute, routeFile } from './drive/route';
 import { hillPanel } from './drive/hillPanel';
+import { BoostHint, boostHintKey, readBoostHint, writeBoostHint } from './drive/boostHint';
 import { applyKeys, createScheme, SchemeA, SchemeB, SchemeC, type ControlScheme, type ControlSchemeId } from './drive/controls';
 import { DriveWorld } from './drive/driveWorld';
 import { installFlowHud } from './drive/flowHud';
@@ -426,6 +427,15 @@ async function main(): Promise<void> {
       },
     });
   }
+  // Boost hint (specs/controls.md v2): a toast for the active scheme until the player boosts.
+  const boostHint = new BoostHint(tuning.controls, readBoostHint(store));
+  const finePointer = ((): boolean => {
+    try {
+      return window.matchMedia('(pointer: fine)').matches;
+    } catch {
+      return false;
+    }
+  })();
   // Fast travel by metro and taxi (specs/travel.md): stations unlock by passing, the move resets
   // traffic, patrols and pedestrians like a teleport.
   const fastTravel = installFastTravel({
@@ -485,6 +495,11 @@ async function main(): Promise<void> {
     // Ticks with the game clock; the grip multiplier goes into this frame's drive step.
     weather.update(stepDt, dt);
     drive.update(stepDt);
+    if (!pilot) {
+      const ev = boostHint.step(stepDt, drive.car.speed, drive.input.boost);
+      if (ev) writeBoostHint(store, boostHint.shown);
+      if (ev === 'show') phone.toast(t(boostHintKey(scheme.id, finePointer)));
+    }
     // Test drive countdown in game time (specs/testdrive.md "Odpočet").
     carsHud.tick(stepDt);
     police.update(stepDt, dt);
@@ -693,6 +708,7 @@ async function main(): Promise<void> {
       ctx.fillStyle = tokens.colorUiControlHalf;
       if (scheme.leftHeld) ctx.fillRect(0, h * 0.6, w / 2, h * 0.4);
       if (scheme.rightHeld) ctx.fillRect(w / 2, h * 0.6, w / 2, h * 0.4);
+      boostButton(SchemeB.boostButton(w, h), scheme.boostHeld);
     } else if (scheme instanceof SchemeC) {
       const ctr = SchemeC.wheelCentre(w, h), r = SchemeC.wheelRadius(w);
       ctx.strokeStyle = tokens.colorUiControlWheel;
@@ -717,7 +733,21 @@ async function main(): Promise<void> {
       };
       rr(SchemeC.pedal(w, h), scheme.brakeHeld ? tokens.colorUiControlBrake : tokens.colorUiControlHint);
       rr(SchemeC.handButton(w, h), scheme.handHeld ? tokens.colorUiControlHand : tokens.colorUiControlHint);
+      boostButton(SchemeC.boostButton(w, h), scheme.boostHeld);
     }
+  }
+
+  /** The Boost button of schemes B and C (specs/controls.md v2): a rounded pad with its label. */
+  function boostButton(s: { left: number; top: number; width: number; height: number }, held: boolean): void {
+    ctx.fillStyle = held ? tokens.colorUiControlBoost : tokens.colorUiControlHint;
+    ctx.beginPath();
+    ctx.roundRect(s.left, s.top, s.width, s.height, 10);
+    ctx.fill();
+    ctx.fillStyle = tokens.colorUiText;
+    ctx.font = `600 ${Math.round(Math.min(s.width * 0.22, 18))}px system-ui, sans-serif`;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(t('boostButton'), s.left + s.width / 2, s.top + s.height / 2);
   }
 
   // WebGL context loss (DUALSTACK 6.3): Babylon restores GPU resources itself; keep the loop alive.
