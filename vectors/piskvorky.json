@@ -1,6 +1,6 @@
 {
  "module": "piskvorky",
- "specVersion": 1,
+ "specVersion": 2,
  "$comment": "Player moves are written out (seeded random policy, or a stronger player using the AI search on its own PRNG); AI moves are {by: ai, level} and decided by aiAction (specs/minigames/README.md). States recorded by the lead client (web).",
  "cases": [
   {

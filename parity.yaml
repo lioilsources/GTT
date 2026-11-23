@@ -401,12 +401,11 @@
 - id: F-047
   name: Piškvorky (gomoku 15×15) (M2-S9 batch A)
   level: P0
-  spec: specs/minigames/piskvorky.md@1
+  spec: specs/minigames/piskvorky.md@2
   vectors: vectors/piskvorky.json
   lead: web
-  flutter: done
-  web: done
-  checks: {flutter: pass, web: pass}
+  flutter: todo
+  web: todo
 
 - id: F-048
   name: Čtyři v řadě (M2-S9 batch A)
