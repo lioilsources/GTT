@@ -1363,6 +1363,13 @@ class TuningMinigames {
         srdce = TuningMinigamesSrdce._(r.sub('srdce')),
         kostky = TuningMinigamesKostky._(r.sub('kostky')),
         prase = TuningMinigamesPrase._(r.sub('prase')),
+        kulecnik = TuningMinigamesKulecnik._(r.sub('kulecnik')),
+        bowling = TuningMinigamesBowling._(r.sub('bowling')),
+        minigolf = TuningMinigamesMinigolf._(r.sub('minigolf')),
+        had = TuningMinigamesHad._(r.sub('had')),
+        cihly = TuningMinigamesCihly._(r.sub('cihly')),
+        krtek = TuningMinigamesKrtek._(r.sub('krtek')),
+        hokej = TuningMinigamesHokej._(r.sub('hokej')),
         desetitisic = TuningMinigamesDesetitisic._(r.sub('desetitisic')),
         sipky = TuningMinigamesSipky._(r.sub('sipky')),
         koulena = TuningMinigamesKoulena._(r.sub('koulena')),
@@ -1403,6 +1410,21 @@ class TuningMinigames {
 
   final TuningMinigamesPrase prase;
 
+  /// M2-S9 batch C (flick, arcade, sport); integer physics in specs/minigames/fyzika.md
+  final TuningMinigamesKulecnik kulecnik;
+
+  final TuningMinigamesBowling bowling;
+
+  final TuningMinigamesMinigolf minigolf;
+
+  final TuningMinigamesHad had;
+
+  final TuningMinigamesCihly cihly;
+
+  final TuningMinigamesKrtek krtek;
+
+  final TuningMinigamesHokej hokej;
+
   final TuningMinigamesDesetitisic desetitisic;
 
   final TuningMinigamesSipky sipky;
@@ -1436,6 +1458,13 @@ class TuningMinigames {
         'srdce': srdce.toJson(),
         'kostky': kostky.toJson(),
         'prase': prase.toJson(),
+        'kulecnik': kulecnik.toJson(),
+        'bowling': bowling.toJson(),
+        'minigolf': minigolf.toJson(),
+        'had': had.toJson(),
+        'cihly': cihly.toJson(),
+        'krtek': krtek.toJson(),
+        'hokej': hokej.toJson(),
         'desetitisic': desetitisic.toJson(),
         'sipky': sipky.toJson(),
         'koulena': koulena.toJson(),
@@ -1872,6 +1901,566 @@ class TuningMinigamesPrase {
         'star_margins': starMargins,
         'time_cap_s': timeCapS,
         'ai_think_s': aiThinkS,
+      };
+}
+
+/// M2-S9 batch C (flick, arcade, sport); integer physics in specs/minigames/fyzika.md
+class TuningMinigamesKulecnik {
+  TuningMinigamesKulecnik._(_R r)
+      : tableW = r.i('table_w'),
+        tableH = r.i('table_h'),
+        ballR = r.i('ball_r'),
+        pockets = r.il('pockets'),
+        rackDx = r.i('rack_dx'),
+        rackDy = r.i('rack_dy'),
+        rack = r.il('rack'),
+        maxSpeed = r.i('max_speed'),
+        dec = r.i('dec'),
+        eBall = r.i('e_ball'),
+        eCushion = r.i('e_cushion'),
+        maxSteps = r.i('max_steps'),
+        aiCandidates = r.il('ai_candidates'),
+        aiScatter = r.il('ai_scatter'),
+        aiPowerBase = r.i('ai_power_base'),
+        aiPowerPerM = r.i('ai_power_per_m'),
+        starLeft = r.il('star_left'),
+        stepsPerFrame = r.i('steps_per_frame'),
+        timeCapS = r.i('time_cap_s'),
+        aiThinkS = r.d('ai_think_s');
+
+  /// u = 0.01 mm, portrait table, the player breaks from the bottom
+  int tableW;
+
+  int tableH;
+
+  int ballR;
+
+  /// (x, y, capture radius)
+  List<int> pockets;
+
+  int rackDx;
+
+  int rackDy;
+
+  List<int> rack;
+
+  /// u per step at power 100, 240 steps/s
+  int maxSpeed;
+
+  int dec;
+
+  /// per mille
+  int eBall;
+
+  int eCushion;
+
+  int maxSteps;
+
+  List<int> aiCandidates;
+
+  List<int> aiScatter;
+
+  int aiPowerBase;
+
+  int aiPowerPerM;
+
+  /// AI balls left on the table for 3 and 2 stars
+  List<int> starLeft;
+
+  int stepsPerFrame;
+
+  int timeCapS;
+
+  double aiThinkS;
+
+  Map<String, Object> toJson() => {
+        'table_w': tableW,
+        'table_h': tableH,
+        'ball_r': ballR,
+        'pockets': pockets,
+        'rack_dx': rackDx,
+        'rack_dy': rackDy,
+        'rack': rack,
+        'max_speed': maxSpeed,
+        'dec': dec,
+        'e_ball': eBall,
+        'e_cushion': eCushion,
+        'max_steps': maxSteps,
+        'ai_candidates': aiCandidates,
+        'ai_scatter': aiScatter,
+        'ai_power_base': aiPowerBase,
+        'ai_power_per_m': aiPowerPerM,
+        'star_left': starLeft,
+        'steps_per_frame': stepsPerFrame,
+        'time_cap_s': timeCapS,
+        'ai_think_s': aiThinkS,
+      };
+}
+
+class TuningMinigamesBowling {
+  TuningMinigamesBowling._(_R r)
+      : laneW = r.i('lane_w'),
+        headY = r.i('head_y'),
+        pinDx = r.i('pin_dx'),
+        pinDy = r.i('pin_dy'),
+        ballR = r.i('ball_r'),
+        ballM = r.i('ball_m'),
+        pinR = r.i('pin_r'),
+        pinM = r.i('pin_m'),
+        minSpeed = r.i('min_speed'),
+        maxSpeed = r.i('max_speed'),
+        pinDec = r.i('pin_dec'),
+        ePin = r.i('e_pin'),
+        eWall = r.i('e_wall'),
+        deckY0 = r.i('deck_y0'),
+        deckY1 = r.i('deck_y1'),
+        knock = r.i('knock'),
+        maxSteps = r.i('max_steps'),
+        scatter = r.il('scatter'),
+        starScores = r.il('star_scores'),
+        stepsPerFrame = r.i('steps_per_frame'),
+        timeCapS = r.i('time_cap_s');
+
+  /// u = 0.01 mm
+  int laneW;
+
+  int headY;
+
+  int pinDx;
+
+  int pinDy;
+
+  int ballR;
+
+  int ballM;
+
+  int pinR;
+
+  int pinM;
+
+  int minSpeed;
+
+  int maxSpeed;
+
+  int pinDec;
+
+  int ePin;
+
+  int eWall;
+
+  int deckY0;
+
+  int deckY1;
+
+  int knock;
+
+  int maxSteps;
+
+  List<int> scatter;
+
+  List<int> starScores;
+
+  int stepsPerFrame;
+
+  int timeCapS;
+
+  Map<String, Object> toJson() => {
+        'lane_w': laneW,
+        'head_y': headY,
+        'pin_dx': pinDx,
+        'pin_dy': pinDy,
+        'ball_r': ballR,
+        'ball_m': ballM,
+        'pin_r': pinR,
+        'pin_m': pinM,
+        'min_speed': minSpeed,
+        'max_speed': maxSpeed,
+        'pin_dec': pinDec,
+        'e_pin': ePin,
+        'e_wall': eWall,
+        'deck_y0': deckY0,
+        'deck_y1': deckY1,
+        'knock': knock,
+        'max_steps': maxSteps,
+        'scatter': scatter,
+        'star_scores': starScores,
+        'steps_per_frame': stepsPerFrame,
+        'time_cap_s': timeCapS,
+      };
+}
+
+class TuningMinigamesMinigolf {
+  TuningMinigamesMinigolf._(_R r)
+      : h1 = r.il('h1'),
+        h2 = r.il('h2'),
+        h3 = r.il('h3'),
+        h4 = r.il('h4'),
+        h5 = r.il('h5'),
+        h6 = r.il('h6'),
+        ballR = r.i('ball_r'),
+        cupR = r.i('cup_r'),
+        cupSpeed = r.i('cup_speed'),
+        maxSpeed = r.i('max_speed'),
+        dec = r.i('dec'),
+        sandDec = r.i('sand_dec'),
+        eWall = r.i('e_wall'),
+        eBumper = r.i('e_bumper'),
+        maxSteps = r.i('max_steps'),
+        maxStrokes = r.i('max_strokes'),
+        scatter = r.il('scatter'),
+        starOver = r.il('star_over'),
+        stepsPerFrame = r.i('steps_per_frame'),
+        timeCapS = r.i('time_cap_s');
+
+  /// holes in mm: [w, h, par, sx, sy, cx, cy, nRect, rects.., nCirc, circles.., nSand, rects.., nWater, rects..]
+  List<int> h1;
+
+  List<int> h2;
+
+  List<int> h3;
+
+  List<int> h4;
+
+  List<int> h5;
+
+  List<int> h6;
+
+  /// u = 0.01 mm
+  int ballR;
+
+  int cupR;
+
+  int cupSpeed;
+
+  int maxSpeed;
+
+  int dec;
+
+  int sandDec;
+
+  int eWall;
+
+  int eBumper;
+
+  int maxSteps;
+
+  int maxStrokes;
+
+  List<int> scatter;
+
+  /// strokes over par for 3, 2, 1 stars
+  List<int> starOver;
+
+  int stepsPerFrame;
+
+  int timeCapS;
+
+  Map<String, Object> toJson() => {
+        'h1': h1,
+        'h2': h2,
+        'h3': h3,
+        'h4': h4,
+        'h5': h5,
+        'h6': h6,
+        'ball_r': ballR,
+        'cup_r': cupR,
+        'cup_speed': cupSpeed,
+        'max_speed': maxSpeed,
+        'dec': dec,
+        'sand_dec': sandDec,
+        'e_wall': eWall,
+        'e_bumper': eBumper,
+        'max_steps': maxSteps,
+        'max_strokes': maxStrokes,
+        'scatter': scatter,
+        'star_over': starOver,
+        'steps_per_frame': stepsPerFrame,
+        'time_cap_s': timeCapS,
+      };
+}
+
+class TuningMinigamesHad {
+  TuningMinigamesHad._(_R r)
+      : w = r.i('w'),
+        h = r.i('h'),
+        startInterval = r.il('start_interval'),
+        minInterval = r.il('min_interval'),
+        speedupEvery = r.i('speedup_every'),
+        foodPoints = r.i('food_points'),
+        starScores = r.il('star_scores'),
+        tickHz = r.i('tick_hz'),
+        timeCapS = r.i('time_cap_s');
+
+  int w;
+
+  int h;
+
+  List<int> startInterval;
+
+  List<int> minInterval;
+
+  int speedupEvery;
+
+  int foodPoints;
+
+  List<int> starScores;
+
+  int tickHz;
+
+  int timeCapS;
+
+  Map<String, Object> toJson() => {
+        'w': w,
+        'h': h,
+        'start_interval': startInterval,
+        'min_interval': minInterval,
+        'speedup_every': speedupEvery,
+        'food_points': foodPoints,
+        'star_scores': starScores,
+        'tick_hz': tickHz,
+        'time_cap_s': timeCapS,
+      };
+}
+
+class TuningMinigamesCihly {
+  TuningMinigamesCihly._(_R r)
+      : w = r.i('w'),
+        h = r.i('h'),
+        ballR = r.i('ball_r'),
+        paddleY = r.i('paddle_y'),
+        paddleH = r.i('paddle_h'),
+        paddleW = r.il('paddle_w'),
+        speed = r.il('speed'),
+        maxVxPct = r.i('max_vx_pct'),
+        serveTicks = r.i('serve_ticks'),
+        lives = r.i('lives'),
+        rows = r.i('rows'),
+        cols = r.i('cols'),
+        brickX0 = r.i('brick_x0'),
+        brickTop = r.i('brick_top'),
+        brickW = r.i('brick_w'),
+        brickH = r.i('brick_h'),
+        brickGap = r.i('brick_gap'),
+        rowPoints = r.il('row_points'),
+        livesBonus = r.i('lives_bonus'),
+        starScores = r.il('star_scores'),
+        tickHz = r.i('tick_hz'),
+        timeCapS = r.i('time_cap_s');
+
+  int w;
+
+  int h;
+
+  int ballR;
+
+  int paddleY;
+
+  int paddleH;
+
+  /// half width per difficulty
+  List<int> paddleW;
+
+  List<int> speed;
+
+  int maxVxPct;
+
+  int serveTicks;
+
+  int lives;
+
+  int rows;
+
+  int cols;
+
+  int brickX0;
+
+  int brickTop;
+
+  int brickW;
+
+  int brickH;
+
+  int brickGap;
+
+  List<int> rowPoints;
+
+  int livesBonus;
+
+  List<int> starScores;
+
+  int tickHz;
+
+  int timeCapS;
+
+  Map<String, Object> toJson() => {
+        'w': w,
+        'h': h,
+        'ball_r': ballR,
+        'paddle_y': paddleY,
+        'paddle_h': paddleH,
+        'paddle_w': paddleW,
+        'speed': speed,
+        'max_vx_pct': maxVxPct,
+        'serve_ticks': serveTicks,
+        'lives': lives,
+        'rows': rows,
+        'cols': cols,
+        'brick_x0': brickX0,
+        'brick_top': brickTop,
+        'brick_w': brickW,
+        'brick_h': brickH,
+        'brick_gap': brickGap,
+        'row_points': rowPoints,
+        'lives_bonus': livesBonus,
+        'star_scores': starScores,
+        'tick_hz': tickHz,
+        'time_cap_s': timeCapS,
+      };
+}
+
+class TuningMinigamesKrtek {
+  TuningMinigamesKrtek._(_R r)
+      : holes = r.i('holes'),
+        gameTicks = r.i('game_ticks'),
+        firstSpawn = r.i('first_spawn'),
+        spawnEvery = r.il('spawn_every'),
+        upTicks = r.il('up_ticks'),
+        goldPct = r.i('gold_pct'),
+        bombPct = r.il('bomb_pct'),
+        points = r.i('points'),
+        goldPoints = r.i('gold_points'),
+        bombPenalty = r.i('bomb_penalty'),
+        starScores = r.il('star_scores'),
+        tickHz = r.i('tick_hz'),
+        timeCapS = r.i('time_cap_s');
+
+  int holes;
+
+  int gameTicks;
+
+  int firstSpawn;
+
+  List<int> spawnEvery;
+
+  List<int> upTicks;
+
+  int goldPct;
+
+  List<int> bombPct;
+
+  int points;
+
+  int goldPoints;
+
+  int bombPenalty;
+
+  List<int> starScores;
+
+  int tickHz;
+
+  int timeCapS;
+
+  Map<String, Object> toJson() => {
+        'holes': holes,
+        'game_ticks': gameTicks,
+        'first_spawn': firstSpawn,
+        'spawn_every': spawnEvery,
+        'up_ticks': upTicks,
+        'gold_pct': goldPct,
+        'bomb_pct': bombPct,
+        'points': points,
+        'gold_points': goldPoints,
+        'bomb_penalty': bombPenalty,
+        'star_scores': starScores,
+        'tick_hz': tickHz,
+        'time_cap_s': timeCapS,
+      };
+}
+
+class TuningMinigamesHokej {
+  TuningMinigamesHokej._(_R r)
+      : w = r.i('w'),
+        h = r.i('h'),
+        puckR = r.i('puck_r'),
+        malletR = r.i('mallet_r'),
+        goalHalf = r.i('goal_half'),
+        eWall = r.i('e_wall'),
+        eMallet = r.i('e_mallet'),
+        dec = r.i('dec'),
+        maxPuck = r.i('max_puck'),
+        malletSpeed = r.i('mallet_speed'),
+        aiSpeed = r.il('ai_speed'),
+        aiReact = r.il('ai_react'),
+        aiDefY = r.i('ai_def_y'),
+        homeY = r.i('home_y'),
+        serveY = r.i('serve_y'),
+        goals = r.i('goals'),
+        goalPause = r.i('goal_pause'),
+        starMargins = r.il('star_margins'),
+        tickHz = r.i('tick_hz'),
+        timeCapS = r.i('time_cap_s');
+
+  int w;
+
+  int h;
+
+  int puckR;
+
+  int malletR;
+
+  int goalHalf;
+
+  int eWall;
+
+  int eMallet;
+
+  int dec;
+
+  int maxPuck;
+
+  int malletSpeed;
+
+  List<int> aiSpeed;
+
+  List<int> aiReact;
+
+  int aiDefY;
+
+  int homeY;
+
+  int serveY;
+
+  int goals;
+
+  int goalPause;
+
+  List<int> starMargins;
+
+  int tickHz;
+
+  int timeCapS;
+
+  Map<String, Object> toJson() => {
+        'w': w,
+        'h': h,
+        'puck_r': puckR,
+        'mallet_r': malletR,
+        'goal_half': goalHalf,
+        'e_wall': eWall,
+        'e_mallet': eMallet,
+        'dec': dec,
+        'max_puck': maxPuck,
+        'mallet_speed': malletSpeed,
+        'ai_speed': aiSpeed,
+        'ai_react': aiReact,
+        'ai_def_y': aiDefY,
+        'home_y': homeY,
+        'serve_y': serveY,
+        'goals': goals,
+        'goal_pause': goalPause,
+        'star_margins': starMargins,
+        'tick_hz': tickHz,
+        'time_cap_s': timeCapS,
       };
 }
 
