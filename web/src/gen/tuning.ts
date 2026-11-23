@@ -3665,6 +3665,10 @@ export class TuningCars {
   garageSpeedMps: number;
   /** the context button stays this long after the stop (auto-throttle moves on) */
   actionHoldS: number;
+  /** garage test drive of a car for sale, game seconds (specs/testdrive.md) */
+  testDriveS: number;
+  /** the countdown pill turns red below this */
+  testDriveLowS: number;
   readonly parked: TuningCarsParked;
 
   constructor(r: R) {
@@ -3676,6 +3680,8 @@ export class TuningCars {
     this.garageRadiusM = r.d('garage_radius_m');
     this.garageSpeedMps = r.d('garage_speed_mps');
     this.actionHoldS = r.d('action_hold_s');
+    this.testDriveS = r.d('test_drive_s');
+    this.testDriveLowS = r.d('test_drive_low_s');
     this.parked = new TuningCarsParked(r.sub('parked'));
   }
 
@@ -3689,6 +3695,8 @@ export class TuningCars {
       garage_radius_m: this.garageRadiusM,
       garage_speed_mps: this.garageSpeedMps,
       action_hold_s: this.actionHoldS,
+      test_drive_s: this.testDriveS,
+      test_drive_low_s: this.testDriveLowS,
       parked: this.parked.toJson(),
     };
   }
@@ -4382,6 +4390,8 @@ export class TuningEconomy {
   firstMinStars: number;
   /** wrecked car (paid up to the cash the player has) */
   towFee: number;
+  /** debug-only "+10 000" cash button (specs/testdrive.md) */
+  debugGrant: number;
 
   constructor(r: R) {
     this.base = r.i('base');
@@ -4392,6 +4402,7 @@ export class TuningEconomy {
     this.firstBonus = r.i('first_bonus');
     this.firstMinStars = r.i('first_min_stars');
     this.towFee = r.i('tow_fee');
+    this.debugGrant = r.i('debug_grant');
   }
 
   toJson(): Record<string, unknown> {
@@ -4404,6 +4415,7 @@ export class TuningEconomy {
       first_bonus: this.firstBonus,
       first_min_stars: this.firstMinStars,
       tow_fee: this.towFee,
+      debug_grant: this.debugGrant,
     };
   }
 }
@@ -4799,9 +4811,19 @@ export class TuningTerrainPipeline {
   roadGapMaxM: number;
   /** validate: share of road edge samples allowed over road_gap_max_m */
   roadGapShare: number;
+  /** validate: |terrain − road profile| on kept carriageways (the car rides the terrain there) */
+  readonly roadStrip: TuningTerrainPipelineRoadStrip;
   /** validate fails below water/road + this; below bridge.clear_* it warns */
   bridgeMinClearM: number;
+  /** a ground edge over water this long in one stretch is an (unflagged) bridge */
+  bridgeOverWaterM: number;
+  /** after grade_clamp: smooth the sawtooth on steep hills (then clamp again) */
+  profileFairPasses: number;
+  /** road strip samples that fit the grid nodes to the road profile */
+  readonly conformFit: TuningTerrainPipelineConformFit;
   readonly sun: TuningTerrainPipelineSun;
+  /** z-factor on game slopes in the Chunk.shade channel only (1 = plain hillshade) */
+  shadeStrength: number;
 
   constructor(r: R) {
     this.demMarginM = r.d('dem_margin_m');
@@ -4818,8 +4840,13 @@ export class TuningTerrainPipeline {
     this.zToleranceM = r.d('z_tolerance_m');
     this.roadGapMaxM = r.d('road_gap_max_m');
     this.roadGapShare = r.d('road_gap_share');
+    this.roadStrip = new TuningTerrainPipelineRoadStrip(r.sub('road_strip'));
     this.bridgeMinClearM = r.d('bridge_min_clear_m');
+    this.bridgeOverWaterM = r.d('bridge_over_water_m');
+    this.profileFairPasses = r.i('profile_fair_passes');
+    this.conformFit = new TuningTerrainPipelineConformFit(r.sub('conform_fit'));
     this.sun = new TuningTerrainPipelineSun(r.sub('sun'));
+    this.shadeStrength = r.d('shade_strength');
   }
 
   toJson(): Record<string, unknown> {
@@ -4838,8 +4865,13 @@ export class TuningTerrainPipeline {
       z_tolerance_m: this.zToleranceM,
       road_gap_max_m: this.roadGapMaxM,
       road_gap_share: this.roadGapShare,
+      road_strip: this.roadStrip.toJson(),
       bridge_min_clear_m: this.bridgeMinClearM,
+      bridge_over_water_m: this.bridgeOverWaterM,
+      profile_fair_passes: this.profileFairPasses,
+      conform_fit: this.conformFit.toJson(),
       sun: this.sun.toJson(),
+      shade_strength: this.shadeStrength,
     };
   }
 }
@@ -4873,6 +4905,61 @@ export class TuningTerrainPipelineProfileWindowM {
   }
 
   static readonly keys = ['lidar', 'coarse'] as const;
+}
+
+/** validate: |terrain − road profile| on kept carriageways (the car rides the terrain there) */
+export class TuningTerrainPipelineRoadStrip {
+  tolM: number;
+  share: number;
+  maxM: number;
+
+  constructor(r: R) {
+    this.tolM = r.d('tol_m');
+    this.share = r.d('share');
+    this.maxM = r.d('max_m');
+  }
+
+  toJson(): Record<string, unknown> {
+    return {
+      tol_m: this.tolM,
+      share: this.share,
+      max_m: this.maxM,
+    };
+  }
+
+  /** Value by YAML key, undefined when the key is unknown. */
+  get(key: string): number | undefined {
+    switch (key) {
+      case 'tol_m':
+        return this.tolM;
+      case 'share':
+        return this.share;
+      case 'max_m':
+        return this.maxM;
+      default:
+        return undefined;
+    }
+  }
+
+  static readonly keys = ['tol_m', 'share', 'max_m'] as const;
+}
+
+/** road strip samples that fit the grid nodes to the road profile */
+export class TuningTerrainPipelineConformFit {
+  stepM: number;
+  passes: number;
+
+  constructor(r: R) {
+    this.stepM = r.d('step_m');
+    this.passes = r.i('passes');
+  }
+
+  toJson(): Record<string, unknown> {
+    return {
+      step_m: this.stepM,
+      passes: this.passes,
+    };
+  }
 }
 
 export class TuningTerrainPipelineSun {
@@ -5331,6 +5418,8 @@ export class TuningNaturePipeline {
   streetTreeSnapM: number;
   treeMinSpacingM: number;
   treeRowStepM: number;
+  /** no crown within this of a bridge, ramp or viaduct footprint (on the ground below) */
+  deckTreeMarginM: number;
 
   constructor(r: R) {
     this.simplifyM = r.d('simplify_m');
@@ -5348,6 +5437,7 @@ export class TuningNaturePipeline {
     this.streetTreeSnapM = r.d('street_tree_snap_m');
     this.treeMinSpacingM = r.d('tree_min_spacing_m');
     this.treeRowStepM = r.d('tree_row_step_m');
+    this.deckTreeMarginM = r.d('deck_tree_margin_m');
   }
 
   toJson(): Record<string, unknown> {
@@ -5367,6 +5457,7 @@ export class TuningNaturePipeline {
       street_tree_snap_m: this.streetTreeSnapM,
       tree_min_spacing_m: this.treeMinSpacingM,
       tree_row_step_m: this.treeRowStepM,
+      deck_tree_margin_m: this.deckTreeMarginM,
     };
   }
 }

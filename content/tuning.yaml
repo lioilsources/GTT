@@ -761,6 +761,8 @@ cars:
   garage_radius_m: 18.0       # around the garage spot's parking point
   garage_speed_mps: 1.5
   action_hold_s: 1.5          # the context button stays this long after the stop (auto-throttle moves on)
+  test_drive_s: 180.0         # garage test drive of a car for sale, game seconds (specs/testdrive.md)
+  test_drive_low_s: 15.0      # the countdown pill turns red below this
   parked:
     salt: 739982445
     per_chunk: 4
@@ -910,6 +912,7 @@ economy:
   first_bonus: 100              # first finish of a minigame with at least first_min_stars
   first_min_stars: 1
   tow_fee: 75                   # wrecked car (paid up to the cash the player has)
+  debug_grant: 10000            # debug-only "+10 000" cash button (specs/testdrive.md)
 # Loop glue (specs/loop.md): the "Play" context button at a spot without a route.
 loop:
   spot_radius_m: 22.0           # around the spot's parking point
@@ -963,8 +966,14 @@ terrain:
     z_tolerance_m: 0.1          # densified samples on a straight profile are dropped
     road_gap_max_m: 0.3         # validate: road edge vs terrain
     road_gap_share: 0.01        # validate: share of road edge samples allowed over road_gap_max_m
+    # validate: |terrain − road profile| on kept carriageways (the car rides the terrain there)
+    road_strip: {tol_m: 0.15, share: 0.005, max_m: 1.0}
     bridge_min_clear_m: 2.0     # validate fails below water/road + this; below bridge.clear_* it warns
+    bridge_over_water_m: 25.0   # a ground edge over water this long in one stretch is an (unflagged) bridge
+    profile_fair_passes: 50     # after grade_clamp: smooth the sawtooth on steep hills (then clamp again)
+    conform_fit: {step_m: 2.0, passes: 20}   # road strip samples that fit the grid nodes to the road profile
     sun: {azimuth_deg: 315.0, altitude_deg: 45.0}
+    shade_strength: 3.0         # z-factor on game slopes in the Chunk.shade channel only (1 = plain hillshade)
   lod: {grid_m: 32, chunks: 4, block_merge_m: 5.0, simplify_m: 4.0, parkland_height_m: 8.0}
 slope_physics:
   gravity: 20.0                 # m/s² in game units
@@ -1004,6 +1013,7 @@ nature:
     street_tree_snap_m: 15.0    # inventory and OSM trees this close to a street go to its sidewalk
     tree_min_spacing_m: 3.0
     tree_row_step_m: 8.0
+    deck_tree_margin_m: 2.0     # no crown within this of a bridge, ramp or viaduct footprint (on the ground below)
 
 # Smooth driving: soft trees, wall slide, rescue (specs/flow.md, Prompts/04-METROPOLE_FLOW_PLAN.md).
 flow:
