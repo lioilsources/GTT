@@ -1,7 +1,7 @@
 import 'package:rules_core/rules_core.dart';
 import 'package:shared_gen/shared_gen.dart';
 
-/// specs/minigames/piskvorky.md, version 1. Pure Dart: no Flutter imports here.
+/// specs/minigames/piskvorky.md, version 2. Pure Dart: no Flutter imports here.
 class PiskvorkyConfig {
   const PiskvorkyConfig({
     required this.size,
@@ -163,6 +163,14 @@ int attack(String board, int size, int cell, String m) {
   return v;
 }
 
+/// Whether a mark [m] on [cell] makes a run of five or more in some direction (v2 steps 2 and 3).
+bool makesFive(String board, int size, int cell, String m) {
+  for (var d = 0; d < 4; d++) {
+    if (runAt(board, size, cell, m, d).len >= 5) return true;
+  }
+  return false;
+}
+
 /// AI candidates: empty cells within Chebyshev distance 2 of a mark, ascending; empty board → centre.
 List<int> candidates(String board, int size) {
   final out = <int>[];
@@ -199,7 +207,7 @@ class PiskvorkyRules extends MgRules<PiskvorkyState, PiskvorkyAction, PiskvorkyR
   String get id => 'piskvorky';
 
   @override
-  int get specVersion => 1;
+  int get specVersion => 2;
 
   /// Starts a game; [config] is the vector form (see [PiskvorkyConfig.fromJson]).
   @override
@@ -257,9 +265,15 @@ class PiskvorkyRules extends MgRules<PiskvorkyState, PiskvorkyAction, PiskvorkyR
     final r = ai.nextInt(100);
     if (r < err) return PiskvorkyAction(s.turn, cand[ai.nextInt(cand.length)]);
     final own = _mark(s.turn), opp = _mark(_other(s.turn));
+    // v2: take an own five first, else block the player's five (first candidate in order).
+    for (final p in cand) {
+      if (makesFive(s.board, c.size, p, own)) return PiskvorkyAction(s.turn, p);
+    }
+    for (final p in cand) {
+      if (makesFive(s.board, c.size, p, opp)) return PiskvorkyAction(s.turn, p);
+    }
     var best = -1, bestCell = cand.first;
     for (final p in cand) {
-      // def > 100 may rank blocking above an own five: v1 as written.
       final v = attack(s.board, c.size, p, own) + (attack(s.board, c.size, p, opp) * def) ~/ 100;
       if (v > best) {
         best = v;
