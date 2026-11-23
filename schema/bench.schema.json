@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "bench.schema.json",
   "title": "BenchRoute",
-  "description": "content/bench/<city>.json: the autopilot route of the D1 measurement (specs/bench.md). Intersections are named by two streets; each leg follows only the listed streets.",
+  "description": "content/bench/<city>.json: the autopilot route of the D1 measurement; content/bench/<city>-<id>.json: a further route, e.g. the Prague hills (specs/bench.md v2). Intersections are named by two streets; each leg follows only the listed streets.",
   "type": "object",
   "additionalProperties": false,
   "required": [
@@ -60,6 +60,10 @@
     },
     "description": {
       "type": "string"
+    },
+    "oneway": {
+      "type": "boolean",
+      "description": "bench v2: legs follow one-way streets only in their allowed direction (default false, the NYC benchmark ignores them)."
     },
     "start": {
       "$ref": "#/$defs/Crossing"

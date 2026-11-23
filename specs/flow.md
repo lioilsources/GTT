@@ -68,6 +68,21 @@ středu auta zvětšeného o půlšířku auta. Fyzické zpracování jen u stro
 - `treeCd[strom] = flow.tree_hit.cooldown_s`. Bez náhody (shodné v obou klientech).
 - Klíč stromu = `"<cx>_<cy>/<index v Chunk.trees>"`.
 
+**Upřesnění FL2 (klient W, F-073):**
+- Krok stromů běží po kroku fyziky a po odezvě na zeď, jen ve vrstvě 0, mimo vzduch, potápění
+  a animaci přesunu (jinak překryvy končí, cooldowny běží dál). Pořadí: cooldowny − dt, pak stromy.
+- Překryv: `|kmen − střed auta| < nature.trunk_radius_m + půlšířka auta`. Kandidáti: 200 nejbližších
+  do 80 m (shoda vzdálenosti → menší klíč), obnoví se, když se auto od poslední obnovy posune o 10 m
+  nebo se změní načtené chunky.
+- `v` = rychlost po kroku fyziky. Stojí-li auto (`|v| = 0`), `v̂ = 0`. `side`: `cross ≥ 0` → +1
+  (kmen přímo před autem = vlevo).
+- Vytlačení: při zásahu M/L se uloží směr `a = −side · n̂` (n̂ = levá normála `v̂` v okamžiku zásahu);
+  v každém kroku překryvu se rychlost upraví tak, aby složka podél `a` byla aspoň `push_mps`
+  (`v += (push_mps − v·a) · a`, když `v·a < push_mps`), nesčítá se. Překryv, který začal během
+  cooldownu, nevytlačuje. Natočení o `yaw_kick_deg` mění jen úhel tělesa, ne rychlost.
+- Padlý stromek se vrátí po 60 s, jakmile je kmen dál než 150 m od auta (mimo záběr shora); do té
+  doby se ignoruje.
+
 ## Les
 Povrch `forest`: `grip × flow.forest.grip`, cílová i maximální rychlost a síla motoru ×
 `flow.forest.speed_factor`. Les nemá kolizi, jen stromy výše. Hlídky a AI zůstávají na silnicích
@@ -136,6 +151,13 @@ natočení a počáteční rychlost ve směru natočení; vstupy podle souboru s
 1. `forest_200` – 200 m lesem (stromy M po 11 m v pruhu) plnou rychlostí: min. rychlost ≥
    `min_speed_mps`, 0 vyproštění.
 2. `tree_head_on` – čelně do stromu M při 20 m/s: rychlost po nárazu 15 m/s, auto mine kmen.
+
+Stromové scénáře běží na syntetické trati `specs/nature.md` („Scénáře“, testy W `web/test/nature.test.ts`):
+
+| scénář | plochy a stromy | start, délka | metriky |
+|---|---|---|---|
+| `forest_200` | les (`wood`/`forest`) x −50…250, y 60…140; stromy M v (11·k, 100), k = 1…18 | (0, 100), 0°, 15 m/s, 20 s, plyn 1 + `boost` | `min_speed_mps` = nejmenší rychlost do x ≥ 200; `time_200_s` = čas, kdy x ≥ 200; `tree_hits`; `rescues` |
+| `tree_head_on` | bez ploch; strom M v (0, 100) | (−3, 100), 0°, 20 m/s, 2 s, bez vstupu | `speed_before_mps` = \|v\| před krokem zásahu; `speed_after_mps` = složka rychlosti po zásahu ve směru rychlosti před ním; `min_trunk_dist_m` = nejmenší vzdálenost středu auta od kmene; `passed` (x > 5 na konci); `tree_hits` |
 3. `wall_30` – šikmo do zdi pod 30° při 20 m/s: ≥ 14,7 m/s ve směru stěny.
 4. `wall_head_on` – čelně do zdi s plynem: do 2,5 s automatické vyproštění, auto stojí 8 m zpět
    na vlastní stopě.

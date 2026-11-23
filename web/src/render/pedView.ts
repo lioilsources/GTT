@@ -9,9 +9,10 @@ import '@babylonjs/core/Meshes/thinInstanceMesh';
 
 import { tokens } from '../gen/tokens';
 import type { Tuning } from '../gen/tuning';
+import type { Terrain } from '../world/terrain';
 import type { PedestrianWorld } from '../peds/pedestrians';
 import type { CameraRig } from './worldView';
-import { Tris, Z } from './geometry';
+import { baseHeight, Tris, Z } from './geometry';
 import { rgba } from './palette';
 
 /** Just above the props, below the car (draw order METROPOLE_PLAN 6.3 step 4). */
@@ -48,13 +49,16 @@ export class PedView {
     });
   }
 
+  /** Heights of the city (specs/terrain.md); null = flat. */
+  terrain: Terrain | null = null;
+
   update(w: PedestrianWorld): void {
     const lists: number[][] = this.meshes.map(() => []);
     const m = Matrix.Identity();
     const s = new Vector3(w.radius, 1, w.radius);
     const pos = new Vector3();
     for (const p of w.peds) {
-      pos.set(p.x, PED_Z, p.y);
+      pos.set(p.x, PED_Z + baseHeight(this.terrain, p.x, p.y, 0, 0), p.y);
       Matrix.ComposeToRef(s, Quaternion.RotationAxis(Vector3.Up(), -p.heading), pos, m);
       lists[p.id % lists.length]!.push(...m.m);
     }

@@ -1,0 +1,74 @@
+# How Ol1n checks the items waiting for him (Prompts/05 L-S14). `metro progress` turns the items with
+# status "čeká na Ol1na" into docs/verify.md: passes of at most `pass_min` minutes on the phone,
+# grouped by city, then the Flutter-only checks, then decisions. An item without an entry here is
+# listed under "Bez návodu" so it is never lost.
+#
+# Fields: city (nyc | prague | tokyo; empty = any), q (web URL parameters after `?`), expect (what has
+# to happen, Czech), min (minutes), client (w = web on the phone, f = Flutter app only,
+# decide = a decision or a measurement, not a walk-through).
+pass_min: 30
+base: https://lioilsources.github.io/GTT/
+checks:
+  M0-S4: {city: nyc, q: "city=nyc&debug", min: 3, client: w, expect: "Nahoře ulice · čtvrť, rychlost a FPS; ⚙ otevře ladicí panel a změna hodnoty se projeví hned."}
+  M0-A1: {city: nyc, q: "city=nyc&bench", min: 5, client: decide, expect: "Benchmark na Pixelu 8a a iPhonu 12 mini; fps_avg ≥ 60 na Times Square a 42nd St, výsledek zkopírovat do plans/BAKEOFF_REPORT.md."}
+  M0-A3: {city: nyc, min: 15, client: decide, expect: "Slepý test památek na 3 lidech podle docs/m0-test.md."}
+  M0-A4: {city: "", min: 5, client: decide, expect: "Po týdnu jízdy vybrat schéma ovládání A/B/C a potvrdit tuning.yaml (ladicí panel → Kopírovat)."}
+  M0-A5: {city: "", min: 2, client: decide, expect: "Rozhodnout R3 / bránu G1 podle čísel z M0-A1 a D1-2."}
+  D1-1: {city: nyc, q: "city=nyc", min: 3, client: w, expect: "Hračka M0 na telefonu: jízda po Midtownu bez sekání, mosty a tunely drží vrstvu."}
+  D1-2: {city: nyc, q: "city=nyc&bench", min: 5, client: decide, expect: "Benchmark W i F na obou telefonech (fps, start, paměť); baterii ručně 10 minut."}
+  D1-3: {city: "", min: 5, client: decide, expect: "Doplnit čísla z D1-2 do plans/BAKEOFF_REPORT.md a potvrdit závěr."}
+  D2-1: {city: "", q: "gallery", min: 2, client: w, expect: "Galerie ukáže všechny minihry, výběr soupeře a úrovně, každá se spustí a jde zavřít."}
+  D2-2: {city: "", q: "mg=sirky", min: 2, client: w, expect: "Sirky: jedna partie do konce, výsledková obrazovka."}
+  D2-3: {city: "", q: "mg=oko", min: 2, client: w, expect: "Oko bere: jedna partie do konce."}
+  D2-4: {city: "", q: "mg=dama", min: 3, client: w, expect: "Dáma: povinné braní funguje, partie do konce."}
+  D2-5: {city: "", q: "mg=desetitisic", min: 2, client: w, expect: "Desetitisíc: hody, odkládání, konec hry."}
+  D2-6: {city: "", q: "mg=sipky", min: 2, client: w, expect: "Šipky 301: míření palcem, zakončení na nulu."}
+  D2-7: {city: "", q: "mg=koulena", min: 2, client: w, expect: "Koulená: hod palcem, počítání bodů."}
+  D2-8: {city: "", q: "mg=strelnice", min: 2, client: w, expect: "Střelnice: terče, čas, skóre."}
+  D2-9: {city: nyc, q: "city=nyc&mg=taxi", min: 4, client: w, expect: "Taxi: zákazník, navigace, doručení, směna skončí výsledkem."}
+  M1-S1: {city: nyc, q: "city=nyc", min: 3, client: w, expect: "Manhattan po 110th St, přes mosty jen po mostovce; GPS trasa z mapy vede po silnicích."}
+  M1-S2: {city: nyc, q: "city=nyc", min: 2, client: w, expect: "Provoz jezdí v pruzích a stojí na červenou, semafory se střídají."}
+  M1-S3: {city: nyc, q: "city=nyc", min: 2, client: w, expect: "Chodci na přechodech vždy uskočí, nikdo není sražen (R7)."}
+  M1-S4: {city: nyc, q: "city=nyc", min: 4, client: w, expect: "Jízda na chodníku před hlídkou: hvězdy, honička; únik hvězdy smaže, zastavení = karta Dopaden a pokuta."}
+  M1-S5: {city: "", q: "gallery", min: 1, client: w, expect: "Viz D2-1 (stejný průchod)."}
+  M1-S6: {city: nyc, q: "city=nyc", min: 5, client: w, expect: "Z feedu vybrat minihru, dojet na spot, hrát, výsledek; zkusit aspoň 3 různé."}
+  M1-S7: {city: nyc, q: "city=nyc", min: 3, client: w, expect: "Telefon: feed (6 karet, přejetí nahoru/dolů, vpravo jedu, vlevo míň), mapa se severem nahoře."}
+  M1-S8: {city: nyc, q: "city=nyc", min: 3, client: w, expect: "Přesednout do zaparkovaného auta, garáž: koupit a vybrat auto."}
+  M1-S9: {city: nyc, q: "city=nyc&passport", min: 3, client: w, expect: "Dojet k památce: pohlednice a razítko v Pasu."}
+  M1-S10: {city: nyc, q: "city=nyc&skits", min: 5, client: w, expect: "Přečíst skity NPC, odpovědi flirt/vtip/věcně, tón sedí."}
+  M1-S11: {city: nyc, q: "city=nyc", min: 3, client: w, expect: "Výsledek přidá hotovost a razítko; po znovunačtení stránky je stav uložený."}
+  M1-S12: {city: nyc, q: "city=nyc&about", min: 1, client: w, expect: "Obrazovka O mapách: zdroje a licence (ODbL) jsou správně."}
+  M1-A1: {city: nyc, q: "city=nyc", min: 15, client: w, expect: "10 smyček feed → jízda → minihra → výsledek za sebou bez pádu a zaseknutí."}
+  M1-A2: {city: "", q: "gallery", min: 1, client: w, expect: "Viz D2-1: každá minihra jde spustit z Galerie."}
+  D3-1: {city: nyc, q: "city=nyc", min: 1, client: w, expect: "Viz M1-A1 (celá smyčka)."}
+  M3-S3: {city: prague, q: "city=nyc", min: 3, client: w, expect: "Telefon → Cesty: přepnout do Prahy a zpět; postup každého města zůstane."}
+  M3-S4: {city: prague, q: "city=prague&spot=zizkov_pub", min: 3, client: w, expect: "Pěší zóna (Staré Město): auto nevjede přes sloupky, koloběžka a kolo projedou."}
+  M3-S5: {city: prague, q: "city=prague", min: 3, client: w, expect: "Tramvaje jezdí po kolejích, stojí na zastávkách, plynule zatáčejí."}
+  M3-S6: {city: prague, q: "city=prague&spot=novomestska_garage", min: 3, client: w, expect: "Garáž: Lidka 105, koloběžka a kolo; kreslení a jízda sedí."}
+  M3-S7: {city: prague, q: "mg=kulicky", min: 6, client: w, expect: "Kuličky, Čára (?mg=cara) a Nohejbal (?mg=nohejbal): pravidla a obtížnost."}
+  M3-S8: {city: prague, q: "city=prague&skits", min: 5, client: w, expect: "Pražské skity (návrh) a pohlednice: texty schválit."}
+  M3-A3: {city: prague, q: "city=prague", min: 5, client: w, expect: "10× přepnout NYC ↔ Praha přes Cesty bez pádu."}
+  M2-S1: {city: nyc, q: "city=nyc", min: 4, client: w, expect: "Hledanost 3: zátaras dvou hlídek napříč silnicí před hráčem; po úniku zmizí."}
+  M2-S2: {city: nyc, q: "city=nyc", min: 3, client: w, expect: "Zvonící budka: tlačítko Zvednout, nabídka minihry s bonusem."}
+  M2-S3: {city: nyc, q: "city=nyc", min: 3, client: w, expect: "Metro: vstup se odemkne průjezdem, přesun na jinou stanici; aplikace Taxi."}
+  M2-ST: {city: prague, q: "city=prague", min: 2, client: w, expect: "Skiny: NYC plochý vektor se stíny, Praha risograf; obojí na telefonu čitelné."}
+  M2-AR: {city: nyc, q: "city=nyc&skits", min: 2, client: w, expect: "Portréty a busty v dialogu a nabídce budky, pohlednice v Pasu: rozložení na telefonu."}
+  M2-S4: {city: nyc, q: "city=nyc", min: 3, client: w, expect: "Fotomísto: Foťák, rámování, snímek v Pasu."}
+  M2-S5: {city: nyc, q: "city=nyc", min: 3, client: w, expect: "Bar: karta podniku, vybraná minihra, pivo zpomalí řízení."}
+  M2-S6: {city: nyc, q: "city=nyc&weather=rain", min: 2, client: w, expect: "Déšť: mokrá silnice, menší přilnavost; ?weather=fog mlha."}
+  M2-S7: {city: nyc, q: "city=nyc", min: 3, client: w, expect: "Garáž: tuning motoru a kosmetika, rozdíl je cítit."}
+  M2-S8: {city: nyc, q: "city=nyc&cars", min: 2, client: w, expect: "Přehled 40 aut: třídy, tvary, žádná reálná značka."}
+  M2-S9A: {city: "", q: "gallery", min: 8, client: w, expect: "Piškvorky, Čtyři v řadě, Mlýn, Reversi, Lodě, Posuvné puzzle, Městský kvíz: každá jedna partie."}
+  M2-S9B: {city: "", q: "gallery", min: 6, client: w, expect: "Prší, Srdce, Kostkový poker, Prase: každá jedna partie."}
+  M2-S9C: {city: "", q: "gallery", min: 8, client: w, expect: "Kulečník, Bowling, Minigolf, Had, Cihly, Bouchni krtka, Vzdušný hokej: ovládání palcem."}
+  M4-S2: {city: tokyo, q: "city=tokyo", min: 3, client: w, expect: "Tokio: levostranný provoz, parkování a taxi vlevo, paleta stylu D."}
+  M5-S1: {city: nyc, q: "city=nyc", min: 5, client: w, expect: "Náraz do zdi: šikmo sklouzne, čelně odrazí; zaseknuté auto se samo vyprostí."}
+  M5-S4: {city: prague, q: "city=prague", min: 2, client: decide, expect: "Výšky Prahy z AWS Terrain Tiles stačí do vystřelení (L2); DMR 5G až potom."}
+  L-S12: {city: "", min: 2, client: decide, expect: "Kde tě policie uvěznila: město, místo (ulice, křižovatka), auto, hledanost, byl tam zátaras? Testy police_box a 20 dopadení po sobě chybu nezopakovaly (PR #257)."}
+  M5-S9: {city: prague, q: "city=prague&camera=chase", min: 4, client: w, expect: "Šikmý pohled za autem: obloha, výšky domů a kopce čitelné, přepnutí ◎/◢ bez cuknutí, plynulých 60 fps."}
+  L-S10: {city: prague, q: "city=prague", min: 3, client: w, expect: "Tramvaje projíždějí výhybky a oblouky plynule, bez otočky v ostrém úhlu, na konečné obrátí čelo."}
+  L-S11: {city: prague, q: "city=prague&spot=naplavka_boats", min: 6, client: w, expect: "Z Náplavky po nábřeží na sever: Jiráskův most přejet tam i zpět (zkus i jízdu podél zábradlí) – auto zůstane na mostovce, nespadne do Vltavy, nezastaví ho strom ani dům pod mostem. Pod mostem Legií a Mánesovým mostem projet po nábřeží bez zastavení a bez vyskočení na most. Pak z Náplavky sjet z břehu do Vltavy: auto se potopí, objeví se na nejbližší silnici a strhne se odtah. Pro NYC stejně Brooklyn Bridge (?city=nyc)."}
+  L-D2: {city: nyc, q: "city=nyc&scheme=b", min: 3, client: w, expect: "Při první jízdě toast „Drž Boost = rychleji“; tlačítko Boost dole uprostřed zrychlí nad 50 km/h a druhým palcem se dál zatáčí. Tlačítko B nahoře přepne na C: Boost nad pedálem brzdy. Po znovunačtení se nápověda hned neukáže (v anonymním okně ano)."}
+  L-S1: {city: prague, q: "city=prague&route=hradcany&debug", min: 5, client: w, expect: "Hradčany (docs/prague-hills.md): navigace vede Nerudovou a Úvozem k Pohořelci; do kopce tachometr klesá, HUD ukáže sklon a výšku 227 → 285 m, stínování a šipky do kopce; panel Ladění mění slope_physics.* hned."}
+  M5-S10: {city: prague, q: "city=prague&route=petrin", min: 6, client: w, expect: "Petřín (docs/prague-hills.md): Holečkova, vracečka Zapovy, Švédská, Na Hřebenkách k Pod Stadiony (206 → 308 m); ztráta rychlosti do kopce, skok na hraně se odděleným stínem, svah Petřína stínovaný. Totéž šikmo s &camera=chase."}
+  M5-A5: {city: prague, q: "city=prague&route=letna", min: 6, client: w, expect: "Letná (docs/prague-hills.md): z Klárova Chotkovy serpentiny, Badeniho, Milady Horákové a sjezd k Veverkově; z kopce auto neujede nad cestovní rychlost. Po třech trasách potvrdit kopce Prahy (M5-A5)."}

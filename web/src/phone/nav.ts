@@ -156,6 +156,15 @@ export class Navigator {
     return this.hasRoute;
   }
 
+  /**
+   * Starts navigation along a fixed polyline (a route of content/bench/, `?route=`, specs/bench.md
+   * v2) instead of a GPS search; leaving it re-plans by GPS to the same target as usual.
+   */
+  follow(t: NavTarget, path: ArrayLike<number>, x: number, y: number): void {
+    this.target = t;
+    this.setPath(Array.from(path), x, y);
+  }
+
   cancel(): void {
     this.target = null;
     this.path = [];
@@ -167,7 +176,11 @@ export class Navigator {
     const s = navStart(this.g, hit, x, y, heading, this.nav.searchM);
     const goal = navGoal(this.g, t);
     const r = s ? findRoute(this.rg, s.node, goal.node) : null;
-    this.path = s && r && r.cost >= 0 ? navPath(this.g, s, r, goal, t.parkX / 10, t.parkY / 10) : [];
+    this.setPath(s && r && r.cost >= 0 ? navPath(this.g, s, r, goal, t.parkX / 10, t.parkY / 10) : [], x, y);
+  }
+
+  private setPath(path: number[], x: number, y: number): void {
+    this.path = path;
     this.cum = [0];
     for (let i = 2; i < this.path.length; i += 2) {
       this.cum.push(this.cum[this.cum.length - 1]! + Math.hypot(this.path[i]! - this.path[i - 2]!, this.path[i + 1]! - this.path[i - 1]!));

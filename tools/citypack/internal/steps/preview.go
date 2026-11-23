@@ -12,7 +12,6 @@ import (
 	"citypack/internal/pb"
 
 	"github.com/fogleman/gg"
-	"golang.org/x/image/font/basicfont"
 )
 
 const previewPxPerM = 0.5
@@ -41,6 +40,7 @@ func Preview(e *Env) error {
 	w := int(math.Ceil((maxX - minX) * previewPxPerM))
 	h := int(math.Ceil((maxY - minY) * previewPxPerM))
 	dc := gg.NewContext(w, h)
+	frame := newPreviewFrame(p)
 	tx := func(x, y float64) (float64, float64) {
 		return (x - minX) * previewPxPerM, (maxY - y) * previewPxPerM
 	}
@@ -55,14 +55,7 @@ func Preview(e *Env) error {
 				if m.Kind != kind {
 					continue
 				}
-				for t := 0; t+2 < len(m.Indices); t += 3 {
-					for k := 0; k < 3; k++ {
-						x, y := pt(m.Vertices, int(m.Indices[t+k]))
-						dc.LineTo(x, y)
-					}
-					dc.ClosePath()
-				}
-				dc.Fill()
+				fillTriangles(dc, frame, m.Vertices, m.Indices)
 			}
 		}
 	}
@@ -92,19 +85,12 @@ func Preview(e *Env) error {
 				col = "#d64545"
 			}
 			dc.SetHexColor(col)
-			for t := 0; t+2 < len(bd.Roof); t += 3 {
-				for k := 0; k < 3; k++ {
-					x, y := pt(bd.Rings, int(bd.Roof[t+k]))
-					dc.LineTo(x, y)
-				}
-				dc.ClosePath()
-			}
-			dc.Fill()
+			fillTriangles(dc, frame, bd.Rings, bd.Roof)
 		}
 	}
 	drawEdges(func(ed *pb.Edge) bool { return ed.Tunnel || ed.LayerFrom < 0 || ed.LayerTo < 0 }, "#e0a03080", 0.35)
 	drawEdges(func(ed *pb.Edge) bool { return ed.LayerFrom > 0 || ed.LayerTo > 0 }, "#2b2b33", 0.8)
-	dc.SetFontFace(basicfont.Face7x13)
+	dc.SetFontFace(previewFont(13))
 	for _, l := range p.Landmarks.Items {
 		x, y := tx(float64(l.X)/10, float64(l.Y)/10)
 		dc.SetHexColor("#000000")
@@ -125,6 +111,26 @@ func Preview(e *Env) error {
 	png := filepath.Join(dir, p.Manifest.CityId+".png")
 	if err := dc.SavePNG(png); err != nil {
 		return err
+	}
+	if p.Manifest.TerrainVersion > 0 {
+		rp, err := previewRelief(e, p, dir)
+		if err != nil {
+			return err
+		}
+		slog.Info("preview", "png", rp)
+	}
+	if err := previewCrop(p, dir); err != nil {
+		return err
+	}
+	if err := previewSection(p, dir); err != nil {
+		return err
+	}
+	if p.Manifest.NatureVersion > 0 {
+		np, err := previewNature(p, dir)
+		if err != nil {
+			return err
+		}
+		slog.Info("preview", "png", np)
 	}
 
 	proj := geo.NewProjection(p.Manifest.OriginLat, p.Manifest.OriginLon)

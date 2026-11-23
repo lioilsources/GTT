@@ -54,6 +54,8 @@ class Car {
         material: SurfaceMaterial(friction: t.carFriction, restitution: t.carRestitution),
         filter: Filter(categoryBits: catCar, maskBits: _mask(0, zoneMask(spec.class_, false))),
         enableContactEvents: true,
+        // Static contacts are read in the pre-solve callback (specs/flow.md, DriveWorld).
+        enablePreSolveEvents: true,
       ),
     );
   }
@@ -64,6 +66,9 @@ class Car {
   final double scale;
   late final Body body;
   late Shape _shape;
+
+  /// The body's one shape (contact tests, specs/flow.md).
+  Shape get shape => _shape;
   late final double halfLength;
   late final double halfWidth;
 
@@ -113,10 +118,10 @@ class Car {
   static int _mask(int layer, int zone) =>
       (layer == 0 ? catBuildings | catParked | zone : 0) | catTraffic | catTram;
 
-  /// Airborne in a hop (specs/hop.md): only buildings collide.
+  /// Airborne in a hop (specs/hop.md v2): only buildings collide, and only on the ground layer.
   bool airborne = false;
 
-  int get maskBits => airborne ? catBuildings : _mask(layer, zoneBits);
+  int get maskBits => airborne ? (layer == 0 ? catBuildings : 0) : _mask(layer, zoneBits);
 
   /// Switches the hop mask on take-off and landing.
   void setAirborne(bool v) {
@@ -154,8 +159,11 @@ class Car {
     _shape.filter = Filter(categoryBits: catCar, maskBits: maskBits);
   }
 
-  /// Applies controls and tyre forces; call before `world.step`.
-  void drive(ControlInput input, double dt, {required double cruise, required double top}) {
+  /// Applies controls and tyre forces; call before `world.step`. [slopeF] is the slope
+  /// acceleration along the heading this step (m/s², + = pulls forward, i.e. downhill;
+  /// specs/terrain.md "Svah"), which the cruise hold cancels (specs/drive.md v2 step 2). Client F
+  /// has no relief yet (F-070), so it is 0 there.
+  void drive(ControlInput input, double dt, {required double cruise, required double top, double slopeF = 0}) {
     final rot = body.rotation;
     final fx = rot.cos, fy = rot.sin; // nose
     final v = body.linearVelocity;
@@ -191,10 +199,17 @@ class Car {
         accel = speedF > -t.reverseMaxMps ? -spec.power * t.reversePower : 0;
       }
     } else {
-      final thr = input.throttle > 0 ? input.throttle : (speedF < wantSpeed ? 1.0 : 0.0);
+      final auto = input.throttle <= 0;
+      final thr = auto ? (speedF < wantSpeed ? 1.0 : 0.0) : input.throttle;
       final k = 1 - math.pow((speedF / topSpeed).clamp(0.0, 1.0), 2).toDouble();
       accel = spec.power * thr * k;
-      if (speedF > wantSpeed + t.overspeedMps) accel = -t.engineBrakeMps2;
+      // Cruise hold (specs/drive.md v2): at or above the wanted speed the engine cancels the
+      // downhill pull, so the car neither runs away nor needs the overspeed brake to settle.
+      final hold = auto && !input.boost && !input.handbrake && speedF >= wantSpeed
+          ? slopeF.clamp(0.0, t.cruiseHoldMps2).toDouble()
+          : 0.0;
+      if (hold > 0) accel = -hold;
+      if (speedF > wantSpeed + t.overspeedMps) accel = -t.engineBrakeMps2 - hold;
     }
     if (input.handbrake) {
       accel = math.min(accel, speedF > t.brakeMinMps ? -t.handbrakeDecelMps2 : 0);

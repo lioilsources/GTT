@@ -1,3 +1,4 @@
+import { art, artIcon } from '../art';
 import type { MessageKey } from '../gen/i18n';
 import type { TuningPhone } from '../gen/tuning';
 import { h } from '../minigames/dom';
@@ -61,6 +62,9 @@ export class Phone {
   private swipe(el: HTMLElement, done: (dy: number) => void): void {
     let y0: number | null = null;
     el.addEventListener('pointerdown', (e) => {
+      // Buttons on the bar (back, close) keep their own click: capturing the pointer on the bar
+      // would retarget the click to the bar and the buttons would never fire.
+      if ((e.target as HTMLElement | null)?.closest('button')) return;
       y0 = e.clientY;
       el.setPointerCapture(e.pointerId);
     });
@@ -105,9 +109,17 @@ export class Phone {
     const grid = h('div.phone-home', {},
       ...phoneAppIds.map((id) =>
         h('button.phone-app', { type: 'button', disabled: !mounts[id], onclick: () => this.launch(id) },
-          h('span.phone-icon', {}, icons[id]),
+          this.icon(id),
           h('span.phone-label', {}, this.t(`app_${id}` as MessageKey)))));
     this.screen.replaceChildren(grid, ...(this.homeActions.length > 0 ? [h('div.phone-actions', {}, ...this.homeActions)] : []));
+  }
+
+  /** App tile icon: `ui/<id>.png` as a mask in the tile's text colour (specs/art.md v3), else the glyph. */
+  private icon(id: PhoneAppId): HTMLElement {
+    const el = h('span.phone-icon', {}, icons[id]);
+    const path = art().uiIcon(id);
+    if (path) el.replaceChildren(artIcon(path, 'phone-icon-art', () => el.replaceChildren(icons[id])));
+    return el;
   }
 
   launch(id: PhoneAppId): void {

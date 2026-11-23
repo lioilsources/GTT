@@ -1,0 +1,58 @@
+# Curated Moscow spots (same rules as nyc/spots.yaml). City-only catalog games (koulena, kulicky, cara,
+# nohejbal, stickball, doubledutch) are not used; kviz has no Moscow bank yet.
+# Commercial places keep a fictional name (R10); the point is a real location of that kind.
+spots:
+  - {id: manege_square, kind: plaza, name: Manege Square, lat: 55.75580, lon: 37.61480}
+  - {id: teatralnaya_square, kind: plaza, name: Theatre Square, lat: 55.75880, lon: 37.62000}
+  - {id: alexander_garden, kind: park, name: Alexander Garden, lat: 55.75250, lon: 37.61400}
+  - {id: hermitage_garden, kind: park, name: Hermitage Garden, lat: 55.77050, lon: 37.60950}
+  # Minigames (9.5): each on a fitting place
+  - {id: kitay_gorod_cellar, kind: bar, name: Podval na Varvarke, lat: 55.75300, lon: 37.62950, minigame: sirky}
+  - {id: myasnitskaya_bar, kind: bar, name: Bar Chistye Prudy, lat: 55.76450, lon: 37.63700, minigame: oko}
+  - {id: gogolevsky_chess, kind: park, name: Gogolevsky Boulevard Benches, lat: 55.74850, lon: 37.60150, minigame: dama}
+  - {id: chistye_prudy_mill, kind: park, name: Chistye Prudy Pavilion, lat: 55.76250, lon: 37.64000, minigame: mlyn}
+  - {id: arbat_dice, kind: plaza, name: Arbat Gate Corner, lat: 55.75150, lon: 37.60050, minigame: desetitisic}
+  - {id: pyatnitskaya_darts, kind: bar, name: Pyatnitsa Darts Club, lat: 55.74100, lon: 37.62800, minigame: sipky}
+  - {id: gorky_park_shooting, kind: park, name: Gorky Park Shooting Booth, lat: 55.73150, lon: 37.60300, minigame: strelnice}
+  - {id: gorky_park_hockey, kind: cafe, name: Krymsky Val Arcade, lat: 55.73250, lon: 37.60700, minigame: hokej}
+  - {id: tverskoy_cards, kind: cafe, name: Kafe Tverskoy Bulvar, lat: 55.76150, lon: 37.59900, minigame: prsi}
+  - {id: taganka_billiards, kind: bar, name: Taganka Billiards, lat: 55.74050, lon: 37.65300, minigame: kulecnik}
+  - {id: kursky_taxi, kind: stand, name: Kursky Station Taxi Rank, lat: 55.75700, lon: 37.65900, minigame: taxi}
+  - {id: luzhnetskaya_drift, kind: pier, name: Frunzenskaya Embankment Lot, lat: 55.72950, lon: 37.59450, minigame: drift}
+  - {id: kremlin_embankment_start, kind: plaza, name: Kremlin Embankment, lat: 55.74880, lon: 37.61800, minigame: sprint}
+  # Player garage (specs/cars.md)
+  - {id: tsvetnoy_garage, kind: garage, name: Tsvetnoy Parking, lat: 55.77150, lon: 37.62000}
+  # Ringing phone booths (specs/booths.md)
+  - {id: booth_tverskaya, kind: booth, name: Phone booth Tverskaya, lat: 55.76200, lon: 37.60800}
+  - {id: booth_zamoskvorechye, kind: booth, name: Phone booth Zamoskvorechye, lat: 55.73800, lon: 37.62600}
+  # Subway entrances (specs/travel.md): no official logos, line as a label only
+  - {id: subway_okhotny_ryad, kind: subway, name: Okhotny Ryad, lat: 55.75760, lon: 37.61500}
+  - {id: subway_lubyanka, kind: subway, name: Lubyanka, lat: 55.75970, lon: 37.62550}
+  - {id: subway_kitay_gorod, kind: subway, name: Kitay-gorod, lat: 55.75620, lon: 37.63150}
+  - {id: subway_tretyakovskaya, kind: subway, name: Tretyakovskaya, lat: 55.74060, lon: 37.62600}
+  - {id: subway_arbatskaya, kind: subway, name: Arbatskaya, lat: 55.75200, lon: 37.60400}
+  - {id: subway_pushkinskaya, kind: subway, name: Pushkinskaya, lat: 55.76570, lon: 37.60450}
+  - {id: subway_kropotkinskaya, kind: subway, name: Kropotkinskaya, lat: 55.74530, lon: 37.60330}
+  - {id: subway_park_kultury, kind: subway, name: Park Kultury, lat: 55.73550, lon: 37.59400}
+  - {id: subway_komsomolskaya, kind: subway, name: Komsomolskaya, lat: 55.77530, lon: 37.65450}
+  - {id: subway_taganskaya, kind: subway, name: Taganskaya, lat: 55.74200, lon: 37.65300}
+  - {id: subway_paveletskaya, kind: subway, name: Paveletskaya, lat: 55.73100, lon: 37.63650}
+  - {id: subway_chistye_prudy, kind: subway, name: Chistye Prudy, lat: 55.76500, lon: 37.63850}
+  # Photo spots (specs/photo.md): views, not landmarks
+  - {id: photo_kremlin_bridge, kind: photo, name: Kremlin from Bolshoy Kamenny Bridge, lat: 55.74700, lon: 37.61400, look: {lat: 55.75050, lon: 37.61750}, subject_m: 150}
+  - {id: photo_basils_moskvoretsky, kind: photo, name: Saint Basil's from Moskvoretsky Bridge, lat: 55.74900, lon: 37.62600, look: {lat: 55.75250, lon: 37.62310}, subject_m: 60}
+  - {id: photo_christ_patriarch_bridge, kind: photo, name: Christ the Saviour from Patriarshy Bridge, lat: 55.74150, lon: 37.60900, look: {lat: 55.74460, lon: 37.60550}, subject_m: 80}
+  - {id: photo_kotelnicheskaya, kind: photo, name: High-rise over the Yauza, lat: 55.74550, lon: 37.64600, look: {lat: 55.74710, lon: 37.64270}, subject_m: 90}
+  - {id: photo_bolshoi_square, kind: photo, name: Bolshoi from Theatre Square, lat: 55.75800, lon: 37.61900, look: {lat: 55.76010, lon: 37.61860}, subject_m: 50}
+  - {id: photo_ministry_ring, kind: photo, name: Smolenskaya high-rise from the Ring, lat: 55.74850, lon: 37.58300, look: {lat: 55.74610, lon: 37.58450}, subject_m: 90}
+  - {id: photo_zaryadye_river, kind: photo, name: River from Zaryadye, lat: 55.74950, lon: 37.62950, look: {lat: 55.74750, lon: 37.62800}, subject_m: 70}
+  - {id: photo_gorky_embankment, kind: photo, name: Pushkinskaya Embankment, lat: 55.73050, lon: 37.59750, look: {lat: 55.73150, lon: 37.59500}, subject_m: 60}
+  # Shops and bars (specs/shops.md), fictional names
+  - {id: food_pirozhki_arbat, kind: food, name: Pirozhki u Arbata, lat: 55.75050, lon: 37.59500}
+  - {id: food_blini_pyatnitskaya, kind: food, name: Blinnaya Zamoskvorechye, lat: 55.73900, lon: 37.62900}
+  - {id: food_kvas_gorky, kind: food, name: Kvas Kiosk Gorky Park, lat: 55.73100, lon: 37.60100}
+  - {id: food_pelmeni_tverskaya, kind: food, name: Pelmennaya Tverskaya, lat: 55.76400, lon: 37.60600}
+  - {id: souvenir_arbat, kind: souvenir, name: Matryoshka Lavka, lat: 55.74700, lon: 37.58700}
+  - {id: souvenir_varvarka, kind: souvenir, name: Varvarka Gifts, lat: 55.75250, lon: 37.62700}
+  - {id: souvenir_kuznetsky, kind: souvenir, name: Kuznetsky Most Postcards, lat: 55.76150, lon: 37.62300}
+  - {id: bar_chistye_prudy, kind: bar, name: Tramvaychik Bar, lat: 55.76350, lon: 37.64200}

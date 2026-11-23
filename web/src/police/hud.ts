@@ -1,5 +1,6 @@
 import './police.css';
 
+import { art, artIcon } from '../art';
 import type { MessageKey } from '../gen/i18n';
 import { h } from '../minigames/dom';
 import type { Police } from './police';
@@ -31,7 +32,16 @@ export class PoliceHud {
     hud: HTMLElement,
   ) {
     const max = police.tuning.police.maxLevel;
-    for (let i = 0; i < max; i++) this.stars.append(h('span.police-star'));
+    // ui/wanted_star.png (specs/art.md v3): the glyph as a mask, empty ones faded; else the shape.
+    const star = art().uiIcon('wanted_star');
+    for (let i = 0; i < max; i++) {
+      const el = h('span.police-star');
+      if (star) {
+        el.classList.add('art');
+        el.append(artIcon(star, 'police-star-art', () => el.classList.remove('art')));
+      }
+      this.stars.append(el);
+    }
     hud.append(this.stars, this.toast, this.card);
     police.on('offence', (e) => this.say(t(reasonKeys[e.kind])));
     police.onWantedChanged((e) => {

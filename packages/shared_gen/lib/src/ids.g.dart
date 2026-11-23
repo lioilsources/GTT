@@ -7,6 +7,7 @@ enum CityId {
   nyc('nyc', "New York"),
   prague('prague', "Praha"),
   tokyo('tokyo', "Tokio"),
+  moscow('moscow', "Moskva"),
   ;
 
   const CityId(this.id, this.name);

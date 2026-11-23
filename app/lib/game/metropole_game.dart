@@ -109,6 +109,8 @@ class HudState {
     this.hopFull,
     this.hopCharges = 0,
     this.hopReady = false,
+    this.flowButton = false,
+    this.stuck10 = 0,
   });
 
   final String street;
@@ -131,6 +133,10 @@ class HudState {
   final int? hopFull;
   final int hopCharges;
   final bool hopReady;
+
+  /// The "Na silnici" button (specs/flow.md "Ručně") and the debug count `flowStuck10`.
+  final bool flowButton;
+  final int stuck10;
 }
 
 /// Context button next to a parked car or in the garage.
@@ -183,11 +189,14 @@ class MetropoleGame extends Game {
     _applySkin();
     _tramsPainter = city.trams.isEmpty ? null : TramsPainter(city.trams, tuning.trams);
     camera.snap(drive.car.x, drive.car.y, drive.car.heading, tuning);
+    // Every rescue move (specs/flow.md) puts the car elsewhere at once: the camera follows.
+    drive.onRescue = (_) => camera.snap(drive.car.x, drive.car.y, drive.car.heading, tuning);
     peds = PedestrianWorld(city, tuning);
     _pedBubbles = PedBubblePainter(
       tr(ui.PlatformDispatcher.instance.locale.languageCode, MessageKey.pedestrianBubble),
       tuning.pedestrians.bubblePx,
     );
+    _boostLabel = tr(ui.PlatformDispatcher.instance.locale.languageCode, MessageKey.boostButton);
     passport = PassportTracker(passportCityOf(city), tuning.passport)..onStamp((e) => passportEvent.value = e);
     // Police and wanted level (specs/police.md); the HUD listens to its hooks.
     police = Police(drive, tuning, fleet);
@@ -198,6 +207,7 @@ class MetropoleGame extends Game {
   final GameAssets data;
   late final PedestrianWorld peds;
   late final PedBubblePainter _pedBubbles;
+  late final String _boostLabel;
   late final Tuning tuning;
   late final DriveWorld drive;
   late final CarFleet fleet;
@@ -248,6 +258,11 @@ class MetropoleGame extends Game {
   /// Rewrites the player's control input after the scheme and the keyboard (not under the
   /// autopilot or while paused): the drunk driver of specs/shops.md brakes to a stop.
   void Function(ControlInput input)? inputHook;
+
+  /// Boost hint (specs/controls.md v2): set by the screen once the stored count is read; the
+  /// callback persists the count and shows the toast. Off under the autopilot.
+  BoostHint? boostHint;
+  void Function(BoostHintEvent e)? onBoostHint;
 
   ui.Size _size = ui.Size.zero;
   double _hudTimer = 0;
@@ -378,6 +393,9 @@ class MetropoleGame extends Game {
   /// A context button with priority ("Zvednout", specs/booths.md): while true, the car button hides.
   bool Function()? carActionYield;
 
+  /// Seconds the "test drive over" toast stays (specs/testdrive.md "Konec"); set when the timer ran out.
+  double testDriveOverS = 0;
+
   /// The context button: switch to the parked car, or open the garage (the UI shows the list).
   void boardCandidate() {
     final p = fleet.boardTarget;
@@ -396,6 +414,10 @@ class MetropoleGame extends Game {
 
   /// The HUD "Hop" button (specs/hop.md).
   bool hop() => !worldPaused && drive.startHop();
+
+  /// "Na silnici" (specs/flow.md "Ručně"): the HUD button and the pause menu (the phone home screen,
+  /// which pauses the game itself). Free, counted as stuck; not during a rescue move.
+  bool toRoad() => drive.flow.animT == 0 && drive.toRoad();
 
   void respawn() {
     police.clearRoadblock(); // specs/roadblock.md: a respawn drops the roadblock
@@ -435,9 +457,17 @@ class MetropoleGame extends Game {
     final stepDt = worldDt(dt);
     if (!pause) {
       drive.update(stepDt);
+      final hint = boostHint;
+      if (hint != null && pilot == null) {
+        final e = hint.step(stepDt, drive.car.speed, input.boost);
+        if (e != null) onBoostHint?.call(e);
+      }
       police.update(stepDt);
       _policeClock += stepDt;
+      // Test drive countdown in game time (specs/testdrive.md "Odpočet").
+      if (fleet.tickTest(stepDt)) testDriveOverS = tuning.nav.toastS;
     }
+    if (testDriveOverS > 0) testDriveOverS -= dt;
     afterUpdate?.call(dt);
     if (!pause) _benchFrame(dt);
     final car = drive.car;
@@ -481,6 +511,8 @@ class MetropoleGame extends Game {
         hopFull: hopCharges(drive.spec),
         hopCharges: drive.hop.charges,
         hopReady: !pause && drive.hopReady,
+        flowButton: !pause && pilot == null && drive.flow.buttonShown && drive.flow.animT == 0,
+        stuck10: drive.flow.count10(drive.time),
         carAction: (carActionYield?.call() ?? false)
             ? null
             : switch (action) {
@@ -575,7 +607,13 @@ class MetropoleGame extends Game {
         final pl = playerLook?.call();
         final look = pl == null ? null : lookPaint(pl, tuning.garage, night: night, layer: car.layer);
         if (lift == null) {
-          if (layer == car.layer) paintCar(c, car, night: night, shadow: shadow, look: look);
+          if (layer == car.layer) {
+            // Rescue move (specs/flow.md): the car fades in at its new place over the animation.
+            final anim = drive.flow.animT;
+            if (anim > 0) c.saveLayer(null, Paint()..color = Color.fromRGBO(0, 0, 0, 1 - anim / rescueAnimS));
+            paintCar(c, car, night: night, shadow: shadow, look: look);
+            if (anim > 0) c.restore();
+          }
         } else if (layer == 0) {
           paintHopShadow(c, car, lift, shadow: shadow);
         } else if (layer == 1) {
@@ -588,7 +626,7 @@ class MetropoleGame extends Game {
     _streetLabels(canvas);
     paintScreen?.call(canvas, _size);
     _pedBubbles.paint(canvas, _size, peds, camera, tuning);
-    paintControls(canvas, _size, scheme);
+    paintControls(canvas, _size, scheme, _boostLabel);
   }
 
   /// Lift and roll of the car while it hops (specs/hop.md "Kreslení"), null on the ground.

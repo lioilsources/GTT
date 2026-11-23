@@ -6,7 +6,7 @@
 # reopened: list of {date, reason} when an item went back from hotovo/ověřeno (regression).
 # Dropped scope: M0 point 5 (Flutter web build) – replaced by D1, see docs/m0.md.
 
-milestones: [M0, D0, D1, D2, M1, D3, M3, M2, M4, M5]
+milestones: [M0, D0, D1, D2, M1, D3, M3, M2, M4, M5, L, M6]
 
 items:
   # ---------- M0 – Hračka (scope)
@@ -169,8 +169,10 @@ items:
      done: 2026-11-23T04:23, commit: 448d42c, evidence: "specs v1 s Upřesněním, vektory 4 her (web lead), obě implementace, vektory projdou v obou klientech, Galerie, bary (prší, kostky) a spoty v NYC a Praze (PR #168, #170, #171, #174), parita F-054–F-057; chybí dohrát na telefonu"}
   - {id: M2-S9C, milestone: M2, name: "minihry dávka C: Kulečník, Bowling, Minigolf, Had, Cihly, Bouchni krtka, Vzdušný hokej", size: L, status: "čeká na Ol1na", started: 2026-11-23T04:00,
      done: 2026-11-23T05:45, commit: e576e00, evidence: "specs v1 s Upřesněním (hokej v2: gól jen v ústí), sdílená celočíselná fyzika (web physics.ts, Flutter mg_physics), vektory 7 her (web lead), obě implementace, vektory projdou v obou klientech, Galerie, bar (kulečník) a spoty v NYC a Praze (PR #180, #184, #187, #189, #190, #196), parita F-058–F-064; chybí dohrát na telefonu"}
-  - {id: M2-S9D, milestone: M2, name: "minihry dávka D: Drift zóna, Sprint A→B", size: M, status: wip, started: 2026-11-23T04:49}
-  - {id: M2-S9E, milestone: M2, name: "místní minihry: Stickball, Double Dutch (engine rhythm)", size: L, status: wip, started: 2026-11-23T04:49}
+  - {id: M2-S9D, milestone: M2, name: "minihry dávka D: Drift zóna, Sprint A→B", size: M, status: wip, started: 2026-11-23T04:49,
+     evidence: "W hotovo: PR #191 (web/minigames-d), vektory #192 (drift 12, sprint 12 případů), F-065/F-066 web done; F: kód v PR #201 (flutter/minigames-d) mergnutý, chybí přepnutí parity F-065/F-066 flutter done (shared/minigames-d-done)"}
+  - {id: M2-S9E, milestone: M2, name: "místní minihry: Stickball, Double Dutch (engine rhythm)", size: L, status: wip, started: 2026-11-23T04:49,
+     evidence: "W hotovo: PR #191, vektory #192 (stickball 11, doubledutch 10 případů), F-067/F-068 web done; F: kód v PR #201 mergnutý, chybí přepnutí parity F-067/F-068 flutter done"}
   - {id: M2-S10, milestone: M2, name: "rádio (kostra stanic)", size: S, status: todo}
   - {id: M2-A1, milestone: M2, name: "30 miniher v NYC: testy, vektory, Galerie v obou klientech", size: S, status: todo}
   - {id: M2-A2, milestone: M2, name: "soak 10 smyček s novými systémy bez pádu", size: S, status: todo}
@@ -192,28 +194,75 @@ items:
   - {id: M4-A4, milestone: M4, name: "matice parity pro rozsah M4 zelená", size: M, status: todo}
 
   # ---------- M5 – Terén, voda a zeleň, plynulá jízda (plans/M5_TEREN_PRIRODA.md, Prompts/02–04)
-  - {id: M5-S1, milestone: M5, name: "FL1 nárazy do zdí a vyproštění v obou klientech (F-069)", size: L, status: todo}
-  - {id: M5-S2, milestone: M5, name: "T0 výšky v datech New York: krok elevation, lod, validate, preview", size: L, status: todo}
-  - {id: M5-S3, milestone: M5, name: "N0 + FL0 voda, zeleň, stromy a štěrbiny v datech New York", size: L, status: todo}
-  - {id: M5-S4, milestone: M5, name: "T0/N0/FL0 Praha (DMR 5G, stromy)", size: M, status: todo}
+  - {id: M5-S1, milestone: M5, name: "FL1 nárazy do zdí a vyproštění v obou klientech (F-069)", size: L, status: "čeká na Ol1na", started: 2026-11-23T05:05,
+     done: 2026-11-23T06:44, commit: d591dd6, evidence: "PR #194, #195 (web, scénáře scenarios/flow), #202 (Flutter drive_core); scénáře wall_30, wall_head_on, corner_3x v obou klientech v toleranci (web/test/flow.test.ts, packages/drive_core/test/flow_test.dart); dogfooding ≤ 1 zaseknutí za 10 min (M5-A4) je na Ol1novi"}
+  - {id: M5-S2, milestone: M5, name: "T0 výšky v datech New York: krok elevation, lod, validate, preview", size: L, status: hotovo,
+     started: 2026-11-23T05:10, done: 2026-11-23T07:05, commit: 1227456, evidence: "run/bin/citypack build nyc (validate: 0 schodů, okraj silnice 0,08 %); go test ./... v tools/citypack (syntetické scény)"}
+  - {id: M5-S3, milestone: M5, name: "N0 + FL0 voda, zeleň, stromy a štěrbiny v datech New York", size: L, status: hotovo,
+     started: 2026-11-23T05:10, done: 2026-11-23T07:05, commit: 1227456, evidence: "run/bin/citypack build nyc (validate: 61 764 stromů mimo vozovku, budovy a vodu, 9 080 štěrbin, řeky pojmenované); preview/nyc_nature.png"}
+  - {id: M5-S4, milestone: M5, name: "T0/N0/FL0 Praha (DMR 5G, stromy)", size: M, status: čeká na Ol1na,
+     started: 2026-11-23T05:10, done: 2026-11-23T07:05, commit: 1227456, evidence: "run/bin/citypack build prague (validate projde, 0 schodů); výšky zatím AWS Terrain Tiles místo DMR 5G (chybí PDAL/GDAL), stromy z OSM"}
   - {id: M5-S5, milestone: M5, name: "T0/N0/FL0 Tokio", size: M, status: todo}
-  - {id: M5-S6, milestone: M5, name: "T1 svahy a skoky a reliéf shora v obou klientech (F-070, F-071)", size: L, status: todo}
-  - {id: M5-S7, milestone: M5, name: "N1 voda a zeleň shora a jízda v obou klientech (F-072)", size: L, status: todo}
-  - {id: M5-S8, milestone: M5, name: "FL2 les a měkké stromy v obou klientech (F-073)", size: M, status: todo}
-  - {id: M5-S9, milestone: M5, name: "T2 + N2 šikmý pohled ve W (F-074)", size: L, status: todo}
-  - {id: M5-S10, milestone: M5, name: "T3 ladění kopců Prahy, minihry z reliéfu, nejprudší ulice", size: M, status: todo}
+  - {id: M5-S6, milestone: M5, name: "T1 svahy a skoky a reliéf shora v obou klientech (F-070, F-071)", size: L, status: wip, started: 2026-11-23T08:10,
+     evidence: "W hotovo: PR #220 (web/terrain-t1), scénáře scenarios/terrain ve W v toleranci (#221), kontrolní tabulka skoků v unit testu ±2 %, data T3 #223; F chybí: čtení polí terénu, groundZ, svah a skok v drive_core, promítání kap. 6, nápovědy 7.1 (F-070/F-071 flutter todo, podle plánu 05 L3 až po vystřelení)"}
+  - {id: M5-S7, milestone: M5, name: "N1 voda a zeleň shora a jízda v obou klientech (F-072)", size: L, status: wip, started: 2026-11-23T08:00,
+     evidence: "W hotovo: PR #218 (web/nature-n1), scénáře scenarios/nature (brake_*, water_fall, parkland_trees) ve W v toleranci (#219); F chybí: kreslení vody a zeleně shora, stromy, přilnavost povrchů, pád do vody, mapa v telefonu (F-072 flutter todo, L3 po vystřelení)"}
+  - {id: M5-S8, milestone: M5, name: "FL2 les a měkké stromy v obou klientech (F-073)", size: M, status: wip, started: 2026-11-23T08:00,
+     evidence: "W hotovo: PR #218 (web/nature-n1), scénáře scenarios/flow/forest_200, tree_head_on ve W v toleranci (#219); F chybí: měkké stromy, les (grip/speed) v drive_core (F-073 flutter todo, L3 po vystřelení)"}
+  - {id: M5-S9, milestone: M5, name: "T2 + N2 šikmý pohled ve W (F-074)", size: L, status: čeká na Ol1na,
+     started: 2026-11-23T10:10, done: 2026-11-23T11:05, commit: 96cad26, evidence: "PR #250 (web/oblique-t2), #224: ?camera=chase nebo tlačítko ◎/◢; headless Metal 430×860 Praha Nerudova shora 47 draw / 81k tri, šikmo 60 / 111k, p50 16,7 ms, p95 16,9 ms, přepnutí max 18,6 ms; test/chase.test.ts; čeká na 60 fps na telefonech a Ol1nův pohled"}
+  - {id: M5-S10, milestone: M5, name: "T3 ladění kopců Prahy, minihry z reliéfu, nejprudší ulice", size: M, status: "čeká na Ol1na",
+     started: 2026-11-23T10:44, done: 2026-11-23T11:27, commit: ea2e58b, evidence: "ladění kopců = L-S1 (docs/prague-hills.md, web/test/pragueHills.test.ts, panel Ladění s ?debug); minihry z reliéfu nejsou součástí (Prompts/05 L-S1)"}
   - {id: M5-S11, milestone: M5, name: "metro stuckmap a počítadlo zaseknutí", size: S, status: todo}
   - {id: M5-A1, milestone: M5, name: "citypack validate nyc, prague, tokyo s výškami a přírodou", size: S, status: todo}
   - {id: M5-A2, milestone: M5, name: "scénáře terénu, přírody a flow v toleranci v obou klientech", size: M, status: todo}
   - {id: M5-A3, milestone: M5, name: "60 fps s reliéfem a stromy na obou telefonech (šikmo ve W)", size: S, status: todo}
   - {id: M5-A4, milestone: M5, name: "nejvýš 1 zaseknutí za 10 minut jízdy (dogfooding Ol1n)", size: S, status: todo}
-  - {id: M5-A5, milestone: M5, name: "Ol1n potvrdí kopce Prahy (Petřín, Letná, Hradčany)", size: S, status: todo}
+  - {id: M5-A5, milestone: M5, name: "Ol1n potvrdí kopce Prahy (Petřín, Letná, Hradčany)", size: S, status: "čeká na Ol1na",
+     started: 2026-11-23T10:44, done: 2026-11-23T11:27, commit: ea2e58b, evidence: "docs/prague-hills.md: tři odkazy ?city=prague&route=<id> a co sledovat; potvrzuje Ol1n na telefonu"}
   - {id: M5-A6, milestone: M5, name: "slepý test: řeka a park ze snímku do 2 s", size: S, status: todo}
+
+  # ---------- L – Vystřelení (Prompts/05, plans/L_LAUNCH.md)
+  - {id: L-S1, milestone: L, name: "T3 ladění kopců Prahy: trasy Petřín, Letná, Hradčany, docs/prague-hills.md", size: M, status: "čeká na Ol1na",
+     started: 2026-11-23T10:44, done: 2026-11-23T11:27, commit: ea2e58b, evidence: "web/test/pragueHills.test.ts: autopilot projede hradcany, petrin, letna s 0 vyproštěními, 0 přeskoky a 0 pády do vody (PR #252, #260)"}
+  - {id: L-S2, milestone: L, name: "README podle skutečnosti, status blok z metro progress, --check v CI", size: S, status: wip, started: 2026-11-23T10:39, evidence: "README: odkaz na Pages, parametry URL, R7/R10, Jak přidat město, licence; blok <!-- metro:status --> z metro progress, metro progress --check v shared.yml; obrázek čeká na og.png z L-S9"}
+  - {id: L-S3, milestone: L, name: "počítadla skitů a miniher v metro progress + test", size: S, status: hotovo, started: 2026-11-23T10:36, done: 2026-11-23T10:45, evidence: "minihry z content/minigames/catalog.yaml (33), skity z content/npc/skits (50); TestCountContentMinigamesAndSkits v tools/metro/internal/progress"}
+  - {id: L-S4, milestone: L, name: "tracker dorovnat: důkazy rozdělaných položek, progress.log, padající test", size: S, status: hotovo, started: 2026-11-23T10:43, done: 2026-11-23T11:08, evidence: "(a) důkazy M2-S9D/E a M5-S6…S8 doplnila session MacBook; (b) plans/progress.log doplněn z gitu do 10:41; (c) metro progress --tests počítá všechny balíčky s test/ a vypisuje padající testy: 1787 / 1787. Lokální pády app/test byly zastaralé AppLocalizations (flutter gen-l10n), ne chyba kódu"}
+  - {id: L-S5, milestone: L, name: "LICENSE, NOTICE se zdroji dat, pole license, audit R10", size: S, status: wip, started: 2026-11-23T10:46, evidence: "LICENSE (MIT, rozsah), NOTICE (licence podle cest, OSM, Overture, AWS Terrain Tiles, Street Tree Census, assets/LICENSES.md); pole license ve web/package.json a pubspec.yaml v klientských PR"}
+  - {id: L-S6, milestone: L, name: "kouřový test mobilního webu v CI (Pixel 8a, iPhone 12 mini)", size: M, status: todo}
+  - {id: L-S7, milestone: L, name: "první spuštění: postup stahování v %, karta ovládání a výběr města", size: S, status: todo}
+  - {id: L-S8, milestone: L, name: "náhled odkazu: og: a twitter: metadata", size: S, status: todo}
+  - {id: L-S9, milestone: L, name: "demo záběr ?demo=roadster, web/scripts/demo.ts, og.png", size: M, status: todo}
+  - {id: L-S10, milestone: L, name: "tramvaje plynule sledují kolej (test přes celou síť Prahy)", size: M, status: "čeká na Ol1na", started: 2026-11-23T10:40,
+     done: 2026-11-23T12:00, commit: 55a4075, evidence: "PR #248 (specs/trams.md v2), #265 (W), #266 (F); příčina: volba další koleje brala každou hranu v uzlu (vlásenky ≈160° ve výhybkách, 90° na kříženích, otočka na konečné), max 1 800 °/m, živě 345 °/m; teď jen sjízdné přechody (trams.max_switch_deg) a změna čela na konečné: 9,70 °/m přes 7 412 přechodů a 3 247 hran, živě 7,7 °/m (W) / 7,2 °/m (F), limit trams.max_turn_deg_per_m 12; web/test/tramsSmooth.test.ts, packages/drive_core/test/trams_test.dart; na Ol1novi pohled na telefonu"}
+  - {id: L-S11, milestone: L, name: "mosty a voda: na most jen z nájezdu, pod mostem po nábřeží, do vody pád", size: M, status: "čeká na Ol1na", started: 2026-11-23T10:15,
+     done: 2026-11-23T11:20, evidence: "specs/terrain.md v3 Konstrukce; W PR #247: web/test/bridges.test.ts – všechny mosty prague/nyc/tokyo z břehu na břeh bez sjetí z mostovky, 65 průjezdů pod mosty ve vrstvě 0, 120 sjezdů z břehu do vody = pád a odtah; F až po vystřelení (L3); projetí mostů v prohlížeči je na Ol1novi"}
+  - {id: L-S12, milestone: L, name: "policie nezablokuje hru: police_box, soak 20 dopadení", size: M, status: "čeká na Ol1na", started: 2026-11-23T11:18, done: 2026-11-23T11:21, evidence: "web/test/police.test.ts police_box (tři hlídky kolem stojícího auta) a soak 20 dopadení na úrovni 1–3 se zátarasem: hráč vždy odjede (PR #257); nález se nepodařilo zopakovat, otázka v docs/verify.md"}
+  - {id: L-S13, milestone: L, name: "regresní testy: průjezd zaparkovanými auty, swipe feedu", size: S, status: hotovo, started: 2026-11-23T10:52, done: 2026-11-23T11:00, evidence: "průjezd zaparkovaným autem: web/test/cars.test.ts a packages/drive_core/test/cars_test.dart (PR #240, #241); swipe feedu hlídají web/test/phone.test.ts a app/test/feed_swipe_test.dart"}
+  - {id: L-S14, milestone: L, name: "docs/verify.md z metro progress: průchody po 30 minutách", size: M, status: hotovo, started: 2026-11-23T11:19, done: 2026-11-23T11:23, evidence: "docs/verify.md z metro progress a plans/verify.yaml (průchody po 30 min podle měst, jen F, rozhodnutí, bez návodu); TestVerifyPasses"}
+  - {id: L-S15, milestone: L, name: "metro stats → plans/STATS.md", size: S, status: hotovo, started: 2026-11-23T11:02, done: 2026-11-23T11:08, evidence: "run/bin/metro stats → plans/STATS.md; go test ./internal/stats (Summarize, Classify)"}
+  - {id: L-D1, milestone: L, name: "dogfooding: zkušební jízda v garáži, garáž z telefonu, ladicí hotovost (F-075)", size: M, status: "čeká na Ol1na", started: 2026-11-23T10:10,
+     done: 2026-11-23T11:30, evidence: "specs/testdrive.md v2; PR #222/#233 (spec), #226/#239 (W), #229/#238 (F), #245 (parita); testy web/test/cars.test.ts, packages/drive_core/test/cars_test.dart, app/test/garage_test.dart; na Ol1novi: Garáž → Vyzkoušet na Vega Roadster, telefon → Garáž → Otevřít garáž, ?debug → +10000"}
+  - {id: L-D2, milestone: L, name: "boost ve schématech B a C, nápověda boostu (F-005, specs/controls.md v2)", size: S, status: "čeká na Ol1na", started: 2026-11-23T12:44,
+     done: 2026-11-23T13:10, evidence: "PR #279 (spec v2, tuning controls.boost_hint_*), #280 (W), #281 (F); tlačítko Boost v B dole uprostřed, v C nad pedálem brzdy; toast boostHintA/B/C/Keys při první jízdě a po 25 s jízdy bez boostu, nejvýš 3×; testy web/test/boost.test.ts, packages/drive_core/test/boost_test.dart, app/test/boost_hint_store_test.dart; na Ol1novi: pocit z tlačítka a nápovědy na telefonu"}
+  - {id: L-A1, milestone: L, name: "docs/launch.md, metro progress --check a kouřový test zelené na main, Pages nasazené", size: S, status: todo}
 
 # Content counters with targets. tests and fps are measured; the rest metro progress counts itself.
 counters:
-  tests: {total: 1039, passing: 1038, measured: 2026-11-23T04:23}   # metro progress --tests
+  tests: {total: 1787, passing: 1787, measured: 2026-11-23T10:59}   # metro progress --tests
   fps:                                            # filled from phone measurements (D1-2, M0-A1)
     pixel_8a: {app: null, web: null, measured: null}
     iphone_12_mini: {app: null, web: null, measured: null}
   stuck: {per_10min: null, target: 1, measured: null}   # specs/flow.md, M5-A4 (from stuck.log / overlay)
+  # ---------- M6 – Moskva (plans/M6_MOSKVA.md), po L souběžně s M4
+  - {id: M6-S1, milestone: M6, name: "balíček Moskva: oblast X1, 25 památek, spoty, terén a příroda, validate", size: L, status: wip, started: 2026-11-23T12:30}
+  - {id: M6-S2, milestone: M6, name: "Moskva v klientech: registrace, balíček, paleta (F-078)", size: M, status: todo}
+  - {id: M6-S3, milestone: M6, name: "styl E – konstruktivistický plakát", size: M, status: todo}
+  - {id: M6-S4, milestone: M6, name: "grafika Moskvy: style check, pohlednice, textury, suvenýry (L40S)", size: M, status: todo}
+  - {id: M6-S5, milestone: M6, name: "místní vozidla Moskvy", size: M, status: todo}
+  - {id: M6-S6, milestone: M6, name: "místní minihry Moskvy", size: L, status: todo}
+  - {id: M6-S7, milestone: M6, name: "moskevské skity a pas", size: M, status: todo}
+  - {id: M6-A1, milestone: M6, name: "citypack validate moscow projde", size: S, status: todo}
+  - {id: M6-A2, milestone: M6, name: "60 fps v Moskvě na obou telefonech", size: S, status: todo}
+  - {id: M6-A3, milestone: M6, name: "přepnutí čtyř měst 10× bez pádu", size: S, status: todo}
+  - {id: M6-A4, milestone: M6, name: "matice parity pro rozsah M6 zelená", size: M, status: todo}

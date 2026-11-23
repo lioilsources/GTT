@@ -1,0 +1,13 @@
+{
+  "module": "flow",
+  "name": "tree_head_on",
+  "car": "sedan_regent",
+  "inputs": [{"t": 0, "throttle": 0, "steer": 0, "brake": 0}],
+  "expect": {
+    "speed_before_mps": {"value": 20, "tol": 0.05},
+    "speed_after_mps": {"value": 14.959, "tol": 0.05},
+    "min_trunk_dist_m": {"value": 1.213, "tol": 0.05},
+    "passed": {"value": 1, "tol": 0},
+    "tree_hits": {"value": 1, "tol": 0}
+  }
+}

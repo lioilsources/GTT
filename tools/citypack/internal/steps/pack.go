@@ -10,7 +10,9 @@ import (
 	"os"
 	"path/filepath"
 	"sort"
+	"strings"
 
+	"citypack/internal/dem"
 	"citypack/internal/geo"
 	"citypack/internal/pb"
 
@@ -57,6 +59,13 @@ func Spots(e *Env) error {
 	if err != nil {
 		return err
 	}
+	var names []NatureName
+	if _, err := os.Stat(e.W("nature_names.jsonl")); err == nil {
+		if names, err = e.LoadNatureNames(); err != nil {
+			return err
+		}
+	}
+	np := e.C.Tuning.Nature.Pipeline
 	sp := &pb.Spots{}
 	for _, s := range e.C.Spots {
 		p := e.Proj.Forward(s.Lon, s.Lat)
@@ -80,6 +89,7 @@ func Spots(e *Env) error {
 			item.LookX, item.LookY = geo.DM(l.X), geo.DM(l.Y)
 			item.SubjectDm = uint32(math.Round(s.SubjectM * 10))
 		}
+		item.AreaName, item.AreaWater = areaName(names, p, np.AreaNameParkM, np.AreaNameWaterM)
 		sp.Items = append(sp.Items, item)
 	}
 	return writePB(e.W("spots.pb"), sp, false)
@@ -177,11 +187,23 @@ func (e *Env) loadDistricts() ([]*pb.District, error) {
 	return out, nil
 }
 
-// Pack writes the final citypack: manifest, graph, chunks, landmarks, spots (all gzip protobuf).
+// Pack writes the final citypack: manifest, graph, chunks, landmarks, spots (all gzip protobuf),
+// with terrain (elevation step), nature (nature and trees steps) and micro_only alleys when built.
 func Pack(e *Env) error {
-	g, err := e.LoadGraph()
+	g, err := e.LoadPackGraph()
 	if err != nil {
 		return err
+	}
+	tg, elev, err := e.LoadTerrain()
+	if err != nil {
+		return err
+	}
+	alleys, err := e.LoadAlleys()
+	if err != nil {
+		return err
+	}
+	for _, ei := range alleys.Micro {
+		g.Edges[ei].MicroOnly = true
 	}
 	masses, err := e.LoadMasses()
 	if err != nil {
@@ -228,9 +250,49 @@ func Pack(e *Env) error {
 			failed++
 			continue
 		}
+		if tg != nil {
+			b.BaseZDm = baseZ(tg, m.Rings[0])
+		}
 		c := centroid(m.Rings[0])
 		ch := chunk(int(math.Floor(c.X/cm)), int(math.Floor(c.Y/cm)))
 		ch.Buildings = append(ch.Buildings, b)
+	}
+	nat, err := e.loadNatureForPack(elev)
+	if err != nil {
+		return err
+	}
+	if nat != nil {
+		// The terrain step can flag more decks (deck ends in the air) after the trees step:
+		// no tree stays in any final deck footprint.
+		ob := &obstacles{deckGrid: map[[2]int][]int{}}
+		for _, ed := range g.Edges {
+			if !ed.Tunnel && !groundEdge(ed) {
+				ob.addDeck(ed)
+			}
+		}
+		keep, dropped := nat.trees[:0], 0
+		for _, t := range nat.trees {
+			crown := e.C.Tuning.Nature.TreeSizes[[]string{"S", "M", "L"}[t.Size&3]].CrownR
+			if ob.underDeck(geo.Pt{X: t.X, Y: t.Y}, crown+e.C.Tuning.Nature.Pipeline.DeckTreeMarginM) {
+				dropped++
+				continue
+			}
+			keep = append(keep, t)
+		}
+		nat.trees = keep
+		if dropped > 0 {
+			slog.Info("pack: trees under decks flagged by the terrain step dropped", "count", dropped)
+		}
+	}
+	if nat != nil {
+		// Classified water and green replace the ground step's plain WATER and PARK meshes.
+		kept := ground[:0]
+		for _, gr := range ground {
+			if gr.Kind != pb.GroundKind_WATER && gr.Kind != pb.GroundKind_PARK {
+				kept = append(kept, gr)
+			}
+		}
+		ground = kept
 	}
 	for _, gr := range ground {
 		idx, err := geo.Triangulate(gr.Rings)
@@ -253,10 +315,15 @@ func Pack(e *Env) error {
 	if failed > 0 {
 		slog.Warn("pack: polygons failed to triangulate", "count", failed)
 	}
+	if nat != nil {
+		failed += nat.addTo(chunk)
+	}
 	barriers, err := e.LoadZoneBarriers()
 	if err != nil {
 		return err
 	}
+	barriers = append(barriers, alleys.Barriers...)
+	barriers = clipBarriers(barriers, newDriveSurfaces(g, e.C.Tuning.SidewalkWidthM), e.C.Tuning.Zones.MinBarrierM)
 	for i := range barriers {
 		// Canonical direction so the same input packs to the same bytes.
 		b := barriers[i].Pts
@@ -297,7 +364,26 @@ func Pack(e *Env) error {
 		FormatVersion: FormatVersion, CityId: e.C.City.ID, Name: e.C.City.Name,
 		OriginLat: e.C.City.Origin.Lat, OriginLon: e.C.City.Origin.Lon,
 		DriveSide: e.C.City.DriveSide, Units: e.C.City.Units, OvertureRelease: e.C.City.OvertureRelease,
-		ChunkM: uint32(e.C.Tuning.ChunkM), Attribution: attribution,
+		ChunkM: uint32(e.C.Tuning.ChunkM), Attribution: append([]string{}, attribution...),
+	}
+	if tg != nil {
+		man.TerrainVersion = TerrainVersion
+		man.Z0M = float32(elev.Z0)
+		man.Exaggeration = float32(elev.Exaggeration)
+		man.TerrainGridM = uint32(math.Round(tg.Step))
+		if strings.HasPrefix(elev.Source, "terrain_tiles") {
+			man.Attribution = append(man.Attribution, dem.Attribution)
+		}
+		for _, k := range keys {
+			c := chunks[k]
+			c.Terrain, c.Shade = chunkTerrain(tg, k[0], k[1])
+		}
+	}
+	if nat != nil {
+		man.NatureVersion = NatureVersion
+		if inv := e.C.City.TreeInventory; inv != nil && inv.Attribution != "" {
+			man.Attribution = append(man.Attribution, inv.Attribution)
+		}
 	}
 	area := e.AreaRingM()
 	minX, minY, maxX, maxY := math.Inf(1), math.Inf(1), math.Inf(-1), math.Inf(-1)

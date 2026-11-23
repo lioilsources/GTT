@@ -26,22 +26,23 @@
 - id: F-004
   name: M0 drive physics (tyre model, handbrake, layers)
   level: P1
-  spec: specs/drive.md@1
+  spec: specs/drive.md@2
   scenarios: scenarios/drive
-  lead: flutter
-  flutter: wip
-  web: wip
+  lead: web
+  flutter: done
+  web: done
 - id: F-005
   name: M0 controls A/B/C
   level: P1
-  spec: specs/controls.md@1
+  spec: specs/controls.md@2
   lead: flutter
-  flutter: wip
-  web: wip
+  flutter: done
+  web: done
+  checks: {flutter: pass, web: pass}
 - id: F-006
   name: D1 benchmark (route, autopilot, measurement)
   level: P1
-  spec: specs/bench.md@1
+  spec: specs/bench.md@2
   lead: web
   flutter: todo
   web: todo
@@ -134,18 +135,18 @@
   web: done
   checks: {flutter: pass, web: pass}
 - id: F-022
-  name: Feed deck selection (6 cards)
+  name: Feed deck selection (6 cards; v2 prev = back to the previous card)
   level: P0
-  spec: specs/feed.md@1
+  spec: specs/feed.md@2
   vectors: vectors/feed.json
   lead: web
   flutter: done
   web: done
   checks: {flutter: pass, web: pass}
 - id: F-023
-  name: Phone, Map and GPS navigation UI
+  name: Phone, Map and GPS navigation UI (v5 TikTok feed swipe)
   level: P2
-  spec: specs/phone.md@4
+  spec: specs/phone.md@5
   lead: web
   flutter: done
   web: done
@@ -248,7 +249,7 @@
 - id: F-030
   name: Trams (tracks, generated stops, articulated cars, right of way)
   level: P1
-  spec: specs/trams.md@1
+  spec: specs/trams.md@2
   lead: web
   flutter: done
   web: done
@@ -291,7 +292,7 @@
 - id: F-035
   name: Hop over traffic (Vega Roadster air tank, garage refill)
   level: P1
-  spec: specs/hop.md@1
+  spec: specs/hop.md@2
   lead: web
   flutter: done
   web: done
@@ -332,9 +333,9 @@
   checks: {flutter: pass, web: pass}
 
 - id: F-040
-  name: Generated art wired in (NPC portraits by vibe, feed busts, landmark postcards; v2 car sprites)
+  name: Generated art wired in (NPC portraits by vibe, feed busts, landmark postcards; v2 car sprites; v3 garage decals and wheels, UI icons)
   level: P2
-  spec: specs/art.md@2
+  spec: specs/art.md@3
   lead: web
   flutter: done
   web: done
@@ -373,7 +374,7 @@
 - id: F-044
   name: Tuning and cosmetics (upgrade levels, looks, garage tabs)
   level: P0
-  spec: specs/garage.md@1
+  spec: specs/garage.md@2
   vectors: vectors/garage.json
   lead: web
   flutter: done
@@ -609,25 +610,26 @@
   spec: specs/flow.md@2
   scenarios: scenarios/flow
   lead: web
-  flutter: todo
+  flutter: done
   web: done
+  checks: {flutter: pass, web: pass}
 
 - id: F-070
   name: "Svahy a skoky (M5-S6, T1)"
   level: P1
-  spec: specs/terrain.md@1
+  spec: specs/terrain.md@3
   scenarios: scenarios/terrain
   lead: web
   flutter: todo
-  web: todo
+  web: done
 
 - id: F-071
   name: "Reliéf v pohledu shora: promítání, stínování, šipky, HUD (M5-S6)"
   level: P2
-  spec: specs/terrain.md@1
+  spec: specs/terrain.md@3
   lead: web
   flutter: todo
-  web: todo
+  web: done
 
 - id: F-072
   name: "Voda a zeleň: třídy, jména, povrchy, pád do vody (M5-S7, N1)"
@@ -636,7 +638,7 @@
   scenarios: scenarios/nature
   lead: web
   flutter: todo
-  web: todo
+  web: done
 
 - id: F-073
   name: "Les a měkké stromy (M5-S8, FL2)"
@@ -645,12 +647,37 @@
   scenarios: scenarios/flow
   lead: web
   flutter: todo
-  web: todo
+  web: done
 
 - id: F-074
   name: "Šikmý pohled: terén, lod, voda, lodě (M5-S9, jen W; F až T4 po G1)"
   level: P2
-  spec: specs/terrain.md@1
+  spec: specs/terrain.md@3
+  lead: web
+  flutter: todo
+  web: done
+
+- id: F-075
+  name: "Zkušební jízda v garáži, garáž z telefonu a ladicí hotovost (dogfooding)"
+  level: P2
+  spec: specs/testdrive.md@2
+  lead: web
+  flutter: done
+  web: done
+  checks: {flutter: pass, web: pass}
+
+- id: F-076
+  name: "První spuštění: postup stahování v % a úvodní karta (L-S7)"
+  level: P2
+  spec: specs/firstrun.md@1
+  lead: web
+  flutter: todo
+  web: todo
+
+- id: F-078
+  name: Moscow in the clients (bundled pack, palette style E, city switching)
+  level: P2
+  spec: specs/cities.md@2
   lead: web
   flutter: todo
   web: todo

@@ -1,6 +1,7 @@
 import type { Graph, Landmarks, Manifest, Spots, TramGraph } from '../gen/pb/citypack_pb';
 import { RoadClass } from '../gen/pb/citypack_pb';
 import { decodeGraph, decodeLandmarks, decodeManifest, decodeSpots, decodeTrams, type PackSource } from './citypack';
+import { Terrain } from './terrain';
 
 /** A drivable road edge in world metres (port of world_engine model.dart). */
 export class RoadEdge {
@@ -24,10 +25,51 @@ export class RoadEdge {
     readonly kept: boolean,
     /** Full corridor width incl. sidewalks. */
     readonly width: number,
+    /**
+     * Game height of every point of `pts` (m, specs/terrain.md); null in a flat pack. Edges with
+     * relief are densified to segments of at most 16 m.
+     */
+    readonly z: Float32Array | null = null,
+    /** Steeper than terrain.max_grade allows: a wall for cars (specs/terrain.md). */
+    readonly stairs = false,
   ) {
-    let l = 0;
-    for (let i = 2; i < pts.length; i += 2) l += dist(pts[i - 2]!, pts[i - 1]!, pts[i]!, pts[i + 1]!);
-    this.length = l;
+    const n = pts.length >> 1;
+    const cum = new Float64Array(Math.max(1, n));
+    for (let i = 1; i < n; i++) cum[i] = cum[i - 1]! + dist(pts[2 * i - 2]!, pts[2 * i - 1]!, pts[2 * i]!, pts[2 * i + 1]!);
+    this.cum = cum;
+    this.length = n > 0 ? cum[n - 1]! : 0;
+  }
+
+  /** Cumulative distance from `from` at each point (m). */
+  readonly cum: Float64Array;
+
+  /** Game height at parameter f (0..1) of segment `seg` (specs/terrain.md: linear between vertices). */
+  zOnSeg(seg: number, f: number): number {
+    const z = this.z;
+    if (z === null) return 0;
+    const s = Math.min(Math.max(seg, 0), z.length - 2);
+    if (s < 0) return z[0] ?? 0;
+    return z[s]! + (z[s + 1]! - z[s]!) * Math.min(1, Math.max(0, f));
+  }
+
+  /** Game height at distance d from `from` along the edge. */
+  zAt(d: number): number {
+    const z = this.z;
+    if (z === null) return 0;
+    const n = this.pointCount;
+    if (n < 2) return z[0] ?? 0;
+    let s = 0;
+    while (s < n - 2 && this.cum[s + 1]! < d) s++;
+    const l = this.cum[s + 1]! - this.cum[s]!;
+    return this.zOnSeg(s, l > 0 ? (d - this.cum[s]!) / l : 0);
+  }
+
+  /** Grade of segment `seg` from → to (dz / length), 0 in a flat pack. */
+  gradeOfSeg(seg: number): number {
+    const z = this.z;
+    if (z === null || seg < 0 || seg + 1 >= this.pointCount) return 0;
+    const l = this.cum[seg + 1]! - this.cum[seg]!;
+    return l > 1e-6 ? (z[seg + 1]! - z[seg]!) / l : 0;
   }
 
   get pointCount(): number {
@@ -81,16 +123,20 @@ export class RoadGraph {
     readonly border: boolean[],
     readonly edges: RoadEdge[],
     readonly nodeEdges: number[][],
+    /** Game height of every node (m, specs/terrain.md); zeros in a flat pack. */
+    readonly nodeZ: Float32Array = new Float32Array(nodeXY.length >> 1),
   ) {
     this.index();
   }
 
   static fromPb(g: Graph): RoadGraph {
     const xy = new Float32Array(g.nodes.length * 2);
+    const nodeZ = new Float32Array(g.nodes.length);
     const border: boolean[] = [];
     g.nodes.forEach((n, i) => {
       xy[2 * i] = n.x / 10;
       xy[2 * i + 1] = n.y / 10;
+      nodeZ[i] = n.zDm / 10;
       border.push(n.border);
     });
     const nodeEdges: number[][] = g.nodes.map(() => []);
@@ -99,20 +145,21 @@ export class RoadGraph {
       for (let j = 0; j < pts.length; j++) pts[j] = e.points[j]! / 10;
       nodeEdges[e.from]!.push(i);
       nodeEdges[e.to]!.push(i);
+      // Heights per vertex (specs/terrain.md); a flat pack or a count mismatch has none.
+      const z = e.zDm.length * 2 === e.points.length && e.zDm.length > 0 ? Float32Array.from(e.zDm, (v) => v / 10) : null;
       return new RoadEdge(
         i, e.from, e.to, pts, e.class, g.names[e.name] ?? '', e.lanes, e.oneway,
-        e.layerFrom, e.layerTo, e.bridge, e.tunnel, e.kept, e.widthM,
+        e.layerFrom, e.layerTo, e.bridge, e.tunnel, e.kept, e.widthM, z, e.stairs,
       );
     });
-    return new RoadGraph(xy, border, edges, nodeEdges);
+    return new RoadGraph(xy, border, edges, nodeEdges, nodeZ);
   }
 
   private index(): void {
     for (const e of this.edges) {
-      const cum = new Float64Array(e.pointCount);
+      const cum = e.cum;
       for (let s = 1; s < e.pointCount; s++) {
         const ax = e.pts[2 * s - 2]!, ay = e.pts[2 * s - 1]!, bx = e.pts[2 * s]!, by = e.pts[2 * s + 1]!;
-        cum[s] = cum[s - 1]! + dist(ax, ay, bx, by);
         const r = e.width / 2;
         const x0 = Math.floor((Math.min(ax, bx) - r) / CELL), x1 = Math.floor((Math.max(ax, bx) + r) / CELL);
         const y0 = Math.floor((Math.min(ay, by) - r) / CELL), y1 = Math.floor((Math.max(ay, by) + r) / CELL);
@@ -347,6 +394,8 @@ export const chunkKey = (x: number, y: number): number => (x + 32768) * 65536 + 
 /** The static, always-loaded part of a citypack. */
 export class City {
   readonly chunkKeys: Set<number>;
+  /** Heights (specs/terrain.md): flat when the pack has no terrain_version. */
+  readonly terrain: Terrain;
 
   private constructor(
     readonly manifest: Manifest,
@@ -361,6 +410,7 @@ export class City {
     readonly trams: TrackGraph,
   ) {
     this.chunkKeys = new Set(manifest.chunks.map((c) => chunkKey(c.x, c.y)));
+    this.terrain = new Terrain(manifest, graph);
   }
 
   get id(): string {

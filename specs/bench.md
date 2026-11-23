@@ -1,6 +1,7 @@
 # Benchmark D1 – autopilot a měření
 
-**version: 1** · P1 (trasa a autopilot), P2 (čísla měření) · trasa `content/bench/<city>.json`
+**version: 2** · P1 (trasa a autopilot), P2 (čísla měření) · trasa `content/bench/<city>.json`,
+další trasy `content/bench/<city>-<id>.json` (v2)
 (`schema/bench.schema.json`), výsledek `schema/bench_result.schema.json`, čísla `bench` v `content/tuning.yaml`
 
 ## Účel
@@ -12,7 +13,8 @@ dá po minutách jízdy přesně stejnou polohu. Trasa: 42nd St od řeky k řece
 1. Křižovatka `{a, b}` = uzel grafu, ze kterého vede hrana pojmenovaná `a` i hrana pojmenovaná `b`.
    Víc takových uzlů → ten s nejmenším indexem. Žádný → chyba trasy.
 2. Úsek `{via, to}` = nejkratší cesta (Dijkstra, délka hran) z konce předchozího úseku do `to`
-   jen po hranách, jejichž jméno je ve `via`. Jednosměrky se ignorují (M0 nemá provoz).
+   jen po hranách, jejichž jméno je ve `via`. Jednosměrky se ignorují (M0 nemá provoz), leda trasa
+   má `oneway: true` (v2): pak se hrana s `oneway` 1 bere jen from → to, s −1 jen to → from.
    Při shodě délek vyhrává cesta přes uzel s menším indexem.
 3. Lomená čára trasy = body hran v pořadí jízdy, bez opakování společných uzlů.
 
@@ -35,6 +37,27 @@ dá po minutách jízdy přesně stejnou polohu. Trasa: 42nd St od řeky k řece
 - `memory_mb`: web `performance.memory.usedJSHeapSize` (jen Chrome), aplikace RSS procesu; jinak chybí.
 - Teplotu a úbytek baterie měří Ol1n ručně (10 minut, opakované jízdy).
 
+## Další trasy (v2)
+Soubor `content/bench/<city>-<id>.json` (stejné schéma, `id` = `<id>`, `city` = `<city>`) je ověřovací
+trasa, ne benchmark: `<city>.json` zůstává jediným D1 měřením města. Kopce Prahy (L-S1, M5-S10):
+`prague-petrin`, `prague-letna`, `prague-hradcany` s `oneway: true`, ulice jen ponechané
+pozemní hrany (`kept`, ne schody ani tunel); popis a co sledovat v `docs/prague-hills.md`.
+- W `?city=<city>&route=<id>`: auto stojí na začátku trasy ve směru trasy a navigace (`specs/phone.md`)
+  vede po lomené čáře trasy (ne GPS hledáním) k jejímu konci; cíl v HUD = ulice `b` posledního
+  `to`; dojezd ukáže jen hlášku „Na místě“. Sjetí z trasy přepočítá navigaci GPS k témuž konci.
+- `?city=<city>&route=<id>&bench`: tutéž trasu jede autopilot a na konci ukáže měření.
+
+### Ladění kopců (W, jen s `?debug`)
+Tlačítko „Ladění“ v řadě kulatých tlačítek otevře panel s posuvníky klíčů `content/tuning.yaml`,
+které klient čte každý krok nebo snímek, takže změna platí hned: `slope_physics.gravity`,
+`slope_physics.slope_force_scale`, `slope_physics.suspension_travel`, `slope_physics.hard_landing`,
+`speed_mps.cruise`, `camera.topdown.height_m`, `camera.chase.distance_m`, `camera.chase.height_m`,
+`camera.chase.look_ahead_m`, `camera.chase.fov_deg`, `camera.heading_follow_rate`, `view_width_m.slow`,
+`view_width_m.fast`. Popisky jsou klíče YAML (jako panel F); „Kopírovat tuning.yaml“ zkopíruje řádky
+`klíč: hodnota` (desetinná čísla vždy s tečkou). Změna se neukládá. Čísla balíčku
+(`terrain.exaggeration`, `terrain.max_grade`, `terrain.pipeline.shade_strength`) panel nemá: platí až
+po novém `citypack build`.
+
 ## Spuštění
 - W: `?bench` (volitelně `&scheme=…`); výsledek se ukáže na konci s tlačítkem Kopírovat.
 - F: ladicí panel → Benchmark.
@@ -43,3 +66,32 @@ Výsledky se vkládají do `plans/BAKEOFF_REPORT.md`.
 ## Testy
 Oba klienti: trasa NYC se sestaví (5 úseků, délka 3–5 km) a autopilot ji v simulaci bez vykreslování
 dojede s `respawns` ≤ 2.
+W (v2, `web/test/pragueHills.test.ts`, balíček Prahy): každá pražská trasa vede jen po ponechaných
+pozemních hranách, autopilot ji dojede s 0 vyproštěními (`specs/flow.md`), 0 `respawns` a 0 pády do
+vody a vystoupá aspoň 20 m (skutečných); test hlásí čas, rychlost min/max, největší sklon pod autem
+(herní i skutečný) a počet skoků (`HILLS_REPORT=<soubor>` je zapíše jako JSON).
+
+## Kouřový test mobilního webu (CI)
+
+Plán `Prompts/05-METROPOLE_LAUNCH_PLAN.md` L-S6, jen W. `web/scripts/smoke.ts` (`npm run smoke`)
+spustí headless Chromium (Playwright) proti `vite preview` buildu a projde kroky ve dvou mobilních
+profilech: **Pixel 8a** 412 × 915, DPR 2,625 a **iPhone 12 mini** 375 × 812, DPR 3, oba
+s dotykem. Čísla jsou `smoke` v `content/tuning.yaml`; chování klienta se nemění.
+
+1. Kořenová URL s `?debug` se načte a `#loading` zmizí do `smoke.first_frame_ms`
+   (`metro.timing().firstFrameMs` od `performance.timeOrigin`).
+2. Úvodní karta (`specs/firstrun.md`), pokud je vidět, se zavře tlačítkem `introGo`.
+3. Dotyk: jeden prst tažený o `smoke.drag_px` nahoru a držený `smoke.drive_s`; auto ujede aspoň
+   `smoke.min_drive_m` (vzdálenost `metro.drive.car`).
+4. Tlačítko telefonu otevře feed; tah nahoru o `smoke.swipe_px` přepne kartu (jiné jméno
+   uprostřed feedu) a tah dolů vrátí původní kartu.
+5. Přepnutí měst New York → Praha → Tokio (`?city=<id>&debug&nointro`): každé se načte do
+   `smoke.first_frame_ms`.
+6. Konzole bez chyb (`console.error`, nezachycené výjimky) v celém průchodu; varování nevadí.
+
+Rozpočet `first_frame_ms` je změřený na CI runneru (softwarové WebGL) se zálohou; na telefonu
+platí cíle z D1 a M0-A1.
+
+## Verze
+- 2 – další trasy `<city>-<id>.json`, `oneway`, `?route=<id>` s navigací po trase, panel „Ladění kopců“, test pražských kopců.
+- 1 – trasa NYC, autopilot, měření.

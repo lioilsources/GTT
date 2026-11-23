@@ -4,7 +4,7 @@ import type { TuningGarage } from '../gen/tuning';
 import { IllegalAction, type Rules, type RulesResult } from '../minigames/rules';
 import type { Prng } from '../rules/prng';
 
-/** specs/garage.md, version 1: upgrade levels and looks of the player's cars (P0, module `garage`). */
+/** specs/garage.md, version 2: upgrade levels and looks of the player's cars (P0, module `garage`). */
 export type GarageSlot = 'engine' | 'tyres' | 'brakes' | 'weight' | 'drift';
 export type LookPart = 'paint' | 'decal' | 'wheels' | 'glow' | 'smoke';
 
@@ -63,11 +63,16 @@ export function lookPrice(t: TuningGarage, part: LookPart): number {
   }
 }
 
-/** Number of choices of each part from the colour tokens (spec "Vzhled"). */
+/** Decal ids by choice (specs/garage.md v2 "Vzhled"; 0 = none): sprite `garage/decals/<id>.png`. */
+export const decalIds = ['', 'stripes', 'flames', 'checker', 'stars', 'lightning', 'waves', 'camo', 'halftone'] as const;
+/** Wheel ids by choice (0 = stock): sprite `garage/wheels/<id>.png`. */
+export const wheelIds = ['', 'sport', 'whitewall', 'five_spoke', 'mesh', 'turbine', 'offroad'] as const;
+
+/** Number of choices of each part from the colour tokens and the decal table (spec "Vzhled"). */
 export function partCounts(): Record<LookPart, number> {
   return {
     paint: 1 + tokens.colorGaragePaints.length,
-    decal: 4,
+    decal: decalIds.length,
     wheels: tokens.colorGarageWheels.length,
     glow: 1 + tokens.colorGarageGlow.length,
     smoke: 1 + tokens.colorGarageSmoke.length,
@@ -135,7 +140,7 @@ function put(m: Record<string, Record<string, number>>, car: string, key: string
 
 export class GarageRules implements Rules<GarageState, GarageAction, RulesResult, GarageConfig> {
   readonly id = 'garage';
-  readonly specVersion = 1;
+  readonly specVersion = 2;
   private cfg: GarageConfig | null = null;
 
   get config(): GarageConfig {

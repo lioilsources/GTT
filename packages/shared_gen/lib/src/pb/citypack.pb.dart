@@ -39,6 +39,14 @@ class Manifest extends $pb.GeneratedMessage {
     $core.Iterable<District>? districts,
     $core.Iterable<$core.String>? attribution,
     $core.String? builtAt,
+    $core.int? terrainVersion,
+    $core.double? z0M,
+    $core.double? exaggeration,
+    $core.int? terrainGridM,
+    $core.int? natureVersion,
+    $core.Iterable<ChunkRef>? lods,
+    $core.int? lodChunks,
+    $core.int? lodGridM,
   }) {
     final result = Manifest._();
     if (formatVersion != null) result.formatVersion = formatVersion;
@@ -57,6 +65,14 @@ class Manifest extends $pb.GeneratedMessage {
     if (districts != null) result.districts.addAll(districts);
     if (attribution != null) result.attribution.addAll(attribution);
     if (builtAt != null) result.builtAt = builtAt;
+    if (terrainVersion != null) result.terrainVersion = terrainVersion;
+    if (z0M != null) result.z0M = z0M;
+    if (exaggeration != null) result.exaggeration = exaggeration;
+    if (terrainGridM != null) result.terrainGridM = terrainGridM;
+    if (natureVersion != null) result.natureVersion = natureVersion;
+    if (lods != null) result.lods.addAll(lods);
+    if (lodChunks != null) result.lodChunks = lodChunks;
+    if (lodGridM != null) result.lodGridM = lodGridM;
     return result;
   }
 
@@ -94,6 +110,19 @@ class Manifest extends $pb.GeneratedMessage {
         subBuilder: District.$_createMessage)
     ..pPS(15, _omitFieldNames ? '' : 'attribution')
     ..aOS(16, _omitFieldNames ? '' : 'builtAt')
+    ..aI(17, _omitFieldNames ? '' : 'terrainVersion',
+        fieldType: $pb.PbFieldType.OU3)
+    ..aD(18, _omitFieldNames ? '' : 'z0M', fieldType: $pb.PbFieldType.OF)
+    ..aD(19, _omitFieldNames ? '' : 'exaggeration',
+        fieldType: $pb.PbFieldType.OF)
+    ..aI(20, _omitFieldNames ? '' : 'terrainGridM',
+        fieldType: $pb.PbFieldType.OU3)
+    ..aI(21, _omitFieldNames ? '' : 'natureVersion',
+        fieldType: $pb.PbFieldType.OU3)
+    ..pPM<ChunkRef>(22, _omitFieldNames ? '' : 'lods',
+        subBuilder: ChunkRef.$_createMessage)
+    ..aI(23, _omitFieldNames ? '' : 'lodChunks', fieldType: $pb.PbFieldType.OU3)
+    ..aI(24, _omitFieldNames ? '' : 'lodGridM', fieldType: $pb.PbFieldType.OU3)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -239,6 +268,74 @@ class Manifest extends $pb.GeneratedMessage {
   $core.bool hasBuiltAt() => $_has(15);
   @$pb.TagNumber(16)
   void clearBuiltAt() => $_clearField(16);
+
+  /// Terrain (specs/terrain.md, citypack v4). 0 or missing = flat pack: z = 0 everywhere.
+  @$pb.TagNumber(17)
+  $core.int get terrainVersion => $_getIZ(16);
+  @$pb.TagNumber(17)
+  set terrainVersion($core.int value) => $_setUnsignedInt32(16, value);
+  @$pb.TagNumber(17)
+  $core.bool hasTerrainVersion() => $_has(16);
+  @$pb.TagNumber(17)
+  void clearTerrainVersion() => $_clearField(17);
+
+  @$pb.TagNumber(18)
+  $core.double get z0M => $_getN(17);
+  @$pb.TagNumber(18)
+  set z0M($core.double value) => $_setFloat(17, value);
+  @$pb.TagNumber(18)
+  $core.bool hasZ0M() => $_has(17);
+  @$pb.TagNumber(18)
+  void clearZ0M() => $_clearField(18);
+
+  @$pb.TagNumber(19)
+  $core.double get exaggeration => $_getN(18);
+  @$pb.TagNumber(19)
+  set exaggeration($core.double value) => $_setFloat(18, value);
+  @$pb.TagNumber(19)
+  $core.bool hasExaggeration() => $_has(18);
+  @$pb.TagNumber(19)
+  void clearExaggeration() => $_clearField(19);
+
+  @$pb.TagNumber(20)
+  $core.int get terrainGridM => $_getIZ(19);
+  @$pb.TagNumber(20)
+  set terrainGridM($core.int value) => $_setUnsignedInt32(19, value);
+  @$pb.TagNumber(20)
+  $core.bool hasTerrainGridM() => $_has(19);
+  @$pb.TagNumber(20)
+  void clearTerrainGridM() => $_clearField(20);
+
+  /// Nature (specs/nature.md, citypack v4). 0 or missing = ground meshes carry no classes, no trees.
+  @$pb.TagNumber(21)
+  $core.int get natureVersion => $_getIZ(20);
+  @$pb.TagNumber(21)
+  set natureVersion($core.int value) => $_setUnsignedInt32(20, value);
+  @$pb.TagNumber(21)
+  $core.bool hasNatureVersion() => $_has(20);
+  @$pb.TagNumber(21)
+  void clearNatureVersion() => $_clearField(21);
+
+  @$pb.TagNumber(22)
+  $pb.PbList<ChunkRef> get lods => $_getList(21);
+
+  @$pb.TagNumber(23)
+  $core.int get lodChunks => $_getIZ(22);
+  @$pb.TagNumber(23)
+  set lodChunks($core.int value) => $_setUnsignedInt32(22, value);
+  @$pb.TagNumber(23)
+  $core.bool hasLodChunks() => $_has(22);
+  @$pb.TagNumber(23)
+  void clearLodChunks() => $_clearField(23);
+
+  @$pb.TagNumber(24)
+  $core.int get lodGridM => $_getIZ(23);
+  @$pb.TagNumber(24)
+  set lodGridM($core.int value) => $_setUnsignedInt32(23, value);
+  @$pb.TagNumber(24)
+  $core.bool hasLodGridM() => $_has(23);
+  @$pb.TagNumber(24)
+  void clearLodGridM() => $_clearField(24);
 }
 
 class Rect extends $pb.GeneratedMessage {
@@ -633,11 +730,13 @@ class Node extends $pb.GeneratedMessage {
     $core.int? x,
     $core.int? y,
     $core.bool? border,
+    $core.int? zDm,
   }) {
     final result = Node._();
     if (x != null) result.x = x;
     if (y != null) result.y = y;
     if (border != null) result.border = border;
+    if (zDm != null) result.zDm = zDm;
     return result;
   }
 
@@ -657,6 +756,7 @@ class Node extends $pb.GeneratedMessage {
     ..aI(1, _omitFieldNames ? '' : 'x', fieldType: $pb.PbFieldType.OS3)
     ..aI(2, _omitFieldNames ? '' : 'y', fieldType: $pb.PbFieldType.OS3)
     ..aOB(3, _omitFieldNames ? '' : 'border')
+    ..aI(4, _omitFieldNames ? '' : 'zDm', fieldType: $pb.PbFieldType.OS3)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -705,6 +805,15 @@ class Node extends $pb.GeneratedMessage {
   $core.bool hasBorder() => $_has(2);
   @$pb.TagNumber(3)
   void clearBorder() => $_clearField(3);
+
+  @$pb.TagNumber(4)
+  $core.int get zDm => $_getIZ(3);
+  @$pb.TagNumber(4)
+  set zDm($core.int value) => $_setSignedInt32(3, value);
+  @$pb.TagNumber(4)
+  $core.bool hasZDm() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearZDm() => $_clearField(4);
 }
 
 class Edge extends $pb.GeneratedMessage {
@@ -722,6 +831,9 @@ class Edge extends $pb.GeneratedMessage {
     $core.bool? tunnel,
     $core.bool? kept,
     $core.double? widthM,
+    $core.Iterable<$core.int>? zDm,
+    $core.bool? stairs,
+    $core.bool? microOnly,
   }) {
     final result = Edge._();
     if (from != null) result.from = from;
@@ -737,6 +849,9 @@ class Edge extends $pb.GeneratedMessage {
     if (tunnel != null) result.tunnel = tunnel;
     if (kept != null) result.kept = kept;
     if (widthM != null) result.widthM = widthM;
+    if (zDm != null) result.zDm.addAll(zDm);
+    if (stairs != null) result.stairs = stairs;
+    if (microOnly != null) result.microOnly = microOnly;
     return result;
   }
 
@@ -767,6 +882,9 @@ class Edge extends $pb.GeneratedMessage {
     ..aOB(11, _omitFieldNames ? '' : 'tunnel')
     ..aOB(12, _omitFieldNames ? '' : 'kept')
     ..aD(13, _omitFieldNames ? '' : 'widthM', fieldType: $pb.PbFieldType.OF)
+    ..p<$core.int>(14, _omitFieldNames ? '' : 'zDm', $pb.PbFieldType.KS3)
+    ..aOB(15, _omitFieldNames ? '' : 'stairs')
+    ..aOB(16, _omitFieldNames ? '' : 'microOnly')
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -899,6 +1017,29 @@ class Edge extends $pb.GeneratedMessage {
   $core.bool hasWidthM() => $_has(12);
   @$pb.TagNumber(13)
   void clearWidthM() => $_clearField(13);
+
+  /// Terrain: game height per vertex of `points` (same count); edges with relief are densified to
+  /// segments of at most 16 m. Empty in a flat pack.
+  @$pb.TagNumber(14)
+  $pb.PbList<$core.int> get zDm => $_getList(13);
+
+  @$pb.TagNumber(15)
+  $core.bool get stairs => $_getBF(14);
+  @$pb.TagNumber(15)
+  set stairs($core.bool value) => $_setBool(14, value);
+  @$pb.TagNumber(15)
+  $core.bool hasStairs() => $_has(14);
+  @$pb.TagNumber(15)
+  void clearStairs() => $_clearField(15);
+
+  @$pb.TagNumber(16)
+  $core.bool get microOnly => $_getBF(15);
+  @$pb.TagNumber(16)
+  set microOnly($core.bool value) => $_setBool(15, value);
+  @$pb.TagNumber(16)
+  $core.bool hasMicroOnly() => $_has(15);
+  @$pb.TagNumber(16)
+  void clearMicroOnly() => $_clearField(16);
 }
 
 /// chunks/{x}_{y}.pb
@@ -909,6 +1050,11 @@ class Chunk extends $pb.GeneratedMessage {
     $core.Iterable<Building>? buildings,
     $core.Iterable<Mesh>? ground,
     $core.Iterable<Barrier>? barriers,
+    $core.List<$core.int>? terrain,
+    $core.List<$core.int>? shade,
+    $core.List<$core.int>? trees,
+    $core.Iterable<Mesh>? shore,
+    $core.Iterable<Label>? labels,
   }) {
     final result = Chunk._();
     if (x != null) result.x = x;
@@ -916,6 +1062,11 @@ class Chunk extends $pb.GeneratedMessage {
     if (buildings != null) result.buildings.addAll(buildings);
     if (ground != null) result.ground.addAll(ground);
     if (barriers != null) result.barriers.addAll(barriers);
+    if (terrain != null) result.terrain = terrain;
+    if (shade != null) result.shade = shade;
+    if (trees != null) result.trees = trees;
+    if (shore != null) result.shore.addAll(shore);
+    if (labels != null) result.labels.addAll(labels);
     return result;
   }
 
@@ -940,6 +1091,16 @@ class Chunk extends $pb.GeneratedMessage {
         subBuilder: Mesh.$_createMessage)
     ..pPM<Barrier>(5, _omitFieldNames ? '' : 'barriers',
         subBuilder: Barrier.$_createMessage)
+    ..a<$core.List<$core.int>>(
+        6, _omitFieldNames ? '' : 'terrain', $pb.PbFieldType.OY)
+    ..a<$core.List<$core.int>>(
+        7, _omitFieldNames ? '' : 'shade', $pb.PbFieldType.OY)
+    ..a<$core.List<$core.int>>(
+        8, _omitFieldNames ? '' : 'trees', $pb.PbFieldType.OY)
+    ..pPM<Mesh>(9, _omitFieldNames ? '' : 'shore',
+        subBuilder: Mesh.$_createMessage)
+    ..pPM<Label>(10, _omitFieldNames ? '' : 'labels',
+        subBuilder: Label.$_createMessage)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -988,6 +1149,129 @@ class Chunk extends $pb.GeneratedMessage {
 
   @$pb.TagNumber(5)
   $pb.PbList<Barrier> get barriers => $_getList(4);
+
+  /// Terrain: 33 × 33 int16 little-endian game heights in dm, rows from the south, sample (i, j) at
+  /// (x·chunk_m + i·grid_m, y·chunk_m + j·grid_m); edges are shared with the neighbours.
+  @$pb.TagNumber(6)
+  $core.List<$core.int> get terrain => $_getN(5);
+  @$pb.TagNumber(6)
+  set terrain($core.List<$core.int> value) => $_setBytes(5, value);
+  @$pb.TagNumber(6)
+  $core.bool hasTerrain() => $_has(5);
+  @$pb.TagNumber(6)
+  void clearTerrain() => $_clearField(6);
+
+  @$pb.TagNumber(7)
+  $core.List<$core.int> get shade => $_getN(6);
+  @$pb.TagNumber(7)
+  set shade($core.List<$core.int> value) => $_setBytes(6, value);
+  @$pb.TagNumber(7)
+  $core.bool hasShade() => $_has(6);
+  @$pb.TagNumber(7)
+  void clearShade() => $_clearField(7);
+
+  /// Nature: 3 bytes per tree: x, y (uint8, metres from the chunk's south-west corner), then
+  /// size (low 2 bits: 0 S, 1 M, 2 L) | colour jitter << 2. Order = tree key index (specs/flow.md).
+  @$pb.TagNumber(8)
+  $core.List<$core.int> get trees => $_getN(7);
+  @$pb.TagNumber(8)
+  set trees($core.List<$core.int> value) => $_setBytes(7, value);
+  @$pb.TagNumber(8)
+  $core.bool hasTrees() => $_has(7);
+  @$pb.TagNumber(8)
+  void clearTrees() => $_clearField(8);
+
+  @$pb.TagNumber(9)
+  $pb.PbList<Mesh> get shore => $_getList(8);
+
+  @$pb.TagNumber(10)
+  $pb.PbList<Label> get labels => $_getList(9);
+}
+
+/// A name drawn along an axis (water) or at a point (green: axis of one vertex).
+class Label extends $pb.GeneratedMessage {
+  factory Label({
+    $core.String? name,
+    $core.Iterable<$core.int>? axis,
+    $core.bool? water,
+    $core.int? areaM2,
+  }) {
+    final result = Label._();
+    if (name != null) result.name = name;
+    if (axis != null) result.axis.addAll(axis);
+    if (water != null) result.water = water;
+    if (areaM2 != null) result.areaM2 = areaM2;
+    return result;
+  }
+
+  Label._();
+
+  factory Label.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      Label()..mergeFromBuffer(data, registry);
+  factory Label.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      Label()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'Label',
+      package: const $pb.PackageName(_omitMessageNames ? '' : 'citypack'),
+      createEmptyInstance: Label.$_createMessage)
+    ..aOS(1, _omitFieldNames ? '' : 'name')
+    ..p<$core.int>(2, _omitFieldNames ? '' : 'axis', $pb.PbFieldType.KS3)
+    ..aOB(3, _omitFieldNames ? '' : 'water')
+    ..aI(4, _omitFieldNames ? '' : 'areaM2', fieldType: $pb.PbFieldType.OU3)
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  Label clone() => deepCopy();
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  Label copyWith(void Function(Label) updates) =>
+      super.copyWith((message) => updates(message as Label)) as Label;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  @$core.Deprecated('Use Label() / Label.new instead')
+  static Label create() => Label._();
+  static $pb.GeneratedMessage $_createMessage() => Label._();
+  @$core.override
+  Label createEmptyInstance() => Label._();
+  @$core.pragma('dart2js:noInline')
+  static Label getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<Label>(Label.$_createMessage);
+  static Label? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get name => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set name($core.String value) => $_setString(0, value);
+  @$pb.TagNumber(1)
+  $core.bool hasName() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearName() => $_clearField(1);
+
+  @$pb.TagNumber(2)
+  $pb.PbList<$core.int> get axis => $_getList(1);
+
+  @$pb.TagNumber(3)
+  $core.bool get water => $_getBF(2);
+  @$pb.TagNumber(3)
+  set water($core.bool value) => $_setBool(2, value);
+  @$pb.TagNumber(3)
+  $core.bool hasWater() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearWater() => $_clearField(3);
+
+  @$pb.TagNumber(4)
+  $core.int get areaM2 => $_getIZ(3);
+  @$pb.TagNumber(4)
+  set areaM2($core.int value) => $_setUnsignedInt32(3, value);
+  @$pb.TagNumber(4)
+  $core.bool hasAreaM2() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearAreaM2() => $_clearField(4);
 }
 
 /// A bollard line: cars (not micro vehicles) collide with it as with a wall.
@@ -1050,6 +1334,7 @@ class Building extends $pb.GeneratedMessage {
     $core.int? landmark,
     $core.bool? collide,
     $core.int? wallSeed,
+    $core.int? baseZDm,
   }) {
     final result = Building._();
     if (rings != null) result.rings.addAll(rings);
@@ -1060,6 +1345,7 @@ class Building extends $pb.GeneratedMessage {
     if (landmark != null) result.landmark = landmark;
     if (collide != null) result.collide = collide;
     if (wallSeed != null) result.wallSeed = wallSeed;
+    if (baseZDm != null) result.baseZDm = baseZDm;
     return result;
   }
 
@@ -1084,6 +1370,7 @@ class Building extends $pb.GeneratedMessage {
     ..aI(6, _omitFieldNames ? '' : 'landmark', fieldType: $pb.PbFieldType.OU3)
     ..aOB(7, _omitFieldNames ? '' : 'collide')
     ..aI(8, _omitFieldNames ? '' : 'wallSeed', fieldType: $pb.PbFieldType.OU3)
+    ..aI(9, _omitFieldNames ? '' : 'baseZDm', fieldType: $pb.PbFieldType.OS3)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -1159,6 +1446,15 @@ class Building extends $pb.GeneratedMessage {
   $core.bool hasWallSeed() => $_has(7);
   @$pb.TagNumber(8)
   void clearWallSeed() => $_clearField(8);
+
+  @$pb.TagNumber(9)
+  $core.int get baseZDm => $_getIZ(8);
+  @$pb.TagNumber(9)
+  set baseZDm($core.int value) => $_setSignedInt32(8, value);
+  @$pb.TagNumber(9)
+  $core.bool hasBaseZDm() => $_has(8);
+  @$pb.TagNumber(9)
+  void clearBaseZDm() => $_clearField(9);
 }
 
 class Mesh extends $pb.GeneratedMessage {
@@ -1166,11 +1462,21 @@ class Mesh extends $pb.GeneratedMessage {
     GroundKind? kind,
     $core.Iterable<$core.int>? vertices,
     $core.Iterable<$core.int>? indices,
+    WaterClass? waterClass,
+    GreenClass? greenClass,
+    Surface? surface,
+    $core.String? name,
+    $core.int? zDm,
   }) {
     final result = Mesh._();
     if (kind != null) result.kind = kind;
     if (vertices != null) result.vertices.addAll(vertices);
     if (indices != null) result.indices.addAll(indices);
+    if (waterClass != null) result.waterClass = waterClass;
+    if (greenClass != null) result.greenClass = greenClass;
+    if (surface != null) result.surface = surface;
+    if (name != null) result.name = name;
+    if (zDm != null) result.zDm = zDm;
     return result;
   }
 
@@ -1191,6 +1497,14 @@ class Mesh extends $pb.GeneratedMessage {
         enumValues: GroundKind.values)
     ..p<$core.int>(2, _omitFieldNames ? '' : 'vertices', $pb.PbFieldType.KS3)
     ..p<$core.int>(3, _omitFieldNames ? '' : 'indices', $pb.PbFieldType.KU3)
+    ..aE<WaterClass>(4, _omitFieldNames ? '' : 'waterClass',
+        enumValues: WaterClass.values)
+    ..aE<GreenClass>(5, _omitFieldNames ? '' : 'greenClass',
+        enumValues: GreenClass.values)
+    ..aE<Surface>(6, _omitFieldNames ? '' : 'surface',
+        enumValues: Surface.values)
+    ..aOS(7, _omitFieldNames ? '' : 'name')
+    ..aI(8, _omitFieldNames ? '' : 'zDm', fieldType: $pb.PbFieldType.OS3)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -1227,6 +1541,244 @@ class Mesh extends $pb.GeneratedMessage {
 
   @$pb.TagNumber(3)
   $pb.PbList<$core.int> get indices => $_getList(2);
+
+  /// Nature (specs/nature.md): WATER meshes carry a class, PARK meshes a green class and surface.
+  @$pb.TagNumber(4)
+  WaterClass get waterClass => $_getN(3);
+  @$pb.TagNumber(4)
+  set waterClass(WaterClass value) => $_setField(4, value);
+  @$pb.TagNumber(4)
+  $core.bool hasWaterClass() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearWaterClass() => $_clearField(4);
+
+  @$pb.TagNumber(5)
+  GreenClass get greenClass => $_getN(4);
+  @$pb.TagNumber(5)
+  set greenClass(GreenClass value) => $_setField(5, value);
+  @$pb.TagNumber(5)
+  $core.bool hasGreenClass() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearGreenClass() => $_clearField(5);
+
+  @$pb.TagNumber(6)
+  Surface get surface => $_getN(5);
+  @$pb.TagNumber(6)
+  set surface(Surface value) => $_setField(6, value);
+  @$pb.TagNumber(6)
+  $core.bool hasSurface() => $_has(5);
+  @$pb.TagNumber(6)
+  void clearSurface() => $_clearField(6);
+
+  @$pb.TagNumber(7)
+  $core.String get name => $_getSZ(6);
+  @$pb.TagNumber(7)
+  set name($core.String value) => $_setString(6, value);
+  @$pb.TagNumber(7)
+  $core.bool hasName() => $_has(6);
+  @$pb.TagNumber(7)
+  void clearName() => $_clearField(7);
+
+  @$pb.TagNumber(8)
+  $core.int get zDm => $_getIZ(7);
+  @$pb.TagNumber(8)
+  set zDm($core.int value) => $_setSignedInt32(7, value);
+  @$pb.TagNumber(8)
+  $core.bool hasZDm() => $_has(7);
+  @$pb.TagNumber(8)
+  void clearZDm() => $_clearField(8);
+}
+
+/// lod/{x}_{y}.pb: the far ring of the chase camera (specs/terrain.md, specs/nature.md).
+class Lod extends $pb.GeneratedMessage {
+  factory Lod({
+    $core.int? x,
+    $core.int? y,
+    $core.List<$core.int>? terrain,
+    $core.Iterable<LodMass>? masses,
+    $core.Iterable<Mesh>? water,
+  }) {
+    final result = Lod._();
+    if (x != null) result.x = x;
+    if (y != null) result.y = y;
+    if (terrain != null) result.terrain = terrain;
+    if (masses != null) result.masses.addAll(masses);
+    if (water != null) result.water.addAll(water);
+    return result;
+  }
+
+  Lod._();
+
+  factory Lod.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      Lod()..mergeFromBuffer(data, registry);
+  factory Lod.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      Lod()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'Lod',
+      package: const $pb.PackageName(_omitMessageNames ? '' : 'citypack'),
+      createEmptyInstance: Lod.$_createMessage)
+    ..aI(1, _omitFieldNames ? '' : 'x', fieldType: $pb.PbFieldType.OS3)
+    ..aI(2, _omitFieldNames ? '' : 'y', fieldType: $pb.PbFieldType.OS3)
+    ..a<$core.List<$core.int>>(
+        3, _omitFieldNames ? '' : 'terrain', $pb.PbFieldType.OY)
+    ..pPM<LodMass>(4, _omitFieldNames ? '' : 'masses',
+        subBuilder: LodMass.$_createMessage)
+    ..pPM<Mesh>(5, _omitFieldNames ? '' : 'water',
+        subBuilder: Mesh.$_createMessage)
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  Lod clone() => deepCopy();
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  Lod copyWith(void Function(Lod) updates) =>
+      super.copyWith((message) => updates(message as Lod)) as Lod;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  @$core.Deprecated('Use Lod() / Lod.new instead')
+  static Lod create() => Lod._();
+  static $pb.GeneratedMessage $_createMessage() => Lod._();
+  @$core.override
+  Lod createEmptyInstance() => Lod._();
+  @$core.pragma('dart2js:noInline')
+  static Lod getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<Lod>(Lod.$_createMessage);
+  static Lod? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.int get x => $_getIZ(0);
+  @$pb.TagNumber(1)
+  set x($core.int value) => $_setSignedInt32(0, value);
+  @$pb.TagNumber(1)
+  $core.bool hasX() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearX() => $_clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.int get y => $_getIZ(1);
+  @$pb.TagNumber(2)
+  set y($core.int value) => $_setSignedInt32(1, value);
+  @$pb.TagNumber(2)
+  $core.bool hasY() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearY() => $_clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.List<$core.int> get terrain => $_getN(2);
+  @$pb.TagNumber(3)
+  set terrain($core.List<$core.int> value) => $_setBytes(2, value);
+  @$pb.TagNumber(3)
+  $core.bool hasTerrain() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearTerrain() => $_clearField(3);
+
+  @$pb.TagNumber(4)
+  $pb.PbList<LodMass> get masses => $_getList(3);
+
+  @$pb.TagNumber(5)
+  $pb.PbList<Mesh> get water => $_getList(4);
+}
+
+class LodMass extends $pb.GeneratedMessage {
+  factory LodMass({
+    LodKind? kind,
+    $core.Iterable<$core.int>? rings,
+    $core.Iterable<$core.int>? ringEnds,
+    $core.Iterable<$core.int>? roof,
+    $core.double? heightM,
+    $core.int? baseZDm,
+  }) {
+    final result = LodMass._();
+    if (kind != null) result.kind = kind;
+    if (rings != null) result.rings.addAll(rings);
+    if (ringEnds != null) result.ringEnds.addAll(ringEnds);
+    if (roof != null) result.roof.addAll(roof);
+    if (heightM != null) result.heightM = heightM;
+    if (baseZDm != null) result.baseZDm = baseZDm;
+    return result;
+  }
+
+  LodMass._();
+
+  factory LodMass.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      LodMass()..mergeFromBuffer(data, registry);
+  factory LodMass.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      LodMass()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'LodMass',
+      package: const $pb.PackageName(_omitMessageNames ? '' : 'citypack'),
+      createEmptyInstance: LodMass.$_createMessage)
+    ..aE<LodKind>(1, _omitFieldNames ? '' : 'kind', enumValues: LodKind.values)
+    ..p<$core.int>(2, _omitFieldNames ? '' : 'rings', $pb.PbFieldType.KS3)
+    ..p<$core.int>(3, _omitFieldNames ? '' : 'ringEnds', $pb.PbFieldType.KU3)
+    ..p<$core.int>(4, _omitFieldNames ? '' : 'roof', $pb.PbFieldType.KU3)
+    ..aD(5, _omitFieldNames ? '' : 'heightM', fieldType: $pb.PbFieldType.OF)
+    ..aI(6, _omitFieldNames ? '' : 'baseZDm', fieldType: $pb.PbFieldType.OS3)
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  LodMass clone() => deepCopy();
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  LodMass copyWith(void Function(LodMass) updates) =>
+      super.copyWith((message) => updates(message as LodMass)) as LodMass;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  @$core.Deprecated('Use LodMass() / LodMass.new instead')
+  static LodMass create() => LodMass._();
+  static $pb.GeneratedMessage $_createMessage() => LodMass._();
+  @$core.override
+  LodMass createEmptyInstance() => LodMass._();
+  @$core.pragma('dart2js:noInline')
+  static LodMass getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<LodMass>(LodMass.$_createMessage);
+  static LodMass? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  LodKind get kind => $_getN(0);
+  @$pb.TagNumber(1)
+  set kind(LodKind value) => $_setField(1, value);
+  @$pb.TagNumber(1)
+  $core.bool hasKind() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearKind() => $_clearField(1);
+
+  @$pb.TagNumber(2)
+  $pb.PbList<$core.int> get rings => $_getList(1);
+
+  @$pb.TagNumber(3)
+  $pb.PbList<$core.int> get ringEnds => $_getList(2);
+
+  @$pb.TagNumber(4)
+  $pb.PbList<$core.int> get roof => $_getList(3);
+
+  @$pb.TagNumber(5)
+  $core.double get heightM => $_getN(4);
+  @$pb.TagNumber(5)
+  set heightM($core.double value) => $_setFloat(4, value);
+  @$pb.TagNumber(5)
+  $core.bool hasHeightM() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearHeightM() => $_clearField(5);
+
+  @$pb.TagNumber(6)
+  $core.int get baseZDm => $_getIZ(5);
+  @$pb.TagNumber(6)
+  set baseZDm($core.int value) => $_setSignedInt32(5, value);
+  @$pb.TagNumber(6)
+  $core.bool hasBaseZDm() => $_has(5);
+  @$pb.TagNumber(6)
+  void clearBaseZDm() => $_clearField(6);
 }
 
 /// landmarks.pb
@@ -1473,6 +2025,8 @@ class Spot extends $pb.GeneratedMessage {
     $core.int? lookX,
     $core.int? lookY,
     $core.int? subjectDm,
+    $core.String? areaName,
+    $core.bool? areaWater,
   }) {
     final result = Spot._();
     if (id != null) result.id = id;
@@ -1488,6 +2042,8 @@ class Spot extends $pb.GeneratedMessage {
     if (lookX != null) result.lookX = lookX;
     if (lookY != null) result.lookY = lookY;
     if (subjectDm != null) result.subjectDm = subjectDm;
+    if (areaName != null) result.areaName = areaName;
+    if (areaWater != null) result.areaWater = areaWater;
     return result;
   }
 
@@ -1517,6 +2073,8 @@ class Spot extends $pb.GeneratedMessage {
     ..aI(11, _omitFieldNames ? '' : 'lookX', fieldType: $pb.PbFieldType.OS3)
     ..aI(12, _omitFieldNames ? '' : 'lookY', fieldType: $pb.PbFieldType.OS3)
     ..aI(13, _omitFieldNames ? '' : 'subjectDm', fieldType: $pb.PbFieldType.OU3)
+    ..aOS(14, _omitFieldNames ? '' : 'areaName')
+    ..aOB(15, _omitFieldNames ? '' : 'areaWater')
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -1655,6 +2213,26 @@ class Spot extends $pb.GeneratedMessage {
   $core.bool hasSubjectDm() => $_has(12);
   @$pb.TagNumber(13)
   void clearSubjectDm() => $_clearField(13);
+
+  /// Nature: the park the spot is in, or the water within 150 m ("" = none); clients phrase
+  /// water as "by …" through i18n.
+  @$pb.TagNumber(14)
+  $core.String get areaName => $_getSZ(13);
+  @$pb.TagNumber(14)
+  set areaName($core.String value) => $_setString(13, value);
+  @$pb.TagNumber(14)
+  $core.bool hasAreaName() => $_has(13);
+  @$pb.TagNumber(14)
+  void clearAreaName() => $_clearField(14);
+
+  @$pb.TagNumber(15)
+  $core.bool get areaWater => $_getBF(14);
+  @$pb.TagNumber(15)
+  set areaWater($core.bool value) => $_setBool(14, value);
+  @$pb.TagNumber(15)
+  $core.bool hasAreaWater() => $_has(14);
+  @$pb.TagNumber(15)
+  void clearAreaWater() => $_clearField(15);
 }
 
 /// trams.pb (specs/trams.md): tram tracks as their own graph, always two-way, plus generated stops.

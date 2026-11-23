@@ -4,10 +4,13 @@ import { WebGPUEngine } from '@babylonjs/core/Engines/webgpuEngine';
 
 import { ASSET_BASE_URL } from './config';
 import { Autopilot, frameStats } from './drive/autopilot';
-import { resolveRoute } from './drive/route';
+import { resolveRoute, routeFile } from './drive/route';
+import { hillPanel } from './drive/hillPanel';
+import { BoostHint, boostHintKey, readBoostHint, writeBoostHint } from './drive/boostHint';
 import { applyKeys, createScheme, SchemeA, SchemeB, SchemeC, type ControlScheme, type ControlSchemeId } from './drive/controls';
 import { DriveWorld } from './drive/driveWorld';
 import { installFlowHud } from './drive/flowHud';
+import { TERRAIN_SPEC } from './drive/slope';
 import { t as tr, type Locale, type MessageKey } from './gen/i18n';
 import { carIdValues, cityIdNames, cityIdValues, minigameCatalog, type CityId, type MinigameId } from './gen/ids';
 import { CarFleet } from './cars/fleet';
@@ -38,10 +41,19 @@ import { installDrift } from './minigames/drift';
 import { installSprint } from './minigames/sprint';
 import { installTravel } from './travel';
 import { installFastTravel } from './travel/fastTravel';
-import { cityUrl, pickStartCity, readLastCity, writeLastCity } from './travel/cities';
-import { HttpPackSource } from './world/citypack';
+import { cityUrl, pickStartCity, readLastCity, switchCity, writeLastCity } from './travel/cities';
+import { chunkPath, HttpPackSource } from './world/citypack';
+import { LoadProgress, ProgressSource } from './firstrun/progress';
+import { introStore, rememberIntro, shouldShowIntro, showIntro } from './firstrun/intro';
+import './firstrun/intro.css';
 import { City } from './world/model';
 import { ChunkStreamer } from './world/streaming';
+import { MapNatureSource } from './phone/mapNature';
+import { drawNatureLabels } from './render/natureLabels';
+import { treeHitSound } from './render/treeSound';
+import { readCameraMode, TwoFingerTap, writeCameraMode, type CameraMode } from './render/chase';
+import { registerPhoneApp } from './phone';
+import { h } from './minigames/dom';
 
 const params = new URLSearchParams(location.search);
 const locale: Locale = navigator.language.startsWith('cs') ? 'cs' : 'en';
@@ -124,7 +136,14 @@ async function main(): Promise<void> {
     HttpPackSource.open(ASSET_BASE_URL, cityId),
     artReady,
   ]);
-  const city = await City.load(source);
+  // Download progress in % until the first frame (specs/firstrun.md).
+  const progress = new LoadProgress((pct) => {
+    $('loading').textContent = t('loadingProgress', { city: cityIdNames[cityId], pct });
+  });
+  const loadSource = new ProgressSource(source.root, progress);
+  const city = await City.load(loadSource);
+  // ?flat (debug, A/B): drive and draw the pack without its heights (specs/terrain.md flat pack).
+  if (params.has('flat')) city.terrain.enabled = false;
   // The pack loaded: remember the city now, not only when leaving it (specs/cities.md).
   writeLastCity(cityId);
   backCity = null;
@@ -152,11 +171,17 @@ async function main(): Promise<void> {
   if (spot) drive.spawn(spot.parkX / 10, spot.parkY / 10, spot.parkHeading);
 
   const view = new WorldView(engine, city, tuning, drive);
+  view.setPackSource(source);
+  // Camera mode (specs/terrain.md "Upřesnění T2"): ?camera=, else the remembered choice, else top-down.
+  view.setCameraMode(readCameraMode(params.get('camera')));
   const peds = new PedestrianWorld(city, tuning);
   const pedView = new PedView(view.scene);
   const trafficView = drive.traffic ? new TrafficView(view.scene, drive.traffic, tuning) : null;
   // Trams (specs/trams.md): drive.trams exposes items, onHit and stops for police and dialogue.
   const tramView = drive.trams ? new TramView(view.scene, drive.trams, tuning) : null;
+  // Heights (specs/terrain.md): trams and pedestrians stand on the terrain or their bridge.
+  if (tramView) tramView.terrain = city.terrain;
+  pedView.terrain = city.terrain;
   // Police and wanted level (specs/police.md).
   const police = installPolice({ drive, cars: fleet, tuning, t, hud: $('hud'), scene: view.scene });
   // Vehicle ground shadows in the city skin's colour by day (specs/style.md).
@@ -166,7 +191,7 @@ async function main(): Promise<void> {
     police.setShadow(view.palette.shadow);
   };
   applyShadows();
-  const streamer = new ChunkStreamer(city, source, tuning, (c) => {
+  const streamer = new ChunkStreamer(city, loadSource, tuning, (c) => {
     drive.addChunk(c);
     fleet.addChunk(c);
     police.addChunk(c);
@@ -179,17 +204,25 @@ async function main(): Promise<void> {
   });
   // ?bench: the autopilot drives the route of specs/bench.md and reports the numbers.
   // A city without content/bench/<cityId>.json has no benchmark (specs/cities.md).
-  const benchRoute = params.has('bench')
-    ? await json<BenchRoute>(`content/bench/${cityId}.json`).catch((e: unknown) => {
-      console.warn(`no benchmark for ${cityId}`, e);
+  // ?route=<id> (bench v2): the route content/bench/<cityId>-<id>.json; the player starts on it with
+  // the navigation along it, with ?bench the autopilot drives it.
+  const routeId = params.get('route');
+  const benchRoute = params.has('bench') || routeId !== null
+    ? await json<BenchRoute>(`content/bench/${routeFile(cityId, routeId)}`).catch((e: unknown) => {
+      console.warn(`no route ${routeId ?? 'benchmark'} for ${cityId}`, e);
       return null;
     })
     : null;
-  const pilot = benchRoute ? new Autopilot(resolveRoute(city.graph, benchRoute), tuning) : null;
+  const routePath = benchRoute ? resolveRoute(city.graph, benchRoute) : null;
+  const pilot = routePath && params.has('bench') ? new Autopilot(routePath, tuning) : null;
   if (pilot) {
     pilot.start(drive);
     view.carChanged();
     drive.beforeStep = (step) => pilot.step(drive, drive.input, step);
+  } else if (routePath) {
+    const p = routePath.at(0);
+    drive.spawn(p.x, p.y, p.dir);
+    view.carChanged();
   }
   view.setFleet(fleet);
   // Car sprites (specs/art.md v2): one atlas set for the player, parked cars, traffic and patrols.
@@ -198,14 +231,28 @@ async function main(): Promise<void> {
     police.setSprites(view.sprites);
   }
   view.rig.snap(drive.car.x, drive.car.y, drive.car.heading, tuning);
-  // Own chunk and its ring first (3×3 = 9); the rest streams in while driving.
+  // Own chunk and its ring first (3×3 = 9); the rest streams in while driving. Their sizes join the
+  // download total from the manifest right away (specs/firstrun.md).
+  const sizes = new Map(city.manifest.chunks.map((c) => [chunkPath(c.x, c.y), c.bytes]));
+  for (const [cx, cy] of streamer.window.wanted(drive.car.x, drive.car.y, drive.car.heading).slice(0, 9)) {
+    const p = chunkPath(cx, cy);
+    progress.announce(p, sizes.get(p) ?? 0);
+  }
   await streamer.preload(drive.car.x, drive.car.y, drive.car.heading, 9);
+  progress.stop();
   $('loading').hidden = true;
   let firstFrameMs = 0;
   // In-game phone, feed, map and GPS navigation (specs/phone.md).
   const phone = installPhone({ city, drive, tuning, t, rig: view.rig, parent: document.body, buttons: $('buttons'), params,
+    mapNature: city.manifest.natureVersion > 0 ? new MapNatureSource(city, source) : null,
     discovered: () => new Set(passport.tracker.stamps.filter((s) => s.startsWith('landmark:')).map((s) => s.slice(9))) });
   const loadMs = performance.now() - tStart;
+  // ?route=: navigation along the route to its last crossing (specs/bench.md v2).
+  if (routeId !== null && routePath && benchRoute && routePath.edges.length > 0) {
+    const end = routePath.at(routePath.length), last = benchRoute.legs[benchRoute.legs.length - 1]!.to;
+    phone.followRoute({ id: `route:${benchRoute.id}`, name: last.b, edge: routePath.edges[routePath.edges.length - 1]!,
+      parkX: Math.round(end.x * 10), parkY: Math.round(end.y * 10) }, routePath.pts);
+  }
 
   // ---------- input
   let scheme: ControlScheme = createScheme((['a', 'b', 'c'].includes(params.get('scheme') ?? '') ? params.get('scheme') : 'a') as ControlSchemeId, tuning.controls);
@@ -236,16 +283,54 @@ async function main(): Promise<void> {
     view.rig.snap(drive.car.x, drive.car.y, drive.car.heading, tuning);
   });
 
+  // Camera switch (specs/terrain.md "Upřesnění T2"): HUD button, two-finger double tap, Settings app.
+  const cameraBtn = $('btn-camera');
+  const cameraLabel = (): void => {
+    const chase = view.cameraMode === 'chase';
+    cameraBtn.textContent = chase ? '◢' : '◎';
+    cameraBtn.title = t(chase ? 'cameraTopdown' : 'cameraChase');
+  };
+  const setCamera = (m: CameraMode): void => {
+    view.setCameraMode(m);
+    writeCameraMode(m);
+    cameraLabel();
+  };
+  const toggleCamera = (): void => setCamera(view.cameraMode === 'chase' ? 'topdown' : 'chase');
+  cameraLabel();
+  cameraBtn.addEventListener('click', toggleCamera);
+  registerPhoneApp('settings', (host) => {
+    const modes = ['topdown', 'chase'] as const;
+    const label = (m: CameraMode): string => `${view.cameraMode === m ? '✓ ' : ''}${t(m === 'chase' ? 'cameraChase' : 'cameraTopdown')}`;
+    const names = modes.map((m) => h('span.travel-name', {}, label(m)));
+    const rows = modes.map((m, i) => h('button.travel-row', { type: 'button', onclick: () => {
+      setCamera(m);
+      modes.forEach((k, j) => (names[j]!.textContent = label(k)));
+    } }, names[i]!));
+    host.append(h('div.taxi-app', {}, ...rows));
+    return () => {};
+  });
+
   const size = { w: 1, h: 1 };
   const pt = (e: PointerEvent): { x: number; y: number } => ({ x: e.clientX, y: e.clientY });
+  const taps = new TwoFingerTap();
   canvas.addEventListener('pointerdown', (e) => {
     canvas.setPointerCapture(e.pointerId);
     scheme.down(e.pointerId, pt(e), size.w, size.h);
+    if (e.pointerType === 'touch') taps.pointerDown(e.pointerId, e.clientX, e.clientY, e.timeStamp / 1000);
   });
-  canvas.addEventListener('pointermove', (e) => scheme.move(e.pointerId, pt(e), size.w, size.h));
-  const up = (e: PointerEvent): void => scheme.up(e.pointerId);
+  canvas.addEventListener('pointermove', (e) => {
+    scheme.move(e.pointerId, pt(e), size.w, size.h);
+    taps.pointerMove(e.pointerId, e.clientX, e.clientY);
+  });
+  const up = (e: PointerEvent): void => {
+    scheme.up(e.pointerId);
+    if (taps.pointerUp(e.pointerId, e.timeStamp / 1000)) toggleCamera();
+  };
   canvas.addEventListener('pointerup', up);
-  canvas.addEventListener('pointercancel', up);
+  canvas.addEventListener('pointercancel', (e) => {
+    scheme.up(e.pointerId);
+    taps.cancel(e.pointerId);
+  });
   canvas.addEventListener('contextmenu', (e) => e.preventDefault());
   const keys = new Set<string>();
   window.addEventListener('keydown', (e) => {
@@ -270,6 +355,7 @@ async function main(): Promise<void> {
 
   // Car name, "Přesednout" / garage button and the garage list (specs/cars.md).
   const carsHud = new CarsHud(fleet, t, $('hud'), () => view.carChanged());
+  carsHud.toast = (text) => phone.toast(text);
   // "Skok" over traffic (specs/hop.md): HUD button and key J.
   const hopHud = new HopHud(drive, t, $('hud'), tuning.nav.toastS);
   window.addEventListener('keydown', (e) => {
@@ -299,6 +385,8 @@ async function main(): Promise<void> {
       },
     },
   });
+  // No test drive during a world minigame (specs/testdrive.md "Pořadí").
+  carsHud.blockTest = () => loop.inWorldGame;
   // Taxi: a world minigame started by the loop at the taxi stand (specs/minigames/taxi.md).
   const taxi = installTaxi({ city, tuning, t, drive, fleet, phone, rig: view.rig, cars, hud: $('hud'), onCarChanged: () => view.carChanged() });
   loop.worldGames.taxi = taxi;
@@ -322,10 +410,32 @@ async function main(): Promise<void> {
     city, tuning, locale, t, drive, fleet, phone, loop, carsHud, npcPack, hud: $('hud'), rig: view.rig,
   });
   // Tuning and looks (specs/garage.md): after the shops (the shelf tab); rebuilds the car from its upgrades.
-  const garage = installGarage({ tuning, t, fleet, carsHud, loop, view, shops });
+  const garage = installGarage({ tuning, t, fleet, carsHud, loop, view, shops, phone });
   // Weather (specs/weather.md): random seed per start, starts clear; ?weather= sets a kind.
   const weather = installWeather({ cityId, tuning, t, drive, view, hud: $('hud'), params });
   installTravel({ cityId, tuning, t, phone, tracker: passport.tracker, store: loop.store, save: () => loop.save(), onSwitch: () => booths.clear() });
+  // First run intro card (specs/firstrun.md): controls and the city choice, once per device.
+  const store = introStore();
+  if (shouldShowIntro(params, store)) {
+    const release = overlays.open('intro');
+    showIntro({
+      parent: document.body, t, cities: cityIdValues, names: cityIdNames, current: cityId,
+      onClose: (target) => {
+        rememberIntro(store);
+        release();
+        if (target) void switchCity(target, { save: () => loop.save(), navigate: (url) => location.assign(url), href: location.href });
+      },
+    });
+  }
+  // Boost hint (specs/controls.md v2): a toast for the active scheme until the player boosts.
+  const boostHint = new BoostHint(tuning.controls, readBoostHint(store));
+  const finePointer = ((): boolean => {
+    try {
+      return window.matchMedia('(pointer: fine)').matches;
+    } catch {
+      return false;
+    }
+  })();
   // Fast travel by metro and taxi (specs/travel.md): stations unlock by passing, the move resets
   // traffic, patrols and pedestrians like a teleport.
   const fastTravel = installFastTravel({
@@ -341,6 +451,17 @@ async function main(): Promise<void> {
     debug: import.meta.env.DEV || params.has('debug'),
     onMoved: () => view.rig.snap(drive.car.x, drive.car.y, drive.car.heading, tuning),
   });
+  // Water fall (specs/nature.md "Voda"): the sunk car is towed to the nearest road for a fee; a
+  // world minigame or taxi shift in progress ends as cancelled.
+  drive.onSunk = () => {
+    for (const g of [taxi, drift, sprint]) g.quit();
+    const paid = loop.book.tow();
+    void loop.save();
+    phone.toast(t('natureTow', { fee: paid.amount }));
+    view.carChanged();
+    view.rig.snap(drive.car.x, drive.car.y, drive.car.heading, tuning);
+  };
+  view.nature.onHit = (size) => treeHitSound(size);
   // Police fines take cash through the economy (specs/economy.md).
   police.police.onFined((e) => loop.fine(e.amount));
 
@@ -374,6 +495,13 @@ async function main(): Promise<void> {
     // Ticks with the game clock; the grip multiplier goes into this frame's drive step.
     weather.update(stepDt, dt);
     drive.update(stepDt);
+    if (!pilot) {
+      const ev = boostHint.step(stepDt, drive.car.speed, drive.input.boost);
+      if (ev) writeBoostHint(store, boostHint.shown);
+      if (ev === 'show') phone.toast(t(boostHintKey(scheme.id, finePointer)));
+    }
+    // Test drive countdown in game time (specs/testdrive.md "Odpočet").
+    carsHud.tick(stepDt);
     police.update(stepDt, dt);
     phone.update(dt);
     taxi.update(stepDt);
@@ -383,7 +511,10 @@ async function main(): Promise<void> {
     shops.update(stepDt, dt);
     const c = drive.car;
     // The Camera glides the rig to its framing view and back (specs/photo.md); otherwise it follows.
-    if (!photo.camera(dt)) view.rig.follow(c.x, c.y, c.heading, c.speed, dt, tuning, c.forwardSpeed < -0.5);
+    const framing = photo.camera(dt);
+    // The framing view is a map from above: the chase camera waits until it ends.
+    view.chaseSuspended = framing;
+    if (!framing) view.rig.follow(c.x, c.y, c.heading, c.speed, dt, tuning, c.forwardSpeed < -0.5);
     streamer.update(c.x, c.y, c.heading, now);
     peds.update(stepDt, [carPose(c)], view.rig.visibleRadius(size.w, size.h, tuning), night);
     pedView.update(peds);
@@ -413,7 +544,7 @@ async function main(): Promise<void> {
     }
   });
 
-  const streetEl = $('street'), speedEl = $('speed'), perfEl = $('perf'), noticeEl = $('notice');
+  const streetEl = $('street'), speedEl = $('speed'), perfEl = $('perf'), noticeEl = $('notice'), terrainEl = $('terrain');
   noticeEl.textContent = t('borderNotice');
   function hud(): void {
     booths.hud();
@@ -428,11 +559,14 @@ async function main(): Promise<void> {
     const edge = drive.layers.edge;
     const street = edge?.name ? edge.name : t('unnamedRoad');
     const tag = c.layer > 0 ? ` · ${t('bridgeTag')}` : c.layer < 0 ? ` · ${t('tunnelTag')}` : '';
-    const district = city.districtAt(c.x, c.y);
+    // Inside a named park the park replaces the district (specs/nature.md "Vykreslení shora").
+    const park = c.layer === 0 ? drive.nature.parkAt(c.x, c.y) : '';
+    const district = park || city.districtAt(c.x, c.y);
     streetEl.textContent = [street + tag, district].filter(Boolean).join('  ·  ');
     speedEl.textContent = city.imperial
       ? t('speedMph', { speed: Math.round(c.speed * 2.23694) })
       : t('speedKmh', { speed: Math.round(c.speed * 3.6) });
+    terrainHud();
     const s = view.stats;
     // Stuck count of the last 10 minutes of driving (specs/flow.md "Měření zaseknutí").
     const stuck = flow.stuckLine();
@@ -446,6 +580,24 @@ async function main(): Promise<void> {
     noticeEl.hidden = !(d !== null && d < tuning.hud.borderNoticeM);
     if (!pilot) passport.update(c.x, c.y);
     loop.update(0.1);
+  }
+
+  /**
+   * Relief HUD (specs/terrain.md "Nápovědy reliéfu shora"): the grade along the direction of
+   * travel in % (rounded, only above 2 %) and the approximate elevation z0 + z / exaggeration.
+   */
+  function terrainHud(): void {
+    const ter = city.terrain;
+    terrainEl.hidden = !ter.enabled;
+    if (!ter.enabled) return;
+    const c = drive.car, v = c.body.getLinearVelocity();
+    const sp = Math.hypot(v.x, v.y);
+    const dx = sp > 0.5 ? v.x / sp : Math.cos(c.heading), dy = sp > 0.5 ? v.y / sp : Math.sin(c.heading);
+    const grade = drive.grad.x * dx + drive.grad.y * dy;
+    const parts: string[] = [];
+    if (Math.abs(grade) > TERRAIN_SPEC.hudMinGrade) parts.push(t('terrainGrade', { pct: Math.round(grade * 100) }));
+    parts.push(t('terrainAltitude', { m: Math.round(ter.altitude(drive.jump.z - drive.jump.gap)) }));
+    terrainEl.textContent = parts.join('  ·  ');
   }
 
   // ---------- benchmark (specs/bench.md)
@@ -499,6 +651,7 @@ async function main(): Promise<void> {
   function drawOverlay(): void {
     ctx.clearRect(0, 0, size.w, size.h);
     const c = drive.car, h = tuning.hud, rig = view.rig;
+    drawNatureLabels(ctx, drive.nature, rig, size, tuning);
     if (c.speed <= h.streetLabelsBelowMps) {
       const hits = city.graph
         .near(c.x, c.y, h.streetLabelRadiusM)
@@ -555,6 +708,7 @@ async function main(): Promise<void> {
       ctx.fillStyle = tokens.colorUiControlHalf;
       if (scheme.leftHeld) ctx.fillRect(0, h * 0.6, w / 2, h * 0.4);
       if (scheme.rightHeld) ctx.fillRect(w / 2, h * 0.6, w / 2, h * 0.4);
+      boostButton(SchemeB.boostButton(w, h), scheme.boostHeld);
     } else if (scheme instanceof SchemeC) {
       const ctr = SchemeC.wheelCentre(w, h), r = SchemeC.wheelRadius(w);
       ctx.strokeStyle = tokens.colorUiControlWheel;
@@ -579,17 +733,45 @@ async function main(): Promise<void> {
       };
       rr(SchemeC.pedal(w, h), scheme.brakeHeld ? tokens.colorUiControlBrake : tokens.colorUiControlHint);
       rr(SchemeC.handButton(w, h), scheme.handHeld ? tokens.colorUiControlHand : tokens.colorUiControlHint);
+      boostButton(SchemeC.boostButton(w, h), scheme.boostHeld);
     }
+  }
+
+  /** The Boost button of schemes B and C (specs/controls.md v2): a rounded pad with its label. */
+  function boostButton(s: { left: number; top: number; width: number; height: number }, held: boolean): void {
+    ctx.fillStyle = held ? tokens.colorUiControlBoost : tokens.colorUiControlHint;
+    ctx.beginPath();
+    ctx.roundRect(s.left, s.top, s.width, s.height, 10);
+    ctx.fill();
+    ctx.fillStyle = tokens.colorUiText;
+    ctx.font = `600 ${Math.round(Math.min(s.width * 0.22, 18))}px system-ui, sans-serif`;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(t('boostButton'), s.left + s.width / 2, s.top + s.height / 2);
   }
 
   // WebGL context loss (DUALSTACK 6.3): Babylon restores GPU resources itself; keep the loop alive.
   engine.onContextLostObservable.add(() => console.warn('WebGL context lost'));
   engine.onContextRestoredObservable.add(() => console.warn('WebGL context restored'));
 
+  if (params.has('debug')) {
+    // Hill tuning (specs/bench.md v2 "Ladění kopců"): live sliders over the client-side keys.
+    const hp = hillPanel(tuning, { title: t('debugPanel'), copy: t('copyYaml'), copied: t('copied') });
+    $('buttons').append(hp.button);
+    document.body.append(hp.panel);
+  }
   if (import.meta.env.DEV || params.has('debug')) {
     (window as unknown as Record<string, unknown>)['metro'] = {
       engine, view, drive, fleet, city, tuning, frameTimes, pilot, bench, peds, phone, passport, loop, taxi, drift, sprint, police: police.police, booths, fastTravel, photo, shops, weather, garage, carsHud, flow,
       timing: () => ({ firstFrameMs, loadMs }),
+      setCamera,
+      /** Debug teleport: puts the car at (x, y) heading h (radians) and snaps the camera. */
+      teleport: async (x: number, y: number, h = 0) => {
+        drive.spawn(x, y, h);
+        view.carChanged();
+        view.rig.snap(x, y, h, tuning);
+        await streamer.preload(x, y, h, 9);
+      },
     };
   }
 }

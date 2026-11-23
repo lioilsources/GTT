@@ -1,6 +1,6 @@
 # Herní telefon, mapa a navigace
 
-**version: 4** · P2 · plán: METROPOLE_PLAN 8, M1 body 1 a 7 · navazuje na `specs/feed.md`, `specs/route.md`
+**version: 5** · P2 · plán: METROPOLE_PLAN 8, M1 body 1 a 7 · navazuje na `specs/feed.md`, `specs/route.md`
 
 ## Účel
 
@@ -27,9 +27,41 @@ lomená čára trasy, postup po ní, formát vzdálenosti, šipka na okraji) maj
 - Karta přes celou obrazovku telefonu: portrét hostitele (busta z `specs/art.md`, bez grafiky zástupná
   silueta s jemným pohybem), zvací věta `feedHost1..6`, štítky: typ hry (`engine_<id>`), místo a čtvrť,
   vzdálenost a čas jízdy, odměna, obtížnost; u místní hry štítek `feedLocal`.
-- Gesta (práh `phone.swipe_px`): tah nahoru = `next`, tah vpravo nebo „Jedu“ = `accept`,
-  dvojité klepnutí (do `phone.double_tap_ms`) = `like`, tah vlevo = `less`. Akce jdou přes pravidla
-  `specs/feed.md`; UI jen kreslí stav.
+- Akce jdou přes pravidla `specs/feed.md`; UI jen kreslí stav a gesta překládá na akce:
+  tah nahoru = `next`, tah dolů = `prev` (v5), tah vpravo nebo tlačítko „Jedu“ = `accept`,
+  tah vlevo = `less`, dvojité klepnutí (do `phone.double_tap_ms`) = `like`.
+
+### Gesta karty (v5, jako TikTok)
+
+Karty tvoří svislý pás stránek výšky `H` (výška plochy feedu): předchozí karta (`at − 1`) leží
+přímo nad aktuální, další (`at + 1`) přímo pod ní; za poslední kartou je jako další stránka
+obrazovka `feedDone`. Vykreslené jsou jen tyto tři sousední stránky (ostatní ne); tah mění jen
+transformace (posun, natočení, průhlednost), bez nového rozvržení, aby běžel v 60 fps.
+
+- **Zámek osy**: dokud se prst od místa dotyku nepohne o `phone.feed_axis_lock_px` (v kterékoli
+  ose), nic se nehýbe. Pak se osa zamkne podle větší složky (`|dy| ≥ |dx|` → svislá, jinak
+  vodorovná) a do puštění se nemění; druhá složka se ignoruje.
+- **Rychlost** puštění = posun prstu v zamčené ose za posledních `phone.feed_velocity_ms` tahu
+  (nejstarší bod v tom okně až poslední), v px/s.
+- **Svislý tah**: pás sleduje prst 1:1 (posun = `dy`), takže uprostřed tahu je vidět kus
+  aktuální i sousední karty. Není-li stránka ve směru tahu (dolů na první kartě; dolů i nahoru
+  na `feedDone`, protože po `over` žádná akce není), posun je `dy × phone.feed_rubber` (guma).
+- **Puštění svisle**: když sousední stránka ve směru tahu existuje a buď
+  `|dy| > H × phone.feed_commit_pct ÷ 100`, nebo rychlost ve směru tahu `> phone.feed_flick_px_s`,
+  pás dojede o celou stránku (`−H` = `next`, `+H` = `prev`) a teprve pak se akce pošle pravidlům
+  a pás se bez skoku přecentruje na novou aktuální kartu. Jinak (i u gumy) se vrátí na 0.
+  Dojezd i návrat trvají `phone.feed_snap_ms` s křivkou ease-out (kubická, bez překmitu);
+  rychlé puštění dojíždí ze současné polohy, ne od nuly.
+- **Vodorovný tah**: karta sleduje prst 1:1 (`dx`) a natáčí se kolem středu spodní hrany o
+  `phone.feed_tilt_deg × dx ÷ W` stupňů (`W` = šířka plochy; po směru tahu). Nápověda akce se
+  rozsvěcuje s průhledností `min(1, |dx| ÷ phone.swipe_px)`: vpravo `feedGo`, vlevo `feedLess`.
+- **Puštění vodorovně**: `|dx| > phone.swipe_px` nebo rychlost `> phone.feed_flick_px_s` ve
+  směru tahu → karta odletí za okraj (`phone.feed_snap_ms`, ease-out) a pak `accept` (vpravo)
+  nebo `less` (vlevo). `like` předem nevadí. Jinak se karta vrátí na místo (stejná křivka).
+- **Klepnutí**: dotyk puštěný před zámkem osy je klepnutí; dvě do `phone.double_tap_ms` = `like`
+  (srdíčko zůstává na kartě i po návratu přes `prev`). Tlačítko „Jedu“ gesta nezačíná.
+- Během dojezdu se nový tah nezačne (dotyk se ignoruje), dvě akce se tak nikdy nesejdou.
+
 - Po balíčku obrazovka `feedDone` (viz `specs/feed.md` „Po balíčku“).
 - `accept` zavře telefon a spustí navigaci ke spotu karty.
 
@@ -84,4 +116,11 @@ parkovacího bodu je před autem), čára vede rovnou po hraně.
 
 ## Ladění
 
-- W: `?goto=<spotId>` spustí po načtení navigaci ke spotu; `?feedSeed=<n>` dá prvnímu balíčku seed.
+- W: `?goto=<spotId>` spustí po načtení navigaci ke spotu; `?feedSeed=<n>` dá prvnímu balíčku seed;
+  `?route=<id>` vede navigaci po pevné trase z `content/bench/` (`specs/bench.md` v2).
+
+## Verze
+
+- 5 – Feed jako TikTok: karta sleduje prst, sousední karty nad a pod ní, `prev` (`specs/feed.md` v2),
+  zámek osy, guma na koncích, odlet do stran s náklonem a nápovědou.
+- 4 – Taxi v mřížce aplikací (`specs/travel.md`).

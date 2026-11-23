@@ -2,6 +2,7 @@ import type { Spots } from '../gen/pb/citypack_pb';
 import { tokens } from '../gen/tokens';
 import type { TuningPhone } from '../gen/tuning';
 import type { RoadGraph } from '../world/model';
+import type { MapNatureSource } from './mapNature';
 
 /** The Map app (specs/phone.md "Mapa"): north-up overview of kept roads, spots, player and route. */
 export interface MapViewEnv {
@@ -15,7 +16,12 @@ export interface MapViewEnv {
   target: () => string | null;
   /** Extra points (metres, colour) drawn over the spots, e.g. a ringing booth (specs/booths.md). */
   extra?: () => Array<{ x: number; y: number; color: string }>;
+  /** Water, parks and their names (specs/nature.md "mapa v telefonu"); absent without nature. */
+  nature?: MapNatureSource | null;
 }
+
+/** Label sizes on the map by area (presentation): big bodies get the bigger font. */
+const LABEL_PX = [[1_000_000, 12], [100_000, 11], [0, 10]] as const;
 
 /** Fits the bounds of a ring into w × h with padding; north up. */
 export function mapFit(ring: ArrayLike<number>, w: number, h: number, pad: number): { s: number; ox: number; oy: number } {
@@ -40,11 +46,16 @@ export function mountMap(host: HTMLElement, env: MapViewEnv): () => void {
   let roads: Path2D | null = null;
   let fit = { s: 1, ox: 0, oy: 0 };
   let w = 0, hgt = 0;
+  // The nature fill layer is drawn once per layout and data version into its own canvas.
+  const fill = document.createElement('canvas');
+  let fillVersion = -1;
+  env.nature?.start();
 
   const layout = (): void => {
     const r = canvas.getBoundingClientRect();
     const dpr = Math.min(window.devicePixelRatio || 1, 3);
     if (r.width === w && r.height === hgt) return;
+    fillVersion = -1;
     w = r.width;
     hgt = r.height;
     canvas.width = Math.max(1, Math.round(w * dpr));
@@ -65,10 +76,81 @@ export function mountMap(host: HTMLElement, env: MapViewEnv): () => void {
   const sx = (x: number): number => x * fit.s + fit.ox;
   const sy = (y: number): number => -y * fit.s + fit.oy;
 
+  const natureFill = (): void => {
+    const n = env.nature?.data;
+    if (!n || n.version === fillVersion) return;
+    fillVersion = n.version;
+    fill.width = canvas.width;
+    fill.height = canvas.height;
+    const f = fill.getContext('2d')!;
+    f.setTransform(canvas.width / Math.max(w, 1), 0, 0, canvas.height / Math.max(hgt, 1), 0, 0);
+    const masses = (list: typeof n.wood, col: string): void => {
+      f.fillStyle = col;
+      const p = new Path2D();
+      for (const m of list) {
+        let start = 0;
+        for (const end of m.ends) {
+          for (let i = start; i < end; i++) {
+            const x = sx(m.xy[2 * i]!), y = sy(m.xy[2 * i + 1]!);
+            if (i === start) p.moveTo(x, y);
+            else p.lineTo(x, y);
+          }
+          p.closePath();
+          start = end;
+        }
+      }
+      f.fill(p, 'evenodd');
+    };
+    masses(n.park, tokens.colorGreenParkland);
+    masses(n.wood, tokens.colorGreenWood);
+    f.fillStyle = f.strokeStyle = tokens.colorWaterRiver;
+    f.lineWidth = 0.6;
+    const p = new Path2D();
+    for (const t of n.water) {
+      for (let i = 0; i + 5 < t.length; i += 6) {
+        p.moveTo(sx(t[i]!), sy(t[i + 1]!));
+        p.lineTo(sx(t[i + 2]!), sy(t[i + 3]!));
+        p.lineTo(sx(t[i + 4]!), sy(t[i + 5]!));
+        p.closePath();
+      }
+    }
+    f.fill(p);
+    // A thin stroke closes the hairline gaps between triangles.
+    f.stroke(p);
+  };
+
+  /** Names by area, biggest first; a name that would overlap one already drawn is skipped. */
+  const natureLabels = (): void => {
+    const n = env.nature?.data;
+    if (!n || n.labels.length === 0) return;
+    const boxes: Array<[number, number, number, number]> = [];
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    for (const l of n.labels) {
+      const x = sx(l.x), y = sy(l.y);
+      if (x < 0 || y < 0 || x > w || y > hgt) continue;
+      const px = LABEL_PX.find(([a]) => l.area >= a)![1];
+      ctx.font = `${l.water ? 'italic ' : ''}600 ${px}px system-ui, sans-serif`;
+      const tw = ctx.measureText(l.name).width / 2 + 2, th = px / 2 + 1;
+      if (x - tw < 0 || x + tw > w) continue;
+      if (boxes.some(([x0, y0, x1, y1]) => x + tw > x0 && x - tw < x1 && y + th > y0 && y - th < y1)) continue;
+      boxes.push([x - tw, y - th, x + tw, y + th]);
+      ctx.fillStyle = l.water ? tokens.colorWaterLine : tokens.colorGreenWood;
+      ctx.fillText(l.name, x, y);
+    }
+  };
+
   const draw = (): void => {
     layout();
     ctx.fillStyle = tokens.colorPhoneMapLand;
     ctx.fillRect(0, 0, w, hgt);
+    if (env.nature) {
+      natureFill();
+      ctx.save();
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
+      ctx.drawImage(fill, 0, 0);
+      ctx.restore();
+    }
     ctx.strokeStyle = tokens.colorPhoneMapRoad;
     ctx.lineWidth = 1;
     if (roads) ctx.stroke(roads);
@@ -84,6 +166,7 @@ export function mountMap(host: HTMLElement, env: MapViewEnv): () => void {
       }
       ctx.stroke();
     }
+    natureLabels();
     const target = env.target();
     for (const s of env.spots.items) {
       // Only a ringing booth shows, as an extra point; photo spots are extra points in their colour.

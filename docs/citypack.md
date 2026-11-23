@@ -19,12 +19,90 @@ Cache nesleduje změny konfigurace: po úpravě `city.yaml`, `tuning.yaml` (ší
 | `widen` | budovy − koridory silnic | Šířka = pruhy × `lane_width_m` + 2 × `sidewalk_width_m`, uličky 1,5 × pruh. Jen silnice ve vrstvě 0 (tunely vedou pod budovami, estakády nad nimi). |
 | `buildings` | → `buildings.jsonl` | Výška: `height` → `num_floors` × 3,2 → `default_height_m`. Zjednodušení 1,5 m, sloučení sousedů ve stejném výškovém pásmu (DBSCAN 0,5 m). Památky a části budov (`building_part`) se neslučují; části památky se přeškálují na ruční výšku. |
 | `ground` | voda, parky, náměstí, kolejiště → `ground.jsonl` | Sjednocení po druhu, ořez oblastí a mřížkou chunků. |
+| `alleys` | uličky + budovy → `alleys.json`, `alley_probes.csv` | FL0 (`specs/flow.md`): ulička užší než `flow.gap_close_m` je `micro_only` (jen mikro vozidla) a dostane na oba konce sloupky (`Chunk.barriers`). |
+| `nature` | voda, `land_use`, `land_cover` → `nature_water.jsonl`, `nature_green.jsonl`, `nature_shore.jsonl`, `nature_names.jsonl` | N0 (`specs/nature.md`): třída vody a zeleně, povrch, jméno; nepojmenované kusy řeky a moře převezmou jméno nejbližší pojmenované vodní linie (`nature.pipeline.water_name_search_m`), velké parky bez vnitřních ploch se dělí podle `land_cover`; mělčina podél břehu. `city.yaml` `water_class_by_name` přebije třídu podle jména (NYC: Upper New York Bay = moře). |
+| `trees` | inventář stromů, OSM `natural=tree`/`tree_row`, parky → `nature_trees.json` | Stromy podél ulic se přichytí na chodník (`street_tree_snap_m`), v parcích a lesích Poissonův disk; nikdy na vozovce (silnice na terénu, i zapuštěné bez příznaku tunelu), v budově ani ve vodě; nejvýš `nature.trees_per_chunk_max` na chunk. `city.yaml` `tree_inventory` (URL CSV, sloupce, atribuce). |
+| `elevation` | DEM → `elevation.json`, `graph_z.pb`, `terrain.bin` | T0 (`specs/terrain.md`): dem → clean → profile → pins → exaggerate → grade_clamp → conform → shade, viz níže. Bez `elevation_sources` zůstane balíček plochý. |
 | `zones` | pěší segmenty a náměstí − koridory silnic → `zones_ground.jsonl`, `zones_barriers.jsonl` | Pěší zóny a sloupky (`specs/zones.md`): pásy `zones.street_width_m` kolem segmentů `pedestrian` a pěší náměstí, které protínají, bez koridorů silnic (+ `zones.gap_margin_m`). Hranice zóny bez hranice oblasti = zábrana (`Chunk.barriers`). |
 | `trams` | segmenty `rail`/`tram` → `trams.pb` | Koleje jako vlastní obousměrný graf (rozdělení v konektorech, ořez oblastí, největší komponenta, bez slepých vleček kratších než `trams.min_track_m`). Zastávky se generují po úsecích mezi výhybkami (`specs/trams.md`). Město bez tramvají má prázdný graf. |
 | `landmarks`, `spots` | YAML → `landmarks.pb`, `spots.pb` | Památka = nejbližší budova do 40 m od bodu (nebo `overture_id`). Spoty se přichytí na nejbližší ponechanou silnici. |
 | `pack` | → `app/assets/cities/<city>/` | `manifest.pb`, `graph.pb`, `chunks/{x}_{y}.pb`, `landmarks.pb`, `spots.pb`; vše gzip protobuf, souřadnice v decimetrech. Střechy a země předtriangulované (earcut). Deterministický: kanonické prstence, úplné řazení, bez času buildu – stejný vstup dá stejné bajty. |
-| `validate` | hotový balíček | Souvislý graf, mosty a tunely napojené na obou koncích, trasa ze startu ke každému spotu (po ponechaných silnicích, s jednosměrkami), žádná budova na ose silnice, žádné sloupky přes osu silnice, limit velikosti chunku, každá hero památka má budovu. |
-| `preview` | → `preview/{city.png,index.html}` | Přehledka a porovnání s OSM. |
+| `validate` | hotový balíček | Souvislý graf, mosty a tunely napojené na obou koncích, trasa ze startu ke každému spotu (po ponechaných silnicích, s jednosměrkami), žádná budova na ose silnice, žádné sloupky přes osu silnice, limit velikosti chunku, každá hero památka má budovu. S terénem navíc: výšky uzlů a konců hran souhlasí, žádná hrana (mimo `stairs`) nad `terrain.max_grade` (tolerance clampu se počítá na každý úsek profilu), int16 bez saturace, mosty nad vodou a silnicí aspoň `terrain.pipeline.bridge_min_clear_m` (pod plnou světlostí `terrain.bridge.clear_*` jen varování; u nájezdu mostu, blíž než `clear_road_m / bridge.max_grade` od místa, kde most dosedá, jen varování), okraj silnice na terénu do `road_gap_max_m` u aspoň 1 − `road_gap_share` vzorků (vzorek, kde je do úhlopříčky mřížky jiná silnice v jiné výšce, se nepočítá: conform dá bod mřížky nejbližší silnici). S přírodou: stromy mimo vozovku, budovy a vodu, limit stromů na chunk, velká voda má jméno. |
+| `lod` | `terrain.bin` + budovy + zeleň → `lod/{x}_{y}.pb` | Vzdálený prstenec: terén po `terrain.lod.grid_m`, budovy sloučené po blocích, les a park jako hmoty, voda jedním povrchem; dlaždice = `terrain.lod.chunks`² chunků. |
+| `preview` | → `preview/{city.png,index.html}`, s terénem `<city>_relief.png` a `steepest.json`, s přírodou `<city>_nature.png` | Přehledka a porovnání s OSM. Reliéf: stínování (pole `shade`) přes barvu výšky, ponechané silnice, 10 nejprudších pojmenovaných ulic (skutečný sklon = herní / `exaggeration`, na úseku aspoň 60 m). Příroda: třídy vody a zeleně, mělčina, stromy, popisky. |
+
+## Terén (M5, `specs/terrain.md`)
+
+`city.yaml`: `elevation_sources` (pořadí = priorita): `local` čte první `content/cities/<id>/dem/*.asc`
+(ESRI ASCII grid ve WGS84, postup v `dem/README.md`; adresář je mimo git), `terrain_tiles` stáhne
+AWS Terrain Tiles (Terrarium PNG, zoom `terrain.pipeline.dem_zoom`) do `run/citypack/<city>/tiles/`.
+`elevation_is_bare_earth: false` = povrchový model: `clean` vyřízne budovy a vyhladí
+(`clean_sigma_m`, u hrubého zdroje `clean_sigma_coarse_m`). Kód dlaždic je port z
+MountainsSimulator/terrain-fetch (`internal/dem/`).
+
+- **profile**: výška hran zhuštěných po `profile_step_m`, vyhlazená po trase (`profile_window_m`:
+  `lidar` pro lokální mřížku, `coarse` pro dlaždice). Zapuštěná silnice bez příznaku tunelu (příčné
+  ulice Central Parku) jede po terénu.
+- **pins**: mosty mají dolní mez (voda + `bridge.clear_water_m`, silnice + `clear_road_m`,
+  ikonické mosty `landmarks.yaml` `deck_height_m`), tunely horní (`tunnel.depth_*`); obě omezené
+  tím, kam se z konců stavby dá dojet sklonem `bridge`/`tunnel.max_grade`.
+- **grade_clamp**: sklony hran na `terrain.max_grade` podle třídy. Meze, které se navzájem
+  vylučují, povolí dřív, než ze silnice udělají schody: nejdřív meze na koncích porušeného úseku,
+  pak aktivní meze do `(clear_road_m + depth_land_m) / bridge.max_grade` po síti (portál tunelu
+  a nájezd estakády spojené krátkou ulicí, Mrázovka u Radlické).
+  Po clampu **fairing** (`profile_fair_passes`): pila rovina–max. sklon–rovina na strmých
+  kopcích se vyhladí k průměru sousedů (v mezích) a clamp proběhne znovu.
+- **conform**: terén řídí jen pozemní hrany (ne most ani tunel, vrstva 0 na obou koncích; mosty
+  Overture ve vrstvě 0 jako Mánesův most se neberou). Bod mřížky do úhlopříčky buňky od vozovky
+  nese výšku silnice; o sdílený bod vyhraje ponechaná silnice, pak nejbližší, pak vyšší. Pak
+  **fit** (`conform_fit`): vzorky po 2 m po vozovce opraví rohy svých buněk (Kaczmarz), jen kde
+  celá buňka patří téže hraně. Dál přechod `blend_m` k terénu; ve vodě dno (hladina −
+  `underwater_m`), jen body pásu silnice na břehu drží její výšku. Voda se pozná podle týchž
+  trojúhelníků, které kreslí balíček; kde se potkají dvě vodní tělesa, platí nižší hladina.
+- **shade**: Horn, sklony násobené `shade_strength` (jen kanál `shade`).
+- Podzemní vodní toky (Overture `level` < 0 nebo `tunnel=*`, Rudolfova štola pod Letnou) do
+  vody ani do jmen nepatří.
+- Mosty, nájezdy a estakády (každá netunelová hrana mimo terén, i most Overture ve vrstvě 0:
+  Praha 53, NYC 61): v jejich půdorysu + `nature.pipeline.deck_tree_margin_m` neroste strom;
+  validate hlídá 0 stromů v půdorysu a spojitou výšku desky (konec hrany = výška uzlu, skok
+  uvnitř hrany ≤ 0,05 m).
+- T3b: uzel, kde ponechaná silnice na konstrukci potká jen vedlejší silnice na zemi, zůstává na
+  konstrukci; hrany na konstrukci u obou konců mají sklon mostu (Nuselský most: nájezdy 0,20 →
+  0,08, deska neklesá na svah). Pozemní hrana, která z uzlu mostu pokračuje ve vzduchu nad
+  conformovaným terénem (`elevated_flag`), je most (NYC West 38th Street, 2 hrany); profil a
+  conform pak běží znovu. Terén do poloviny šířky silnice + `trench.margin_m` nese výšku silnice
+  (validate: nad silnicí ≤ `trench.max_m` až na `trench.share` vzorků).
+- Sloupky (zóny i uličky) se v kroku `pack` ořežou o vozovky ponechaných silnic a půdorysy mostů a
+  nájezdů (Čechův a Jiráskův most); validate jich tam chce 0. Stromy v půdorysu desky, kterou
+  označil až krok `elevation`, `pack` vypustí.
+- Hrana nad vodou aspoň `bridge_over_water_m` v kuse, napojená na obou koncích, je most i bez
+  příznaku (NYC: 2 hrany); slepá hrana nad vodou (molo) zůstane silnicí.
+
+Zdroje: NYC AWS Terrain Tiles (USGS 3DEP, veřejné dílo; NYC 1 ft DEM má neověřenou licenci).
+Praha zatím také AWS Terrain Tiles (EU-DEM/SRTM, ~25 m, povrchový model): ČÚZK DMR 4G i 5G jsou
+jen LAZ v S-JTSK (ATOM `atom.cuzk.gov.cz/DMR4G-SJTSK`), převod na mřížku potřebuje PDAL/GDAL
+(`content/cities/prague/dem/README.md`). Po převodu stačí `elevation_sources: [local]` a
+`elevation_is_bare_earth: true`.
+
+## Terén a příroda v číslech (M5, 2026-11-23)
+
+| | New York | Praha |
+|---|---|---|
+| zdroj výšek | AWS Terrain Tiles (3DEP) | AWS Terrain Tiles (EU-DEM), DMR čeká na GDAL |
+| z0, převýšení | −1 m, 2,0 | 183 m, 2,0 |
+| schody, povolené meze | 0, 94 | 0, 446 |
+| okraj silnice mimo terén > 0,3 m | 187 z 100 516 (0,2 %) | 240 z 55 429 (0,4 %) |
+| vozovka ponechané silnice vs terén > 0,15 m (T3) | 79 z 187 946, max 0,42 m | 191 z 82 919, max 0,87 m (serpentiny) |
+| body mřížky ve vodě nad hladinou (T3) | 0 | 0 (dřív 357, max 32 m pod mosty) |
+| mosty pod plnou světlostí (varování) | 14 vzorků | 171 vzorků (nábřeží u předmostí) |
+| stromy (žádný v půdorysu mostu či nájezdu) | 60 996 (35 392 ze Street Tree Census) | 32 782 (OSM + parky) |
+| sloupky na vozovce či mostě (T3b) | 284 → 0 | 64 → 0 |
+| terén > 0,3 m nad silnicí vedle ní (T3b) | 121 z 451 224 | 686 z 269 091 (Nerudova 8 z 1 062, max 0,68 m) |
+| uzavřené štěrbiny, `micro_only` uličky | 9 080, 57 | 3 655, 99 |
+| balíček | 4,5 MB | 3,1 MB |
+
+Nejprudší ulice Prahy podle náhledu: Nad Laurovou, Nad Štolou, Donská, Zámecká, Thunovská (14–16,5 %
+skutečného sklonu; strop dává `max_grade.alley` 0,33 / převýšení 2,0).
 
 ## Ověřeno proti datům (OVĚŘ z plánu, release 2026-11-18.0)
 
@@ -79,3 +157,26 @@ přepisu zahodí (klienti nemají písmo CJK). Jména jsou po segmentech nejedno
 - Spoty mají pole `minigame` (id z katalogu): na tom místě se minihra hraje (9.5).
 - `validate` bere při kontrole „silnice v budově“ v úvahu dvory (díry v obrysu): příjezd do dvora
   Dakoty na 72nd St není kolize.
+
+
+## Moskva v číslech (M6)
+
+Uvnitř Sadového okruhu i s okruhem + Zamoskvorečje, Gorkého park, Komsomolské náměstí a předmostí
+u Kutuzovského (`plans/M6_MOSKVA.md` X1; sever oříznutý na 55,777° kvůli dvorním rampám u
+Novoslobodské): 28 296 uzlů, 31 834 hran, 15 079 hmot budov, 520 chunků, 48 spotů (13 s minihrou,
+2 budky, 12 vstupů do metra, 8 fotomíst, 8 obchodů a barů), 387 hran tramvají a 34 zastávek,
+balíček 3,8 MB (`pack-moscow-1cabcee6fcf1`). Build s fetch ~12 min.
+
+Terén z AWS Terrain Tiles (z0 = 122 m, převýšení 2,0, 0 schodů): Moskva je mírná, nejprudší
+pojmenovaná ulice je Bolšoj Nikolovorobinskij pereulok 11,5 %, pak Zemljanoj val 9,9 %. Příroda:
+14 170 stromů (OSM 46 %, zbytek Poissonův výsev v parcích), řeka Moskva, Jauza, Obtokový kanál,
+Patriarší a Golicynské rybníky pojmenované; 62 hran mostů, 43 z nich s koncem ve vrstvě 0.
+
+Jména: Overture má v Moskvě `names.primary` azbukou. `name_langs: [en, ru-Latn]` bere anglické
+nebo latinkou přepsané jméno; od M6 platí `name_langs` i pro vodu a zeleň (krok `nature`, dřív
+jen silnice), azbuka by se v klientech nevykreslila. Plochy kanálu bez jména berou jméno
+z nejbližší pojmenované čáry kanálu jako řeky (Obtokový kanál má jméno jen na ose).
+
+- `validate`: `terrain.pipeline.road_strip.max_m` 1,2 m (dvorní obslužné rampy u Novoslobodské
+  a na Taganke 1,04–1,18 m; Praha 0,87, NYC 0,42).
+- Borovická věž nemá v Overture budovu, je bod (`kind: plaza`).

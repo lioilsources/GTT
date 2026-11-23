@@ -1,0 +1,32 @@
+{
+  "module": "terrain",
+  "name": "bridge_7",
+  "car": "sedan_regent",
+  "inputs": [
+    {
+      "t": 0
+    }
+  ],
+  "expect": {
+    "v_at_m100_mps": {
+      "value": 14.063,
+      "tol": 0.05
+    },
+    "v_at_0_mps": {
+      "value": 14.023,
+      "tol": 0.05
+    },
+    "v_at_100_mps": {
+      "value": 13.999,
+      "tol": 0.05
+    },
+    "v_at_200_mps": {
+      "value": 14.034,
+      "tol": 0.05
+    },
+    "v_at_300_mps": {
+      "value": 14.009,
+      "tol": 0.05
+    }
+  }
+}
