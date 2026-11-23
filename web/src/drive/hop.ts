@@ -29,6 +29,11 @@ export function hopFlip(t: number, airS: number, flips: number): number {
   return airS > 0 ? Math.cos((2 * Math.PI * flips * t) / airS) : 1;
 }
 
+/** Roll angle of the flip in the chase view (radians): 2π · flips · t / air_s; cos of it is hopFlip. */
+export function hopRoll(t: number, airS: number, flips: number): number {
+  return airS > 0 ? (2 * Math.PI * flips * t) / airS : 0;
+}
+
 /** Session state of the hop (not saved). */
 export class HopState {
   /** Charges left. */
