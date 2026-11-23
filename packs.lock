@@ -7,10 +7,10 @@ packs:
         sha256: ec583facd5f84d079b48721ceee9fc939f2de80c020d9699c43e30ed305ea4b3
         overture_release: 2026-11-18.0
     prague:
-        version: 1ddc00eaefb5
-        tag: pack-prague-1ddc00eaefb5
-        asset: prague-1ddc00eaefb5.tar.gz
-        sha256: 1ddc00eaefb5569ad30fa96a5724b6910a01b2b3a79f3a1158d0d8939b989050
+        version: 6fbe9d59214f
+        tag: pack-prague-6fbe9d59214f
+        asset: prague-6fbe9d59214f.tar.gz
+        sha256: 6fbe9d59214ff8e549278b056cf6718bae5b88c8ed58e3ade4dbe761ef74132e
         overture_release: 2026-11-18.0
     tokyo:
         version: 5af7637300d7
