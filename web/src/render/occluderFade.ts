@@ -10,7 +10,7 @@ import { FADE_COVERAGE, FADE_RADIUS_M } from './chase';
 /**
  * Occluder fade of the chase camera (specs/terrain.md "Upřesnění T2"): building and bridge deck
  * fragments nearer the camera than the car, within FADE_RADIUS_M of the eye–car segment and not
- * below the car (the deck it drives on stays solid) keep a
+ * below half the car's height (the deck it drives on stays solid) keep a
  * 4 × 4 Bayer pattern of FADE_COVERAGE (alpha 0.3 without sorting). The test mirrors `occludes`
  * in chase.ts. Always compiled in; `state.on` = 0 (top-down) only skips it, no shader rebuild.
  */
@@ -33,7 +33,7 @@ if (fadeEye.w > 0.5) {
   vec3 fadeV = fadeCar.xyz - fadeEye.xyz;
   float fadeT = dot(vPositionW - fadeEye.xyz, fadeV) / max(dot(fadeV, fadeV), 1e-4);
   vec3 fadeQ = fadeEye.xyz + fadeV * fadeT - vPositionW;
-  if (fadeT > 0.0 && fadeT < 1.0 && vPositionW.y > fadeCar.y - 1.0 && dot(fadeQ, fadeQ) <= fadeCar.w && fadeB4(gl_FragCoord.xy) >= ${FADE_COVERAGE.toFixed(3)}) discard;
+  if (fadeT > 0.0 && fadeT < 1.0 && vPositionW.y > fadeCar.y - 0.5 && dot(fadeQ, fadeQ) <= fadeCar.w && fadeB4(gl_FragCoord.xy) >= ${FADE_COVERAGE.toFixed(3)}) discard;
 }
 `;
 const WGSL_DEFS = `
@@ -47,7 +47,7 @@ if (uniforms.fadeEye.w > 0.5) {
   let fadeV = uniforms.fadeCar.xyz - uniforms.fadeEye.xyz;
   let fadeT = dot(fragmentInputs.vPositionW - uniforms.fadeEye.xyz, fadeV) / max(dot(fadeV, fadeV), 1e-4);
   let fadeQ = uniforms.fadeEye.xyz + fadeV * fadeT - fragmentInputs.vPositionW;
-  if (fadeT > 0.0 && fadeT < 1.0 && fragmentInputs.vPositionW.y > uniforms.fadeCar.y - 1.0 && dot(fadeQ, fadeQ) <= uniforms.fadeCar.w && fadeB4(fragmentInputs.position.xy) >= ${FADE_COVERAGE.toFixed(3)}) { discard; }
+  if (fadeT > 0.0 && fadeT < 1.0 && fragmentInputs.vPositionW.y > uniforms.fadeCar.y - 0.5 && dot(fadeQ, fadeQ) <= uniforms.fadeCar.w && fadeB4(fragmentInputs.position.xy) >= ${FADE_COVERAGE.toFixed(3)}) { discard; }
 }
 `;
 

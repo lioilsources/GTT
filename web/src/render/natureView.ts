@@ -16,7 +16,7 @@ import { TREE_S, type Tree } from '../world/nature';
 import { displayHeight, extrusionScale } from '../world/camera';
 import { Tris } from './geometry';
 import { bridgeShadowTris, crownJitter, crownTris, trunkTris, visibleTrees, waterTris } from './natureGeometry';
-import { rgba, type Palette } from './palette';
+import { rgba, type Palette, type Rgba } from './palette';
 
 /**
  * Water plane, trees and hit effects of client W (specs/nature.md "Vykreslení shora", 5.4; P2).
@@ -37,6 +37,8 @@ const LEAVES_PER_HIT = 10;
 const LEAF_MAX = 120;
 /** Trunk dots above the sidewalks and markings, below the props. */
 const TRUNK_Z = 0.13;
+/** Chase view (specs/terrain.md "Šikmý pohled"): trunks as posts up to the crown within this range. */
+const POST_M = 150;
 
 Effect.ShadersStore['natureWaterVertexShader'] = `
 precision highp float;
@@ -108,6 +110,9 @@ export class NatureView {
   private readonly trunkMat: StandardMaterial;
   private crowns: Mesh[] = [];
   private trunks!: Mesh;
+  /** Trunk posts of the chase view (a four-sided prism, unit height); off from above. */
+  private posts!: Mesh;
+  private chase = false;
   private leaves!: Mesh;
   private pal: Palette;
   private treeVersion = -1;
@@ -150,6 +155,7 @@ export class NatureView {
     for (const m of this.crowns) m.dispose();
     this.trunks?.dispose();
     this.leaves?.dispose();
+    this.posts?.dispose();
     this.crowns = [sizes.s, sizes.m, sizes.l].map((s, i) => {
       const t = new Tris();
       crownTris(i, s.crownR, this.pal, t);
@@ -171,6 +177,11 @@ export class NatureView {
     this.leaves.alphaIndex = 14;
     this.leaves.alwaysSelectAsActiveMesh = true;
     this.leaves.setEnabled(false);
+    const pt = new Tris();
+    postTris(e.tuning.nature.trunkRadiusM, this.pal, pt);
+    this.posts = e.world(e.mesh('trunk-posts', pt, this.trunkMat, false, false));
+    this.posts.alwaysSelectAsActiveMesh = true;
+    this.posts.setEnabled(false);
     this.treeVersion = -1;
     this.waterVersion = -1;
   }
@@ -179,6 +190,18 @@ export class NatureView {
   setFog(start: number, end: number, color: Color3): void {
     this.waterMat.setVector3('fogRange', new Vector3(start, end, 0));
     this.waterMat.setColor3('fogColor', color);
+  }
+
+  /** Crowns and trunks: the chase view fades them between the eye and the car like buildings. */
+  get occluderMaterials(): StandardMaterial[] {
+    return [this.crownMat, this.trunkMat];
+  }
+
+  /** Chase view on or off: trunk posts under the crowns. */
+  setChase(on: boolean): void {
+    if (on === this.chase) return;
+    this.chase = on;
+    this.treeVersion = -1;
   }
 
   /** The chase camera's eye (world x east, y north, z up) for the water fog. */
@@ -244,6 +267,7 @@ export class NatureView {
     this.slots.clear();
     this.faded.clear();
     const trunk = new Float32Array(list.length * 16);
+    const posts: number[] = [];
     let ti = 0;
     for (let s = 0; s < 3; s++) {
       const trees = bySize[s]!;
@@ -257,6 +281,7 @@ export class NatureView {
         cols.set([j[0], j[1], j[2], 1], 4 * i);
         this.slots.set(t.key, { size: s, index: i, tree: t });
         writeMatrix(trunk, ti++, t.x, TRUNK_Z + this.groundAt(t.x, t.y), t.y, 0, 1);
+        if (this.chase && (t.x - px) ** 2 + (t.y - py) ** 2 < POST_M * POST_M) posts.push(t.x, this.groundAt(t.x, t.y), t.y, y);
       });
       this.mats[s] = mats;
       this.cols[s] = cols;
@@ -267,6 +292,13 @@ export class NatureView {
     }
     this.trunks.thinInstanceSetBuffer('matrix', list.length ? trunk : null, 16, false);
     this.trunks.setEnabled(list.length > 0);
+    const n = posts.length / 4, pm = new Float32Array(n * 16);
+    for (let i = 0; i < n; i++) {
+      writeMatrix(pm, i, posts[4 * i]!, posts[4 * i + 1]!, posts[4 * i + 2]!, 0, 1);
+      pm[16 * i + 5] = posts[4 * i + 3]!;
+    }
+    this.posts.thinInstanceSetBuffer('matrix', n ? pm : null, 16, false);
+    this.posts.setEnabled(n > 0);
   }
 
   /** Crowns within crown_fade.radius_m (in a forest flow.forest.crown_fade_radius_m) of the car get crown_fade.alpha. */
@@ -362,6 +394,22 @@ export class NatureView {
     for (const m of this.crowns) m.dispose();
     this.trunks.dispose();
     this.leaves.dispose();
+    this.posts.dispose();
+  }
+}
+
+/** A trunk post: four sides of radius r from 0 to 1 (scaled to the crown height), shaded by the sun. */
+function postTris(r: number, pal: Palette, out: Tris): void {
+  const c = pal.night ? pal.land : rgba(tokens.colorGreenTrunk);
+  const sl = Math.hypot(pal.sunX, pal.sunY) || 1;
+  for (let i = 0; i < 4; i++) {
+    const a0 = (i * Math.PI) / 2 + Math.PI / 4, a1 = a0 + Math.PI / 2;
+    const nx = Math.cos(a0 + Math.PI / 4), ny = Math.sin(a0 + Math.PI / 4);
+    const k = pal.ambient + (1 - pal.ambient) * Math.max(0, (nx * pal.sunX + ny * pal.sunY) / sl);
+    const col: Rgba = [c[0] * k, c[1] * k, c[2] * k, 1];
+    const ax = r * Math.cos(a0), ay = r * Math.sin(a0), bx = r * Math.cos(a1), by = r * Math.sin(a1);
+    const v0 = out.vertex(ax, ay, 0, col), v1 = out.vertex(bx, by, 0, col), v2 = out.vertex(bx, by, 1, col), v3 = out.vertex(ax, ay, 1, col);
+    out.idx.push(v0, v2, v1, v0, v3, v2);
   }
 }
 

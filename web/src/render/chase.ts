@@ -63,14 +63,14 @@ export function chaseFov(c: TuningCameraChase, w: number, h: number): { fov: num
 
 /**
  * Occluder test of the fade (mirrors the shader): point p is nearer the camera than the car, at
- * most FADE_RADIUS_M from the eye–car segment and not below the car's base ([car] is 1 m above it).
+ * most FADE_RADIUS_M from the eye–car segment and above half the car ([car] is 1 m over its base).
  */
 export function occludes(eye: P3, car: P3, p: P3): boolean {
   const vx = car.x - eye.x, vy = car.y - eye.y, vz = car.z - eye.z;
   const l2 = vx * vx + vy * vy + vz * vz;
   if (l2 < 1e-6) return false;
   const t = ((p.x - eye.x) * vx + (p.y - eye.y) * vy + (p.z - eye.z) * vz) / l2;
-  if (t <= 0 || t >= 1 || p.z <= car.z - 1) return false;
+  if (t <= 0 || t >= 1 || p.z <= car.z - 0.5) return false;
   const qx = eye.x + vx * t - p.x, qy = eye.y + vy * t - p.y, qz = eye.z + vz * t - p.z;
   return qx * qx + qy * qy + qz * qz <= FADE_RADIUS_M * FADE_RADIUS_M;
 }

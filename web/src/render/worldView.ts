@@ -376,6 +376,7 @@ export class WorldView {
       mesh: (n, t, mat, alpha, frozen) => this.mesh(n, t, mat, alpha, frozen),
       world: (m) => this.world(m, false),
     }, this.palette);
+    for (const m of this.nature.occluderMaterials) new OccluderFadePlugin(m, this.fade);
     this.ring = new FarRing({ scene, city, tuning, H: this.H, world: (m) => this.world(m, false) }, this.palette);
     this.applyClearColor();
     this.applyRisograph();
@@ -1089,6 +1090,7 @@ export class WorldView {
     }
     // Fog only on the far ring and the water plane: the near world ends before the fog starts.
     this.fade.on = chase;
+    this.nature.setChase(chase);
     this.nature.setFog(chase ? FOG_START_M : 1e6, chase ? FOG_END_M : 2e6, this.ring.fogColor);
     this.rig.project = chase ? (x, y, z, w, h) => this.projectChase(x, y, z, w, h) : null;
     if (!chase) this.pose = null;
