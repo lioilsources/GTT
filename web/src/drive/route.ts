@@ -9,6 +9,8 @@ export class RoutePath {
     /** Interleaved x, y. */
     readonly pts: Float64Array,
     readonly legs: number,
+    /** Graph edges in driving order (empty when built from bare points). */
+    readonly edges: readonly number[] = [],
   ) {
     const n = pts.length >> 1;
     this.cum = new Float64Array(n);
@@ -93,8 +95,11 @@ export function crossingNode(g: RoadGraph, c: Crossing): number {
   throw new Error(`bench route: no crossing of ${c.a} and ${c.b}`);
 }
 
-/** Shortest path (edge length) from node a to b over edges named in via; ties go to smaller node index. */
-function leg(g: RoadGraph, from: number, to: number, via: ReadonlySet<string>): number[] {
+/**
+ * Shortest path (edge length) from node a to b over edges named in via; ties go to smaller node index.
+ * With `oneway` (bench v2) an edge is taken only in its allowed direction.
+ */
+function leg(g: RoadGraph, from: number, to: number, via: ReadonlySet<string>, oneway: boolean): number[] {
   const n = g.nodeEdges.length;
   const dist = new Float64Array(n).fill(Infinity);
   const prevEdge = new Int32Array(n).fill(-1);
@@ -109,6 +114,7 @@ function leg(g: RoadGraph, from: number, to: number, via: ReadonlySet<string>): 
     for (const ei of g.nodeEdges[u]!) {
       const e = g.edges[ei]!;
       if (!via.has(e.name)) continue;
+      if (oneway && ((e.oneway === 1 && e.from !== u) || (e.oneway === -1 && e.to !== u))) continue;
       const v = e.from === u ? e.to : e.from;
       const d = dist[u]! + e.length;
       if (d < dist[v]!) {
@@ -131,9 +137,11 @@ function leg(g: RoadGraph, from: number, to: number, via: ReadonlySet<string>): 
 export function resolveRoute(g: RoadGraph, r: BenchRoute): RoutePath {
   let node = crossingNode(g, r.start);
   const pts: number[] = [g.nodeXY[2 * node]!, g.nodeXY[2 * node + 1]!];
+  const edges: number[] = [];
   for (const l of r.legs) {
     const to = crossingNode(g, l.to);
-    for (const ei of leg(g, node, to, new Set(l.via))) {
+    for (const ei of leg(g, node, to, new Set(l.via), r.oneway === true)) {
+      edges.push(ei);
       const e = g.edges[ei]!;
       const forward = e.from === node;
       const k = e.pointCount;
@@ -144,5 +152,13 @@ export function resolveRoute(g: RoadGraph, r: BenchRoute): RoutePath {
       node = forward ? e.to : e.from;
     }
   }
-  return new RoutePath(Float64Array.from(pts), r.legs.length);
+  return new RoutePath(Float64Array.from(pts), r.legs.length, edges);
+}
+
+/**
+ * File of a route in content/bench/ (specs/bench.md v2): the city's benchmark is `<city>.json`,
+ * a further route `<city>-<id>.json` (`?city=<city>&route=<id>`).
+ */
+export function routeFile(city: string, id: string | null): string {
+  return id === null ? `${city}.json` : `${city}-${id}.json`;
 }
