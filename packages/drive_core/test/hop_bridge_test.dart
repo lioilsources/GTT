@@ -77,8 +77,10 @@ void main() {
   final vega = car('vega_roadster'), coupe = car('m0_coupe');
   final dt = 1 / tuning.drive.stepHz;
   final cruise = tuning.speedMps.cruise;
+  // Boosted speed above city cruise (specs/drive.md v2): the hop clears an 18 m gap and a tram car.
+  const hopMps = 25.0;
 
-  /// On the deck at x = 20 (layer 1) at cruise; a tram car stands 18 m ahead and a building under
+  /// On the deck at x = 20 (layer 1) at hopMps; a tram car stands 18 m ahead and a building under
   /// the deck just beyond it. Returns the world and the far / near edge of the tram for the car.
   Future<(DriveWorld, double, double)> onDeck(CarSpec spec) async {
     final city = await bridgeCity();
@@ -94,7 +96,7 @@ void main() {
     d.spawn(-150, 0, 0);
     for (var i = 0; i < 60 * 20 && d.car.x < 20; i++) {
       d.input.reset();
-      d.car.body.linearVelocity = Vector2(cruise, 0);
+      d.car.body.linearVelocity = Vector2(hopMps, 0);
       d.update(dt);
     }
     expect(d.car.layer, 1);
@@ -108,7 +110,7 @@ void main() {
       Polygon.box(4, 4),
       ShapeDef(filter: Filter(categoryBits: catBuildings, maskBits: catCar)),
     );
-    d.car.body.linearVelocity = Vector2(cruise, 0);
+    d.car.body.linearVelocity = Vector2(hopMps, 0);
     return (d, tramX + half + d.car.halfLength, tramX - half - d.car.halfLength);
   }
 

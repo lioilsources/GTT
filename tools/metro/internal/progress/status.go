@@ -110,3 +110,12 @@ func StatusStale(readme, block string) (bool, error) {
 	}
 	return stampLine.ReplaceAllString(want, "") != stampLine.ReplaceAllString(readme, ""), nil
 }
+
+// Counts returns the content counters (name → value) that PROGRESS.md and the README show.
+func Counts(root string, f *File) map[string]string {
+	out := map[string]string{}
+	for _, c := range countContent(root, f) {
+		out[c.name] = c.value
+	}
+	return out
+}

@@ -11,7 +11,7 @@ view_width_m: {slow: 50.0, fast: 85.0}     # zoom by speed
 car_anchor: {x: 0.5, y: 0.72}          # car position on screen
 extrusion: {k: 0.004, knee_m: 50.0, exp: 0.85, max_scale: 2.2}
 chunk_m: 256
-speed_mps: {cruise: 25.0, top_default: 40.0}
+speed_mps: {cruise: 25.0, top_default: 40.0}   # cruise = no-input pace; 14.0 with specs/drive.md v2 (flipped in shared/cruise-v2-scenarios)
 
 # citypack: road corridors and building masses.
 roads:
@@ -78,6 +78,9 @@ trams:
   despawn_m: 520.0
   seed: 20261122
   rail_gauge_m: 3.6             # drawn distance between the two rails (world metres)
+  max_switch_deg: 50.0          # trams.md v2: a node turn sharper than this is not a track connection
+  turn_probe_m: 5.0             # the turn at a node is measured this far along both edges
+  max_turn_deg_per_m: 12.0      # acceptance: max change of a car's axis per metre of travel (test)
 
 # Chunk streaming (METROPOLE_PLAN 6.4): window in chunks around the player.
 streaming: {ahead: 3, behind: 1, side: 1, keep: 3, max_in_flight: 2, retry_s: 2.0}
@@ -106,6 +109,7 @@ drive:
   reverse_power: 0.6            # fraction of car power
   engine_brake_mps2: 2.0
   overspeed_mps: 1.0            # engine braking starts this far above the wanted speed
+  cruise_hold_mps2: 4.0         # auto-cruise cancels the downhill slope pull up to this (specs/drive.md v2)
   drag_linear: 0.04             # 1/s
   drag_quadratic: 0.0012        # 1/m
   handbrake_decel_mps2: 3.5

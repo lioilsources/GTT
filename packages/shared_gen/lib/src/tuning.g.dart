@@ -141,6 +141,7 @@ class Tuning {
 
   int chunkM;
 
+  /// cruise = no-input pace; 14.0 with specs/drive.md v2 (flipped in shared/cruise-v2-scenarios)
   final TuningSpeedMps speedMps;
 
   /// citypack: road corridors and building masses.
@@ -419,6 +420,7 @@ class TuningExtrusion {
   static const keys = ['k', 'knee_m', 'exp', 'max_scale'];
 }
 
+/// cruise = no-input pace; 14.0 with specs/drive.md v2 (flipped in shared/cruise-v2-scenarios)
 class TuningSpeedMps {
   TuningSpeedMps._(_R r)
       : cruise = r.d('cruise'),
@@ -688,7 +690,10 @@ class TuningTrams {
         spawnClearM = r.d('spawn_clear_m'),
         despawnM = r.d('despawn_m'),
         seed = r.i('seed'),
-        railGaugeM = r.d('rail_gauge_m');
+        railGaugeM = r.d('rail_gauge_m'),
+        maxSwitchDeg = r.d('max_switch_deg'),
+        turnProbeM = r.d('turn_probe_m'),
+        maxTurnDegPerM = r.d('max_turn_deg_per_m');
 
   bool enabled;
 
@@ -754,6 +759,15 @@ class TuningTrams {
   /// drawn distance between the two rails (world metres)
   double railGaugeM;
 
+  /// trams.md v2: a node turn sharper than this is not a track connection
+  double maxSwitchDeg;
+
+  /// the turn at a node is measured this far along both edges
+  double turnProbeM;
+
+  /// acceptance: max change of a car's axis per metre of travel (test)
+  double maxTurnDegPerM;
+
   Map<String, Object> toJson() => {
         'enabled': enabled,
         'min_track_m': minTrackM,
@@ -784,6 +798,9 @@ class TuningTrams {
         'despawn_m': despawnM,
         'seed': seed,
         'rail_gauge_m': railGaugeM,
+        'max_switch_deg': maxSwitchDeg,
+        'turn_probe_m': turnProbeM,
+        'max_turn_deg_per_m': maxTurnDegPerM,
       };
 }
 
@@ -920,6 +937,7 @@ class TuningDrive {
         reversePower = r.d('reverse_power'),
         engineBrakeMps2 = r.d('engine_brake_mps2'),
         overspeedMps = r.d('overspeed_mps'),
+        cruiseHoldMps2 = r.d('cruise_hold_mps2'),
         dragLinear = r.d('drag_linear'),
         dragQuadratic = r.d('drag_quadratic'),
         handbrakeDecelMps2 = r.d('handbrake_decel_mps2'),
@@ -977,6 +995,9 @@ class TuningDrive {
   /// engine braking starts this far above the wanted speed
   double overspeedMps;
 
+  /// auto-cruise cancels the downhill slope pull up to this (specs/drive.md v2)
+  double cruiseHoldMps2;
+
   /// 1/s
   double dragLinear;
 
@@ -1029,6 +1050,7 @@ class TuningDrive {
         'reverse_power': reversePower,
         'engine_brake_mps2': engineBrakeMps2,
         'overspeed_mps': overspeedMps,
+        'cruise_hold_mps2': cruiseHoldMps2,
         'drag_linear': dragLinear,
         'drag_quadratic': dragQuadratic,
         'handbrake_decel_mps2': handbrakeDecelMps2,

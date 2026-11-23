@@ -78,6 +78,7 @@ export class Tuning {
   readonly carAnchor: TuningCarAnchor;
   readonly extrusion: TuningExtrusion;
   chunkM: number;
+  /** cruise = no-input pace; 14.0 with specs/drive.md v2 (flipped in shared/cruise-v2-scenarios) */
   readonly speedMps: TuningSpeedMps;
   /** citypack: road corridors and building masses. */
   readonly roads: TuningRoads;
@@ -403,6 +404,7 @@ export class TuningExtrusion {
   static readonly keys = ['k', 'knee_m', 'exp', 'max_scale'] as const;
 }
 
+/** cruise = no-input pace; 14.0 with specs/drive.md v2 (flipped in shared/cruise-v2-scenarios) */
 export class TuningSpeedMps {
   cruise: number;
   topDefault: number;
@@ -702,6 +704,12 @@ export class TuningTrams {
   seed: number;
   /** drawn distance between the two rails (world metres) */
   railGaugeM: number;
+  /** trams.md v2: a node turn sharper than this is not a track connection */
+  maxSwitchDeg: number;
+  /** the turn at a node is measured this far along both edges */
+  turnProbeM: number;
+  /** acceptance: max change of a car's axis per metre of travel (test) */
+  maxTurnDegPerM: number;
 
   constructor(r: R) {
     this.enabled = r.b('enabled');
@@ -733,6 +741,9 @@ export class TuningTrams {
     this.despawnM = r.d('despawn_m');
     this.seed = r.i('seed');
     this.railGaugeM = r.d('rail_gauge_m');
+    this.maxSwitchDeg = r.d('max_switch_deg');
+    this.turnProbeM = r.d('turn_probe_m');
+    this.maxTurnDegPerM = r.d('max_turn_deg_per_m');
   }
 
   toJson(): Record<string, unknown> {
@@ -766,6 +777,9 @@ export class TuningTrams {
       despawn_m: this.despawnM,
       seed: this.seed,
       rail_gauge_m: this.railGaugeM,
+      max_switch_deg: this.maxSwitchDeg,
+      turn_probe_m: this.turnProbeM,
+      max_turn_deg_per_m: this.maxTurnDegPerM,
     };
   }
 }
@@ -923,6 +937,8 @@ export class TuningDrive {
   engineBrakeMps2: number;
   /** engine braking starts this far above the wanted speed */
   overspeedMps: number;
+  /** auto-cruise cancels the downhill slope pull up to this (specs/drive.md v2) */
+  cruiseHoldMps2: number;
   /** 1/s */
   dragLinear: number;
   /** 1/m */
@@ -961,6 +977,7 @@ export class TuningDrive {
     this.reversePower = r.d('reverse_power');
     this.engineBrakeMps2 = r.d('engine_brake_mps2');
     this.overspeedMps = r.d('overspeed_mps');
+    this.cruiseHoldMps2 = r.d('cruise_hold_mps2');
     this.dragLinear = r.d('drag_linear');
     this.dragQuadratic = r.d('drag_quadratic');
     this.handbrakeDecelMps2 = r.d('handbrake_decel_mps2');
@@ -996,6 +1013,7 @@ export class TuningDrive {
       reverse_power: this.reversePower,
       engine_brake_mps2: this.engineBrakeMps2,
       overspeed_mps: this.overspeedMps,
+      cruise_hold_mps2: this.cruiseHoldMps2,
       drag_linear: this.dragLinear,
       drag_quadratic: this.dragQuadratic,
       handbrake_decel_mps2: this.handbrakeDecelMps2,
