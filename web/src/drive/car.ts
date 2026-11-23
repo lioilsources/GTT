@@ -157,7 +157,8 @@ export class Car {
 
   private refilter(): void {
     if (this.airborne) {
-      this.fixture.setFilterData({ groupIndex: 0, categoryBits: CAT_CAR, maskBits: CAT_BUILDINGS });
+      // In the air (specs/hop.md v2): buildings only, and they only exist on the ground layer.
+      this.fixture.setFilterData({ groupIndex: 0, categoryBits: CAT_CAR, maskBits: this.layer === 0 ? CAT_BUILDINGS : 0 });
       return;
     }
     // Buildings, parked cars and bollards only exist on the ground layer; bridges and tunnels use
