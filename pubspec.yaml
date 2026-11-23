@@ -31,6 +31,10 @@ workspace:
   - packages/mg_srdce
   - packages/mg_kostky
   - packages/mg_prase
+  - packages/mg_drift
+  - packages/mg_sprint
+  - packages/mg_stickball
+  - packages/mg_doubledutch
   - packages/feed_hub
   - packages/meta_progress
   - packages/npc_dialogue
