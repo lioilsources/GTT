@@ -8,6 +8,7 @@
 //	metro vectors record --client C --module M
 //	metro parity report [--release]     write PARITY.md, fail on red rows
 //	metro progress [--tests|--check]    write plans/PROGRESS.md and the README status block (--check: fail if stale)
+//	metro stats                         write plans/STATS.md (numbers for the launch post)
 package main
 
 import (
@@ -26,6 +27,7 @@ import (
 	"metro/internal/parity"
 	"metro/internal/progress"
 	"metro/internal/repo"
+	"metro/internal/stats"
 	"metro/internal/validate"
 	"metro/internal/vectors"
 )
@@ -91,6 +93,11 @@ func main() {
 		check := fs.Bool("check", false, "fail when the README status block is stale (writes nothing)")
 		_ = fs.Parse(args)
 		fail(runProgress(root, *tests, *check))
+	case "stats":
+		md, err := stats.Render(root)
+		fail(err)
+		fail(os.WriteFile(filepath.Join(root, "plans", "STATS.md"), []byte(md), 0o644))
+		slog.Info("stats", "file", "plans/STATS.md")
 	default:
 		usage()
 	}
@@ -219,7 +226,7 @@ func runGuard(root, base string) error {
 }
 
 func usage() {
-	fmt.Fprintln(os.Stderr, "usage: metro gen [--check] | sync | validate | guard [--base B] | vectors check | vectors record --client C --module M | parity report [--release] | progress [--tests|--check]")
+	fmt.Fprintln(os.Stderr, "usage: metro gen [--check] | sync | validate | guard [--base B] | vectors check | vectors record --client C --module M | parity report [--release] | progress [--tests|--check] | stats")
 	os.Exit(2)
 }
 

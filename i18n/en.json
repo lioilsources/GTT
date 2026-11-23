@@ -1270,5 +1270,13 @@
   "debugCash": "+{amount}",
   "@debugCash": {"placeholders": {"amount": {"type": "int"}}},
   "garageOpen": "Open garage",
+  "loadingProgress": "Downloading {city}… {pct} %",
+  "@loadingProgress": {"placeholders": {"city": {"type": "String"}, "pct": {"type": "int"}}},
+  "introTitle": "Welcome to Metropole",
+  "introLine1": "Drag your thumb left and right to steer.",
+  "introLine2": "Drag down to brake, up to boost. A second finger is the handbrake.",
+  "introLine3": "The phone at the top right: a feed of minigames, the map and trips to other cities.",
+  "introCity": "Where do you want to drive?",
+  "introGo": "Let's go",
   "ogTagline": "Free driving through Prague, New York and Tokyo. On your phone, in the browser, for free."
 }

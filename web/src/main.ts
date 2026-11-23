@@ -4,7 +4,8 @@ import { WebGPUEngine } from '@babylonjs/core/Engines/webgpuEngine';
 
 import { ASSET_BASE_URL } from './config';
 import { Autopilot, frameStats } from './drive/autopilot';
-import { resolveRoute } from './drive/route';
+import { resolveRoute, routeFile } from './drive/route';
+import { hillPanel } from './drive/hillPanel';
 import { applyKeys, createScheme, SchemeA, SchemeB, SchemeC, type ControlScheme, type ControlSchemeId } from './drive/controls';
 import { DriveWorld } from './drive/driveWorld';
 import { installFlowHud } from './drive/flowHud';
@@ -39,8 +40,11 @@ import { installDrift } from './minigames/drift';
 import { installSprint } from './minigames/sprint';
 import { installTravel } from './travel';
 import { installFastTravel } from './travel/fastTravel';
-import { cityUrl, pickStartCity, readLastCity, writeLastCity } from './travel/cities';
-import { HttpPackSource } from './world/citypack';
+import { cityUrl, pickStartCity, readLastCity, switchCity, writeLastCity } from './travel/cities';
+import { chunkPath, HttpPackSource } from './world/citypack';
+import { LoadProgress, ProgressSource } from './firstrun/progress';
+import { introStore, rememberIntro, shouldShowIntro, showIntro } from './firstrun/intro';
+import './firstrun/intro.css';
 import { City } from './world/model';
 import { ChunkStreamer } from './world/streaming';
 import { MapNatureSource } from './phone/mapNature';
@@ -131,7 +135,12 @@ async function main(): Promise<void> {
     HttpPackSource.open(ASSET_BASE_URL, cityId),
     artReady,
   ]);
-  const city = await City.load(source);
+  // Download progress in % until the first frame (specs/firstrun.md).
+  const progress = new LoadProgress((pct) => {
+    $('loading').textContent = t('loadingProgress', { city: cityIdNames[cityId], pct });
+  });
+  const loadSource = new ProgressSource(source.root, progress);
+  const city = await City.load(loadSource);
   // ?flat (debug, A/B): drive and draw the pack without its heights (specs/terrain.md flat pack).
   if (params.has('flat')) city.terrain.enabled = false;
   // The pack loaded: remember the city now, not only when leaving it (specs/cities.md).
@@ -181,7 +190,7 @@ async function main(): Promise<void> {
     police.setShadow(view.palette.shadow);
   };
   applyShadows();
-  const streamer = new ChunkStreamer(city, source, tuning, (c) => {
+  const streamer = new ChunkStreamer(city, loadSource, tuning, (c) => {
     drive.addChunk(c);
     fleet.addChunk(c);
     police.addChunk(c);
@@ -194,17 +203,25 @@ async function main(): Promise<void> {
   });
   // ?bench: the autopilot drives the route of specs/bench.md and reports the numbers.
   // A city without content/bench/<cityId>.json has no benchmark (specs/cities.md).
-  const benchRoute = params.has('bench')
-    ? await json<BenchRoute>(`content/bench/${cityId}.json`).catch((e: unknown) => {
-      console.warn(`no benchmark for ${cityId}`, e);
+  // ?route=<id> (bench v2): the route content/bench/<cityId>-<id>.json; the player starts on it with
+  // the navigation along it, with ?bench the autopilot drives it.
+  const routeId = params.get('route');
+  const benchRoute = params.has('bench') || routeId !== null
+    ? await json<BenchRoute>(`content/bench/${routeFile(cityId, routeId)}`).catch((e: unknown) => {
+      console.warn(`no route ${routeId ?? 'benchmark'} for ${cityId}`, e);
       return null;
     })
     : null;
-  const pilot = benchRoute ? new Autopilot(resolveRoute(city.graph, benchRoute), tuning) : null;
+  const routePath = benchRoute ? resolveRoute(city.graph, benchRoute) : null;
+  const pilot = routePath && params.has('bench') ? new Autopilot(routePath, tuning) : null;
   if (pilot) {
     pilot.start(drive);
     view.carChanged();
     drive.beforeStep = (step) => pilot.step(drive, drive.input, step);
+  } else if (routePath) {
+    const p = routePath.at(0);
+    drive.spawn(p.x, p.y, p.dir);
+    view.carChanged();
   }
   view.setFleet(fleet);
   // Car sprites (specs/art.md v2): one atlas set for the player, parked cars, traffic and patrols.
@@ -213,8 +230,15 @@ async function main(): Promise<void> {
     police.setSprites(view.sprites);
   }
   view.rig.snap(drive.car.x, drive.car.y, drive.car.heading, tuning);
-  // Own chunk and its ring first (3×3 = 9); the rest streams in while driving.
+  // Own chunk and its ring first (3×3 = 9); the rest streams in while driving. Their sizes join the
+  // download total from the manifest right away (specs/firstrun.md).
+  const sizes = new Map(city.manifest.chunks.map((c) => [chunkPath(c.x, c.y), c.bytes]));
+  for (const [cx, cy] of streamer.window.wanted(drive.car.x, drive.car.y, drive.car.heading).slice(0, 9)) {
+    const p = chunkPath(cx, cy);
+    progress.announce(p, sizes.get(p) ?? 0);
+  }
   await streamer.preload(drive.car.x, drive.car.y, drive.car.heading, 9);
+  progress.stop();
   $('loading').hidden = true;
   let firstFrameMs = 0;
   // In-game phone, feed, map and GPS navigation (specs/phone.md).
@@ -222,6 +246,12 @@ async function main(): Promise<void> {
     mapNature: city.manifest.natureVersion > 0 ? new MapNatureSource(city, source) : null,
     discovered: () => new Set(passport.tracker.stamps.filter((s) => s.startsWith('landmark:')).map((s) => s.slice(9))) });
   const loadMs = performance.now() - tStart;
+  // ?route=: navigation along the route to its last crossing (specs/bench.md v2).
+  if (routeId !== null && routePath && benchRoute && routePath.edges.length > 0) {
+    const end = routePath.at(routePath.length), last = benchRoute.legs[benchRoute.legs.length - 1]!.to;
+    phone.followRoute({ id: `route:${benchRoute.id}`, name: last.b, edge: routePath.edges[routePath.edges.length - 1]!,
+      parkX: Math.round(end.x * 10), parkY: Math.round(end.y * 10) }, routePath.pts);
+  }
 
   // ---------- input
   let scheme: ControlScheme = createScheme((['a', 'b', 'c'].includes(params.get('scheme') ?? '') ? params.get('scheme') : 'a') as ControlSchemeId, tuning.controls);
@@ -383,6 +413,19 @@ async function main(): Promise<void> {
   // Weather (specs/weather.md): random seed per start, starts clear; ?weather= sets a kind.
   const weather = installWeather({ cityId, tuning, t, drive, view, hud: $('hud'), params });
   installTravel({ cityId, tuning, t, phone, tracker: passport.tracker, store: loop.store, save: () => loop.save(), onSwitch: () => booths.clear() });
+  // First run intro card (specs/firstrun.md): controls and the city choice, once per device.
+  const store = introStore();
+  if (shouldShowIntro(params, store)) {
+    const release = overlays.open('intro');
+    showIntro({
+      parent: document.body, t, cities: cityIdValues, names: cityIdNames, current: cityId,
+      onClose: (target) => {
+        rememberIntro(store);
+        release();
+        if (target) void switchCity(target, { save: () => loop.save(), navigate: (url) => location.assign(url), href: location.href });
+      },
+    });
+  }
   // Fast travel by metro and taxi (specs/travel.md): stations unlock by passing, the move resets
   // traffic, patrols and pedestrians like a teleport.
   const fastTravel = installFastTravel({
@@ -681,6 +724,12 @@ async function main(): Promise<void> {
   engine.onContextLostObservable.add(() => console.warn('WebGL context lost'));
   engine.onContextRestoredObservable.add(() => console.warn('WebGL context restored'));
 
+  if (params.has('debug')) {
+    // Hill tuning (specs/bench.md v2 "Ladění kopců"): live sliders over the client-side keys.
+    const hp = hillPanel(tuning, { title: t('debugPanel'), copy: t('copyYaml'), copied: t('copied') });
+    $('buttons').append(hp.button);
+    document.body.append(hp.panel);
+  }
   if (import.meta.env.DEV || params.has('debug')) {
     (window as unknown as Record<string, unknown>)['metro'] = {
       engine, view, drive, fleet, city, tuning, frameTimes, pilot, bench, peds, phone, passport, loop, taxi, drift, sprint, police: police.police, booths, fastTravel, photo, shops, weather, garage, carsHud, flow,
