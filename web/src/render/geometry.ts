@@ -91,6 +91,8 @@ const GROUND_ORDER = [GroundKind.PARK, GroundKind.PLAZA, GroundKind.RAIL, Ground
 
 export function groundTris(c: ChunkData, pal: Palette, out: Tris): void {
   GROUND_ORDER.forEach((kind, k) => {
+    // A pack with nature (specs/nature.md): water is the water plane, green the class fills.
+    if (c.nature && (kind === GroundKind.WATER || kind === GroundKind.PARK)) return;
     const col = groundColor(pal, kind);
     for (const g of c.ground) {
       if (g.kind !== kind) continue;

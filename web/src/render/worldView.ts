@@ -42,6 +42,8 @@ import type { CarFleet } from '../cars/fleet';
 import { CarSpriteView, LIGHTS_BRAKE, LIGHTS_FULL, LIGHTS_OFF } from './carSprites';
 import { lookPaint } from '../garage/looks';
 import { paintHex } from '../cars/shape';
+import { NatureView } from './natureView';
+import { bankTris, greenTris } from './natureGeometry';
 
 /** Rotating follow camera state (port of world_engine camera.dart). */
 export class CameraRig {
@@ -218,6 +220,9 @@ export class WorldView {
   private readonly topCamera: TargetCamera;
   private readonly depthMat: StandardMaterial;
   private riso: PostProcess | null = null;
+  /** Water plane, trees and hit effects (specs/nature.md); idle for a pack without nature. */
+  readonly nature: NatureView;
+  private lastFrame = 0;
 
   constructor(
     readonly engine: AbstractEngine,
@@ -287,6 +292,12 @@ export class WorldView {
     this.skidMesh.hasVertexAlpha = true;
     this.skidMesh.alwaysSelectAsActiveMesh = true;
 
+    this.nature = new NatureView({
+      scene, city, tuning, drive, H: this.H,
+      unlit: (n) => this.unlit(n),
+      mesh: (n, t, mat, alpha, frozen) => this.mesh(n, t, mat, alpha, frozen),
+      world: (m) => this.world(m, false),
+    }, this.palette);
     this.applyClearColor();
     this.applyRisograph();
     this.instr = new SceneInstrumentation(scene);
@@ -422,6 +433,7 @@ export class WorldView {
     this.bollardMesh = this.makeBollardMesh();
     this.bollardsDirty = true;
     this.parkedVersion = -1;
+    this.nature.setPalette(this.palette);
   }
 
   // ---------- chunks
@@ -429,6 +441,11 @@ export class WorldView {
   private chunkMeshes(c: ChunkData, key: number): ChunkMeshes {
     const flat = new Tris();
     groundTris(c, this.palette, flat);
+    // Green fills and the bank line share the chunk's flat mesh (no extra draw call, specs/nature.md).
+    if (c.nature) {
+      greenTris(c.nature, this.palette, flat);
+      bankTris(c.nature, this.city.chunkM, this.palette, flat);
+    }
     const b = new Tris();
     buildingTris(c, this.palette, this.tuning, b);
     const sh = new Tris();
@@ -658,7 +675,11 @@ export class WorldView {
     for (const w of this.carParts.wheels) w.rotation.y = -car.wheelAngle;
     // Rescue move (specs/flow.md): the car fades in at its new place over the animation.
     const anim = this.drive.flow.animT;
-    const alpha = anim > 0 ? 1 - anim / RESCUE_ANIM_S : 1;
+    // Water fall (specs/nature.md "Voda"): the car shrinks to 0.6 and fades out over sink_s.
+    const sink = this.drive.water.progress(this.tuning.nature.waterFall.sinkS);
+    const alpha = (anim > 0 ? 1 - anim / RESCUE_ANIM_S : 1) * (1 - sink);
+    const sc = 1 - 0.4 * sink;
+    this.carRoot.scaling.set(sc, 1, sc);
     if (alpha !== this.carAlpha) {
       this.carAlpha = alpha;
       for (const m of this.carRoot.getChildMeshes(false)) if (m !== this.carParts.glow) m.visibility = alpha;
@@ -873,6 +894,9 @@ export class WorldView {
     this.updateBollards();
     this.updateParked();
     this.updateSkids(car.halfWidth * 0.32);
+    const now = performance.now();
+    this.nature.update(car.x, car.y, this.lastFrame > 0 ? Math.min(0.1, (now - this.lastFrame) / 1000) : 0);
+    this.lastFrame = now;
     this.sprites?.flush();
     this.scene.render();
     this.stats.chunks = this.chunks.size;

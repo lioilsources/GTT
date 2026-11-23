@@ -98,7 +98,7 @@ export class ChunkStreamer {
   private async load(cx: number, cy: number, key: number): Promise<void> {
     this.inFlight.add(key);
     try {
-      const data = await prepareChunk(await this.source.read(chunkPath(cx, cy)));
+      const data = await prepareChunk(await this.source.read(chunkPath(cx, cy)), { chunkM: this.city.chunkM, version: this.city.manifest.natureVersion });
       if (this.disposed || this.loaded.has(key)) return;
       this.loaded.set(key, data);
       this.failedAt.delete(key);
