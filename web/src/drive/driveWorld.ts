@@ -386,6 +386,8 @@ export class DriveWorld {
     this.world.step(step, d.velocityIterations, d.positionIterations);
     if (air) {
       this.car.body.setAngularVelocity(0);
+      // The edge is still tracked (rails, ride surface) but the car keeps its layer (specs/hop.md v2).
+      this.layers.update(this.car.x, this.car.y);
       if (this.hop.step(step)) this.land();
     } else {
       this.layers.update(this.car.x, this.car.y);
@@ -593,12 +595,12 @@ export class DriveWorld {
   }
 
   /**
-   * Landing: the layer mask comes back and the zone test runs with the hold-off (a car landing on
-   * bollards gets out first, specs/zones.md); overlapping traffic is pushed (traffic step 7).
+   * Landing: the layer of the tracked edge and its mask come back (deck rails and deck traffic on a
+   * bridge, specs/hop.md v2); the zone test runs with the hold-off (a car landing on bollards gets
+   * out first, specs/zones.md); overlapping traffic is pushed (traffic step 7).
    */
   private land(): void {
     const car = this.car;
-    this.layers.update(car.x, car.y);
     car.setLayer(this.layers.layer);
     const r = Math.hypot(car.halfLength, car.halfWidth) + this.tuning.drive.bodyRoundM;
     this.inZone = car.layer === 0 && this.zones.insideFor(car.x, car.y, r, true);
