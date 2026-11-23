@@ -3,4 +3,5 @@ library;
 
 export 'src/art.dart';
 export 'src/contract.dart';
+export 'src/dice.dart';
 export 'src/shell.dart';

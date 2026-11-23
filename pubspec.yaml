@@ -27,6 +27,10 @@ workspace:
   - packages/mg_lode
   - packages/mg_posuvne
   - packages/mg_kviz
+  - packages/mg_prsi
+  - packages/mg_srdce
+  - packages/mg_kostky
+  - packages/mg_prase
   - packages/feed_hub
   - packages/meta_progress
   - packages/npc_dialogue
