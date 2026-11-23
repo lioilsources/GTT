@@ -2,7 +2,7 @@
   "module": "flow",
   "name": "wall_30",
   "car": "sedan_regent",
-  "inputs": [{"t": 0, "throttle": 0, "steer": 0, "brake": 0}],
+  "inputs": [{"t": 0, "throttle": 0, "steer": 0, "brake": 0, "boost": 1}],
   "expect": {
     "along_wall_mps": {"value": 17.617, "tol": 0.05},
     "along_wall_min_1s_mps": {"value": 17.295, "tol": 0.05},
