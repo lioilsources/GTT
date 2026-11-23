@@ -1408,12 +1408,15 @@ export class TuningDemo {
   /** fixed step per rendered frame */
   fps: number;
   durationS: number;
-  /** tram on the track next to the route this far from the start */
-  tramAtM: number;
+  /** tram track next to the crossing */
   trackSearchM: number;
+  /** the standing tram's tail this far past the crossing */
+  tramPastM: number;
   queueCars: number;
+  /** front of the first queued car before the crossing */
+  queueStopM: number;
   queueGapM: number;
-  /** hop when the queue's last car is this close ahead */
+  /** hop when the queue's last car is this close ahead of the nose */
   hopAtM: number;
   /** link preview frame; 0 = mid-air of the hop */
   ogAtS: number;
@@ -1422,9 +1425,10 @@ export class TuningDemo {
     this.seed = r.i('seed');
     this.fps = r.i('fps');
     this.durationS = r.d('duration_s');
-    this.tramAtM = r.d('tram_at_m');
     this.trackSearchM = r.d('track_search_m');
+    this.tramPastM = r.d('tram_past_m');
     this.queueCars = r.i('queue_cars');
+    this.queueStopM = r.d('queue_stop_m');
     this.queueGapM = r.d('queue_gap_m');
     this.hopAtM = r.d('hop_at_m');
     this.ogAtS = r.d('og_at_s');
@@ -1435,9 +1439,10 @@ export class TuningDemo {
       seed: this.seed,
       fps: this.fps,
       duration_s: this.durationS,
-      tram_at_m: this.tramAtM,
       track_search_m: this.trackSearchM,
+      tram_past_m: this.tramPastM,
       queue_cars: this.queueCars,
+      queue_stop_m: this.queueStopM,
       queue_gap_m: this.queueGapM,
       hop_at_m: this.hopAtM,
       og_at_s: this.ogAtS,

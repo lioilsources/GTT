@@ -1,11 +1,28 @@
 {
   "id": "demo",
   "city": "prague",
-  "description": "L-S9 demo shot (specs/demo.md): Vinohradská uphill from Legerova to Budečská, trams in the street.",
+  "description": "L-S9 demo shot (specs/demo.md): Vinohradská uphill from Legerova, left into Italská at the tram stop, on to Mánesova.",
   "oneway": true,
-  "start": {"a": "Vinohradská", "b": "Legerova"},
+  "start": {
+    "a": "Vinohradská",
+    "b": "Legerova"
+  },
   "legs": [
-    {"via": ["Vinohradská"], "to": {"a": "Vinohradská", "b": "Italská"}},
-    {"via": ["Vinohradská"], "to": {"a": "Vinohradská", "b": "Budečská"}}
+    {
+      "via": [
+        "Vinohradská"
+      ],
+      "to": {"a": "Vinohradská",
+        "b": "Italská"
+      }
+    },
+    {
+      "via": [
+        "Italská"
+      ],
+      "to": {"a": "Italská",
+        "b": "Mánesova"
+      }
+    }
   ]
 }

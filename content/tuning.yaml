@@ -184,12 +184,13 @@ bench:
 demo:
   seed: 20261123                # every random seed of the game in the demo
   fps: 30                       # fixed step per rendered frame
-  duration_s: 24.0
-  tram_at_m: 330.0              # tram on the track next to the route this far from the start
-  track_search_m: 6.0
-  queue_cars: 3
-  queue_gap_m: 7.5
-  hop_at_m: 16.0                # hop when the queue's last car is this close ahead
+  duration_s: 26.0
+  track_search_m: 6.0           # tram track next to the crossing
+  tram_past_m: 4.0              # the standing tram's tail this far past the crossing
+  queue_cars: 2
+  queue_stop_m: 5.0             # front of the first queued car before the crossing
+  queue_gap_m: 2.5
+  hop_at_m: 4.0                 # hop when the queue's last car is this close ahead of the nose
   og_at_s: 0.0                  # link preview frame; 0 = mid-air of the hop
 
 hud:

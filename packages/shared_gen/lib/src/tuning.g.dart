@@ -1416,9 +1416,10 @@ class TuningDemo {
       : seed = r.i('seed'),
         fps = r.i('fps'),
         durationS = r.d('duration_s'),
-        tramAtM = r.d('tram_at_m'),
         trackSearchM = r.d('track_search_m'),
+        tramPastM = r.d('tram_past_m'),
         queueCars = r.i('queue_cars'),
+        queueStopM = r.d('queue_stop_m'),
         queueGapM = r.d('queue_gap_m'),
         hopAtM = r.d('hop_at_m'),
         ogAtS = r.d('og_at_s');
@@ -1431,16 +1432,20 @@ class TuningDemo {
 
   double durationS;
 
-  /// tram on the track next to the route this far from the start
-  double tramAtM;
-
+  /// tram track next to the crossing
   double trackSearchM;
+
+  /// the standing tram's tail this far past the crossing
+  double tramPastM;
 
   int queueCars;
 
+  /// front of the first queued car before the crossing
+  double queueStopM;
+
   double queueGapM;
 
-  /// hop when the queue's last car is this close ahead
+  /// hop when the queue's last car is this close ahead of the nose
   double hopAtM;
 
   /// link preview frame; 0 = mid-air of the hop
@@ -1450,9 +1455,10 @@ class TuningDemo {
         'seed': seed,
         'fps': fps,
         'duration_s': durationS,
-        'tram_at_m': tramAtM,
         'track_search_m': trackSearchM,
+        'tram_past_m': tramPastM,
         'queue_cars': queueCars,
+        'queue_stop_m': queueStopM,
         'queue_gap_m': queueGapM,
         'hop_at_m': hopAtM,
         'og_at_s': ogAtS,

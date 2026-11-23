@@ -12,15 +12,18 @@ se stejným výsledkem.
 ## Scéna
 
 - Město `prague`, auto `vega_roadster`, trasa `content/bench/prague-demo.json` (Vinohradská od
-  Legerovy do kopce k Budečské; formát `specs/bench.md`), autopilot ze `specs/bench.md`.
-- Tramvaj: na koleji nejbližší bodu trasy ve vzdálenosti `demo.tram_at_m` od startu (do
-  `demo.track_search_m`), čelem ve směru trasy. Stojí po celý záběr (zastávka bez konce).
-- Kolona: `demo.queue_cars` aut provozu na hraně trasy v jízdním pruhu za tramvají, mezery
-  `demo.queue_gap_m`, stojí (provoz zastavuje za tramvají, `specs/traffic.md`).
-- Skok: jakmile je zadní konec posledního auta kolony do `demo.hop_at_m` před autem, autopilot
-  spustí skok (`specs/hop.md`), jednou za záběr.
-- Po dopadu autopilot dojede trasu; záběr končí po `demo.duration_s`.
-- Počasí jasno, den, ostatní provoz a chodci podle seedu `demo.seed` (všechny náhodné seedy hry).
+  Legerovy do kopce, u Italské doleva do Italské k Mánesově; formát `specs/bench.md`), autopilot
+  ze `specs/bench.md`. Křižovatka = konec prvního úseku trasy (Vinohradská × Italská).
+- Tramvaj: na koleji nejbližší křižovatce (do `demo.track_search_m`), čelem ve směru trasy před
+  křižovatkou, zadní konec `demo.tram_past_m` za křižovatkou. Stojí po celý záběr (zastávka bez
+  konce).
+- Kolona: `demo.queue_cars` stojících aut na čáře trasy před křižovatkou; přední konec prvního
+  `demo.queue_stop_m` před křižovatkou, mezery `demo.queue_gap_m`. Modely = první auta
+  pražského výběru zaparkovaných aut (`specs/cars.md`). Jsou to zaparkovaná auta (dají se odtlačit).
+- Skok: jakmile je zadní konec posledního auta kolony do `demo.hop_at_m` před přídí auta,
+  spustí se skok (`specs/hop.md`), jednou za záběr. Po dopadu autopilot odbočí a dojede trasu.
+- Záběr končí po `demo.duration_s`.
+- Počasí jasno, den; všechny náhodné seedy hry = `demo.seed`.
 - Bez úvodní karty, ladicího HUD, telefonu a tlačítek; jen svět (kamera jako ve hře).
 
 ## Pevný krok
