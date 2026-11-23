@@ -336,8 +336,9 @@
   level: P2
   spec: specs/art.md@2
   lead: web
-  flutter: todo
-  web: todo
+  flutter: done
+  web: done
+  checks: {flutter: pass, web: pass}
 
 - id: F-041
   name: Photo spots and the Camera app (frame the view, Passport photo stamps)
@@ -509,7 +510,7 @@
   spec: specs/minigames/kulecnik.md@1
   vectors: vectors/kulecnik.json
   lead: web
-  flutter: todo
+  flutter: done
   web: done
 
 - id: F-059
@@ -518,7 +519,7 @@
   spec: specs/minigames/bowling.md@1
   vectors: vectors/bowling.json
   lead: web
-  flutter: todo
+  flutter: done
   web: done
 
 - id: F-060
@@ -527,7 +528,7 @@
   spec: specs/minigames/minigolf.md@1
   vectors: vectors/minigolf.json
   lead: web
-  flutter: todo
+  flutter: done
   web: done
 
 - id: F-061
@@ -536,7 +537,7 @@
   spec: specs/minigames/had.md@1
   vectors: vectors/had.json
   lead: web
-  flutter: todo
+  flutter: done
   web: done
 
 - id: F-062
@@ -545,7 +546,7 @@
   spec: specs/minigames/cihly.md@1
   vectors: vectors/cihly.json
   lead: web
-  flutter: todo
+  flutter: done
   web: done
 
 - id: F-063
@@ -554,7 +555,7 @@
   spec: specs/minigames/krtek.md@1
   vectors: vectors/krtek.json
   lead: web
-  flutter: todo
+  flutter: done
   web: done
 
 - id: F-064
@@ -563,7 +564,7 @@
   spec: specs/minigames/hokej.md@2
   vectors: vectors/hokej.json
   lead: web
-  flutter: todo
+  flutter: done
   web: done
 
 - id: F-065

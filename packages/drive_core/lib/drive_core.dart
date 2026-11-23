@@ -28,4 +28,5 @@ export 'src/traffic/road_rules.dart';
 export 'src/traffic/traffic.dart';
 export 'src/trams/tram_rules.dart';
 export 'src/trams/trams.dart';
+export 'src/world_hits.dart';
 export 'src/zones.dart';

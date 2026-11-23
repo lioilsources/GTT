@@ -106,6 +106,7 @@ async function main(): Promise<void> {
       import('./cars/sheet'),
       json<unknown>('content/tuning.json').then((j) => Tuning.fromJson(j)),
       Promise.all(carIdValues.map(async (id) => [id, await json<CarSpec>(`content/cars/${id}.json`)] as const)).then((e) => new Map<string, CarSpec>(e)),
+      artReady,
     ]);
     for (const id of ['world', 'overlay', 'hud', 'loading']) $(id).hidden = true;
     const host = document.createElement('div');
@@ -191,6 +192,11 @@ async function main(): Promise<void> {
     drive.beforeStep = (step) => pilot.step(drive, drive.input, step);
   }
   view.setFleet(fleet);
+  // Car sprites (specs/art.md v2): one atlas set for the player, parked cars, traffic and patrols.
+  if (view.sprites) {
+    trafficView?.setSprites(view.sprites);
+    police.setSprites(view.sprites);
+  }
   view.rig.snap(drive.car.x, drive.car.y, drive.car.heading, tuning);
   // Own chunk and its ring first (3×3 = 9); the rest streams in while driving.
   await streamer.preload(drive.car.x, drive.car.y, drive.car.heading, 9);

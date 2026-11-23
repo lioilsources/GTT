@@ -14,6 +14,8 @@ import type { Traffic } from '../traffic/traffic';
 import { Tris, Z } from './geometry';
 import { rgba, type Rgba } from './palette';
 import { setCount, setShadowColour } from './shadow';
+import { LIGHTS_BRAKE, LIGHTS_FULL, LIGHTS_OFF, type CarSpriteView } from './carSprites';
+import { stretchedSize, TRAFFIC_SPRITE } from '../cars/sprites';
 
 /**
  * Traffic cars and traffic-light indicators (specs/traffic.md "Kreslení"): thin instances with
@@ -35,6 +37,11 @@ export class TrafficView {
   private readonly bodies: Rgba[];
   private readonly lightCols: Rgba[];
   private readonly m = Matrix.Identity();
+  /** Car sprites (specs/art.md v2): once `traffic_sedan` is in the atlas the cars draw through it. */
+  private sprites: CarSpriteView | null = null;
+  private spriteOn = false;
+  private shadowCol: Rgba = rgba(tokens.colorCarShadow);
+  private readonly shadowOnly: Tris;
 
   constructor(
     scene: Scene,
@@ -61,6 +68,9 @@ export class TrafficView {
     det.rect(0, 0, 0, hl * 0.9, -hw * 0.85, hl, -hw * 0.5, 0.05, head);
     det.rect(0, 0, 0, -hl, hw * 0.5, -hl * 0.92, hw * 0.85, 0.05, tail);
     det.rect(0, 0, 0, -hl, -hw * 0.85, -hl * 0.92, -hw * 0.5, 0.05, tail);
+    // Sprite mode: the details mesh keeps only the procedural ground shadow (specs/art.md "Stín").
+    this.shadowOnly = new Tris();
+    this.shadowOnly.rect(0, 0, 0, -hl + 0.6, -hw - 0.6, hl + 0.6, hw - 0.6, -0.02, rgba(tokens.colorCarShadow));
     const br = new Tris();
     const brakeCol = rgba(tokens.colorCarBrake);
     br.rect(0, 0, 0, -hl, hw * 0.5, -hl * 0.92, hw * 0.85, 0.06, brakeCol);
@@ -110,7 +120,22 @@ export class TrafficView {
 
   /** Ground shadow colour (the city skin's `shadow` by day, specs/style.md); the first rect of the details. */
   setShadow(c: Rgba): void {
+    this.shadowCol = c;
     setShadowColour(this.details, 4, c);
+  }
+
+  setSprites(sp: CarSpriteView): void {
+    this.sprites = sp;
+  }
+
+  private useSprite(): void {
+    this.spriteOn = true;
+    const vd = new VertexData();
+    vd.positions = new Float32Array(this.shadowOnly.pos);
+    vd.colors = new Float32Array(this.shadowOnly.col);
+    vd.indices = new Uint16Array(this.shadowOnly.idx);
+    vd.applyToMesh(this.details, false);
+    setShadowColour(this.details, 4, this.shadowCol);
   }
 
   /** Writes the instance buffers; call once per frame before scene.render. */
@@ -119,6 +144,13 @@ export class TrafficView {
     const lift = t.layers.deckLiftM;
     const inTunnel = playerLayer < 0;
     let n = 0, nb = 0;
+    const sp = this.sprites;
+    if (!this.spriteOn && sp?.has(TRAFFIC_SPRITE)) this.useSprite();
+    const sprite = this.spriteOn && sp !== null;
+    const spriteLights = sprite && sp.hasLights(TRAFFIC_SPRITE);
+    const size = stretchedSize(t.traffic.carLengthM, t.traffic.carWidthM, t.carScale);
+    const hl = (t.traffic.carLengthM * t.carScale) / 2, hw = (t.traffic.carWidthM * t.carScale) / 2;
+    if (sprite) sp.begin('traffic');
     for (const c of tr.cars) {
       // Patrols are drawn by police/view.ts.
       if (c.layer < 0 !== inTunnel || c.police) continue;
@@ -128,10 +160,18 @@ export class TrafficView {
       this.m.setTranslationFromFloats(c.x, h, c.y);
       this.m.copyToArray(this.carM, 16 * n);
       this.carC.set(this.bodies[c.colour % this.bodies.length]!, 4 * n);
-      if (c.braking || c.hitTimer > 0) this.m.copyToArray(this.brakeM, 16 * nb++);
+      const braking = c.braking || c.hitTimer > 0;
+      if (sprite) {
+        sp.add('traffic', {
+          id: TRAFFIC_SPRITE, decal: 0, world: this.m, len: size.len, wid: size.wid, hl, hw, axle: hl * t.drive.axleOffset,
+          paint: this.bodies[c.colour % this.bodies.length]!, steer: 0, wheelTint: null,
+          lights: !spriteLights ? LIGHTS_OFF : tr.night ? LIGHTS_FULL : braking ? LIGHTS_BRAKE : LIGHTS_OFF,
+        });
+      }
+      if (braking && !spriteLights) this.m.copyToArray(this.brakeM, 16 * nb++);
       n++;
     }
-    setCount(this.paint, n);
+    setCount(this.paint, sprite ? 0 : n);
     setCount(this.details, n);
     setCount(this.brake, nb);
     this.paint.thinInstanceBufferUpdated('matrix');

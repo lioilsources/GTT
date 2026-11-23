@@ -177,6 +177,13 @@ class DriveWorld {
   /// Called before every fixed step (the benchmark autopilot sets the input here).
   void Function(double step)? beforeStep;
 
+  /// Called when the car starts touching a building wall, with its speed along the contact normal
+  /// before the step (m/s); world minigames count crashes from it (specs/minigames/drift.md).
+  void Function(double intoMps)? onWall;
+
+  /// Called when a bridge or tunnel rail stops the car, with the speed into the rail (m/s).
+  void Function(double outMps)? onRail;
+
   TuningDrive get _d => tuning.drive;
 
   void spawn(double x, double y, double heading) {
@@ -308,6 +315,7 @@ class DriveWorld {
     _preVy = pv.y;
     _contactN.clear();
     world.step(step, subStepCount: _d.substeps);
+    if (onWall != null) _walls(Vector2(_preVx, _preVy));
     (double, double)? rail;
     if (flying) {
       // In the air the layer, the zone bit and the hit events stay out (specs/hop.md).
@@ -459,7 +467,22 @@ class DriveWorld {
   /// Drops the bollards from the player's mask while its centre is inside a zone (specs/zones.md).
   /// The zone bit only matters on layer 0 (Car.maskBits), so other layers skip the test.
   void _zoneMask() => car.setInsideZone(
-      car.layer == 0 && zones.insideFor(car.x, car.y, car.boundingRadius, wasInside: car.zoneBits == 0));
+    car.layer == 0 && zones.insideFor(car.x, car.y, car.boundingRadius, wasInside: car.zoneBits == 0),
+  );
+
+  /// Begin-contacts of the car with a building: the pre-step velocity along the contact normal.
+  void _walls(Vector2 v0) {
+    final body = car.body;
+    for (final e in world.contactEvents.begin) {
+      final a = e.shapeA.body == body, b = e.shapeB.body == body;
+      if (a == b) continue;
+      final other = a ? e.shapeB : e.shapeA;
+      if (other.filter.categoryBits != catBuildings) continue;
+      final n = e.normal;
+      final into = n.length2 > 0 ? (v0.x * n.x + v0.y * n.y).abs() : v0.length;
+      onWall?.call(into);
+    }
+  }
 
   /// Keeps the car on bridge decks and in tunnels; returns the rail's normal (towards the road) when
   /// the car moved into it, a static contact for [_wallStep] (specs/flow.md: bridge rails).
@@ -473,6 +496,7 @@ class DriveWorld {
     final out = v.x * nx + v.y * ny;
     car.body.setTransform(Vector2(h.x + nx * limit, h.y + ny * limit), car.body.rotation);
     if (out > 0) {
+      onRail?.call(out);
       final k = out * tuning.layers.railBounce;
       car.body.linearVelocity = Vector2(v.x - nx * k, v.y - ny * k);
       return (-nx, -ny);
