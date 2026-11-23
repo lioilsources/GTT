@@ -1,4 +1,4 @@
-// Tuning and cosmetics (specs/garage.md, version 1): the P0 rules (module `garage`), the config from
+// Tuning and cosmetics (specs/garage.md, version 2): the P0 rules (module `garage`), the config from
 // tuning and the catalog, and the pure look resolution (colours from design/tokens.json).
 import 'package:rules_core/rules_core.dart';
 import 'package:shared_gen/shared_gen.dart';
@@ -8,6 +8,15 @@ const garageSlots = ['engine', 'tyres', 'brakes', 'weight', 'drift'];
 
 /// Look parts in their fixed order (specs/garage.md "Vzhled").
 const garageParts = ['paint', 'decal', 'wheels', 'glow', 'smoke'];
+
+/// Sprite ids of the decal choices 1… (specs/art.md v3 `garage/decals/<id>.png`; index = choice − 1).
+const garageDecalIds = ['stripes', 'flames', 'checker', 'stars', 'lightning', 'waves', 'camo', 'halftone'];
+
+/// Sprite ids of the wheel choices 1… (specs/art.md v3 `garage/wheels/<id>.png`; index = choice − 1).
+const garageWheelIds = ['sport', 'whitewall', 'five_spoke', 'mesh', 'turbine', 'offroad'];
+
+/// Number of decal choices (0 = none + one per sprite id): 9.
+final garageDecalCount = 1 + garageDecalIds.length;
 
 /// `{carId: {key: int}}`: upgrade levels per slot or look values per part.
 typedef CarLevels = Map<String, Map<String, int>>;
@@ -34,8 +43,8 @@ class GarageConfig {
     }),
     parts: Map.unmodifiable({
       'paint': 1 + Tokens.colorGaragePaints.length,
-      'decal': 4,
-      'wheels': 3,
+      'decal': garageDecalCount,
+      'wheels': Tokens.colorGarageWheels.length,
       'glow': 1 + Tokens.colorGarageGlow.length,
       'smoke': 1 + Tokens.colorGarageSmoke.length,
     }),
@@ -303,7 +312,7 @@ CarLevels? _levels(Object? v) {
 
 /// The look of one car, resolved to colours; [paint] / [rim] / [glow] null = the catalog drawing.
 class CarLook {
-  const CarLook({this.paint, this.decal = 0, this.rim, this.glow, this.smoke});
+  const CarLook({this.paint, this.decal = 0, this.rim, this.glow, this.smoke, this.wheels = 0});
 
   /// Resolves the part values of [values] (missing = 0; out-of-range values fall back to 0).
   factory CarLook.of(Map<String, int>? values) {
@@ -311,10 +320,12 @@ class CarLook {
     int? pick(List<int> list, int i) => i >= 0 && i < list.length ? list[i] : null;
     final d = v('decal');
     final w = v('wheels');
+    final rim = pick(Tokens.colorGarageWheels, w);
     return CarLook(
       paint: v('paint') >= 1 ? pick(Tokens.colorGaragePaints, v('paint') - 1) : null,
-      decal: d >= 0 && d < 4 ? d : 0,
-      rim: pick(Tokens.colorGarageWheels, w) ?? Tokens.colorGarageWheels.first,
+      decal: d >= 0 && d < garageDecalCount ? d : 0,
+      rim: rim ?? Tokens.colorGarageWheels.first,
+      wheels: rim == null ? 0 : w,
       glow: v('glow') >= 1 ? pick(Tokens.colorGarageGlow, v('glow') - 1) : null,
       smoke: v('smoke') >= 1 ? pick(Tokens.colorGarageSmoke, v('smoke') - 1) : null,
     );
@@ -322,8 +333,11 @@ class CarLook {
 
   final int? paint, rim, glow, smoke;
 
-  /// 0 none, 1 stripes, 2 flames, 3 checker.
+  /// 0 none, 1 stripes, 2 flames, 3 checker, 4 stars, 5 lightning, 6 waves, 7 camo, 8 halftone.
   final int decal;
+
+  /// The wheels choice (0 stock; ≥ 1 a garage wheel sprite `garageWheelIds[wheels − 1]` when indexed).
+  final int wheels;
 
   static const stock = CarLook();
 }
