@@ -7,28 +7,92 @@ import type { TrackGraph } from '../world/model';
  * both clients check the same values.
  */
 
+const probeA = [0, 0, 0, 0];
+const probeB = [0, 0, 0, 0];
+
 /**
- * Next track edge at `node` after arriving along `from` (as traffic's chooseNext, without one-way
- * streets and alleys): candidates are the edges at the node in ascending index order without
- * `from`, duplicates and loops; pick `prng.nextInt(count)`. No candidate = terminus: turn back
- * along `from`. A border node (or a loop as the only way) = −1, the tram disappears.
+ * Point `probeM` metres along edge `ei` away from its end at `node` (or its far end when the edge
+ * is shorter), into out[0..1].
  */
-export function chooseNextTrack(g: TrackGraph, node: number, from: number, rng: Prng, scratch: number[] = []): number {
-  if (g.border[node]) return -1;
-  scratch.length = 0;
+function probe(g: TrackGraph, ei: number, node: number, probeM: number, out: number[]): void {
+  const e = g.edges[ei]!;
+  const d = Math.min(probeM, e.length);
+  e.pointAt(e.from === node ? d : e.length - d, out);
+}
+
+/**
+ * Cosine of the turn at `node` from arriving along edge `from` to leaving along edge `to`
+ * (specs/trams.md v2 "Sjízdnost"): arrival = from the point `probeM` along `from` to the node,
+ * departure = from the node to the point `probeM` along `to`. 1 when either direction is
+ * degenerate (zero length).
+ */
+export function turnCos(g: TrackGraph, node: number, from: number, to: number, probeM: number): number {
+  const nx = g.nodeXY[2 * node]!, ny = g.nodeXY[2 * node + 1]!;
+  probe(g, from, node, probeM, probeA);
+  probe(g, to, node, probeM, probeB);
+  const ax = nx - probeA[0]!, ay = ny - probeA[1]!;
+  const bx = probeB[0]! - nx, by = probeB[1]! - ny;
+  const la = Math.sqrt(ax * ax + ay * ay), lb = Math.sqrt(bx * bx + by * by);
+  if (la <= 1e-6 || lb <= 1e-6) return 1;
+  return (ax * bx + ay * by) / (la * lb);
+}
+
+/**
+ * Track edges a tram arriving at `node` along `from` can go on to, into `out` in ascending index
+ * order: the node's edges without `from`, duplicates and loops whose turn has a cosine of at least
+ * `cosMin` (cos of trams.max_switch_deg). Empty at a border node.
+ */
+export function feasibleNext(g: TrackGraph, node: number, from: number, cosMin: number, probeM: number, out: number[]): number[] {
+  out.length = 0;
+  if (g.border[node]) return out;
   const list = g.nodeEdges[node]!;
   // nodeEdges is in ascending index order (built edge by edge); skip duplicates of loops.
   for (let k = 0; k < list.length; k++) {
     const ei = list[k]!;
     if (ei === from || (k > 0 && list[k - 1] === ei)) continue;
     const e = g.edges[ei]!;
-    if (e.from !== e.to) scratch.push(ei);
+    if (e.from !== e.to && turnCos(g, node, from, ei, probeM) >= cosMin) out.push(ei);
   }
+  return out;
+}
+
+/**
+ * Next track edge at `node` after arriving along `from` (as traffic's chooseNext, without one-way
+ * streets and alleys): one of `feasibleNext`, picked with `prng.nextInt(count)`. No candidate =
+ * terminus: returns `from` (the tram changes ends). A border node (or a loop as the only way) =
+ * −1, the tram disappears.
+ */
+export function chooseNextTrack(g: TrackGraph, node: number, from: number, rng: Prng, cosMin: number, probeM: number, scratch: number[] = []): number {
+  if (g.border[node]) return -1;
+  feasibleNext(g, node, from, cosMin, probeM, scratch);
   if (scratch.length === 0) {
     const back = g.edges[from];
     return back && back.from !== back.to ? from : -1;
   }
   return scratch[rng.nextInt(scratch.length)]!;
+}
+
+/**
+ * The straightest edge a tram could have come from into `node` before leaving along `to`
+ * (seeding the path behind a new tram, specs/trams.md v2 "Vznik"): the largest turn cosine of
+ * at least `cosMin`, the lower index on a tie; −1 at a border node or without one.
+ */
+export function straightestPrev(g: TrackGraph, node: number, to: number, cosMin: number, probeM: number): number {
+  if (g.border[node]) return -1;
+  const list = g.nodeEdges[node]!;
+  let best = -1, bestCos = -Infinity;
+  for (let k = 0; k < list.length; k++) {
+    const ei = list[k]!;
+    if (ei === to || (k > 0 && list[k - 1] === ei)) continue;
+    const e = g.edges[ei]!;
+    if (e.from === e.to) continue;
+    const c = turnCos(g, node, ei, to, probeM);
+    if (c >= cosMin && c > bestCos) {
+      best = ei;
+      bestCos = c;
+    }
+  }
+  return best;
 }
 
 /**
