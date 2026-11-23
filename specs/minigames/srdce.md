@@ -105,3 +105,13 @@ k vítězi. Po rozdání tabulka bodů (`srdceDeal`). Jména soupeřů `srdceWes
 - `scores` po rozdání může překročit `target` u víc míst; konec je stejný.
 - Nové rozdání `lastTrick` nemění (UI ještě ukáže poslední zdvih předchozího rozdání).
 - Zdvih s pikovou dámou a srdci: body se sečtou (dáma 13 + srdce).
+
+## Upřesnění v1
+
+- Konec partie: `taken` zůstane z posledního rozdání, `tricks = 13`, `leader = turn` = vítěz
+  posledního zdvihu, `deal` beze změny. Konec rozdáním: `deal ≥ maxDeals`.
+- „Jiná karta“ v prvním zdvihu = karta za 0 bodů. Ruka bez křížů jen ze srdcí a pikové dámy z
+  náhodného rozdání prakticky nevznikne; vektor tuto větev nepokrývá (je v unit testu).
+- AI: `w` a `pts` se počítají ze zdvihu před kartou AI, `lastSeat` = zdvih má před ní 3 karty.
+- `by` musí odpovídat místu na tahu: `"player"` na místě 0, `"ai"` na 1–3.
+- `timeout` mění jen `over`.
