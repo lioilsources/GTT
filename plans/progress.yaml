@@ -176,7 +176,8 @@ items:
   - {id: M2-A5, milestone: M2, name: "soft launch (rozhoduje Ol1n)", size: M, status: todo}
   # ---------- M4 – Tokio (plans/M4_TOKIO.md)
   - {id: M4-S1, milestone: M4, name: "balíček Tokio: oblast T1, 25 památek, spoty, validate", size: L, status: wip, started: 2026-11-23T00:25}
-  - {id: M4-S2, milestone: M4, name: "Tokio v klientech: levostranný provoz, balíček, paleta (F-046)", size: M, status: todo}
+  - {id: M4-S2, milestone: M4, name: "Tokio v klientech: levostranný provoz, balíček, paleta (F-046)", size: M, status: "čeká na Ol1na", started: 2026-11-23T02:40,
+     done: 2026-11-23T03:10, commit: 228b7c9, evidence: "PR #160 (flutter), #162 a #164 (web); Tokio živě na webu (?city=tokyo), 60 fps na GPU, 2× trojúhelníky proti NYC; vzhled ve Flutteru na telefonu neověřen"}
   - {id: M4-S3, milestone: M4, name: "styl D – anime cel", size: M, status: todo}
   - {id: M4-S4, milestone: M4, name: "grafika Tokia: pohlednice, textury, suvenýry (L40S)", size: M, status: todo}
   - {id: M4-S5, milestone: M4, name: "místní vozidla Tokia", size: M, status: todo}
