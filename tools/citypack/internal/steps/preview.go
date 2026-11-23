@@ -122,6 +122,9 @@ func Preview(e *Env) error {
 	if err := previewCrop(p, dir); err != nil {
 		return err
 	}
+	if err := previewSection(p, dir); err != nil {
+		return err
+	}
 	if p.Manifest.NatureVersion > 0 {
 		np, err := previewNature(p, dir)
 		if err != nil {

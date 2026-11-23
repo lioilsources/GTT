@@ -8,7 +8,8 @@ overture_release: "2026-11-18.0"
 height_sources: [overture]
 road_keep_classes: [motorway, trunk, primary, secondary, tertiary]
 # The organic old town has few tertiary streets; keep the ones that carry the city.
-road_keep_names: [Pařížská, Dlouhá, Revoluční, Karmelitská, Újezd, Nerudova, Vinohradská, Korunní, Seifertova, Křižíkova, Sokolovská, Plzeňská, Nádražní, Národní, Spálená, Žitná, Ječná, Myslíkova, Vodičkova, Jindřišská, Hybernská, Dukelských hrdinů, Milady Horákové]
+road_keep_names: [Pařížská, Dlouhá, Revoluční, Karmelitská, Újezd, Nerudova, Vinohradská, Korunní, Seifertova, Křižíkova, Sokolovská, Plzeňská, Nádražní, Národní, Spálená, Žitná, Ječná, Myslíkova, Vodičkova, Jindřišská, Hybernská, Dukelských hrdinů, Milady Horákové,
+  Mánesův most, most Legií, Palackého most]   # car bridges Overture tags as minor (T3b)
 style: style.yaml
 start: {lat: 50.08050, lon: 14.41300, heading_deg: 0, street: Masarykovo nábřeží}   # by the National Theatre, castle ahead
 default_height_m: 18

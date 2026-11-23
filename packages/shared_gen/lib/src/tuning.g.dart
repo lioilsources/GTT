@@ -5303,6 +5303,8 @@ class TuningTerrainPipeline {
         roadGapMaxM = r.d('road_gap_max_m'),
         roadGapShare = r.d('road_gap_share'),
         roadStrip = TuningTerrainPipelineRoadStrip._(r.sub('road_strip')),
+        trench = TuningTerrainPipelineTrench._(r.sub('trench')),
+        elevatedFlag = TuningTerrainPipelineElevatedFlag._(r.sub('elevated_flag')),
         bridgeMinClearM = r.d('bridge_min_clear_m'),
         bridgeOverWaterM = r.d('bridge_over_water_m'),
         profileFairPasses = r.i('profile_fair_passes'),
@@ -5354,6 +5356,12 @@ class TuningTerrainPipeline {
   /// max_m 1.2: Moscow courtyard service ramps (Novoslobodskaya, Taganka) reach 1.18 m; Prague max 0.87, NYC 0.42
   final TuningTerrainPipelineRoadStrip roadStrip;
 
+  /// conform and validate: terrain within road width / 2 + margin_m never above the road + max_m
+  final TuningTerrainPipelineTrench trench;
+
+  /// a ground edge joined to a structure and this far above the terrain this long is a bridge
+  final TuningTerrainPipelineElevatedFlag elevatedFlag;
+
   /// validate fails below water/road + this; below bridge.clear_* it warns
   double bridgeMinClearM;
 
@@ -5387,6 +5395,8 @@ class TuningTerrainPipeline {
         'road_gap_max_m': roadGapMaxM,
         'road_gap_share': roadGapShare,
         'road_strip': roadStrip.toJson(),
+        'trench': trench.toJson(),
+        'elevated_flag': elevatedFlag.toJson(),
         'bridge_min_clear_m': bridgeMinClearM,
         'bridge_over_water_m': bridgeOverWaterM,
         'profile_fair_passes': profileFairPasses,
@@ -5449,6 +5459,61 @@ class TuningTerrainPipelineRoadStrip {
       };
 
   static const keys = ['tol_m', 'share', 'max_m'];
+}
+
+/// conform and validate: terrain within road width / 2 + margin_m never above the road + max_m
+class TuningTerrainPipelineTrench {
+  TuningTerrainPipelineTrench._(_R r)
+      : marginM = r.d('margin_m'),
+        maxM = r.d('max_m'),
+        share = r.d('share');
+
+  double marginM;
+
+  double maxM;
+
+  double share;
+
+  Map<String, Object> toJson() => {
+        'margin_m': marginM,
+        'max_m': maxM,
+        'share': share,
+      };
+
+  /// Value by YAML key, null when the key is unknown.
+  double? operator [](String key) => switch (key) {
+        'margin_m' => marginM,
+        'max_m' => maxM,
+        'share' => share,
+        _ => null,
+      };
+
+  static const keys = ['margin_m', 'max_m', 'share'];
+}
+
+/// a ground edge joined to a structure and this far above the terrain this long is a bridge
+class TuningTerrainPipelineElevatedFlag {
+  TuningTerrainPipelineElevatedFlag._(_R r)
+      : aboveM = r.d('above_m'),
+        runM = r.d('run_m');
+
+  double aboveM;
+
+  double runM;
+
+  Map<String, Object> toJson() => {
+        'above_m': aboveM,
+        'run_m': runM,
+      };
+
+  /// Value by YAML key, null when the key is unknown.
+  double? operator [](String key) => switch (key) {
+        'above_m' => aboveM,
+        'run_m' => runM,
+        _ => null,
+      };
+
+  static const keys = ['above_m', 'run_m'];
 }
 
 /// road strip samples that fit the grid nodes to the road profile
