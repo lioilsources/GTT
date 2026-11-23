@@ -4,8 +4,9 @@ import type { CarSpec } from '../gen/schema';
 import type { Tuning, TuningLayers } from '../gen/tuning';
 import type { ChunkData } from '../world/chunk';
 import { chunkKey, type City, type EdgeHit, type RoadEdge, type RoadGraph } from '../world/model';
-import { CAT_BUILDINGS, CAT_CAR, CAT_PARKED, CAT_TRAFFIC, Car, zoneMask } from './car';
+import { CAT_BUILDINGS, CAT_CAR, CAT_PARKED, CAT_TRAFFIC, CAT_ZONE, Car, zoneMask } from './car';
 import { ControlInput } from './controls';
+import { easeHeading, FlowState, roadSpot, SLIDE_SPIN_KEEP, UNSTICK_M, wallResponse, type StuckKind } from './flow';
 import { canHop, HopState } from './hop';
 import { generateProps, type Prop, type PropSet } from './props';
 import { Traffic } from '../traffic/traffic';
@@ -104,6 +105,22 @@ export class DriveWorld {
   readonly zones: ZoneWorld;
   /** Air-tank hop (specs/hop.md): charges and flight, per session. */
   readonly hop = new HopState();
+  /** Wall response, trail and rescue (specs/flow.md, F-069). */
+  readonly flow: FlowState;
+  /** An open context menu that does not pause (specs/flow.md: no automatic rescue then); none in W. */
+  flowBlocked: () => boolean = () => false;
+  /** The GPS route still ahead (interleaved metres) or null; the road move faces along it. */
+  routeAhead: () => ArrayLike<number> | null = () => null;
+  /** Called after every rescue move (automatic or manual) with its kind. */
+  onRescue: ((kind: StuckKind) => void) | null = null;
+  /** Static contact in the previous step; a head-on bounce needs a new contact. */
+  private wallContact = false;
+  /** The head-on bounce (with the 1 m unstick) is armed; see wallStep. */
+  private bounceArmed = true;
+  private freeT = 0;
+  // Velocity before the step (the "v before contact" of specs/flow.md).
+  private preVx = 0;
+  private preVy = 0;
 
   constructor(
     readonly city: City,
@@ -111,7 +128,8 @@ export class DriveWorld {
     readonly tuning: Tuning,
   ) {
     this.world = new World({ gravity: { x: 0, y: 0 } });
-    this.zones = new ZoneWorld(this.world, tuning.drive);
+    this.zones = new ZoneWorld(this.world, tuning.drive, tuning.flow.wall);
+    this.flow = new FlowState(tuning.flow.rescue);
     this.layers = new LayerTracker(city.graph, tuning.layers);
     this.car = this.makeCar(city.startX, city.startY, city.startHeading);
     this.layers.reset(this.car.x, this.car.y);
@@ -132,6 +150,9 @@ export class DriveWorld {
     this.layers.reset(x, y);
     this.car.setLayer(this.layers.layer);
     this.lastSkid = null;
+    this.flow.reset();
+    this.wallContact = false;
+    this.bounceArmed = true;
     // A new body starts on the ground; the tank stays (replaceCar fills it for a hop car).
     this.hop.air = 0;
     this.hop.t = 0;
@@ -178,11 +199,12 @@ export class DriveWorld {
   addChunk(c: ChunkData): void {
     const key = chunkKey(c.x, c.y);
     if (this.colliders.has(key)) return;
-    const d = this.tuning.drive;
+    const w = this.tuning.flow.wall;
     const body = this.world.createBody({ type: 'static' });
+    // Static contacts use flow.wall friction and restitution (specs/flow.md), not drive.building_*.
     const opt = {
-      friction: d.buildingFriction,
-      restitution: d.buildingRestitution,
+      friction: w.friction,
+      restitution: w.restitution,
       filterCategoryBits: CAT_BUILDINGS,
       filterMaskBits: CAT_CAR | CAT_PARKED | CAT_TRAFFIC, // pushed parked and loose traffic cars stop at walls
     };
@@ -238,7 +260,12 @@ export class DriveWorld {
     this.time += step;
     this.beforeStep?.(step);
     const air = this.hop.airborne;
-    if (air) {
+    const frozen = this.flow.animT > 0;
+    if (frozen) {
+      // Rescue animation (specs/flow.md): the car stands where it was put.
+      this.car.body.setLinearVelocity({ x: 0, y: 0 });
+      this.car.body.setAngularVelocity(0);
+    } else if (air) {
       // In the air (specs/hop.md): no input, no tyres, buildings only, the layer stays.
       this.car.fly();
     } else {
@@ -248,6 +275,9 @@ export class DriveWorld {
     }
     this.traffic?.preStep(step, this.car);
     this.trams?.preStep(step, this.car);
+    const pv = this.car.body.getLinearVelocity();
+    this.preVx = pv.x;
+    this.preVy = pv.y;
     this.world.step(step, d.velocityIterations, d.positionIterations);
     if (air) {
       this.car.body.setAngularVelocity(0);
@@ -258,9 +288,125 @@ export class DriveWorld {
     }
     this.traffic?.postStep(this.car);
     this.trams?.postStep(this.car);
-    if (this.car.layer !== 0) this.rails();
+    const rail = this.car.layer !== 0 ? this.rails() : null;
+    if (frozen) {
+      this.car.body.setLinearVelocity({ x: 0, y: 0 });
+      this.car.body.setAngularVelocity(0);
+    } else {
+      this.wallStep(step, rail);
+    }
     this.stepProps(step);
     this.skidMarks();
+    this.rescueStep(step);
+  }
+
+  /**
+   * Static contact response (specs/flow.md "Náraz do pevné překážky") after the physics step. The
+   * contact normal is the one the pre-step velocity drives into most. A slide applies in every step
+   * of contact; the head-on bounce only on a new contact while armed: it disarms itself until the
+   * car has been free of static contact for flow.rescue.stuck_time_s or was rescued, so a car
+   * pushing into a wall comes to rest there (and is rescued) instead of bouncing forever.
+   */
+  private wallStep(step: number, rail: { nx: number; ny: number } | null): void {
+    const car = this.car, body = car.body;
+    const vx = this.preVx, vy = this.preVy;
+    let nx = 0, ny = 0, best = Infinity;
+    for (let ce = body.getContactList(); ce; ce = ce.next) {
+      const c = ce.contact;
+      if (!c.isTouching()) continue;
+      const fa = c.getFixtureA(), fb = c.getFixtureB();
+      const mine = fa.getBody() === body;
+      const other = mine ? fb : fa;
+      if ((other.getFilterCategoryBits() & (CAT_BUILDINGS | CAT_ZONE)) === 0) continue;
+      const wm = c.getWorldManifold(null);
+      if (!wm) continue;
+      // planck's normal points from A to B; n must point from the wall to the car.
+      const sx = mine ? -wm.normal.x : wm.normal.x, sy = mine ? -wm.normal.y : wm.normal.y;
+      const vn = vx * sx + vy * sy;
+      if (vn < best) {
+        best = vn;
+        nx = sx;
+        ny = sy;
+      }
+    }
+    if (rail) {
+      const vn = vx * rail.nx + vy * rail.ny;
+      if (vn < best) {
+        best = vn;
+        nx = rail.nx;
+        ny = rail.ny;
+      }
+    }
+    const contact = best !== Infinity;
+    const isNew = contact && !this.wallContact;
+    this.wallContact = contact;
+    if (!contact) {
+      this.freeT += step;
+      if (this.freeT >= this.tuning.flow.rescue.stuckTimeS) this.bounceArmed = true;
+      return;
+    }
+    this.freeT = 0;
+    const r = wallResponse(vx, vy, nx, ny, this.tuning.flow.wall);
+    if (r === null) return;
+    if (r.slide) {
+      body.setLinearVelocity({ x: r.vx, y: r.vy });
+      body.setTransform(body.getPosition(), easeHeading(body.getAngle(), r.tx, r.ty, step));
+      body.setAngularVelocity(body.getAngularVelocity() * SLIDE_SPIN_KEEP);
+    } else if (isNew && this.bounceArmed) {
+      this.bounceArmed = false;
+      const p = body.getPosition();
+      body.setTransform({ x: p.x + nx * UNSTICK_M, y: p.y + ny * UNSTICK_M }, body.getAngle());
+      body.setLinearVelocity({ x: r.vx, y: r.vy });
+      body.setAngularVelocity(0);
+    }
+  }
+
+  /** Trail and automatic rescue (specs/flow.md "Vyproštění"); the move itself is place(). */
+  private rescueStep(step: number): void {
+    const car = this.car, inp = this.input;
+    const plan = this.flow.step(step, this.time, {
+      x: car.x, y: car.y, heading: car.heading, speed: car.speed,
+      braking: inp.brake > 0 || inp.handbrake, airborne: car.airborne,
+    }, this.flowBlocked());
+    if (plan === null) return;
+    if (plan.kind === 'road') this.toRoadSpot();
+    else this.place(plan.point.x, plan.point.y, plan.point.heading);
+    this.onRescue?.(plan.kind);
+  }
+
+  /**
+   * "Na silnici" (button or pause menu, specs/flow.md): the road move, free, counted as stuck.
+   * Returns false when the city has no kept ground road.
+   */
+  toRoad(): boolean {
+    const car = this.car;
+    this.flow.manual(this.time, car.x, car.y);
+    const ok = this.toRoadSpot();
+    this.onRescue?.('button');
+    return ok;
+  }
+
+  private toRoadSpot(): boolean {
+    const car = this.car;
+    const s = roadSpot(this.city.graph, car.x, car.y, this.routeAhead(), this.tuning.layers.searchM);
+    if (s === null) return false;
+    this.place(s.x, s.y, s.heading);
+    return true;
+  }
+
+  /** The rescue move: same body, at rest, on the ground at (x, y). */
+  private place(x: number, y: number, heading: number): void {
+    const car = this.car, body = car.body;
+    body.setTransform({ x, y }, heading);
+    body.setLinearVelocity({ x: 0, y: 0 });
+    body.setAngularVelocity(0);
+    car.wheelAngle = 0;
+    this.layers.reset(x, y);
+    car.setLayer(this.layers.layer);
+    this.lastSkid = null;
+    this.wallContact = false;
+    this.bounceArmed = true;
+    this.freeT = 0;
   }
 
   /**
@@ -288,13 +434,16 @@ export class DriveWorld {
   /** Last zone test result (the hold-off in specs/zones.md). */
   private inZone = false;
 
-  /** Keeps the car on bridge decks and in tunnels. */
-  private rails(): void {
+  /**
+   * Keeps the car on bridge decks and in tunnels; returns the rail's normal (towards the road) when
+   * the car moved into it, a static contact for wallStep (specs/flow.md: bridge rails).
+   */
+  private rails(): { nx: number; ny: number } | null {
     const h = this.layers.hit;
-    if (h === null || h.dist === 0) return;
+    if (h === null || h.dist === 0) return null;
     const car = this.car;
     const limit = Math.max(0, h.edge.width / 2 - car.halfWidth * this.tuning.layers.railMargin);
-    if (h.dist <= limit) return;
+    if (h.dist <= limit) return null;
     const nx = (car.x - h.x) / h.dist, ny = (car.y - h.y) / h.dist;
     const v = car.body.getLinearVelocity();
     const out = v.x * nx + v.y * ny;
@@ -303,7 +452,9 @@ export class DriveWorld {
       this.onRail?.(out);
       const k = out * this.tuning.layers.railBounce;
       car.body.setLinearVelocity({ x: v.x - nx * k, y: v.y - ny * k });
+      return { nx: -nx, ny: -ny };
     }
+    return null;
   }
 
   /** True while some knocked prop is still flying (its render transform changes). */
