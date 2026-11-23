@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:drive_core/drive_core.dart';
 import 'package:flame/game.dart';
 
+import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:npc_dialogue/npc_dialogue.dart';
@@ -15,6 +16,7 @@ import '../cities/cities.dart';
 import '../cities/passport_percent.dart';
 import '../game/metropole_game.dart';
 import '../game/pause.dart';
+import '../game/stuck_log.dart';
 import '../garage/garage_controller.dart';
 import '../l10n/app_localizations.dart';
 import '../loop/loop_controller.dart';
@@ -201,6 +203,16 @@ class _GameScreenState extends State<GameScreen> {
           final phone = _phone ??= PhoneController(game)
             ..onTravel = _travel
             ..passportPercent = ((c) => _passportPercent(game, c));
+          // Wall slide and rescue (specs/flow.md, F-069): the road move faces along the GPS route, the
+          // phone home screen (the pause menu) has "Na silnici", the debug build logs stuck events.
+          if (phone.onToRoad == null) {
+            phone.onToRoad = () => game.toRoad();
+            game.drive.routeAhead = () {
+              final r = phone.nav.ahead();
+              return r.length >= 4 ? r : null;
+            };
+            if (kDebugMode) game.drive.flow.onStuck = StuckLogFile(game.city.id).append;
+          }
           final loop = _loop ??= LoopController(
             game,
             phone,
@@ -257,6 +269,9 @@ class _GameScreenState extends State<GameScreen> {
                   garage.leave();
                 },
                 onHop: game.hop,
+                onToRoad: () {
+                  if (!game.worldPaused) game.toRoad();
+                },
                 onTuning: () => showTuningPanel(
                   context,
                   game,

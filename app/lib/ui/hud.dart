@@ -17,6 +17,7 @@ class Hud extends StatelessWidget {
     this.onPassport,
     this.onCarAction,
     this.onHop,
+    this.onToRoad,
   });
 
   final MetropoleGame game;
@@ -31,6 +32,9 @@ class Hud extends StatelessWidget {
 
   /// The "Hop" button of a car with an air tank (specs/hop.md "Ovládání").
   final VoidCallback? onHop;
+
+  /// "Na silnici" after `flow.rescue.button_after_s` of slow driving (specs/flow.md "Ručně").
+  final VoidCallback? onToRoad;
 
   @override
   Widget build(BuildContext context) {
@@ -47,6 +51,7 @@ class Hud extends StatelessWidget {
                 : s.layer < 0
                 ? ' · ${l.tunnelTag}'
                 : '';
+            final stuckOver = s.stuck10 > game.tuning.flow.stuckLimitPer10min;
             final speed = game.city.imperial
                 ? l.speedMph((s.speedMps * 2.23694).round())
                 : l.speedKmh((s.speedMps * 3.6).round());
@@ -123,6 +128,23 @@ class Hud extends StatelessWidget {
                       ),
                     ),
                   ),
+                if (s.flowButton && onToRoad != null)
+                  Positioned(
+                    left: 0,
+                    right: 0,
+                    bottom: 148,
+                    child: Center(
+                      child: FilledButton(
+                        key: const ValueKey('flowToRoad'),
+                        style: FilledButton.styleFrom(
+                          backgroundColor: const Color(Tokens.colorUiPill),
+                          foregroundColor: const Color(Tokens.colorUiText),
+                        ),
+                        onPressed: onToRoad,
+                        child: Text(l.flowToRoad),
+                      ),
+                    ),
+                  ),
                 Positioned(
                   left: 12,
                   bottom: 12,
@@ -147,10 +169,14 @@ class Hud extends StatelessWidget {
                     child: Text(
                       '${s.fps.toStringAsFixed(0)} fps  ${s.frameMs.toStringAsFixed(1)} ms\n'
                       'bld ${s.buildings}  prep ${s.prepMs.toStringAsFixed(2)} ms\n'
-                      'chunks ${s.chunks}  ${scheme.name.toUpperCase()}',
+                      'chunks ${s.chunks}  ${scheme.name.toUpperCase()}\n'
+                      // Stuck events in the last 10 minutes of driving (specs/flow.md "Měření zaseknutí").
+                      '${l.flowStuck10(s.stuck10)}',
                       textAlign: TextAlign.right,
                       style: TextStyle(
-                        color: s.fps >= 57 ? const Color(Tokens.colorUiFpsOk) : const Color(Tokens.colorUiFpsBad),
+                        color: s.fps >= 57 && !stuckOver
+                            ? const Color(Tokens.colorUiFpsOk)
+                            : const Color(Tokens.colorUiFpsBad),
                         fontSize: Tokens.fontHudSmall,
                         fontFeatures: const [FontFeature.tabularFigures()],
                         shadows: const [Shadow(blurRadius: 2)],

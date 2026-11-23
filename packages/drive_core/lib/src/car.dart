@@ -54,6 +54,8 @@ class Car {
         material: SurfaceMaterial(friction: t.carFriction, restitution: t.carRestitution),
         filter: Filter(categoryBits: catCar, maskBits: _mask(0, zoneMask(spec.class_, false))),
         enableContactEvents: true,
+        // Static contacts are read in the pre-solve callback (specs/flow.md, DriveWorld).
+        enablePreSolveEvents: true,
       ),
     );
   }
@@ -64,6 +66,9 @@ class Car {
   final double scale;
   late final Body body;
   late Shape _shape;
+
+  /// The body's one shape (contact tests, specs/flow.md).
+  Shape get shape => _shape;
   late final double halfLength;
   late final double halfWidth;
 

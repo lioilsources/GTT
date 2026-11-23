@@ -57,6 +57,10 @@ class PhoneController extends ChangeNotifier {
   void Function(CityId city)? onTravel;
   Future<int> Function(CityId city)? passportPercent;
 
+  /// "Na silnici" on the home screen (the phone is the pause menu, specs/flow.md "Ručně"); wired by
+  /// the game screen, null = no such action.
+  VoidCallback? onToRoad;
+
   /// Called when the player accepts a feed card (spot id); not for [acceptSpot].
   final List<void Function(String spotId)> onAccept = [];
 
