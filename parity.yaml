@@ -250,8 +250,9 @@
   level: P1
   spec: specs/trams.md@2
   lead: web
-  flutter: todo
-  web: todo
+  flutter: done
+  web: done
+  checks: {flutter: pass, web: pass}
 - id: F-031
   name: Kuličky (Prague local game)
   level: P0
