@@ -57,7 +57,10 @@ async function bridgeCity(terrain: boolean): Promise<City> {
   return City.load({ read: async (p) => files[p] ?? Promise.reject(new Error(p)) });
 }
 
-/** On the deck at x = 20 (layer 1) at cruise, a tram car standing 18 m ahead and a building under the deck. */
+/** Boosted speed above city cruise (specs/drive.md v2): the hop clears an 18 m gap and a tram car. */
+const HOP_MPS = 25;
+
+/** On the deck at x = 20 (layer 1) at HOP_MPS, a tram car standing 18 m ahead and a building under the deck. */
 async function onDeck(spec: CarSpec, terrain: boolean): Promise<{ d: DriveWorld; tramFar: number; tramNear: number }> {
   const city = await bridgeCity(terrain);
   const d = new DriveWorld(city, spec, tuning);
@@ -76,7 +79,7 @@ async function onDeck(spec: CarSpec, terrain: boolean): Promise<{ d: DriveWorld;
   const dt = 1 / tuning.drive.stepHz;
   for (let i = 0; i < 60 * 20 && d.car.x < 20; i++) {
     d.input.reset();
-    d.car.body.setLinearVelocity({ x: tuning.speedMps.cruise, y: 0 });
+    d.car.body.setLinearVelocity({ x: HOP_MPS, y: 0 });
     d.update(dt);
   }
   expect(d.car.layer).toBe(1);
@@ -86,7 +89,7 @@ async function onDeck(spec: CarSpec, terrain: boolean): Promise<{ d: DriveWorld;
   // A building under the deck (layer 0 only): the flight on layer 1 must not hit it.
   const house = d.world.createBody({ type: 'static', position: { x: tramX + 8, y: 0 } });
   house.createFixture({ shape: new Box(4, 4), filterCategoryBits: CAT_BUILDINGS, filterMaskBits: CAT_CAR });
-  d.car.body.setLinearVelocity({ x: tuning.speedMps.cruise, y: 0 });
+  d.car.body.setLinearVelocity({ x: HOP_MPS, y: 0 });
   return { d, tramFar: tramX + half + d.car.halfLength, tramNear: tramX - half - d.car.halfLength };
 }
 

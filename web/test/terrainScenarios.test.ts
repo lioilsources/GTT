@@ -95,20 +95,21 @@ const SETUPS: Record<string, Setup> = {
   jump_30_15: { track: ground(crest(0.15, 0.15)), x: -2, v: 30.3, s: 3 },
   jump_40_20: { track: ground(crest(0.2, 0.2)), x: -2, v: 40.4, s: 3 },
   hold_20: { track: ground((x) => 0.2 * x), x: 0, v: 0, s: 5 },
-  bridge_7: { track: BRIDGE, x: -300, v: 25, s: 30 },
+  // v3: starts at cruise; the down ramp tests the cruise hold (specs/drive.md v2).
+  bridge_7: { track: BRIDGE, x: -300, v: tuning.speedMps.cruise, s: 50 },
 };
 
 interface Scenario {
   module: string;
   name: string;
   car?: string;
-  inputs: Array<{ t: number; throttle?: number; steer?: number; brake?: number; coast?: number }>;
+  inputs: Array<{ t: number; throttle?: number; steer?: number; brake?: number; boost?: number; coast?: number }>;
   expect: Record<string, { value: number | null; tol: number }>;
 }
 
 const DEFAULT_INPUTS: Record<string, Scenario['inputs']> = {
   downhill_coast: [{ t: 0, coast: 1 }],
-  uphill_launch: [{ t: 0, throttle: 1 }],
+  uphill_launch: [{ t: 0, throttle: 1, boost: 1 }],
   jump_30_15: [{ t: 0, coast: 1 }],
   jump_40_20: [{ t: 0, coast: 1 }],
   hold_20: [{ t: 0, coast: 1 }],
@@ -150,6 +151,7 @@ async function runScenario(name: string, inputs: Scenario['inputs']): Promise<Re
     d.input.throttle = inp.throttle ?? 0;
     d.input.steer = inp.steer ?? 0;
     d.input.brake = inp.brake ?? 0;
+    d.input.boost = (inp.boost ?? 0) > 0;
     d.input.coast = (inp.coast ?? 0) > 0;
     const px = d.car.x, py = d.car.y;
     const wasAir = d.jump.airborne;
