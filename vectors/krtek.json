@@ -1,0 +1,6132 @@
+{
+ "module": "krtek",
+ "specVersion": 1,
+ "$comment": "M2-S9 dávka C: bouchni krtka (specs/minigames/krtek.md v1); zmenšená hra.",
+ "cases": [
+  {
+   "name": "hits-gold-3star-l1",
+   "config": {
+    "level": 1,
+    "holes": 4,
+    "gameTicks": 120,
+    "firstSpawn": 3,
+    "spawnEvery": [
+     6,
+     5,
+     4,
+     4,
+     3
+    ],
+    "upTicks": [
+     14,
+     12,
+     10,
+     9,
+     8
+    ],
+    "goldPct": 20,
+    "bombPct": [
+     0,
+     10,
+     15,
+     20,
+     25
+    ],
+    "points": 10,
+    "goldPoints": 30,
+    "bombPenalty": 20,
+    "starScores": [
+     100,
+     60,
+     30
+    ]
+   },
+   "seed": 71,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 3
+     },
+     "state": {
+      "tick": 3,
+      "holes": [
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "gold",
+        "left": 14
+       }
+      ],
+      "nextSpawn": 6,
+      "score": 0,
+      "hits": 0,
+      "misses": 0,
+      "over": false,
+      "rng": 503841611
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "hit",
+      "hole": 3
+     },
+     "state": {
+      "tick": 3,
+      "holes": [
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       }
+      ],
+      "nextSpawn": 6,
+      "score": 30,
+      "hits": 1,
+      "misses": 0,
+      "over": false,
+      "rng": 503841611
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 6
+     },
+     "state": {
+      "tick": 9,
+      "holes": [
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "mole",
+        "left": 14
+       }
+      ],
+      "nextSpawn": 6,
+      "score": 30,
+      "hits": 1,
+      "misses": 0,
+      "over": false,
+      "rng": 2346395020
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "hit",
+      "hole": 3
+     },
+     "state": {
+      "tick": 9,
+      "holes": [
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       }
+      ],
+      "nextSpawn": 6,
+      "score": 40,
+      "hits": 2,
+      "misses": 0,
+      "over": false,
+      "rng": 2346395020
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 6
+     },
+     "state": {
+      "tick": 15,
+      "holes": [
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "gold",
+        "left": 14
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       }
+      ],
+      "nextSpawn": 6,
+      "score": 40,
+      "hits": 2,
+      "misses": 0,
+      "over": false,
+      "rng": 48502608
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "hit",
+      "hole": 1
+     },
+     "state": {
+      "tick": 15,
+      "holes": [
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       }
+      ],
+      "nextSpawn": 6,
+      "score": 70,
+      "hits": 3,
+      "misses": 0,
+      "over": false,
+      "rng": 48502608
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 6
+     },
+     "state": {
+      "tick": 21,
+      "holes": [
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "gold",
+        "left": 14
+       }
+      ],
+      "nextSpawn": 6,
+      "score": 70,
+      "hits": 3,
+      "misses": 0,
+      "over": false,
+      "rng": 3627583310
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "hit",
+      "hole": 3
+     },
+     "state": {
+      "tick": 21,
+      "holes": [
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       }
+      ],
+      "nextSpawn": 6,
+      "score": 100,
+      "hits": 4,
+      "misses": 0,
+      "over": false,
+      "rng": 3627583310
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 6
+     },
+     "state": {
+      "tick": 27,
+      "holes": [
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "gold",
+        "left": 14
+       },
+       {
+        "kind": "",
+        "left": 0
+       }
+      ],
+      "nextSpawn": 6,
+      "score": 100,
+      "hits": 4,
+      "misses": 0,
+      "over": false,
+      "rng": 993978018
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "hit",
+      "hole": 2
+     },
+     "state": {
+      "tick": 27,
+      "holes": [
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       }
+      ],
+      "nextSpawn": 6,
+      "score": 130,
+      "hits": 5,
+      "misses": 0,
+      "over": false,
+      "rng": 993978018
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 6
+     },
+     "state": {
+      "tick": 33,
+      "holes": [
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "mole",
+        "left": 14
+       }
+      ],
+      "nextSpawn": 6,
+      "score": 130,
+      "hits": 5,
+      "misses": 0,
+      "over": false,
+      "rng": 3180607380
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "hit",
+      "hole": 3
+     },
+     "state": {
+      "tick": 33,
+      "holes": [
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       }
+      ],
+      "nextSpawn": 6,
+      "score": 140,
+      "hits": 6,
+      "misses": 0,
+      "over": false,
+      "rng": 3180607380
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 6
+     },
+     "state": {
+      "tick": 39,
+      "holes": [
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "mole",
+        "left": 14
+       }
+      ],
+      "nextSpawn": 6,
+      "score": 140,
+      "hits": 6,
+      "misses": 0,
+      "over": false,
+      "rng": 1728603570
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "hit",
+      "hole": 3
+     },
+     "state": {
+      "tick": 39,
+      "holes": [
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       }
+      ],
+      "nextSpawn": 6,
+      "score": 150,
+      "hits": 7,
+      "misses": 0,
+      "over": false,
+      "rng": 1728603570
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 6
+     },
+     "state": {
+      "tick": 45,
+      "holes": [
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "mole",
+        "left": 14
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       }
+      ],
+      "nextSpawn": 6,
+      "score": 150,
+      "hits": 7,
+      "misses": 0,
+      "over": false,
+      "rng": 1736161231
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "hit",
+      "hole": 1
+     },
+     "state": {
+      "tick": 45,
+      "holes": [
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       }
+      ],
+      "nextSpawn": 6,
+      "score": 160,
+      "hits": 8,
+      "misses": 0,
+      "over": false,
+      "rng": 1736161231
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 6
+     },
+     "state": {
+      "tick": 51,
+      "holes": [
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "mole",
+        "left": 14
+       },
+       {
+        "kind": "",
+        "left": 0
+       }
+      ],
+      "nextSpawn": 6,
+      "score": 160,
+      "hits": 8,
+      "misses": 0,
+      "over": false,
+      "rng": 3558788358
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "hit",
+      "hole": 2
+     },
+     "state": {
+      "tick": 51,
+      "holes": [
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       }
+      ],
+      "nextSpawn": 6,
+      "score": 170,
+      "hits": 9,
+      "misses": 0,
+      "over": false,
+      "rng": 3558788358
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 6
+     },
+     "state": {
+      "tick": 57,
+      "holes": [
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "mole",
+        "left": 14
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       }
+      ],
+      "nextSpawn": 6,
+      "score": 170,
+      "hits": 9,
+      "misses": 0,
+      "over": false,
+      "rng": 3631162345
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "hit",
+      "hole": 1
+     },
+     "state": {
+      "tick": 57,
+      "holes": [
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       }
+      ],
+      "nextSpawn": 6,
+      "score": 180,
+      "hits": 10,
+      "misses": 0,
+      "over": false,
+      "rng": 3631162345
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 6
+     },
+     "state": {
+      "tick": 63,
+      "holes": [
+       {
+        "kind": "mole",
+        "left": 14
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       }
+      ],
+      "nextSpawn": 6,
+      "score": 180,
+      "hits": 10,
+      "misses": 0,
+      "over": false,
+      "rng": 3352395286
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "hit",
+      "hole": 0
+     },
+     "state": {
+      "tick": 63,
+      "holes": [
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       }
+      ],
+      "nextSpawn": 6,
+      "score": 190,
+      "hits": 11,
+      "misses": 0,
+      "over": false,
+      "rng": 3352395286
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 6
+     },
+     "state": {
+      "tick": 69,
+      "holes": [
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "mole",
+        "left": 14
+       }
+      ],
+      "nextSpawn": 6,
+      "score": 190,
+      "hits": 11,
+      "misses": 0,
+      "over": false,
+      "rng": 3522412277
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "hit",
+      "hole": 3
+     },
+     "state": {
+      "tick": 69,
+      "holes": [
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       }
+      ],
+      "nextSpawn": 6,
+      "score": 200,
+      "hits": 12,
+      "misses": 0,
+      "over": false,
+      "rng": 3522412277
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 6
+     },
+     "state": {
+      "tick": 75,
+      "holes": [
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "mole",
+        "left": 14
+       }
+      ],
+      "nextSpawn": 6,
+      "score": 200,
+      "hits": 12,
+      "misses": 0,
+      "over": false,
+      "rng": 1260979321
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "hit",
+      "hole": 3
+     },
+     "state": {
+      "tick": 75,
+      "holes": [
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       }
+      ],
+      "nextSpawn": 6,
+      "score": 210,
+      "hits": 13,
+      "misses": 0,
+      "over": false,
+      "rng": 1260979321
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 6
+     },
+     "state": {
+      "tick": 81,
+      "holes": [
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "mole",
+        "left": 14
+       },
+       {
+        "kind": "",
+        "left": 0
+       }
+      ],
+      "nextSpawn": 6,
+      "score": 210,
+      "hits": 13,
+      "misses": 0,
+      "over": false,
+      "rng": 3839626198
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "hit",
+      "hole": 2
+     },
+     "state": {
+      "tick": 81,
+      "holes": [
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       }
+      ],
+      "nextSpawn": 6,
+      "score": 220,
+      "hits": 14,
+      "misses": 0,
+      "over": false,
+      "rng": 3839626198
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 6
+     },
+     "state": {
+      "tick": 87,
+      "holes": [
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "mole",
+        "left": 14
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       }
+      ],
+      "nextSpawn": 6,
+      "score": 220,
+      "hits": 14,
+      "misses": 0,
+      "over": false,
+      "rng": 2750192867
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "hit",
+      "hole": 1
+     },
+     "state": {
+      "tick": 87,
+      "holes": [
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       }
+      ],
+      "nextSpawn": 6,
+      "score": 230,
+      "hits": 15,
+      "misses": 0,
+      "over": false,
+      "rng": 2750192867
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 6
+     },
+     "state": {
+      "tick": 93,
+      "holes": [
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "mole",
+        "left": 14
+       }
+      ],
+      "nextSpawn": 6,
+      "score": 230,
+      "hits": 15,
+      "misses": 0,
+      "over": false,
+      "rng": 2197006774
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "hit",
+      "hole": 3
+     },
+     "state": {
+      "tick": 93,
+      "holes": [
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       }
+      ],
+      "nextSpawn": 6,
+      "score": 240,
+      "hits": 16,
+      "misses": 0,
+      "over": false,
+      "rng": 2197006774
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 6
+     },
+     "state": {
+      "tick": 99,
+      "holes": [
+       {
+        "kind": "gold",
+        "left": 14
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       }
+      ],
+      "nextSpawn": 6,
+      "score": 240,
+      "hits": 16,
+      "misses": 0,
+      "over": false,
+      "rng": 1808332714
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "hit",
+      "hole": 0
+     },
+     "state": {
+      "tick": 99,
+      "holes": [
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       }
+      ],
+      "nextSpawn": 6,
+      "score": 270,
+      "hits": 17,
+      "misses": 0,
+      "over": false,
+      "rng": 1808332714
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 6
+     },
+     "state": {
+      "tick": 105,
+      "holes": [
+       {
+        "kind": "mole",
+        "left": 14
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       }
+      ],
+      "nextSpawn": 6,
+      "score": 270,
+      "hits": 17,
+      "misses": 0,
+      "over": false,
+      "rng": 2829748585
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "hit",
+      "hole": 0
+     },
+     "state": {
+      "tick": 105,
+      "holes": [
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       }
+      ],
+      "nextSpawn": 6,
+      "score": 280,
+      "hits": 18,
+      "misses": 0,
+      "over": false,
+      "rng": 2829748585
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 6
+     },
+     "state": {
+      "tick": 111,
+      "holes": [
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "mole",
+        "left": 14
+       },
+       {
+        "kind": "",
+        "left": 0
+       }
+      ],
+      "nextSpawn": 6,
+      "score": 280,
+      "hits": 18,
+      "misses": 0,
+      "over": false,
+      "rng": 3378665754
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "hit",
+      "hole": 2
+     },
+     "state": {
+      "tick": 111,
+      "holes": [
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       }
+      ],
+      "nextSpawn": 6,
+      "score": 290,
+      "hits": 19,
+      "misses": 0,
+      "over": false,
+      "rng": 3378665754
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 6
+     },
+     "state": {
+      "tick": 117,
+      "holes": [
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "mole",
+        "left": 14
+       },
+       {
+        "kind": "",
+        "left": 0
+       }
+      ],
+      "nextSpawn": 6,
+      "score": 290,
+      "hits": 19,
+      "misses": 0,
+      "over": false,
+      "rng": 2972625080
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "hit",
+      "hole": 2
+     },
+     "state": {
+      "tick": 117,
+      "holes": [
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       }
+      ],
+      "nextSpawn": 6,
+      "score": 300,
+      "hits": 20,
+      "misses": 0,
+      "over": false,
+      "rng": 2972625080
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 6
+     },
+     "state": {
+      "tick": 120,
+      "holes": [
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       }
+      ],
+      "nextSpawn": 3,
+      "score": 300,
+      "hits": 20,
+      "misses": 0,
+      "over": true,
+      "rng": 2972625080
+     }
+    }
+   ],
+   "result": {
+    "winner": "player",
+    "stars": 3,
+    "score": 300,
+    "hits": 20,
+    "misses": 0
+   }
+  },
+  {
+   "name": "bombs-hit-floor-2star-l3",
+   "config": {
+    "level": 3,
+    "holes": 4,
+    "gameTicks": 120,
+    "firstSpawn": 3,
+    "spawnEvery": [
+     6,
+     5,
+     4,
+     4,
+     3
+    ],
+    "upTicks": [
+     14,
+     12,
+     10,
+     9,
+     8
+    ],
+    "goldPct": 20,
+    "bombPct": [
+     0,
+     10,
+     15,
+     20,
+     25
+    ],
+    "points": 10,
+    "goldPoints": 30,
+    "bombPenalty": 20,
+    "starScores": [
+     300,
+     100,
+     30
+    ]
+   },
+   "seed": 72,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 3
+     },
+     "state": {
+      "tick": 3,
+      "holes": [
+       {
+        "kind": "mole",
+        "left": 10
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       }
+      ],
+      "nextSpawn": 4,
+      "score": 0,
+      "hits": 0,
+      "misses": 0,
+      "over": false,
+      "rng": 570663236
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 4
+     },
+     "state": {
+      "tick": 7,
+      "holes": [
+       {
+        "kind": "mole",
+        "left": 6
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "mole",
+        "left": 10
+       }
+      ],
+      "nextSpawn": 4,
+      "score": 0,
+      "hits": 0,
+      "misses": 0,
+      "over": false,
+      "rng": 3016079283
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 4
+     },
+     "state": {
+      "tick": 11,
+      "holes": [
+       {
+        "kind": "mole",
+        "left": 2
+       },
+       {
+        "kind": "mole",
+        "left": 10
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "mole",
+        "left": 6
+       }
+      ],
+      "nextSpawn": 4,
+      "score": 0,
+      "hits": 0,
+      "misses": 0,
+      "over": false,
+      "rng": 634040264
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 4
+     },
+     "state": {
+      "tick": 15,
+      "holes": [
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "mole",
+        "left": 6
+       },
+       {
+        "kind": "mole",
+        "left": 10
+       },
+       {
+        "kind": "mole",
+        "left": 2
+       }
+      ],
+      "nextSpawn": 4,
+      "score": 0,
+      "hits": 0,
+      "misses": 1,
+      "over": false,
+      "rng": 605249998
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 4
+     },
+     "state": {
+      "tick": 19,
+      "holes": [
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "mole",
+        "left": 2
+       },
+       {
+        "kind": "mole",
+        "left": 6
+       },
+       {
+        "kind": "mole",
+        "left": 10
+       }
+      ],
+      "nextSpawn": 4,
+      "score": 0,
+      "hits": 0,
+      "misses": 2,
+      "over": false,
+      "rng": 1594238541
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 4
+     },
+     "state": {
+      "tick": 23,
+      "holes": [
+       {
+        "kind": "mole",
+        "left": 10
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "mole",
+        "left": 2
+       },
+       {
+        "kind": "mole",
+        "left": 6
+       }
+      ],
+      "nextSpawn": 4,
+      "score": 0,
+      "hits": 0,
+      "misses": 3,
+      "over": false,
+      "rng": 2291623935
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 4
+     },
+     "state": {
+      "tick": 27,
+      "holes": [
+       {
+        "kind": "mole",
+        "left": 6
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "mole",
+        "left": 10
+       },
+       {
+        "kind": "mole",
+        "left": 2
+       }
+      ],
+      "nextSpawn": 4,
+      "score": 0,
+      "hits": 0,
+      "misses": 4,
+      "over": false,
+      "rng": 897868574
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 4
+     },
+     "state": {
+      "tick": 31,
+      "holes": [
+       {
+        "kind": "mole",
+        "left": 2
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "mole",
+        "left": 6
+       },
+       {
+        "kind": "mole",
+        "left": 10
+       }
+      ],
+      "nextSpawn": 4,
+      "score": 0,
+      "hits": 0,
+      "misses": 5,
+      "over": false,
+      "rng": 795737157
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 4
+     },
+     "state": {
+      "tick": 35,
+      "holes": [
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "gold",
+        "left": 10
+       },
+       {
+        "kind": "mole",
+        "left": 2
+       },
+       {
+        "kind": "mole",
+        "left": 6
+       }
+      ],
+      "nextSpawn": 4,
+      "score": 0,
+      "hits": 0,
+      "misses": 6,
+      "over": false,
+      "rng": 3182753529
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 4
+     },
+     "state": {
+      "tick": 39,
+      "holes": [
+       {
+        "kind": "bomb",
+        "left": 10
+       },
+       {
+        "kind": "gold",
+        "left": 6
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "mole",
+        "left": 2
+       }
+      ],
+      "nextSpawn": 4,
+      "score": 0,
+      "hits": 0,
+      "misses": 7,
+      "over": false,
+      "rng": 1386077705
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "hit",
+      "hole": 0
+     },
+     "state": {
+      "tick": 39,
+      "holes": [
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "gold",
+        "left": 6
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "mole",
+        "left": 2
+       }
+      ],
+      "nextSpawn": 4,
+      "score": 0,
+      "hits": 0,
+      "misses": 7,
+      "over": false,
+      "rng": 1386077705
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "hit",
+      "hole": 1
+     },
+     "state": {
+      "tick": 39,
+      "holes": [
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "mole",
+        "left": 2
+       }
+      ],
+      "nextSpawn": 4,
+      "score": 30,
+      "hits": 1,
+      "misses": 7,
+      "over": false,
+      "rng": 1386077705
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "hit",
+      "hole": 3
+     },
+     "state": {
+      "tick": 39,
+      "holes": [
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       }
+      ],
+      "nextSpawn": 4,
+      "score": 40,
+      "hits": 2,
+      "misses": 7,
+      "over": false,
+      "rng": 1386077705
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 4
+     },
+     "state": {
+      "tick": 43,
+      "holes": [
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "bomb",
+        "left": 10
+       }
+      ],
+      "nextSpawn": 4,
+      "score": 40,
+      "hits": 2,
+      "misses": 7,
+      "over": false,
+      "rng": 1504008805
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "hit",
+      "hole": 3
+     },
+     "state": {
+      "tick": 43,
+      "holes": [
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       }
+      ],
+      "nextSpawn": 4,
+      "score": 20,
+      "hits": 2,
+      "misses": 7,
+      "over": false,
+      "rng": 1504008805
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 4
+     },
+     "state": {
+      "tick": 47,
+      "holes": [
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "bomb",
+        "left": 10
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       }
+      ],
+      "nextSpawn": 4,
+      "score": 20,
+      "hits": 2,
+      "misses": 7,
+      "over": false,
+      "rng": 3960377614
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "hit",
+      "hole": 1
+     },
+     "state": {
+      "tick": 47,
+      "holes": [
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       }
+      ],
+      "nextSpawn": 4,
+      "score": 0,
+      "hits": 2,
+      "misses": 7,
+      "over": false,
+      "rng": 3960377614
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 4
+     },
+     "state": {
+      "tick": 51,
+      "holes": [
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "gold",
+        "left": 10
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       }
+      ],
+      "nextSpawn": 4,
+      "score": 0,
+      "hits": 2,
+      "misses": 7,
+      "over": false,
+      "rng": 1716959529
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "hit",
+      "hole": 1
+     },
+     "state": {
+      "tick": 51,
+      "holes": [
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       }
+      ],
+      "nextSpawn": 4,
+      "score": 30,
+      "hits": 3,
+      "misses": 7,
+      "over": false,
+      "rng": 1716959529
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 4
+     },
+     "state": {
+      "tick": 55,
+      "holes": [
+       {
+        "kind": "mole",
+        "left": 10
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       }
+      ],
+      "nextSpawn": 4,
+      "score": 30,
+      "hits": 3,
+      "misses": 7,
+      "over": false,
+      "rng": 3460949676
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "hit",
+      "hole": 0
+     },
+     "state": {
+      "tick": 55,
+      "holes": [
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       }
+      ],
+      "nextSpawn": 4,
+      "score": 40,
+      "hits": 4,
+      "misses": 7,
+      "over": false,
+      "rng": 3460949676
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 4
+     },
+     "state": {
+      "tick": 59,
+      "holes": [
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "mole",
+        "left": 10
+       },
+       {
+        "kind": "",
+        "left": 0
+       }
+      ],
+      "nextSpawn": 4,
+      "score": 40,
+      "hits": 4,
+      "misses": 7,
+      "over": false,
+      "rng": 4028248055
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "hit",
+      "hole": 2
+     },
+     "state": {
+      "tick": 59,
+      "holes": [
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       }
+      ],
+      "nextSpawn": 4,
+      "score": 50,
+      "hits": 5,
+      "misses": 7,
+      "over": false,
+      "rng": 4028248055
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 4
+     },
+     "state": {
+      "tick": 63,
+      "holes": [
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "bomb",
+        "left": 10
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       }
+      ],
+      "nextSpawn": 4,
+      "score": 50,
+      "hits": 5,
+      "misses": 7,
+      "over": false,
+      "rng": 933018308
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "hit",
+      "hole": 1
+     },
+     "state": {
+      "tick": 63,
+      "holes": [
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       }
+      ],
+      "nextSpawn": 4,
+      "score": 30,
+      "hits": 5,
+      "misses": 7,
+      "over": false,
+      "rng": 933018308
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 4
+     },
+     "state": {
+      "tick": 67,
+      "holes": [
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "mole",
+        "left": 10
+       },
+       {
+        "kind": "",
+        "left": 0
+       }
+      ],
+      "nextSpawn": 4,
+      "score": 30,
+      "hits": 5,
+      "misses": 7,
+      "over": false,
+      "rng": 1865647396
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "hit",
+      "hole": 2
+     },
+     "state": {
+      "tick": 67,
+      "holes": [
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       }
+      ],
+      "nextSpawn": 4,
+      "score": 40,
+      "hits": 6,
+      "misses": 7,
+      "over": false,
+      "rng": 1865647396
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 4
+     },
+     "state": {
+      "tick": 71,
+      "holes": [
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "bomb",
+        "left": 10
+       }
+      ],
+      "nextSpawn": 4,
+      "score": 40,
+      "hits": 6,
+      "misses": 7,
+      "over": false,
+      "rng": 3580050500
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "hit",
+      "hole": 3
+     },
+     "state": {
+      "tick": 71,
+      "holes": [
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       }
+      ],
+      "nextSpawn": 4,
+      "score": 20,
+      "hits": 6,
+      "misses": 7,
+      "over": false,
+      "rng": 3580050500
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 4
+     },
+     "state": {
+      "tick": 75,
+      "holes": [
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "gold",
+        "left": 10
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       }
+      ],
+      "nextSpawn": 4,
+      "score": 20,
+      "hits": 6,
+      "misses": 7,
+      "over": false,
+      "rng": 4183391627
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "hit",
+      "hole": 1
+     },
+     "state": {
+      "tick": 75,
+      "holes": [
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       }
+      ],
+      "nextSpawn": 4,
+      "score": 50,
+      "hits": 7,
+      "misses": 7,
+      "over": false,
+      "rng": 4183391627
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 4
+     },
+     "state": {
+      "tick": 79,
+      "holes": [
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "mole",
+        "left": 10
+       }
+      ],
+      "nextSpawn": 4,
+      "score": 50,
+      "hits": 7,
+      "misses": 7,
+      "over": false,
+      "rng": 107080157
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "hit",
+      "hole": 3
+     },
+     "state": {
+      "tick": 79,
+      "holes": [
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       }
+      ],
+      "nextSpawn": 4,
+      "score": 60,
+      "hits": 8,
+      "misses": 7,
+      "over": false,
+      "rng": 107080157
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 4
+     },
+     "state": {
+      "tick": 83,
+      "holes": [
+       {
+        "kind": "mole",
+        "left": 10
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       }
+      ],
+      "nextSpawn": 4,
+      "score": 60,
+      "hits": 8,
+      "misses": 7,
+      "over": false,
+      "rng": 545326143
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "hit",
+      "hole": 0
+     },
+     "state": {
+      "tick": 83,
+      "holes": [
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       }
+      ],
+      "nextSpawn": 4,
+      "score": 70,
+      "hits": 9,
+      "misses": 7,
+      "over": false,
+      "rng": 545326143
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 4
+     },
+     "state": {
+      "tick": 87,
+      "holes": [
+       {
+        "kind": "gold",
+        "left": 10
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       }
+      ],
+      "nextSpawn": 4,
+      "score": 70,
+      "hits": 9,
+      "misses": 7,
+      "over": false,
+      "rng": 3642063018
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "hit",
+      "hole": 0
+     },
+     "state": {
+      "tick": 87,
+      "holes": [
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       }
+      ],
+      "nextSpawn": 4,
+      "score": 100,
+      "hits": 10,
+      "misses": 7,
+      "over": false,
+      "rng": 3642063018
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 4
+     },
+     "state": {
+      "tick": 91,
+      "holes": [
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "mole",
+        "left": 10
+       },
+       {
+        "kind": "",
+        "left": 0
+       }
+      ],
+      "nextSpawn": 4,
+      "score": 100,
+      "hits": 10,
+      "misses": 7,
+      "over": false,
+      "rng": 2742041092
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "hit",
+      "hole": 2
+     },
+     "state": {
+      "tick": 91,
+      "holes": [
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       }
+      ],
+      "nextSpawn": 4,
+      "score": 110,
+      "hits": 11,
+      "misses": 7,
+      "over": false,
+      "rng": 2742041092
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 4
+     },
+     "state": {
+      "tick": 95,
+      "holes": [
+       {
+        "kind": "mole",
+        "left": 10
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       }
+      ],
+      "nextSpawn": 4,
+      "score": 110,
+      "hits": 11,
+      "misses": 7,
+      "over": false,
+      "rng": 1956291155
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "hit",
+      "hole": 0
+     },
+     "state": {
+      "tick": 95,
+      "holes": [
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       }
+      ],
+      "nextSpawn": 4,
+      "score": 120,
+      "hits": 12,
+      "misses": 7,
+      "over": false,
+      "rng": 1956291155
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 4
+     },
+     "state": {
+      "tick": 99,
+      "holes": [
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "gold",
+        "left": 10
+       }
+      ],
+      "nextSpawn": 4,
+      "score": 120,
+      "hits": 12,
+      "misses": 7,
+      "over": false,
+      "rng": 1683614731
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "hit",
+      "hole": 3
+     },
+     "state": {
+      "tick": 99,
+      "holes": [
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       }
+      ],
+      "nextSpawn": 4,
+      "score": 150,
+      "hits": 13,
+      "misses": 7,
+      "over": false,
+      "rng": 1683614731
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 4
+     },
+     "state": {
+      "tick": 103,
+      "holes": [
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "mole",
+        "left": 10
+       }
+      ],
+      "nextSpawn": 4,
+      "score": 150,
+      "hits": 13,
+      "misses": 7,
+      "over": false,
+      "rng": 1556673153
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "hit",
+      "hole": 3
+     },
+     "state": {
+      "tick": 103,
+      "holes": [
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       }
+      ],
+      "nextSpawn": 4,
+      "score": 160,
+      "hits": 14,
+      "misses": 7,
+      "over": false,
+      "rng": 1556673153
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 4
+     },
+     "state": {
+      "tick": 107,
+      "holes": [
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "gold",
+        "left": 10
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       }
+      ],
+      "nextSpawn": 4,
+      "score": 160,
+      "hits": 14,
+      "misses": 7,
+      "over": false,
+      "rng": 3651275528
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "hit",
+      "hole": 1
+     },
+     "state": {
+      "tick": 107,
+      "holes": [
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       }
+      ],
+      "nextSpawn": 4,
+      "score": 190,
+      "hits": 15,
+      "misses": 7,
+      "over": false,
+      "rng": 3651275528
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 4
+     },
+     "state": {
+      "tick": 111,
+      "holes": [
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "mole",
+        "left": 10
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       }
+      ],
+      "nextSpawn": 4,
+      "score": 190,
+      "hits": 15,
+      "misses": 7,
+      "over": false,
+      "rng": 1237116856
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "hit",
+      "hole": 1
+     },
+     "state": {
+      "tick": 111,
+      "holes": [
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       }
+      ],
+      "nextSpawn": 4,
+      "score": 200,
+      "hits": 16,
+      "misses": 7,
+      "over": false,
+      "rng": 1237116856
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 4
+     },
+     "state": {
+      "tick": 115,
+      "holes": [
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "mole",
+        "left": 10
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       }
+      ],
+      "nextSpawn": 4,
+      "score": 200,
+      "hits": 16,
+      "misses": 7,
+      "over": false,
+      "rng": 73390891
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "hit",
+      "hole": 1
+     },
+     "state": {
+      "tick": 115,
+      "holes": [
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       }
+      ],
+      "nextSpawn": 4,
+      "score": 210,
+      "hits": 17,
+      "misses": 7,
+      "over": false,
+      "rng": 73390891
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 4
+     },
+     "state": {
+      "tick": 119,
+      "holes": [
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "mole",
+        "left": 10
+       },
+       {
+        "kind": "",
+        "left": 0
+       }
+      ],
+      "nextSpawn": 4,
+      "score": 210,
+      "hits": 17,
+      "misses": 7,
+      "over": false,
+      "rng": 398186336
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "hit",
+      "hole": 2
+     },
+     "state": {
+      "tick": 119,
+      "holes": [
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       }
+      ],
+      "nextSpawn": 4,
+      "score": 220,
+      "hits": 18,
+      "misses": 7,
+      "over": false,
+      "rng": 398186336
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 4
+     },
+     "state": {
+      "tick": 120,
+      "holes": [
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       }
+      ],
+      "nextSpawn": 3,
+      "score": 220,
+      "hits": 18,
+      "misses": 7,
+      "over": true,
+      "rng": 398186336
+     }
+    }
+   ],
+   "result": {
+    "winner": "player",
+    "stars": 2,
+    "score": 220,
+    "hits": 18,
+    "misses": 7
+   }
+  },
+  {
+   "name": "escapes-empty-hit-1star-l5",
+   "config": {
+    "level": 5,
+    "holes": 4,
+    "gameTicks": 120,
+    "firstSpawn": 3,
+    "spawnEvery": [
+     6,
+     5,
+     4,
+     4,
+     3
+    ],
+    "upTicks": [
+     14,
+     12,
+     10,
+     9,
+     8
+    ],
+    "goldPct": 20,
+    "bombPct": [
+     0,
+     10,
+     15,
+     20,
+     25
+    ],
+    "points": 10,
+    "goldPoints": 30,
+    "bombPenalty": 20,
+    "starScores": [
+     400,
+     300,
+     30
+    ]
+   },
+   "seed": 73,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 3
+     },
+     "state": {
+      "tick": 3,
+      "holes": [
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "gold",
+        "left": 8
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       }
+      ],
+      "nextSpawn": 3,
+      "score": 0,
+      "hits": 0,
+      "misses": 0,
+      "over": false,
+      "rng": 638297925
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "hit",
+      "hole": 1
+     },
+     "state": {
+      "tick": 3,
+      "holes": [
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       }
+      ],
+      "nextSpawn": 3,
+      "score": 30,
+      "hits": 1,
+      "misses": 0,
+      "over": false,
+      "rng": 638297925
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 3
+     },
+     "state": {
+      "tick": 6,
+      "holes": [
+       {
+        "kind": "mole",
+        "left": 8
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       }
+      ],
+      "nextSpawn": 3,
+      "score": 30,
+      "hits": 1,
+      "misses": 0,
+      "over": false,
+      "rng": 2710580988
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "hit",
+      "hole": 1
+     },
+     "state": {
+      "tick": 6,
+      "holes": [
+       {
+        "kind": "mole",
+        "left": 8
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       }
+      ],
+      "nextSpawn": 3,
+      "score": 30,
+      "hits": 1,
+      "misses": 0,
+      "over": false,
+      "rng": 2710580988
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 3
+     },
+     "state": {
+      "tick": 9,
+      "holes": [
+       {
+        "kind": "mole",
+        "left": 5
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "mole",
+        "left": 8
+       },
+       {
+        "kind": "",
+        "left": 0
+       }
+      ],
+      "nextSpawn": 3,
+      "score": 30,
+      "hits": 1,
+      "misses": 0,
+      "over": false,
+      "rng": 161870872
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 3
+     },
+     "state": {
+      "tick": 12,
+      "holes": [
+       {
+        "kind": "mole",
+        "left": 2
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "mole",
+        "left": 5
+       },
+       {
+        "kind": "bomb",
+        "left": 8
+       }
+      ],
+      "nextSpawn": 3,
+      "score": 30,
+      "hits": 1,
+      "misses": 0,
+      "over": false,
+      "rng": 1038777724
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "hit",
+      "hole": 0
+     },
+     "state": {
+      "tick": 12,
+      "holes": [
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "mole",
+        "left": 5
+       },
+       {
+        "kind": "bomb",
+        "left": 8
+       }
+      ],
+      "nextSpawn": 3,
+      "score": 40,
+      "hits": 2,
+      "misses": 0,
+      "over": false,
+      "rng": 1038777724
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 3
+     },
+     "state": {
+      "tick": 15,
+      "holes": [
+       {
+        "kind": "bomb",
+        "left": 8
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "mole",
+        "left": 2
+       },
+       {
+        "kind": "bomb",
+        "left": 5
+       }
+      ],
+      "nextSpawn": 3,
+      "score": 40,
+      "hits": 2,
+      "misses": 0,
+      "over": false,
+      "rng": 4074112313
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 3
+     },
+     "state": {
+      "tick": 18,
+      "holes": [
+       {
+        "kind": "bomb",
+        "left": 5
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "mole",
+        "left": 8
+       },
+       {
+        "kind": "bomb",
+        "left": 2
+       }
+      ],
+      "nextSpawn": 3,
+      "score": 40,
+      "hits": 2,
+      "misses": 1,
+      "over": false,
+      "rng": 3515609288
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "hit",
+      "hole": 2
+     },
+     "state": {
+      "tick": 18,
+      "holes": [
+       {
+        "kind": "bomb",
+        "left": 5
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "bomb",
+        "left": 2
+       }
+      ],
+      "nextSpawn": 3,
+      "score": 50,
+      "hits": 3,
+      "misses": 1,
+      "over": false,
+      "rng": 3515609288
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 3
+     },
+     "state": {
+      "tick": 21,
+      "holes": [
+       {
+        "kind": "bomb",
+        "left": 2
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "mole",
+        "left": 8
+       }
+      ],
+      "nextSpawn": 3,
+      "score": 50,
+      "hits": 3,
+      "misses": 1,
+      "over": false,
+      "rng": 828873648
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 3
+     },
+     "state": {
+      "tick": 24,
+      "holes": [
+       {
+        "kind": "mole",
+        "left": 8
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "mole",
+        "left": 5
+       }
+      ],
+      "nextSpawn": 3,
+      "score": 50,
+      "hits": 3,
+      "misses": 1,
+      "over": false,
+      "rng": 3869862388
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 3
+     },
+     "state": {
+      "tick": 27,
+      "holes": [
+       {
+        "kind": "mole",
+        "left": 5
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "gold",
+        "left": 8
+       },
+       {
+        "kind": "mole",
+        "left": 2
+       }
+      ],
+      "nextSpawn": 3,
+      "score": 50,
+      "hits": 3,
+      "misses": 1,
+      "over": false,
+      "rng": 2074553841
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "hit",
+      "hole": 0
+     },
+     "state": {
+      "tick": 27,
+      "holes": [
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "gold",
+        "left": 8
+       },
+       {
+        "kind": "mole",
+        "left": 2
+       }
+      ],
+      "nextSpawn": 3,
+      "score": 60,
+      "hits": 4,
+      "misses": 1,
+      "over": false,
+      "rng": 2074553841
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 3
+     },
+     "state": {
+      "tick": 30,
+      "holes": [
+       {
+        "kind": "bomb",
+        "left": 8
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "gold",
+        "left": 5
+       },
+       {
+        "kind": "",
+        "left": 0
+       }
+      ],
+      "nextSpawn": 3,
+      "score": 60,
+      "hits": 4,
+      "misses": 2,
+      "over": false,
+      "rng": 2915745808
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 3
+     },
+     "state": {
+      "tick": 33,
+      "holes": [
+       {
+        "kind": "bomb",
+        "left": 5
+       },
+       {
+        "kind": "mole",
+        "left": 8
+       },
+       {
+        "kind": "gold",
+        "left": 2
+       },
+       {
+        "kind": "",
+        "left": 0
+       }
+      ],
+      "nextSpawn": 3,
+      "score": 60,
+      "hits": 4,
+      "misses": 2,
+      "over": false,
+      "rng": 3128342492
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "hit",
+      "hole": 1
+     },
+     "state": {
+      "tick": 33,
+      "holes": [
+       {
+        "kind": "bomb",
+        "left": 5
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "gold",
+        "left": 2
+       },
+       {
+        "kind": "",
+        "left": 0
+       }
+      ],
+      "nextSpawn": 3,
+      "score": 70,
+      "hits": 5,
+      "misses": 2,
+      "over": false,
+      "rng": 3128342492
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 3
+     },
+     "state": {
+      "tick": 36,
+      "holes": [
+       {
+        "kind": "bomb",
+        "left": 2
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "gold",
+        "left": 8
+       }
+      ],
+      "nextSpawn": 3,
+      "score": 70,
+      "hits": 5,
+      "misses": 3,
+      "over": false,
+      "rng": 901624641
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 3
+     },
+     "state": {
+      "tick": 39,
+      "holes": [
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "gold",
+        "left": 8
+       },
+       {
+        "kind": "gold",
+        "left": 5
+       }
+      ],
+      "nextSpawn": 3,
+      "score": 70,
+      "hits": 5,
+      "misses": 3,
+      "over": false,
+      "rng": 994738944
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "hit",
+      "hole": 2
+     },
+     "state": {
+      "tick": 39,
+      "holes": [
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "gold",
+        "left": 5
+       }
+      ],
+      "nextSpawn": 3,
+      "score": 100,
+      "hits": 6,
+      "misses": 3,
+      "over": false,
+      "rng": 994738944
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 3
+     },
+     "state": {
+      "tick": 42,
+      "holes": [
+       {
+        "kind": "mole",
+        "left": 8
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "gold",
+        "left": 2
+       }
+      ],
+      "nextSpawn": 3,
+      "score": 100,
+      "hits": 6,
+      "misses": 3,
+      "over": false,
+      "rng": 3718917192
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 3
+     },
+     "state": {
+      "tick": 45,
+      "holes": [
+       {
+        "kind": "mole",
+        "left": 5
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "bomb",
+        "left": 8
+       },
+       {
+        "kind": "",
+        "left": 0
+       }
+      ],
+      "nextSpawn": 3,
+      "score": 100,
+      "hits": 6,
+      "misses": 4,
+      "over": false,
+      "rng": 1429081801
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "hit",
+      "hole": 0
+     },
+     "state": {
+      "tick": 45,
+      "holes": [
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "bomb",
+        "left": 8
+       },
+       {
+        "kind": "",
+        "left": 0
+       }
+      ],
+      "nextSpawn": 3,
+      "score": 110,
+      "hits": 7,
+      "misses": 4,
+      "over": false,
+      "rng": 1429081801
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 3
+     },
+     "state": {
+      "tick": 48,
+      "holes": [
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "bomb",
+        "left": 5
+       },
+       {
+        "kind": "bomb",
+        "left": 8
+       }
+      ],
+      "nextSpawn": 3,
+      "score": 110,
+      "hits": 7,
+      "misses": 4,
+      "over": false,
+      "rng": 4243886800
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 3
+     },
+     "state": {
+      "tick": 51,
+      "holes": [
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "mole",
+        "left": 8
+       },
+       {
+        "kind": "bomb",
+        "left": 2
+       },
+       {
+        "kind": "bomb",
+        "left": 5
+       }
+      ],
+      "nextSpawn": 3,
+      "score": 110,
+      "hits": 7,
+      "misses": 4,
+      "over": false,
+      "rng": 3272062988
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 3
+     },
+     "state": {
+      "tick": 54,
+      "holes": [
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "mole",
+        "left": 5
+       },
+       {
+        "kind": "bomb",
+        "left": 8
+       },
+       {
+        "kind": "bomb",
+        "left": 2
+       }
+      ],
+      "nextSpawn": 3,
+      "score": 110,
+      "hits": 7,
+      "misses": 4,
+      "over": false,
+      "rng": 4013951408
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 3
+     },
+     "state": {
+      "tick": 57,
+      "holes": [
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "mole",
+        "left": 2
+       },
+       {
+        "kind": "bomb",
+        "left": 5
+       },
+       {
+        "kind": "mole",
+        "left": 8
+       }
+      ],
+      "nextSpawn": 3,
+      "score": 110,
+      "hits": 7,
+      "misses": 4,
+      "over": false,
+      "rng": 3185339497
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "hit",
+      "hole": 1
+     },
+     "state": {
+      "tick": 57,
+      "holes": [
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "bomb",
+        "left": 5
+       },
+       {
+        "kind": "mole",
+        "left": 8
+       }
+      ],
+      "nextSpawn": 3,
+      "score": 120,
+      "hits": 8,
+      "misses": 4,
+      "over": false,
+      "rng": 3185339497
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 3
+     },
+     "state": {
+      "tick": 60,
+      "holes": [
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "bomb",
+        "left": 8
+       },
+       {
+        "kind": "bomb",
+        "left": 2
+       },
+       {
+        "kind": "mole",
+        "left": 5
+       }
+      ],
+      "nextSpawn": 3,
+      "score": 120,
+      "hits": 8,
+      "misses": 4,
+      "over": false,
+      "rng": 2131513306
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 3
+     },
+     "state": {
+      "tick": 63,
+      "holes": [
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "bomb",
+        "left": 5
+       },
+       {
+        "kind": "mole",
+        "left": 8
+       },
+       {
+        "kind": "mole",
+        "left": 2
+       }
+      ],
+      "nextSpawn": 3,
+      "score": 120,
+      "hits": 8,
+      "misses": 4,
+      "over": false,
+      "rng": 2502990373
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "hit",
+      "hole": 2
+     },
+     "state": {
+      "tick": 63,
+      "holes": [
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "bomb",
+        "left": 5
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "mole",
+        "left": 2
+       }
+      ],
+      "nextSpawn": 3,
+      "score": 130,
+      "hits": 9,
+      "misses": 4,
+      "over": false,
+      "rng": 2502990373
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 3
+     },
+     "state": {
+      "tick": 66,
+      "holes": [
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "bomb",
+        "left": 2
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "gold",
+        "left": 8
+       }
+      ],
+      "nextSpawn": 3,
+      "score": 130,
+      "hits": 9,
+      "misses": 5,
+      "over": false,
+      "rng": 1462881933
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 3
+     },
+     "state": {
+      "tick": 69,
+      "holes": [
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "gold",
+        "left": 8
+       },
+       {
+        "kind": "gold",
+        "left": 5
+       }
+      ],
+      "nextSpawn": 3,
+      "score": 130,
+      "hits": 9,
+      "misses": 5,
+      "over": false,
+      "rng": 439714029
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "hit",
+      "hole": 2
+     },
+     "state": {
+      "tick": 69,
+      "holes": [
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "gold",
+        "left": 5
+       }
+      ],
+      "nextSpawn": 3,
+      "score": 160,
+      "hits": 10,
+      "misses": 5,
+      "over": false,
+      "rng": 439714029
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 3
+     },
+     "state": {
+      "tick": 72,
+      "holes": [
+       {
+        "kind": "mole",
+        "left": 8
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "gold",
+        "left": 2
+       }
+      ],
+      "nextSpawn": 3,
+      "score": 160,
+      "hits": 10,
+      "misses": 5,
+      "over": false,
+      "rng": 4190358791
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 3
+     },
+     "state": {
+      "tick": 75,
+      "holes": [
+       {
+        "kind": "mole",
+        "left": 5
+       },
+       {
+        "kind": "mole",
+        "left": 8
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       }
+      ],
+      "nextSpawn": 3,
+      "score": 160,
+      "hits": 10,
+      "misses": 6,
+      "over": false,
+      "rng": 4218685582
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "hit",
+      "hole": 0
+     },
+     "state": {
+      "tick": 75,
+      "holes": [
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "mole",
+        "left": 8
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       }
+      ],
+      "nextSpawn": 3,
+      "score": 170,
+      "hits": 11,
+      "misses": 6,
+      "over": false,
+      "rng": 4218685582
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 3
+     },
+     "state": {
+      "tick": 78,
+      "holes": [
+       {
+        "kind": "mole",
+        "left": 8
+       },
+       {
+        "kind": "mole",
+        "left": 5
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       }
+      ],
+      "nextSpawn": 3,
+      "score": 170,
+      "hits": 11,
+      "misses": 6,
+      "over": false,
+      "rng": 2365670194
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 3
+     },
+     "state": {
+      "tick": 81,
+      "holes": [
+       {
+        "kind": "mole",
+        "left": 5
+       },
+       {
+        "kind": "mole",
+        "left": 2
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "gold",
+        "left": 8
+       }
+      ],
+      "nextSpawn": 3,
+      "score": 170,
+      "hits": 11,
+      "misses": 6,
+      "over": false,
+      "rng": 312179933
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "hit",
+      "hole": 0
+     },
+     "state": {
+      "tick": 81,
+      "holes": [
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "mole",
+        "left": 2
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "gold",
+        "left": 8
+       }
+      ],
+      "nextSpawn": 3,
+      "score": 180,
+      "hits": 12,
+      "misses": 6,
+      "over": false,
+      "rng": 312179933
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 3
+     },
+     "state": {
+      "tick": 84,
+      "holes": [
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "bomb",
+        "left": 8
+       },
+       {
+        "kind": "gold",
+        "left": 5
+       }
+      ],
+      "nextSpawn": 3,
+      "score": 180,
+      "hits": 12,
+      "misses": 7,
+      "over": false,
+      "rng": 1279692908
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 3
+     },
+     "state": {
+      "tick": 87,
+      "holes": [
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "gold",
+        "left": 8
+       },
+       {
+        "kind": "bomb",
+        "left": 5
+       },
+       {
+        "kind": "gold",
+        "left": 2
+       }
+      ],
+      "nextSpawn": 3,
+      "score": 180,
+      "hits": 12,
+      "misses": 7,
+      "over": false,
+      "rng": 2086364543
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "hit",
+      "hole": 1
+     },
+     "state": {
+      "tick": 87,
+      "holes": [
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "bomb",
+        "left": 5
+       },
+       {
+        "kind": "gold",
+        "left": 2
+       }
+      ],
+      "nextSpawn": 3,
+      "score": 210,
+      "hits": 13,
+      "misses": 7,
+      "over": false,
+      "rng": 2086364543
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 3
+     },
+     "state": {
+      "tick": 90,
+      "holes": [
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "bomb",
+        "left": 8
+       },
+       {
+        "kind": "bomb",
+        "left": 2
+       },
+       {
+        "kind": "",
+        "left": 0
+       }
+      ],
+      "nextSpawn": 3,
+      "score": 210,
+      "hits": 13,
+      "misses": 8,
+      "over": false,
+      "rng": 3521827309
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 3
+     },
+     "state": {
+      "tick": 93,
+      "holes": [
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "bomb",
+        "left": 5
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "bomb",
+        "left": 8
+       }
+      ],
+      "nextSpawn": 3,
+      "score": 210,
+      "hits": 13,
+      "misses": 8,
+      "over": false,
+      "rng": 848033106
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 3
+     },
+     "state": {
+      "tick": 96,
+      "holes": [
+       {
+        "kind": "bomb",
+        "left": 8
+       },
+       {
+        "kind": "bomb",
+        "left": 2
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "bomb",
+        "left": 5
+       }
+      ],
+      "nextSpawn": 3,
+      "score": 210,
+      "hits": 13,
+      "misses": 8,
+      "over": false,
+      "rng": 1494218715
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 3
+     },
+     "state": {
+      "tick": 99,
+      "holes": [
+       {
+        "kind": "bomb",
+        "left": 5
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "gold",
+        "left": 8
+       },
+       {
+        "kind": "bomb",
+        "left": 2
+       }
+      ],
+      "nextSpawn": 3,
+      "score": 210,
+      "hits": 13,
+      "misses": 8,
+      "over": false,
+      "rng": 4243398231
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 3
+     },
+     "state": {
+      "tick": 102,
+      "holes": [
+       {
+        "kind": "bomb",
+        "left": 2
+       },
+       {
+        "kind": "mole",
+        "left": 8
+       },
+       {
+        "kind": "gold",
+        "left": 5
+       },
+       {
+        "kind": "",
+        "left": 0
+       }
+      ],
+      "nextSpawn": 3,
+      "score": 210,
+      "hits": 13,
+      "misses": 8,
+      "over": false,
+      "rng": 3629657598
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "hit",
+      "hole": 1
+     },
+     "state": {
+      "tick": 102,
+      "holes": [
+       {
+        "kind": "bomb",
+        "left": 2
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "gold",
+        "left": 5
+       },
+       {
+        "kind": "",
+        "left": 0
+       }
+      ],
+      "nextSpawn": 3,
+      "score": 220,
+      "hits": 14,
+      "misses": 8,
+      "over": false,
+      "rng": 3629657598
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 3
+     },
+     "state": {
+      "tick": 105,
+      "holes": [
+       {
+        "kind": "mole",
+        "left": 8
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "gold",
+        "left": 2
+       },
+       {
+        "kind": "",
+        "left": 0
+       }
+      ],
+      "nextSpawn": 3,
+      "score": 220,
+      "hits": 14,
+      "misses": 8,
+      "over": false,
+      "rng": 889425292
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 3
+     },
+     "state": {
+      "tick": 108,
+      "holes": [
+       {
+        "kind": "mole",
+        "left": 5
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "gold",
+        "left": 8
+       },
+       {
+        "kind": "",
+        "left": 0
+       }
+      ],
+      "nextSpawn": 3,
+      "score": 220,
+      "hits": 14,
+      "misses": 9,
+      "over": false,
+      "rng": 594889337
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "hit",
+      "hole": 0
+     },
+     "state": {
+      "tick": 108,
+      "holes": [
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "gold",
+        "left": 8
+       },
+       {
+        "kind": "",
+        "left": 0
+       }
+      ],
+      "nextSpawn": 3,
+      "score": 230,
+      "hits": 15,
+      "misses": 9,
+      "over": false,
+      "rng": 594889337
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 3
+     },
+     "state": {
+      "tick": 111,
+      "holes": [
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "gold",
+        "left": 5
+       },
+       {
+        "kind": "mole",
+        "left": 8
+       }
+      ],
+      "nextSpawn": 3,
+      "score": 230,
+      "hits": 15,
+      "misses": 9,
+      "over": false,
+      "rng": 2506651077
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 3
+     },
+     "state": {
+      "tick": 114,
+      "holes": [
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "mole",
+        "left": 8
+       },
+       {
+        "kind": "gold",
+        "left": 2
+       },
+       {
+        "kind": "mole",
+        "left": 5
+       }
+      ],
+      "nextSpawn": 3,
+      "score": 230,
+      "hits": 15,
+      "misses": 9,
+      "over": false,
+      "rng": 3694977588
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "hit",
+      "hole": 1
+     },
+     "state": {
+      "tick": 114,
+      "holes": [
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "gold",
+        "left": 2
+       },
+       {
+        "kind": "mole",
+        "left": 5
+       }
+      ],
+      "nextSpawn": 3,
+      "score": 240,
+      "hits": 16,
+      "misses": 9,
+      "over": false,
+      "rng": 3694977588
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 3
+     },
+     "state": {
+      "tick": 117,
+      "holes": [
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "mole",
+        "left": 8
+       },
+       {
+        "kind": "mole",
+        "left": 2
+       }
+      ],
+      "nextSpawn": 3,
+      "score": 240,
+      "hits": 16,
+      "misses": 10,
+      "over": false,
+      "rng": 3853759682
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 3
+     },
+     "state": {
+      "tick": 120,
+      "holes": [
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "gold",
+        "left": 8
+       },
+       {
+        "kind": "mole",
+        "left": 5
+       },
+       {
+        "kind": "",
+        "left": 0
+       }
+      ],
+      "nextSpawn": 3,
+      "score": 240,
+      "hits": 16,
+      "misses": 11,
+      "over": true,
+      "rng": 3790827938
+     }
+    }
+   ],
+   "result": {
+    "winner": "player",
+    "stars": 1,
+    "score": 240,
+    "hits": 16,
+    "misses": 11
+   }
+  },
+  {
+   "name": "full-board-no-rng-0star-l4",
+   "config": {
+    "level": 4,
+    "holes": 4,
+    "gameTicks": 60,
+    "firstSpawn": 3,
+    "spawnEvery": [
+     6,
+     5,
+     4,
+     2,
+     3
+    ],
+    "upTicks": [
+     14,
+     12,
+     10,
+     30,
+     8
+    ],
+    "goldPct": 20,
+    "bombPct": [
+     0,
+     10,
+     15,
+     20,
+     25
+    ],
+    "points": 10,
+    "goldPoints": 30,
+    "bombPenalty": 20,
+    "starScores": [
+     100,
+     60,
+     30
+    ]
+   },
+   "seed": 74,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 5
+     },
+     "state": {
+      "tick": 5,
+      "holes": [
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "mole",
+        "left": 28
+       },
+       {
+        "kind": "mole",
+        "left": 30
+       }
+      ],
+      "nextSpawn": 2,
+      "score": 0,
+      "hits": 0,
+      "misses": 0,
+      "over": false,
+      "rng": 3495759541
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 5
+     },
+     "state": {
+      "tick": 10,
+      "holes": [
+       {
+        "kind": "gold",
+        "left": 27
+       },
+       {
+        "kind": "mole",
+        "left": 29
+       },
+       {
+        "kind": "mole",
+        "left": 23
+       },
+       {
+        "kind": "mole",
+        "left": 25
+       }
+      ],
+      "nextSpawn": 1,
+      "score": 0,
+      "hits": 0,
+      "misses": 0,
+      "over": false,
+      "rng": 2006712440
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 5
+     },
+     "state": {
+      "tick": 15,
+      "holes": [
+       {
+        "kind": "gold",
+        "left": 22
+       },
+       {
+        "kind": "mole",
+        "left": 24
+       },
+       {
+        "kind": "mole",
+        "left": 18
+       },
+       {
+        "kind": "mole",
+        "left": 20
+       }
+      ],
+      "nextSpawn": 2,
+      "score": 0,
+      "hits": 0,
+      "misses": 0,
+      "over": false,
+      "rng": 2006712440
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 5
+     },
+     "state": {
+      "tick": 20,
+      "holes": [
+       {
+        "kind": "gold",
+        "left": 17
+       },
+       {
+        "kind": "mole",
+        "left": 19
+       },
+       {
+        "kind": "mole",
+        "left": 13
+       },
+       {
+        "kind": "mole",
+        "left": 15
+       }
+      ],
+      "nextSpawn": 1,
+      "score": 0,
+      "hits": 0,
+      "misses": 0,
+      "over": false,
+      "rng": 2006712440
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 5
+     },
+     "state": {
+      "tick": 25,
+      "holes": [
+       {
+        "kind": "gold",
+        "left": 12
+       },
+       {
+        "kind": "mole",
+        "left": 14
+       },
+       {
+        "kind": "mole",
+        "left": 8
+       },
+       {
+        "kind": "mole",
+        "left": 10
+       }
+      ],
+      "nextSpawn": 2,
+      "score": 0,
+      "hits": 0,
+      "misses": 0,
+      "over": false,
+      "rng": 2006712440
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 5
+     },
+     "state": {
+      "tick": 30,
+      "holes": [
+       {
+        "kind": "gold",
+        "left": 7
+       },
+       {
+        "kind": "mole",
+        "left": 9
+       },
+       {
+        "kind": "mole",
+        "left": 3
+       },
+       {
+        "kind": "mole",
+        "left": 5
+       }
+      ],
+      "nextSpawn": 1,
+      "score": 0,
+      "hits": 0,
+      "misses": 0,
+      "over": false,
+      "rng": 2006712440
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 5
+     },
+     "state": {
+      "tick": 35,
+      "holes": [
+       {
+        "kind": "gold",
+        "left": 2
+       },
+       {
+        "kind": "mole",
+        "left": 4
+       },
+       {
+        "kind": "bomb",
+        "left": 28
+       },
+       {
+        "kind": "gold",
+        "left": 30
+       }
+      ],
+      "nextSpawn": 2,
+      "score": 0,
+      "hits": 0,
+      "misses": 2,
+      "over": false,
+      "rng": 2012765634
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 5
+     },
+     "state": {
+      "tick": 40,
+      "holes": [
+       {
+        "kind": "mole",
+        "left": 27
+       },
+       {
+        "kind": "mole",
+        "left": 29
+       },
+       {
+        "kind": "bomb",
+        "left": 23
+       },
+       {
+        "kind": "gold",
+        "left": 25
+       }
+      ],
+      "nextSpawn": 1,
+      "score": 0,
+      "hits": 0,
+      "misses": 4,
+      "over": false,
+      "rng": 2773587899
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 5
+     },
+     "state": {
+      "tick": 45,
+      "holes": [
+       {
+        "kind": "mole",
+        "left": 22
+       },
+       {
+        "kind": "mole",
+        "left": 24
+       },
+       {
+        "kind": "bomb",
+        "left": 18
+       },
+       {
+        "kind": "gold",
+        "left": 20
+       }
+      ],
+      "nextSpawn": 2,
+      "score": 0,
+      "hits": 0,
+      "misses": 4,
+      "over": false,
+      "rng": 2773587899
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 5
+     },
+     "state": {
+      "tick": 50,
+      "holes": [
+       {
+        "kind": "mole",
+        "left": 17
+       },
+       {
+        "kind": "mole",
+        "left": 19
+       },
+       {
+        "kind": "bomb",
+        "left": 13
+       },
+       {
+        "kind": "gold",
+        "left": 15
+       }
+      ],
+      "nextSpawn": 1,
+      "score": 0,
+      "hits": 0,
+      "misses": 4,
+      "over": false,
+      "rng": 2773587899
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 5
+     },
+     "state": {
+      "tick": 55,
+      "holes": [
+       {
+        "kind": "mole",
+        "left": 12
+       },
+       {
+        "kind": "mole",
+        "left": 14
+       },
+       {
+        "kind": "bomb",
+        "left": 8
+       },
+       {
+        "kind": "gold",
+        "left": 10
+       }
+      ],
+      "nextSpawn": 2,
+      "score": 0,
+      "hits": 0,
+      "misses": 4,
+      "over": false,
+      "rng": 2773587899
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 5
+     },
+     "state": {
+      "tick": 60,
+      "holes": [
+       {
+        "kind": "mole",
+        "left": 7
+       },
+       {
+        "kind": "mole",
+        "left": 9
+       },
+       {
+        "kind": "bomb",
+        "left": 3
+       },
+       {
+        "kind": "gold",
+        "left": 5
+       }
+      ],
+      "nextSpawn": 1,
+      "score": 0,
+      "hits": 0,
+      "misses": 4,
+      "over": true,
+      "rng": 2773587899
+     }
+    }
+   ],
+   "result": {
+    "winner": "ai",
+    "stars": 0,
+    "score": 0,
+    "hits": 0,
+    "misses": 4
+   }
+  },
+  {
+   "name": "timeout-l2",
+   "config": {
+    "level": 2,
+    "holes": 4,
+    "gameTicks": 120,
+    "firstSpawn": 3,
+    "spawnEvery": [
+     6,
+     5,
+     4,
+     4,
+     3
+    ],
+    "upTicks": [
+     14,
+     12,
+     10,
+     9,
+     8
+    ],
+    "goldPct": 20,
+    "bombPct": [
+     0,
+     10,
+     15,
+     20,
+     25
+    ],
+    "points": 10,
+    "goldPoints": 30,
+    "bombPenalty": 20,
+    "starScores": [
+     100,
+     60,
+     30
+    ]
+   },
+   "seed": 75,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 3
+     },
+     "state": {
+      "tick": 3,
+      "holes": [
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "gold",
+        "left": 12
+       }
+      ],
+      "nextSpawn": 5,
+      "score": 0,
+      "hits": 0,
+      "misses": 0,
+      "over": false,
+      "rng": 772483911
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "hit",
+      "hole": 3
+     },
+     "state": {
+      "tick": 3,
+      "holes": [
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       }
+      ],
+      "nextSpawn": 5,
+      "score": 30,
+      "hits": 1,
+      "misses": 0,
+      "over": false,
+      "rng": 772483911
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 5
+     },
+     "state": {
+      "tick": 8,
+      "holes": [
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "mole",
+        "left": 12
+       },
+       {
+        "kind": "",
+        "left": 0
+       }
+      ],
+      "nextSpawn": 5,
+      "score": 30,
+      "hits": 1,
+      "misses": 0,
+      "over": false,
+      "rng": 3255343098
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "hit",
+      "hole": 2
+     },
+     "state": {
+      "tick": 8,
+      "holes": [
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       }
+      ],
+      "nextSpawn": 5,
+      "score": 40,
+      "hits": 2,
+      "misses": 0,
+      "over": false,
+      "rng": 3255343098
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 5
+     },
+     "state": {
+      "tick": 13,
+      "holes": [
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "mole",
+        "left": 12
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       }
+      ],
+      "nextSpawn": 5,
+      "score": 40,
+      "hits": 2,
+      "misses": 0,
+      "over": false,
+      "rng": 964003643
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "hit",
+      "hole": 1
+     },
+     "state": {
+      "tick": 13,
+      "holes": [
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       }
+      ],
+      "nextSpawn": 5,
+      "score": 50,
+      "hits": 3,
+      "misses": 0,
+      "over": false,
+      "rng": 964003643
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 5
+     },
+     "state": {
+      "tick": 18,
+      "holes": [
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "mole",
+        "left": 12
+       },
+       {
+        "kind": "",
+        "left": 0
+       }
+      ],
+      "nextSpawn": 5,
+      "score": 50,
+      "hits": 3,
+      "misses": 0,
+      "over": false,
+      "rng": 1852120266
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "hit",
+      "hole": 2
+     },
+     "state": {
+      "tick": 18,
+      "holes": [
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       }
+      ],
+      "nextSpawn": 5,
+      "score": 60,
+      "hits": 4,
+      "misses": 0,
+      "over": false,
+      "rng": 1852120266
+     }
+    },
+    {
+     "action": {
+      "by": "timeout"
+     },
+     "state": {
+      "tick": 18,
+      "holes": [
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       },
+       {
+        "kind": "",
+        "left": 0
+       }
+      ],
+      "nextSpawn": 5,
+      "score": 60,
+      "hits": 4,
+      "misses": 0,
+      "over": true,
+      "rng": 1852120266
+     }
+    }
+   ],
+   "result": {
+    "winner": "player",
+    "stars": 2,
+    "score": 60,
+    "hits": 4,
+    "misses": 0
+   }
+  }
+ ]
+}

@@ -129,3 +129,27 @@ odrazů). Síla jako pruh. Simulaci kreslí krokováním (`steps_per_frame`), v�
 - Poslední koule skupiny a osmička v jednom úderu = prohra (skupina nebyla dole před úderem).
 - Faul při spadlé osmičce (např. bílá taky spadla) = prohra.
 - Úder s nulovou rychlostí (síla 1 a krátký směr) je legální; `firstHit = −1` → faul.
+
+## Upřesnění v1
+
+- `firstHit`: první dvojice `(0, j)` v kroku 3 se `0 < d2 < R²` a `vn < 0` (i když `k` vyjde 0);
+  v jednom kroku tedy nejnižší `j`. Srážky dvou jiných koulí se nepočítají a pozdější srážky
+  bílé `firstHit` nemění.
+- `pots`: v pořadí kroků, v kroku podle indexu koule; koule padá do první kapsy (0–5), která ji
+  zachytí.
+- Faul i cíl se posuzují podle stavu **před** úderem (skupina střelce, jeho koule na stole).
+  Spadlá osmička mimo lámání při otevřeném stole je prohra střelce i bez faulu.
+- Body 4–8 se provedou vždy, i když úder hru ukončil: skupina se ještě přidělí (bod 5), `turn`
+  se spočte podle bodu 6 (po vítězné osmičce tedy přejde na soupeře, osmička do skupiny
+  nepatří) a spadlá bílá se vrátí.
+- Při lámání se do „aspoň jedna koule mimo bílou" počítá i osmička (vrácená na `footSpot`).
+- Bod 7: nejdřív se vrací bílá, potom osmička; vrácená koule má `on = true` a už vrácená bílá je
+  pro osmičku překážkou. Bílá zkouší `y = H div 4 − n × rackDx` (míří ke spodní hraně).
+- `timeout` změní jen `over` a `winner`; `turn`, `shots` a `last` zůstanou.
+- `result.winner` = `winner` ze stavu.
+- AI: kandidáti se zkoušejí jako úder strany `"ai"` bez ohledu na `turn`. Hodnota: `over` po
+  úderu → `+100000` při `winner = "ai"`, jinak `−100000`; počet koulí skupiny AI se bere podle
+  skupiny AI **po** úderu (přidělení v tomtéž úderu se započte; otevřený stůl po úderu = 0);
+  „AI pokračuje" = `turn = "ai"` po úderu.
+- Bez kandidáta (bod 7) se míří na první cíl ze seznamu bodu 2; normované míření AI vždy od
+  středu bílé a z `ai` vždy právě dvě čísla (`ex`, pak `ey`).

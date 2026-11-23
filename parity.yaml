@@ -511,7 +511,7 @@
   vectors: vectors/kulecnik.json
   lead: web
   flutter: todo
-  web: todo
+  web: done
 
 - id: F-059
   name: Bowling (M2-S9 batch C)
@@ -520,7 +520,7 @@
   vectors: vectors/bowling.json
   lead: web
   flutter: todo
-  web: todo
+  web: done
 
 - id: F-060
   name: Minigolf (M2-S9 batch C)
@@ -529,7 +529,7 @@
   vectors: vectors/minigolf.json
   lead: web
   flutter: todo
-  web: todo
+  web: done
 
 - id: F-061
   name: Had (M2-S9 batch C)
@@ -538,7 +538,7 @@
   vectors: vectors/had.json
   lead: web
   flutter: todo
-  web: todo
+  web: done
 
 - id: F-062
   name: Cihly (M2-S9 batch C)
@@ -547,7 +547,7 @@
   vectors: vectors/cihly.json
   lead: web
   flutter: todo
-  web: todo
+  web: done
 
 - id: F-063
   name: Bouchni krtka (M2-S9 batch C)
@@ -556,7 +556,7 @@
   vectors: vectors/krtek.json
   lead: web
   flutter: todo
-  web: todo
+  web: done
 
 - id: F-064
   name: Vzdušný hokej (M2-S9 batch C)
@@ -565,4 +565,4 @@
   vectors: vectors/hokej.json
   lead: web
   flutter: todo
-  web: todo
+  web: done

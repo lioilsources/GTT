@@ -1,0 +1,9710 @@
+{
+ "module": "hokej",
+ "specVersion": 1,
+ "$comment": "M2-S9 dávka C: vzdušný hokej (specs/minigames/hokej.md v1); zmenšený stůl, automat bez rng.",
+ "cases": [
+  {
+   "name": "player-2-0-3star-l1",
+   "config": {
+    "level": 1,
+    "w": 1200,
+    "h": 2000,
+    "puckR": 60,
+    "malletR": 90,
+    "goalHalf": 250,
+    "eWall": 900,
+    "eMallet": 900,
+    "dec": 1,
+    "maxPuck": 120,
+    "malletSpeed": 150,
+    "aiSpeed": [
+     30,
+     45,
+     60,
+     75,
+     90
+    ],
+    "aiReact": [
+     8,
+     6,
+     4,
+     3,
+     2
+    ],
+    "aiDefY": 300,
+    "homeY": 300,
+    "serveY": 400,
+    "goals": 2,
+    "goalPause": 5,
+    "starMargins": [
+     2,
+     1
+    ]
+   },
+   "seed": 0,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 640,
+      "y": 560
+     },
+     "state": {
+      "tick": 0,
+      "puck": {
+       "x": 600,
+       "y": 600,
+       "vx": 0,
+       "vy": 0
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 640,
+       "ty": 560
+      },
+      "ai": {
+       "x": 600,
+       "y": 1700,
+       "tx": 600,
+       "ty": 1700
+      },
+      "playerGoals": 0,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 0,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 6
+     },
+     "state": {
+      "tick": 6,
+      "puck": {
+       "x": 193,
+       "y": 1007,
+       "vx": -85,
+       "vy": 85
+      },
+      "me": {
+       "x": 640,
+       "y": 560,
+       "tx": 640,
+       "ty": 560
+      },
+      "ai": {
+       "x": 600,
+       "y": 1700,
+       "tx": 600,
+       "ty": 1700
+      },
+      "playerGoals": 0,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 6,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 600,
+      "y": 300
+     },
+     "state": {
+      "tick": 6,
+      "puck": {
+       "x": 193,
+       "y": 1007,
+       "vx": -85,
+       "vy": 85
+      },
+      "me": {
+       "x": 640,
+       "y": 560,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 600,
+       "y": 1700,
+       "tx": 600,
+       "ty": 1700
+      },
+      "playerGoals": 0,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 6,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 6
+     },
+     "state": {
+      "tick": 12,
+      "puck": {
+       "x": 327,
+       "y": 1517,
+       "vx": 76,
+       "vy": 85
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 510,
+       "y": 1585,
+       "tx": 108,
+       "ty": 1092
+      },
+      "playerGoals": 0,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 4,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 600,
+      "y": 300
+     },
+     "state": {
+      "tick": 12,
+      "puck": {
+       "x": 327,
+       "y": 1517,
+       "vx": 76,
+       "vy": 85
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 510,
+       "y": 1585,
+       "tx": 108,
+       "ty": 1092
+      },
+      "playerGoals": 0,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 4,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 6
+     },
+     "state": {
+      "tick": 18,
+      "puck": {
+       "x": 600,
+       "y": 1400,
+       "vx": 0,
+       "vy": 0
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 600,
+       "y": 1700,
+       "tx": 600,
+       "ty": 1700
+      },
+      "playerGoals": 1,
+      "aiGoals": 0,
+      "pause": 4,
+      "aiClock": 0,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 600,
+      "y": 300
+     },
+     "state": {
+      "tick": 18,
+      "puck": {
+       "x": 600,
+       "y": 1400,
+       "vx": 0,
+       "vy": 0
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 600,
+       "y": 1700,
+       "tx": 600,
+       "ty": 1700
+      },
+      "playerGoals": 1,
+      "aiGoals": 0,
+      "pause": 4,
+      "aiClock": 0,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 6
+     },
+     "state": {
+      "tick": 24,
+      "puck": {
+       "x": 600,
+       "y": 1400,
+       "vx": 0,
+       "vy": 0
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 600,
+       "y": 1700,
+       "tx": 600,
+       "ty": 1700
+      },
+      "playerGoals": 1,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 2,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 600,
+      "y": 300
+     },
+     "state": {
+      "tick": 24,
+      "puck": {
+       "x": 600,
+       "y": 1400,
+       "vx": 0,
+       "vy": 0
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 600,
+       "y": 1700,
+       "tx": 600,
+       "ty": 1700
+      },
+      "playerGoals": 1,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 2,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 6
+     },
+     "state": {
+      "tick": 30,
+      "puck": {
+       "x": 600,
+       "y": 1400,
+       "vx": 0,
+       "vy": 0
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 600,
+       "y": 1670,
+       "tx": 600,
+       "ty": 1400
+      },
+      "playerGoals": 1,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 0,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 600,
+      "y": 300
+     },
+     "state": {
+      "tick": 30,
+      "puck": {
+       "x": 600,
+       "y": 1400,
+       "vx": 0,
+       "vy": 0
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 600,
+       "y": 1670,
+       "tx": 600,
+       "ty": 1400
+      },
+      "playerGoals": 1,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 0,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 6
+     },
+     "state": {
+      "tick": 36,
+      "puck": {
+       "x": 600,
+       "y": 1314,
+       "vx": 0,
+       "vy": -55
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 600,
+       "y": 1490,
+       "tx": 600,
+       "ty": 1400
+      },
+      "playerGoals": 1,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 6,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 600,
+      "y": 300
+     },
+     "state": {
+      "tick": 36,
+      "puck": {
+       "x": 600,
+       "y": 1314,
+       "vx": 0,
+       "vy": -55
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 600,
+       "y": 1490,
+       "tx": 600,
+       "ty": 1400
+      },
+      "playerGoals": 1,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 6,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 6
+     },
+     "state": {
+      "tick": 42,
+      "puck": {
+       "x": 600,
+       "y": 999,
+       "vx": 0,
+       "vy": -49
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 600,
+       "y": 1310,
+       "tx": 600,
+       "ty": 1259
+      },
+      "playerGoals": 1,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 4,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 640,
+      "y": 959
+     },
+     "state": {
+      "tick": 42,
+      "puck": {
+       "x": 600,
+       "y": 999,
+       "vx": 0,
+       "vy": -49
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 640,
+       "ty": 910
+      },
+      "ai": {
+       "x": 600,
+       "y": 1310,
+       "tx": 600,
+       "ty": 1259
+      },
+      "playerGoals": 1,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 4,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 6
+     },
+     "state": {
+      "tick": 48,
+      "puck": {
+       "x": 475,
+       "y": 1244,
+       "vx": -36,
+       "vy": 114
+      },
+      "me": {
+       "x": 640,
+       "y": 910,
+       "tx": 640,
+       "ty": 910
+      },
+      "ai": {
+       "x": 600,
+       "y": 1349,
+       "tx": 590,
+       "ty": 1700
+      },
+      "playerGoals": 1,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 2,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 600,
+      "y": 300
+     },
+     "state": {
+      "tick": 48,
+      "puck": {
+       "x": 475,
+       "y": 1244,
+       "vx": -36,
+       "vy": 114
+      },
+      "me": {
+       "x": 640,
+       "y": 910,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 600,
+       "y": 1349,
+       "tx": 590,
+       "ty": 1700
+      },
+      "playerGoals": 1,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 2,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 6
+     },
+     "state": {
+      "tick": 54,
+      "puck": {
+       "x": 259,
+       "y": 1928,
+       "vx": -36,
+       "vy": 114
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 594,
+       "y": 1528,
+       "tx": 545,
+       "ty": 1910
+      },
+      "playerGoals": 1,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 0,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 600,
+      "y": 300
+     },
+     "state": {
+      "tick": 54,
+      "puck": {
+       "x": 259,
+       "y": 1928,
+       "vx": -36,
+       "vy": 114
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 594,
+       "y": 1528,
+       "tx": 545,
+       "ty": 1910
+      },
+      "playerGoals": 1,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 0,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 6
+     },
+     "state": {
+      "tick": 55,
+      "puck": {
+       "x": 600,
+       "y": 1400,
+       "vx": 0,
+       "vy": 0
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 600,
+       "y": 1700,
+       "tx": 600,
+       "ty": 1700
+      },
+      "playerGoals": 2,
+      "aiGoals": 0,
+      "pause": 5,
+      "aiClock": 0,
+      "over": true
+     }
+    }
+   ],
+   "result": {
+    "winner": "player",
+    "stars": 3,
+    "score": 2,
+    "playerGoals": 2,
+    "aiGoals": 0
+   }
+  },
+  {
+   "name": "player-3-1-2star-flank-attack-l3",
+   "config": {
+    "level": 3,
+    "w": 1200,
+    "h": 2000,
+    "puckR": 60,
+    "malletR": 90,
+    "goalHalf": 250,
+    "eWall": 900,
+    "eMallet": 900,
+    "dec": 1,
+    "maxPuck": 120,
+    "malletSpeed": 150,
+    "aiSpeed": [
+     30,
+     45,
+     60,
+     75,
+     90
+    ],
+    "aiReact": [
+     8,
+     6,
+     4,
+     3,
+     2
+    ],
+    "aiDefY": 300,
+    "homeY": 300,
+    "serveY": 400,
+    "goals": 3,
+    "goalPause": 5,
+    "starMargins": [
+     3,
+     2
+    ]
+   },
+   "seed": 0,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 620,
+      "y": 560
+     },
+     "state": {
+      "tick": 0,
+      "puck": {
+       "x": 600,
+       "y": 600,
+       "vx": 0,
+       "vy": 0
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 620,
+       "ty": 560
+      },
+      "ai": {
+       "x": 600,
+       "y": 1700,
+       "tx": 600,
+       "ty": 1700
+      },
+      "playerGoals": 0,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 0,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 4
+     },
+     "state": {
+      "tick": 4,
+      "puck": {
+       "x": 446,
+       "y": 910,
+       "vx": -53,
+       "vy": 107
+      },
+      "me": {
+       "x": 620,
+       "y": 560,
+       "tx": 620,
+       "ty": 560
+      },
+      "ai": {
+       "x": 540,
+       "y": 1700,
+       "tx": 499,
+       "ty": 1700
+      },
+      "playerGoals": 0,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 0,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 466,
+      "y": 870
+     },
+     "state": {
+      "tick": 4,
+      "puck": {
+       "x": 446,
+       "y": 910,
+       "vx": -53,
+       "vy": 107
+      },
+      "me": {
+       "x": 620,
+       "y": 560,
+       "tx": 466,
+       "ty": 870
+      },
+      "ai": {
+       "x": 540,
+       "y": 1700,
+       "tx": 499,
+       "ty": 1700
+      },
+      "playerGoals": 0,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 0,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 4
+     },
+     "state": {
+      "tick": 8,
+      "puck": {
+       "x": 234,
+       "y": 1338,
+       "vx": -53,
+       "vy": 107
+      },
+      "me": {
+       "x": 466,
+       "y": 870,
+       "tx": 466,
+       "ty": 870
+      },
+      "ai": {
+       "x": 475,
+       "y": 1646,
+       "tx": 287,
+       "ty": 1231
+      },
+      "playerGoals": 0,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 0,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 600,
+      "y": 300
+     },
+     "state": {
+      "tick": 8,
+      "puck": {
+       "x": 234,
+       "y": 1338,
+       "vx": -53,
+       "vy": 107
+      },
+      "me": {
+       "x": 466,
+       "y": 870,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 475,
+       "y": 1646,
+       "tx": 287,
+       "ty": 1231
+      },
+      "playerGoals": 0,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 0,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 4
+     },
+     "state": {
+      "tick": 12,
+      "puck": {
+       "x": 22,
+       "y": 1766,
+       "vx": 47,
+       "vy": 107
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 393,
+       "y": 1543,
+       "tx": 325,
+       "ty": 1909
+      },
+      "playerGoals": 0,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 0,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 600,
+      "y": 300
+     },
+     "state": {
+      "tick": 12,
+      "puck": {
+       "x": 22,
+       "y": 1766,
+       "vx": 47,
+       "vy": 107
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 393,
+       "y": 1543,
+       "tx": 325,
+       "ty": 1909
+      },
+      "playerGoals": 0,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 0,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 4
+     },
+     "state": {
+      "tick": 16,
+      "puck": {
+       "x": 210,
+       "y": 1788,
+       "vx": 47,
+       "vy": -96
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 376,
+       "y": 1778,
+       "tx": 413,
+       "ty": 1910
+      },
+      "playerGoals": 0,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 0,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 600,
+      "y": 300
+     },
+     "state": {
+      "tick": 16,
+      "puck": {
+       "x": 210,
+       "y": 1788,
+       "vx": 47,
+       "vy": -96
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 376,
+       "y": 1778,
+       "tx": 413,
+       "ty": 1910
+      },
+      "playerGoals": 0,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 0,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 4
+     },
+     "state": {
+      "tick": 20,
+      "puck": {
+       "x": 398,
+       "y": 1404,
+       "vx": 47,
+       "vy": -96
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 405,
+       "y": 1851,
+       "tx": 351,
+       "ty": 1500
+      },
+      "playerGoals": 0,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 0,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 600,
+      "y": 300
+     },
+     "state": {
+      "tick": 20,
+      "puck": {
+       "x": 398,
+       "y": 1404,
+       "vx": 47,
+       "vy": -96
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 405,
+       "y": 1851,
+       "tx": 351,
+       "ty": 1500
+      },
+      "playerGoals": 0,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 0,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 4
+     },
+     "state": {
+      "tick": 24,
+      "puck": {
+       "x": 586,
+       "y": 1020,
+       "vx": 47,
+       "vy": -96
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 394,
+       "y": 1617,
+       "tx": 539,
+       "ty": 1116
+      },
+      "playerGoals": 0,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 0,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 600,
+      "y": 300
+     },
+     "state": {
+      "tick": 24,
+      "puck": {
+       "x": 586,
+       "y": 1020,
+       "vx": 47,
+       "vy": -96
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 394,
+       "y": 1617,
+       "tx": 539,
+       "ty": 1116
+      },
+      "playerGoals": 0,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 0,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 4
+     },
+     "state": {
+      "tick": 28,
+      "puck": {
+       "x": 774,
+       "y": 636,
+       "vx": 47,
+       "vy": -96
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 486,
+       "y": 1486,
+       "tx": 727,
+       "ty": 1700
+      },
+      "playerGoals": 0,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 0,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 794,
+      "y": 596
+     },
+     "state": {
+      "tick": 28,
+      "puck": {
+       "x": 774,
+       "y": 636,
+       "vx": 47,
+       "vy": -96
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 794,
+       "ty": 596
+      },
+      "ai": {
+       "x": 486,
+       "y": 1486,
+       "tx": 727,
+       "ty": 1700
+      },
+      "playerGoals": 0,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 0,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 4
+     },
+     "state": {
+      "tick": 32,
+      "puck": {
+       "x": 963,
+       "y": 251,
+       "vx": 47,
+       "vy": -96
+      },
+      "me": {
+       "x": 794,
+       "y": 596,
+       "tx": 794,
+       "ty": 596
+      },
+      "ai": {
+       "x": 674,
+       "y": 1627,
+       "tx": 850,
+       "ty": 1700
+      },
+      "playerGoals": 0,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 0,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 983,
+      "y": 211
+     },
+     "state": {
+      "tick": 32,
+      "puck": {
+       "x": 963,
+       "y": 251,
+       "vx": 47,
+       "vy": -96
+      },
+      "me": {
+       "x": 794,
+       "y": 596,
+       "tx": 983,
+       "ty": 211
+      },
+      "ai": {
+       "x": 674,
+       "y": 1627,
+       "tx": 850,
+       "ty": 1700
+      },
+      "playerGoals": 0,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 0,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 4
+     },
+     "state": {
+      "tick": 36,
+      "puck": {
+       "x": 1234,
+       "y": 134,
+       "vx": -106,
+       "vy": -5
+      },
+      "me": {
+       "x": 983,
+       "y": 211,
+       "tx": 983,
+       "ty": 211
+      },
+      "ai": {
+       "x": 850,
+       "y": 1700,
+       "tx": 850,
+       "ty": 1700
+      },
+      "playerGoals": 0,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 0,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 1254,
+      "y": 94
+     },
+     "state": {
+      "tick": 36,
+      "puck": {
+       "x": 1234,
+       "y": 134,
+       "vx": -106,
+       "vy": -5
+      },
+      "me": {
+       "x": 983,
+       "y": 211,
+       "tx": 1110,
+       "ty": 94
+      },
+      "ai": {
+       "x": 850,
+       "y": 1700,
+       "tx": 850,
+       "ty": 1700
+      },
+      "playerGoals": 0,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 0,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 4
+     },
+     "state": {
+      "tick": 40,
+      "puck": {
+       "x": 1075,
+       "y": 439,
+       "vx": -74,
+       "vy": 85
+      },
+      "me": {
+       "x": 1110,
+       "y": 94,
+       "tx": 1110,
+       "ty": 94
+      },
+      "ai": {
+       "x": 850,
+       "y": 1700,
+       "tx": 850,
+       "ty": 1700
+      },
+      "playerGoals": 0,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 0,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 1095,
+      "y": 399
+     },
+     "state": {
+      "tick": 40,
+      "puck": {
+       "x": 1075,
+       "y": 439,
+       "vx": -74,
+       "vy": 85
+      },
+      "me": {
+       "x": 1110,
+       "y": 94,
+       "tx": 1095,
+       "ty": 399
+      },
+      "ai": {
+       "x": 850,
+       "y": 1700,
+       "tx": 850,
+       "ty": 1700
+      },
+      "playerGoals": 0,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 0,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 4
+     },
+     "state": {
+      "tick": 44,
+      "puck": {
+       "x": 779,
+       "y": 779,
+       "vx": -74,
+       "vy": 85
+      },
+      "me": {
+       "x": 1095,
+       "y": 399,
+       "tx": 1095,
+       "ty": 399
+      },
+      "ai": {
+       "x": 850,
+       "y": 1700,
+       "tx": 850,
+       "ty": 1700
+      },
+      "playerGoals": 0,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 0,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 799,
+      "y": 739
+     },
+     "state": {
+      "tick": 44,
+      "puck": {
+       "x": 779,
+       "y": 779,
+       "vx": -74,
+       "vy": 85
+      },
+      "me": {
+       "x": 1095,
+       "y": 399,
+       "tx": 799,
+       "ty": 739
+      },
+      "ai": {
+       "x": 850,
+       "y": 1700,
+       "tx": 850,
+       "ty": 1700
+      },
+      "playerGoals": 0,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 0,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 4
+     },
+     "state": {
+      "tick": 48,
+      "puck": {
+       "x": 483,
+       "y": 1119,
+       "vx": -74,
+       "vy": 85
+      },
+      "me": {
+       "x": 799,
+       "y": 739,
+       "tx": 799,
+       "ty": 739
+      },
+      "ai": {
+       "x": 824,
+       "y": 1646,
+       "tx": 557,
+       "ty": 1090
+      },
+      "playerGoals": 0,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 0,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 600,
+      "y": 300
+     },
+     "state": {
+      "tick": 48,
+      "puck": {
+       "x": 483,
+       "y": 1119,
+       "vx": -74,
+       "vy": 85
+      },
+      "me": {
+       "x": 799,
+       "y": 739,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 824,
+       "y": 1646,
+       "tx": 557,
+       "ty": 1090
+      },
+      "playerGoals": 0,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 0,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 4
+     },
+     "state": {
+      "tick": 52,
+      "puck": {
+       "x": 187,
+       "y": 1459,
+       "vx": -74,
+       "vy": 85
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 688,
+       "y": 1471,
+       "tx": 261,
+       "ty": 1374
+      },
+      "playerGoals": 0,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 0,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 600,
+      "y": 300
+     },
+     "state": {
+      "tick": 52,
+      "puck": {
+       "x": 187,
+       "y": 1459,
+       "vx": -74,
+       "vy": 85
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 688,
+       "y": 1471,
+       "tx": 261,
+       "ty": 1374
+      },
+      "playerGoals": 0,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 0,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 4
+     },
+     "state": {
+      "tick": 56,
+      "puck": {
+       "x": 171,
+       "y": 1799,
+       "vx": 66,
+       "vy": 85
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 496,
+       "y": 1489,
+       "tx": 355,
+       "ty": 1910
+      },
+      "playerGoals": 0,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 0,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 600,
+      "y": 300
+     },
+     "state": {
+      "tick": 56,
+      "puck": {
+       "x": 171,
+       "y": 1799,
+       "vx": 66,
+       "vy": 85
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 496,
+       "y": 1489,
+       "tx": 355,
+       "ty": 1910
+      },
+      "playerGoals": 0,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 0,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 4
+     },
+     "state": {
+      "tick": 60,
+      "puck": {
+       "x": 424,
+       "y": 1850,
+       "vx": -11,
+       "vy": 119
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 474,
+       "y": 1708,
+       "tx": 619,
+       "ty": 1910
+      },
+      "playerGoals": 0,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 0,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 600,
+      "y": 300
+     },
+     "state": {
+      "tick": 60,
+      "puck": {
+       "x": 424,
+       "y": 1850,
+       "vx": -11,
+       "vy": 119
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 474,
+       "y": 1708,
+       "tx": 619,
+       "ty": 1910
+      },
+      "playerGoals": 0,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 0,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 4
+     },
+     "state": {
+      "tick": 64,
+      "puck": {
+       "x": 600,
+       "y": 1400,
+       "vx": 0,
+       "vy": 0
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 600,
+       "y": 1700,
+       "tx": 600,
+       "ty": 1700
+      },
+      "playerGoals": 1,
+      "aiGoals": 0,
+      "pause": 3,
+      "aiClock": 0,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 600,
+      "y": 300
+     },
+     "state": {
+      "tick": 64,
+      "puck": {
+       "x": 600,
+       "y": 1400,
+       "vx": 0,
+       "vy": 0
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 600,
+       "y": 1700,
+       "tx": 600,
+       "ty": 1700
+      },
+      "playerGoals": 1,
+      "aiGoals": 0,
+      "pause": 3,
+      "aiClock": 0,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 4
+     },
+     "state": {
+      "tick": 68,
+      "puck": {
+       "x": 600,
+       "y": 1400,
+       "vx": 0,
+       "vy": 0
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 600,
+       "y": 1700,
+       "tx": 600,
+       "ty": 1700
+      },
+      "playerGoals": 1,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 1,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 600,
+      "y": 300
+     },
+     "state": {
+      "tick": 68,
+      "puck": {
+       "x": 600,
+       "y": 1400,
+       "vx": 0,
+       "vy": 0
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 600,
+       "y": 1700,
+       "tx": 600,
+       "ty": 1700
+      },
+      "playerGoals": 1,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 1,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 4
+     },
+     "state": {
+      "tick": 72,
+      "puck": {
+       "x": 600,
+       "y": 1400,
+       "vx": 0,
+       "vy": 0
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 600,
+       "y": 1580,
+       "tx": 600,
+       "ty": 1400
+      },
+      "playerGoals": 1,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 1,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 600,
+      "y": 300
+     },
+     "state": {
+      "tick": 72,
+      "puck": {
+       "x": 600,
+       "y": 1400,
+       "vx": 0,
+       "vy": 0
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 600,
+       "y": 1580,
+       "tx": 600,
+       "ty": 1400
+      },
+      "playerGoals": 1,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 1,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 4
+     },
+     "state": {
+      "tick": 76,
+      "puck": {
+       "x": 600,
+       "y": 1034,
+       "vx": 0,
+       "vy": -110
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 600,
+       "y": 1340,
+       "tx": 600,
+       "ty": 1257
+      },
+      "playerGoals": 1,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 1,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 600,
+      "y": 300
+     },
+     "state": {
+      "tick": 76,
+      "puck": {
+       "x": 600,
+       "y": 1034,
+       "vx": 0,
+       "vy": -110
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 600,
+       "y": 1340,
+       "tx": 600,
+       "ty": 1257
+      },
+      "playerGoals": 1,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 1,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 4
+     },
+     "state": {
+      "tick": 80,
+      "puck": {
+       "x": 600,
+       "y": 600,
+       "vx": 0,
+       "vy": -106
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 600,
+       "y": 1377,
+       "tx": 600,
+       "ty": 1700
+      },
+      "playerGoals": 1,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 1,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 620,
+      "y": 560
+     },
+     "state": {
+      "tick": 80,
+      "puck": {
+       "x": 600,
+       "y": 600,
+       "vx": 0,
+       "vy": -106
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 620,
+       "ty": 560
+      },
+      "ai": {
+       "x": 600,
+       "y": 1377,
+       "tx": 600,
+       "ty": 1700
+      },
+      "playerGoals": 1,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 1,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 4
+     },
+     "state": {
+      "tick": 84,
+      "puck": {
+       "x": 464,
+       "y": 938,
+       "vx": -37,
+       "vy": 114
+      },
+      "me": {
+       "x": 620,
+       "y": 560,
+       "tx": 620,
+       "ty": 560
+      },
+      "ai": {
+       "x": 566,
+       "y": 1611,
+       "tx": 538,
+       "ty": 1700
+      },
+      "playerGoals": 1,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 1,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 484,
+      "y": 898
+     },
+     "state": {
+      "tick": 84,
+      "puck": {
+       "x": 464,
+       "y": 938,
+       "vx": -37,
+       "vy": 114
+      },
+      "me": {
+       "x": 620,
+       "y": 560,
+       "tx": 484,
+       "ty": 898
+      },
+      "ai": {
+       "x": 566,
+       "y": 1611,
+       "tx": 538,
+       "ty": 1700
+      },
+      "playerGoals": 1,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 1,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 4
+     },
+     "state": {
+      "tick": 88,
+      "puck": {
+       "x": 316,
+       "y": 1394,
+       "vx": -37,
+       "vy": 114
+      },
+      "me": {
+       "x": 484,
+       "y": 898,
+       "tx": 484,
+       "ty": 898
+      },
+      "ai": {
+       "x": 506,
+       "y": 1586,
+       "tx": 390,
+       "ty": 1166
+      },
+      "playerGoals": 1,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 1,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 600,
+      "y": 300
+     },
+     "state": {
+      "tick": 88,
+      "puck": {
+       "x": 316,
+       "y": 1394,
+       "vx": -37,
+       "vy": 114
+      },
+      "me": {
+       "x": 484,
+       "y": 898,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 506,
+       "y": 1586,
+       "tx": 390,
+       "ty": 1166
+      },
+      "playerGoals": 1,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 1,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 4
+     },
+     "state": {
+      "tick": 92,
+      "puck": {
+       "x": 168,
+       "y": 1850,
+       "vx": -37,
+       "vy": 114
+      },
+      "me": {
+       "x": 598,
+       "y": 310,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 479,
+       "y": 1592,
+       "tx": 492,
+       "ty": 1872
+      },
+      "playerGoals": 1,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 1,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 600,
+      "y": 300
+     },
+     "state": {
+      "tick": 92,
+      "puck": {
+       "x": 168,
+       "y": 1850,
+       "vx": -37,
+       "vy": 114
+      },
+      "me": {
+       "x": 598,
+       "y": 310,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 479,
+       "y": 1592,
+       "tx": 492,
+       "ty": 1872
+      },
+      "playerGoals": 1,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 1,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 4
+     },
+     "state": {
+      "tick": 96,
+      "puck": {
+       "x": 90,
+       "y": 1658,
+       "vx": 33,
+       "vy": -102
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 416,
+       "y": 1810,
+       "tx": 344,
+       "ty": 1910
+      },
+      "playerGoals": 1,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 1,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 600,
+      "y": 300
+     },
+     "state": {
+      "tick": 96,
+      "puck": {
+       "x": 90,
+       "y": 1658,
+       "vx": 33,
+       "vy": -102
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 416,
+       "y": 1810,
+       "tx": 344,
+       "ty": 1910
+      },
+      "playerGoals": 1,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 1,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 4
+     },
+     "state": {
+      "tick": 100,
+      "puck": {
+       "x": 222,
+       "y": 1250,
+       "vx": 33,
+       "vy": -102
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 300,
+       "y": 1797,
+       "tx": 156,
+       "ty": 1454
+      },
+      "playerGoals": 1,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 1,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 600,
+      "y": 300
+     },
+     "state": {
+      "tick": 100,
+      "puck": {
+       "x": 222,
+       "y": 1250,
+       "vx": 33,
+       "vy": -102
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 300,
+       "y": 1797,
+       "tx": 156,
+       "ty": 1454
+      },
+      "playerGoals": 1,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 1,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 4
+     },
+     "state": {
+      "tick": 104,
+      "puck": {
+       "x": 354,
+       "y": 842,
+       "vx": 33,
+       "vy": -102
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 260,
+       "y": 1567,
+       "tx": 288,
+       "ty": 1090
+      },
+      "playerGoals": 1,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 1,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 374,
+      "y": 802
+     },
+     "state": {
+      "tick": 104,
+      "puck": {
+       "x": 354,
+       "y": 842,
+       "vx": 33,
+       "vy": -102
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 374,
+       "ty": 802
+      },
+      "ai": {
+       "x": 260,
+       "y": 1567,
+       "tx": 288,
+       "ty": 1090
+      },
+      "playerGoals": 1,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 1,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 4
+     },
+     "state": {
+      "tick": 108,
+      "puck": {
+       "x": 191,
+       "y": 849,
+       "vx": -89,
+       "vy": 80
+      },
+      "me": {
+       "x": 374,
+       "y": 802,
+       "tx": 374,
+       "ty": 802
+      },
+      "ai": {
+       "x": 314,
+       "y": 1557,
+       "tx": 378,
+       "ty": 1700
+      },
+      "playerGoals": 1,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 1,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 211,
+      "y": 809
+     },
+     "state": {
+      "tick": 108,
+      "puck": {
+       "x": 191,
+       "y": 849,
+       "vx": -89,
+       "vy": 80
+      },
+      "me": {
+       "x": 374,
+       "y": 802,
+       "tx": 211,
+       "ty": 809
+      },
+      "ai": {
+       "x": 314,
+       "y": 1557,
+       "tx": 378,
+       "ty": 1700
+      },
+      "playerGoals": 1,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 1,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 4
+     },
+     "state": {
+      "tick": 112,
+      "puck": {
+       "x": 173,
+       "y": 1169,
+       "vx": 80,
+       "vy": 80
+      },
+      "me": {
+       "x": 211,
+       "y": 809,
+       "tx": 211,
+       "ty": 809
+      },
+      "ai": {
+       "x": 313,
+       "y": 1559,
+       "tx": 90,
+       "ty": 1090
+      },
+      "playerGoals": 1,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 1,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 600,
+      "y": 300
+     },
+     "state": {
+      "tick": 112,
+      "puck": {
+       "x": 173,
+       "y": 1169,
+       "vx": 80,
+       "vy": 80
+      },
+      "me": {
+       "x": 211,
+       "y": 809,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 313,
+       "y": 1559,
+       "tx": 90,
+       "ty": 1090
+      },
+      "playerGoals": 1,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 1,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 4
+     },
+     "state": {
+      "tick": 116,
+      "puck": {
+       "x": 574,
+       "y": 1279,
+       "vx": 118,
+       "vy": -21
+      },
+      "me": {
+       "x": 575,
+       "y": 333,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 323,
+       "y": 1347,
+       "tx": 338,
+       "ty": 1321
+      },
+      "playerGoals": 1,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 1,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 600,
+      "y": 300
+     },
+     "state": {
+      "tick": 116,
+      "puck": {
+       "x": 574,
+       "y": 1279,
+       "vx": 118,
+       "vy": -21
+      },
+      "me": {
+       "x": 575,
+       "y": 333,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 323,
+       "y": 1347,
+       "tx": 338,
+       "ty": 1321
+      },
+      "playerGoals": 1,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 1,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 4
+     },
+     "state": {
+      "tick": 120,
+      "puck": {
+       "x": 1046,
+       "y": 1195,
+       "vx": 118,
+       "vy": -21
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 456,
+       "y": 1301,
+       "tx": 810,
+       "ty": 1237
+      },
+      "playerGoals": 1,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 1,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 600,
+      "y": 300
+     },
+     "state": {
+      "tick": 120,
+      "puck": {
+       "x": 1046,
+       "y": 1195,
+       "vx": 118,
+       "vy": -21
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 456,
+       "y": 1301,
+       "tx": 810,
+       "ty": 1237
+      },
+      "playerGoals": 1,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 1,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 4
+     },
+     "state": {
+      "tick": 124,
+      "puck": {
+       "x": 846,
+       "y": 1111,
+       "vx": -106,
+       "vy": -21
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 690,
+       "y": 1251,
+       "tx": 1058,
+       "ty": 1153
+      },
+      "playerGoals": 1,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 1,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 600,
+      "y": 300
+     },
+     "state": {
+      "tick": 124,
+      "puck": {
+       "x": 846,
+       "y": 1111,
+       "vx": -106,
+       "vy": -21
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 690,
+       "y": 1251,
+       "tx": 1058,
+       "ty": 1153
+      },
+      "playerGoals": 1,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 1,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 4
+     },
+     "state": {
+      "tick": 128,
+      "puck": {
+       "x": 422,
+       "y": 1023,
+       "vx": -106,
+       "vy": -21
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 712,
+       "y": 1149,
+       "tx": 634,
+       "ty": 1090
+      },
+      "playerGoals": 1,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 1,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 600,
+      "y": 300
+     },
+     "state": {
+      "tick": 128,
+      "puck": {
+       "x": 422,
+       "y": 1023,
+       "vx": -106,
+       "vy": -21
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 712,
+       "y": 1149,
+       "tx": 634,
+       "ty": 1090
+      },
+      "playerGoals": 1,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 1,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 4
+     },
+     "state": {
+      "tick": 132,
+      "puck": {
+       "x": -2,
+       "y": 939,
+       "vx": 95,
+       "vy": -21
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 584,
+       "y": 1198,
+       "tx": 350,
+       "ty": 1700
+      },
+      "playerGoals": 1,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 1,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 18,
+      "y": 899
+     },
+     "state": {
+      "tick": 132,
+      "puck": {
+       "x": -2,
+       "y": 939,
+       "vx": 95,
+       "vy": -21
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 90,
+       "ty": 899
+      },
+      "ai": {
+       "x": 584,
+       "y": 1198,
+       "tx": 350,
+       "ty": 1700
+      },
+      "playerGoals": 1,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 1,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 4
+     },
+     "state": {
+      "tick": 136,
+      "puck": {
+       "x": 378,
+       "y": 855,
+       "vx": 95,
+       "vy": -21
+      },
+      "me": {
+       "x": 212,
+       "y": 756,
+       "tx": 90,
+       "ty": 899
+      },
+      "ai": {
+       "x": 484,
+       "y": 1414,
+       "tx": 350,
+       "ty": 1700
+      },
+      "playerGoals": 1,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 1,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 398,
+      "y": 815
+     },
+     "state": {
+      "tick": 136,
+      "puck": {
+       "x": 378,
+       "y": 855,
+       "vx": 95,
+       "vy": -21
+      },
+      "me": {
+       "x": 212,
+       "y": 756,
+       "tx": 398,
+       "ty": 815
+      },
+      "ai": {
+       "x": 484,
+       "y": 1414,
+       "tx": 350,
+       "ty": 1700
+      },
+      "playerGoals": 1,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 1,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 4
+     },
+     "state": {
+      "tick": 140,
+      "puck": {
+       "x": 854,
+       "y": 859,
+       "vx": 116,
+       "vy": 6
+      },
+      "me": {
+       "x": 398,
+       "y": 815,
+       "tx": 398,
+       "ty": 815
+      },
+      "ai": {
+       "x": 520,
+       "y": 1604,
+       "tx": 619,
+       "ty": 1700
+      },
+      "playerGoals": 1,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 1,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 874,
+      "y": 819
+     },
+     "state": {
+      "tick": 140,
+      "puck": {
+       "x": 854,
+       "y": 859,
+       "vx": 116,
+       "vy": 6
+      },
+      "me": {
+       "x": 398,
+       "y": 815,
+       "tx": 874,
+       "ty": 819
+      },
+      "ai": {
+       "x": 520,
+       "y": 1604,
+       "tx": 619,
+       "ty": 1700
+      },
+      "playerGoals": 1,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 1,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 4
+     },
+     "state": {
+      "tick": 144,
+      "puck": {
+       "x": 1098,
+       "y": 883,
+       "vx": -100,
+       "vy": 6
+      },
+      "me": {
+       "x": 874,
+       "y": 819,
+       "tx": 874,
+       "ty": 819
+      },
+      "ai": {
+       "x": 726,
+       "y": 1693,
+       "tx": 850,
+       "ty": 1700
+      },
+      "playerGoals": 1,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 1,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 1118,
+      "y": 843
+     },
+     "state": {
+      "tick": 144,
+      "puck": {
+       "x": 1098,
+       "y": 883,
+       "vx": -100,
+       "vy": 6
+      },
+      "me": {
+       "x": 874,
+       "y": 819,
+       "tx": 1110,
+       "ty": 843
+      },
+      "ai": {
+       "x": 726,
+       "y": 1693,
+       "tx": 850,
+       "ty": 1700
+      },
+      "playerGoals": 1,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 1,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 4
+     },
+     "state": {
+      "tick": 148,
+      "puck": {
+       "x": 667,
+       "y": 989,
+       "vx": -96,
+       "vy": 6
+      },
+      "me": {
+       "x": 1110,
+       "y": 843,
+       "tx": 1110,
+       "ty": 843
+      },
+      "ai": {
+       "x": 850,
+       "y": 1700,
+       "tx": 850,
+       "ty": 1700
+      },
+      "playerGoals": 1,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 1,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 687,
+      "y": 949
+     },
+     "state": {
+      "tick": 148,
+      "puck": {
+       "x": 667,
+       "y": 989,
+       "vx": -96,
+       "vy": 6
+      },
+      "me": {
+       "x": 1110,
+       "y": 843,
+       "tx": 687,
+       "ty": 910
+      },
+      "ai": {
+       "x": 850,
+       "y": 1700,
+       "tx": 850,
+       "ty": 1700
+      },
+      "playerGoals": 1,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 1,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 4
+     },
+     "state": {
+      "tick": 152,
+      "puck": {
+       "x": 289,
+       "y": 1013,
+       "vx": -92,
+       "vy": 6
+      },
+      "me": {
+       "x": 687,
+       "y": 910,
+       "tx": 687,
+       "ty": 910
+      },
+      "ai": {
+       "x": 788,
+       "y": 1598,
+       "tx": 476,
+       "ty": 1090
+      },
+      "playerGoals": 1,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 1,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 600,
+      "y": 300
+     },
+     "state": {
+      "tick": 152,
+      "puck": {
+       "x": 289,
+       "y": 1013,
+       "vx": -92,
+       "vy": 6
+      },
+      "me": {
+       "x": 687,
+       "y": 910,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 788,
+       "y": 1598,
+       "tx": 476,
+       "ty": 1090
+      },
+      "playerGoals": 1,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 1,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 4
+     },
+     "state": {
+      "tick": 156,
+      "puck": {
+       "x": 96,
+       "y": 1037,
+       "vx": 79,
+       "vy": 6
+      },
+      "me": {
+       "x": 603,
+       "y": 317,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 626,
+       "y": 1432,
+       "tx": 106,
+       "ty": 1090
+      },
+      "playerGoals": 1,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 1,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 600,
+      "y": 300
+     },
+     "state": {
+      "tick": 156,
+      "puck": {
+       "x": 96,
+       "y": 1037,
+       "vx": 79,
+       "vy": 6
+      },
+      "me": {
+       "x": 603,
+       "y": 317,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 626,
+       "y": 1432,
+       "tx": 106,
+       "ty": 1090
+      },
+      "playerGoals": 1,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 1,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 4
+     },
+     "state": {
+      "tick": 160,
+      "puck": {
+       "x": 406,
+       "y": 1061,
+       "vx": 75,
+       "vy": 6
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 442,
+       "y": 1283,
+       "tx": 253,
+       "ty": 1090
+      },
+      "playerGoals": 1,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 1,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 600,
+      "y": 300
+     },
+     "state": {
+      "tick": 160,
+      "puck": {
+       "x": 406,
+       "y": 1061,
+       "vx": 75,
+       "vy": 6
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 442,
+       "y": 1283,
+       "tx": 253,
+       "ty": 1090
+      },
+      "playerGoals": 1,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 1,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 4
+     },
+     "state": {
+      "tick": 164,
+      "puck": {
+       "x": 700,
+       "y": 1085,
+       "vx": 71,
+       "vy": 6
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 462,
+       "y": 1141,
+       "tx": 555,
+       "ty": 1090
+      },
+      "playerGoals": 1,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 1,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 600,
+      "y": 300
+     },
+     "state": {
+      "tick": 164,
+      "puck": {
+       "x": 700,
+       "y": 1085,
+       "vx": 71,
+       "vy": 6
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 462,
+       "y": 1141,
+       "tx": 555,
+       "ty": 1090
+      },
+      "playerGoals": 1,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 1,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 4
+     },
+     "state": {
+      "tick": 168,
+      "puck": {
+       "x": 978,
+       "y": 1109,
+       "vx": 67,
+       "vy": 6
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 571,
+       "y": 1208,
+       "tx": 591,
+       "ty": 1347
+      },
+      "playerGoals": 1,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 1,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 600,
+      "y": 300
+     },
+     "state": {
+      "tick": 168,
+      "puck": {
+       "x": 978,
+       "y": 1109,
+       "vx": 67,
+       "vy": 6
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 571,
+       "y": 1208,
+       "tx": 591,
+       "ty": 1347
+      },
+      "playerGoals": 1,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 1,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 4
+     },
+     "state": {
+      "tick": 172,
+      "puck": {
+       "x": 1119,
+       "y": 1133,
+       "vx": -56,
+       "vy": 6
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 698,
+       "y": 1283,
+       "tx": 1110,
+       "ty": 1121
+      },
+      "playerGoals": 1,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 1,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 600,
+      "y": 300
+     },
+     "state": {
+      "tick": 172,
+      "puck": {
+       "x": 1119,
+       "y": 1133,
+       "vx": -56,
+       "vy": 6
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 698,
+       "y": 1283,
+       "tx": 1110,
+       "ty": 1121
+      },
+      "playerGoals": 1,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 1,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 4
+     },
+     "state": {
+      "tick": 176,
+      "puck": {
+       "x": 1070,
+       "y": 1046,
+       "vx": 85,
+       "vy": -84
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 916,
+       "y": 1189,
+       "tx": 1008,
+       "ty": 1145
+      },
+      "playerGoals": 1,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 1,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 600,
+      "y": 300
+     },
+     "state": {
+      "tick": 176,
+      "puck": {
+       "x": 1070,
+       "y": 1046,
+       "vx": 85,
+       "vy": -84
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 916,
+       "y": 1189,
+       "tx": 1008,
+       "ty": 1145
+      },
+      "playerGoals": 1,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 1,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 4
+     },
+     "state": {
+      "tick": 180,
+      "puck": {
+       "x": 927,
+       "y": 710,
+       "vx": -76,
+       "vy": -84
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 976,
+       "y": 1259,
+       "tx": 850,
+       "ty": 1700
+      },
+      "playerGoals": 1,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 1,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 947,
+      "y": 670
+     },
+     "state": {
+      "tick": 180,
+      "puck": {
+       "x": 927,
+       "y": 710,
+       "vx": -76,
+       "vy": -84
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 947,
+       "ty": 670
+      },
+      "ai": {
+       "x": 976,
+       "y": 1259,
+       "tx": 850,
+       "ty": 1700
+      },
+      "playerGoals": 1,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 1,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 4
+     },
+     "state": {
+      "tick": 184,
+      "puck": {
+       "x": 535,
+       "y": 447,
+       "vx": -76,
+       "vy": -84
+      },
+      "me": {
+       "x": 947,
+       "y": 670,
+       "tx": 947,
+       "ty": 670
+      },
+      "ai": {
+       "x": 870,
+       "y": 1467,
+       "tx": 687,
+       "ty": 1700
+      },
+      "playerGoals": 1,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 1,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 555,
+      "y": 407
+     },
+     "state": {
+      "tick": 184,
+      "puck": {
+       "x": 535,
+       "y": 447,
+       "vx": -76,
+       "vy": -84
+      },
+      "me": {
+       "x": 947,
+       "y": 670,
+       "tx": 555,
+       "ty": 407
+      },
+      "ai": {
+       "x": 870,
+       "y": 1467,
+       "tx": 687,
+       "ty": 1700
+      },
+      "playerGoals": 1,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 1,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 4
+     },
+     "state": {
+      "tick": 188,
+      "puck": {
+       "x": 231,
+       "y": 111,
+       "vx": -76,
+       "vy": -84
+      },
+      "me": {
+       "x": 555,
+       "y": 407,
+       "tx": 555,
+       "ty": 407
+      },
+      "ai": {
+       "x": 684,
+       "y": 1599,
+       "tx": 383,
+       "ty": 1700
+      },
+      "playerGoals": 1,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 1,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 251,
+      "y": 71
+     },
+     "state": {
+      "tick": 188,
+      "puck": {
+       "x": 231,
+       "y": 111,
+       "vx": -76,
+       "vy": -84
+      },
+      "me": {
+       "x": 555,
+       "y": 407,
+       "tx": 251,
+       "ty": 90
+      },
+      "ai": {
+       "x": 684,
+       "y": 1599,
+       "tx": 383,
+       "ty": 1700
+      },
+      "playerGoals": 1,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 1,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 4
+     },
+     "state": {
+      "tick": 192,
+      "puck": {
+       "x": 71,
+       "y": 252,
+       "vx": 68,
+       "vy": 75
+      },
+      "me": {
+       "x": 251,
+       "y": 90,
+       "tx": 251,
+       "ty": 90
+      },
+      "ai": {
+       "x": 458,
+       "y": 1669,
+       "tx": 350,
+       "ty": 1700
+      },
+      "playerGoals": 1,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 1,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 91,
+      "y": 212
+     },
+     "state": {
+      "tick": 192,
+      "puck": {
+       "x": 71,
+       "y": 252,
+       "vx": 68,
+       "vy": 75
+      },
+      "me": {
+       "x": 251,
+       "y": 90,
+       "tx": 91,
+       "ty": 212
+      },
+      "ai": {
+       "x": 458,
+       "y": 1669,
+       "tx": 350,
+       "ty": 1700
+      },
+      "playerGoals": 1,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 1,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 4
+     },
+     "state": {
+      "tick": 196,
+      "puck": {
+       "x": 343,
+       "y": 595,
+       "vx": 68,
+       "vy": 88
+      },
+      "me": {
+       "x": 91,
+       "y": 212,
+       "tx": 91,
+       "ty": 212
+      },
+      "ai": {
+       "x": 350,
+       "y": 1700,
+       "tx": 350,
+       "ty": 1700
+      },
+      "playerGoals": 1,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 1,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 363,
+      "y": 555
+     },
+     "state": {
+      "tick": 196,
+      "puck": {
+       "x": 343,
+       "y": 595,
+       "vx": 68,
+       "vy": 88
+      },
+      "me": {
+       "x": 91,
+       "y": 212,
+       "tx": 363,
+       "ty": 555
+      },
+      "ai": {
+       "x": 350,
+       "y": 1700,
+       "tx": 350,
+       "ty": 1700
+      },
+      "playerGoals": 1,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 1,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 4
+     },
+     "state": {
+      "tick": 200,
+      "puck": {
+       "x": 615,
+       "y": 947,
+       "vx": 68,
+       "vy": 88
+      },
+      "me": {
+       "x": 363,
+       "y": 555,
+       "tx": 363,
+       "ty": 555
+      },
+      "ai": {
+       "x": 470,
+       "y": 1700,
+       "tx": 479,
+       "ty": 1700
+      },
+      "playerGoals": 1,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 1,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 635,
+      "y": 907
+     },
+     "state": {
+      "tick": 200,
+      "puck": {
+       "x": 615,
+       "y": 947,
+       "vx": 68,
+       "vy": 88
+      },
+      "me": {
+       "x": 363,
+       "y": 555,
+       "tx": 635,
+       "ty": 907
+      },
+      "ai": {
+       "x": 470,
+       "y": 1700,
+       "tx": 479,
+       "ty": 1700
+      },
+      "playerGoals": 1,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 1,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 4
+     },
+     "state": {
+      "tick": 204,
+      "puck": {
+       "x": 887,
+       "y": 1299,
+       "vx": 68,
+       "vy": 88
+      },
+      "me": {
+       "x": 635,
+       "y": 907,
+       "tx": 635,
+       "ty": 907
+      },
+      "ai": {
+       "x": 529,
+       "y": 1592,
+       "tx": 751,
+       "ty": 1123
+      },
+      "playerGoals": 1,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 1,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 600,
+      "y": 300
+     },
+     "state": {
+      "tick": 204,
+      "puck": {
+       "x": 887,
+       "y": 1299,
+       "vx": 68,
+       "vy": 88
+      },
+      "me": {
+       "x": 635,
+       "y": 907,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 529,
+       "y": 1592,
+       "tx": 751,
+       "ty": 1123
+      },
+      "playerGoals": 1,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 1,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 4
+     },
+     "state": {
+      "tick": 208,
+      "puck": {
+       "x": 1159,
+       "y": 1651,
+       "vx": -61,
+       "vy": 88
+      },
+      "me": {
+       "x": 601,
+       "y": 308,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 653,
+       "y": 1576,
+       "tx": 773,
+       "ty": 1725
+      },
+      "playerGoals": 1,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 1,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 600,
+      "y": 300
+     },
+     "state": {
+      "tick": 208,
+      "puck": {
+       "x": 1159,
+       "y": 1651,
+       "vx": -61,
+       "vy": 88
+      },
+      "me": {
+       "x": 601,
+       "y": 308,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 653,
+       "y": 1576,
+       "tx": 773,
+       "ty": 1725
+      },
+      "playerGoals": 1,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 1,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 4
+     },
+     "state": {
+      "tick": 212,
+      "puck": {
+       "x": 600,
+       "y": 1400,
+       "vx": 0,
+       "vy": 0
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 600,
+       "y": 1700,
+       "tx": 600,
+       "ty": 1700
+      },
+      "playerGoals": 2,
+      "aiGoals": 0,
+      "pause": 5,
+      "aiClock": 0,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 600,
+      "y": 300
+     },
+     "state": {
+      "tick": 212,
+      "puck": {
+       "x": 600,
+       "y": 1400,
+       "vx": 0,
+       "vy": 0
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 600,
+       "y": 1700,
+       "tx": 600,
+       "ty": 1700
+      },
+      "playerGoals": 2,
+      "aiGoals": 0,
+      "pause": 5,
+      "aiClock": 0,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 4
+     },
+     "state": {
+      "tick": 216,
+      "puck": {
+       "x": 600,
+       "y": 1400,
+       "vx": 0,
+       "vy": 0
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 600,
+       "y": 1700,
+       "tx": 600,
+       "ty": 1700
+      },
+      "playerGoals": 2,
+      "aiGoals": 0,
+      "pause": 1,
+      "aiClock": 0,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 600,
+      "y": 300
+     },
+     "state": {
+      "tick": 216,
+      "puck": {
+       "x": 600,
+       "y": 1400,
+       "vx": 0,
+       "vy": 0
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 600,
+       "y": 1700,
+       "tx": 600,
+       "ty": 1700
+      },
+      "playerGoals": 2,
+      "aiGoals": 0,
+      "pause": 1,
+      "aiClock": 0,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 4
+     },
+     "state": {
+      "tick": 220,
+      "puck": {
+       "x": 600,
+       "y": 1400,
+       "vx": 0,
+       "vy": 0
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 600,
+       "y": 1700,
+       "tx": 600,
+       "ty": 1700
+      },
+      "playerGoals": 2,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 3,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 600,
+      "y": 300
+     },
+     "state": {
+      "tick": 220,
+      "puck": {
+       "x": 600,
+       "y": 1400,
+       "vx": 0,
+       "vy": 0
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 600,
+       "y": 1700,
+       "tx": 600,
+       "ty": 1700
+      },
+      "playerGoals": 2,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 3,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 4
+     },
+     "state": {
+      "tick": 224,
+      "puck": {
+       "x": 600,
+       "y": 1257,
+       "vx": 0,
+       "vy": -112
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 600,
+       "y": 1460,
+       "tx": 600,
+       "ty": 1400
+      },
+      "playerGoals": 2,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 3,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 600,
+      "y": 300
+     },
+     "state": {
+      "tick": 224,
+      "puck": {
+       "x": 600,
+       "y": 1257,
+       "vx": 0,
+       "vy": -112
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 600,
+       "y": 1460,
+       "tx": 600,
+       "ty": 1400
+      },
+      "playerGoals": 2,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 3,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 4
+     },
+     "state": {
+      "tick": 228,
+      "puck": {
+       "x": 600,
+       "y": 815,
+       "vx": 0,
+       "vy": -108
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 600,
+       "y": 1257,
+       "tx": 600,
+       "ty": 1257
+      },
+      "playerGoals": 2,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 3,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 620,
+      "y": 775
+     },
+     "state": {
+      "tick": 228,
+      "puck": {
+       "x": 600,
+       "y": 815,
+       "vx": 0,
+       "vy": -108
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 620,
+       "ty": 775
+      },
+      "ai": {
+       "x": 600,
+       "y": 1257,
+       "tx": 600,
+       "ty": 1257
+      },
+      "playerGoals": 2,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 3,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 4
+     },
+     "state": {
+      "tick": 232,
+      "puck": {
+       "x": 462,
+       "y": 389,
+       "vx": 0,
+       "vy": -104
+      },
+      "me": {
+       "x": 620,
+       "y": 775,
+       "tx": 620,
+       "ty": 775
+      },
+      "ai": {
+       "x": 600,
+       "y": 1497,
+       "tx": 600,
+       "ty": 1700
+      },
+      "playerGoals": 2,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 3,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 482,
+      "y": 349
+     },
+     "state": {
+      "tick": 232,
+      "puck": {
+       "x": 462,
+       "y": 389,
+       "vx": 0,
+       "vy": -104
+      },
+      "me": {
+       "x": 620,
+       "y": 775,
+       "tx": 482,
+       "ty": 349
+      },
+      "ai": {
+       "x": 600,
+       "y": 1497,
+       "tx": 600,
+       "ty": 1700
+      },
+      "playerGoals": 2,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 3,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 4
+     },
+     "state": {
+      "tick": 236,
+      "puck": {
+       "x": 600,
+       "y": 600,
+       "vx": 0,
+       "vy": 0
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 600,
+       "y": 1700,
+       "tx": 600,
+       "ty": 1700
+      },
+      "playerGoals": 2,
+      "aiGoals": 1,
+      "pause": 5,
+      "aiClock": 0,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 620,
+      "y": 560
+     },
+     "state": {
+      "tick": 236,
+      "puck": {
+       "x": 600,
+       "y": 600,
+       "vx": 0,
+       "vy": 0
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 620,
+       "ty": 560
+      },
+      "ai": {
+       "x": 600,
+       "y": 1700,
+       "tx": 600,
+       "ty": 1700
+      },
+      "playerGoals": 2,
+      "aiGoals": 1,
+      "pause": 5,
+      "aiClock": 0,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 4
+     },
+     "state": {
+      "tick": 240,
+      "puck": {
+       "x": 600,
+       "y": 600,
+       "vx": 0,
+       "vy": 0
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 620,
+       "ty": 560
+      },
+      "ai": {
+       "x": 600,
+       "y": 1700,
+       "tx": 600,
+       "ty": 1700
+      },
+      "playerGoals": 2,
+      "aiGoals": 1,
+      "pause": 1,
+      "aiClock": 0,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 620,
+      "y": 560
+     },
+     "state": {
+      "tick": 240,
+      "puck": {
+       "x": 600,
+       "y": 600,
+       "vx": 0,
+       "vy": 0
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 620,
+       "ty": 560
+      },
+      "ai": {
+       "x": 600,
+       "y": 1700,
+       "tx": 600,
+       "ty": 1700
+      },
+      "playerGoals": 2,
+      "aiGoals": 1,
+      "pause": 1,
+      "aiClock": 0,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 4
+     },
+     "state": {
+      "tick": 244,
+      "puck": {
+       "x": 499,
+       "y": 803,
+       "vx": -53,
+       "vy": 107
+      },
+      "me": {
+       "x": 620,
+       "y": 560,
+       "tx": 620,
+       "ty": 560
+      },
+      "ai": {
+       "x": 600,
+       "y": 1700,
+       "tx": 600,
+       "ty": 1700
+      },
+      "playerGoals": 2,
+      "aiGoals": 1,
+      "pause": 0,
+      "aiClock": 3,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 519,
+      "y": 763
+     },
+     "state": {
+      "tick": 244,
+      "puck": {
+       "x": 499,
+       "y": 803,
+       "vx": -53,
+       "vy": 107
+      },
+      "me": {
+       "x": 620,
+       "y": 560,
+       "tx": 519,
+       "ty": 763
+      },
+      "ai": {
+       "x": 600,
+       "y": 1700,
+       "tx": 600,
+       "ty": 1700
+      },
+      "playerGoals": 2,
+      "aiGoals": 1,
+      "pause": 0,
+      "aiClock": 3,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 4
+     },
+     "state": {
+      "tick": 248,
+      "puck": {
+       "x": 287,
+       "y": 1231,
+       "vx": -53,
+       "vy": 107
+      },
+      "me": {
+       "x": 519,
+       "y": 763,
+       "tx": 519,
+       "ty": 763
+      },
+      "ai": {
+       "x": 499,
+       "y": 1700,
+       "tx": 499,
+       "ty": 1700
+      },
+      "playerGoals": 2,
+      "aiGoals": 1,
+      "pause": 0,
+      "aiClock": 3,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 600,
+      "y": 300
+     },
+     "state": {
+      "tick": 248,
+      "puck": {
+       "x": 287,
+       "y": 1231,
+       "vx": -53,
+       "vy": 107
+      },
+      "me": {
+       "x": 519,
+       "y": 763,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 499,
+       "y": 1700,
+       "tx": 499,
+       "ty": 1700
+      },
+      "playerGoals": 2,
+      "aiGoals": 1,
+      "pause": 0,
+      "aiClock": 3,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 4
+     },
+     "state": {
+      "tick": 252,
+      "puck": {
+       "x": 75,
+       "y": 1659,
+       "vx": -53,
+       "vy": 107
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 403,
+       "y": 1484,
+       "tx": 287,
+       "ty": 1231
+      },
+      "playerGoals": 2,
+      "aiGoals": 1,
+      "pause": 0,
+      "aiClock": 3,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 600,
+      "y": 300
+     },
+     "state": {
+      "tick": 252,
+      "puck": {
+       "x": 75,
+       "y": 1659,
+       "vx": -53,
+       "vy": 107
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 403,
+       "y": 1484,
+       "tx": 287,
+       "ty": 1231
+      },
+      "playerGoals": 2,
+      "aiGoals": 1,
+      "pause": 0,
+      "aiClock": 3,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 4
+     },
+     "state": {
+      "tick": 256,
+      "puck": {
+       "x": 163,
+       "y": 1884,
+       "vx": 47,
+       "vy": -96
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 361,
+       "y": 1720,
+       "tx": 325,
+       "ty": 1909
+      },
+      "playerGoals": 2,
+      "aiGoals": 1,
+      "pause": 0,
+      "aiClock": 3,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 600,
+      "y": 300
+     },
+     "state": {
+      "tick": 256,
+      "puck": {
+       "x": 163,
+       "y": 1884,
+       "vx": 47,
+       "vy": -96
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 361,
+       "y": 1720,
+       "tx": 325,
+       "ty": 1909
+      },
+      "playerGoals": 2,
+      "aiGoals": 1,
+      "pause": 0,
+      "aiClock": 3,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 4
+     },
+     "state": {
+      "tick": 260,
+      "puck": {
+       "x": 351,
+       "y": 1500,
+       "vx": 47,
+       "vy": -96
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 413,
+       "y": 1910,
+       "tx": 413,
+       "ty": 1910
+      },
+      "playerGoals": 2,
+      "aiGoals": 1,
+      "pause": 0,
+      "aiClock": 3,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 600,
+      "y": 300
+     },
+     "state": {
+      "tick": 260,
+      "puck": {
+       "x": 351,
+       "y": 1500,
+       "vx": 47,
+       "vy": -96
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 413,
+       "y": 1910,
+       "tx": 413,
+       "ty": 1910
+      },
+      "playerGoals": 2,
+      "aiGoals": 1,
+      "pause": 0,
+      "aiClock": 3,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 4
+     },
+     "state": {
+      "tick": 264,
+      "puck": {
+       "x": 539,
+       "y": 1116,
+       "vx": 47,
+       "vy": -96
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 378,
+       "y": 1674,
+       "tx": 351,
+       "ty": 1500
+      },
+      "playerGoals": 2,
+      "aiGoals": 1,
+      "pause": 0,
+      "aiClock": 3,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 600,
+      "y": 300
+     },
+     "state": {
+      "tick": 264,
+      "puck": {
+       "x": 539,
+       "y": 1116,
+       "vx": 47,
+       "vy": -96
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 378,
+       "y": 1674,
+       "tx": 351,
+       "ty": 1500
+      },
+      "playerGoals": 2,
+      "aiGoals": 1,
+      "pause": 0,
+      "aiClock": 3,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 4
+     },
+     "state": {
+      "tick": 268,
+      "puck": {
+       "x": 727,
+       "y": 732,
+       "vx": 47,
+       "vy": -96
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 442,
+       "y": 1446,
+       "tx": 539,
+       "ty": 1116
+      },
+      "playerGoals": 2,
+      "aiGoals": 1,
+      "pause": 0,
+      "aiClock": 3,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 747,
+      "y": 692
+     },
+     "state": {
+      "tick": 268,
+      "puck": {
+       "x": 727,
+       "y": 732,
+       "vx": 47,
+       "vy": -96
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 747,
+       "ty": 692
+      },
+      "ai": {
+       "x": 442,
+       "y": 1446,
+       "tx": 539,
+       "ty": 1116
+      },
+      "playerGoals": 2,
+      "aiGoals": 1,
+      "pause": 0,
+      "aiClock": 3,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 4
+     },
+     "state": {
+      "tick": 272,
+      "puck": {
+       "x": 940,
+       "y": 340,
+       "vx": 47,
+       "vy": -96
+      },
+      "me": {
+       "x": 747,
+       "y": 692,
+       "tx": 747,
+       "ty": 692
+      },
+      "ai": {
+       "x": 619,
+       "y": 1604,
+       "tx": 727,
+       "ty": 1700
+      },
+      "playerGoals": 2,
+      "aiGoals": 1,
+      "pause": 0,
+      "aiClock": 3,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 960,
+      "y": 300
+     },
+     "state": {
+      "tick": 272,
+      "puck": {
+       "x": 940,
+       "y": 340,
+       "vx": 47,
+       "vy": -96
+      },
+      "me": {
+       "x": 747,
+       "y": 692,
+       "tx": 960,
+       "ty": 300
+      },
+      "ai": {
+       "x": 619,
+       "y": 1604,
+       "tx": 727,
+       "ty": 1700
+      },
+      "playerGoals": 2,
+      "aiGoals": 1,
+      "pause": 0,
+      "aiClock": 3,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 4
+     },
+     "state": {
+      "tick": 276,
+      "puck": {
+       "x": 1128,
+       "y": 138,
+       "vx": 47,
+       "vy": 86
+      },
+      "me": {
+       "x": 960,
+       "y": 300,
+       "tx": 960,
+       "ty": 300
+      },
+      "ai": {
+       "x": 839,
+       "y": 1695,
+       "tx": 850,
+       "ty": 1700
+      },
+      "playerGoals": 2,
+      "aiGoals": 1,
+      "pause": 0,
+      "aiClock": 3,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 1148,
+      "y": 98
+     },
+     "state": {
+      "tick": 276,
+      "puck": {
+       "x": 1128,
+       "y": 138,
+       "vx": 47,
+       "vy": 86
+      },
+      "me": {
+       "x": 960,
+       "y": 300,
+       "tx": 1110,
+       "ty": 98
+      },
+      "ai": {
+       "x": 839,
+       "y": 1695,
+       "tx": 850,
+       "ty": 1700
+      },
+      "playerGoals": 2,
+      "aiGoals": 1,
+      "pause": 0,
+      "aiClock": 3,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 4
+     },
+     "state": {
+      "tick": 280,
+      "puck": {
+       "x": 1100,
+       "y": 553,
+       "vx": -46,
+       "vy": 108
+      },
+      "me": {
+       "x": 1110,
+       "y": 98,
+       "tx": 1110,
+       "ty": 98
+      },
+      "ai": {
+       "x": 850,
+       "y": 1700,
+       "tx": 850,
+       "ty": 1700
+      },
+      "playerGoals": 2,
+      "aiGoals": 1,
+      "pause": 0,
+      "aiClock": 3,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 1120,
+      "y": 513
+     },
+     "state": {
+      "tick": 280,
+      "puck": {
+       "x": 1100,
+       "y": 553,
+       "vx": -46,
+       "vy": 108
+      },
+      "me": {
+       "x": 1110,
+       "y": 98,
+       "tx": 1110,
+       "ty": 513
+      },
+      "ai": {
+       "x": 850,
+       "y": 1700,
+       "tx": 850,
+       "ty": 1700
+      },
+      "playerGoals": 2,
+      "aiGoals": 1,
+      "pause": 0,
+      "aiClock": 3,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 4
+     },
+     "state": {
+      "tick": 284,
+      "puck": {
+       "x": 916,
+       "y": 985,
+       "vx": -46,
+       "vy": 108
+      },
+      "me": {
+       "x": 1110,
+       "y": 513,
+       "tx": 1110,
+       "ty": 513
+      },
+      "ai": {
+       "x": 850,
+       "y": 1700,
+       "tx": 850,
+       "ty": 1700
+      },
+      "playerGoals": 2,
+      "aiGoals": 1,
+      "pause": 0,
+      "aiClock": 3,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 936,
+      "y": 945
+     },
+     "state": {
+      "tick": 284,
+      "puck": {
+       "x": 916,
+       "y": 985,
+       "vx": -46,
+       "vy": 108
+      },
+      "me": {
+       "x": 1110,
+       "y": 513,
+       "tx": 936,
+       "ty": 910
+      },
+      "ai": {
+       "x": 850,
+       "y": 1700,
+       "tx": 850,
+       "ty": 1700
+      },
+      "playerGoals": 2,
+      "aiGoals": 1,
+      "pause": 0,
+      "aiClock": 3,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 4
+     },
+     "state": {
+      "tick": 288,
+      "puck": {
+       "x": 732,
+       "y": 1417,
+       "vx": -46,
+       "vy": 108
+      },
+      "me": {
+       "x": 936,
+       "y": 910,
+       "tx": 936,
+       "ty": 910
+      },
+      "ai": {
+       "x": 850,
+       "y": 1700,
+       "tx": 850,
+       "ty": 1700
+      },
+      "playerGoals": 2,
+      "aiGoals": 1,
+      "pause": 0,
+      "aiClock": 3,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 600,
+      "y": 300
+     },
+     "state": {
+      "tick": 288,
+      "puck": {
+       "x": 732,
+       "y": 1417,
+       "vx": -46,
+       "vy": 108
+      },
+      "me": {
+       "x": 936,
+       "y": 910,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 850,
+       "y": 1700,
+       "tx": 850,
+       "ty": 1700
+      },
+      "playerGoals": 2,
+      "aiGoals": 1,
+      "pause": 0,
+      "aiClock": 3,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 4
+     },
+     "state": {
+      "tick": 292,
+      "puck": {
+       "x": 548,
+       "y": 1849,
+       "vx": -46,
+       "vy": 108
+      },
+      "me": {
+       "x": 648,
+       "y": 386,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 758,
+       "y": 1480,
+       "tx": 732,
+       "ty": 1417
+      },
+      "playerGoals": 2,
+      "aiGoals": 1,
+      "pause": 0,
+      "aiClock": 3,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 600,
+      "y": 300
+     },
+     "state": {
+      "tick": 292,
+      "puck": {
+       "x": 548,
+       "y": 1849,
+       "vx": -46,
+       "vy": 108
+      },
+      "me": {
+       "x": 648,
+       "y": 386,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 758,
+       "y": 1480,
+       "tx": 732,
+       "ty": 1417
+      },
+      "playerGoals": 2,
+      "aiGoals": 1,
+      "pause": 0,
+      "aiClock": 3,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 4
+     },
+     "state": {
+      "tick": 294,
+      "puck": {
+       "x": 600,
+       "y": 1400,
+       "vx": 0,
+       "vy": 0
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 600,
+       "y": 1700,
+       "tx": 600,
+       "ty": 1700
+      },
+      "playerGoals": 3,
+      "aiGoals": 1,
+      "pause": 5,
+      "aiClock": 0,
+      "over": true
+     }
+    }
+   ],
+   "result": {
+    "winner": "player",
+    "stars": 2,
+    "score": 3,
+    "playerGoals": 3,
+    "aiGoals": 1
+   }
+  },
+  {
+   "name": "player-2-1-1star-pushed-l5",
+   "config": {
+    "level": 5,
+    "w": 1200,
+    "h": 2000,
+    "puckR": 60,
+    "malletR": 90,
+    "goalHalf": 250,
+    "eWall": 900,
+    "eMallet": 900,
+    "dec": 1,
+    "maxPuck": 120,
+    "malletSpeed": 150,
+    "aiSpeed": [
+     30,
+     45,
+     60,
+     75,
+     90
+    ],
+    "aiReact": [
+     8,
+     6,
+     4,
+     3,
+     2
+    ],
+    "aiDefY": 300,
+    "homeY": 300,
+    "serveY": 400,
+    "goals": 2,
+    "goalPause": 5,
+    "starMargins": [
+     3,
+     2
+    ]
+   },
+   "seed": 0,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 670,
+      "y": 560
+     },
+     "state": {
+      "tick": 0,
+      "puck": {
+       "x": 600,
+       "y": 600,
+       "vx": 0,
+       "vy": 0
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 670,
+       "ty": 560
+      },
+      "ai": {
+       "x": 600,
+       "y": 1700,
+       "tx": 600,
+       "ty": 1700
+      },
+      "playerGoals": 0,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 0,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 6
+     },
+     "state": {
+      "tick": 6,
+      "puck": {
+       "x": 339,
+       "y": 747,
+       "vx": -50,
+       "vy": 28
+      },
+      "me": {
+       "x": 670,
+       "y": 560,
+       "tx": 670,
+       "ty": 560
+      },
+      "ai": {
+       "x": 399,
+       "y": 1700,
+       "tx": 389,
+       "ty": 1700
+      },
+      "playerGoals": 0,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 0,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 409,
+      "y": 707
+     },
+     "state": {
+      "tick": 6,
+      "puck": {
+       "x": 339,
+       "y": 747,
+       "vx": -50,
+       "vy": 28
+      },
+      "me": {
+       "x": 670,
+       "y": 560,
+       "tx": 409,
+       "ty": 707
+      },
+      "ai": {
+       "x": 399,
+       "y": 1700,
+       "tx": 389,
+       "ty": 1700
+      },
+      "playerGoals": 0,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 0,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 6
+     },
+     "state": {
+      "tick": 12,
+      "puck": {
+       "x": 39,
+       "y": 915,
+       "vx": 45,
+       "vy": 28
+      },
+      "me": {
+       "x": 409,
+       "y": 707,
+       "tx": 409,
+       "ty": 707
+      },
+      "ai": {
+       "x": 350,
+       "y": 1700,
+       "tx": 350,
+       "ty": 1700
+      },
+      "playerGoals": 0,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 0,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 109,
+      "y": 875
+     },
+     "state": {
+      "tick": 12,
+      "puck": {
+       "x": 39,
+       "y": 915,
+       "vx": 45,
+       "vy": 28
+      },
+      "me": {
+       "x": 409,
+       "y": 707,
+       "tx": 109,
+       "ty": 875
+      },
+      "ai": {
+       "x": 350,
+       "y": 1700,
+       "tx": 350,
+       "ty": 1700
+      },
+      "playerGoals": 0,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 0,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 6
+     },
+     "state": {
+      "tick": 18,
+      "puck": {
+       "x": 105,
+       "y": 1520,
+       "vx": 18,
+       "vy": 119
+      },
+      "me": {
+       "x": 109,
+       "y": 875,
+       "tx": 109,
+       "ty": 875
+      },
+      "ai": {
+       "x": 242,
+       "y": 1456,
+       "tx": 179,
+       "ty": 1358
+      },
+      "playerGoals": 0,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 0,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 600,
+      "y": 300
+     },
+     "state": {
+      "tick": 18,
+      "puck": {
+       "x": 105,
+       "y": 1520,
+       "vx": 18,
+       "vy": 119
+      },
+      "me": {
+       "x": 109,
+       "y": 875,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 242,
+       "y": 1456,
+       "tx": 179,
+       "ty": 1358
+      },
+      "playerGoals": 0,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 0,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 6
+     },
+     "state": {
+      "tick": 24,
+      "puck": {
+       "x": 213,
+       "y": 1782,
+       "vx": 18,
+       "vy": -107
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 370,
+       "y": 1789,
+       "tx": 445,
+       "ty": 1910
+      },
+      "playerGoals": 0,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 0,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 600,
+      "y": 300
+     },
+     "state": {
+      "tick": 24,
+      "puck": {
+       "x": 213,
+       "y": 1782,
+       "vx": 18,
+       "vy": -107
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 370,
+       "y": 1789,
+       "tx": 445,
+       "ty": 1910
+      },
+      "playerGoals": 0,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 0,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 6
+     },
+     "state": {
+      "tick": 30,
+      "puck": {
+       "x": 321,
+       "y": 1140,
+       "vx": 18,
+       "vy": -107
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 283,
+       "y": 1469,
+       "tx": 303,
+       "ty": 1247
+      },
+      "playerGoals": 0,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 0,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 600,
+      "y": 300
+     },
+     "state": {
+      "tick": 30,
+      "puck": {
+       "x": 321,
+       "y": 1140,
+       "vx": 18,
+       "vy": -107
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 283,
+       "y": 1469,
+       "tx": 303,
+       "ty": 1247
+      },
+      "playerGoals": 0,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 0,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 6
+     },
+     "state": {
+      "tick": 36,
+      "puck": {
+       "x": 429,
+       "y": 498,
+       "vx": 18,
+       "vy": -107
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 358,
+       "y": 1467,
+       "tx": 411,
+       "ty": 1700
+      },
+      "playerGoals": 0,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 0,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 499,
+      "y": 458
+     },
+     "state": {
+      "tick": 36,
+      "puck": {
+       "x": 429,
+       "y": 498,
+       "vx": 18,
+       "vy": -107
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 499,
+       "ty": 458
+      },
+      "ai": {
+       "x": 358,
+       "y": 1467,
+       "tx": 411,
+       "ty": 1700
+      },
+      "playerGoals": 0,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 0,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 6
+     },
+     "state": {
+      "tick": 42,
+      "puck": {
+       "x": 600,
+       "y": 600,
+       "vx": 0,
+       "vy": 0
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 600,
+       "y": 1700,
+       "tx": 600,
+       "ty": 1700
+      },
+      "playerGoals": 0,
+      "aiGoals": 1,
+      "pause": 4,
+      "aiClock": 0,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 670,
+      "y": 560
+     },
+     "state": {
+      "tick": 42,
+      "puck": {
+       "x": 600,
+       "y": 600,
+       "vx": 0,
+       "vy": 0
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 670,
+       "ty": 560
+      },
+      "ai": {
+       "x": 600,
+       "y": 1700,
+       "tx": 600,
+       "ty": 1700
+      },
+      "playerGoals": 0,
+      "aiGoals": 1,
+      "pause": 4,
+      "aiClock": 0,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 6
+     },
+     "state": {
+      "tick": 48,
+      "puck": {
+       "x": 539,
+       "y": 635,
+       "vx": -50,
+       "vy": 28
+      },
+      "me": {
+       "x": 670,
+       "y": 560,
+       "tx": 670,
+       "ty": 560
+      },
+      "ai": {
+       "x": 600,
+       "y": 1700,
+       "tx": 600,
+       "ty": 1700
+      },
+      "playerGoals": 0,
+      "aiGoals": 1,
+      "pause": 0,
+      "aiClock": 0,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 609,
+      "y": 595
+     },
+     "state": {
+      "tick": 48,
+      "puck": {
+       "x": 539,
+       "y": 635,
+       "vx": -50,
+       "vy": 28
+      },
+      "me": {
+       "x": 670,
+       "y": 560,
+       "tx": 609,
+       "ty": 595
+      },
+      "ai": {
+       "x": 600,
+       "y": 1700,
+       "tx": 600,
+       "ty": 1700
+      },
+      "playerGoals": 0,
+      "aiGoals": 1,
+      "pause": 0,
+      "aiClock": 0,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 6
+     },
+     "state": {
+      "tick": 54,
+      "puck": {
+       "x": 123,
+       "y": 869,
+       "vx": -71,
+       "vy": 40
+      },
+      "me": {
+       "x": 609,
+       "y": 595,
+       "tx": 609,
+       "ty": 595
+      },
+      "ai": {
+       "x": 350,
+       "y": 1700,
+       "tx": 350,
+       "ty": 1700
+      },
+      "playerGoals": 0,
+      "aiGoals": 1,
+      "pause": 0,
+      "aiClock": 0,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 193,
+      "y": 829
+     },
+     "state": {
+      "tick": 54,
+      "puck": {
+       "x": 123,
+       "y": 869,
+       "vx": -71,
+       "vy": 40
+      },
+      "me": {
+       "x": 609,
+       "y": 595,
+       "tx": 193,
+       "ty": 829
+      },
+      "ai": {
+       "x": 350,
+       "y": 1700,
+       "tx": 350,
+       "ty": 1700
+      },
+      "playerGoals": 0,
+      "aiGoals": 1,
+      "pause": 0,
+      "aiClock": 0,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 6
+     },
+     "state": {
+      "tick": 60,
+      "puck": {
+       "x": 367,
+       "y": 1109,
+       "vx": 63,
+       "vy": 40
+      },
+      "me": {
+       "x": 193,
+       "y": 829,
+       "tx": 193,
+       "ty": 829
+      },
+      "ai": {
+       "x": 344,
+       "y": 1611,
+       "tx": 304,
+       "ty": 1090
+      },
+      "playerGoals": 0,
+      "aiGoals": 1,
+      "pause": 0,
+      "aiClock": 0,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 600,
+      "y": 300
+     },
+     "state": {
+      "tick": 60,
+      "puck": {
+       "x": 367,
+       "y": 1109,
+       "vx": 63,
+       "vy": 40
+      },
+      "me": {
+       "x": 193,
+       "y": 829,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 344,
+       "y": 1611,
+       "tx": 304,
+       "ty": 1090
+      },
+      "playerGoals": 0,
+      "aiGoals": 1,
+      "pause": 0,
+      "aiClock": 0,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 6
+     },
+     "state": {
+      "tick": 66,
+      "puck": {
+       "x": 745,
+       "y": 1349,
+       "vx": 63,
+       "vy": 40
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 502,
+       "y": 1334,
+       "tx": 432,
+       "ty": 1559
+      },
+      "playerGoals": 0,
+      "aiGoals": 1,
+      "pause": 0,
+      "aiClock": 0,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 600,
+      "y": 300
+     },
+     "state": {
+      "tick": 66,
+      "puck": {
+       "x": 745,
+       "y": 1349,
+       "vx": 63,
+       "vy": 40
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 502,
+       "y": 1334,
+       "tx": 432,
+       "ty": 1559
+      },
+      "playerGoals": 0,
+      "aiGoals": 1,
+      "pause": 0,
+      "aiClock": 0,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 6
+     },
+     "state": {
+      "tick": 72,
+      "puck": {
+       "x": 1123,
+       "y": 1589,
+       "vx": 63,
+       "vy": 40
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 742,
+       "y": 1621,
+       "tx": 810,
+       "ty": 1799
+      },
+      "playerGoals": 0,
+      "aiGoals": 1,
+      "pause": 0,
+      "aiClock": 0,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 600,
+      "y": 300
+     },
+     "state": {
+      "tick": 72,
+      "puck": {
+       "x": 1123,
+       "y": 1589,
+       "vx": 63,
+       "vy": 40
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 742,
+       "y": 1621,
+       "tx": 810,
+       "ty": 1799
+      },
+      "playerGoals": 0,
+      "aiGoals": 1,
+      "pause": 0,
+      "aiClock": 0,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 6
+     },
+     "state": {
+      "tick": 78,
+      "puck": {
+       "x": 1013,
+       "y": 1924,
+       "vx": -87,
+       "vy": 70
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 850,
+       "y": 1910,
+       "tx": 850,
+       "ty": 1910
+      },
+      "playerGoals": 0,
+      "aiGoals": 1,
+      "pause": 0,
+      "aiClock": 0,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 600,
+      "y": 300
+     },
+     "state": {
+      "tick": 78,
+      "puck": {
+       "x": 1013,
+       "y": 1924,
+       "vx": -87,
+       "vy": 70
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 850,
+       "y": 1910,
+       "tx": 850,
+       "ty": 1910
+      },
+      "playerGoals": 0,
+      "aiGoals": 1,
+      "pause": 0,
+      "aiClock": 0,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 6
+     },
+     "state": {
+      "tick": 84,
+      "puck": {
+       "x": 600,
+       "y": 1400,
+       "vx": 0,
+       "vy": 0
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 600,
+       "y": 1700,
+       "tx": 600,
+       "ty": 1700
+      },
+      "playerGoals": 1,
+      "aiGoals": 1,
+      "pause": 1,
+      "aiClock": 0,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 600,
+      "y": 300
+     },
+     "state": {
+      "tick": 84,
+      "puck": {
+       "x": 600,
+       "y": 1400,
+       "vx": 0,
+       "vy": 0
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 600,
+       "y": 1700,
+       "tx": 600,
+       "ty": 1700
+      },
+      "playerGoals": 1,
+      "aiGoals": 1,
+      "pause": 1,
+      "aiClock": 0,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 6
+     },
+     "state": {
+      "tick": 90,
+      "puck": {
+       "x": 600,
+       "y": 1133,
+       "vx": 0,
+       "vy": -117
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 600,
+       "y": 1370,
+       "tx": 600,
+       "ty": 1370
+      },
+      "playerGoals": 1,
+      "aiGoals": 1,
+      "pause": 0,
+      "aiClock": 1,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 600,
+      "y": 300
+     },
+     "state": {
+      "tick": 90,
+      "puck": {
+       "x": 600,
+       "y": 1133,
+       "vx": 0,
+       "vy": -117
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 600,
+       "y": 1370,
+       "tx": 600,
+       "ty": 1370
+      },
+      "playerGoals": 1,
+      "aiGoals": 1,
+      "pause": 0,
+      "aiClock": 1,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 6
+     },
+     "state": {
+      "tick": 96,
+      "puck": {
+       "x": 600,
+       "y": 450,
+       "vx": 0,
+       "vy": 99
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 600,
+       "y": 1550,
+       "tx": 600,
+       "ty": 1700
+      },
+      "playerGoals": 1,
+      "aiGoals": 1,
+      "pause": 0,
+      "aiClock": 1,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 670,
+      "y": 410
+     },
+     "state": {
+      "tick": 96,
+      "puck": {
+       "x": 600,
+       "y": 450,
+       "vx": 0,
+       "vy": 99
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 670,
+       "ty": 410
+      },
+      "ai": {
+       "x": 600,
+       "y": 1550,
+       "tx": 600,
+       "ty": 1700
+      },
+      "playerGoals": 1,
+      "aiGoals": 1,
+      "pause": 0,
+      "aiClock": 1,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 6
+     },
+     "state": {
+      "tick": 102,
+      "puck": {
+       "x": 600,
+       "y": 1029,
+       "vx": 0,
+       "vy": 93
+      },
+      "me": {
+       "x": 670,
+       "y": 410,
+       "tx": 670,
+       "ty": 410
+      },
+      "ai": {
+       "x": 600,
+       "y": 1700,
+       "tx": 600,
+       "ty": 1700
+      },
+      "playerGoals": 1,
+      "aiGoals": 1,
+      "pause": 0,
+      "aiClock": 1,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 600,
+      "y": 300
+     },
+     "state": {
+      "tick": 102,
+      "puck": {
+       "x": 600,
+       "y": 1029,
+       "vx": 0,
+       "vy": 93
+      },
+      "me": {
+       "x": 670,
+       "y": 410,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 600,
+       "y": 1700,
+       "tx": 600,
+       "ty": 1700
+      },
+      "playerGoals": 1,
+      "aiGoals": 1,
+      "pause": 0,
+      "aiClock": 1,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 6
+     },
+     "state": {
+      "tick": 108,
+      "puck": {
+       "x": 600,
+       "y": 926,
+       "vx": 0,
+       "vy": -116
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 600,
+       "y": 1161,
+       "tx": 600,
+       "ty": 1161
+      },
+      "playerGoals": 1,
+      "aiGoals": 1,
+      "pause": 0,
+      "aiClock": 1,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 670,
+      "y": 886
+     },
+     "state": {
+      "tick": 108,
+      "puck": {
+       "x": 600,
+       "y": 926,
+       "vx": 0,
+       "vy": -116
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 670,
+       "ty": 886
+      },
+      "ai": {
+       "x": 600,
+       "y": 1161,
+       "tx": 600,
+       "ty": 1161
+      },
+      "playerGoals": 1,
+      "aiGoals": 1,
+      "pause": 0,
+      "aiClock": 1,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 6
+     },
+     "state": {
+      "tick": 114,
+      "puck": {
+       "x": 377,
+       "y": 1169,
+       "vx": -52,
+       "vy": 108
+      },
+      "me": {
+       "x": 670,
+       "y": 886,
+       "tx": 670,
+       "ty": 886
+      },
+      "ai": {
+       "x": 498,
+       "y": 1673,
+       "tx": 481,
+       "ty": 1700
+      },
+      "playerGoals": 1,
+      "aiGoals": 1,
+      "pause": 0,
+      "aiClock": 1,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 600,
+      "y": 300
+     },
+     "state": {
+      "tick": 114,
+      "puck": {
+       "x": 377,
+       "y": 1169,
+       "vx": -52,
+       "vy": 108
+      },
+      "me": {
+       "x": 670,
+       "y": 886,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 498,
+       "y": 1673,
+       "tx": 481,
+       "ty": 1700
+      },
+      "playerGoals": 1,
+      "aiGoals": 1,
+      "pause": 0,
+      "aiClock": 1,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 6
+     },
+     "state": {
+      "tick": 120,
+      "puck": {
+       "x": 65,
+       "y": 1817,
+       "vx": -52,
+       "vy": 108
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 348,
+       "y": 1579,
+       "tx": 419,
+       "ty": 1851
+      },
+      "playerGoals": 1,
+      "aiGoals": 1,
+      "pause": 0,
+      "aiClock": 1,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 600,
+      "y": 300
+     },
+     "state": {
+      "tick": 120,
+      "puck": {
+       "x": 65,
+       "y": 1817,
+       "vx": -52,
+       "vy": 108
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 348,
+       "y": 1579,
+       "tx": 419,
+       "ty": 1851
+      },
+      "playerGoals": 1,
+      "aiGoals": 1,
+      "pause": 0,
+      "aiClock": 1,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 6
+     },
+     "state": {
+      "tick": 122,
+      "puck": {
+       "x": 600,
+       "y": 1400,
+       "vx": 0,
+       "vy": 0
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 600,
+       "y": 1700,
+       "tx": 600,
+       "ty": 1700
+      },
+      "playerGoals": 2,
+      "aiGoals": 1,
+      "pause": 5,
+      "aiClock": 0,
+      "over": true
+     }
+    }
+   ],
+   "result": {
+    "winner": "player",
+    "stars": 1,
+    "score": 2,
+    "playerGoals": 2,
+    "aiGoals": 1
+   }
+  },
+  {
+   "name": "ai-wins-0star-l2",
+   "config": {
+    "level": 2,
+    "w": 1200,
+    "h": 2000,
+    "puckR": 60,
+    "malletR": 90,
+    "goalHalf": 250,
+    "eWall": 900,
+    "eMallet": 900,
+    "dec": 1,
+    "maxPuck": 120,
+    "malletSpeed": 150,
+    "aiSpeed": [
+     30,
+     45,
+     60,
+     75,
+     90
+    ],
+    "aiReact": [
+     8,
+     6,
+     4,
+     3,
+     2
+    ],
+    "aiDefY": 300,
+    "homeY": 300,
+    "serveY": 400,
+    "goals": 2,
+    "goalPause": 5,
+    "starMargins": [
+     2,
+     1
+    ]
+   },
+   "seed": 0,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 620,
+      "y": 560
+     },
+     "state": {
+      "tick": 0,
+      "puck": {
+       "x": 600,
+       "y": 600,
+       "vx": 0,
+       "vy": 0
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 620,
+       "ty": 560
+      },
+      "ai": {
+       "x": 600,
+       "y": 1700,
+       "tx": 600,
+       "ty": 1700
+      },
+      "playerGoals": 0,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 0,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 6
+     },
+     "state": {
+      "tick": 6,
+      "puck": {
+       "x": 340,
+       "y": 1124,
+       "vx": -53,
+       "vy": 107
+      },
+      "me": {
+       "x": 620,
+       "y": 560,
+       "tx": 620,
+       "ty": 560
+      },
+      "ai": {
+       "x": 586,
+       "y": 1658,
+       "tx": 393,
+       "ty": 1090
+      },
+      "playerGoals": 0,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 0,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 0,
+      "y": 0
+     },
+     "state": {
+      "tick": 6,
+      "puck": {
+       "x": 340,
+       "y": 1124,
+       "vx": -53,
+       "vy": 107
+      },
+      "me": {
+       "x": 620,
+       "y": 560,
+       "tx": 90,
+       "ty": 90
+      },
+      "ai": {
+       "x": 586,
+       "y": 1658,
+       "tx": 393,
+       "ty": 1090
+      },
+      "playerGoals": 0,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 0,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 6
+     },
+     "state": {
+      "tick": 12,
+      "puck": {
+       "x": 22,
+       "y": 1766,
+       "vx": 47,
+       "vy": 107
+      },
+      "me": {
+       "x": 90,
+       "y": 90,
+       "tx": 90,
+       "ty": 90
+      },
+      "ai": {
+       "x": 499,
+       "y": 1489,
+       "tx": 325,
+       "ty": 1909
+      },
+      "playerGoals": 0,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 0,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 0,
+      "y": 0
+     },
+     "state": {
+      "tick": 12,
+      "puck": {
+       "x": 22,
+       "y": 1766,
+       "vx": 47,
+       "vy": 107
+      },
+      "me": {
+       "x": 90,
+       "y": 90,
+       "tx": 90,
+       "ty": 90
+      },
+      "ai": {
+       "x": 499,
+       "y": 1489,
+       "tx": 325,
+       "ty": 1909
+      },
+      "playerGoals": 0,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 0,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 6
+     },
+     "state": {
+      "tick": 18,
+      "puck": {
+       "x": 304,
+       "y": 1596,
+       "vx": 47,
+       "vy": -96
+      },
+      "me": {
+       "x": 90,
+       "y": 90,
+       "tx": 90,
+       "ty": 90
+      },
+      "ai": {
+       "x": 431,
+       "y": 1735,
+       "tx": 507,
+       "ty": 1910
+      },
+      "playerGoals": 0,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 0,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 0,
+      "y": 0
+     },
+     "state": {
+      "tick": 18,
+      "puck": {
+       "x": 304,
+       "y": 1596,
+       "vx": 47,
+       "vy": -96
+      },
+      "me": {
+       "x": 90,
+       "y": 90,
+       "tx": 90,
+       "ty": 90
+      },
+      "ai": {
+       "x": 431,
+       "y": 1735,
+       "tx": 507,
+       "ty": 1910
+      },
+      "playerGoals": 0,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 0,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 6
+     },
+     "state": {
+      "tick": 24,
+      "puck": {
+       "x": 586,
+       "y": 1020,
+       "vx": 47,
+       "vy": -96
+      },
+      "me": {
+       "x": 90,
+       "y": 90,
+       "tx": 90,
+       "ty": 90
+      },
+      "ai": {
+       "x": 508,
+       "y": 1865,
+       "tx": 539,
+       "ty": 1116
+      },
+      "playerGoals": 0,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 0,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 0,
+      "y": 0
+     },
+     "state": {
+      "tick": 24,
+      "puck": {
+       "x": 586,
+       "y": 1020,
+       "vx": 47,
+       "vy": -96
+      },
+      "me": {
+       "x": 90,
+       "y": 90,
+       "tx": 90,
+       "ty": 90
+      },
+      "ai": {
+       "x": 508,
+       "y": 1865,
+       "tx": 539,
+       "ty": 1116
+      },
+      "playerGoals": 0,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 0,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 6
+     },
+     "state": {
+      "tick": 30,
+      "puck": {
+       "x": 868,
+       "y": 444,
+       "vx": 47,
+       "vy": -96
+      },
+      "me": {
+       "x": 90,
+       "y": 90,
+       "tx": 90,
+       "ty": 90
+      },
+      "ai": {
+       "x": 559,
+       "y": 1648,
+       "tx": 821,
+       "ty": 1700
+      },
+      "playerGoals": 0,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 0,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 0,
+      "y": 0
+     },
+     "state": {
+      "tick": 30,
+      "puck": {
+       "x": 868,
+       "y": 444,
+       "vx": 47,
+       "vy": -96
+      },
+      "me": {
+       "x": 90,
+       "y": 90,
+       "tx": 90,
+       "ty": 90
+      },
+      "ai": {
+       "x": 559,
+       "y": 1648,
+       "tx": 821,
+       "ty": 1700
+      },
+      "playerGoals": 0,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 0,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 6
+     },
+     "state": {
+      "tick": 36,
+      "puck": {
+       "x": 600,
+       "y": 600,
+       "vx": 0,
+       "vy": 0
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 600,
+       "y": 1700,
+       "tx": 600,
+       "ty": 1700
+      },
+      "playerGoals": 0,
+      "aiGoals": 1,
+      "pause": 4,
+      "aiClock": 0,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 620,
+      "y": 560
+     },
+     "state": {
+      "tick": 36,
+      "puck": {
+       "x": 600,
+       "y": 600,
+       "vx": 0,
+       "vy": 0
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 620,
+       "ty": 560
+      },
+      "ai": {
+       "x": 600,
+       "y": 1700,
+       "tx": 600,
+       "ty": 1700
+      },
+      "playerGoals": 0,
+      "aiGoals": 1,
+      "pause": 4,
+      "aiClock": 0,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 6
+     },
+     "state": {
+      "tick": 42,
+      "puck": {
+       "x": 552,
+       "y": 696,
+       "vx": -53,
+       "vy": 107
+      },
+      "me": {
+       "x": 620,
+       "y": 560,
+       "tx": 620,
+       "ty": 560
+      },
+      "ai": {
+       "x": 600,
+       "y": 1700,
+       "tx": 600,
+       "ty": 1700
+      },
+      "playerGoals": 0,
+      "aiGoals": 1,
+      "pause": 0,
+      "aiClock": 2,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 0,
+      "y": 0
+     },
+     "state": {
+      "tick": 42,
+      "puck": {
+       "x": 552,
+       "y": 696,
+       "vx": -53,
+       "vy": 107
+      },
+      "me": {
+       "x": 620,
+       "y": 560,
+       "tx": 90,
+       "ty": 90
+      },
+      "ai": {
+       "x": 600,
+       "y": 1700,
+       "tx": 600,
+       "ty": 1700
+      },
+      "playerGoals": 0,
+      "aiGoals": 1,
+      "pause": 0,
+      "aiClock": 2,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 6
+     },
+     "state": {
+      "tick": 48,
+      "puck": {
+       "x": 234,
+       "y": 1338,
+       "vx": -53,
+       "vy": 107
+      },
+      "me": {
+       "x": 90,
+       "y": 90,
+       "tx": 90,
+       "ty": 90
+      },
+      "ai": {
+       "x": 558,
+       "y": 1574,
+       "tx": 393,
+       "ty": 1090
+      },
+      "playerGoals": 0,
+      "aiGoals": 1,
+      "pause": 0,
+      "aiClock": 2,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 0,
+      "y": 0
+     },
+     "state": {
+      "tick": 48,
+      "puck": {
+       "x": 234,
+       "y": 1338,
+       "vx": -53,
+       "vy": 107
+      },
+      "me": {
+       "x": 90,
+       "y": 90,
+       "tx": 90,
+       "ty": 90
+      },
+      "ai": {
+       "x": 558,
+       "y": 1574,
+       "tx": 393,
+       "ty": 1090
+      },
+      "playerGoals": 0,
+      "aiGoals": 1,
+      "pause": 0,
+      "aiClock": 2,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 6
+     },
+     "state": {
+      "tick": 54,
+      "puck": {
+       "x": 116,
+       "y": 1980,
+       "vx": 47,
+       "vy": -96
+      },
+      "me": {
+       "x": 90,
+       "y": 90,
+       "tx": 90,
+       "ty": 90
+      },
+      "ai": {
+       "x": 465,
+       "y": 1571,
+       "tx": 325,
+       "ty": 1909
+      },
+      "playerGoals": 0,
+      "aiGoals": 1,
+      "pause": 0,
+      "aiClock": 2,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 0,
+      "y": 0
+     },
+     "state": {
+      "tick": 54,
+      "puck": {
+       "x": 116,
+       "y": 1980,
+       "vx": 47,
+       "vy": -96
+      },
+      "me": {
+       "x": 90,
+       "y": 90,
+       "tx": 90,
+       "ty": 90
+      },
+      "ai": {
+       "x": 465,
+       "y": 1571,
+       "tx": 325,
+       "ty": 1909
+      },
+      "playerGoals": 0,
+      "aiGoals": 1,
+      "pause": 0,
+      "aiClock": 2,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 6
+     },
+     "state": {
+      "tick": 60,
+      "puck": {
+       "x": 398,
+       "y": 1404,
+       "vx": 47,
+       "vy": -96
+      },
+      "me": {
+       "x": 90,
+       "y": 90,
+       "tx": 90,
+       "ty": 90
+      },
+      "ai": {
+       "x": 466,
+       "y": 1817,
+       "tx": 507,
+       "ty": 1910
+      },
+      "playerGoals": 0,
+      "aiGoals": 1,
+      "pause": 0,
+      "aiClock": 2,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 0,
+      "y": 0
+     },
+     "state": {
+      "tick": 60,
+      "puck": {
+       "x": 398,
+       "y": 1404,
+       "vx": 47,
+       "vy": -96
+      },
+      "me": {
+       "x": 90,
+       "y": 90,
+       "tx": 90,
+       "ty": 90
+      },
+      "ai": {
+       "x": 466,
+       "y": 1817,
+       "tx": 507,
+       "ty": 1910
+      },
+      "playerGoals": 0,
+      "aiGoals": 1,
+      "pause": 0,
+      "aiClock": 2,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 6
+     },
+     "state": {
+      "tick": 66,
+      "puck": {
+       "x": 680,
+       "y": 828,
+       "vx": 47,
+       "vy": -96
+      },
+      "me": {
+       "x": 90,
+       "y": 90,
+       "tx": 90,
+       "ty": 90
+      },
+      "ai": {
+       "x": 510,
+       "y": 1775,
+       "tx": 539,
+       "ty": 1116
+      },
+      "playerGoals": 0,
+      "aiGoals": 1,
+      "pause": 0,
+      "aiClock": 2,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 0,
+      "y": 0
+     },
+     "state": {
+      "tick": 66,
+      "puck": {
+       "x": 680,
+       "y": 828,
+       "vx": 47,
+       "vy": -96
+      },
+      "me": {
+       "x": 90,
+       "y": 90,
+       "tx": 90,
+       "ty": 90
+      },
+      "ai": {
+       "x": 510,
+       "y": 1775,
+       "tx": 539,
+       "ty": 1116
+      },
+      "playerGoals": 0,
+      "aiGoals": 1,
+      "pause": 0,
+      "aiClock": 2,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 6
+     },
+     "state": {
+      "tick": 72,
+      "puck": {
+       "x": 962,
+       "y": 252,
+       "vx": 47,
+       "vy": -96
+      },
+      "me": {
+       "x": 90,
+       "y": 90,
+       "tx": 90,
+       "ty": 90
+      },
+      "ai": {
+       "x": 647,
+       "y": 1664,
+       "tx": 821,
+       "ty": 1700
+      },
+      "playerGoals": 0,
+      "aiGoals": 1,
+      "pause": 0,
+      "aiClock": 2,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 0,
+      "y": 0
+     },
+     "state": {
+      "tick": 72,
+      "puck": {
+       "x": 962,
+       "y": 252,
+       "vx": 47,
+       "vy": -96
+      },
+      "me": {
+       "x": 90,
+       "y": 90,
+       "tx": 90,
+       "ty": 90
+      },
+      "ai": {
+       "x": 647,
+       "y": 1664,
+       "tx": 821,
+       "ty": 1700
+      },
+      "playerGoals": 0,
+      "aiGoals": 1,
+      "pause": 0,
+      "aiClock": 2,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 6
+     },
+     "state": {
+      "tick": 75,
+      "puck": {
+       "x": 600,
+       "y": 600,
+       "vx": 0,
+       "vy": 0
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 600,
+       "y": 1700,
+       "tx": 600,
+       "ty": 1700
+      },
+      "playerGoals": 0,
+      "aiGoals": 2,
+      "pause": 5,
+      "aiClock": 0,
+      "over": true
+     }
+    }
+   ],
+   "result": {
+    "winner": "ai",
+    "stars": 0,
+    "score": 0,
+    "playerGoals": 0,
+    "aiGoals": 2
+   }
+  },
+  {
+   "name": "timeout-l4",
+   "config": {
+    "level": 4,
+    "w": 1200,
+    "h": 2000,
+    "puckR": 60,
+    "malletR": 90,
+    "goalHalf": 250,
+    "eWall": 900,
+    "eMallet": 900,
+    "dec": 1,
+    "maxPuck": 120,
+    "malletSpeed": 150,
+    "aiSpeed": [
+     30,
+     45,
+     60,
+     75,
+     90
+    ],
+    "aiReact": [
+     8,
+     6,
+     4,
+     3,
+     2
+    ],
+    "aiDefY": 300,
+    "homeY": 300,
+    "serveY": 400,
+    "goals": 5,
+    "goalPause": 5,
+    "starMargins": [
+     2,
+     1
+    ]
+   },
+   "seed": 0,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 630,
+      "y": 560
+     },
+     "state": {
+      "tick": 0,
+      "puck": {
+       "x": 600,
+       "y": 600,
+       "vx": 0,
+       "vy": 0
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 630,
+       "ty": 560
+      },
+      "ai": {
+       "x": 600,
+       "y": 1700,
+       "tx": 600,
+       "ty": 1700
+      },
+      "playerGoals": 0,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 0,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 6
+     },
+     "state": {
+      "tick": 6,
+      "puck": {
+       "x": 252,
+       "y": 1064,
+       "vx": -72,
+       "vy": 96
+      },
+      "me": {
+       "x": 630,
+       "y": 560,
+       "tx": 630,
+       "ty": 560
+      },
+      "ai": {
+       "x": 465,
+       "y": 1700,
+       "tx": 350,
+       "ty": 1700
+      },
+      "playerGoals": 0,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 0,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 600,
+      "y": 300
+     },
+     "state": {
+      "tick": 6,
+      "puck": {
+       "x": 252,
+       "y": 1064,
+       "vx": -72,
+       "vy": 96
+      },
+      "me": {
+       "x": 630,
+       "y": 560,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 465,
+       "y": 1700,
+       "tx": 350,
+       "ty": 1700
+      },
+      "playerGoals": 0,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 0,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 6
+     },
+     "state": {
+      "tick": 12,
+      "puck": {
+       "x": 143,
+       "y": 1681,
+       "vx": 33,
+       "vy": 111
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 269,
+       "y": 1575,
+       "tx": 360,
+       "ty": 1820
+      },
+      "playerGoals": 0,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 0,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 600,
+      "y": 300
+     },
+     "state": {
+      "tick": 12,
+      "puck": {
+       "x": 143,
+       "y": 1681,
+       "vx": 33,
+       "vy": 111
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 269,
+       "y": 1575,
+       "tx": 360,
+       "ty": 1820
+      },
+      "playerGoals": 0,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 0,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 6
+     },
+     "state": {
+      "tick": 18,
+      "puck": {
+       "x": 600,
+       "y": 1400,
+       "vx": 0,
+       "vy": 0
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 600,
+       "y": 1700,
+       "tx": 600,
+       "ty": 1700
+      },
+      "playerGoals": 1,
+      "aiGoals": 0,
+      "pause": 2,
+      "aiClock": 0,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 600,
+      "y": 300
+     },
+     "state": {
+      "tick": 18,
+      "puck": {
+       "x": 600,
+       "y": 1400,
+       "vx": 0,
+       "vy": 0
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 600,
+       "y": 1700,
+       "tx": 600,
+       "ty": 1700
+      },
+      "playerGoals": 1,
+      "aiGoals": 0,
+      "pause": 2,
+      "aiClock": 0,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 6
+     },
+     "state": {
+      "tick": 24,
+      "puck": {
+       "x": 600,
+       "y": 1400,
+       "vx": 0,
+       "vy": 0
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 600,
+       "y": 1550,
+       "tx": 600,
+       "ty": 1400
+      },
+      "playerGoals": 1,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 1,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 600,
+      "y": 300
+     },
+     "state": {
+      "tick": 24,
+      "puck": {
+       "x": 600,
+       "y": 1400,
+       "vx": 0,
+       "vy": 0
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 600,
+       "y": 1550,
+       "tx": 600,
+       "ty": 1400
+      },
+      "playerGoals": 1,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 1,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 6
+     },
+     "state": {
+      "tick": 30,
+      "puck": {
+       "x": 600,
+       "y": 740,
+       "vx": 0,
+       "vy": -114
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 600,
+       "y": 1475,
+       "tx": 600,
+       "ty": 1700
+      },
+      "playerGoals": 1,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 1,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 630,
+      "y": 700
+     },
+     "state": {
+      "tick": 30,
+      "puck": {
+       "x": 600,
+       "y": 740,
+       "vx": 0,
+       "vy": -114
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 630,
+       "ty": 700
+      },
+      "ai": {
+       "x": 600,
+       "y": 1475,
+       "tx": 600,
+       "ty": 1700
+      },
+      "playerGoals": 1,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 1,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 6
+     },
+     "state": {
+      "tick": 36,
+      "puck": {
+       "x": 585,
+       "y": 11,
+       "vx": 0,
+       "vy": -108
+      },
+      "me": {
+       "x": 630,
+       "y": 700,
+       "tx": 630,
+       "ty": 700
+      },
+      "ai": {
+       "x": 585,
+       "y": 1700,
+       "tx": 585,
+       "ty": 1700
+      },
+      "playerGoals": 1,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 1,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 615,
+      "y": -29
+     },
+     "state": {
+      "tick": 36,
+      "puck": {
+       "x": 585,
+       "y": 11,
+       "vx": 0,
+       "vy": -108
+      },
+      "me": {
+       "x": 630,
+       "y": 700,
+       "tx": 615,
+       "ty": 90
+      },
+      "ai": {
+       "x": 585,
+       "y": 1700,
+       "tx": 585,
+       "ty": 1700
+      },
+      "playerGoals": 1,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 1,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 6
+     },
+     "state": {
+      "tick": 42,
+      "puck": {
+       "x": 600,
+       "y": 600,
+       "vx": 0,
+       "vy": 0
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 600,
+       "y": 1700,
+       "tx": 600,
+       "ty": 1700
+      },
+      "playerGoals": 1,
+      "aiGoals": 1,
+      "pause": 0,
+      "aiClock": 0,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 630,
+      "y": 560
+     },
+     "state": {
+      "tick": 42,
+      "puck": {
+       "x": 600,
+       "y": 600,
+       "vx": 0,
+       "vy": 0
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 630,
+       "ty": 560
+      },
+      "ai": {
+       "x": 600,
+       "y": 1700,
+       "tx": 600,
+       "ty": 1700
+      },
+      "playerGoals": 1,
+      "aiGoals": 1,
+      "pause": 0,
+      "aiClock": 0,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 6
+     },
+     "state": {
+      "tick": 48,
+      "puck": {
+       "x": 252,
+       "y": 1064,
+       "vx": -72,
+       "vy": 96
+      },
+      "me": {
+       "x": 630,
+       "y": 560,
+       "tx": 630,
+       "ty": 560
+      },
+      "ai": {
+       "x": 465,
+       "y": 1700,
+       "tx": 350,
+       "ty": 1700
+      },
+      "playerGoals": 1,
+      "aiGoals": 1,
+      "pause": 0,
+      "aiClock": 0,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 600,
+      "y": 300
+     },
+     "state": {
+      "tick": 48,
+      "puck": {
+       "x": 252,
+       "y": 1064,
+       "vx": -72,
+       "vy": 96
+      },
+      "me": {
+       "x": 630,
+       "y": 560,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 465,
+       "y": 1700,
+       "tx": 350,
+       "ty": 1700
+      },
+      "playerGoals": 1,
+      "aiGoals": 1,
+      "pause": 0,
+      "aiClock": 0,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 6
+     },
+     "state": {
+      "tick": 54,
+      "puck": {
+       "x": 143,
+       "y": 1681,
+       "vx": 33,
+       "vy": 111
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 269,
+       "y": 1575,
+       "tx": 360,
+       "ty": 1820
+      },
+      "playerGoals": 1,
+      "aiGoals": 1,
+      "pause": 0,
+      "aiClock": 0,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 600,
+      "y": 300
+     },
+     "state": {
+      "tick": 54,
+      "puck": {
+       "x": 143,
+       "y": 1681,
+       "vx": 33,
+       "vy": 111
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 269,
+       "y": 1575,
+       "tx": 360,
+       "ty": 1820
+      },
+      "playerGoals": 1,
+      "aiGoals": 1,
+      "pause": 0,
+      "aiClock": 0,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 6
+     },
+     "state": {
+      "tick": 60,
+      "puck": {
+       "x": 600,
+       "y": 1400,
+       "vx": 0,
+       "vy": 0
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 600,
+       "y": 1700,
+       "tx": 600,
+       "ty": 1700
+      },
+      "playerGoals": 2,
+      "aiGoals": 1,
+      "pause": 2,
+      "aiClock": 0,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 600,
+      "y": 300
+     },
+     "state": {
+      "tick": 60,
+      "puck": {
+       "x": 600,
+       "y": 1400,
+       "vx": 0,
+       "vy": 0
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 600,
+       "y": 1700,
+       "tx": 600,
+       "ty": 1700
+      },
+      "playerGoals": 2,
+      "aiGoals": 1,
+      "pause": 2,
+      "aiClock": 0,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 6
+     },
+     "state": {
+      "tick": 66,
+      "puck": {
+       "x": 600,
+       "y": 1400,
+       "vx": 0,
+       "vy": 0
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 600,
+       "y": 1550,
+       "tx": 600,
+       "ty": 1400
+      },
+      "playerGoals": 2,
+      "aiGoals": 1,
+      "pause": 0,
+      "aiClock": 1,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 600,
+      "y": 300
+     },
+     "state": {
+      "tick": 66,
+      "puck": {
+       "x": 600,
+       "y": 1400,
+       "vx": 0,
+       "vy": 0
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 600,
+       "y": 1550,
+       "tx": 600,
+       "ty": 1400
+      },
+      "playerGoals": 2,
+      "aiGoals": 1,
+      "pause": 0,
+      "aiClock": 1,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 6
+     },
+     "state": {
+      "tick": 72,
+      "puck": {
+       "x": 600,
+       "y": 740,
+       "vx": 0,
+       "vy": -114
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 600,
+       "y": 1475,
+       "tx": 600,
+       "ty": 1700
+      },
+      "playerGoals": 2,
+      "aiGoals": 1,
+      "pause": 0,
+      "aiClock": 1,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 630,
+      "y": 700
+     },
+     "state": {
+      "tick": 72,
+      "puck": {
+       "x": 600,
+       "y": 740,
+       "vx": 0,
+       "vy": -114
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 630,
+       "ty": 700
+      },
+      "ai": {
+       "x": 600,
+       "y": 1475,
+       "tx": 600,
+       "ty": 1700
+      },
+      "playerGoals": 2,
+      "aiGoals": 1,
+      "pause": 0,
+      "aiClock": 1,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 6
+     },
+     "state": {
+      "tick": 78,
+      "puck": {
+       "x": 585,
+       "y": 11,
+       "vx": 0,
+       "vy": -108
+      },
+      "me": {
+       "x": 630,
+       "y": 700,
+       "tx": 630,
+       "ty": 700
+      },
+      "ai": {
+       "x": 585,
+       "y": 1700,
+       "tx": 585,
+       "ty": 1700
+      },
+      "playerGoals": 2,
+      "aiGoals": 1,
+      "pause": 0,
+      "aiClock": 1,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 615,
+      "y": -29
+     },
+     "state": {
+      "tick": 78,
+      "puck": {
+       "x": 585,
+       "y": 11,
+       "vx": 0,
+       "vy": -108
+      },
+      "me": {
+       "x": 630,
+       "y": 700,
+       "tx": 615,
+       "ty": 90
+      },
+      "ai": {
+       "x": 585,
+       "y": 1700,
+       "tx": 585,
+       "ty": 1700
+      },
+      "playerGoals": 2,
+      "aiGoals": 1,
+      "pause": 0,
+      "aiClock": 1,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 6
+     },
+     "state": {
+      "tick": 84,
+      "puck": {
+       "x": 600,
+       "y": 600,
+       "vx": 0,
+       "vy": 0
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 600,
+       "y": 1700,
+       "tx": 600,
+       "ty": 1700
+      },
+      "playerGoals": 2,
+      "aiGoals": 2,
+      "pause": 0,
+      "aiClock": 0,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 630,
+      "y": 560
+     },
+     "state": {
+      "tick": 84,
+      "puck": {
+       "x": 600,
+       "y": 600,
+       "vx": 0,
+       "vy": 0
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 630,
+       "ty": 560
+      },
+      "ai": {
+       "x": 600,
+       "y": 1700,
+       "tx": 600,
+       "ty": 1700
+      },
+      "playerGoals": 2,
+      "aiGoals": 2,
+      "pause": 0,
+      "aiClock": 0,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 6
+     },
+     "state": {
+      "tick": 90,
+      "puck": {
+       "x": 252,
+       "y": 1064,
+       "vx": -72,
+       "vy": 96
+      },
+      "me": {
+       "x": 630,
+       "y": 560,
+       "tx": 630,
+       "ty": 560
+      },
+      "ai": {
+       "x": 465,
+       "y": 1700,
+       "tx": 350,
+       "ty": 1700
+      },
+      "playerGoals": 2,
+      "aiGoals": 2,
+      "pause": 0,
+      "aiClock": 0,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 600,
+      "y": 300
+     },
+     "state": {
+      "tick": 90,
+      "puck": {
+       "x": 252,
+       "y": 1064,
+       "vx": -72,
+       "vy": 96
+      },
+      "me": {
+       "x": 630,
+       "y": 560,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 465,
+       "y": 1700,
+       "tx": 350,
+       "ty": 1700
+      },
+      "playerGoals": 2,
+      "aiGoals": 2,
+      "pause": 0,
+      "aiClock": 0,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 6
+     },
+     "state": {
+      "tick": 96,
+      "puck": {
+       "x": 143,
+       "y": 1681,
+       "vx": 33,
+       "vy": 111
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 269,
+       "y": 1575,
+       "tx": 360,
+       "ty": 1820
+      },
+      "playerGoals": 2,
+      "aiGoals": 2,
+      "pause": 0,
+      "aiClock": 0,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 600,
+      "y": 300
+     },
+     "state": {
+      "tick": 96,
+      "puck": {
+       "x": 143,
+       "y": 1681,
+       "vx": 33,
+       "vy": 111
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 269,
+       "y": 1575,
+       "tx": 360,
+       "ty": 1820
+      },
+      "playerGoals": 2,
+      "aiGoals": 2,
+      "pause": 0,
+      "aiClock": 0,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 6
+     },
+     "state": {
+      "tick": 102,
+      "puck": {
+       "x": 600,
+       "y": 1400,
+       "vx": 0,
+       "vy": 0
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 600,
+       "y": 1700,
+       "tx": 600,
+       "ty": 1700
+      },
+      "playerGoals": 3,
+      "aiGoals": 2,
+      "pause": 2,
+      "aiClock": 0,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 600,
+      "y": 300
+     },
+     "state": {
+      "tick": 102,
+      "puck": {
+       "x": 600,
+       "y": 1400,
+       "vx": 0,
+       "vy": 0
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 600,
+       "y": 1700,
+       "tx": 600,
+       "ty": 1700
+      },
+      "playerGoals": 3,
+      "aiGoals": 2,
+      "pause": 2,
+      "aiClock": 0,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 6
+     },
+     "state": {
+      "tick": 108,
+      "puck": {
+       "x": 600,
+       "y": 1400,
+       "vx": 0,
+       "vy": 0
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 600,
+       "y": 1550,
+       "tx": 600,
+       "ty": 1400
+      },
+      "playerGoals": 3,
+      "aiGoals": 2,
+      "pause": 0,
+      "aiClock": 1,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 600,
+      "y": 300
+     },
+     "state": {
+      "tick": 108,
+      "puck": {
+       "x": 600,
+       "y": 1400,
+       "vx": 0,
+       "vy": 0
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 600,
+       "y": 1550,
+       "tx": 600,
+       "ty": 1400
+      },
+      "playerGoals": 3,
+      "aiGoals": 2,
+      "pause": 0,
+      "aiClock": 1,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 6
+     },
+     "state": {
+      "tick": 114,
+      "puck": {
+       "x": 600,
+       "y": 740,
+       "vx": 0,
+       "vy": -114
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 600,
+       "ty": 300
+      },
+      "ai": {
+       "x": 600,
+       "y": 1475,
+       "tx": 600,
+       "ty": 1700
+      },
+      "playerGoals": 3,
+      "aiGoals": 2,
+      "pause": 0,
+      "aiClock": 1,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 630,
+      "y": 700
+     },
+     "state": {
+      "tick": 114,
+      "puck": {
+       "x": 600,
+       "y": 740,
+       "vx": 0,
+       "vy": -114
+      },
+      "me": {
+       "x": 600,
+       "y": 300,
+       "tx": 630,
+       "ty": 700
+      },
+      "ai": {
+       "x": 600,
+       "y": 1475,
+       "tx": 600,
+       "ty": 1700
+      },
+      "playerGoals": 3,
+      "aiGoals": 2,
+      "pause": 0,
+      "aiClock": 1,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 6
+     },
+     "state": {
+      "tick": 120,
+      "puck": {
+       "x": 585,
+       "y": 11,
+       "vx": 0,
+       "vy": -108
+      },
+      "me": {
+       "x": 630,
+       "y": 700,
+       "tx": 630,
+       "ty": 700
+      },
+      "ai": {
+       "x": 585,
+       "y": 1700,
+       "tx": 585,
+       "ty": 1700
+      },
+      "playerGoals": 3,
+      "aiGoals": 2,
+      "pause": 0,
+      "aiClock": 1,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 615,
+      "y": -29
+     },
+     "state": {
+      "tick": 120,
+      "puck": {
+       "x": 585,
+       "y": 11,
+       "vx": 0,
+       "vy": -108
+      },
+      "me": {
+       "x": 630,
+       "y": 700,
+       "tx": 615,
+       "ty": 90
+      },
+      "ai": {
+       "x": 585,
+       "y": 1700,
+       "tx": 585,
+       "ty": 1700
+      },
+      "playerGoals": 3,
+      "aiGoals": 2,
+      "pause": 0,
+      "aiClock": 1,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "timeout"
+     },
+     "state": {
+      "tick": 120,
+      "puck": {
+       "x": 585,
+       "y": 11,
+       "vx": 0,
+       "vy": -108
+      },
+      "me": {
+       "x": 630,
+       "y": 700,
+       "tx": 615,
+       "ty": 90
+      },
+      "ai": {
+       "x": 585,
+       "y": 1700,
+       "tx": 585,
+       "ty": 1700
+      },
+      "playerGoals": 3,
+      "aiGoals": 2,
+      "pause": 0,
+      "aiClock": 1,
+      "over": true
+     }
+    }
+   ],
+   "result": {
+    "winner": "player",
+    "stars": 2,
+    "score": 3,
+    "playerGoals": 3,
+    "aiGoals": 2
+   }
+  },
+  {
+   "name": "timeout-draw-default-l3",
+   "config": {
+    "level": 3,
+    "w": 6000,
+    "h": 10000,
+    "puckR": 250,
+    "malletR": 350,
+    "goalHalf": 900,
+    "eWall": 900,
+    "eMallet": 900,
+    "dec": 1,
+    "maxPuck": 450,
+    "malletSpeed": 600,
+    "aiSpeed": [
+     100,
+     140,
+     180,
+     220,
+     260
+    ],
+    "aiReact": [
+     16,
+     12,
+     8,
+     5,
+     3
+    ],
+    "aiDefY": 1200,
+    "homeY": 1200,
+    "serveY": 1500,
+    "goals": 7,
+    "goalPause": 60,
+    "starMargins": [
+     5,
+     3
+    ]
+   },
+   "seed": 0,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 3000,
+      "y": 3600
+     },
+     "state": {
+      "tick": 0,
+      "puck": {
+       "x": 3000,
+       "y": 3500,
+       "vx": 0,
+       "vy": 0
+      },
+      "me": {
+       "x": 3000,
+       "y": 1200,
+       "tx": 3000,
+       "ty": 3600
+      },
+      "ai": {
+       "x": 3000,
+       "y": 8800,
+       "tx": 3000,
+       "ty": 8800
+      },
+      "playerGoals": 0,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 0,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 12
+     },
+     "state": {
+      "tick": 12,
+      "puck": {
+       "x": 3000,
+       "y": 7300,
+       "vx": 0,
+       "vy": -449
+      },
+      "me": {
+       "x": 3000,
+       "y": 3600,
+       "tx": 3000,
+       "ty": 3600
+      },
+      "ai": {
+       "x": 3000,
+       "y": 7900,
+       "tx": 3000,
+       "ty": 5544
+      },
+      "playerGoals": 0,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 4,
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "timeout"
+     },
+     "state": {
+      "tick": 12,
+      "puck": {
+       "x": 3000,
+       "y": 7300,
+       "vx": 0,
+       "vy": -449
+      },
+      "me": {
+       "x": 3000,
+       "y": 3600,
+       "tx": 3000,
+       "ty": 3600
+      },
+      "ai": {
+       "x": 3000,
+       "y": 7900,
+       "tx": 3000,
+       "ty": 5544
+      },
+      "playerGoals": 0,
+      "aiGoals": 0,
+      "pause": 0,
+      "aiClock": 4,
+      "over": true
+     }
+    }
+   ],
+   "result": {
+    "winner": "draw",
+    "stars": 0,
+    "score": 0,
+    "playerGoals": 0,
+    "aiGoals": 0
+   }
+  }
+ ]
+}
