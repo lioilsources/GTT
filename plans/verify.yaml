@@ -68,3 +68,4 @@ checks:
   M5-S9: {city: prague, q: "city=prague&camera=chase", min: 4, client: w, expect: "Šikmý pohled za autem: obloha, výšky domů a kopce čitelné, přepnutí ◎/◢ bez cuknutí, plynulých 60 fps."}
   L-S10: {city: prague, q: "city=prague", min: 3, client: w, expect: "Tramvaje projíždějí výhybky a oblouky plynule, bez otočky v ostrém úhlu, na konečné obrátí čelo."}
   L-S11: {city: prague, q: "city=prague", min: 4, client: w, expect: "Na most jen z nájezdu, pod mostem se dá projet po nábřeží, sjezd z břehu do Vltavy = pád a odtah."}
+  L-D1: {city: prague, q: "city=prague&debug", min: 5, client: w, expect: "Garáž (nebo telefon → Garáž → Otevřít garáž kdekoli): u Vega Roadster Vyzkoušet, modrá pilulka Zkušební jízda 3:00 odpočítává, Skok funguje; po konci / ✕ zase ve svém autě na místě. Ladicí +10000 přidá hotovost a po znovunačtení zůstane."}
