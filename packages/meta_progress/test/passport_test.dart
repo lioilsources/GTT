@@ -124,7 +124,7 @@ void main() {
     });
   });
 
-  test('postcards: 20 per city that has them, each a hero landmark of one city', () {
+  test('postcards: at least 20 per city that has them, each a hero landmark of one city', () {
     final titles = MessageKey.values.where((k) => RegExp(r'^lm_.+_title$').hasMatch(k.key)).toList();
     final ids = [for (final k in titles) k.key.substring(3, k.key.length - 6)];
     // Hero landmark ids per city, from content/cities/<city>/landmarks.yaml (one flow map per line).
@@ -143,7 +143,7 @@ void main() {
     }
     for (final e in heroes.entries) {
       final n = e.value.where(ids.contains).length;
-      if (n > 0) expect(n, 20, reason: e.key);
+      if (n > 0) expect(n, greaterThanOrEqualTo(20), reason: e.key);
     }
     expect(heroes['nyc']!.where(ids.contains), hasLength(20));
   });

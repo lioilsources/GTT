@@ -151,10 +151,10 @@ describe('postcards in i18n', () => {
     }
   });
 
-  it('a city with postcards has 20 of them (M1 9, M3)', () => {
+  it('a city with postcards has at least 20 of them (M1 9, M3, M4 Tokyo 25)', () => {
     for (const c of cities) {
       const n = byCity.get(c)!.filter((l) => ids.includes(l.id)).length;
-      if (n > 0) expect(n, c).toBe(20);
+      if (n > 0) expect(n, c).toBeGreaterThanOrEqual(20);
     }
     expect(byCity.get('nyc')!.filter((l) => ids.includes(l.id))).toHaveLength(20);
   });
