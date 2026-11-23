@@ -17,7 +17,7 @@ import type { Message } from "@bufbuild/protobuf";
  * Describes the file citypack.proto.
  */
 export const file_citypack: GenFile = /*@__PURE__*/
-  fileDesc("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KA0icAoJVHJhbUdyYXBoEh0KBW5vZGVzGAEgAygLMg4uY2l0eXBhY2suTm9kZRIhCgVlZGdlcxgCIAMoCzISLmNpdHlwYWNrLlRyYW1FZGdlEiEKBXN0b3BzGAMgAygLMhIuY2l0eXBhY2suVHJhbVN0b3AiegoIVHJhbUVkZ2USDAoEZnJvbRgBIAEoDRIKCgJ0bxgCIAEoDRIOCgZwb2ludHMYAyADKBESEgoKbGF5ZXJfZnJvbRgEIAEoERIQCghsYXllcl90bxgFIAEoERIOCgZicmlkZ2UYBiABKAgSDgoGdHVubmVsGAcgASgIIiUKCFRyYW1TdG9wEgwKBGVkZ2UYASABKA0SCwoDc19tGAIgASgCKn4KCVJvYWRDbGFzcxIQCgxST0FEX1VOS05PV04QABIMCghNT1RPUldBWRABEgkKBVRSVU5LEAISCwoHUFJJTUFSWRADEg0KCVNFQ09OREFSWRAEEgwKCFRFUlRJQVJZEAUSDwoLUkVTSURFTlRJQUwQBhILCgdTRVJWSUNFEAcqZAoKR3JvdW5kS2luZBISCg5HUk9VTkRfVU5LTk9XThAAEggKBExBTkQQARIJCgVXQVRFUhACEggKBFBBUksQAxIICgRSQUlMEAQSCQoFUExBWkEQBRIOCgpQRURFU1RSSUFOEAZCFloUY2l0eXBhY2svaW50ZXJuYWwvcGJiBnByb3RvMw");
+  fileDesc("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cxgBIAMoCzIOLmNpdHlwYWNrLk5vZGUSIQoFZWRnZXMYAiADKAsyEi5jaXR5cGFjay5UcmFtRWRnZRIhCgVzdG9wcxgDIAMoCzISLmNpdHlwYWNrLlRyYW1TdG9wInoKCFRyYW1FZGdlEgwKBGZyb20YASABKA0SCgoCdG8YAiABKA0SDgoGcG9pbnRzGAMgAygREhIKCmxheWVyX2Zyb20YBCABKBESEAoIbGF5ZXJfdG8YBSABKBESDgoGYnJpZGdlGAYgASgIEg4KBnR1bm5lbBgHIAEoCCIlCghUcmFtU3RvcBIMCgRlZGdlGAEgASgNEgsKA3NfbRgCIAEoAip+CglSb2FkQ2xhc3MSEAoMUk9BRF9VTktOT1dOEAASDAoITU9UT1JXQVkQARIJCgVUUlVOSxACEgsKB1BSSU1BUlkQAxINCglTRUNPTkRBUlkQBBIMCghURVJUSUFSWRAFEg8KC1JFU0lERU5USUFMEAYSCwoHU0VSVklDRRAHKm4KCldhdGVyQ2xhc3MSDgoKV0FURVJfTk9ORRAAEg0KCVdBVEVSX1NFQRABEg8KC1dBVEVSX1JJVkVSEAISDwoLV0FURVJfQ0FOQUwQAxIOCgpXQVRFUl9MQUtFEAQSDwoLV0FURVJfU01BTEwQBSqHAQoKR3JlZW5DbGFzcxIOCgpHUkVFTl9OT05FEAASDgoKR1JFRU5fV09PRBABEhIKDkdSRUVOX1BBUktMQU5EEAISEAoMR1JFRU5fR0FSREVOEAMSEgoOR1JFRU5fQ0VNRVRFUlkQBBIPCgtHUkVFTl9HUkFTUxAFEg4KCkdSRUVOX1NBTkQQBippCgdTdXJmYWNlEhMKD1NVUkZBQ0VfQVNQSEFMVBAAEhEKDVNVUkZBQ0VfR1JBU1MQARIQCgxTVVJGQUNFX1NBTkQQAhIQCgxTVVJGQUNFX0RJUlQQAxISCg5TVVJGQUNFX0ZPUkVTVBAEKmQKCkdyb3VuZEtpbmQSEgoOR1JPVU5EX1VOS05PV04QABIICgRMQU5EEAESCQoFV0FURVIQAhIICgRQQVJLEAMSCAoEUkFJTBAEEgkKBVBMQVpBEAUSDgoKUEVERVNUUklBThAGKjgKB0xvZEtpbmQSDQoJTE9EX0JMT0NLEAASDAoITE9EX1dPT0QQARIQCgxMT0RfUEFSS0xBTkQQAkIWWhRjaXR5cGFjay9pbnRlcm5hbC9wYmIGcHJvdG8z");
 
 /**
  * manifest.pb
@@ -112,6 +112,62 @@ export type Manifest = Message<"citypack.Manifest"> & {
    * @generated from field: string built_at = 16;
    */
   builtAt: string;
+
+  /**
+   * Terrain (specs/terrain.md, citypack v4). 0 or missing = flat pack: z = 0 everywhere.
+   *
+   * @generated from field: uint32 terrain_version = 17;
+   */
+  terrainVersion: number;
+
+  /**
+   * real elevation of game height 0
+   *
+   * @generated from field: float z0_m = 18;
+   */
+  z0M: number;
+
+  /**
+   * game height = (real − z0) × exaggeration
+   *
+   * @generated from field: float exaggeration = 19;
+   */
+  exaggeration: number;
+
+  /**
+   * Chunk.terrain step (8 → 33 × 33 per 256 m chunk)
+   *
+   * @generated from field: uint32 terrain_grid_m = 20;
+   */
+  terrainGridM: number;
+
+  /**
+   * Nature (specs/nature.md, citypack v4). 0 or missing = ground meshes carry no classes, no trees.
+   *
+   * @generated from field: uint32 nature_version = 21;
+   */
+  natureVersion: number;
+
+  /**
+   * lod/{x}_{y}.pb; x, y = floor(chunk x, y / lod_chunks)
+   *
+   * @generated from field: repeated citypack.ChunkRef lods = 22;
+   */
+  lods: ChunkRef[];
+
+  /**
+   * chunks per lod tile edge (4)
+   *
+   * @generated from field: uint32 lod_chunks = 23;
+   */
+  lodChunks: number;
+
+  /**
+   * Lod.terrain step (32 → 33 × 33 per tile)
+   *
+   * @generated from field: uint32 lod_grid_m = 24;
+   */
+  lodGridM: number;
 };
 
 /**
@@ -291,6 +347,13 @@ export type Node = Message<"citypack.Node"> & {
    * @generated from field: bool border = 3;
    */
   border: boolean;
+
+  /**
+   * game height (specs/terrain.md), 0 in a flat pack
+   *
+   * @generated from field: sint32 z_dm = 4;
+   */
+  zDm: number;
 };
 
 /**
@@ -382,6 +445,28 @@ export type Edge = Message<"citypack.Edge"> & {
    * @generated from field: float width_m = 13;
    */
   widthM: number;
+
+  /**
+   * Terrain: game height per vertex of `points` (same count); edges with relief are densified to
+   * segments of at most 16 m. Empty in a flat pack.
+   *
+   * @generated from field: repeated sint32 z_dm = 14;
+   */
+  zDm: number[];
+
+  /**
+   * steeper than terrain.max_grade allows: a wall for cars
+   *
+   * @generated from field: bool stairs = 15;
+   */
+  stairs: boolean;
+
+  /**
+   * alley narrower than flow.gap_close_m: micro vehicles only (bollards at both ends)
+   *
+   * @generated from field: bool micro_only = 16;
+   */
+  microOnly: boolean;
 };
 
 /**
@@ -418,11 +503,48 @@ export type Chunk = Message<"citypack.Chunk"> & {
   ground: Mesh[];
 
   /**
-   * pedestrian-zone bollard lines (specs/zones.md), layer 0
+   * bollard lines (specs/zones.md, micro_only alleys), layer 0
    *
    * @generated from field: repeated citypack.Barrier barriers = 5;
    */
   barriers: Barrier[];
+
+  /**
+   * Terrain: 33 × 33 int16 little-endian game heights in dm, rows from the south, sample (i, j) at
+   * (x·chunk_m + i·grid_m, y·chunk_m + j·grid_m); edges are shared with the neighbours.
+   *
+   * @generated from field: bytes terrain = 6;
+   */
+  terrain: Uint8Array;
+
+  /**
+   * 33 × 33 uint8 hillshade, 128 = flat, sun az 315°, alt 45°
+   *
+   * @generated from field: bytes shade = 7;
+   */
+  shade: Uint8Array;
+
+  /**
+   * Nature: 3 bytes per tree: x, y (uint8, metres from the chunk's south-west corner), then
+   * size (low 2 bits: 0 S, 1 M, 2 L) | colour jitter << 2. Order = tree key index (specs/flow.md).
+   *
+   * @generated from field: bytes trees = 8;
+   */
+  trees: Uint8Array;
+
+  /**
+   * shallow band inside water along the bank (kind WATER)
+   *
+   * @generated from field: repeated citypack.Mesh shore = 9;
+   */
+  shore: Mesh[];
+
+  /**
+   * names of water > 2 ha and green > 1 ha, in the chunk of their midpoint
+   *
+   * @generated from field: repeated citypack.Label labels = 10;
+   */
+  labels: Label[];
 };
 
 /**
@@ -431,6 +553,46 @@ export type Chunk = Message<"citypack.Chunk"> & {
  */
 export const ChunkSchema: GenMessage<Chunk> = /*@__PURE__*/
   messageDesc(file_citypack, 8);
+
+/**
+ * A name drawn along an axis (water) or at a point (green: axis of one vertex).
+ *
+ * @generated from message citypack.Label
+ */
+export type Label = Message<"citypack.Label"> & {
+  /**
+   * @generated from field: string name = 1;
+   */
+  name: string;
+
+  /**
+   * polyline, dm
+   *
+   * @generated from field: repeated sint32 axis = 2;
+   */
+  axis: number[];
+
+  /**
+   * false = green
+   *
+   * @generated from field: bool water = 3;
+   */
+  water: boolean;
+
+  /**
+   * whole body (the phone map sorts names by area)
+   *
+   * @generated from field: uint32 area_m2 = 4;
+   */
+  areaM2: number;
+};
+
+/**
+ * Describes the message citypack.Label.
+ * Use `create(LabelSchema)` to create a new message.
+ */
+export const LabelSchema: GenMessage<Label> = /*@__PURE__*/
+  messageDesc(file_citypack, 9);
 
 /**
  * A bollard line: cars (not micro vehicles) collide with it as with a wall.
@@ -451,7 +613,7 @@ export type Barrier = Message<"citypack.Barrier"> & {
  * Use `create(BarrierSchema)` to create a new message.
  */
 export const BarrierSchema: GenMessage<Barrier> = /*@__PURE__*/
-  messageDesc(file_citypack, 9);
+  messageDesc(file_citypack, 10);
 
 /**
  * @generated from message citypack.Building
@@ -510,6 +672,13 @@ export type Building = Message<"citypack.Building"> & {
    * @generated from field: uint32 wall_seed = 8;
    */
   wallSeed: number;
+
+  /**
+   * terrain: lowest game height under the footprint
+   *
+   * @generated from field: sint32 base_z_dm = 9;
+   */
+  baseZDm: number;
 };
 
 /**
@@ -517,7 +686,7 @@ export type Building = Message<"citypack.Building"> & {
  * Use `create(BuildingSchema)` to create a new message.
  */
 export const BuildingSchema: GenMessage<Building> = /*@__PURE__*/
-  messageDesc(file_citypack, 10);
+  messageDesc(file_citypack, 11);
 
 /**
  * @generated from message citypack.Mesh
@@ -539,6 +708,37 @@ export type Mesh = Message<"citypack.Mesh"> & {
    * @generated from field: repeated uint32 indices = 3;
    */
   indices: number[];
+
+  /**
+   * Nature (specs/nature.md): WATER meshes carry a class, PARK meshes a green class and surface.
+   *
+   * @generated from field: citypack.WaterClass water_class = 4;
+   */
+  waterClass: WaterClass;
+
+  /**
+   * @generated from field: citypack.GreenClass green_class = 5;
+   */
+  greenClass: GreenClass;
+
+  /**
+   * @generated from field: citypack.Surface surface = 6;
+   */
+  surface: Surface;
+
+  /**
+   * water body or park name, "" = unnamed
+   *
+   * @generated from field: string name = 7;
+   */
+  name: string;
+
+  /**
+   * water level (game height)
+   *
+   * @generated from field: sint32 z_dm = 8;
+   */
+  zDm: number;
 };
 
 /**
@@ -546,7 +746,94 @@ export type Mesh = Message<"citypack.Mesh"> & {
  * Use `create(MeshSchema)` to create a new message.
  */
 export const MeshSchema: GenMessage<Mesh> = /*@__PURE__*/
-  messageDesc(file_citypack, 11);
+  messageDesc(file_citypack, 12);
+
+/**
+ * lod/{x}_{y}.pb: the far ring of the chase camera (specs/terrain.md, specs/nature.md).
+ *
+ * @generated from message citypack.Lod
+ */
+export type Lod = Message<"citypack.Lod"> & {
+  /**
+   * @generated from field: sint32 x = 1;
+   */
+  x: number;
+
+  /**
+   * @generated from field: sint32 y = 2;
+   */
+  y: number;
+
+  /**
+   * 33 × 33 int16 LE dm, step Manifest.lod_grid_m, rows from the south
+   *
+   * @generated from field: bytes terrain = 3;
+   */
+  terrain: Uint8Array;
+
+  /**
+   * @generated from field: repeated citypack.LodMass masses = 4;
+   */
+  masses: LodMass[];
+
+  /**
+   * the tile's water as one surface
+   *
+   * @generated from field: repeated citypack.Mesh water = 5;
+   */
+  water: Mesh[];
+};
+
+/**
+ * Describes the message citypack.Lod.
+ * Use `create(LodSchema)` to create a new message.
+ */
+export const LodSchema: GenMessage<Lod> = /*@__PURE__*/
+  messageDesc(file_citypack, 13);
+
+/**
+ * @generated from message citypack.LodMass
+ */
+export type LodMass = Message<"citypack.LodMass"> & {
+  /**
+   * @generated from field: citypack.LodKind kind = 1;
+   */
+  kind: LodKind;
+
+  /**
+   * like Building
+   *
+   * @generated from field: repeated sint32 rings = 2;
+   */
+  rings: number[];
+
+  /**
+   * @generated from field: repeated uint32 ring_ends = 3;
+   */
+  ringEnds: number[];
+
+  /**
+   * @generated from field: repeated uint32 roof = 4;
+   */
+  roof: number[];
+
+  /**
+   * @generated from field: float height_m = 5;
+   */
+  heightM: number;
+
+  /**
+   * @generated from field: sint32 base_z_dm = 6;
+   */
+  baseZDm: number;
+};
+
+/**
+ * Describes the message citypack.LodMass.
+ * Use `create(LodMassSchema)` to create a new message.
+ */
+export const LodMassSchema: GenMessage<LodMass> = /*@__PURE__*/
+  messageDesc(file_citypack, 14);
 
 /**
  * landmarks.pb
@@ -565,7 +852,7 @@ export type Landmarks = Message<"citypack.Landmarks"> & {
  * Use `create(LandmarksSchema)` to create a new message.
  */
 export const LandmarksSchema: GenMessage<Landmarks> = /*@__PURE__*/
-  messageDesc(file_citypack, 12);
+  messageDesc(file_citypack, 15);
 
 /**
  * @generated from message citypack.Landmark
@@ -614,7 +901,7 @@ export type Landmark = Message<"citypack.Landmark"> & {
  * Use `create(LandmarkSchema)` to create a new message.
  */
 export const LandmarkSchema: GenMessage<Landmark> = /*@__PURE__*/
-  messageDesc(file_citypack, 13);
+  messageDesc(file_citypack, 16);
 
 /**
  * spots.pb
@@ -633,7 +920,7 @@ export type Spots = Message<"citypack.Spots"> & {
  * Use `create(SpotsSchema)` to create a new message.
  */
 export const SpotsSchema: GenMessage<Spots> = /*@__PURE__*/
-  messageDesc(file_citypack, 14);
+  messageDesc(file_citypack, 17);
 
 /**
  * @generated from message citypack.Spot
@@ -713,6 +1000,19 @@ export type Spot = Message<"citypack.Spot"> & {
    * @generated from field: uint32 subject_dm = 13;
    */
   subjectDm: number;
+
+  /**
+   * Nature: the park the spot is in, or the water within 150 m ("" = none); clients phrase
+   * water as "by …" through i18n.
+   *
+   * @generated from field: string area_name = 14;
+   */
+  areaName: string;
+
+  /**
+   * @generated from field: bool area_water = 15;
+   */
+  areaWater: boolean;
 };
 
 /**
@@ -720,7 +1020,7 @@ export type Spot = Message<"citypack.Spot"> & {
  * Use `create(SpotSchema)` to create a new message.
  */
 export const SpotSchema: GenMessage<Spot> = /*@__PURE__*/
-  messageDesc(file_citypack, 15);
+  messageDesc(file_citypack, 18);
 
 /**
  * trams.pb (specs/trams.md): tram tracks as their own graph, always two-way, plus generated stops.
@@ -752,7 +1052,7 @@ export type TramGraph = Message<"citypack.TramGraph"> & {
  * Use `create(TramGraphSchema)` to create a new message.
  */
 export const TramGraphSchema: GenMessage<TramGraph> = /*@__PURE__*/
-  messageDesc(file_citypack, 16);
+  messageDesc(file_citypack, 19);
 
 /**
  * @generated from message citypack.TramEdge
@@ -803,7 +1103,7 @@ export type TramEdge = Message<"citypack.TramEdge"> & {
  * Use `create(TramEdgeSchema)` to create a new message.
  */
 export const TramEdgeSchema: GenMessage<TramEdge> = /*@__PURE__*/
-  messageDesc(file_citypack, 17);
+  messageDesc(file_citypack, 20);
 
 /**
  * @generated from message citypack.TramStop
@@ -827,7 +1127,7 @@ export type TramStop = Message<"citypack.TramStop"> & {
  * Use `create(TramStopSchema)` to create a new message.
  */
 export const TramStopSchema: GenMessage<TramStop> = /*@__PURE__*/
-  messageDesc(file_citypack, 18);
+  messageDesc(file_citypack, 21);
 
 /**
  * @generated from enum citypack.RoadClass
@@ -881,6 +1181,129 @@ export const RoadClassSchema: GenEnum<RoadClass> = /*@__PURE__*/
   enumDesc(file_citypack, 0);
 
 /**
+ * @generated from enum citypack.WaterClass
+ */
+export enum WaterClass {
+  /**
+   * @generated from enum value: WATER_NONE = 0;
+   */
+  WATER_NONE = 0,
+
+  /**
+   * @generated from enum value: WATER_SEA = 1;
+   */
+  WATER_SEA = 1,
+
+  /**
+   * @generated from enum value: WATER_RIVER = 2;
+   */
+  WATER_RIVER = 2,
+
+  /**
+   * @generated from enum value: WATER_CANAL = 3;
+   */
+  WATER_CANAL = 3,
+
+  /**
+   * @generated from enum value: WATER_LAKE = 4;
+   */
+  WATER_LAKE = 4,
+
+  /**
+   * @generated from enum value: WATER_SMALL = 5;
+   */
+  WATER_SMALL = 5,
+}
+
+/**
+ * Describes the enum citypack.WaterClass.
+ */
+export const WaterClassSchema: GenEnum<WaterClass> = /*@__PURE__*/
+  enumDesc(file_citypack, 1);
+
+/**
+ * @generated from enum citypack.GreenClass
+ */
+export enum GreenClass {
+  /**
+   * @generated from enum value: GREEN_NONE = 0;
+   */
+  GREEN_NONE = 0,
+
+  /**
+   * @generated from enum value: GREEN_WOOD = 1;
+   */
+  GREEN_WOOD = 1,
+
+  /**
+   * @generated from enum value: GREEN_PARKLAND = 2;
+   */
+  GREEN_PARKLAND = 2,
+
+  /**
+   * @generated from enum value: GREEN_GARDEN = 3;
+   */
+  GREEN_GARDEN = 3,
+
+  /**
+   * @generated from enum value: GREEN_CEMETERY = 4;
+   */
+  GREEN_CEMETERY = 4,
+
+  /**
+   * @generated from enum value: GREEN_GRASS = 5;
+   */
+  GREEN_GRASS = 5,
+
+  /**
+   * @generated from enum value: GREEN_SAND = 6;
+   */
+  GREEN_SAND = 6,
+}
+
+/**
+ * Describes the enum citypack.GreenClass.
+ */
+export const GreenClassSchema: GenEnum<GreenClass> = /*@__PURE__*/
+  enumDesc(file_citypack, 2);
+
+/**
+ * @generated from enum citypack.Surface
+ */
+export enum Surface {
+  /**
+   * @generated from enum value: SURFACE_ASPHALT = 0;
+   */
+  ASPHALT = 0,
+
+  /**
+   * @generated from enum value: SURFACE_GRASS = 1;
+   */
+  GRASS = 1,
+
+  /**
+   * @generated from enum value: SURFACE_SAND = 2;
+   */
+  SAND = 2,
+
+  /**
+   * @generated from enum value: SURFACE_DIRT = 3;
+   */
+  DIRT = 3,
+
+  /**
+   * @generated from enum value: SURFACE_FOREST = 4;
+   */
+  FOREST = 4,
+}
+
+/**
+ * Describes the enum citypack.Surface.
+ */
+export const SurfaceSchema: GenEnum<Surface> = /*@__PURE__*/
+  enumDesc(file_citypack, 3);
+
+/**
  * @generated from enum citypack.GroundKind
  */
 export enum GroundKind {
@@ -926,5 +1349,33 @@ export enum GroundKind {
  * Describes the enum citypack.GroundKind.
  */
 export const GroundKindSchema: GenEnum<GroundKind> = /*@__PURE__*/
-  enumDesc(file_citypack, 1);
+  enumDesc(file_citypack, 4);
+
+/**
+ * @generated from enum citypack.LodKind
+ */
+export enum LodKind {
+  /**
+   * buildings merged per block
+   *
+   * @generated from enum value: LOD_BLOCK = 0;
+   */
+  LOD_BLOCK = 0,
+
+  /**
+   * @generated from enum value: LOD_WOOD = 1;
+   */
+  LOD_WOOD = 1,
+
+  /**
+   * @generated from enum value: LOD_PARKLAND = 2;
+   */
+  LOD_PARKLAND = 2,
+}
+
+/**
+ * Describes the enum citypack.LodKind.
+ */
+export const LodKindSchema: GenEnum<LodKind> = /*@__PURE__*/
+  enumDesc(file_citypack, 5);
 

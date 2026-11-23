@@ -15,3 +15,20 @@ start: {lat: 40.76040, lon: -73.98360, heading_deg: 209, street: 7th Avenue}   #
 default_height_m: 12
 max_chunk_kb: 512
 districts: districts.yaml
+# Terrain (specs/terrain.md): the NYC 1 ft DEM licence is unverified (plans/M5_TEREN_PRIRODA.md),
+# so AWS Terrain Tiles (USGS 3DEP, public domain) are used; `local` reads dem/*.asc when present.
+elevation_sources: [terrain_tiles]
+elevation_is_bare_earth: true
+# Nature (specs/nature.md): NYC Parks 2015 Street Tree Census (NYC Open Data uvpi-gqnh). The dataset
+# names no licence; NYC Open Data has no use restrictions (NYC Admin. Code 23-502, Open Data FAQ).
+tree_inventory:
+  url: https://data.cityofnewyork.us/resource/uvpi-gqnh.csv
+  where: "status='Alive'"
+  lat: latitude
+  lon: longitude
+  dbh: tree_dbh
+  dbh_to_cm: 2.54
+  attribution: "Trees: NYC Parks, 2015 Street Tree Census (NYC Open Data)"
+  licence: "NYC Open Data, no use restrictions"
+water_class_by_name:
+  Upper New York Bay: sea

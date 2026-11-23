@@ -14,3 +14,9 @@ start: {lat: 50.08050, lon: 14.41300, heading_deg: 0, street: Masarykovo nábře
 default_height_m: 18
 max_chunk_kb: 512
 districts: districts.yaml
+# Terrain (specs/terrain.md): ČÚZK DMR 4G/5G come only as LAZ point clouds in S-JTSK (atom.cuzk.gov.cz);
+# without GDAL/PDAL no 1 m grid is made yet, so AWS Terrain Tiles are used (EU-DEM / SRTM, ~25 m,
+# a surface model: `clean` removes buildings). Once DMR 4G is converted to dem/*.asc
+# (content/cities/prague/dem/README.md) switch to [local] and elevation_is_bare_earth: true.
+elevation_sources: [terrain_tiles]
+elevation_is_bare_earth: false
