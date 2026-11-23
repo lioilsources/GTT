@@ -21,11 +21,12 @@ Future<void> showGarage(
   List<({String id, String name})> Function()? shelf,
   GarageController? garage,
   bool testBlocked = false,
+  bool here = false,
 }) => showModalBottomSheet<void>(
   context: context,
   backgroundColor: const Color(Tokens.colorUiSheet),
   isScrollControlled: true,
-  builder: (context) => GarageSheet(fleet: fleet, shelf: shelf, garage: garage, testBlocked: testBlocked),
+  builder: (context) => GarageSheet(fleet: fleet, shelf: shelf, garage: garage, testBlocked: testBlocked, here: here),
 );
 
 /// Tabs of the garage sheet, in order.
@@ -39,11 +40,16 @@ class GarageSheet extends StatefulWidget {
     this.garage,
     this.initialTab = GarageTab.cars,
     this.testBlocked = false,
+    this.here = false,
   });
   final CarFleet fleet;
 
   /// A world minigame runs: "Vyzkoušet" is grey (specs/testdrive.md "Pořadí").
   final bool testBlocked;
+
+  /// Opened from the phone away from the garage spot: a chosen or tried car appears in place of
+  /// the player's car (specs/testdrive.md v2 "Garáž z telefonu").
+  final bool here;
   final List<({String id, String name})> Function()? shelf;
   final GarageController? garage;
   final GarageTab initialTab;
@@ -186,7 +192,7 @@ class _GarageSheetState extends State<GarageSheet> {
               trailing: fleet.canSelect(id)
                   ? FilledButton(
                       onPressed: () {
-                        fleet.select(id);
+                        fleet.select(id, here: widget.here);
                         Navigator.of(context).pop();
                       },
                       child: Text(l.garageTakeOut),
@@ -224,7 +230,7 @@ class _GarageSheetState extends State<GarageSheet> {
                       onPressed: widget.testBlocked || !fleet.canTest(spec.id)
                           ? null
                           : () {
-                              fleet.startTest(spec.id);
+                              fleet.startTest(spec.id, here: widget.here);
                               Navigator.of(context).pop();
                             },
                       child: Text(l.garageTestDrive),
