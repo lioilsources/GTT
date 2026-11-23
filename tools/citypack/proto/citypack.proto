@@ -28,6 +28,16 @@ message Manifest {
   repeated District districts = 14;
   repeated string attribution = 15;
   string built_at = 16;
+  // Terrain (specs/terrain.md, citypack v4). 0 or missing = flat pack: z = 0 everywhere.
+  uint32 terrain_version = 17;
+  float z0_m = 18;                 // real elevation of game height 0
+  float exaggeration = 19;         // game height = (real − z0) × exaggeration
+  uint32 terrain_grid_m = 20;      // Chunk.terrain step (8 → 33 × 33 per 256 m chunk)
+  // Nature (specs/nature.md, citypack v4). 0 or missing = ground meshes carry no classes, no trees.
+  uint32 nature_version = 21;
+  repeated ChunkRef lods = 22;     // lod/{x}_{y}.pb; x, y = floor(chunk x, y / lod_chunks)
+  uint32 lod_chunks = 23;          // chunks per lod tile edge (4)
+  uint32 lod_grid_m = 24;          // Lod.terrain step (32 → 33 × 33 per tile)
 }
 
 message Rect {
@@ -78,6 +88,7 @@ message Node {
   sint32 x = 1;
   sint32 y = 2;
   bool border = 3;  // road leaves the playable area here: draw a roadblock
+  sint32 z_dm = 4;  // game height (specs/terrain.md), 0 in a flat pack
 }
 
 message Edge {
@@ -94,6 +105,11 @@ message Edge {
   bool tunnel = 11;
   bool kept = 12;              // false = alley: drivable, no traffic, no GPS
   float width_m = 13;          // lanes*lane_width + 2*sidewalk (alleys: no sidewalk)
+  // Terrain: game height per vertex of `points` (same count); edges with relief are densified to
+  // segments of at most 16 m. Empty in a flat pack.
+  repeated sint32 z_dm = 14;
+  bool stairs = 15;            // steeper than terrain.max_grade allows: a wall for cars
+  bool micro_only = 16;        // alley narrower than flow.gap_close_m: micro vehicles only (bollards at both ends)
 }
 
 // chunks/{x}_{y}.pb
@@ -102,7 +118,51 @@ message Chunk {
   sint32 y = 2;
   repeated Building buildings = 3;
   repeated Mesh ground = 4;
-  repeated Barrier barriers = 5;  // pedestrian-zone bollard lines (specs/zones.md), layer 0
+  repeated Barrier barriers = 5;  // bollard lines (specs/zones.md, micro_only alleys), layer 0
+  // Terrain: 33 × 33 int16 little-endian game heights in dm, rows from the south, sample (i, j) at
+  // (x·chunk_m + i·grid_m, y·chunk_m + j·grid_m); edges are shared with the neighbours.
+  bytes terrain = 6;
+  bytes shade = 7;                // 33 × 33 uint8 hillshade, 128 = flat, sun az 315°, alt 45°
+  // Nature: 3 bytes per tree: x, y (uint8, metres from the chunk's south-west corner), then
+  // size (low 2 bits: 0 S, 1 M, 2 L) | colour jitter << 2. Order = tree key index (specs/flow.md).
+  bytes trees = 8;
+  repeated Mesh shore = 9;        // shallow band inside water along the bank (kind WATER)
+  repeated Label labels = 10;     // names of water > 2 ha and green > 1 ha, in the chunk of their midpoint
+}
+
+enum WaterClass {
+  WATER_NONE = 0;
+  WATER_SEA = 1;
+  WATER_RIVER = 2;
+  WATER_CANAL = 3;
+  WATER_LAKE = 4;
+  WATER_SMALL = 5;
+}
+
+enum GreenClass {
+  GREEN_NONE = 0;
+  GREEN_WOOD = 1;
+  GREEN_PARKLAND = 2;
+  GREEN_GARDEN = 3;
+  GREEN_CEMETERY = 4;
+  GREEN_GRASS = 5;
+  GREEN_SAND = 6;
+}
+
+enum Surface {
+  SURFACE_ASPHALT = 0;
+  SURFACE_GRASS = 1;
+  SURFACE_SAND = 2;
+  SURFACE_DIRT = 3;
+  SURFACE_FOREST = 4;
+}
+
+// A name drawn along an axis (water) or at a point (green: axis of one vertex).
+message Label {
+  string name = 1;
+  repeated sint32 axis = 2;   // polyline, dm
+  bool water = 3;             // false = green
+  uint32 area_m2 = 4;         // whole body (the phone map sorts names by area)
 }
 
 // A bollard line: cars (not micro vehicles) collide with it as with a wall.
@@ -119,6 +179,7 @@ message Building {
   uint32 landmark = 6;            // 1-based index into Landmarks.items, 0 = none
   bool collide = 7;               // ground-touching masses get static colliders
   uint32 wall_seed = 8;           // seeds the facade tint and window scale
+  sint32 base_z_dm = 9;           // terrain: lowest game height under the footprint
 }
 
 enum GroundKind {
@@ -135,6 +196,36 @@ message Mesh {
   GroundKind kind = 1;
   repeated sint32 vertices = 2;  // dm
   repeated uint32 indices = 3;
+  // Nature (specs/nature.md): WATER meshes carry a class, PARK meshes a green class and surface.
+  WaterClass water_class = 4;
+  GreenClass green_class = 5;
+  Surface surface = 6;
+  string name = 7;               // water body or park name, "" = unnamed
+  sint32 z_dm = 8;               // water level (game height)
+}
+
+// lod/{x}_{y}.pb: the far ring of the chase camera (specs/terrain.md, specs/nature.md).
+message Lod {
+  sint32 x = 1;
+  sint32 y = 2;
+  bytes terrain = 3;             // 33 × 33 int16 LE dm, step Manifest.lod_grid_m, rows from the south
+  repeated LodMass masses = 4;
+  repeated Mesh water = 5;       // the tile's water as one surface
+}
+
+enum LodKind {
+  LOD_BLOCK = 0;                 // buildings merged per block
+  LOD_WOOD = 1;
+  LOD_PARKLAND = 2;
+}
+
+message LodMass {
+  LodKind kind = 1;
+  repeated sint32 rings = 2;     // like Building
+  repeated uint32 ring_ends = 3;
+  repeated uint32 roof = 4;
+  float height_m = 5;
+  sint32 base_z_dm = 6;
 }
 
 // landmarks.pb
@@ -171,6 +262,10 @@ message Spot {
   sint32 look_x = 11;        // photo spots (specs/photo.md): the view to frame, dm
   sint32 look_y = 12;
   uint32 subject_dm = 13;    // radius of the view, dm
+  // Nature: the park the spot is in, or the water within 150 m ("" = none); clients phrase
+  // water as "by …" through i18n.
+  string area_name = 14;
+  bool area_water = 15;
 }
 
 // trams.pb (specs/trams.md): tram tracks as their own graph, always two-way, plus generated stops.

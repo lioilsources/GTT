@@ -4619,6 +4619,9 @@ export class TuningTerrain {
   readonly maxGrade: TuningTerrainMaxGrade;
   readonly bridge: TuningTerrainBridge;
   readonly tunnel: TuningTerrainTunnel;
+  /** citypack `elevation` and `lod` steps (plan ch. 4); clients do not read these. */
+  readonly pipeline: TuningTerrainPipeline;
+  readonly lod: TuningTerrainLod;
 
   constructor(r: R) {
     this.exaggeration = r.d('exaggeration');
@@ -4627,6 +4630,8 @@ export class TuningTerrain {
     this.maxGrade = new TuningTerrainMaxGrade(r.sub('max_grade'));
     this.bridge = new TuningTerrainBridge(r.sub('bridge'));
     this.tunnel = new TuningTerrainTunnel(r.sub('tunnel'));
+    this.pipeline = new TuningTerrainPipeline(r.sub('pipeline'));
+    this.lod = new TuningTerrainLod(r.sub('lod'));
   }
 
   toJson(): Record<string, unknown> {
@@ -4637,6 +4642,8 @@ export class TuningTerrain {
       max_grade: this.maxGrade.toJson(),
       bridge: this.bridge.toJson(),
       tunnel: this.tunnel.toJson(),
+      pipeline: this.pipeline.toJson(),
+      lod: this.lod.toJson(),
     };
   }
 }
@@ -4764,6 +4771,167 @@ export class TuningTerrainTunnel {
   static readonly keys = ['depth_water_m', 'depth_land_m', 'max_grade'] as const;
 }
 
+/** citypack `elevation` and `lod` steps (plan ch. 4); clients do not read these. */
+export class TuningTerrainPipeline {
+  /** DEM read around the area */
+  demMarginM: number;
+  /** working grid in local metres */
+  demGridM: number;
+  /** AWS Terrain Tiles zoom (~3.6 m/px at 40° N) */
+  demZoom: number;
+  /** smoothing after removing buildings from a surface model */
+  cleanSigmaM: number;
+  /** the same for a coarse one (~25 m EU-DEM smears blocks into streets) */
+  cleanSigmaCoarseM: number;
+  /** road profile samples (and densified edges) */
+  profileStepM: number;
+  readonly profileWindowM: TuningTerrainPipelineProfileWindowM;
+  /** viaduct over land: terrain + this */
+  elevatedM: number;
+  /** terrain under water: level − this */
+  underwaterM: number;
+  /** grade_clamp stops below this excess */
+  gradeToleranceM: number;
+  gradePasses: number;
+  /** densified samples on a straight profile are dropped */
+  zToleranceM: number;
+  /** validate: road edge vs terrain */
+  roadGapMaxM: number;
+  /** validate: share of road edge samples allowed over road_gap_max_m */
+  roadGapShare: number;
+  /** validate fails below water/road + this; below bridge.clear_* it warns */
+  bridgeMinClearM: number;
+  readonly sun: TuningTerrainPipelineSun;
+
+  constructor(r: R) {
+    this.demMarginM = r.d('dem_margin_m');
+    this.demGridM = r.d('dem_grid_m');
+    this.demZoom = r.i('dem_zoom');
+    this.cleanSigmaM = r.d('clean_sigma_m');
+    this.cleanSigmaCoarseM = r.d('clean_sigma_coarse_m');
+    this.profileStepM = r.d('profile_step_m');
+    this.profileWindowM = new TuningTerrainPipelineProfileWindowM(r.sub('profile_window_m'));
+    this.elevatedM = r.d('elevated_m');
+    this.underwaterM = r.d('underwater_m');
+    this.gradeToleranceM = r.d('grade_tolerance_m');
+    this.gradePasses = r.i('grade_passes');
+    this.zToleranceM = r.d('z_tolerance_m');
+    this.roadGapMaxM = r.d('road_gap_max_m');
+    this.roadGapShare = r.d('road_gap_share');
+    this.bridgeMinClearM = r.d('bridge_min_clear_m');
+    this.sun = new TuningTerrainPipelineSun(r.sub('sun'));
+  }
+
+  toJson(): Record<string, unknown> {
+    return {
+      dem_margin_m: this.demMarginM,
+      dem_grid_m: this.demGridM,
+      dem_zoom: this.demZoom,
+      clean_sigma_m: this.cleanSigmaM,
+      clean_sigma_coarse_m: this.cleanSigmaCoarseM,
+      profile_step_m: this.profileStepM,
+      profile_window_m: this.profileWindowM.toJson(),
+      elevated_m: this.elevatedM,
+      underwater_m: this.underwaterM,
+      grade_tolerance_m: this.gradeToleranceM,
+      grade_passes: this.gradePasses,
+      z_tolerance_m: this.zToleranceM,
+      road_gap_max_m: this.roadGapMaxM,
+      road_gap_share: this.roadGapShare,
+      bridge_min_clear_m: this.bridgeMinClearM,
+      sun: this.sun.toJson(),
+    };
+  }
+}
+
+export class TuningTerrainPipelineProfileWindowM {
+  lidar: number;
+  coarse: number;
+
+  constructor(r: R) {
+    this.lidar = r.d('lidar');
+    this.coarse = r.d('coarse');
+  }
+
+  toJson(): Record<string, unknown> {
+    return {
+      lidar: this.lidar,
+      coarse: this.coarse,
+    };
+  }
+
+  /** Value by YAML key, undefined when the key is unknown. */
+  get(key: string): number | undefined {
+    switch (key) {
+      case 'lidar':
+        return this.lidar;
+      case 'coarse':
+        return this.coarse;
+      default:
+        return undefined;
+    }
+  }
+
+  static readonly keys = ['lidar', 'coarse'] as const;
+}
+
+export class TuningTerrainPipelineSun {
+  azimuthDeg: number;
+  altitudeDeg: number;
+
+  constructor(r: R) {
+    this.azimuthDeg = r.d('azimuth_deg');
+    this.altitudeDeg = r.d('altitude_deg');
+  }
+
+  toJson(): Record<string, unknown> {
+    return {
+      azimuth_deg: this.azimuthDeg,
+      altitude_deg: this.altitudeDeg,
+    };
+  }
+
+  /** Value by YAML key, undefined when the key is unknown. */
+  get(key: string): number | undefined {
+    switch (key) {
+      case 'azimuth_deg':
+        return this.azimuthDeg;
+      case 'altitude_deg':
+        return this.altitudeDeg;
+      default:
+        return undefined;
+    }
+  }
+
+  static readonly keys = ['azimuth_deg', 'altitude_deg'] as const;
+}
+
+export class TuningTerrainLod {
+  gridM: number;
+  chunks: number;
+  blockMergeM: number;
+  simplifyM: number;
+  parklandHeightM: number;
+
+  constructor(r: R) {
+    this.gridM = r.i('grid_m');
+    this.chunks = r.i('chunks');
+    this.blockMergeM = r.d('block_merge_m');
+    this.simplifyM = r.d('simplify_m');
+    this.parklandHeightM = r.d('parkland_height_m');
+  }
+
+  toJson(): Record<string, unknown> {
+    return {
+      grid_m: this.gridM,
+      chunks: this.chunks,
+      block_merge_m: this.blockMergeM,
+      simplify_m: this.simplifyM,
+      parkland_height_m: this.parklandHeightM,
+    };
+  }
+}
+
 export class TuningSlopePhysics {
   /** m/s² in game units */
   gravity: number;
@@ -4824,6 +4992,8 @@ export class TuningNature {
   readonly grip: TuningNatureGrip;
   readonly crownFade: TuningNatureCrownFade;
   readonly waterFall: TuningNatureWaterFall;
+  /** citypack `nature` step (plan ch. 4); clients do not read these. */
+  readonly pipeline: TuningNaturePipeline;
 
   constructor(r: R) {
     this.treeSizes = new TuningNatureTreeSizes(r.sub('tree_sizes'));
@@ -4835,6 +5005,7 @@ export class TuningNature {
     this.grip = new TuningNatureGrip(r.sub('grip'));
     this.crownFade = new TuningNatureCrownFade(r.sub('crown_fade'));
     this.waterFall = new TuningNatureWaterFall(r.sub('water_fall'));
+    this.pipeline = new TuningNaturePipeline(r.sub('pipeline'));
   }
 
   toJson(): Record<string, unknown> {
@@ -4848,6 +5019,7 @@ export class TuningNature {
       grip: this.grip.toJson(),
       crown_fade: this.crownFade.toJson(),
       water_fall: this.waterFall.toJson(),
+      pipeline: this.pipeline.toJson(),
     };
   }
 }
@@ -5130,6 +5302,73 @@ export class TuningNatureWaterFall {
   }
 
   static readonly keys = ['sink_s'] as const;
+}
+
+/** citypack `nature` step (plan ch. 4); clients do not read these. */
+export class TuningNaturePipeline {
+  /** outline simplification (river widths kept) */
+  simplifyM: number;
+  /** below: class small */
+  smallWaterM2: number;
+  /** a stream polygon wider than this is a river */
+  streamRiverM: number;
+  /** unnamed river/sea pieces take the nearest named water line */
+  waterNameSearchM: number;
+  labelWaterHa: number;
+  labelGreenHa: number;
+  /** validate: bigger water bodies must have a name */
+  namedWaterHa: number;
+  /** spots.area_name: near named water */
+  areaNameWaterM: number;
+  /** spots.area_name: in or next to a named park */
+  areaNameParkM: number;
+  /** parks without inner surfaces are split by land_cover */
+  bigParkHa: number;
+  woodCoverHa: number;
+  /** S, M, L for scattered trees */
+  treeSizeMix: number[];
+  /** inventory and OSM trees this close to a street go to its sidewalk */
+  streetTreeSnapM: number;
+  treeMinSpacingM: number;
+  treeRowStepM: number;
+
+  constructor(r: R) {
+    this.simplifyM = r.d('simplify_m');
+    this.smallWaterM2 = r.d('small_water_m2');
+    this.streamRiverM = r.d('stream_river_m');
+    this.waterNameSearchM = r.d('water_name_search_m');
+    this.labelWaterHa = r.d('label_water_ha');
+    this.labelGreenHa = r.d('label_green_ha');
+    this.namedWaterHa = r.d('named_water_ha');
+    this.areaNameWaterM = r.d('area_name_water_m');
+    this.areaNameParkM = r.d('area_name_park_m');
+    this.bigParkHa = r.d('big_park_ha');
+    this.woodCoverHa = r.d('wood_cover_ha');
+    this.treeSizeMix = r.dl('tree_size_mix');
+    this.streetTreeSnapM = r.d('street_tree_snap_m');
+    this.treeMinSpacingM = r.d('tree_min_spacing_m');
+    this.treeRowStepM = r.d('tree_row_step_m');
+  }
+
+  toJson(): Record<string, unknown> {
+    return {
+      simplify_m: this.simplifyM,
+      small_water_m2: this.smallWaterM2,
+      stream_river_m: this.streamRiverM,
+      water_name_search_m: this.waterNameSearchM,
+      label_water_ha: this.labelWaterHa,
+      label_green_ha: this.labelGreenHa,
+      named_water_ha: this.namedWaterHa,
+      area_name_water_m: this.areaNameWaterM,
+      area_name_park_m: this.areaNameParkM,
+      big_park_ha: this.bigParkHa,
+      wood_cover_ha: this.woodCoverHa,
+      tree_size_mix: this.treeSizeMix,
+      street_tree_snap_m: this.streetTreeSnapM,
+      tree_min_spacing_m: this.treeMinSpacingM,
+      tree_row_step_m: this.treeRowStepM,
+    };
+  }
 }
 
 /** Smooth driving: soft trees, wall slide, rescue (specs/flow.md, Prompts/04-METROPOLE_FLOW_PLAN.md). */

@@ -16,25 +16,47 @@ type LatLon struct {
 }
 
 type City struct {
-	ID              string       `yaml:"id"`
-	Name            string       `yaml:"name"`
-	Origin          LatLon       `yaml:"origin"`
-	DriveSide       string       `yaml:"drive_side"`
-	Units           string       `yaml:"units"`
-	Area            string       `yaml:"area"`
-	OvertureRelease string       `yaml:"overture_release"`
-	HeightSources   []string     `yaml:"height_sources"`
-	RoadKeepClasses []string     `yaml:"road_keep_classes"`
-	RoadKeepNames   []string     `yaml:"road_keep_names"`
-	NameLangs       []string     `yaml:"name_langs"` // e.g. [en, ja-Latn]: Overture names.common first, Latin-script primary last
-	Style           string       `yaml:"style"`
-	Start           Start        `yaml:"start"`
-	DefaultHeightM  float64      `yaml:"default_height_m"`
-	MaxChunkKB      int          `yaml:"max_chunk_kb"`
-	DistrictsFile   string       `yaml:"districts"`
-	Dir             string       `yaml:"-"`
-	AreaRing        [][2]float64 `yaml:"-"` // lon, lat
+	ID              string   `yaml:"id"`
+	Name            string   `yaml:"name"`
+	Origin          LatLon   `yaml:"origin"`
+	DriveSide       string   `yaml:"drive_side"`
+	Units           string   `yaml:"units"`
+	Area            string   `yaml:"area"`
+	OvertureRelease string   `yaml:"overture_release"`
+	HeightSources   []string `yaml:"height_sources"`
+	RoadKeepClasses []string `yaml:"road_keep_classes"`
+	RoadKeepNames   []string `yaml:"road_keep_names"`
+	NameLangs       []string `yaml:"name_langs"` // e.g. [en, ja-Latn]: Overture names.common first, Latin-script primary last
+	Style           string   `yaml:"style"`
+	Start           Start    `yaml:"start"`
+	DefaultHeightM  float64  `yaml:"default_height_m"`
+	MaxChunkKB      int      `yaml:"max_chunk_kb"`
+	DistrictsFile   string   `yaml:"districts"`
+	// Terrain (specs/terrain.md): sources in order of preference; `local` reads
+	// content/cities/<id>/dem/*.asc, `terrain_tiles` AWS Terrain Tiles. Empty = no elevation.
+	ElevationSources     []string `yaml:"elevation_sources"`
+	ElevationIsBareEarth *bool    `yaml:"elevation_is_bare_earth"`
+	// Nature (specs/nature.md).
+	TreeInventory    *TreeInventory    `yaml:"tree_inventory"`
+	WaterClassByName map[string]string `yaml:"water_class_by_name"`
+	Dir              string            `yaml:"-"`
+	AreaRing         [][2]float64      `yaml:"-"` // lon, lat
 }
+
+// TreeInventory is a city tree census read as CSV (specs/nature.md, trees step 1).
+type TreeInventory struct {
+	URL         string  `yaml:"url"` // Socrata-style CSV endpoint; the area bbox is appended to $where
+	Where       string  `yaml:"where"`
+	Lat         string  `yaml:"lat"`
+	Lon         string  `yaml:"lon"`
+	DBH         string  `yaml:"dbh"`       // trunk diameter column
+	DBHToCM     float64 `yaml:"dbh_to_cm"` // unit factor (inches: 2.54)
+	Attribution string  `yaml:"attribution"`
+	Licence     string  `yaml:"licence"`
+}
+
+// BareEarth reports whether the DEM is a terrain model (default) rather than a surface model.
+func (c *City) BareEarth() bool { return c.ElevationIsBareEarth == nil || *c.ElevationIsBareEarth }
 
 type Start struct {
 	LatLon     `yaml:",inline"`
@@ -78,6 +100,95 @@ type Tuning struct {
 		StopSpacingM  float64 `yaml:"stop_spacing_m"`
 		StopMinChainM float64 `yaml:"stop_min_chain_m"`
 	} `yaml:"trams"`
+	Terrain TerrainTuning `yaml:"terrain"`
+	Nature  NatureTuning  `yaml:"nature"`
+	Flow    struct {
+		GapCloseM float64 `yaml:"gap_close_m"`
+	} `yaml:"flow"`
+}
+
+// TerrainTuning is tuning.yaml `terrain` (specs/terrain.md).
+type TerrainTuning struct {
+	Exaggeration float64            `yaml:"exaggeration"`
+	GridM        float64            `yaml:"grid_m"`
+	BlendM       float64            `yaml:"blend_m"`
+	MaxGrade     map[string]float64 `yaml:"max_grade"`
+	Bridge       struct {
+		ClearWaterM float64 `yaml:"clear_water_m"`
+		ClearRoadM  float64 `yaml:"clear_road_m"`
+		MaxGrade    float64 `yaml:"max_grade"`
+	} `yaml:"bridge"`
+	Tunnel struct {
+		DepthWaterM float64 `yaml:"depth_water_m"`
+		DepthLandM  float64 `yaml:"depth_land_m"`
+		MaxGrade    float64 `yaml:"max_grade"`
+	} `yaml:"tunnel"`
+	Pipeline struct {
+		DemMarginM     float64 `yaml:"dem_margin_m"`
+		DemGridM       float64 `yaml:"dem_grid_m"`
+		DemZoom        int     `yaml:"dem_zoom"`
+		CleanSigmaM    float64 `yaml:"clean_sigma_m"`
+		CleanSigmaCoarseM float64 `yaml:"clean_sigma_coarse_m"`
+		ProfileStepM   float64 `yaml:"profile_step_m"`
+		ProfileWindowM struct {
+			Lidar  float64 `yaml:"lidar"`
+			Coarse float64 `yaml:"coarse"`
+		} `yaml:"profile_window_m"`
+		ElevatedM       float64 `yaml:"elevated_m"`
+		UnderwaterM     float64 `yaml:"underwater_m"`
+		GradeTolM       float64 `yaml:"grade_tolerance_m"`
+		GradePasses     int     `yaml:"grade_passes"`
+		ZTolM           float64 `yaml:"z_tolerance_m"`
+		RoadGapMaxM     float64 `yaml:"road_gap_max_m"`
+		RoadGapShare    float64 `yaml:"road_gap_share"`
+		BridgeMinClearM float64 `yaml:"bridge_min_clear_m"`
+		Sun             struct {
+			AzimuthDeg  float64 `yaml:"azimuth_deg"`
+			AltitudeDeg float64 `yaml:"altitude_deg"`
+		} `yaml:"sun"`
+	} `yaml:"pipeline"`
+	Lod struct {
+		GridM           float64 `yaml:"grid_m"`
+		Chunks          int     `yaml:"chunks"`
+		BlockMergeM     float64 `yaml:"block_merge_m"`
+		SimplifyM       float64 `yaml:"simplify_m"`
+		ParklandHeightM float64 `yaml:"parkland_height_m"`
+	} `yaml:"lod"`
+}
+
+// TreeSize is one entry of nature.tree_sizes.
+type TreeSize struct {
+	CrownR float64 `yaml:"crown_r"`
+	Height float64 `yaml:"height"`
+}
+
+// NatureTuning is tuning.yaml `nature` (specs/nature.md).
+type NatureTuning struct {
+	TreeSizes        map[string]TreeSize `yaml:"tree_sizes"`
+	TreesPerHa       map[string]float64  `yaml:"trees_per_ha"`
+	TreesPerChunkMax int                 `yaml:"trees_per_chunk_max"`
+	Wood             struct {
+		CanopyHeightM float64 `yaml:"canopy_height_m"`
+	} `yaml:"wood"`
+	ShoreBandM   float64 `yaml:"shore_band_m"`
+	TrunkRadiusM float64 `yaml:"trunk_radius_m"`
+	Pipeline     struct {
+		SimplifyM        float64   `yaml:"simplify_m"`
+		SmallWaterM2     float64   `yaml:"small_water_m2"`
+		StreamRiverM     float64   `yaml:"stream_river_m"`
+		WaterNameSearchM float64   `yaml:"water_name_search_m"`
+		LabelWaterHa     float64   `yaml:"label_water_ha"`
+		LabelGreenHa     float64   `yaml:"label_green_ha"`
+		NamedWaterHa     float64   `yaml:"named_water_ha"`
+		AreaNameWaterM   float64   `yaml:"area_name_water_m"`
+		AreaNameParkM    float64   `yaml:"area_name_park_m"`
+		BigParkHa        float64   `yaml:"big_park_ha"`
+		WoodCoverHa      float64   `yaml:"wood_cover_ha"`
+		TreeSizeMix      []float64 `yaml:"tree_size_mix"`
+		StreetTreeSnapM  float64   `yaml:"street_tree_snap_m"`
+		TreeMinSpacingM  float64   `yaml:"tree_min_spacing_m"`
+		TreeRowStepM     float64   `yaml:"tree_row_step_m"`
+	} `yaml:"pipeline"`
 }
 
 func (t *Tuning) check() error {
@@ -96,6 +207,55 @@ func (t *Tuning) check() error {
 			return fmt.Errorf("tuning.yaml: %s missing or not positive", name)
 		}
 	}
+	tt, tp, nt, np := t.Terrain, t.Terrain.Pipeline, t.Nature, t.Nature.Pipeline
+	for name, v := range map[string]float64{
+		"terrain.exaggeration": tt.Exaggeration, "terrain.grid_m": tt.GridM, "terrain.blend_m": tt.BlendM,
+		"terrain.bridge.clear_water_m": tt.Bridge.ClearWaterM, "terrain.bridge.clear_road_m": tt.Bridge.ClearRoadM,
+		"terrain.bridge.max_grade": tt.Bridge.MaxGrade, "terrain.tunnel.depth_water_m": tt.Tunnel.DepthWaterM,
+		"terrain.tunnel.depth_land_m": tt.Tunnel.DepthLandM, "terrain.tunnel.max_grade": tt.Tunnel.MaxGrade,
+		"terrain.pipeline.dem_margin_m": tp.DemMarginM, "terrain.pipeline.dem_grid_m": tp.DemGridM,
+		"terrain.pipeline.dem_zoom": float64(tp.DemZoom), "terrain.pipeline.clean_sigma_m": tp.CleanSigmaM, "terrain.pipeline.clean_sigma_coarse_m": tp.CleanSigmaCoarseM,
+		"terrain.pipeline.profile_step_m": tp.ProfileStepM, "terrain.pipeline.profile_window_m.lidar": tp.ProfileWindowM.Lidar,
+		"terrain.pipeline.profile_window_m.coarse": tp.ProfileWindowM.Coarse, "terrain.pipeline.elevated_m": tp.ElevatedM,
+		"terrain.pipeline.underwater_m": tp.UnderwaterM, "terrain.pipeline.grade_tolerance_m": tp.GradeTolM,
+		"terrain.pipeline.grade_passes": float64(tp.GradePasses), "terrain.pipeline.z_tolerance_m": tp.ZTolM,
+		"terrain.pipeline.road_gap_max_m": tp.RoadGapMaxM, "terrain.pipeline.road_gap_share": tp.RoadGapShare,
+		"terrain.pipeline.bridge_min_clear_m": tp.BridgeMinClearM, "terrain.pipeline.sun.altitude_deg": tp.Sun.AltitudeDeg,
+		"terrain.lod.grid_m": tt.Lod.GridM, "terrain.lod.chunks": float64(tt.Lod.Chunks), "terrain.lod.block_merge_m": tt.Lod.BlockMergeM,
+		"terrain.lod.simplify_m": tt.Lod.SimplifyM, "terrain.lod.parkland_height_m": tt.Lod.ParklandHeightM,
+		"nature.trees_per_chunk_max": float64(nt.TreesPerChunkMax), "nature.wood.canopy_height_m": nt.Wood.CanopyHeightM,
+		"nature.shore_band_m": nt.ShoreBandM, "nature.trunk_radius_m": nt.TrunkRadiusM,
+		"nature.pipeline.simplify_m": np.SimplifyM, "nature.pipeline.small_water_m2": np.SmallWaterM2,
+		"nature.pipeline.stream_river_m": np.StreamRiverM, "nature.pipeline.water_name_search_m": np.WaterNameSearchM,
+		"nature.pipeline.label_water_ha": np.LabelWaterHa, "nature.pipeline.label_green_ha": np.LabelGreenHa,
+		"nature.pipeline.named_water_ha": np.NamedWaterHa, "nature.pipeline.area_name_water_m": np.AreaNameWaterM,
+		"nature.pipeline.area_name_park_m": np.AreaNameParkM, "nature.pipeline.big_park_ha": np.BigParkHa,
+		"nature.pipeline.wood_cover_ha": np.WoodCoverHa, "nature.pipeline.street_tree_snap_m": np.StreetTreeSnapM,
+		"nature.pipeline.tree_min_spacing_m": np.TreeMinSpacingM, "nature.pipeline.tree_row_step_m": np.TreeRowStepM,
+		"flow.gap_close_m": t.Flow.GapCloseM,
+	} {
+		if v <= 0 {
+			return fmt.Errorf("tuning.yaml: %s missing or not positive", name)
+		}
+	}
+	for _, k := range []string{"motorway", "trunk", "primary", "secondary", "tertiary", "alley"} {
+		if tt.MaxGrade[k] <= 0 {
+			return fmt.Errorf("tuning.yaml: terrain.max_grade.%s missing", k)
+		}
+	}
+	for _, k := range []string{"S", "M", "L"} {
+		if nt.TreeSizes[k].CrownR <= 0 {
+			return fmt.Errorf("tuning.yaml: nature.tree_sizes.%s missing", k)
+		}
+	}
+	for _, k := range []string{"wood", "parkland", "garden", "cemetery"} {
+		if nt.TreesPerHa[k] <= 0 {
+			return fmt.Errorf("tuning.yaml: nature.trees_per_ha.%s missing", k)
+		}
+	}
+	if len(np.TreeSizeMix) != 3 {
+		return fmt.Errorf("tuning.yaml: nature.pipeline.tree_size_mix needs S, M, L")
+	}
 	if len(r.LanesByClass) == 0 || len(b.HeightBandsM) == 0 {
 		return fmt.Errorf("tuning.yaml: roads.lanes_by_class and buildings.height_bands_m are required")
 	}
@@ -113,6 +273,9 @@ type Landmark struct {
 	Blurb      string  `yaml:"blurb"`
 	// Kind "plaza" marks an open space (Times Square) with no building to match.
 	Kind string `yaml:"kind"`
+	// DeckHeightM is the deck height above water of an iconic bridge (specs/terrain.md pins);
+	// it applies to bridge edges named like the landmark.
+	DeckHeightM float64 `yaml:"deck_height_m"`
 }
 
 type Spot struct {
@@ -267,4 +430,3 @@ func (c *City) NameSQL() string {
 	expr += `CASE WHEN regexp_full_match(names.primary, '[\x{20}-\x{7E}\x{A0}-\x{24F}\x{1E00}-\x{1EFF}]*') THEN names.primary END)`
 	return expr
 }
-

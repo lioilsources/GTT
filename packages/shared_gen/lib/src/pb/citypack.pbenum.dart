@@ -50,6 +50,99 @@ class RoadClass extends $pb.ProtobufEnum {
   const RoadClass._(super.value, super.name);
 }
 
+class WaterClass extends $pb.ProtobufEnum {
+  static const WaterClass WATER_NONE =
+      WaterClass._(0, _omitEnumNames ? '' : 'WATER_NONE');
+  static const WaterClass WATER_SEA =
+      WaterClass._(1, _omitEnumNames ? '' : 'WATER_SEA');
+  static const WaterClass WATER_RIVER =
+      WaterClass._(2, _omitEnumNames ? '' : 'WATER_RIVER');
+  static const WaterClass WATER_CANAL =
+      WaterClass._(3, _omitEnumNames ? '' : 'WATER_CANAL');
+  static const WaterClass WATER_LAKE =
+      WaterClass._(4, _omitEnumNames ? '' : 'WATER_LAKE');
+  static const WaterClass WATER_SMALL =
+      WaterClass._(5, _omitEnumNames ? '' : 'WATER_SMALL');
+
+  static const $core.List<WaterClass> values = <WaterClass>[
+    WATER_NONE,
+    WATER_SEA,
+    WATER_RIVER,
+    WATER_CANAL,
+    WATER_LAKE,
+    WATER_SMALL,
+  ];
+
+  static final $core.List<WaterClass?> _byValue =
+      $pb.ProtobufEnum.$_initByValueList(values, 5);
+  static WaterClass? valueOf($core.int value) =>
+      value < 0 || value >= _byValue.length ? null : _byValue[value];
+
+  const WaterClass._(super.value, super.name);
+}
+
+class GreenClass extends $pb.ProtobufEnum {
+  static const GreenClass GREEN_NONE =
+      GreenClass._(0, _omitEnumNames ? '' : 'GREEN_NONE');
+  static const GreenClass GREEN_WOOD =
+      GreenClass._(1, _omitEnumNames ? '' : 'GREEN_WOOD');
+  static const GreenClass GREEN_PARKLAND =
+      GreenClass._(2, _omitEnumNames ? '' : 'GREEN_PARKLAND');
+  static const GreenClass GREEN_GARDEN =
+      GreenClass._(3, _omitEnumNames ? '' : 'GREEN_GARDEN');
+  static const GreenClass GREEN_CEMETERY =
+      GreenClass._(4, _omitEnumNames ? '' : 'GREEN_CEMETERY');
+  static const GreenClass GREEN_GRASS =
+      GreenClass._(5, _omitEnumNames ? '' : 'GREEN_GRASS');
+  static const GreenClass GREEN_SAND =
+      GreenClass._(6, _omitEnumNames ? '' : 'GREEN_SAND');
+
+  static const $core.List<GreenClass> values = <GreenClass>[
+    GREEN_NONE,
+    GREEN_WOOD,
+    GREEN_PARKLAND,
+    GREEN_GARDEN,
+    GREEN_CEMETERY,
+    GREEN_GRASS,
+    GREEN_SAND,
+  ];
+
+  static final $core.List<GreenClass?> _byValue =
+      $pb.ProtobufEnum.$_initByValueList(values, 6);
+  static GreenClass? valueOf($core.int value) =>
+      value < 0 || value >= _byValue.length ? null : _byValue[value];
+
+  const GreenClass._(super.value, super.name);
+}
+
+class Surface extends $pb.ProtobufEnum {
+  static const Surface SURFACE_ASPHALT =
+      Surface._(0, _omitEnumNames ? '' : 'SURFACE_ASPHALT');
+  static const Surface SURFACE_GRASS =
+      Surface._(1, _omitEnumNames ? '' : 'SURFACE_GRASS');
+  static const Surface SURFACE_SAND =
+      Surface._(2, _omitEnumNames ? '' : 'SURFACE_SAND');
+  static const Surface SURFACE_DIRT =
+      Surface._(3, _omitEnumNames ? '' : 'SURFACE_DIRT');
+  static const Surface SURFACE_FOREST =
+      Surface._(4, _omitEnumNames ? '' : 'SURFACE_FOREST');
+
+  static const $core.List<Surface> values = <Surface>[
+    SURFACE_ASPHALT,
+    SURFACE_GRASS,
+    SURFACE_SAND,
+    SURFACE_DIRT,
+    SURFACE_FOREST,
+  ];
+
+  static final $core.List<Surface?> _byValue =
+      $pb.ProtobufEnum.$_initByValueList(values, 4);
+  static Surface? valueOf($core.int value) =>
+      value < 0 || value >= _byValue.length ? null : _byValue[value];
+
+  const Surface._(super.value, super.name);
+}
+
 class GroundKind extends $pb.ProtobufEnum {
   static const GroundKind GROUND_UNKNOWN =
       GroundKind._(0, _omitEnumNames ? '' : 'GROUND_UNKNOWN');
@@ -79,6 +172,28 @@ class GroundKind extends $pb.ProtobufEnum {
       value < 0 || value >= _byValue.length ? null : _byValue[value];
 
   const GroundKind._(super.value, super.name);
+}
+
+class LodKind extends $pb.ProtobufEnum {
+  static const LodKind LOD_BLOCK =
+      LodKind._(0, _omitEnumNames ? '' : 'LOD_BLOCK');
+  static const LodKind LOD_WOOD =
+      LodKind._(1, _omitEnumNames ? '' : 'LOD_WOOD');
+  static const LodKind LOD_PARKLAND =
+      LodKind._(2, _omitEnumNames ? '' : 'LOD_PARKLAND');
+
+  static const $core.List<LodKind> values = <LodKind>[
+    LOD_BLOCK,
+    LOD_WOOD,
+    LOD_PARKLAND,
+  ];
+
+  static final $core.List<LodKind?> _byValue =
+      $pb.ProtobufEnum.$_initByValueList(values, 2);
+  static LodKind? valueOf($core.int value) =>
+      value < 0 || value >= _byValue.length ? null : _byValue[value];
+
+  const LodKind._(super.value, super.name);
 }
 
 const $core.bool _omitEnumNames =

@@ -1,6 +1,6 @@
 # Citypack – formát balíčku města
 
-**version: 3** · P0 · schéma `tools/citypack/proto/citypack.proto` (`format_version` 1)
+**version: 4** · P0 · schéma `tools/citypack/proto/citypack.proto` (`format_version` 1)
 
 ## Účel
 Jeden balíček města, který čtou oba klienti. Staví ho `citypack` (Go), čte F (`world_engine`) i W.
@@ -23,6 +23,13 @@ R = 6 371 008,8 m), v souborech decimetry `sint32`. Ploché seznamy `x0, y0, x1,
 - Zábrana (v2): `Chunk.barriers` = lomené čáry sloupků pěších zón ve vrstvě 0 (`specs/zones.md`).
   Starší balíček je nemá; klient bez podpory zón je ignoruje. `format_version` zůstává 1 (pole
   přibyla, nic se neodebralo).
+- Terén a příroda (v4): `Manifest.terrain_version`, `z0_m`, `exaggeration`, `terrain_grid_m`,
+  `Node.z_dm`, `Edge.z_dm`, `Edge.stairs`, `Chunk.terrain`, `Chunk.shade` (`specs/terrain.md`);
+  `Manifest.nature_version`, třídy a jména na `Mesh`, `Chunk.trees`, `Chunk.shore`, `Chunk.labels`,
+  `Spot.area_name` (`specs/nature.md`); `Edge.micro_only` a sloupky na koncích uliček
+  (`specs/flow.md`); vzdálený prstenec `lod/{x}_{y}.pb` (`Manifest.lods`, `lod_chunks`,
+  `lod_grid_m`). Verze 0 nebo chybějící pole = plochý balíček bez přírody, kreslí se jako v3.
+  `Manifest.attribution` nese i zdroj výšek a stromů. `format_version` zůstává 1.
 
 ## Hraniční případy
 - Uzel s `border` = silnice opouští oblast, kreslí se uzavírka.

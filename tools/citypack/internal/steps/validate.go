@@ -146,7 +146,8 @@ func Validate(e *Env) error {
 		fail("%d road sample points lie inside buildings", overlaps)
 	}
 
-	// 4b. No pedestrian-zone bollard line crosses a road centreline (specs/zones.md).
+	// 4b. No bollard line crosses a road centreline (specs/zones.md), except the micro_only alleys
+	// they close (specs/flow.md).
 	if n := barrierRoadCrossings(p); n > 0 {
 		fail("%d bollard lines cross a road centreline", n)
 	}
@@ -191,6 +192,9 @@ func Validate(e *Env) error {
 			fail("hero landmark %s has no building", l.ID)
 		}
 	}
+	// M5: terrain, nature, flow (specs/terrain.md, specs/nature.md, specs/flow.md).
+	e.validateTerrain(p, fail)
+	e.validateNature(p, fail)
 	if len(errs) > 0 {
 		return errors.Join(errs...)
 	}
@@ -326,7 +330,7 @@ func barrierRoadCrossings(p *PackData) int {
 	}
 	bad := 0
 	for _, ed := range p.Graph.Edges {
-		if ed.Tunnel || ed.LayerFrom != 0 || ed.LayerTo != 0 {
+		if ed.Tunnel || ed.LayerFrom != 0 || ed.LayerTo != 0 || ed.MicroOnly {
 			continue
 		}
 		pts := EdgePts(ed)

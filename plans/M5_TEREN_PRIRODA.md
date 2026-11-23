@@ -100,5 +100,14 @@ kód: pro každý bod 4m pracovní mřížky převod na lon/lat a bilineární v
 
 ## Stav (2026-11-23)
 - Sdílená vrstva: plány v `Prompts/`, specifikace v1, tuning, tokeny, texty, parita F-069…F-074,
-  položky M5 v `plans/progress.yaml` (todo).
-- Další krok: M5-S1 (FL1) ve W (vede) a F.
+  položky M5 v `plans/progress.yaml`.
+- Pořadí změněno: datové kroky M5-S2…S4 (jen sdílená vrstva, `tools/citypack`) šly před M5-S1,
+  aby klienti dostali balíčky s výškami a přírodou hned (pole jsou přídavná, starý klient je
+  ignoruje). M5-S1 a klientské kroky S6+ pokračují podle tabulky.
+- M5-S2, M5-S3 hotovo: `citypack validate nyc` projde (AWS Terrain Tiles, 0 schodů, 61 764 stromů,
+  9 080 uzavřených štěrbin), náhledy `preview/nyc_relief.png`, `nyc_nature.png`.
+- M5-S4 čeká na Ol1na: `citypack validate prague` projde, 0 schodů (Mrázovka/Radlická vyřešená
+  povolením mezí v okolí), ale výšky jsou z AWS Terrain Tiles (EU-DEM ~25 m), ne z DMR 5G: ČÚZK
+  dává jen LAZ v S-JTSK a chybí PDAL/GDAL (`content/cities/prague/dem/README.md`). Stromy z OSM
+  a Poissonova disku v parcích; pražský dataset stromů (IPR) zatím neověřen.
+- Další krok: M5-S1 (FL1) ve W (vede) a F; po instalaci GDAL převod DMR 5G pro Prahu.
