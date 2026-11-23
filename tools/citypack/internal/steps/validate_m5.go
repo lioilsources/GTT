@@ -254,6 +254,10 @@ func (e *Env) validateTerrain(p *PackData, fail func(string, ...any)) {
 	if gapN > 0 && float64(gap) > tp.RoadGapShare*float64(gapN) {
 		fail("%d of %d road edge samples are more than %.1f m from the terrain (limit %.1f %%)", gap, gapN, tp.RoadGapMaxM, 100*tp.RoadGapShare)
 	}
+	ci := newConformIndex(p, e.C.Tuning.SidewalkWidthM, tt.GridM*math.Sqrt2)
+	e.validateWaterTerrain(p, t, water, ci, fail)
+	e.validateDecks(p, fail)
+	e.validateRoadStrips(p, t, water, ground, ci, fail)
 	slog.Info("validate: terrain", "z0", m.Z0M, "exaggeration", m.Exaggeration, "stairs", stairs, "lods", len(m.Lods))
 }
 
