@@ -141,10 +141,12 @@ export class TreeContacts {
   /**
    * One step after the physics step. car = centre, velocity and half width; returns the new
    * velocity and the yaw kick to apply (or null when nothing changed). Not on the ground layer, in
-   * the air or sinking: call clear() instead.
+   * the air or sinking: call clear() instead. `atCar` (terrain packs) drops trunks that do not
+   * stand at the car's height, e.g. under a bridge or down a bank.
    */
   step(
     dt: number, time: number, nature: NatureMap, car: { x: number; y: number; vx: number; vy: number; halfWidth: number }, t: Tuning,
+    atCar?: (tree: Tree) => boolean,
   ): { vx: number; vy: number; yaw: number } | null {
     for (const [k, v] of this.cd) {
       if (v - dt <= 0) this.cd.delete(k);
@@ -166,6 +168,7 @@ export class TreeContacts {
       if (this.fallen.has(tr.key)) continue;
       const dx = tr.x - car.x, dy = tr.y - car.y;
       if (dx * dx + dy * dy >= r * r) continue;
+      if (atCar && !atCar(tr)) continue;
       seen.add(tr.key);
       let o = this.overlap.get(tr.key);
       if (!o) {
