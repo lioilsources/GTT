@@ -1,5 +1,11 @@
 # Written by `citypack publish`; read by `citypack pull` and `metro sync`. Do not edit by hand.
 packs:
+    moscow:
+        version: 1cabcee6fcf1
+        tag: pack-moscow-1cabcee6fcf1
+        asset: moscow-1cabcee6fcf1.tar.gz
+        sha256: 1cabcee6fcf1649bea667ca9d683af401ecfd61dae22635e61f536b19ab6d5aa
+        overture_release: 2026-11-18.0
     nyc:
         version: 770d67c86cff
         tag: pack-nyc-770d67c86cff

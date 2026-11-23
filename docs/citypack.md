@@ -146,3 +146,26 @@ přepisu zahodí (klienti nemají písmo CJK). Jména jsou po segmentech nejedno
 - Spoty mají pole `minigame` (id z katalogu): na tom místě se minihra hraje (9.5).
 - `validate` bere při kontrole „silnice v budově“ v úvahu dvory (díry v obrysu): příjezd do dvora
   Dakoty na 72nd St není kolize.
+
+
+## Moskva v číslech (M6)
+
+Uvnitř Sadového okruhu i s okruhem + Zamoskvorečje, Gorkého park, Komsomolské náměstí a předmostí
+u Kutuzovského (`plans/M6_MOSKVA.md` X1; sever oříznutý na 55,777° kvůli dvorním rampám u
+Novoslobodské): 28 296 uzlů, 31 834 hran, 15 079 hmot budov, 520 chunků, 48 spotů (13 s minihrou,
+2 budky, 12 vstupů do metra, 8 fotomíst, 8 obchodů a barů), 387 hran tramvají a 34 zastávek,
+balíček 3,8 MB (`pack-moscow-1cabcee6fcf1`). Build s fetch ~12 min.
+
+Terén z AWS Terrain Tiles (z0 = 122 m, převýšení 2,0, 0 schodů): Moskva je mírná, nejprudší
+pojmenovaná ulice je Bolšoj Nikolovorobinskij pereulok 11,5 %, pak Zemljanoj val 9,9 %. Příroda:
+14 170 stromů (OSM 46 %, zbytek Poissonův výsev v parcích), řeka Moskva, Jauza, Obtokový kanál,
+Patriarší a Golicynské rybníky pojmenované; 62 hran mostů, 43 z nich s koncem ve vrstvě 0.
+
+Jména: Overture má v Moskvě `names.primary` azbukou. `name_langs: [en, ru-Latn]` bere anglické
+nebo latinkou přepsané jméno; od M6 platí `name_langs` i pro vodu a zeleň (krok `nature`, dřív
+jen silnice), azbuka by se v klientech nevykreslila. Plochy kanálu bez jména berou jméno
+z nejbližší pojmenované čáry kanálu jako řeky (Obtokový kanál má jméno jen na ose).
+
+- `validate`: `terrain.pipeline.road_strip.max_m` 1,2 m (dvorní obslužné rampy u Novoslobodské
+  a na Taganke 1,04–1,18 m; Praha 0,87, NYC 0,42).
+- Borovická věž nemá v Overture budovu, je bod (`kind: plaza`).

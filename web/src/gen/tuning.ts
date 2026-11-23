@@ -3894,11 +3894,13 @@ export class TuningWeatherCities {
   nyc: boolean;
   prague: boolean;
   tokyo: boolean;
+  moscow: boolean;
 
   constructor(r: R) {
     this.nyc = r.b('nyc');
     this.prague = r.b('prague');
     this.tokyo = r.b('tokyo');
+    this.moscow = r.b('moscow');
   }
 
   toJson(): Record<string, unknown> {
@@ -3906,6 +3908,7 @@ export class TuningWeatherCities {
       nyc: this.nyc,
       prague: this.prague,
       tokyo: this.tokyo,
+      moscow: this.moscow,
     };
   }
 }
@@ -3961,11 +3964,13 @@ export class TuningShopsCities {
   nyc: boolean;
   prague: boolean;
   tokyo: boolean;
+  moscow: boolean;
 
   constructor(r: R) {
     this.nyc = r.b('nyc');
     this.prague = r.b('prague');
     this.tokyo = r.b('tokyo');
+    this.moscow = r.b('moscow');
   }
 
   toJson(): Record<string, unknown> {
@@ -3973,6 +3978,7 @@ export class TuningShopsCities {
       nyc: this.nyc,
       prague: this.prague,
       tokyo: this.tokyo,
+      moscow: this.moscow,
     };
   }
 }
@@ -4149,11 +4155,13 @@ export class TuningStyleRisograph {
   nyc: boolean;
   prague: boolean;
   tokyo: boolean;
+  moscow: boolean;
 
   constructor(r: R) {
     this.nyc = r.b('nyc');
     this.prague = r.b('prague');
     this.tokyo = r.b('tokyo');
+    this.moscow = r.b('moscow');
   }
 
   toJson(): Record<string, unknown> {
@@ -4161,6 +4169,7 @@ export class TuningStyleRisograph {
       nyc: this.nyc,
       prague: this.prague,
       tokyo: this.tokyo,
+      moscow: this.moscow,
     };
   }
 }
@@ -4170,11 +4179,13 @@ export class TuningStyleCastShadow {
   nyc: boolean;
   prague: boolean;
   tokyo: boolean;
+  moscow: boolean;
 
   constructor(r: R) {
     this.nyc = r.b('nyc');
     this.prague = r.b('prague');
     this.tokyo = r.b('tokyo');
+    this.moscow = r.b('moscow');
   }
 
   toJson(): Record<string, unknown> {
@@ -4182,6 +4193,7 @@ export class TuningStyleCastShadow {
       nyc: this.nyc,
       prague: this.prague,
       tokyo: this.tokyo,
+      moscow: this.moscow,
     };
   }
 }
@@ -4190,11 +4202,13 @@ export class TuningStyleCrosswalks {
   nyc: boolean;
   prague: boolean;
   tokyo: boolean;
+  moscow: boolean;
 
   constructor(r: R) {
     this.nyc = r.b('nyc');
     this.prague = r.b('prague');
     this.tokyo = r.b('tokyo');
+    this.moscow = r.b('moscow');
   }
 
   toJson(): Record<string, unknown> {
@@ -4202,6 +4216,7 @@ export class TuningStyleCrosswalks {
       nyc: this.nyc,
       prague: this.prague,
       tokyo: this.tokyo,
+      moscow: this.moscow,
     };
   }
 }
@@ -4829,7 +4844,10 @@ export class TuningTerrainPipeline {
   roadGapMaxM: number;
   /** validate: share of road edge samples allowed over road_gap_max_m */
   roadGapShare: number;
-  /** validate: |terrain − road profile| on kept carriageways (the car rides the terrain there) */
+  /**
+   * validate: |terrain − road profile| on kept carriageways (the car rides the terrain there)
+   * max_m 1.2: Moscow courtyard service ramps (Novoslobodskaya, Taganka) reach 1.18 m; Prague max 0.87, NYC 0.42
+   */
   readonly roadStrip: TuningTerrainPipelineRoadStrip;
   /** validate fails below water/road + this; below bridge.clear_* it warns */
   bridgeMinClearM: number;
@@ -4925,7 +4943,10 @@ export class TuningTerrainPipelineProfileWindowM {
   static readonly keys = ['lidar', 'coarse'] as const;
 }
 
-/** validate: |terrain − road profile| on kept carriageways (the car rides the terrain there) */
+/**
+ * validate: |terrain − road profile| on kept carriageways (the car rides the terrain there)
+ * max_m 1.2: Moscow courtyard service ramps (Novoslobodskaya, Taganka) reach 1.18 m; Prague max 0.87, NYC 0.42
+ */
 export class TuningTerrainPipelineRoadStrip {
   tolM: number;
   share: number;

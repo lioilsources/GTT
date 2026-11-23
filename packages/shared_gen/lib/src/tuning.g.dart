@@ -4286,7 +4286,8 @@ class TuningWeatherCities {
   TuningWeatherCities._(_R r)
       : nyc = r.b('nyc'),
         prague = r.b('prague'),
-        tokyo = r.b('tokyo');
+        tokyo = r.b('tokyo'),
+        moscow = r.b('moscow');
 
   bool nyc;
 
@@ -4294,10 +4295,13 @@ class TuningWeatherCities {
 
   bool tokyo;
 
+  bool moscow;
+
   Map<String, Object> toJson() => {
         'nyc': nyc,
         'prague': prague,
         'tokyo': tokyo,
+        'moscow': moscow,
       };
 }
 
@@ -4358,7 +4362,8 @@ class TuningShopsCities {
   TuningShopsCities._(_R r)
       : nyc = r.b('nyc'),
         prague = r.b('prague'),
-        tokyo = r.b('tokyo');
+        tokyo = r.b('tokyo'),
+        moscow = r.b('moscow');
 
   bool nyc;
 
@@ -4366,10 +4371,13 @@ class TuningShopsCities {
 
   bool tokyo;
 
+  bool moscow;
+
   Map<String, Object> toJson() => {
         'nyc': nyc,
         'prague': prague,
         'tokyo': tokyo,
+        'moscow': moscow,
       };
 }
 
@@ -4566,7 +4574,8 @@ class TuningStyleRisograph {
   TuningStyleRisograph._(_R r)
       : nyc = r.b('nyc'),
         prague = r.b('prague'),
-        tokyo = r.b('tokyo');
+        tokyo = r.b('tokyo'),
+        moscow = r.b('moscow');
 
   bool nyc;
 
@@ -4574,10 +4583,13 @@ class TuningStyleRisograph {
 
   bool tokyo;
 
+  bool moscow;
+
   Map<String, Object> toJson() => {
         'nyc': nyc,
         'prague': prague,
         'tokyo': tokyo,
+        'moscow': moscow,
       };
 }
 
@@ -4586,7 +4598,8 @@ class TuningStyleCastShadow {
   TuningStyleCastShadow._(_R r)
       : nyc = r.b('nyc'),
         prague = r.b('prague'),
-        tokyo = r.b('tokyo');
+        tokyo = r.b('tokyo'),
+        moscow = r.b('moscow');
 
   bool nyc;
 
@@ -4594,10 +4607,13 @@ class TuningStyleCastShadow {
 
   bool tokyo;
 
+  bool moscow;
+
   Map<String, Object> toJson() => {
         'nyc': nyc,
         'prague': prague,
         'tokyo': tokyo,
+        'moscow': moscow,
       };
 }
 
@@ -4605,7 +4621,8 @@ class TuningStyleCrosswalks {
   TuningStyleCrosswalks._(_R r)
       : nyc = r.b('nyc'),
         prague = r.b('prague'),
-        tokyo = r.b('tokyo');
+        tokyo = r.b('tokyo'),
+        moscow = r.b('moscow');
 
   bool nyc;
 
@@ -4613,10 +4630,13 @@ class TuningStyleCrosswalks {
 
   bool tokyo;
 
+  bool moscow;
+
   Map<String, Object> toJson() => {
         'nyc': nyc,
         'prague': prague,
         'tokyo': tokyo,
+        'moscow': moscow,
       };
 }
 
@@ -5290,6 +5310,7 @@ class TuningTerrainPipeline {
   double roadGapShare;
 
   /// validate: |terrain − road profile| on kept carriageways (the car rides the terrain there)
+  /// max_m 1.2: Moscow courtyard service ramps (Novoslobodskaya, Taganka) reach 1.18 m; Prague max 0.87, NYC 0.42
   final TuningTerrainPipelineRoadStrip roadStrip;
 
   /// validate fails below water/road + this; below bridge.clear_* it warns
@@ -5359,6 +5380,7 @@ class TuningTerrainPipelineProfileWindowM {
 }
 
 /// validate: |terrain − road profile| on kept carriageways (the car rides the terrain there)
+/// max_m 1.2: Moscow courtyard service ramps (Novoslobodskaya, Taganka) reach 1.18 m; Prague max 0.87, NYC 0.42
 class TuningTerrainPipelineRoadStrip {
   TuningTerrainPipelineRoadStrip._(_R r)
       : tolM = r.d('tol_m'),

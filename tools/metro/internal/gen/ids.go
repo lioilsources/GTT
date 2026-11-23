@@ -2,6 +2,7 @@ package gen
 
 import (
 	"fmt"
+	"metro/internal/repo"
 	"os"
 	"path/filepath"
 	"sort"
@@ -39,6 +40,31 @@ func Ids(o *Output, citiesDir, carsDir, catalog string) error {
 		cities.values = append(cities.values, d.Name())
 		cities.labels[d.Name()] = c.Name
 	}
+	// specs/cities.md "Výchozí město": the first city of bundle_cities is the start city, and the
+	// clients take it as CityId's first value. Bundled cities go first in metro.yaml order, the
+	// rest follow by name.
+	var guard struct {
+		BundleCities []string `yaml:"bundle_cities"`
+	}
+	if b, err := os.ReadFile(filepath.Join(o.Root, repo.GuardConfig)); err == nil {
+		if err := yaml.Unmarshal(b, &guard); err != nil {
+			return fmt.Errorf("metro.yaml: %w", err)
+		}
+	}
+	rank := map[string]int{}
+	for i, c := range guard.BundleCities {
+		rank[c] = i + 1
+	}
+	sort.SliceStable(cities.values, func(i, j int) bool {
+		ri, rj := rank[cities.values[i]], rank[cities.values[j]]
+		if ri == 0 || rj == 0 {
+			if ri != rj {
+				return ri != 0
+			}
+			return cities.values[i] < cities.values[j]
+		}
+		return ri < rj
+	})
 	enums = append(enums, cities)
 
 	cars := idEnum{name: "CarId", doc: "Cars defined in content/cars/<id>.json.", source: carsDir}
@@ -88,7 +114,7 @@ func Ids(o *Output, citiesDir, carsDir, catalog string) error {
 	ts.WriteString("\nimport type { MinigameMeta } from './schema';\n")
 	for _, e := range enums {
 		vals := append([]string{}, e.values...)
-		if e.name != "EngineId" && e.name != "MinigameId" {
+		if e.name != "EngineId" && e.name != "MinigameId" && e.name != "CityId" {
 			sort.Strings(vals)
 		}
 		fmt.Fprintf(&d, "\n%senum %s {\n", Doc("", e.doc), e.name)
