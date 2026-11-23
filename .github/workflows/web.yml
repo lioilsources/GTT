@@ -69,8 +69,8 @@ jobs:
       - working-directory: web
         run: |
           npm run typecheck
-          npm test
           npm run build
+          npm test
       - if: github.event_name == 'push'
         uses: actions/upload-pages-artifact@v5
         with:
