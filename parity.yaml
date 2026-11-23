@@ -293,8 +293,9 @@
   level: P1
   spec: specs/hop.md@2
   lead: web
-  flutter: todo
-  web: todo
+  flutter: done
+  web: done
+  checks: {flutter: pass, web: pass}
 - id: F-036
   name: Wanted level 3 with a roadblock of two standing patrols
   level: P1
