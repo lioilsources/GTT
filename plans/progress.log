@@ -7,3 +7,4 @@
 2026-11-22 | 01:05–01:40 (35 min) | D2-9 Taxi v obou klientech (PR #50–#52); parita F-001–F-027 zelená – D2 kompletní (čeká na Ol1na), D3-2 hotovo, D3-1 čeká
 2026-11-22 | 13:45–14:50 (65 min) | převzetí z GTT; pod-plán M2 (PR #94), objednávka grafiky (docs/art-requests.md, L40S); M2-S1 hledanost 3 a zátaras v obou klientech (PR #95, #97, #98) – M2 +2 čeká
 2026-11-22 | 14:50–16:31 | M2-S2 budky (PR #100–#103), brána vektorů podle parity v obou klientech (#104, #105), M2-S3 metro a taxi, uložení v3 (#106–#110), balíčky NYC a Praha s budkami a metrem (#107) – M2 +2 položky čekají
+2026-11-23 | 10:10–11:10 (60 min) | M5-S9 T2 šikmý pohled ve W: kamera za autem, prstenec z lod/, obloha a mlha, zprůhlednění, přepínač (PR #224, #250 + upřesnění spec a parita F-074) – M5 +1 čeká
