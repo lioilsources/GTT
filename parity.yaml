@@ -473,7 +473,7 @@
   spec: specs/minigames/prsi.md@1
   vectors: vectors/prsi.json
   lead: web
-  flutter: todo
+  flutter: done
   web: done
 
 - id: F-055
@@ -482,7 +482,7 @@
   spec: specs/minigames/srdce.md@1
   vectors: vectors/srdce.json
   lead: web
-  flutter: todo
+  flutter: done
   web: done
 
 - id: F-056
@@ -491,7 +491,7 @@
   spec: specs/minigames/kostky.md@1
   vectors: vectors/kostky.json
   lead: web
-  flutter: todo
+  flutter: done
   web: done
 
 - id: F-057
@@ -500,7 +500,7 @@
   spec: specs/minigames/prase.md@1
   vectors: vectors/prase.json
   lead: web
-  flutter: todo
+  flutter: done
   web: done
 
 - id: F-058
