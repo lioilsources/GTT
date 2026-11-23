@@ -53,7 +53,7 @@ značky, žádné postavy cizí IP), DUALSTACK (sdílená vrstva, pak W a F, mat
 | T3 | Styl | D – anime cel (jiný než A v NYC a C v Praze) |
 | T4 | Výšky budov | Overture, default 18 m |
 | T5 | Jména podniků | fiktivní (R10); komerční stavby místem (Roppongi Hills, hodinová věž v Ginze), bez jmen firem |
-| T6 | Přepis jmen | Hepburn s makrony v datech (`Ryōgoku`), čeština v `i18n/cs.json` počeštěně (`Rjógoku`) |
+| T6 | Přepis jmen | Hepburn s makrony (`Ryōgoku`) v datech i v titulcích pohlednic (titulek = jméno z `landmarks.yaml`, `specs/passport.md`); čeština jen v textech |
 | T7 | Dálnice Shuto | ponechané jako `motorway`, nadzemní úseky jako vrstva +1 |
 
 ## Stav (2026-11-23)
