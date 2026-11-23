@@ -194,4 +194,51 @@ describe('hokej', () => {
     const m = r.apply(s, { by: 'player', op: 'move', x: 99999, y: 99999 });
     expect(m.me).toMatchObject({ tx: cfg.w - cfg.malletR, ty: cfg.h / 2 - cfg.malletR });
   });
+
+  // v2: a goal only when the puck crosses the goal line within the mouth (crossing x interpolated).
+  const table = { ...hokejConfig(tm.hokej, 1), w: 1200, h: 2000, puckR: 60, malletR: 90, goalHalf: 250, maxPuck: 200, homeY: 300, serveY: 400, aiDefY: 300 };
+  const shot = (x: number, y: number, vx: number, vy: number) => {
+    const r = new HokejRules();
+    const s = r.init(table, 0);
+    return { r, s: { ...s, puck: { x, y, vx, vy } } };
+  };
+  const tick = { by: 'player', op: 'tick', n: 1 } as const;
+
+  it('bounces a fast puck that crosses the own line outside the mouth (no goal)', () => {
+    const { r, s } = shot(200, 80, 0, -120);
+    const n = r.apply(s, tick);
+    expect(n.aiGoals).toBe(0);
+    expect(n.pause).toBe(0);
+    expect(n.puck.y).toBe(40);
+    expect(n.puck.vy).toBeGreaterThan(0);
+    expect(n.puck.vy).toBeLessThanOrEqual(108);
+  });
+
+  it('bounces off the top end wall outside the mouth', () => {
+    const { r, s } = shot(1000, 1920, 0, 120);
+    const n = r.apply(s, tick);
+    expect(n.playerGoals).toBe(0);
+    expect(n.puck.y).toBe(1960);
+    expect(n.puck.vy).toBeLessThan(0);
+  });
+
+  it('decides by the crossing x, not the x after the move', () => {
+    // Crosses at x 350 (|350 − 600| = 250, edge counts) though it ends at x 300, outside the mouth.
+    const a = shot(400, 60, -100, -120);
+    const g = a.r.apply(a.s, tick);
+    expect(g.aiGoals).toBe(1);
+    expect(g.puck).toEqual({ x: 600, y: 600, vx: 0, vy: 0 });
+    expect(g.pause).toBe(table.goalPause);
+    // Crosses at x 340, outside, though it ends at x 390 within the mouth: bounce.
+    const b = shot(290, 60, 100, -120);
+    const n = b.r.apply(b.s, tick);
+    expect(n.aiGoals).toBe(0);
+    expect(n.puck.y).toBe(60);
+    expect(n.puck.vy).toBeGreaterThan(0);
+  });
+
+  it('still scores for a puck that starts behind the line in the mouth', () => {
+    const { r, s } = shot(600, -10, 0, 0);
+    expect(r.apply(s, tick).aiGoals).toBe(1);
+  });
 });
