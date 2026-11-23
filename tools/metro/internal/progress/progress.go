@@ -189,12 +189,12 @@ type counter struct {
 func countContent(root string, f *File) []counter {
 	var out []counter
 	mg := 0
-	if dirs, err := filepath.Glob(filepath.Join(root, "packages", "mg_*")); err == nil {
-		for _, d := range dirs {
-			b := filepath.Base(d)
-			if b != "mg_api" && !strings.HasPrefix(b, "mg_engine_") {
-				mg++
-			}
+	if b, err := os.ReadFile(filepath.Join(root, "content", "minigames", "catalog.yaml")); err == nil {
+		var c struct {
+			Minigames []any `yaml:"minigames"`
+		}
+		if yaml.Unmarshal(b, &c) == nil {
+			mg = len(c.Minigames)
 		}
 	}
 	out = append(out, counter{"Minihry", fmt.Sprint(mg), "100"})
@@ -220,16 +220,16 @@ func countContent(root string, f *File) []counter {
 	out = append(out, counter{"Auta", fmt.Sprint(len(cars)), "200"})
 	out = append(out, counter{"Památky", fmt.Sprint(landmarks), "25–40 na město"})
 	skits := 0
-	_ = filepath.WalkDir(filepath.Join(root, "content", "dialogues"), func(p string, e os.DirEntry, err error) error {
-		if err != nil || e.IsDir() || !strings.HasSuffix(p, ".json") {
+	_ = filepath.WalkDir(filepath.Join(root, "content", "npc", "skits"), func(p string, e os.DirEntry, err error) error {
+		if err != nil || e.IsDir() || !strings.HasSuffix(p, ".yaml") {
 			return nil
 		}
 		b, _ := os.ReadFile(p)
 		var v struct {
-			Skits []any `json:"skits"`
+			ID string `yaml:"id"`
 		}
-		if json.Unmarshal(b, &v) == nil {
-			skits += len(v.Skits)
+		if yaml.Unmarshal(b, &v) == nil && v.ID != "" {
+			skits++
 		}
 		return nil
 	})

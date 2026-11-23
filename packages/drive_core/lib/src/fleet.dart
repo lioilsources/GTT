@@ -41,7 +41,12 @@ class CarFleet {
   /// A car bought in the garage (M1-S11: the loop saves).
   final List<void Function(String car, int price)> onBought = [];
 
-  CarSpec get spec => specs[state.driving]!;
+  /// The car driven now: the test-drive car while one runs, else the car of the state.
+  CarSpec get spec => specs[testing?.car ?? state.driving]!;
+
+  /// Garage test drive (specs/testdrive.md, P2): the car tried and the game seconds left. The cars
+  /// state does not know about it (`driving` stays the own car the player drove out with).
+  TestDrive? testing;
 
   // ---------- parked cars
 
@@ -182,6 +187,8 @@ class CarFleet {
 
   /// "Přesednout": the current car stays parked, the player drives the parked one.
   void board(ParkedCar p) {
+    // A test drive ends first: the own car is left parked here, the test car vanishes.
+    endTest(notify: false);
     final c = drive.car;
     final left = ParkedCar(carId: state.driving, owner: _currentOwner, x: c.x, y: c.y, heading: c.heading);
     state = rules.apply(state, CarsAction.board(p.carId, p.owner));
@@ -252,17 +259,88 @@ class CarFleet {
     }
   }
 
+  /// Where a car from the garage appears: its parking point, or with [here] (the garage opened from
+  /// the phone away from the spot, specs/testdrive.md v2) the player's car's place and heading.
+  ({double x, double y, double heading}) _spawnPoint(GaragePoint g, bool here) {
+    final c = drive.car;
+    return here ? (x: c.x, y: c.y, heading: c.heading) : (x: g.x, y: g.y, heading: g.heading);
+  }
+
   /// Drive out of the garage with an owned car; the current one stays inside (or is towed away).
-  void select(String car) {
+  /// [here]: the garage list was opened from the phone away from the spot.
+  void select(String car, {bool here = false}) {
     final g = garage;
     if (g == null) return;
+    testing = null;
+    final at = _spawnPoint(g, here);
     state = rules.apply(state, CarsAction.select(car));
     for (final p in parked.where((q) => q.chunk == null && q.owner == 'player' && q.carId == car).toList()) {
       _remove(p);
     }
-    drive.replaceCar(spec, g.x, g.y, g.heading);
+    drive.replaceCar(spec, at.x, at.y, at.heading);
     for (final f in onCarChanged) {
       f(car);
     }
   }
+
+  // ---------- test drive (specs/testdrive.md)
+
+  /// A car for sale can be tried: a garage, a known car the player does not own.
+  bool canTest(String car) => garage != null && specs.containsKey(car) && !state.owned.contains(car);
+
+  /// Starts a test drive of [car] on the garage's parking point: the catalog car (no upgrades,
+  /// default look), not owned. A stolen car is towed first (`select` of the first own car).
+  bool startTest(String car, {bool here = false}) {
+    final g = garage;
+    if (g == null || !canTest(car)) return false;
+    final at = _spawnPoint(g, here);
+    if (state.stolen && state.owned.isNotEmpty) state = rules.apply(state, CarsAction.select(state.owned.first));
+    // The own car stays in the garage: copies of it left parked in town go.
+    for (final p in parked.where((q) => q.chunk == null && q.owner == 'player' && q.carId == state.driving).toList()) {
+      _remove(p);
+    }
+    testing = TestDrive(car, tuning.cars.testDriveS);
+    drive.replaceCar(spec, at.x, at.y, at.heading);
+    for (final f in onCarChanged) {
+      f(car);
+    }
+    return true;
+  }
+
+  /// Counts the test drive down by [dt] game seconds and ends it when the time is up. True when it
+  /// ended on this call (the HUD shows "Zkušební jízda skončila").
+  bool tickTest(double dt) {
+    final t = testing;
+    if (t == null) return false;
+    t.left = t.left - dt < 0 ? 0 : t.left - dt;
+    return t.left <= 0 && endTest();
+  }
+
+  /// Ends a test drive: the own car of the state comes back in place of the test car (same place
+  /// and heading, at rest). False when none ran.
+  bool endTest({bool notify = true}) {
+    if (testing == null) return false;
+    testing = null;
+    final c = drive.car;
+    drive.replaceCar(spec, c.x, c.y, c.heading);
+    if (notify) {
+      for (final f in onCarChanged) {
+        f(state.driving);
+      }
+    }
+    return true;
+  }
+
+  /// Debug cash (specs/testdrive.md "Ladicí hotovost"): cash += economy.debug_grant.
+  int grantDebugCash() {
+    setCash(state.cash + tuning.economy.debugGrant);
+    return state.cash;
+  }
+}
+
+/// A running test drive (specs/testdrive.md): the car tried and the game seconds left.
+class TestDrive {
+  TestDrive(this.car, this.left);
+  final String car;
+  double left;
 }

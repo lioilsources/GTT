@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:game_loop/game_loop.dart';
+import 'package:mg_api/mg_api.dart' show ArtIcon;
 import 'package:shared_gen/shared_gen.dart';
 
 import '../l10n/app_localizations.dart';
@@ -47,11 +48,17 @@ class WeatherLayer extends StatelessWidget {
                       color: const Color(Tokens.colorUiPill),
                       borderRadius: BorderRadius.circular(Tokens.radiusPill),
                     ),
-                    child: Icon(
-                      weatherIcon(k),
-                      key: ValueKey('weatherIcon.${k.name}'),
+                    // ui/weather_<kind>.png (specs/art.md v3) in the icon colour, else today's icon.
+                    child: ArtIcon(
+                      'weather_${k.name}',
                       size: Tokens.fontHud,
                       color: const Color(Tokens.colorWeatherIcon),
+                      fallback: Icon(
+                        weatherIcon(k),
+                        key: ValueKey('weatherIcon.${k.name}'),
+                        size: Tokens.fontHud,
+                        color: const Color(Tokens.colorWeatherIcon),
+                      ),
                     ),
                   ),
                 ),

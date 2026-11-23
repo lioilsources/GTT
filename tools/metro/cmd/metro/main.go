@@ -7,7 +7,7 @@
 //	metro vectors check                 validate vector files
 //	metro vectors record --client C --module M
 //	metro parity report [--release]     write PARITY.md, fail on red rows
-//	metro progress [--tests]            write plans/PROGRESS.md from plans/progress.yaml
+//	metro progress [--tests|--check]    write plans/PROGRESS.md and the README status block (--check: fail if stale)
 package main
 
 import (
@@ -88,15 +88,39 @@ func main() {
 	case "progress":
 		fs := flag.NewFlagSet("progress", flag.ExitOnError)
 		tests := fs.Bool("tests", false, "run every test suite and record the counts")
+		check := fs.Bool("check", false, "fail when the README status block is stale (writes nothing)")
 		_ = fs.Parse(args)
-		fail(runProgress(root, *tests))
+		fail(runProgress(root, *tests, *check))
 	default:
 		usage()
 	}
 }
 
-func runProgress(root string, tests bool) error {
+func runProgress(root string, tests, check bool) error {
 	now := time.Now()
+	if check {
+		f, err := progress.Load(root)
+		if err != nil {
+			return err
+		}
+		block, err := progress.StatusBlock(root, f, now)
+		if err != nil {
+			return err
+		}
+		readme, err := os.ReadFile(filepath.Join(root, "README.md"))
+		if err != nil {
+			return err
+		}
+		stale, err := progress.StatusStale(string(readme), block)
+		if err != nil {
+			return err
+		}
+		if stale {
+			return fmt.Errorf("README.md status block is stale: run metro progress")
+		}
+		slog.Info("progress --check ok")
+		return nil
+	}
 	if tests {
 		total, pass, err := progress.RunTests(root)
 		if err != nil {
@@ -115,8 +139,24 @@ func runProgress(root string, tests bool) error {
 	if err != nil {
 		return err
 	}
-	slog.Info("progress", "file", "plans/PROGRESS.md")
-	return os.WriteFile(filepath.Join(root, "plans", "PROGRESS.md"), []byte(md), 0o644)
+	if err := os.WriteFile(filepath.Join(root, "plans", "PROGRESS.md"), []byte(md), 0o644); err != nil {
+		return err
+	}
+	block, err := progress.StatusBlock(root, f, now)
+	if err != nil {
+		return err
+	}
+	rp := filepath.Join(root, "README.md")
+	readme, err := os.ReadFile(rp)
+	if err != nil {
+		return err
+	}
+	out, err := progress.ReplaceStatus(string(readme), block)
+	if err != nil {
+		return err
+	}
+	slog.Info("progress", "file", "plans/PROGRESS.md", "readme", "status block")
+	return os.WriteFile(rp, []byte(out), 0o644)
 }
 
 func runGen(root string, check bool) error {
@@ -179,7 +219,7 @@ func runGuard(root, base string) error {
 }
 
 func usage() {
-	fmt.Fprintln(os.Stderr, "usage: metro gen [--check] | sync | validate | guard [--base B] | vectors check | vectors record --client C --module M | parity report [--release] | progress [--tests]")
+	fmt.Fprintln(os.Stderr, "usage: metro gen [--check] | sync | validate | guard [--base B] | vectors check | vectors record --client C --module M | parity report [--release] | progress [--tests|--check]")
 	os.Exit(2)
 }
 
