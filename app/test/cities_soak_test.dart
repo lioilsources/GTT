@@ -1,4 +1,4 @@
-// Soak test for acceptance M3-A3 (specs/cities.md "Testy"): switching cities NYC → Prague → NYC … 10×
+// Soak test for acceptance M3-A3 (specs/cities.md "Testy"): switching round every bundled city 10×
 // with the real city packs and the building blocks the game uses for a city, without a crash, with each
 // city keeping its own save, and with the physics body count back at the same baseline after a city is
 // disposed (no leak). Skipped when the packs are not synced.
@@ -108,12 +108,13 @@ void main() {
       for (final s in [parseCarSpec(f.readAsStringSync())]) s.id: s,
   };
   SaveConfig cfg(CityId c) => SaveConfig.fromTuning(tuning, c.id, CarId.values.map((c) => c.id));
-  final hasPacks = packRoot(CityId.nyc) != null && packRoot(CityId.prague) != null;
+  final hasPacks = CityId.values.every((c) => packRoot(c) != null);
+  const cities = CityId.values;
 
   setUpAll(() async => initializeForge2D());
 
   test(
-    '10 city switches NYC ↔ Prague: no throw, own saves, body count back at baseline',
+    '10 city switches round all cities: no throw, own saves, body count back at baseline',
     () async {
       final saves = MemorySaveStore();
       final cityStore = MemoryCityStore();
@@ -124,7 +125,7 @@ void main() {
       var state = <String, Object?>{};
 
       for (var round = 0; round <= 10; round++) {
-        final c = round.isEven ? CityId.nyc : CityId.prague;
+        final c = cities[round % cities.length];
         if (round > 0) {
           await switchCity(current, c, saveCurrent: () => saves.write(current.id, state));
         }
@@ -170,14 +171,14 @@ void main() {
       }
       await saves.write(current.id, state);
 
-      expect(await cityStore.read(), 'nyc');
-      expect(rounds, {CityId.nyc: 6, CityId.prague: 5});
-      final nyc = saveOf(normalizeSave(cfg(CityId.nyc), await saves.read('nyc')));
-      final prague = saveOf(normalizeSave(cfg(CityId.prague), await saves.read('prague')));
-      expect(nyc.stamps, [for (var i = 0; i < 6; i++) 'landmark:nyc_$i']);
-      expect(prague.stamps, [for (var i = 0; i < 5; i++) 'landmark:prague_$i']);
-      expect(nyc.cash, 1000 * (CityId.nyc.index + 1) + 5);
-      expect(prague.cash, 1000 * (CityId.prague.index + 1) + 4);
+      expect(await cityStore.read(), cities[10 % cities.length].id);
+      final visits = {for (final c in cities) c: (10 - c.index) ~/ cities.length + 1};
+      expect(rounds, visits);
+      for (final c in cities) {
+        final s = saveOf(normalizeSave(cfg(c), await saves.read(c.id)));
+        expect(s.stamps, [for (var i = 0; i < visits[c]!; i++) 'landmark:${c.id}_$i']);
+        expect(s.cash, 1000 * (c.index + 1) + visits[c]! - 1);
+      }
       // ignore: avoid_print
       print('cities soak: baseline $baseline, peak bodies $loadedPeak');
     },
