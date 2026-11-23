@@ -13,6 +13,17 @@ import { Tris, Z } from '../render/geometry';
 import { rgba, type Rgba } from '../render/palette';
 import { setCount, setShadowColour } from '../render/shadow';
 import type { Traffic } from '../traffic/traffic';
+import { LIGHTS_BRAKE, LIGHTS_FULL, LIGHTS_OFF, type CarSpriteView } from '../render/carSprites';
+import { POLICE_SPRITE, stretchedSize } from '../cars/sprites';
+
+/** Mesh data of a Tris (for swapping a mesh's geometry). */
+function vertexData(t: Tris): VertexData {
+  const vd = new VertexData();
+  vd.positions = new Float32Array(t.pos);
+  vd.colors = new Float32Array(t.col);
+  vd.indices = new Uint16Array(t.idx);
+  return vd;
+}
 
 /**
  * Light-bar phase (specs/police.md "Kreslení"): −1 = off (not chasing), else 0 / 1 alternating
@@ -41,6 +52,11 @@ export class PoliceView {
   private readonly off: Rgba;
   private readonly m = Matrix.Identity();
   private time = 0;
+  /** Car sprites (specs/art.md v2): `police_patrol` in the atlas replaces the livery. */
+  private sprites: CarSpriteView | null = null;
+  private spriteOn = false;
+  private shadowCol: Rgba = rgba(tokens.colorCarShadow);
+  private readonly spriteGeo: { body: Tris; l: Tris; r: Tris };
 
   constructor(
     scene: Scene,
@@ -72,6 +88,16 @@ export class PoliceView {
     l.rect(0, 0, 0, -hl * 0.1, hw * 0.1, hl * 0.02, hw * 0.8, 0.05, white);
     const r = new Tris();
     r.rect(0, 0, 0, -hl * 0.1, -hw * 0.8, hl * 0.02, -hw * 0.1, 0.05, white);
+
+    // Sprite mode: the body keeps only the ground shadow; the lamps sit in the empty light-bar
+    // housing of the sprite (±0.6 hw across, 0.12 hl deep, on the roof at −0.12 hl).
+    const sb = new Tris();
+    sb.rect(0, 0, 0, -hl + 0.6, -hw - 0.6, hl + 0.6, hw - 0.6, -0.02, rgba(tokens.colorCarShadow));
+    const sl = new Tris();
+    sl.rect(0, 0, 0, -hl * 0.17, hw * 0.06, -hl * 0.07, hw * 0.55, 0.05, white);
+    const sr = new Tris();
+    sr.rect(0, 0, 0, -hl * 0.17, -hw * 0.55, -hl * 0.07, -hw * 0.06, 0.05, white);
+    this.spriteGeo = { body: sb, l: sl, r: sr };
 
     const n = t.maxCars;
     this.body = this.mesh(scene, 'police-body', b, true);
@@ -107,7 +133,20 @@ export class PoliceView {
 
   /** Ground shadow colour (the city skin's `shadow` by day, specs/style.md); the first rect of the body. */
   setShadow(c: Rgba): void {
+    this.shadowCol = c;
     setShadowColour(this.body, 4, c);
+  }
+
+  setSprites(sp: CarSpriteView): void {
+    this.sprites = sp;
+  }
+
+  private useSprite(): void {
+    this.spriteOn = true;
+    vertexData(this.spriteGeo.body).applyToMesh(this.body, false);
+    vertexData(this.spriteGeo.l).applyToMesh(this.lampL, false);
+    vertexData(this.spriteGeo.r).applyToMesh(this.lampR, false);
+    setShadowColour(this.body, 4, this.shadowCol);
   }
 
   /** Writes the instance buffers; call once per frame before scene.render. */
@@ -116,12 +155,27 @@ export class PoliceView {
     const lift = this.tuning.layers.deckLiftM, blink = this.tuning.police.lightBlinkS;
     const inTunnel = playerLayer < 0;
     let n = 0;
+    const sp = this.sprites, t = this.tuning;
+    if (!this.spriteOn && sp?.has(POLICE_SPRITE)) this.useSprite();
+    const sprite = this.spriteOn && sp !== null;
+    const spriteLights = sprite && sp.hasLights(POLICE_SPRITE);
+    const size = stretchedSize(t.traffic.carLengthM, t.traffic.carWidthM, t.carScale);
+    const hl = (t.traffic.carLengthM * t.carScale) / 2, hw = (t.traffic.carWidthM * t.carScale) / 2;
+    if (sprite) sp.begin('police');
     for (const c of this.traffic.cars) {
       if (!c.police || c.layer < 0 !== inTunnel) continue;
       const h = (c.layer > 0 ? lift * c.layer : 0) + Z.car;
       Matrix.RotationYToRef(-c.heading, this.m);
       this.m.setTranslationFromFloats(c.x, h, c.y);
       this.m.copyToArray(this.carM, 16 * n);
+      if (sprite) {
+        // The patrol is never tinted (specs/art.md "Lak").
+        sp.add('police', {
+          id: POLICE_SPRITE, decal: 0, world: this.m, len: size.len, wid: size.wid, hl, hw, axle: hl * t.drive.axleOffset,
+          paint: [1, 1, 1, 1], steer: 0, wheelTint: null,
+          lights: !spriteLights ? LIGHTS_OFF : this.traffic.night ? LIGHTS_FULL : c.braking || c.hitTimer > 0 ? LIGHTS_BRAKE : LIGHTS_OFF,
+        });
+      }
       // A roadblock patrol's lights blink always (specs/roadblock.md).
       const ph = lightPhase(c.pursuing || c.blocking, this.time, blink);
       this.colL.set(ph < 0 ? this.off : ph === 0 ? this.red : this.off, 4 * n);
