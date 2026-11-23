@@ -1010,6 +1010,7 @@ nature:
     street_tree_snap_m: 15.0    # inventory and OSM trees this close to a street go to its sidewalk
     tree_min_spacing_m: 3.0
     tree_row_step_m: 8.0
+    deck_tree_margin_m: 2.0     # no crown within this of a bridge, ramp or viaduct footprint (on the ground below)
 
 # Smooth driving: soft trees, wall slide, rescue (specs/flow.md, Prompts/04-METROPOLE_FLOW_PLAN.md).
 flow:

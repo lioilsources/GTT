@@ -200,6 +200,7 @@ type NatureTuning struct {
 		StreetTreeSnapM  float64   `yaml:"street_tree_snap_m"`
 		TreeMinSpacingM  float64   `yaml:"tree_min_spacing_m"`
 		TreeRowStepM     float64   `yaml:"tree_row_step_m"`
+		DeckTreeMarginM  float64   `yaml:"deck_tree_margin_m"`
 	} `yaml:"pipeline"`
 }
 
@@ -247,7 +248,7 @@ func (t *Tuning) check() error {
 		"nature.pipeline.named_water_ha": np.NamedWaterHa, "nature.pipeline.area_name_water_m": np.AreaNameWaterM,
 		"nature.pipeline.area_name_park_m": np.AreaNameParkM, "nature.pipeline.big_park_ha": np.BigParkHa,
 		"nature.pipeline.wood_cover_ha": np.WoodCoverHa, "nature.pipeline.street_tree_snap_m": np.StreetTreeSnapM,
-		"nature.pipeline.tree_min_spacing_m": np.TreeMinSpacingM, "nature.pipeline.tree_row_step_m": np.TreeRowStepM,
+		"nature.pipeline.tree_min_spacing_m": np.TreeMinSpacingM, "nature.pipeline.tree_row_step_m": np.TreeRowStepM, "nature.pipeline.deck_tree_margin_m": np.DeckTreeMarginM,
 		"flow.gap_close_m": t.Flow.GapCloseM,
 	} {
 		if v <= 0 {

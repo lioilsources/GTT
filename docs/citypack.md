@@ -62,6 +62,10 @@ MountainsSimulator/terrain-fetch (`internal/dem/`).
 - **shade**: Horn, sklony násobené `shade_strength` (jen kanál `shade`).
 - Podzemní vodní toky (Overture `level` < 0 nebo `tunnel=*`, Rudolfova štola pod Letnou) do
   vody ani do jmen nepatří.
+- Mosty, nájezdy a estakády (každá netunelová hrana mimo terén, i most Overture ve vrstvě 0:
+  Praha 53, NYC 61): v jejich půdorysu + `nature.pipeline.deck_tree_margin_m` neroste strom;
+  validate hlídá 0 stromů v půdorysu a spojitou výšku desky (konec hrany = výška uzlu, skok
+  uvnitř hrany ≤ 0,05 m).
 - Hrana nad vodou aspoň `bridge_over_water_m` v kuse, napojená na obou koncích, je most i bez
   příznaku (NYC: 2 hrany); slepá hrana nad vodou (molo) zůstane silnicí.
 
@@ -82,7 +86,7 @@ jen LAZ v S-JTSK (ATOM `atom.cuzk.gov.cz/DMR4G-SJTSK`), převod na mřížku pot
 | vozovka ponechané silnice vs terén > 0,15 m (T3) | 79 z 187 946, max 0,42 m | 191 z 82 919, max 0,87 m (serpentiny) |
 | body mřížky ve vodě nad hladinou (T3) | 0 | 0 (dřív 357, max 32 m pod mosty) |
 | mosty pod plnou světlostí (varování) | 14 vzorků | 172 vzorků (nábřeží u předmostí) |
-| stromy | 61 844 (35 602 z Street Tree Census) | 32 949 (OSM + parky) |
+| stromy (žádný v půdorysu mostu či nájezdu) | 60 997 (35 392 ze Street Tree Census) | 32 793 (OSM + parky) |
 | uzavřené štěrbiny, `micro_only` uličky | 9 080, 57 | 3 655, 99 |
 | balíček | 4,5 MB | 3,1 MB |
 

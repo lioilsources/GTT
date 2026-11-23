@@ -5747,7 +5747,8 @@ class TuningNaturePipeline {
         treeSizeMix = r.dl('tree_size_mix'),
         streetTreeSnapM = r.d('street_tree_snap_m'),
         treeMinSpacingM = r.d('tree_min_spacing_m'),
-        treeRowStepM = r.d('tree_row_step_m');
+        treeRowStepM = r.d('tree_row_step_m'),
+        deckTreeMarginM = r.d('deck_tree_margin_m');
 
   /// outline simplification (river widths kept)
   double simplifyM;
@@ -5789,6 +5790,9 @@ class TuningNaturePipeline {
 
   double treeRowStepM;
 
+  /// no crown within this of a bridge, ramp or viaduct footprint (on the ground below)
+  double deckTreeMarginM;
+
   Map<String, Object> toJson() => {
         'simplify_m': simplifyM,
         'small_water_m2': smallWaterM2,
@@ -5805,6 +5809,7 @@ class TuningNaturePipeline {
         'street_tree_snap_m': streetTreeSnapM,
         'tree_min_spacing_m': treeMinSpacingM,
         'tree_row_step_m': treeRowStepM,
+        'deck_tree_margin_m': deckTreeMarginM,
       };
 }
 

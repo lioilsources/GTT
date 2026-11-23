@@ -256,6 +256,7 @@ func (e *Env) validateTerrain(p *PackData, fail func(string, ...any)) {
 	}
 	ci := newConformIndex(p, e.C.Tuning.SidewalkWidthM, tt.GridM*math.Sqrt2)
 	e.validateWaterTerrain(p, t, water, ci, fail)
+	e.validateDecks(p, fail)
 	e.validateRoadStrips(p, t, water, ground, ci, fail)
 	slog.Info("validate: terrain", "z0", m.Z0M, "exaggeration", m.Exaggeration, "stairs", stairs, "lods", len(m.Lods))
 }

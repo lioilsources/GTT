@@ -32,6 +32,8 @@ Záruky dat (v2, `citypack validate`):
 - Terén řídí jen pozemní hrany (ne most, ne tunel, vrstva 0 na obou koncích). Pod mostem, nájezdem
   a v tunelu má terén vlastní tvar, auto tam jede po povrchu hrany (`groundZ` výše). Most, který
   Overture vede ve vrstvě 0 (Mánesův most), je pořád most.
+- Most, nájezd a estakáda (netunelová hrana mimo terén) mají spojitou desku: konec hrany má výšku
+  svého uzlu, uvnitř hrany žádný skok nad 0,05 m. V jejich půdorysu na zemi neroste strom.
 - Ve vodě neleží žádný bod mřížky nad hladinou. Výjimka: body, které nese pás pozemní silnice na
   břehu (buňka 8 m nemůže z vozovky spadnout k vodě; hladina je překryje).
 - Na vozovce ponechané pozemní silnice čte bilineární terén profil silnice: odchylka ≤ 0,15 m

@@ -5406,6 +5406,8 @@ export class TuningNaturePipeline {
   streetTreeSnapM: number;
   treeMinSpacingM: number;
   treeRowStepM: number;
+  /** no crown within this of a bridge, ramp or viaduct footprint (on the ground below) */
+  deckTreeMarginM: number;
 
   constructor(r: R) {
     this.simplifyM = r.d('simplify_m');
@@ -5423,6 +5425,7 @@ export class TuningNaturePipeline {
     this.streetTreeSnapM = r.d('street_tree_snap_m');
     this.treeMinSpacingM = r.d('tree_min_spacing_m');
     this.treeRowStepM = r.d('tree_row_step_m');
+    this.deckTreeMarginM = r.d('deck_tree_margin_m');
   }
 
   toJson(): Record<string, unknown> {
@@ -5442,6 +5445,7 @@ export class TuningNaturePipeline {
       street_tree_snap_m: this.streetTreeSnapM,
       tree_min_spacing_m: this.treeMinSpacingM,
       tree_row_step_m: this.treeRowStepM,
+      deck_tree_margin_m: this.deckTreeMarginM,
     };
   }
 }

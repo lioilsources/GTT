@@ -79,6 +79,9 @@ func (e *Env) Trees() error {
 			case ob.onCarriageway(q, nt.TrunkRadiusM+streetTrunkMargin):
 				counts[src+"_dropped_carriageway"]++
 				return
+			case ob.underDeck(q, crown(size)+np.DeckTreeMarginM):
+				counts[src+"_dropped_deck"]++
+				return
 			}
 			if placed.near(q, np.TreeMinSpacingM) {
 				counts[src+"_duplicate"]++
@@ -90,7 +93,7 @@ func (e *Env) Trees() error {
 			return
 		}
 		r := crown(size)
-		if ob.nearRoad(p, r) || ob.inBuilding(p, r) || ob.inWater(p, r) {
+		if ob.nearRoad(p, r) || ob.inBuilding(p, r) || ob.inWater(p, r) || ob.underDeck(p, r+np.DeckTreeMarginM) {
 			counts[src+"_dropped_park"]++
 			return
 		}
@@ -174,7 +177,7 @@ func (e *Env) Trees() error {
 				continue
 			}
 			r := crown(size)
-			if ob.nearRoad(p, r) || ob.inBuilding(p, r) || ob.inWater(p, r) {
+			if ob.nearRoad(p, r) || ob.inBuilding(p, r) || ob.inWater(p, r) || ob.underDeck(p, r+np.DeckTreeMarginM) {
 				continue
 			}
 			placed.add(p)
