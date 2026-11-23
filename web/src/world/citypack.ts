@@ -4,12 +4,14 @@ import {
   ChunkSchema,
   GraphSchema,
   LandmarksSchema,
+  LodSchema,
   ManifestSchema,
   SpotsSchema,
   TramGraphSchema,
   type Chunk,
   type Graph,
   type Landmarks,
+  type Lod,
   type Manifest,
   type Spots,
   type TramGraph,
@@ -36,6 +38,8 @@ export const decodeLandmarks = (gz: Uint8Array): Promise<Landmarks> => decode(La
 export const decodeSpots = (gz: Uint8Array): Promise<Spots> => decode(SpotsSchema, gz);
 export const decodeTrams = (gz: Uint8Array): Promise<TramGraph> => decode(TramGraphSchema, gz);
 export const decodeChunk = (gz: Uint8Array): Promise<Chunk> => decode(ChunkSchema, gz);
+/** lod/{x}_{y}.pb (citypack v4): the far ring; the phone map takes its water and green masses. */
+export const decodeLod = (gz: Uint8Array): Promise<Lod> => decode(LodSchema, gz);
 
 export const chunkPath = (x: number, y: number): string => `chunks/${x}_${y}.pb`;
 

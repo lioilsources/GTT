@@ -50,6 +50,10 @@ export class Car {
   braking = false;
   /** Multiplies both axles' grip (weather input, specs/weather.md); 1 = the spec's grip. */
   gripScale = 1;
+  /** Surface under the car (specs/nature.md "Jízda"): × brake deceleration; 1 on asphalt. */
+  brakeScale = 1;
+  /** Forest (specs/flow.md "Les"): × engine force; 1 elsewhere. */
+  powerScale = 1;
   reversing = false;
 
   // Scratch vectors: no allocations in the step.
@@ -191,16 +195,16 @@ export class Car {
     this.reversing = false;
     if (input.brake > 0) {
       if (speedF > t.brakeMinMps) {
-        accel = -spec.brake * input.brake;
+        accel = -spec.brake * input.brake * this.brakeScale;
         this.braking = true;
       } else {
         this.reversing = true;
-        accel = speedF > -t.reverseMaxMps ? -spec.power * t.reversePower : 0;
+        accel = speedF > -t.reverseMaxMps ? -spec.power * this.powerScale * t.reversePower : 0;
       }
     } else {
       const thr = input.throttle > 0 ? input.throttle : speedF < wantSpeed ? 1 : 0;
       const k = 1 - clamp(speedF / topSpeed, 0, 1) ** 2;
-      accel = spec.power * thr * k;
+      accel = spec.power * this.powerScale * thr * k;
       if (speedF > wantSpeed + t.overspeedMps) accel = -t.engineBrakeMps2;
     }
     if (input.handbrake) {
