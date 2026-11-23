@@ -46,6 +46,20 @@ dependencies:
     path: ../packages/mg_strelnice
   mg_taxi:
     path: ../packages/mg_taxi
+  mg_piskvorky:
+    path: ../packages/mg_piskvorky
+  mg_ctyri:
+    path: ../packages/mg_ctyri
+  mg_mlyn:
+    path: ../packages/mg_mlyn
+  mg_reversi:
+    path: ../packages/mg_reversi
+  mg_lode:
+    path: ../packages/mg_lode
+  mg_posuvne:
+    path: ../packages/mg_posuvne
+  mg_kviz:
+    path: ../packages/mg_kviz
   feed_hub:
     path: ../packages/feed_hub
   meta_progress:
@@ -74,6 +88,7 @@ flutter:
     - assets/shared/content/
     - assets/shared/content/cars/
     - assets/shared/content/bench/
+    - assets/shared/content/quiz/
     - assets/shared/packs/nyc/
     - assets/shared/packs/nyc/chunks/
     - assets/shared/packs/prague/

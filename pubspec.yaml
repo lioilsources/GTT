@@ -20,6 +20,13 @@ workspace:
   - packages/mg_nohejbal
   - packages/mg_strelnice
   - packages/mg_taxi
+  - packages/mg_piskvorky
+  - packages/mg_ctyri
+  - packages/mg_mlyn
+  - packages/mg_reversi
+  - packages/mg_lode
+  - packages/mg_posuvne
+  - packages/mg_kviz
   - packages/feed_hub
   - packages/meta_progress
   - packages/npc_dialogue
