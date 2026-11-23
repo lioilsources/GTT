@@ -169,10 +169,10 @@ items:
      done: 2026-11-23T04:23, commit: 448d42c, evidence: "specs v1 s Upřesněním, vektory 4 her (web lead), obě implementace, vektory projdou v obou klientech, Galerie, bary (prší, kostky) a spoty v NYC a Praze (PR #168, #170, #171, #174), parita F-054–F-057; chybí dohrát na telefonu"}
   - {id: M2-S9C, milestone: M2, name: "minihry dávka C: Kulečník, Bowling, Minigolf, Had, Cihly, Bouchni krtka, Vzdušný hokej", size: L, status: "čeká na Ol1na", started: 2026-11-23T04:00,
      done: 2026-11-23T05:45, commit: e576e00, evidence: "specs v1 s Upřesněním (hokej v2: gól jen v ústí), sdílená celočíselná fyzika (web physics.ts, Flutter mg_physics), vektory 7 her (web lead), obě implementace, vektory projdou v obou klientech, Galerie, bar (kulečník) a spoty v NYC a Praze (PR #180, #184, #187, #189, #190, #196), parita F-058–F-064; chybí dohrát na telefonu"}
-  - {id: M2-S9D, milestone: M2, name: "minihry dávka D: Drift zóna, Sprint A→B", size: M, status: wip, started: 2026-11-23T04:49,
-     evidence: "W hotovo: PR #191 (web/minigames-d), vektory #192 (drift 12, sprint 12 případů), F-065/F-066 web done; F: kód v PR #201 (flutter/minigames-d) mergnutý, chybí přepnutí parity F-065/F-066 flutter done (shared/minigames-d-done)"}
-  - {id: M2-S9E, milestone: M2, name: "místní minihry: Stickball, Double Dutch (engine rhythm)", size: L, status: wip, started: 2026-11-23T04:49,
-     evidence: "W hotovo: PR #191, vektory #192 (stickball 11, doubledutch 10 případů), F-067/F-068 web done; F: kód v PR #201 mergnutý, chybí přepnutí parity F-067/F-068 flutter done"}
+  - {id: M2-S9D, milestone: M2, name: "minihry dávka D: Drift zóna, Sprint A→B", size: M, status: "čeká na Ol1na", started: 2026-11-23T04:49,
+     done: 2026-11-23T13:30, evidence: "W: PR #191, vektory #192 (drift 12, sprint 12 případů); F: PR #201; vektory projdou v obou klientech, Galerie, parita F-065/F-066 obě done; chybí odjet na telefonu"}
+  - {id: M2-S9E, milestone: M2, name: "místní minihry: Stickball, Double Dutch (engine rhythm)", size: L, status: "čeká na Ol1na", started: 2026-11-23T04:49,
+     done: 2026-11-23T13:30, evidence: "W: PR #191, vektory #192 (stickball 11, doubledutch 10 případů); F: PR #201; vektory projdou v obou klientech, Galerie, parita F-067/F-068 obě done; chybí dohrát na telefonu (načasování klepnutí a tahu)"}
   - {id: M2-S10, milestone: M2, name: "rádio (kostra stanic)", size: S, status: todo}
   - {id: M2-A1, milestone: M2, name: "30 miniher v NYC: testy, vektory, Galerie v obou klientech", size: S, status: todo}
   - {id: M2-A2, milestone: M2, name: "soak 10 smyček s novými systémy bez pádu", size: S, status: todo}
