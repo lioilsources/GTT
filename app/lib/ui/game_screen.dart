@@ -18,6 +18,7 @@ import '../game/metropole_game.dart';
 import '../game/pause.dart';
 import '../game/stuck_log.dart';
 import '../garage/garage_controller.dart';
+import '../garage/test_drive_hud.dart';
 import '../l10n/app_localizations.dart';
 import '../loop/loop_controller.dart';
 import '../loop/loop_layer.dart';
@@ -272,6 +273,30 @@ class _GameScreenState extends State<GameScreen> {
           final weather = _weather ??= WeatherController(game);
           // Tuning and cosmetics (specs/garage.md): the garage tabs, the tuned body, the looks.
           final garage = _garage ??= GarageController(game, loop, phone: phone)..shelf = shops.shelf;
+          // The garage sheet: from the context button at the spot, or from the phone Garage app
+          // anywhere (specs/testdrive.md v2: away from the spot cars appear in place).
+          Future<void> openGarage() async {
+            // Opening the garage ends a test drive: back in the own car (specs/testdrive.md).
+            game.fleet.endTest();
+            final here = !game.fleet.atGarage();
+            await game.pauseOverlays.hold(
+              GameOverlay.garage,
+              showGarage(
+                context,
+                game.fleet,
+                shelf: shops.shelf,
+                garage: garage,
+                testBlocked: loop.inWorldGame,
+                here: here,
+              ),
+            );
+            garage.leave();
+          }
+
+          garage.openSheet = () {
+            phone.close();
+            openGarage();
+          };
           return Stack(
             fit: StackFit.expand,
             children: [
@@ -290,11 +315,7 @@ class _GameScreenState extends State<GameScreen> {
                 onPhone: phone.toggle,
                 onCarAction: (a) async {
                   if (a == CarAction.board) return game.boardCandidate();
-                  await game.pauseOverlays.hold(
-                    GameOverlay.garage,
-                    showGarage(context, game.fleet, shelf: shops.shelf, garage: garage),
-                  );
-                  garage.leave();
+                  await openGarage();
                 },
                 onHop: game.hop,
                 onToRoad: () {
@@ -309,6 +330,7 @@ class _GameScreenState extends State<GameScreen> {
                   },
                   onBench: _hasBench ? game.startBench : null,
                   onResetSave: loop.resetSave,
+                  onDebugCash: loop.grantDebugCash,
                   weather: weather,
                 ),
                 onPassport: () => PassportScreen.open(
@@ -323,6 +345,7 @@ class _GameScreenState extends State<GameScreen> {
               PoliceHud(police: game.police),
               NavHud(phone: phone),
               TaxiHud(taxi: taxi),
+              TestDriveHud(game: game),
               DriftHud(drift: drift),
               SprintHud(sprint: sprint),
               PhoneLayer(phone: phone),

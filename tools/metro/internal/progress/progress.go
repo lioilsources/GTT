@@ -6,6 +6,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"log/slog"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -188,12 +189,12 @@ type counter struct {
 func countContent(root string, f *File) []counter {
 	var out []counter
 	mg := 0
-	if dirs, err := filepath.Glob(filepath.Join(root, "packages", "mg_*")); err == nil {
-		for _, d := range dirs {
-			b := filepath.Base(d)
-			if b != "mg_api" && !strings.HasPrefix(b, "mg_engine_") {
-				mg++
-			}
+	if b, err := os.ReadFile(filepath.Join(root, "content", "minigames", "catalog.yaml")); err == nil {
+		var c struct {
+			Minigames []any `yaml:"minigames"`
+		}
+		if yaml.Unmarshal(b, &c) == nil {
+			mg = len(c.Minigames)
 		}
 	}
 	out = append(out, counter{"Minihry", fmt.Sprint(mg), "100"})
@@ -219,16 +220,16 @@ func countContent(root string, f *File) []counter {
 	out = append(out, counter{"Auta", fmt.Sprint(len(cars)), "200"})
 	out = append(out, counter{"Památky", fmt.Sprint(landmarks), "25–40 na město"})
 	skits := 0
-	_ = filepath.WalkDir(filepath.Join(root, "content", "dialogues"), func(p string, e os.DirEntry, err error) error {
-		if err != nil || e.IsDir() || !strings.HasSuffix(p, ".json") {
+	_ = filepath.WalkDir(filepath.Join(root, "content", "npc", "skits"), func(p string, e os.DirEntry, err error) error {
+		if err != nil || e.IsDir() || !strings.HasSuffix(p, ".yaml") {
 			return nil
 		}
 		b, _ := os.ReadFile(p)
 		var v struct {
-			Skits []any `json:"skits"`
+			ID string `yaml:"id"`
 		}
-		if json.Unmarshal(b, &v) == nil {
-			skits += len(v.Skits)
+		if yaml.Unmarshal(b, &v) == nil && v.ID != "" {
+			skits++
 		}
 		return nil
 	})
@@ -416,7 +417,7 @@ func RunTests(root string) (int, int, error) {
 		}
 		add(t, p)
 	}
-	for _, dir := range []string{"packages/rules_core", "packages/world_engine", "packages/drive_core", "app"} {
+	for _, dir := range flutterTestDirs(root) {
 		t, p, err := flutterTests(filepath.Join(root, dir))
 		if err != nil {
 			return 0, 0, err
@@ -431,6 +432,18 @@ func RunTests(root string) (int, int, error) {
 	return total, pass, nil
 }
 
+// flutterTestDirs lists app and every packages/<name> that has a test/ folder.
+func flutterTestDirs(root string) []string {
+	var dirs []string
+	ms, _ := filepath.Glob(filepath.Join(root, "packages", "*", "test"))
+	for _, m := range ms {
+		rel, _ := filepath.Rel(root, filepath.Dir(m))
+		dirs = append(dirs, rel)
+	}
+	sort.Strings(dirs)
+	return append(dirs, "app")
+}
+
 func goTests(dir string) (int, int, error) {
 	cmd := exec.Command("go", "test", "-json", "-count=1", "./...")
 	cmd.Dir = dir
@@ -439,7 +452,7 @@ func goTests(dir string) (int, int, error) {
 	sc := bufio.NewScanner(bytes.NewReader(out))
 	sc.Buffer(make([]byte, 1<<20), 1<<24)
 	for sc.Scan() {
-		var ev struct{ Action, Test string }
+		var ev struct{ Action, Package, Test string }
 		if json.Unmarshal(sc.Bytes(), &ev) != nil || ev.Test == "" || strings.Contains(ev.Test, "/") {
 			continue
 		}
@@ -449,6 +462,7 @@ func goTests(dir string) (int, int, error) {
 			pass++
 		case "fail":
 			total++
+			slog.Warn("test failed", "suite", "go", "test", ev.Package+" "+ev.Test)
 		}
 	}
 	if total == 0 {
@@ -462,6 +476,7 @@ func flutterTests(dir string) (int, int, error) {
 	cmd.Dir = dir
 	out, _ := cmd.Output()
 	total, pass := 0, 0
+	names := map[int]string{}
 	sc := bufio.NewScanner(bytes.NewReader(out))
 	sc.Buffer(make([]byte, 1<<20), 1<<24)
 	for sc.Scan() {
@@ -470,13 +485,26 @@ func flutterTests(dir string) (int, int, error) {
 			Result  string `json:"result"`
 			Hidden  bool   `json:"hidden"`
 			Skipped bool   `json:"skipped"`
+			TestID  int    `json:"testID"`
+			Test    struct {
+				ID   int    `json:"id"`
+				Name string `json:"name"`
+			} `json:"test"`
 		}
-		if json.Unmarshal(sc.Bytes(), &ev) != nil || ev.Type != "testDone" || ev.Hidden || ev.Skipped {
+		if json.Unmarshal(sc.Bytes(), &ev) != nil {
+			continue
+		}
+		if ev.Type == "testStart" {
+			names[ev.Test.ID] = ev.Test.Name
+		}
+		if ev.Type != "testDone" || ev.Hidden || ev.Skipped {
 			continue
 		}
 		total++
 		if ev.Result == "success" {
 			pass++
+		} else {
+			slog.Warn("test failed", "suite", filepath.Base(dir), "test", names[ev.TestID])
 		}
 	}
 	if total == 0 {
@@ -492,7 +520,7 @@ func vitest(dir string) (int, int, error) {
 	}
 	tmp.Close()
 	defer os.Remove(tmp.Name())
-	cmd := exec.Command("npx", "vitest", "run", "--reporter=json", "--outputFile="+tmp.Name())
+	cmd := exec.Command("npx", "vitest", "run", "--hookTimeout", "120000", "--reporter=json", "--outputFile="+tmp.Name())
 	cmd.Dir = dir
 	_ = cmd.Run() // failing tests still write the report
 	out, err := os.ReadFile(tmp.Name())
@@ -503,9 +531,24 @@ func vitest(dir string) (int, int, error) {
 		NumTotalTests   int `json:"numTotalTests"`
 		NumPassedTests  int `json:"numPassedTests"`
 		NumPendingTests int `json:"numPendingTests"`
+		TestResults     []struct {
+			Name             string `json:"name"`
+			Message          string `json:"message"`
+			AssertionResults []struct {
+				FullName string `json:"fullName"`
+				Status   string `json:"status"`
+			} `json:"assertionResults"`
+		} `json:"testResults"`
 	}
 	if err := json.Unmarshal(out, &r); err != nil || r.NumTotalTests == 0 {
 		return 0, 0, fmt.Errorf("vitest in %s: unreadable report", dir)
+	}
+	for _, f := range r.TestResults {
+		for _, a := range f.AssertionResults {
+			if a.Status == "failed" {
+				slog.Warn("test failed", "suite", "web", "test", filepath.Base(f.Name)+" "+a.FullName)
+			}
+		}
 	}
 	return r.NumTotalTests - r.NumPendingTests, r.NumPassedTests, nil
 }

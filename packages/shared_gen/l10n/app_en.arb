@@ -818,6 +818,7 @@
   "testDriveNoTaxi": "No taxi shift during a test drive",
   "debugCash": "+{amount}",
   "@debugCash": {"placeholders":{"amount":{"type":"int"}}},
+  "garageOpen": "Open garage",
   "loadingProgress": "Downloading {city}… {pct} %",
   "@loadingProgress": {"placeholders":{"city":{"type":"String"},"pct":{"type":"int"}}},
   "introTitle": "Welcome to Metropole",

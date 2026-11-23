@@ -696,6 +696,7 @@ export type MessageKey =
   | "testDriveOver"
   | "testDriveNoTaxi"
   | "debugCash"
+  | "garageOpen"
   | "loadingProgress"
   | "introTitle"
   | "introLine1"
@@ -1399,6 +1400,7 @@ export const messages: Record<Locale, Record<MessageKey, string>> = {
     testDriveOver: "Zkušební jízda skončila, sedíš zase ve svém autě",
     testDriveNoTaxi: "Při zkušební jízdě taxi směnu nevezmeš",
     debugCash: "+{amount}",
+    garageOpen: "Otevřít garáž",
     loadingProgress: "Stahuji {city}… {pct} %",
     introTitle: "Vítej v Metropoli",
     introLine1: "Táhni palcem doleva a doprava – zatáčíš.",
@@ -2100,6 +2102,7 @@ export const messages: Record<Locale, Record<MessageKey, string>> = {
     testDriveOver: "Test drive over, back in your own car",
     testDriveNoTaxi: "No taxi shift during a test drive",
     debugCash: "+{amount}",
+    garageOpen: "Open garage",
     loadingProgress: "Downloading {city}… {pct} %",
     introTitle: "Welcome to Metropole",
     introLine1: "Drag your thumb left and right to steer.",

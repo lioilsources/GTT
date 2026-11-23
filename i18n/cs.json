@@ -691,6 +691,7 @@
   "testDriveOver": "Zkušební jízda skončila, sedíš zase ve svém autě",
   "testDriveNoTaxi": "Při zkušební jízdě taxi směnu nevezmeš",
   "debugCash": "+{amount}",
+  "garageOpen": "Otevřít garáž",
   "loadingProgress": "Stahuji {city}… {pct} %",
   "introTitle": "Vítej v Metropoli",
   "introLine1": "Táhni palcem doleva a doprava – zatáčíš.",

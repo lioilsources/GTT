@@ -1,0 +1,44 @@
+Metropole
+Copyright (c) 2026 Ol1n
+
+Licenses by path
+----------------
+- Source code and game data in content/ (except content/npc/): MIT, see LICENSE.
+- assets/ and content/npc/ (NPC characters, portraits, postcards, dialogue skits):
+  Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0),
+  https://creativecommons.org/licenses/by-nc/4.0/
+  Attribution: "Metropole by Ol1n". How each asset was made: assets/LICENSES.md.
+- City packs (build/packs/, GitHub Releases pack-<city>-<version>): a derived
+  database under the Open Database License (ODbL) 1.0,
+  https://opendatacommons.org/licenses/odbl/1-0/ . The pipeline that builds them
+  is tools/citypack (MIT); the configuration is content/cities/.
+
+Data sources used by the city packs
+-----------------------------------
+- OpenStreetMap: (c) OpenStreetMap contributors, ODbL 1.0,
+  https://www.openstreetmap.org/copyright . Used directly (trees in Prague) and
+  through Overture Maps layers derived from OSM.
+- Overture Maps Foundation (transportation, buildings, base, places):
+  https://docs.overturemaps.org/attribution/ . Layers are published under
+  CDLA Permissive 2.0 or ODbL depending on the theme; ODbL layers keep ODbL.
+- AWS Terrain Tiles (Mapzen / Registry of Open Data on AWS):
+  https://github.com/tilezen/joerd/blob/master/docs/attribution.md .
+  New York: USGS 3DEP (public domain). Prague and Tokyo: EU-DEM (Copernicus),
+  SRTM and other sources listed in the attribution document above.
+- NYC Parks, 2015 Street Tree Census, NYC Open Data (dataset uvpi-gqnh),
+  NYC Open Data terms of use, https://opendata.cityofnewyork.us/overview/#termsofuse .
+
+Each pack also carries its own attribution string (Manifest.attribution) that
+the game shows in the About screen.
+
+Generated art
+-------------
+Images in assets/ were generated with open models listed in assets/LICENSES.md
+(Qwen-Image, Apache 2.0; BiRefNet, MIT) or drawn procedurally by tools/art/.
+No third-party images were used as input.
+
+No real brands
+--------------
+Cars, shops, bars and the in-game feed are fictional (rule R10 in
+Prompts/00-METROPOLE_PLAN.md). Public institutions and landmarks keep their real
+names. Any resemblance of a fictional name to a real product is unintended.
