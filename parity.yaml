@@ -404,8 +404,9 @@
   spec: specs/minigames/piskvorky.md@1
   vectors: vectors/piskvorky.json
   lead: web
-  flutter: todo
+  flutter: done
   web: done
+  checks: {flutter: pass, web: pass}
 
 - id: F-048
   name: Čtyři v řadě (M2-S9 batch A)
@@ -413,8 +414,9 @@
   spec: specs/minigames/ctyri.md@1
   vectors: vectors/ctyri.json
   lead: web
-  flutter: todo
+  flutter: done
   web: done
+  checks: {flutter: pass, web: pass}
 
 - id: F-049
   name: Mlýn (M2-S9 batch A)
@@ -422,8 +424,9 @@
   spec: specs/minigames/mlyn.md@1
   vectors: vectors/mlyn.json
   lead: web
-  flutter: todo
+  flutter: done
   web: done
+  checks: {flutter: pass, web: pass}
 
 - id: F-050
   name: Reversi (M2-S9 batch A)
@@ -431,8 +434,9 @@
   spec: specs/minigames/reversi.md@1
   vectors: vectors/reversi.json
   lead: web
-  flutter: todo
+  flutter: done
   web: done
+  checks: {flutter: pass, web: pass}
 
 - id: F-051
   name: Lodě (M2-S9 batch A)
@@ -440,8 +444,9 @@
   spec: specs/minigames/lode.md@1
   vectors: vectors/lode.json
   lead: web
-  flutter: todo
+  flutter: done
   web: done
+  checks: {flutter: pass, web: pass}
 
 - id: F-052
   name: Posuvné puzzle (M2-S9 batch A)
@@ -449,8 +454,9 @@
   spec: specs/minigames/posuvne.md@1
   vectors: vectors/posuvne.json
   lead: web
-  flutter: todo
+  flutter: done
   web: done
+  checks: {flutter: pass, web: pass}
 
 - id: F-053
   name: Městský kvíz (M2-S9 batch A)
@@ -458,5 +464,6 @@
   spec: specs/minigames/kviz.md@1
   vectors: vectors/kviz.json
   lead: web
-  flutter: todo
+  flutter: done
   web: done
+  checks: {flutter: pass, web: pass}

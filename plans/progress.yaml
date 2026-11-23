@@ -163,7 +163,8 @@ items:
      done: 2026-11-23T00:00, commit: bcbd6d6, evidence: "specs/garage.md v1, save v5, PR #144–#146, parita F-044 a F-026; motor 3 = 0–25 m/s o 21,8 % rychleji v obou klientech, pneumatiky 3 = o 40 % menší skluz (poloměr omezuje rejd); na telefonu nevyzkoušené"}
   - {id: M2-S8, milestone: M2, name: "40 aut v NYC", size: L, status: "čeká na Ol1na", started: 2026-11-23T00:08,
      done: 2026-11-23T00:48, commit: 03aa847, evidence: "specs/cars.md v2, 34 nových aut (40 v NYC), PR #148, #150–#153, parita F-045 a F-018; přehled tříd ověřený ve webu (?cars) a Flutter testu"}
-  - {id: M2-S9A, milestone: M2, name: "minihry dávka A: Piškvorky, Čtyři v řadě, Mlýn, Reversi, Lodě, Posuvné puzzle, Městský kvíz", size: L, status: wip, started: 2026-11-23T01:01}
+  - {id: M2-S9A, milestone: M2, name: "minihry dávka A: Piškvorky, Čtyři v řadě, Mlýn, Reversi, Lodě, Posuvné puzzle, Městský kvíz", size: L, status: "čeká na Ol1na", started: 2026-11-23T01:01,
+     done: 2026-11-23T03:25, commit: 48540b7, evidence: "specs v1 s Upřesněním, vektory 7 her (web lead), obě implementace, vektory projdou v obou klientech, Galerie a spoty v NYC (PR #156, #161, #163, #167), parita F-047–F-053; chybí dohrát na telefonu"}
   - {id: M2-S9B, milestone: M2, name: "minihry dávka B: Prší, Srdce, Kostkový poker, Prase", size: L, status: todo}
   - {id: M2-S9C, milestone: M2, name: "minihry dávka C: Kulečník, Bowling, Minigolf, Had, Cihly, Bouchni krtka, Vzdušný hokej", size: L, status: todo}
   - {id: M2-S9D, milestone: M2, name: "minihry dávka D: Drift zóna, Sprint A→B", size: M, status: todo}
@@ -190,7 +191,7 @@ items:
 
 # Content counters with targets. tests and fps are measured; the rest metro progress counts itself.
 counters:
-  tests: {total: 54, passing: 54, measured: 2026-11-21T14:31}   # metro progress --tests
+  tests: {total: 984, passing: 984, measured: 2026-11-23T03:25}   # metro progress --tests
   fps:                                            # filled from phone measurements (D1-2, M0-A1)
     pixel_8a: {app: null, web: null, measured: null}
     iphone_12_mini: {app: null, web: null, measured: null}
