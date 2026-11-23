@@ -34,7 +34,7 @@
 - id: F-005
   name: M0 controls A/B/C
   level: P1
-  spec: specs/controls.md@1
+  spec: specs/controls.md@2
   lead: flutter
   flutter: wip
   web: wip
