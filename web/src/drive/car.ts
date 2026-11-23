@@ -167,8 +167,12 @@ export class Car {
     this.fixture.setFilterData({ groupIndex: 0, categoryBits: CAT_CAR, maskBits: (this.layer === 0 ? ground : 0) | CAT_TRAFFIC | CAT_TRAM });
   }
 
-  /** Applies controls and tyre forces; call before world.step. */
-  drive(input: ControlInput, dt: number, cruise: number, top: number): void {
+  /**
+   * Applies controls and tyre forces; call before world.step. [slopeF] = the slope acceleration
+   * along the heading this step (m/s², + = pulls forward, i.e. downhill; specs/terrain.md "Svah"),
+   * which the cruise hold cancels (specs/drive.md v2 step 2); 0 on the flat.
+   */
+  drive(input: ControlInput, dt: number, cruise: number, top: number, slopeF = 0): void {
     const t = this.t, spec = this.spec, body = this.body;
     const ang = body.getAngle();
     const fx = Math.cos(ang), fy = Math.sin(ang);
@@ -205,10 +209,15 @@ export class Car {
         accel = speedF > -t.reverseMaxMps ? -spec.power * this.powerScale * t.reversePower : 0;
       }
     } else if (!input.coast) {
-      const thr = input.throttle > 0 ? input.throttle : speedF < wantSpeed ? 1 : 0;
+      const auto = input.throttle <= 0;
+      const thr = auto ? (speedF < wantSpeed ? 1 : 0) : input.throttle;
       const k = 1 - clamp(speedF / topSpeed, 0, 1) ** 2;
       accel = spec.power * this.powerScale * thr * k;
-      if (speedF > wantSpeed + t.overspeedMps) accel = -t.engineBrakeMps2;
+      // Cruise hold (specs/drive.md v2): at or above the wanted speed the engine cancels the
+      // downhill pull, so the car neither runs away nor needs the overspeed brake to settle.
+      const hold = auto && !input.boost && !input.handbrake && speedF >= wantSpeed ? clamp(slopeF, 0, t.cruiseHoldMps2) : 0;
+      if (hold > 0) accel = -hold;
+      if (speedF > wantSpeed + t.overspeedMps) accel = -t.engineBrakeMps2 - hold;
     }
     if (input.handbrake) {
       accel = Math.min(accel, speedF > t.brakeMinMps ? -t.handbrakeDecelMps2 : 0);
