@@ -52,9 +52,11 @@ uniform sampler2D maskTex;
 void main(void) {
   vec4 c = texture2D(tex, vUV);
 #ifdef ADDITIVE
-  gl_FragColor = vec4(c.rgb * vColor.rgb, c.a);
+  gl_FragColor = vec4(c.rgb * vColor.rgb, c.a * vColor.a);
 #else
-  if (c.a < 0.5) discard;
+  // Alpha-tested; a fade (instance alpha < 1) dissolves by screen-door dithering.
+  float h = fract(sin(dot(floor(gl_FragCoord.xy), vec2(12.9898, 78.233))) * 43758.5453);
+  if (c.a < 0.5 || vColor.a <= h) discard;
 #ifdef MASK
   float m = dot(texture2D(maskTex, vUV).rgb, vec3(0.299, 0.587, 0.114));
   gl_FragColor = vec4(c.rgb * mix(vec3(1.0), vColor.rgb, m), 1.0);
@@ -97,6 +99,8 @@ export interface SpriteCar {
   /** Garage rim colour multiplying the wheel (null = untinted). */
   wheelTint: Rgba | null;
   lights: number;
+  /** Fade (0..1, rescue animation of the player's car); 1 when absent. */
+  alpha?: number;
 }
 
 interface Layer {
@@ -340,6 +344,8 @@ export class CarSpriteView {
     const sec = this.sections.get(s)!;
     const body = this.bodyCells.get(`${c.id}#${c.decal}`) ?? this.bodyCells.get(`${c.id}#0`);
     if (!body) return;
+    const a = c.alpha ?? 1;
+    if (a <= 0) return;
     sec.n++;
     const paint = c.id === POLICE_SPRITE ? WHITE : c.paint;
     // Wheels (under the body), front ones steered, left ones mirrored.
@@ -349,20 +355,20 @@ export class CarSpriteView {
       const ww = wpx[0] * k, wl = wpx[1] * k;
       for (const w of spriteWheels(e.cls, e.lengthM, c.hl, c.hw, c.axle)) {
         this.local(wl, ww * (w.mirror ? -1 : 1), w.front ? c.steer : 0, w.x, DZ_WHEEL, w.y);
-        this.push(sec, 'w', c.world, wc, c.wheelTint ?? WHITE);
+        this.push(sec, 'w', c.world, wc, c.wheelTint ?? WHITE, a);
       }
     }
     this.local(c.len, c.wid, 0, 0, DZ_BODY, 0);
-    this.push(sec, 'b', c.world, body, paint);
+    this.push(sec, 'b', c.world, body, paint, a);
     const lc = this.lightCells.get(c.id);
     if (lc && c.lights !== LIGHTS_OFF) {
       if (c.lights === LIGHTS_FULL) {
         this.local(c.len, c.wid, 0, 0, DZ_LIGHTS, 0);
-        this.push(sec, 'l', c.world, lc, WHITE);
+        this.push(sec, 'l', c.world, lc, WHITE, a);
       } else {
         // Rear half of the canvas (below its centre): brake lights by day.
         this.local(c.len / 2, c.wid, 0, -c.len / 4, DZ_LIGHTS, 0);
-        this.push(sec, 'l', c.world, [lc[0], lc[1] + lc[3] / 2, lc[2], lc[3] / 2], WHITE);
+        this.push(sec, 'l', c.world, [lc[0], lc[1] + lc[3] / 2, lc[2], lc[3] / 2], WHITE, a);
       }
     }
   }
@@ -378,13 +384,13 @@ export class CarSpriteView {
     Matrix.FromArrayToRef(o, 0, this.a);
   }
 
-  private push(sec: Section, kind: 'b' | 'w' | 'l', world: Matrix, uv: readonly number[], col: Rgba): void {
+  private push(sec: Section, kind: 'b' | 'w' | 'l', world: Matrix, uv: readonly number[], col: Rgba, alpha: number): void {
     this.a.multiplyToRef(world, this.b);
     const arr = this.b.asArray();
     sec.m.push(kind === 'b' ? 0 : kind === 'w' ? 1 : 2);
     for (let i = 0; i < 16; i++) sec.m.push(arr[i]!);
     sec.uv.push(uv[0]!, uv[1]!, uv[2]!, uv[3]!);
-    sec.col.push(col[0], col[1], col[2], 1);
+    sec.col.push(col[0], col[1], col[2], alpha);
   }
 
   /** Merges the sections into the three meshes; call once per frame before scene.render. */

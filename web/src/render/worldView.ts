@@ -36,6 +36,7 @@ import { carShape } from '../cars/shape';
 import type { ParkedCar } from '../cars/parked';
 import { glowStrength, lookRim } from '../garage/looks';
 import type { Look } from '../garage/rules';
+import { RESCUE_ANIM_S } from '../drive/flow';
 import { hopArc, hopFlip } from '../drive/hop';
 import type { CarFleet } from '../cars/fleet';
 import { CarSpriteView, LIGHTS_BRAKE, LIGHTS_FULL, LIGHTS_OFF } from './carSprites';
@@ -171,6 +172,8 @@ export class WorldView {
   private readonly roads = new Map<number, RoadMeshes>();
   private readonly tunnelShade: Mesh;
   private readonly carRoot: TransformNode;
+  /** Visibility of the car meshes (rescue fade, specs/flow.md). */
+  private carAlpha = 1;
   private carParts!: {
     wheels: TransformNode[]; brake: Mesh; reverse: Mesh; cone: Mesh; root: TransformNode; lights: boolean;
     /** Hop (specs/hop.md): the lifted, flipped body; its top and underside; the ground shadow. */
@@ -505,6 +508,7 @@ export class WorldView {
   // ---------- car
 
   private buildCar(car: Car): void {
+    this.carAlpha = 1;
     if (this.carParts) this.carParts.root.dispose();
     const holder = new TransformNode('car-parts', this.scene);
     holder.parent = this.carRoot;
@@ -653,8 +657,15 @@ export class WorldView {
     // Babylon rotates about +Y clockwise seen from above; world headings are CCW.
     this.carRoot.rotation.y = -car.heading;
     for (const w of this.carParts.wheels) w.rotation.y = -car.wheelAngle;
+    // Rescue move (specs/flow.md): the car fades in at its new place over the animation.
+    const anim = this.drive.flow.animT;
+    const alpha = anim > 0 ? 1 - anim / RESCUE_ANIM_S : 1;
+    if (alpha !== this.carAlpha) {
+      this.carAlpha = alpha;
+      for (const m of this.carRoot.getChildMeshes(false)) if (m !== this.carParts.glow) m.visibility = alpha;
+    }
     const glow = this.carParts.glow;
-    if (glow) glow.visibility = glowStrength(this.palette.night, car.layer < 0, this.tuning.garage.glowDay);
+    if (glow) glow.visibility = glowStrength(this.palette.night, car.layer < 0, this.tuning.garage.glowDay) * alpha;
     this.carParts.brake.setEnabled(this.carParts.lights && !this.carParts.spriteLights && car.braking && !car.reversing);
     this.carParts.reverse.setEnabled(this.carParts.lights && car.reversing);
     this.updateHop();
@@ -680,6 +691,8 @@ export class WorldView {
       paint: rgba(lookPaint(car.spec, look)), steer: car.wheelAngle,
       wheelTint: look && (look.wheels ?? 0) > 0 ? rgba(lookRim(look)) : null,
       lights: !this.carParts.lights ? LIGHTS_OFF : night ? LIGHTS_FULL : braking ? LIGHTS_BRAKE : LIGHTS_OFF,
+      // Rescue fade-in (specs/flow.md) as for the procedural meshes.
+      alpha: this.carAlpha,
     });
   }
 

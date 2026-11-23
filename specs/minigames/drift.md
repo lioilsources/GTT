@@ -124,3 +124,24 @@ F přenese auto na spot a spustí ji.
 - Vyjetí ze zóny během driftu = konec driftu, připíše se po `graceMs`.
 - Náraz při nulovém řetězu jen zvýší `hits`.
 - Město bez spotu `drift`: minihra se neobjeví ve Feedu (žádný spot).
+
+## Upřesnění v1
+
+- `sample` i `hit`: `atMs` celé číslo `≥ clockMs`; `slipMrad`, `speedCms` celá `≥ 0`, `inZone`
+  bool. `dt` se počítá ze **starého** `clockMs`; `clockMs = atMs` se nastaví u každého vzorku
+  (drift i ne-drift) i u `hit`.
+- Řetěz s `chain = 0` se nepřipisuje ani nenuluje (ne-drift ani `timeout` s ním nic nedělá);
+  `chainMs` a `mult` mu zůstanou, dokud je nevynuluje připsání nebo náraz. `lastDriftMs` nenuluje
+  nic (ani připsání, ani náraz).
+- `hit` nemění `lastDriftMs` ani `score`/`best`/`drifts`; `drifts` počítá jen připsané řetězy.
+- **Svět (W):** nejvýš jeden vzorek za snímek: `acc += dt`; když `acc ≥ 1 / sample_hz`, pošle se
+  vzorek a `acc = acc mod (1 / sample_hz)`. `atMs = floor(clock × 1000)` po přičtení `dt`
+  snímku. Náraz snímku jde jako `hit` **před** vzorkem téhož snímku se stejným `atMs`. Snímek,
+  ve kterém `clock ≥ session_s`, pošle jen `timeout` (bez vzorku a nárazu).
+- `β = |atan2(boční, podélná rychlost)|` vůči natočení auta (při couvání až π); pod 0,5 m/s 0.
+  `inZone` = vzdálenost středu auta od parkovacího bodu spotu `≤ zone_m` a vrstva 0.
+- Náraz (stejně u Sprintu): začátek kontaktu s budovou (rychlost auta podél normály kontaktu),
+  zábradlí mostu/tunelu (rychlost do zábradlí) nebo náraz auta provozu (jeho `impactMps`), vždy
+  `≥ hit_min_mps`. Nárazy do 500 ms času relace od posledního nahlášeného se zahodí.
+- Tlačítko ukončit = `aborted`, 0★ a skóre 0; přesednutí / garáž = `timeout` s normálním
+  výsledkem. Relace jede vlastním autem hráče bez přesunu (začíná tam, kde hráč stiskl „Hrát“).

@@ -7,6 +7,7 @@ import { Autopilot, frameStats } from './drive/autopilot';
 import { resolveRoute } from './drive/route';
 import { applyKeys, createScheme, SchemeA, SchemeB, SchemeC, type ControlScheme, type ControlSchemeId } from './drive/controls';
 import { DriveWorld } from './drive/driveWorld';
+import { installFlowHud } from './drive/flowHud';
 import { t as tr, type Locale, type MessageKey } from './gen/i18n';
 import { carIdValues, cityIdNames, cityIdValues, minigameCatalog, type CityId, type MinigameId } from './gen/ids';
 import { CarFleet } from './cars/fleet';
@@ -334,6 +335,12 @@ async function main(): Promise<void> {
       view.rig.snap(drive.car.x, drive.car.y, drive.car.heading, tuning);
     },
   });
+  // Wall slide, trail, rescue and "Na silnici" (specs/flow.md, F-069).
+  const flow = installFlowHud({
+    drive, tuning, t, cityId, hud: $('hud'), buttons: $('buttons'), phone: phone.phone, route: () => phone.nav.ahead(),
+    debug: import.meta.env.DEV || params.has('debug'),
+    onMoved: () => view.rig.snap(drive.car.x, drive.car.y, drive.car.heading, tuning),
+  });
   // Police fines take cash through the economy (specs/economy.md).
   police.police.onFined((e) => loop.fine(e.amount));
 
@@ -416,6 +423,7 @@ async function main(): Promise<void> {
     fleet.update();
     carsHud.update();
     hopHud.update(0.1);
+    if (!pilot) flow.update();
     const c = drive.car;
     const edge = drive.layers.edge;
     const street = edge?.name ? edge.name : t('unnamedRoad');
@@ -426,11 +434,14 @@ async function main(): Promise<void> {
       ? t('speedMph', { speed: Math.round(c.speed * 2.23694) })
       : t('speedKmh', { speed: Math.round(c.speed * 3.6) });
     const s = view.stats;
+    // Stuck count of the last 10 minutes of driving (specs/flow.md "Měření zaseknutí").
+    const stuck = flow.stuckLine();
     perfEl.textContent =
       `${perf.fps.toFixed(0)} fps  ${perf.frameMs.toFixed(1)} ms  max ${perf.worst.toFixed(0)}\n` +
       `draw ${s.drawCalls}  tri ${(s.triangles / 1000).toFixed(0)}k\n` +
-      `chunks ${s.chunks}  cars ${drive.traffic?.cars.length ?? 0}  trams ${drive.trams?.trams.length ?? 0}  ${engine.isWebGPU ? 'WebGPU' : 'WebGL2'}  ${scheme.id.toUpperCase()}`;
-    perfEl.style.color = perf.fps >= 57 ? tokens.colorUiFpsOk : tokens.colorUiFpsBad;
+      `chunks ${s.chunks}  cars ${drive.traffic?.cars.length ?? 0}  trams ${drive.trams?.trams.length ?? 0}  ${engine.isWebGPU ? 'WebGPU' : 'WebGL2'}  ${scheme.id.toUpperCase()}\n` +
+      stuck.text;
+    perfEl.style.color = perf.fps >= 57 && !stuck.over ? tokens.colorUiFpsOk : tokens.colorUiFpsBad;
     const d = drive.borderDistance();
     noticeEl.hidden = !(d !== null && d < tuning.hud.borderNoticeM);
     if (!pilot) passport.update(c.x, c.y);
@@ -577,7 +588,7 @@ async function main(): Promise<void> {
 
   if (import.meta.env.DEV || params.has('debug')) {
     (window as unknown as Record<string, unknown>)['metro'] = {
-      engine, view, drive, fleet, city, tuning, frameTimes, pilot, bench, peds, phone, passport, loop, taxi, drift, sprint, police: police.police, booths, fastTravel, photo, shops, weather, garage, carsHud,
+      engine, view, drive, fleet, city, tuning, frameTimes, pilot, bench, peds, phone, passport, loop, taxi, drift, sprint, police: police.police, booths, fastTravel, photo, shops, weather, garage, carsHud, flow,
       timing: () => ({ firstFrameMs, loadMs }),
     };
   }

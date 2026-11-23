@@ -101,3 +101,17 @@ po úderu `i − 1`.
 - Kombo se počítá i přes trikové údery; minutí ho nuluje, ale skóre zůstává.
 - Tři zakopnutí v úvodu = konec s nízkým `pct`.
 - Obtížnost 1 nemá triky (`trickPct = 0`), ale `rng` se losuje stejně.
+
+## Upřesnění v1
+
+- `init`: jediné `Prng(seed)`, losuje se jen pro `i ≥ introBeats` v pořadí úderů; ve stavu je
+  konečný uint32 stav generátoru.
+- `hit`: `input` musí být 0 nebo 1 a `errMs` celé číslo (jinak `IllegalAction`). Minutí (špatný
+  vstup nebo `|errMs| > okMs`) nedá body, jen `misses`, `trips` += 1 a `combo = 0`.
+- Násobič se počítá z komba **po** přičtení tohoto úderu. Konec (`next = beats` nebo
+  `trips = maxTrips`) se vyhodnotí po každém `hit` i `miss`; `timeout` mění jen `over`.
+- `pct = floor(score × 100 ÷ maxScore)`.
+- UI (W): čas vstupu = okamžik dotyku (pointerdown) na hodinách hry. Tah nahoru (≥ 40 px do
+  300 ms od dotyku) se pošle jako `input 1`, jakmile ho prst urazí; jinak `input 0` při puštění
+  nebo po 300 ms držení. Dokud nerozhodnutý dotyk patří k úderu `next`, `miss` se neposílá.
+  `errMs = floor(čas vstupu − čas úderu)`.
