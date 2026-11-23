@@ -119,6 +119,9 @@ func Preview(e *Env) error {
 		}
 		slog.Info("preview", "png", rp)
 	}
+	if err := previewCrop(p, dir); err != nil {
+		return err
+	}
 	if p.Manifest.NatureVersion > 0 {
 		np, err := previewNature(p, dir)
 		if err != nil {

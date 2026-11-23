@@ -50,8 +50,20 @@ MountainsSimulator/terrain-fetch (`internal/dem/`).
   vylučují, povolí dřív, než ze silnice udělají schody: nejdřív meze na koncích porušeného úseku,
   pak aktivní meze do `(clear_road_m + depth_land_m) / bridge.max_grade` po síti (portál tunelu
   a nájezd estakády spojené krátkou ulicí, Mrázovka u Radlické).
-- **conform**: mřížka `grid_m` drží výšku silnice do úhlopříčky buňky od okraje, pak přechod
-  `blend_m` k terénu; voda = hladina − `underwater_m`.
+  Po clampu **fairing** (`profile_fair_passes`): pila rovina–max. sklon–rovina na strmých
+  kopcích se vyhladí k průměru sousedů (v mezích) a clamp proběhne znovu.
+- **conform**: terén řídí jen pozemní hrany (ne most ani tunel, vrstva 0 na obou koncích; mosty
+  Overture ve vrstvě 0 jako Mánesův most se neberou). Bod mřížky do úhlopříčky buňky od vozovky
+  nese výšku silnice; o sdílený bod vyhraje ponechaná silnice, pak nejbližší, pak vyšší. Pak
+  **fit** (`conform_fit`): vzorky po 2 m po vozovce opraví rohy svých buněk (Kaczmarz), jen kde
+  celá buňka patří téže hraně. Dál přechod `blend_m` k terénu; ve vodě dno (hladina −
+  `underwater_m`), jen body pásu silnice na břehu drží její výšku. Voda se pozná podle týchž
+  trojúhelníků, které kreslí balíček; kde se potkají dvě vodní tělesa, platí nižší hladina.
+- **shade**: Horn, sklony násobené `shade_strength` (jen kanál `shade`).
+- Podzemní vodní toky (Overture `level` < 0 nebo `tunnel=*`, Rudolfova štola pod Letnou) do
+  vody ani do jmen nepatří.
+- Hrana nad vodou aspoň `bridge_over_water_m` v kuse, napojená na obou koncích, je most i bez
+  příznaku (NYC: 2 hrany); slepá hrana nad vodou (molo) zůstane silnicí.
 
 Zdroje: NYC AWS Terrain Tiles (USGS 3DEP, veřejné dílo; NYC 1 ft DEM má neověřenou licenci).
 Praha zatím také AWS Terrain Tiles (EU-DEM/SRTM, ~25 m, povrchový model): ČÚZK DMR 4G i 5G jsou
@@ -66,9 +78,11 @@ jen LAZ v S-JTSK (ATOM `atom.cuzk.gov.cz/DMR4G-SJTSK`), převod na mřížku pot
 | zdroj výšek | AWS Terrain Tiles (3DEP) | AWS Terrain Tiles (EU-DEM), DMR čeká na GDAL |
 | z0, převýšení | −1 m, 2,0 | 183 m, 2,0 |
 | schody, povolené meze | 0, 94 | 0, 446 |
-| okraj silnice mimo terén > 0,3 m | 82 z 104 464 (0,08 %) | 487 z 58 381 (0,8 %) |
-| mosty pod plnou světlostí (varování) | 9 vzorků | 166 vzorků (nábřeží u předmostí) |
-| stromy | 61 764 (35 602 z Street Tree Census) | 32 949 (OSM + parky) |
+| okraj silnice mimo terén > 0,3 m | 187 z 100 516 (0,2 %) | 240 z 55 429 (0,4 %) |
+| vozovka ponechané silnice vs terén > 0,15 m (T3) | 79 z 187 946, max 0,42 m | 191 z 82 919, max 0,87 m (serpentiny) |
+| body mřížky ve vodě nad hladinou (T3) | 0 | 0 (dřív 357, max 32 m pod mosty) |
+| mosty pod plnou světlostí (varování) | 14 vzorků | 172 vzorků (nábřeží u předmostí) |
+| stromy | 61 844 (35 602 z Street Tree Census) | 32 949 (OSM + parky) |
 | uzavřené štěrbiny, `micro_only` uličky | 9 080, 57 | 3 655, 99 |
 | balíček | 4,5 MB | 3,1 MB |
 

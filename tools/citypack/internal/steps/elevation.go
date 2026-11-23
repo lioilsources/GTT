@@ -221,7 +221,7 @@ func Elevation(e *Env) error {
 		ClearWaterM: tt.Bridge.ClearWaterM, ClearRoadM: tt.Bridge.ClearRoadM, BridgeGrade: tt.Bridge.MaxGrade,
 		DepthWaterM: tt.Tunnel.DepthWaterM, DepthLandM: tt.Tunnel.DepthLandM, TunnelGrade: tt.Tunnel.MaxGrade,
 		StepM: tp.ProfileStepM, WindowM: window, ElevatedM: tp.ElevatedM,
-		GradeTolM: tp.GradeTolM, GradePasses: tp.GradePasses, ZTolM: tp.ZTolM,
+		GradeTolM: tp.GradeTolM, GradePasses: tp.GradePasses, ZTolM: tp.ZTolM, FairPasses: tp.ProfileFairPasses,
 	}
 	decks := map[string]float64{}
 	for _, l := range e.C.Landmarks {
@@ -229,6 +229,7 @@ func Elevation(e *Env) error {
 			decks[l.Name] = l.DeckHeightM
 		}
 	}
+	flagWaterBridges(g, wi, tp.BridgeOverWaterM)
 	in := terrain.Input{Ground: ground, Z0: z0, Water: wi.level}
 	for _, n := range g.Nodes {
 		in.Nodes = append(in.Nodes, geo.Pt{X: float64(n.X) / 10, Y: float64(n.Y) / 10})
@@ -281,10 +282,18 @@ func Elevation(e *Env) error {
 	per := int(math.Round(cm / gm))
 	tg := terrain.NewRaster(float64(cx0)*cm, float64(cy0)*cm, gm, (cx1-cx0+1)*per+1, (cy1-cy0+1)*per+1)
 	var roads []terrain.Road
+	// Only ground edges shape the terrain. Clients ride the edge's own surface on bridges (also
+	// Overture bridges on level 0, Mánesův most), ramps and tunnels (specs/terrain.md groundZ),
+	// so the terrain under them keeps its own shape and the river under a deck stays flat.
 	for ei, pts := range res.EdgePts {
+		te := in.Edges[ei]
+		if te.Bridge || te.Tunnel || te.LayerFrom != 0 || te.LayerTo != 0 {
+			continue
+		}
 		for k := 1; k < len(pts); k++ {
 			if res.GroundPt[ei][k-1] && res.GroundPt[ei][k] {
-				roads = append(roads, terrain.Road{A: pts[k-1], B: pts[k], ZA: res.EdgeZ[ei][k-1], ZB: res.EdgeZ[ei][k], HalfWidthM: in.Edges[ei].HalfWidthM})
+				roads = append(roads, terrain.Road{A: pts[k-1], B: pts[k], ZA: res.EdgeZ[ei][k-1], ZB: res.EdgeZ[ei][k], HalfWidthM: te.HalfWidthM,
+					StripM: carriageway(g.Edges[ei], e.C.Tuning.SidewalkWidthM), Kept: g.Edges[ei].Kept, Edge: ei})
 			}
 		}
 	}
@@ -301,11 +310,11 @@ func Elevation(e *Env) error {
 		}
 	}
 	terrain.Conform(tg, func(p geo.Pt) float64 { return math.Max(floor, (ground(p)-z0)*tt.Exaggeration) }, gameWater, roads,
-		terrain.ConformParams{PlateauM: gm * math.Sqrt2, BlendM: tt.BlendM, UnderwaterM: tp.UnderwaterM})
+		terrain.ConformParams{SupportM: gm * math.Sqrt2, BlendM: tt.BlendM, UnderwaterM: tp.UnderwaterM, FitStepM: tp.ConformFit.StepM, FitPasses: tp.ConformFit.Passes})
 
 	// 8. shade.
 	grid := TerrainGrid{CX0: cx0, CY0: cy0, W: tg.W, H: tg.H, Step: gm, ChunkM: cm, Z: make([]int16, len(tg.Z)),
-		Shade: tg.Shade(tp.Sun.AzimuthDeg, tp.Sun.AltitudeDeg)}
+		Shade: tg.ShadeZ(tp.Sun.AzimuthDeg, tp.Sun.AltitudeDeg, tp.ShadeStrength)}
 	rep.MinZ, rep.MaxZ = math.Inf(1), math.Inf(-1)
 	for k, z := range tg.Z {
 		dm := math.Round(z * 10)
@@ -422,32 +431,6 @@ func waterLevels(water []NaturePiece, ground func(geo.Pt) float64, cm float64) m
 }
 
 // waterIndex answers "which water level is at p".
-type waterIndex struct {
-	pieces []NaturePiece
-	lvl    []float64
-	grid   map[[2]int][]int
-}
-
-func newWaterIndex(water []NaturePiece, levels map[string]float64) *waterIndex {
-	wi := &waterIndex{pieces: water, grid: map[[2]int][]int{}}
-	for i, w := range water {
-		wi.lvl = append(wi.lvl, levels[waterKey(w, i)])
-		minX, minY, maxX, maxY := bounds(w.Rings[0])
-		cellsOf(minX, minY, maxX, maxY, func(c [2]int) { wi.grid[c] = append(wi.grid[c], i) })
-	}
-	return wi
-}
-
-func (wi *waterIndex) level(p geo.Pt) (float64, bool) {
-	for _, i := range wi.grid[cellOf(p)] {
-		r := wi.pieces[i].Rings
-		if geo.PointInRing(p, r[0]) && !inAnyRing(p, r[1:]) {
-			return wi.lvl[i], true
-		}
-	}
-	return 0, false
-}
-
 // LoadTerrain reads terrain.bin (nil without elevation).
 func (e *Env) LoadTerrain() (*TerrainGrid, *ElevationReport, error) {
 	f, err := os.Open(e.W("terrain.bin"))

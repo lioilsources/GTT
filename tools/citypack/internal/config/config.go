@@ -124,25 +124,37 @@ type TerrainTuning struct {
 		MaxGrade    float64 `yaml:"max_grade"`
 	} `yaml:"tunnel"`
 	Pipeline struct {
-		DemMarginM     float64 `yaml:"dem_margin_m"`
-		DemGridM       float64 `yaml:"dem_grid_m"`
-		DemZoom        int     `yaml:"dem_zoom"`
-		CleanSigmaM    float64 `yaml:"clean_sigma_m"`
+		DemMarginM        float64 `yaml:"dem_margin_m"`
+		DemGridM          float64 `yaml:"dem_grid_m"`
+		DemZoom           int     `yaml:"dem_zoom"`
+		CleanSigmaM       float64 `yaml:"clean_sigma_m"`
 		CleanSigmaCoarseM float64 `yaml:"clean_sigma_coarse_m"`
-		ProfileStepM   float64 `yaml:"profile_step_m"`
-		ProfileWindowM struct {
+		ProfileStepM      float64 `yaml:"profile_step_m"`
+		ProfileWindowM    struct {
 			Lidar  float64 `yaml:"lidar"`
 			Coarse float64 `yaml:"coarse"`
 		} `yaml:"profile_window_m"`
-		ElevatedM       float64 `yaml:"elevated_m"`
-		UnderwaterM     float64 `yaml:"underwater_m"`
-		GradeTolM       float64 `yaml:"grade_tolerance_m"`
-		GradePasses     int     `yaml:"grade_passes"`
-		ZTolM           float64 `yaml:"z_tolerance_m"`
-		RoadGapMaxM     float64 `yaml:"road_gap_max_m"`
-		RoadGapShare    float64 `yaml:"road_gap_share"`
-		BridgeMinClearM float64 `yaml:"bridge_min_clear_m"`
-		Sun             struct {
+		ElevatedM         float64 `yaml:"elevated_m"`
+		UnderwaterM       float64 `yaml:"underwater_m"`
+		GradeTolM         float64 `yaml:"grade_tolerance_m"`
+		GradePasses       int     `yaml:"grade_passes"`
+		ZTolM             float64 `yaml:"z_tolerance_m"`
+		RoadGapMaxM       float64 `yaml:"road_gap_max_m"`
+		RoadGapShare      float64 `yaml:"road_gap_share"`
+		BridgeMinClearM   float64 `yaml:"bridge_min_clear_m"`
+		BridgeOverWaterM  float64 `yaml:"bridge_over_water_m"`
+		ShadeStrength     float64 `yaml:"shade_strength"`
+		ProfileFairPasses int     `yaml:"profile_fair_passes"`
+		RoadStrip         struct {
+			TolM  float64 `yaml:"tol_m"`
+			Share float64 `yaml:"share"`
+			MaxM  float64 `yaml:"max_m"`
+		} `yaml:"road_strip"`
+		ConformFit struct {
+			StepM  float64 `yaml:"step_m"`
+			Passes int     `yaml:"passes"`
+		} `yaml:"conform_fit"`
+		Sun struct {
 			AzimuthDeg  float64 `yaml:"azimuth_deg"`
 			AltitudeDeg float64 `yaml:"altitude_deg"`
 		} `yaml:"sun"`
@@ -220,7 +232,11 @@ func (t *Tuning) check() error {
 		"terrain.pipeline.underwater_m": tp.UnderwaterM, "terrain.pipeline.grade_tolerance_m": tp.GradeTolM,
 		"terrain.pipeline.grade_passes": float64(tp.GradePasses), "terrain.pipeline.z_tolerance_m": tp.ZTolM,
 		"terrain.pipeline.road_gap_max_m": tp.RoadGapMaxM, "terrain.pipeline.road_gap_share": tp.RoadGapShare,
-		"terrain.pipeline.bridge_min_clear_m": tp.BridgeMinClearM, "terrain.pipeline.sun.altitude_deg": tp.Sun.AltitudeDeg,
+		"terrain.pipeline.bridge_min_clear_m": tp.BridgeMinClearM, "terrain.pipeline.bridge_over_water_m": tp.BridgeOverWaterM,
+		"terrain.pipeline.shade_strength": tp.ShadeStrength, "terrain.pipeline.profile_fair_passes": float64(tp.ProfileFairPasses), "terrain.pipeline.conform_fit.step_m": tp.ConformFit.StepM,
+		"terrain.pipeline.road_strip.tol_m": tp.RoadStrip.TolM, "terrain.pipeline.road_strip.share": tp.RoadStrip.Share,
+		"terrain.pipeline.road_strip.max_m":   tp.RoadStrip.MaxM,
+		"terrain.pipeline.conform_fit.passes": float64(tp.ConformFit.Passes), "terrain.pipeline.sun.altitude_deg": tp.Sun.AltitudeDeg,
 		"terrain.lod.grid_m": tt.Lod.GridM, "terrain.lod.chunks": float64(tt.Lod.Chunks), "terrain.lod.block_merge_m": tt.Lod.BlockMergeM,
 		"terrain.lod.simplify_m": tt.Lod.SimplifyM, "terrain.lod.parkland_height_m": tt.Lod.ParklandHeightM,
 		"nature.trees_per_chunk_max": float64(nt.TreesPerChunkMax), "nature.wood.canopy_height_m": nt.Wood.CanopyHeightM,
