@@ -211,3 +211,8 @@ vzorem). Do té doby klient kreslí ikonu a jméno.
   traffic_sedan a police_patrol (bez masky), procedurálně (`tools/art/cars_proc.py`), plátna podle tabulky.
   Lidovka: k hotovému body.png lak převeden na šedou, výřezy pro kola, doplněny maska, kolo a světla
   (`tools/art/post_lidovka.py`).
+- **Auta, dávka 2**, 23. 11. 2026: zbylých 33 aut z tabulky (všechna kromě dávky 1 a lidovky), procedurálně
+  (`tools/art/cars_proc.py`). Třída micro (kolo, micro_cruiser, kolobezka, micro_scoot) má kola a jezdce v body.png,
+  bez wheel.png a lights.png; rikša bez lights.png. Rozdíly proti procedurální kresbě kvůli pravidlu „kolo zvenku
+  nezakryté“: markýza food trucku −0,42…0,40 hl (místo −0,60…0,30), blatníky veteránů jen uvnitř a před a za koly,
+  rezerva terénních aut uvnitř obrysu.
