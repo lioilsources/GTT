@@ -99,3 +99,14 @@ Dráha na výšku, kamera jede s koulí, kuželky nahoře. Před hodem tah prste
 - Žlab: koule zmizí, kuželky stojí, `k = 0`.
 - Kuželka odražená od stěny zpět na plato a zastavená daleko od místa = padlá.
 - Ve framu 10 se po spare postaví všech 10 kuželek pro třetí hod.
+
+## Upřesnění v1
+
+- Boční stěny plata (statika) a jejich `eWall` platí pro všechna tělesa včetně koule; žlab (koule
+  s `y < deckY0` mimo dráhu) jen pro kouli.
+- Rozptyl: z `rng` stavu vždy dvě čísla na hod (`ex`, pak `ey`), i při `s = 0`. Rychlost se
+  počítá z rozptýleného bodu znovu přes `isqrt` (Úder ve fyzice).
+- `k` se počítá jen z kuželek, které před hodem stály.
+- Po posledním hodu hry zůstane `frame = 10` a `roll` = číslo toho hodu (2 nebo 3); `standing`
+  odpovídá stavu po hodu včetně případného postavení všech 10.
+- `timeout` změní jen `over`.

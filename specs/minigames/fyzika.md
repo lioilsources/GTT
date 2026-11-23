@@ -104,3 +104,14 @@ Počet kroků ani rychlosti nejsou ve stavu: stav po úderu obsahuje jen polohy 
   s rychlostí po té předchozí.
 - `trunc` záporných čísel jde k nule (`trunc(−7 / 2) = −3`), ne dolů.
 - Rychlost `0` a dotyk: `vn = 0` → nic (stojící koule u mantinelu zůstane).
+
+## Upřesnění v1
+
+- `trunc` nikdy nevrací −0: výsledek 0 je 0 (ve stavu i v JSON).
+- Srážka těleso–těleso „proběhla" (pro hry, které to sledují, např. `firstHit` v kulečníku),
+  právě když platí `0 < d2 < R²` a `vn < 0` – i když `k` nebo všechny přírůstky vyjdou 0.
+- Konec simulace: před každým krokem se zkontroluje, zda se něco hýbe (když ne, simulace končí,
+  i před prvním krokem); kroky se počítají do `max_steps` včetně.
+- Když zachycení (krok 2) simulaci ukončí (minigolf), kroky 3–5 téhož kroku se už neprovedou;
+  rychlosti se pak vynulují jako po každé simulaci.
+- Tření se volá pro každé těleso s `on` i při `dec = 0` (nic nezmění).

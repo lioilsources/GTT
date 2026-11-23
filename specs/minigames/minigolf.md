@@ -105,3 +105,17 @@ Dráha shora na výšku, kamera drží míček a jamku. Řádek nahoře: jamka a
 - Rychlý míček přes jamku nespadne (vylétne z ní).
 - Trestný úder se počítá do `maxStrokes`.
 - Míček zastavený v písku hraje se odtud.
+
+## Upřesnění v1
+
+- Všechny délky z formátu jamky (rozměry, start, jamka, stěny, kruhy, písek, voda) i tloušťka
+  okrajů (200 mm = 20000 u) se násobí 100; `ballR`, `cupR`, `cupSpeed` jsou už v u.
+- Zachycení v kroku 2: nejdřív voda, pak jamka; poloha po pohybu, rychlost z konce předchozího
+  kroku. Zachycení končí simulaci hned (kroky 3–5 se neprovedou).
+- Kontrola „zastavený míček do `cupR`" proběhne po každé simulaci, která neskončila zachycením,
+  i když skončila stropem `maxSteps`.
+- Šplouchnutí: `strokes += 1` a návrat míčku; teprve pak se kontroluje `maxStrokes`.
+- Po dohrané jamce `strokes = 0`; po šesté `hole = 7` a `x, y` zůstanou, kde míček skončil
+  (u šplouchnutí poloha před úderem).
+- Písek i voda: `x0 ≤ x ≤ x1` a `y0 ≤ y ≤ y1` ve středu míčku (v u).
+- `result.par` = součet parů dohraných jamek; `timeout` změní jen `over`.

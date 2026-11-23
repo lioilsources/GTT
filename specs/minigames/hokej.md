@@ -105,3 +105,18 @@ středové čáry, po gólu krátký nápis `hokejGoal`.
 - Puk zastavený v soupeřově polovině soupeř dřív nebo později trefí (obchvat a útok).
 - Pálka se do soupeřovy poloviny nedostane, puk přes středovou čáru ano.
 - Puk vysunutý pálkou do mantinelu se ořízne; odraz od mantinelu proběhne až v dalším tiku.
+
+## Upřesnění v1
+
+- Tik v pauze: jen `tick += 1` a `pause −= 1`; `aiClock` ani nic jiného se nemění.
+- Cíl soupeře se přepočítá z polohy puku **před** jeho pohybem v tomto tiku (krok 3 je před 4)
+  a z polohy soupeřovy pálky před jejím pohybem; pak se ořízne do jeho poloviny. `mv`, `ma` =
+  skutečný posun pálky v tomto tiku.
+- Gól se počítá jen podle `y` středu puku (`y < 0`, `y > h`) bez ohledu na `x`.
+- Krok 6: x i y nezávisle, nejdřív x; podmínka ústí bere `x` po pohybu.
+- Krok 7: vysunutí na dotyk se provede při každém překryvu `0 < d2 < R²`, i když `vn ≥ 0`
+  (odraz jen při `vn < 0`). Ořez: nejdřív `x` do `[r, w − r]`, podmínka ústí se počítá z už
+  ořezaného `x`, `y` se ořezává jen mimo ústí. Soupeřova pálka už vidí puk po vysunutí
+  a odrazu od hráčovy. Puk vysunutý v ústí za brankovou čáru dá gól až v kroku 5 dalšího
+  tiku; odraz od mantinelu po vysunutí až v dalším tiku.
+- `move` mění jen cíl; `timeout` jen `over`.
