@@ -302,14 +302,27 @@ export class CarFleet {
     return this.drive.hop.refill(this.drive.spec);
   }
 
-  /** Drive out of the garage with an owned car; the current one stays inside (or is towed away). */
-  select(car: string): void {
+  /**
+   * Where a car from the garage appears: its parking point, or with [here] (the garage opened
+   * from the phone away from the spot, specs/testdrive.md v2) the player's car's place and heading.
+   */
+  private spawnPoint(g: GaragePoint, here: boolean): { x: number; y: number; heading: number } {
+    const c = this.drive.car;
+    return here ? { x: c.x, y: c.y, heading: c.heading } : g;
+  }
+
+  /**
+   * Drive out of the garage with an owned car; the current one stays inside (or is towed away).
+   * [here]: the garage list was opened from the phone away from the spot.
+   */
+  select(car: string, here = false): void {
     const g = this.garage;
     if (!g) return;
     this.testing = null;
+    const at = this.spawnPoint(g, here);
     this.apply({ by: 'player', op: 'select', car });
     for (const p of this.parked.filter((q) => q.chunk === null && q.owner === 'player' && q.carId === car)) this.removeParked(p);
-    this.drive.replaceCar(this.drivenSpec, g.x, g.y, g.heading);
+    this.drive.replaceCar(this.drivenSpec, at.x, at.y, at.heading);
     this.emit('carChanged', { car });
   }
 
@@ -324,15 +337,16 @@ export class CarFleet {
    * Starts a test drive of [car] on the garage's parking point: the catalog car (no upgrades,
    * default look), not owned. A stolen car is towed first (`select` of the first own car).
    */
-  startTest(car: string): boolean {
+  startTest(car: string, here = false): boolean {
     const g = this.garage;
     if (!g || !this.canTest(car)) return false;
+    const at = this.spawnPoint(g, here);
     const first = this.state.owned[0];
     if (this.state.stolen && first !== undefined) this.apply({ by: 'player', op: 'select', car: first });
     // The own car stays in the garage: copies of it left parked in town go.
     for (const p of this.parked.filter((q) => q.chunk === null && q.owner === 'player' && q.carId === this.state.driving)) this.removeParked(p);
     this.testing = { car, left: this.tuning.cars.testDriveS };
-    this.drive.replaceCar(this.drivenSpec, g.x, g.y, g.heading);
+    this.drive.replaceCar(this.drivenSpec, at.x, at.y, at.heading);
     this.emit('carChanged', { car });
     return true;
   }
