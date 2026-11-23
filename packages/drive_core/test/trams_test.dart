@@ -97,32 +97,137 @@ Map<String, Uint8List> roadPack({pb.TramGraph? trams}) => {
   if (trams != null) 'trams.pb': _gz(trams.writeToBuffer()),
 };
 
+/// The junction of the W test (web/test/trams.test.ts), metres:
+///
+///                 3 (100,100) terminus
+///                 | e2 3→1 (90° to e0 and e1: not a track connection, v2)
+///  0 ──e0── 1 (100,0) ──e1── 2 (200,0) border
+///  (0,0)      \ e3 1→4 (200,-40), 21.8° off e0 (a switch)     e4: loop at 1
+TrackGraph junction() => TrackGraph.fromPb(
+  pb.TramGraph(
+    nodes: [_n(0, 0), _n(100, 0), _n(200, 0, true), _n(100, 100), _n(200, -40)],
+    edges: [
+      _e(0, 1, [0, 0, 100, 0]),
+      _e(1, 2, [100, 0, 200, 0]),
+      _e(3, 1, [100, 100, 100, 0]),
+      _e(1, 4, [100, 0, 200, -40]),
+      _e(1, 1, [100, 0, 120, 20, 80, 20, 100, 0]),
+    ],
+  ),
+);
+
+// Recorded by client W (web/test/trams.test.ts PICKS_42, PICKS_7).
+const picks42 = [1, 1, 3, 1, 1, 1, 1, 1, 3, 3, 1, 3];
+const picks7 = [3, 3, 3, 3, 3, 1];
+
+final _tun = freshTuning().trams;
+final cosMin = math.cos(_tun.maxSwitchDeg * math.pi / 180);
+final probeM = _tun.turnProbeM;
+
+/// Change of a car's axis (heading modulo π), radians in [0, π/2].
+double axisDelta(double a, double b) {
+  var d = (b - a) % math.pi;
+  if (d < 0) d += math.pi;
+  return math.min(d, math.pi - d);
+}
+
+/// Edge [ei] as travel-order points leaving [node].
+List<double> leaving(TrackGraph g, int ei, int node) {
+  final e = g.edges[ei];
+  final n = e.pointCount;
+  return [
+    for (var j = 0; j < n; j++) ...[e.pts[2 * (e.from == node ? j : n - 1 - j)], e.pts[2 * (e.from == node ? j : n - 1 - j) + 1]],
+  ];
+}
+
+/// Drives an articulated tram (TramTrail + articulate) along [path] in [ds] steps: the largest
+/// axis change of any car per metre of the nose's path, in degrees.
+double worstRate(List<double> path, double ds, TuningTrams t) {
+  final cum = <double>[0];
+  for (var i = 2; i < path.length; i += 2) {
+    final dx = path[i] - path[i - 2], dy = path[i + 1] - path[i - 1];
+    cum.add(cum.last + math.sqrt(dx * dx + dy * dy));
+  }
+  final total = cum.last;
+  final trail = TramTrail(t.trailPoints, carM: t.carLengthM, gapM: t.jointGapM)..push(path[0], path[1], 0);
+  final prev = List<double>.filled(t.carsPerTram, double.nan);
+  final pose = TramCarPose();
+  var seg = 0;
+  var worst = 0.0;
+  // Travel direction: the first non-degenerate segment, then the last one walked.
+  var ux = 1.0, uy = 0.0;
+  for (var i = 2; i < path.length; i += 2) {
+    final dx = path[i] - path[i - 2], dy = path[i + 1] - path[i - 1], l = math.sqrt(dx * dx + dy * dy);
+    if (l > 1e-9) {
+      ux = dx / l;
+      uy = dy / l;
+      break;
+    }
+  }
+  for (var s = 0.0; s <= total; s += ds) {
+    while (seg < cum.length - 2 && s > cum[seg + 1]) {
+      seg++;
+      trail.push(path[2 * seg], path[2 * seg + 1], 0);
+    }
+    final l = cum[seg + 1] - cum[seg];
+    final f = l > 0 ? (s - cum[seg]) / l : 0.0;
+    final dx = path[2 * seg + 2] - path[2 * seg], dy = path[2 * seg + 3] - path[2 * seg + 1];
+    if (l > 1e-9) {
+      ux = dx / l;
+      uy = dy / l;
+    }
+    trail.setNose(path[2 * seg] + dx * f, path[2 * seg + 1] + dy * f, ux, uy, 0);
+    for (var k = 0; k < t.carsPerTram; k++) {
+      final h = articulate(trail, k, pose).heading;
+      if (!prev[k].isNaN) worst = math.max(worst, axisDelta(prev[k], h) * 180 / math.pi / ds);
+      prev[k] = h;
+    }
+  }
+  return worst;
+}
+
+class _DirPack implements PackSource {
+  _DirPack(this.root);
+  final String root;
+  @override
+  Future<Uint8List> read(String path) async => File('$root$path').readAsBytes();
+}
+
 void main() {
   group('tram rules (specs/trams.md)', () {
-    test('next edge: ascending candidates without the arrival edge, shared PRNG', () {
-      final g = tinyNet();
-      final rng = Prng(42), ref = Prng(42);
-      // At junction 0 arriving along e0 the candidates are [1, 2]; along e1 they are [0, 2].
-      for (var i = 0; i < 12; i++) {
-        expect(chooseNextTrack(g, 0, 0, rng), [1, 2][ref.nextInt(2)]);
-      }
-      for (var i = 0; i < 12; i++) {
-        expect(chooseNextTrack(g, 0, 1, rng), [0, 2][ref.nextInt(2)]);
-      }
-      // A single candidate still draws from the PRNG (nextInt(1)).
-      expect(chooseNextTrack(g, 1, 0, rng), 3);
-      ref.nextInt(1);
-      expect(rng.state, ref.state);
+    test('turn at a node: only feasible connections (v2)', () {
+      final g = junction();
+      expect(turnCos(g, 1, 0, 1, probeM), closeTo(1, 1e-9));
+      expect(turnCos(g, 1, 0, 3, probeM), closeTo(100 / math.sqrt(100 * 100 + 40 * 40), 1e-6));
+      expect(turnCos(g, 1, 0, 2, probeM), closeTo(0, 1e-6)); // 90°
+      expect(turnCos(g, 1, 1, 3, probeM), closeTo(-100 / math.sqrt(100 * 100 + 40 * 40), 1e-6)); // hairpin
+      expect(feasibleNext(g, 1, 0, cosMin, probeM, []), [1, 3]);
+      expect(feasibleNext(g, 1, 1, cosMin, probeM, []), [0]);
+      expect(feasibleNext(g, 1, 3, cosMin, probeM, []), [0]);
+      expect(feasibleNext(g, 1, 2, cosMin, probeM, []), isEmpty);
+      expect(feasibleNext(g, 2, 1, cosMin, probeM, []), isEmpty); // border
+      expect(straightestPrev(g, 1, 1, cosMin, probeM), 0);
+      expect(straightestPrev(g, 1, 3, cosMin, probeM), 0);
+      expect(straightestPrev(g, 1, 0, cosMin, probeM), 1);
+      expect(straightestPrev(g, 1, 2, cosMin, probeM), -1);
+      expect(straightestPrev(g, 2, 1, cosMin, probeM), -1);
     });
 
-    test('next edge: a terminus turns back without drawing, a border node despawns', () {
-      final g = tinyNet();
-      final rng = Prng(7);
+    test('next edge: shared PRNG over feasible candidates, never a loop or a sharp turn', () {
+      final g = junction();
+      final r42 = Prng(42);
+      expect([for (var i = 0; i < 12; i++) chooseNextTrack(g, 1, 0, r42, cosMin, probeM)], picks42);
+      final r7 = Prng(7);
+      expect([for (var i = 0; i < 6; i++) chooseNextTrack(g, 1, 0, r7, cosMin, probeM)], picks7);
+      expect(chooseNextTrack(g, 1, 3, Prng(1), cosMin, probeM), 0);
+      // No feasible way = terminus (change ends), without drawing.
+      final rng = Prng(1);
       final before = rng.state;
-      expect(chooseNextTrack(g, 4, 3, rng), 3);
-      expect(chooseNextTrack(g, 2, 1, rng), 1);
+      expect(chooseNextTrack(g, 1, 2, rng, cosMin, probeM), 2);
+      expect(chooseNextTrack(g, 3, 2, rng, cosMin, probeM), 2);
+      expect(chooseNextTrack(g, 0, 0, rng, cosMin, probeM), 0);
       expect(rng.state, before);
-      expect(chooseNextTrack(g, 3, 2, rng), -1);
+      expect(chooseNextTrack(g, 2, 1, rng, cosMin, probeM), -1); // border: the tram disappears
     });
 
     test('articulate: straight trail', () {
@@ -217,6 +322,65 @@ void main() {
       expect(tram.s, greaterThan(130));
       expect(tram.speed, greaterThan(0));
       expect(trams.trams, contains(tram));
+      trams.dispose();
+      world.destroy();
+    });
+
+    test('a tram changes ends at a terminus: stops on the end node, cars stay, axis unchanged (v2)', () {
+      final tuning = freshTuning();
+      final t = tuning.trams..maxTrams = 1;
+      final world = World(gravity: Vector2.zero());
+      final player = Car(world, spec(), tuning.drive, x: 150, y: 60, heading: 0, scale: tuning.carScale);
+      // 0 (border) ── 1 ── 2 (terminus), bent at 1.
+      final g = TrackGraph.fromPb(
+        pb.TramGraph(
+          nodes: [_n(0, 0, true), _n(100, 0), _n(160, 30)],
+          edges: [
+            _e(0, 1, [0, 0, 50, 0, 100, 0]),
+            _e(1, 2, [100, 0, 130, 10, 160, 30]),
+          ],
+        ),
+      );
+      final trams = Trams(world, g, tuning);
+      final tram = trams.addTram(0, 1, 70)!;
+      expect(tram.histCount, 0); // nothing behind the border node
+      const dt = 1 / 60;
+      void step() {
+        trams.preStep(dt, player);
+        world.step(dt, subStepCount: tuning.drive.substeps);
+        trams.postStep(player);
+      }
+
+      var before = <List<double>>[];
+      var at = -1;
+      for (var i = 0; i < 40 * 60 && at < 0; i++) {
+        before = [for (final c in tram.cars) [c.x, c.y, c.heading]];
+        step();
+        if (tram.reversals > 0) at = i;
+      }
+      expect(at, greaterThan(0));
+      expect(trams.trams, contains(tram));
+      expect(tram.edge.index, 1);
+      expect(tram.dir, -1);
+      expect(tram.s, closeTo(trams.tramLength, 1e-6));
+      expect(tram.speed, 0);
+      expect(tram.dwell, closeTo(t.dwellS, 1e-9));
+      final n = tram.cars.length;
+      for (var k = 0; k < n; k++) {
+        final c = tram.cars[k], b = before[n - 1 - k];
+        expect(c.k, k);
+        expect(math.sqrt((c.x - b[0]) * (c.x - b[0]) + (c.y - b[1]) * (c.y - b[1])), lessThan(t.speedMps * dt + 1e-6));
+        expect(axisDelta(b[2], c.heading), lessThan(0.05));
+        final d = c.heading - b[2] - math.pi;
+        expect(math.atan2(math.sin(d), math.cos(d)).abs(), lessThan(0.05));
+      }
+      // It waits dwell_s, then drives back and disappears at the border node.
+      var gone = -1;
+      for (var i = 0; i < 60 * 60 && gone < 0; i++) {
+        step();
+        if (!trams.trams.contains(tram)) gone = i;
+      }
+      expect(gone, greaterThan(t.dwellS / dt - 2));
       trams.dispose();
       world.destroy();
     });
@@ -341,5 +505,90 @@ void main() {
       expect(tram.x, closeTo(300, 1e-6));
       d.dispose();
     });
+  });
+
+  group('L-S10: smooth trams on the whole Prague network (specs/trams.md v2 "Plynulost")', () {
+    const root = '../../build/packs/prague/';
+    final has = File('${root}trams.pb').existsSync();
+    setUpAll(() async => initializeForge2D());
+
+    test('every feasible connection and every edge stays under max_turn_deg_per_m', () async {
+      final t = freshTuning().trams;
+      final g = (await City.load(_DirPack(root))).trams;
+      expect(g.edges.length, greaterThan(1000));
+      var pairs = 0;
+      var worst = 0.0;
+      final out = <int>[];
+      for (var node = 0; node < g.nodeEdges.length; node++) {
+        for (final a in g.nodeEdges[node].toSet()) {
+          if (g.edges[a].from == g.edges[a].to) continue;
+          final inPts = leaving(g, a, node);
+          final arrive = <double>[for (var i = inPts.length - 2; i >= 0; i -= 2) ...[inPts[i], inPts[i + 1]]];
+          for (final b in feasibleNext(g, node, a, cosMin, probeM, out)) {
+            worst = math.max(worst, worstRate([...arrive, ...leaving(g, b, node).skip(2)], 0.1, t));
+            pairs++;
+          }
+        }
+      }
+      for (final e in g.edges) {
+        if (e.from == e.to || e.pointCount < 2) continue;
+        for (final node in [e.from, e.to]) {
+          worst = math.max(worst, worstRate(leaving(g, e.index, node), 0.1, t));
+        }
+      }
+      // ignore: avoid_print
+      print('L-S10 F: $pairs connections, max ${worst.toStringAsFixed(2)} deg/m');
+      expect(pairs, greaterThan(g.edges.length));
+      expect(worst, lessThanOrEqualTo(t.maxTurnDegPerM));
+    }, skip: !has, timeout: const Timeout(Duration(minutes: 5)));
+
+    test('live trams (spawn, switches, stops, termini) stay under max_turn_deg_per_m', () async {
+      final tuning = freshTuning();
+      final t = tuning.trams;
+      final g = (await City.load(_DirPack(root))).trams;
+      var worst = 0.0, metres = 0.0;
+      var changes = 0;
+      const dt = 1 / 60;
+      final step = math.max(1, g.stops.length ~/ 12);
+      for (var si = 0; si < g.stops.length; si += step) {
+        final st = g.stops[si];
+        final world = World(gravity: Vector2.zero());
+        final player = Car(world, spec(), tuning.drive, x: st.x - st.dirY * 30, y: st.y + st.dirX * 30, heading: 0, scale: tuning.carScale);
+        final trams = Trams(world, g, tuning)..solid = false;
+        final last = <TramCar, List<double>>{};
+        for (var i = 0; i < 120 * 60; i++) {
+          player.body.linearVelocity = Vector2.zero();
+          trams.preStep(dt, player);
+          world.step(dt, subStepCount: tuning.drive.substeps);
+          trams.postStep(player);
+          for (final tr in trams.trams) {
+            for (final c in tr.cars) {
+              final prev = last[c];
+              last[c] = [c.heading, tr.x, tr.y, tr.reversals.toDouble()];
+              if (prev == null) continue;
+              final d = axisDelta(prev[0], c.heading) * 180 / math.pi;
+              if (tr.reversals != prev[3].round()) {
+                changes++;
+                expect(d, lessThanOrEqualTo(t.maxTurnDegPerM * t.speedMps * dt));
+                continue;
+              }
+              final nose = math.sqrt((tr.x - prev[1]) * (tr.x - prev[1]) + (tr.y - prev[2]) * (tr.y - prev[2]));
+              if (nose < 1e-3) {
+                expect(d, lessThan(0.01));
+                continue;
+              }
+              worst = math.max(worst, d / nose);
+            }
+            metres += tr.speed * dt;
+          }
+        }
+        trams.dispose();
+        world.destroy();
+      }
+      // ignore: avoid_print
+      print('L-S10 F live: ${metres.round()} m, ${changes ~/ t.carsPerTram} changes of ends, max ${worst.toStringAsFixed(2)} deg/m');
+      expect(metres, greaterThan(5000));
+      expect(worst, lessThanOrEqualTo(t.maxTurnDegPerM));
+    }, skip: !has, timeout: const Timeout(Duration(minutes: 10)));
   });
 }
