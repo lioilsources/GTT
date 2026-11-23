@@ -4,7 +4,8 @@ import { WebGPUEngine } from '@babylonjs/core/Engines/webgpuEngine';
 
 import { ASSET_BASE_URL } from './config';
 import { Autopilot, frameStats } from './drive/autopilot';
-import { resolveRoute } from './drive/route';
+import { resolveRoute, routeFile } from './drive/route';
+import { hillPanel } from './drive/hillPanel';
 import { applyKeys, createScheme, SchemeA, SchemeB, SchemeC, type ControlScheme, type ControlSchemeId } from './drive/controls';
 import { DriveWorld } from './drive/driveWorld';
 import { installFlowHud } from './drive/flowHud';
@@ -194,17 +195,25 @@ async function main(): Promise<void> {
   });
   // ?bench: the autopilot drives the route of specs/bench.md and reports the numbers.
   // A city without content/bench/<cityId>.json has no benchmark (specs/cities.md).
-  const benchRoute = params.has('bench')
-    ? await json<BenchRoute>(`content/bench/${cityId}.json`).catch((e: unknown) => {
-      console.warn(`no benchmark for ${cityId}`, e);
+  // ?route=<id> (bench v2): the route content/bench/<cityId>-<id>.json; the player starts on it with
+  // the navigation along it, with ?bench the autopilot drives it.
+  const routeId = params.get('route');
+  const benchRoute = params.has('bench') || routeId !== null
+    ? await json<BenchRoute>(`content/bench/${routeFile(cityId, routeId)}`).catch((e: unknown) => {
+      console.warn(`no route ${routeId ?? 'benchmark'} for ${cityId}`, e);
       return null;
     })
     : null;
-  const pilot = benchRoute ? new Autopilot(resolveRoute(city.graph, benchRoute), tuning) : null;
+  const routePath = benchRoute ? resolveRoute(city.graph, benchRoute) : null;
+  const pilot = routePath && params.has('bench') ? new Autopilot(routePath, tuning) : null;
   if (pilot) {
     pilot.start(drive);
     view.carChanged();
     drive.beforeStep = (step) => pilot.step(drive, drive.input, step);
+  } else if (routePath) {
+    const p = routePath.at(0);
+    drive.spawn(p.x, p.y, p.dir);
+    view.carChanged();
   }
   view.setFleet(fleet);
   // Car sprites (specs/art.md v2): one atlas set for the player, parked cars, traffic and patrols.
@@ -222,6 +231,12 @@ async function main(): Promise<void> {
     mapNature: city.manifest.natureVersion > 0 ? new MapNatureSource(city, source) : null,
     discovered: () => new Set(passport.tracker.stamps.filter((s) => s.startsWith('landmark:')).map((s) => s.slice(9))) });
   const loadMs = performance.now() - tStart;
+  // ?route=: navigation along the route to its last crossing (specs/bench.md v2).
+  if (routeId !== null && routePath && benchRoute && routePath.edges.length > 0) {
+    const end = routePath.at(routePath.length), last = benchRoute.legs[benchRoute.legs.length - 1]!.to;
+    phone.followRoute({ id: `route:${benchRoute.id}`, name: last.b, edge: routePath.edges[routePath.edges.length - 1]!,
+      parkX: Math.round(end.x * 10), parkY: Math.round(end.y * 10) }, routePath.pts);
+  }
 
   // ---------- input
   let scheme: ControlScheme = createScheme((['a', 'b', 'c'].includes(params.get('scheme') ?? '') ? params.get('scheme') : 'a') as ControlSchemeId, tuning.controls);
@@ -681,6 +696,12 @@ async function main(): Promise<void> {
   engine.onContextLostObservable.add(() => console.warn('WebGL context lost'));
   engine.onContextRestoredObservable.add(() => console.warn('WebGL context restored'));
 
+  if (params.has('debug')) {
+    // Hill tuning (specs/bench.md v2 "Ladění kopců"): live sliders over the client-side keys.
+    const hp = hillPanel(tuning, { title: t('debugPanel'), copy: t('copyYaml'), copied: t('copied') });
+    $('buttons').append(hp.button);
+    document.body.append(hp.panel);
+  }
   if (import.meta.env.DEV || params.has('debug')) {
     (window as unknown as Record<string, unknown>)['metro'] = {
       engine, view, drive, fleet, city, tuning, frameTimes, pilot, bench, peds, phone, passport, loop, taxi, drift, sprint, police: police.police, booths, fastTravel, photo, shops, weather, garage, carsHud, flow,
