@@ -1,14 +1,21 @@
 import 'package:mg_api/mg_api.dart';
+import 'package:mg_bowling/mg_bowling.dart';
 import 'package:mg_cara/mg_cara.dart';
+import 'package:mg_cihly/mg_cihly.dart';
 import 'package:mg_ctyri/mg_ctyri.dart';
 import 'package:mg_dama/mg_dama.dart';
 import 'package:mg_desetitisic/mg_desetitisic.dart';
 import 'package:mg_doubledutch/mg_doubledutch.dart';
+import 'package:mg_had/mg_had.dart';
+import 'package:mg_hokej/mg_hokej.dart';
 import 'package:mg_kostky/mg_kostky.dart';
 import 'package:mg_koulena/mg_koulena.dart';
+import 'package:mg_krtek/mg_krtek.dart';
+import 'package:mg_kulecnik/mg_kulecnik.dart';
 import 'package:mg_kulicky/mg_kulicky.dart';
 import 'package:mg_kviz/mg_kviz.dart';
 import 'package:mg_lode/mg_lode.dart';
+import 'package:mg_minigolf/mg_minigolf.dart';
 import 'package:mg_mlyn/mg_mlyn.dart';
 import 'package:mg_nohejbal/mg_nohejbal.dart';
 import 'package:mg_oko/mg_oko.dart';
@@ -52,6 +59,14 @@ const Map<MinigameId, Minigame> minigames = {
   MinigameId.srdce: SrdceGame(),
   MinigameId.kostky: KostkyGame(),
   MinigameId.prase: PraseGame(),
+  // M2-S9 batch C (physics, arcade).
+  MinigameId.kulecnik: KulecnikGame(),
+  MinigameId.bowling: BowlingGame(),
+  MinigameId.minigolf: MinigolfGame(),
+  MinigameId.had: HadGame(),
+  MinigameId.cihly: CihlyGame(),
+  MinigameId.krtek: KrtekGame(),
+  MinigameId.hokej: HokejGame(),
   // World minigame: the Gallery card starts the shift in the city (specs/minigames/taxi.md).
   MinigameId.taxi: TaxiGame(),
   // M2-S9 batch D: world minigames in the player's own car (specs/minigames/drift.md, sprint.md).

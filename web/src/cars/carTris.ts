@@ -141,9 +141,10 @@ export function carGlowTris(t: Tris, look: Look | null, hl: number, hw: number, 
 }
 
 /** The ground shadow of a car shape alone (see carTris [shadow]). */
-export function carShadowTris(t: Tris, spec: CarSpec, hl: number, hw: number, h: number, col: Rgba = rgba(tokens.colorCarShadow)): void {
+export function carShadowTris(t: Tris, spec: CarSpec, hl: number, hw: number, h: number, col: Rgba = rgba(tokens.colorCarShadow),
+  ox = 0, oy = 0, ang = 0): void {
   for (const r of carShape(spec.class, hl, hw, spec.length_m)) {
-    if (r.part === 'shadow') t.rect(0, 0, 0, r.x0, r.y0, r.x1, r.y1, h, col);
+    if (r.part === 'shadow') t.rect(ox, oy, ang, r.x0, r.y0, r.x1, r.y1, h, col);
   }
 }
 
@@ -159,6 +160,8 @@ export function parkedTris(
   /** Looks of the player's own parked cars (specs/garage.md); null = catalog drawing. */
   lookOf: ((p: ParkedCar) => Look | null) | null = null,
   glow: { margin: number; strength: number } = { margin: 0, strength: 0 },
+  /** Cars drawn as sprites (specs/art.md v2): only their shadow (and underglow) go into the mesh. */
+  sprite: ((p: ParkedCar, look: Look | null) => boolean) | null = null,
 ): Tris {
   const t = new Tris();
   for (const p of cars) {
@@ -167,6 +170,10 @@ export function parkedTris(
     const hl = (s.length_m * scale) / 2, hw = (s.width_m * scale) / 2;
     const look = lookOf?.(p) ?? null;
     if (look) carGlowTris(t, look, hl, hw, glow.margin, p.x, p.y, p.heading, h - CAR_PART_DZ, glow.strength);
+    if (sprite?.(p, look)) {
+      carShadowTris(t, s, hl, hw, h, shadow, p.x, p.y, p.heading);
+      continue;
+    }
     carTris(t, s, hl, hw, hl * axleOffset, p.x, p.y, p.heading, h, false, true, true, shadow, look);
   }
   return t;
