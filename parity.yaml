@@ -618,7 +618,7 @@
   scenarios: scenarios/terrain
   lead: web
   flutter: todo
-  web: todo
+  web: done
 
 - id: F-071
   name: "Reliéf v pohledu shora: promítání, stínování, šipky, HUD (M5-S6)"
@@ -626,7 +626,7 @@
   spec: specs/terrain.md@1
   lead: web
   flutter: todo
-  web: todo
+  web: done
 
 - id: F-072
   name: "Voda a zeleň: třídy, jména, povrchy, pád do vody (M5-S7, N1)"

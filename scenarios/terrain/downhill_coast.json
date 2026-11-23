@@ -1,0 +1,21 @@
+{
+  "module": "terrain",
+  "name": "downhill_coast",
+  "car": "sedan_regent",
+  "inputs": [
+    {
+      "t": 0,
+      "coast": 1
+    }
+  ],
+  "expect": {
+    "end_speed_mps": {
+      "value": 15.185,
+      "tol": 0.05
+    },
+    "time_s": {
+      "value": 21.267,
+      "tol": 0.05
+    }
+  }
+}
