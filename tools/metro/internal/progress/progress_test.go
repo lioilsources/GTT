@@ -3,6 +3,7 @@ package progress
 import (
 	"os"
 	"path/filepath"
+	"strings"
 	"testing"
 	"time"
 )
@@ -65,5 +66,24 @@ func TestCountContentMinigamesAndSkits(t *testing.T) {
 	}
 	if got["Minihry"] != "2" || got["Skity"] != "2" {
 		t.Fatalf("Minihry=%s Skity=%s, want 2 and 2", got["Minihry"], got["Skity"])
+	}
+}
+
+func TestStatusBlockReplaceAndStale(t *testing.T) {
+	readme := "# X\n\n" + StatusOpen + "\nold\n" + StatusClose + "\n\nrest\n"
+	block := StatusOpen + "\n| a | 1 |\n\n_Stav k 2026-11-23, generuje `metro progress`._\n" + StatusClose
+	got, err := ReplaceStatus(readme, block)
+	if err != nil || got != "# X\n\n"+block+"\n\nrest\n" {
+		t.Fatalf("ReplaceStatus = %q, %v", got, err)
+	}
+	if stale, _ := StatusStale(readme, block); !stale {
+		t.Fatal("old block must be stale")
+	}
+	later := strings.Replace(block, "2026-11-23", "2026-12-01", 1)
+	if stale, _ := StatusStale(got, later); stale {
+		t.Fatal("a different date alone must not make the block stale")
+	}
+	if _, err := ReplaceStatus("no markers", block); err == nil {
+		t.Fatal("missing markers must fail")
 	}
 }
