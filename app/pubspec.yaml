@@ -68,6 +68,20 @@ dependencies:
     path: ../packages/mg_kostky
   mg_prase:
     path: ../packages/mg_prase
+  mg_kulecnik:
+    path: ../packages/mg_kulecnik
+  mg_bowling:
+    path: ../packages/mg_bowling
+  mg_minigolf:
+    path: ../packages/mg_minigolf
+  mg_had:
+    path: ../packages/mg_had
+  mg_cihly:
+    path: ../packages/mg_cihly
+  mg_krtek:
+    path: ../packages/mg_krtek
+  mg_hokej:
+    path: ../packages/mg_hokej
   feed_hub:
     path: ../packages/feed_hub
   meta_progress:
