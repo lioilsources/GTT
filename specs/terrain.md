@@ -51,7 +51,44 @@ groundZ(x, y, surface):
 ```
 Auto si drží `surface`. Na most, do tunelu a na estakádu přechází na nájezdu (hrana s přechodem
 vrstvy, `specs/drive.md` krok 6) a jede po povrchu hrany, jinak po terénu. Kolizní vrstvy platí
-beze změny. Mimo načtené chunky `groundZ` = výška nejbližšího uzlu.
+beze změny (v3: viz „Konstrukce“). Mimo načtené chunky `groundZ` = výška nejbližšího uzlu.
+
+## Konstrukce: most, nájezd, estakáda (v3, L-S11)
+Dogfooding: přes most se nedalo přejet. Nájezd (`01`/`10`) má podle `specs/drive.md` krok 6
+první polovinu ve vrstvě 0, a ta často leží nad řekou. Overture navíc vede řadu mostů celé ve
+vrstvě 0. Auto na mostovce pak narazilo do budov, sloupků a stromů pod ní, spadlo do vody pod
+ní a bez zábradlí sjelo z boku na terén. Pravidla v3 (`clear` =
+`terrain.pipeline.bridge_min_clear_m`, `margin` = `layers.switch_margin_m`, `E` = sledovaná
+hrana, `d` = vzdálenost středu auta od její osy):
+- **Vrstva auta na konstrukci.** Když je `E` most nebo nájezd (ne pozemní hrana) a sledovaná
+  vrstva je 0, auto je na `E` (`d ≤ width/2 + margin` a výška auta `z` není víc než `clear` pod
+  `groundZ(E)`; u povrchu pod terénem nejvýš `clear` i nad ním), pak:
+  `groundZ(E) > terén + clear` → vrstva +1, `groundZ(E) < terén − clear` → vrstva −1, jinak 0
+  (u země, na křižovatce). Vrstva +1 znamená zábradlí, žádné budovy, sloupky, stromy, mobiliář
+  ani vodu, jako na mostě. Balíček bez výšek: polovina nájezdu ve vrstvě 0 má vrstvu nájezdu
+  (`max`, tunel −1), ale jen když auto na hranu přijelo po grafu (ze sousední hrany), nikdy
+  z cesty pod ní.
+- **Povrch jen ve výšce auta.** Z terénu na povrch hrany auto přejde, jen když není víc než
+  `clear` pod ním. Na mostovku se tedy dostane jen nájezdem a cesta pod mostem projede ve vrstvě
+  0. Pozemní hrana, jejíž profil se od terénu liší o víc než `clear` (chybí příznak mostu, schod
+  v datech), se jede po profilu.
+- **Sledování hrany s výškou.** Sousední hrana (`specs/drive.md` krok 6) má přednost, když je
+  ve výšce auta: `|groundZ(hrana) − g| ≤ clear`, kde `g` je země pod autem. Když taková není,
+  platí kterýkoli soused (graf je spojí, schod v datech je malý pád, nikdy zeď). Hrana mimo
+  sousedy se bere jen ve výšce auta. Když auto opustí vozovku své hrany (`d > width/2 − margin`)
+  a stojí na vozovce jiné hrany ve své výšce, převezme ji: souběžné vozovky a rozvětvení na
+  mostovce, bez neviditelné zdi zábradlí.
+- **Voda a stromy.** Pád do vody (`specs/nature.md`) ani zásah stromu (`specs/flow.md`)
+  nenastane, když auto jede po povrchu hrany (most, nájezd, tunel). Strom se počítá, jen když
+  terén u jeho kmene je nejvýš `clear` od země pod autem. Na vozovce mostu nebo nájezdu
+  (`d ≤ width/2`) auto nenarazí do sloupků zón (`specs/zones.md`: silnice je průjezdná celou
+  šířkou).
+- **Vyproštění.** Návrat po stopě na mostovce zůstane na mostovce: hrana pod bodem stopy ve výšce
+  auta (`clear`) má přednost před nejbližší pozemní. Přesun na silnici dál hledá jen vrstvu 0.
+
+Testy W: `web/test/bridges.test.ts` (čisté funkce `structureLayer`, `flatStructureLayer`,
+`onSurface`; přejezdy všech mostů všech balíčků z břehu na břeh, cesty pod mosty a sjezd z břehu
+do vody na skutečných balíčcích). F: parita F-070 (todo do vystřelení, L3).
 
 ## Svah (krok jízdy, po kroku 5 „Pneumatiky“ ve `specs/drive.md`)
 Na zemi (`airborne = false`):
@@ -196,7 +233,8 @@ gestem (dvojí klepnutí dvěma prsty); výchozí je pohled shora (K1 = A). Rozp
   Během záběru Foťáku (`specs/photo.md`) se kreslí shora.
 
 ## Hraniční případy
-- Balíček bez výšek: `groundZ = 0`, `grad = 0`, nikdy `airborne`; vše jako před v1.
+- Balíček bez výšek: `groundZ = 0`, `grad = 0`, nikdy `airborne`; vše jako před v1 kromě vrstvy
+  na nájezdu (v3, „Konstrukce“).
 - Hrana `stairs`: pro auta zeď (jako budova ve vrstvě 0), chodci po ní chodí.
 - Teleport (metro, vyproštění, přesun města): `z = g`, `vz = 0`, `airborne = false`.
 - Chunk se načte pod letícím autem: `g` skočí, auto dosedne podle pravidla `z ≤ g`.
