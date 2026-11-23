@@ -29,6 +29,10 @@ import { had } from './had/game';
 import { cihly } from './cihly/game';
 import { krtek } from './krtek/game';
 import { hokej } from './hokej/game';
+import { drift } from './drift/game';
+import { sprint } from './sprint/game';
+import { stickball } from './stickball/game';
+import { doubledutch } from './doubledutch/game';
 
 /** Minigames this client implements; the Gallery greys out the rest. */
 export const minigames: Partial<Record<MinigameId, (env: MinigameEnv) => Minigame>> = {
@@ -61,4 +65,8 @@ export const minigames: Partial<Record<MinigameId, (env: MinigameEnv) => Minigam
   cihly,
   krtek,
   hokej,
+  drift,
+  sprint,
+  stickball,
+  doubledutch,
 };
