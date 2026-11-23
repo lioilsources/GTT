@@ -337,7 +337,7 @@
   spec: specs/art.md@2
   lead: web
   flutter: todo
-  web: todo
+  web: done
 
 - id: F-041
   name: Photo spots and the Camera app (frame the view, Passport photo stamps)
