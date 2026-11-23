@@ -59,6 +59,33 @@ void main() {
     expect([99, 104], contains(own.r.aiAction(own.s, 4, aiPrng(1)).cell));
   });
 
+  test('v2: the AI takes its own five before blocking, at every level', () {
+    final g = setup({31: 'o', 32: 'o', 33: 'o', 34: 'o', 61: 'x', 62: 'x', 63: 'x', 64: 'x'}, turn: 'ai');
+    final r = PiskvorkyRules()..init({...cfg, 'aiErrorPct': [0, 0, 0, 0, 0]}, 1);
+    // Own five at 30 or 35 (first in order: 30); v1 at def 110 % chose a block (60 / 65).
+    for (final lv in [1, 3, 5]) {
+      expect(r.aiAction(g.s, lv, aiPrng(1)).cell, 30);
+    }
+  });
+
+  test('v2: the AI blocks the player\'s five when it cannot win', () {
+    final g = setup({31: 'o', 32: 'o', 33: 'o', 62: 'x', 63: 'x', 64: 'x', 65: 'x', 66: 'o'}, turn: 'ai');
+    final r = PiskvorkyRules()..init({...cfg, 'aiErrorPct': [0, 0, 0, 0, 0]}, 1);
+    for (final lv in [1, 5]) {
+      expect(r.aiAction(g.s, lv, aiPrng(1)).cell, 61);
+    }
+  });
+
+  test('v2: an error move stays random even with a win in hand', () {
+    final g = setup({30: 'o', 31: 'o', 32: 'o', 33: 'o'}, turn: 'ai');
+    final r = PiskvorkyRules()..init({...cfg, 'aiErrorPct': [100, 100, 100, 100, 100]}, 1);
+    final ai = aiPrng(1);
+    final ref = aiPrng(1)..nextInt(100);
+    final cand = candidates(g.s.board, 15);
+    expect(r.aiAction(g.s, 5, ai).cell, cand[ref.nextInt(cand.length)]);
+    expect(ai.state, ref.state);
+  });
+
   test('timeout is a draw with 0 stars', () {
     final g = setup({0: 'x'});
     final n = g.r.apply(g.s, const PiskvorkyAction.timeout());
