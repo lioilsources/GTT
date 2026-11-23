@@ -635,7 +635,7 @@
   scenarios: scenarios/nature
   lead: web
   flutter: todo
-  web: todo
+  web: done
 
 - id: F-073
   name: "Les a měkké stromy (M5-S8, FL2)"
@@ -644,7 +644,7 @@
   scenarios: scenarios/flow
   lead: web
   flutter: todo
-  web: todo
+  web: done
 
 - id: F-074
   name: "Šikmý pohled: terén, lod, voda, lodě (M5-S9, jen W; F až T4 po G1)"

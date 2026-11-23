@@ -202,8 +202,10 @@ items:
      started: 2026-11-23T05:10, done: 2026-11-23T07:05, commit: 1227456, evidence: "run/bin/citypack build prague (validate projde, 0 schodů); výšky zatím AWS Terrain Tiles místo DMR 5G (chybí PDAL/GDAL), stromy z OSM"}
   - {id: M5-S5, milestone: M5, name: "T0/N0/FL0 Tokio", size: M, status: todo}
   - {id: M5-S6, milestone: M5, name: "T1 svahy a skoky a reliéf shora v obou klientech (F-070, F-071)", size: L, status: todo}
-  - {id: M5-S7, milestone: M5, name: "N1 voda a zeleň shora a jízda v obou klientech (F-072)", size: L, status: todo}
-  - {id: M5-S8, milestone: M5, name: "FL2 les a měkké stromy v obou klientech (F-073)", size: M, status: todo}
+  - {id: M5-S7, milestone: M5, name: "N1 voda a zeleň shora a jízda v obou klientech (F-072)", size: L, status: wip, started: 2026-11-23T08:00,
+     evidence: "W hotovo: PR #218 (web/nature-n1), scénáře scenarios/nature (brake_*, water_fall, parkland_trees) ve W v toleranci; F čeká"}
+  - {id: M5-S8, milestone: M5, name: "FL2 les a měkké stromy v obou klientech (F-073)", size: M, status: wip, started: 2026-11-23T08:00,
+     evidence: "W hotovo: PR #218 (web/nature-n1), scénáře scenarios/flow/forest_200, tree_head_on ve W v toleranci; F čeká"}
   - {id: M5-S9, milestone: M5, name: "T2 + N2 šikmý pohled ve W (F-074)", size: L, status: todo}
   - {id: M5-S10, milestone: M5, name: "T3 ladění kopců Prahy, minihry z reliéfu, nejprudší ulice", size: M, status: todo}
   - {id: M5-S11, milestone: M5, name: "metro stuckmap a počítadlo zaseknutí", size: S, status: todo}
