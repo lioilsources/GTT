@@ -3,7 +3,7 @@ import { ShaderStore } from '@babylonjs/core/Engines/shaderStore';
 import { RawTexture } from '@babylonjs/core/Materials/Textures/rawTexture';
 import { Texture } from '@babylonjs/core/Materials/Textures/texture';
 import { ShaderMaterial } from '@babylonjs/core/Materials/shaderMaterial';
-import { Matrix } from '@babylonjs/core/Maths/math.vector';
+import { Matrix, Vector4 } from '@babylonjs/core/Maths/math.vector';
 import { Mesh } from '@babylonjs/core/Meshes/mesh';
 import { VertexData } from '@babylonjs/core/Meshes/mesh.vertexData';
 import type { Scene } from '@babylonjs/core/scene';
@@ -12,19 +12,29 @@ import '@babylonjs/core/Shaders/ShadersInclude/instancesDeclaration';
 import '@babylonjs/core/Shaders/ShadersInclude/instancesVertex';
 
 import { composeBody, loadCarSprite, type CarSprite } from '../cars/spriteArt';
+import { decalArt, wheelArt } from '../garage/cosmetics';
+import { loadCosmetics } from '../garage/cosmeticsLoad';
+import { decalIds, wheelIds } from '../garage/rules';
+import { tokens } from '../gen/tokens';
 import { atlasCarIds, packAtlas, POLICE_SPRITE, spriteWheels, uvRect, type AtlasItem, type AtlasLayout } from '../cars/sprites';
 import type { CarSpec } from '../gen/schema';
 import type { Tuning } from '../gen/tuning';
-import type { Rgba } from './palette';
+import { rgba, type Rgba } from './palette';
 import { setCount } from './shadow';
 
 // One shader for the three meshes: texture × instance colour, or with the mask atlas
-// body × mix(1, paint, mask) (specs/art.md v2 "Lak").
+// body × mix(1, paint, mask) (specs/art.md v2 "Lak"). The body also samples the decal atlas
+// (specs/art.md v3 "Polep" → W): the decal cell stretched over the canvas, its alpha × mask in
+// color.garage.decal; decalRect = 0 = no decal.
 const VERTEX = /* glsl */ `
 precision highp float;
 attribute vec3 position;
 attribute vec2 uv;
 attribute vec4 uvRect;
+#ifdef MASK
+attribute vec4 decalRect;
+varying vec3 vDecal;
+#endif
 #include<instancesDeclaration>
 uniform mat4 viewProjection;
 varying vec2 vUV;
@@ -33,6 +43,9 @@ void main(void) {
 #include<instancesVertex>
   gl_Position = viewProjection * finalWorld * vec4(position, 1.0);
   vUV = uvRect.xy + uv * uvRect.zw;
+#ifdef MASK
+  vDecal = vec3(decalRect.xy + uv * decalRect.zw, decalRect.z > 0.0 ? 1.0 : 0.0);
+#endif
 #ifdef INSTANCESCOLOR
   vColor = instanceColor;
 #else
@@ -48,6 +61,9 @@ varying vec4 vColor;
 uniform sampler2D tex;
 #ifdef MASK
 uniform sampler2D maskTex;
+uniform sampler2D decalTex;
+uniform vec4 decalColor;
+varying vec3 vDecal;
 #endif
 void main(void) {
   vec4 c = texture2D(tex, vUV);
@@ -59,7 +75,9 @@ void main(void) {
   if (c.a < 0.5 || vColor.a <= h) discard;
 #ifdef MASK
   float m = dot(texture2D(maskTex, vUV).rgb, vec3(0.299, 0.587, 0.114));
-  gl_FragColor = vec4(c.rgb * mix(vec3(1.0), vColor.rgb, m), 1.0);
+  vec3 col = c.rgb * mix(vec3(1.0), vColor.rgb, m);
+  if (vDecal.z > 0.5) col = mix(col, decalColor.rgb, texture2D(decalTex, vDecal.xy).a * m);
+  gl_FragColor = vec4(col, 1.0);
 #else
   gl_FragColor = vec4(c.rgb * vColor.rgb, 1.0);
 #endif
@@ -74,6 +92,7 @@ ShaderStore.ShadersStore['carSpriteFragmentShader'] = FRAGMENT;
 const DZ_WHEEL = 0.01, DZ_BODY = 0.02, DZ_LIGHTS = 0.03;
 const WHITE: Rgba = [1, 1, 1, 1];
 type UvRect = [number, number, number, number];
+const NO_DECAL: UvRect = [0, 0, 0, 0];
 
 /** Which part of lights.png to show: none, the rear half (brake by day) or all (night). */
 export const LIGHTS_OFF = 0, LIGHTS_BRAKE = 1, LIGHTS_FULL = 2;
@@ -98,6 +117,8 @@ export interface SpriteCar {
   steer: number;
   /** Garage rim colour multiplying the wheel (null = untinted). */
   wheelTint: Rgba | null;
+  /** `looks.wheels` of an own car: a garage wheel sprite replaces wheel.png when indexed. */
+  wheel?: number;
   lights: number;
   /** Fade (0..1, rescue animation of the player's car); 1 when absent. */
   alpha?: number;
@@ -109,6 +130,10 @@ interface Layer {
   m: Float32Array;
   uv: Float32Array;
   col: Float32Array;
+  /** decalRect per instance (bound on the body layer only). */
+  dr: Float32Array;
+  /** The body layer (decal attribute). */
+  decal: boolean;
   n: number;
   /** Instances per car of this layer at most (wheels 4). */
   per: number;
@@ -119,11 +144,13 @@ class Section {
   m: number[] = [];
   uv: number[] = [];
   col: number[] = [];
+  dr: number[] = [];
   n = 0;
   clear(): void {
     this.m.length = 0;
     this.uv.length = 0;
     this.col.length = 0;
+    this.dr.length = 0;
     this.n = 0;
   }
 }
@@ -149,6 +176,8 @@ export class CarSpriteView {
   private bodyCells = new Map<string, UvRect>();
   private wheelCells = new Map<string, UvRect>();
   private lightCells = new Map<string, UvRect>();
+  /** Decal sprites (specs/art.md v3) by choice: cells of the decal atlas. */
+  private decalCells = new Map<number, UvRect>();
   private readonly wheelPx = new Map<string, [number, number]>();
   private layout: AtlasLayout | null = null;
   private body: Layer | null = null;
@@ -179,7 +208,8 @@ export class CarSpriteView {
       const s = specs.get(id);
       return s ? [s.class, s.length_m] : ['sedan', tuning.traffic.carLengthM];
     };
-    void Promise.all(ids.map(async (id) => [id, await loadCarSprite(id, clsOf(id)[0])] as const)).then((all) => {
+    // Garage cosmetics sprites first (decal and wheel atlases), then the cars.
+    void loadCosmetics().then(() => Promise.all(ids.map(async (id) => [id, await loadCarSprite(id, clsOf(id)[0])] as const))).then((all) => {
       if (this.disposed) return;
       for (const [id, s] of all) if (s) this.entries.set(id, { sprite: s, cls: clsOf(id)[0], lengthM: clsOf(id)[1] });
       this.build();
@@ -194,9 +224,18 @@ export class CarSpriteView {
     else this.listeners.push(cb);
   }
 
-  /** Car [id] draws a sprite (in the atlas); with [decal] the variant cell must exist too. */
+  /**
+   * Car [id] draws a sprite (in the atlas); with [decal] the decal sprite cell or the procedural
+   * variant cell must exist too.
+   */
   has(id: string, decal = 0): boolean {
-    return this.ready && this.bodyCells.has(`${id}#${decal}`);
+    if (!this.ready || !this.bodyCells.has(`${id}#0`)) return false;
+    return decal === 0 || this.decalCells.has(decal) || this.bodyCells.has(`${id}#${decal}`);
+  }
+
+  /** Decal choices drawn from the decal atlas (sprites), for ?debug and tests. */
+  decalSprites(): number[] {
+    return [...this.decalCells.keys()];
   }
 
   /** lights.png of [id] is in the atlas (else the code draws the lights as before). */
@@ -223,7 +262,8 @@ export class CarSpriteView {
     let changed = false;
     for (const [id, d] of pairs) {
       const k = `${id}#${d}`;
-      if (d === 0 || !this.entries.has(id) || this.decals.has(k)) continue;
+      // A decal sprite needs no variant cell: the shader stretches it over the base cell.
+      if (d === 0 || decalArt(d) || !this.entries.has(id) || this.decals.has(k)) continue;
       this.decals.add(k);
       changed = true;
     }
@@ -242,7 +282,8 @@ export class CarSpriteView {
       items.push({ key: `${id}#0`, w: e.sprite.body.width, h: e.sprite.body.height });
     }
     for (const k of this.decals) {
-      const [id] = k.split('#');
+      const [id, d] = k.split('#');
+      if (decalArt(Number(d))) continue;
       const e = this.entries.get(id!)!;
       items.push({ key: k, w: e.sprite.body.width, h: e.sprite.body.height });
     }
@@ -258,9 +299,16 @@ export class CarSpriteView {
     // A body dropped from the atlas drops its wheels and lights too (whole car procedural).
     const inAtlas = [...this.entries].filter(([id]) => this.bodyCells.has(`${id}#0`));
 
+    // Garage wheel sprites (specs/art.md v3 "Kola" → W) share the wheel atlas as `garage#<i>`.
     const wItems = inAtlas.filter(([, e]) => e.sprite.wheel).map(([id, e]) => ({ key: id, w: e.sprite.wheel!.width, h: e.sprite.wheel!.height }));
+    const garageWheels = new Map<string, ImageData>();
+    for (let i = 1; i < wheelIds.length; i++) {
+      const px = wheelArt(i);
+      if (px) garageWheels.set(`garage#${i}`, px as ImageData);
+    }
+    if (wItems.length > 0) for (const [k, px] of garageWheels) wItems.push({ key: k, w: px.width, h: px.height });
     const wLay = packAtlas(wItems);
-    const wheelTex = this.atlasTexture('car-wheel-atlas', wLay, (k) => this.entries.get(k)!.sprite.wheel!);
+    const wheelTex = this.atlasTexture('car-wheel-atlas', wLay, (k) => garageWheels.get(k) ?? this.entries.get(k)!.sprite.wheel!);
     this.wheelCells = new Map([...wLay.cells].map(([k, c]) => [k, uvRect(c, wLay.w, wLay.h)]));
     for (const [id, e] of inAtlas) if (e.sprite.wheel) this.wheelPx.set(id, [e.sprite.wheel.width, e.sprite.wheel.height]);
 
@@ -269,6 +317,19 @@ export class CarSpriteView {
     const lightTex = this.atlasTexture('car-light-atlas', lLay, (k) => this.entries.get(k)!.sprite.lights!);
     this.lightCells = new Map([...lLay.cells].map(([k, c]) => [k, uvRect(c, lLay.w, lLay.h)]));
 
+    // Decal sprites (specs/art.md v3 "Polep" → W): 128 × 256 cells in their own atlas.
+    const dItems: AtlasItem[] = [];
+    const decalPx = new Map<string, ImageData>();
+    for (let i = 1; i < decalIds.length; i++) {
+      const px = decalArt(i);
+      if (!px) continue;
+      decalPx.set(String(i), px as ImageData);
+      dItems.push({ key: String(i), w: px.width, h: px.height });
+    }
+    const dLay = packAtlas(dItems);
+    const decalTex = this.atlasTexture('car-decal-atlas', dLay, (k) => decalPx.get(k)!);
+    this.decalCells = new Map([...dLay.cells].map(([k, c]) => [Number(k), uvRect(c, dLay.w, dLay.h)]));
+
     if (!this.body) {
       this.body = this.layer('car-sprite-body', ['MASK'], false, 1);
       this.wheels = this.layer('car-sprite-wheels', [], false, 4);
@@ -276,6 +337,8 @@ export class CarSpriteView {
     }
     this.body.mat.setTexture('tex', bodyTex);
     this.body.mat.setTexture('maskTex', maskTex);
+    this.body.mat.setTexture('decalTex', decalTex);
+    this.body.mat.setVector4('decalColor', new Vector4(...rgba(tokens.colorGarageDecal)));
     this.wheels!.mat.setTexture('tex', wheelTex);
     this.lights!.mat.setTexture('tex', lightTex);
   }
@@ -297,10 +360,11 @@ export class CarSpriteView {
   }
 
   private layer(name: string, defines: string[], additive: boolean, per: number): Layer {
+    const mask = defines.includes('MASK');
     const mat = new ShaderMaterial(name, this.scene, 'carSprite', {
-      attributes: ['position', 'uv', 'uvRect'],
-      uniforms: ['world', 'viewProjection'],
-      samplers: defines.includes('MASK') ? ['tex', 'maskTex'] : ['tex'],
+      attributes: mask ? ['position', 'uv', 'uvRect', 'decalRect'] : ['position', 'uv', 'uvRect'],
+      uniforms: mask ? ['world', 'viewProjection', 'decalColor'] : ['world', 'viewProjection'],
+      samplers: mask ? ['tex', 'maskTex', 'decalTex'] : ['tex'],
       defines,
       needAlphaBlending: additive,
       needAlphaTesting: !additive,
@@ -322,7 +386,8 @@ export class CarSpriteView {
     mesh.alwaysSelectAsActiveMesh = true;
     mesh.doNotSyncBoundingInfo = true;
     const cap = 64 * per;
-    const l: Layer = { mesh, mat, m: new Float32Array(cap * 16), uv: new Float32Array(cap * 4), col: new Float32Array(cap * 4), n: 0, per };
+    const l: Layer = { mesh, mat, m: new Float32Array(cap * 16), uv: new Float32Array(cap * 4), col: new Float32Array(cap * 4),
+      dr: new Float32Array(cap * 4), decal: mask, n: 0, per };
     this.bind(l);
     setCount(mesh, 0);
     return l;
@@ -332,6 +397,7 @@ export class CarSpriteView {
     l.mesh.thinInstanceSetBuffer('matrix', l.m, 16, false);
     l.mesh.thinInstanceSetBuffer('uvRect', l.uv, 4, false);
     l.mesh.thinInstanceSetBuffer('color', l.col, 4, false);
+    if (l.decal) l.mesh.thinInstanceSetBuffer('decalRect', l.dr, 4, false);
   }
 
   /** Clears one section before its owner writes this frame's cars. */
@@ -342,14 +408,18 @@ export class CarSpriteView {
   /** Adds a car to section [s] (the car must pass `has(id, decal)`). */
   add(s: SectionId, c: SpriteCar): void {
     const sec = this.sections.get(s)!;
-    const body = this.bodyCells.get(`${c.id}#${c.decal}`) ?? this.bodyCells.get(`${c.id}#0`);
+    // A decal sprite: the base cell + its decal cell; else the procedural variant cell.
+    const dc = c.decal > 0 ? this.decalCells.get(c.decal) : undefined;
+    const body = (dc ? undefined : this.bodyCells.get(`${c.id}#${c.decal}`)) ?? this.bodyCells.get(`${c.id}#0`);
     if (!body) return;
     const a = c.alpha ?? 1;
     if (a <= 0) return;
     sec.n++;
     const paint = c.id === POLICE_SPRITE ? WHITE : c.paint;
     // Wheels (under the body), front ones steered, left ones mirrored.
-    const wc = this.wheelCells.get(c.id), wpx = this.wheelPx.get(c.id), e = this.entries.get(c.id)!;
+    // A garage wheel sprite replaces wheel.png at the same size (specs/art.md v3 "Kola").
+    const own = this.wheelCells.get(c.id), wpx = this.wheelPx.get(c.id), e = this.entries.get(c.id)!;
+    const wc = own && (c.wheel ?? 0) > 0 ? (this.wheelCells.get(`garage#${c.wheel}`) ?? own) : own;
     if (wc && wpx) {
       const k = this.tuning.carScale / 32;
       const ww = wpx[0] * k, wl = wpx[1] * k;
@@ -359,7 +429,7 @@ export class CarSpriteView {
       }
     }
     this.local(c.len, c.wid, 0, 0, DZ_BODY, 0);
-    this.push(sec, 'b', c.world, body, paint, a);
+    this.push(sec, 'b', c.world, body, paint, a, dc ?? NO_DECAL);
     const lc = this.lightCells.get(c.id);
     if (lc && c.lights !== LIGHTS_OFF) {
       if (c.lights === LIGHTS_FULL) {
@@ -384,13 +454,15 @@ export class CarSpriteView {
     Matrix.FromArrayToRef(o, 0, this.a);
   }
 
-  private push(sec: Section, kind: 'b' | 'w' | 'l', world: Matrix, uv: readonly number[], col: Rgba, alpha: number): void {
+  private push(sec: Section, kind: 'b' | 'w' | 'l', world: Matrix, uv: readonly number[], col: Rgba, alpha: number,
+    dr: readonly number[] = NO_DECAL): void {
     this.a.multiplyToRef(world, this.b);
     const arr = this.b.asArray();
     sec.m.push(kind === 'b' ? 0 : kind === 'w' ? 1 : 2);
     for (let i = 0; i < 16; i++) sec.m.push(arr[i]!);
     sec.uv.push(uv[0]!, uv[1]!, uv[2]!, uv[3]!);
     sec.col.push(col[0], col[1], col[2], alpha);
+    sec.dr.push(dr[0]!, dr[1]!, dr[2]!, dr[3]!);
   }
 
   /** Merges the sections into the three meshes; call once per frame before scene.render. */
@@ -408,6 +480,7 @@ export class CarSpriteView {
         for (let j = 0; j < 4; j++) {
           l.uv[l.n * 4 + j] = sec.uv[i * 4 + j]!;
           l.col[l.n * 4 + j] = sec.col[i * 4 + j]!;
+          l.dr[l.n * 4 + j] = sec.dr[i * 4 + j]!;
         }
         l.n++;
       }
@@ -418,18 +491,21 @@ export class CarSpriteView {
       l.mesh.thinInstanceBufferUpdated('matrix');
       l.mesh.thinInstanceBufferUpdated('uvRect');
       l.mesh.thinInstanceBufferUpdated('color');
+      if (l.decal) l.mesh.thinInstanceBufferUpdated('decalRect');
     }
   }
 
   private grow(l: Layer): void {
     const cap = (l.m.length / 16) * 2;
-    const m = new Float32Array(cap * 16), uv = new Float32Array(cap * 4), col = new Float32Array(cap * 4);
+    const m = new Float32Array(cap * 16), uv = new Float32Array(cap * 4), col = new Float32Array(cap * 4), dr = new Float32Array(cap * 4);
     m.set(l.m);
     uv.set(l.uv);
     col.set(l.col);
+    dr.set(l.dr);
     l.m = m;
     l.uv = uv;
     l.col = col;
+    l.dr = dr;
     this.bind(l);
   }
 
