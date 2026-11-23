@@ -135,3 +135,29 @@ Jako Taxi: `sprintGallery` a `sprintGalleryGo`; W `?mg=sprint` otevře svět na 
   v rozmezí = všechny cíle, a když ani k jednomu trasa nevede, UI pošle `timeout` (0★).
 - Kontrola projetá mimo pořadí se ignoruje (UI posílá jen další v pořadí).
 - Rychlé auto pod parem: 3★ a vyšší skóre; score nikdy záporné.
+
+## Upřesnění v1
+
+- `pick`: každé id v `allow` musí být v `dests` (jinak `IllegalAction`); `pool` drží pořadí
+  `dests`. Prázdný `pool` → `over` **bez** losu (`rng` se nemění). `pick` nemá `atMs` a
+  `clockMs` nemění.
+- `go`: `atMs ≥ clockMs`. `finish` při `cps = 0` je legální hned po `go`.
+- Výsledek bez dojetí nese `timeMs` a `parMs` ze stavu (0 před `go`) a `dest` (`""` před `pick`).
+- **Svět (W):** na startu se auto přesune (v klidu) na parkovací bod spotu s `parkHeading`,
+  hodiny minihry začínají na 0 a hned jde `pick`. `allow` = cíle Taxi vzdušně
+  `dest_min_m … dest_max_m` od auta, **ke kterým vede trasa**; když žádný, pošle se `[]`. Když
+  vylosovaný cíl nemá trasu, hned po `pick` jde `timeout`.
+- Trasa: `navStart` z pozice a natočení auta na startu → `navGoal(cíl)`, `findRoute`
+  (specs/route.md). `distDm` = součet délek hran trasy (dm, specs/route.md) od startovního po
+  cílový uzel; částečná startovní a cílová hrana se nepočítají.
+- Kontroly: `cum[i]` = součet délek prvních `i` hran trasy, `every = round(cp_every_m × 10)` dm;
+  uzel `i ≥ 1` dostane kontrolu `k`, když `cum[i] ≥ k × every` a `2 × (distDm − cum[i]) > every`
+  (pak `k += 1`). Bod kontroly = uzel, polovina koridoru = `šířka / 2` hrany trasy, která do uzlu
+  vede. Cíl = bod cíle (parkovací bod landmarku), polovina koridoru jeho hrany.
+- Odpočet: `go` v prvním snímku, kdy `clock ≥ countdown_s`, s `atMs = floor(clock × 1000)`.
+  Během odpočtu se vstup nahradí brzděním do stání (brzda při dopředné rychlosti nad
+  `drive.brake_min_mps`, ruční brzda).
+- Za snímek nejvýš jedna kontrola nebo cíl; `hit` (stejná detekce a 500 ms jako Drift) jde před
+  kontrolou téhož snímku se stejným `atMs`. `time_cap_s` se měří od `go`.
+- Mezičas v HUD: `splitMs − floor(parMs × cum ÷ distDm)` (cum kontroly). Tlačítko ukončit =
+  `timeout` a `aborted` (0★, skóre 0); přesednutí / garáž = `timeout` s normálním výsledkem.
