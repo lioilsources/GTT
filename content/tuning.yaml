@@ -184,7 +184,7 @@ bench:
 demo:
   seed: 20261123                # every random seed of the game in the demo
   fps: 30                       # fixed step per rendered frame
-  duration_s: 26.0
+  duration_s: 20.0
   track_search_m: 6.0           # tram track next to the crossing
   tram_past_m: 4.0              # the standing tram's tail this far past the crossing
   queue_cars: 2
