@@ -336,8 +336,9 @@
   level: P2
   spec: specs/art.md@2
   lead: web
-  flutter: todo
+  flutter: done
   web: done
+  checks: {flutter: pass, web: pass}
 
 - id: F-041
   name: Photo spots and the Camera app (frame the view, Passport photo stamps)
