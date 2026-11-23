@@ -77,3 +77,14 @@ Prohra, remíza 0★. `score = max(0, 1000 − 10 × shots)` při výhře, jinak
 
 Nahoře soupeřova deska (klepnutí = výstřel), dole menší vlastní. Před prvním výstřelem tlačítko
 „Přerozmístit“ s počtem zbývajících. Potopená loď se obtáhne.
+
+## Upřesnění v1
+
+- `pShips`, `aShips` jsou v pořadí `fleet`. `shuffle` přerozmístí jen flotilu hráče a pokračuje v `rng`.
+- AI po zásahu střílí znovu jako hráč; `r = ai.nextInt(100)` se losuje u každého výstřelu AI.
+- **Řada** = maximální souvislý úsek ≥ 2 zásahů na nepotopených lodích vodorovně nebo svisle.
+  Kandidáti = volná pole hned za oběma konci všech řad; když žádná řada není (nebo nedá volné
+  pole), volní ortogonální sousedé všech zásahů na nepotopených lodích.
+- Hledání: nejdřív filtr `(x + y) mod 2 = 0` (úroveň ≥ 3), pak vyřazení polí u potopených lodí
+  (úroveň ≥ 4); každý krok platí jen, když nezůstane prázdno.
+- `timeout`: zásahy = počet `x` v `aShots` (hráč) a v `pShots` (AI).

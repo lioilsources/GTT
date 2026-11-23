@@ -75,3 +75,11 @@ podle `i`. Prázdná deska: jen středové pole `(size div 2) × size + size div
 
 Deska se vejde na šířku (15 polí ≈ 24 px na 360 px displeji); klepnutí vybere pole, druhé klepnutí
 na stejné pole potvrdí (velké prsty). Poslední tah AI zvýrazněný, vítězná řada podtržená.
+
+## Upřesnění v1
+
+- `r = ai.nextInt(100)` se losuje u každého tahu AI, i když je kandidát jen jeden (prázdná deska).
+- `útok(p, x) × def ÷ 100` se počítá ze součtu přes všechny 4 směry, celočíselně (ořez k nule).
+- Při `def > 100` (úroveň 5) může blokování hráčovy pětky přebít vlastní výhru – tak, jak je vzorec
+  napsaný (test ve `web/test/boardgames.test.ts`); jiné chování by byla nová verze.
+- `moves` roste jen po tahu hráče.

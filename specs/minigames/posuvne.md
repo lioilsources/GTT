@@ -56,3 +56,7 @@ Nesloženo: `winner = "ai"`, 0★, `score = 0`.
 
 Klepnutí na dílek v řadě nebo sloupci s prázdným polem přesune celou řadu dílků (UI pošle akce
 jednotlivě od prázdného pole). Počítadlo tahů a „par“ nahoře.
+
+## Upřesnění v1
+
+- `level` se ořízne do 1…`len(shuffleMoves)`. Dodatečný posun při složeném výsledku je nejvýš jeden.
