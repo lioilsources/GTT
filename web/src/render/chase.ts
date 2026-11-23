@@ -12,6 +12,8 @@ export type CameraMode = 'topdown' | 'chase';
 export const RING_M = 1500;
 export const FOG_START_M = 500;
 export const FOG_END_M = 1500;
+/** Chase view: the driven car is a box this tall, its top drawing on the roof (hop roll in 3D). */
+export const CHASE_BODY_M = 1.2;
 /** Chase view: traffic, pedestrians and roads are kept this far around the car (m). */
 export const CHASE_NEAR_M = 300;
 /** Occluding buildings (specs/terrain.md): within 6 m of the camera–car segment, drawn at 0.3 coverage. */

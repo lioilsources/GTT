@@ -248,11 +248,10 @@
 - id: F-030
   name: Trams (tracks, generated stops, articulated cars, right of way)
   level: P1
-  spec: specs/trams.md@1
+  spec: specs/trams.md@2
   lead: web
-  flutter: done
-  web: done
-  checks: {flutter: pass, web: pass}
+  flutter: todo
+  web: todo
 - id: F-031
   name: Kuličky (Prague local game)
   level: P0
@@ -658,6 +657,13 @@
   name: "Zkušební jízda v garáži a ladicí hotovost (dogfooding)"
   level: P2
   spec: specs/testdrive.md@2
+  lead: web
+  flutter: todo
+  web: todo
+- id: F-076
+  name: "První spuštění: postup stahování v % a úvodní karta (L-S7)"
+  level: P2
+  spec: specs/firstrun.md@1
   lead: web
   flutter: todo
   web: todo
