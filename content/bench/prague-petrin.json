@@ -1,0 +1,13 @@
+{
+  "id": "petrin",
+  "city": "prague",
+  "description": "L-S1 hills: Petřín south slope, from náměstí Kinských up Holečkova, Zapova and Švédská to Na Hřebenkách under Strahov.",
+  "oneway": true,
+  "start": {"a": "Holečkova", "b": "Štefánikova"},
+  "legs": [
+    {"via": ["Holečkova"], "to": {"a": "Holečkova", "b": "Zapova"}},
+    {"via": ["Zapova"], "to": {"a": "Zapova", "b": "Švédská"}},
+    {"via": ["Švédská"], "to": {"a": "Švédská", "b": "Na Hřebenkách"}},
+    {"via": ["Na Hřebenkách"], "to": {"a": "Na Hřebenkách", "b": "Pod Stadiony"}}
+  ]
+}

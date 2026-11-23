@@ -259,16 +259,25 @@ class CarFleet {
     }
   }
 
+  /// Where a car from the garage appears: its parking point, or with [here] (the garage opened from
+  /// the phone away from the spot, specs/testdrive.md v2) the player's car's place and heading.
+  ({double x, double y, double heading}) _spawnPoint(GaragePoint g, bool here) {
+    final c = drive.car;
+    return here ? (x: c.x, y: c.y, heading: c.heading) : (x: g.x, y: g.y, heading: g.heading);
+  }
+
   /// Drive out of the garage with an owned car; the current one stays inside (or is towed away).
-  void select(String car) {
+  /// [here]: the garage list was opened from the phone away from the spot.
+  void select(String car, {bool here = false}) {
     final g = garage;
     if (g == null) return;
     testing = null;
+    final at = _spawnPoint(g, here);
     state = rules.apply(state, CarsAction.select(car));
     for (final p in parked.where((q) => q.chunk == null && q.owner == 'player' && q.carId == car).toList()) {
       _remove(p);
     }
-    drive.replaceCar(spec, g.x, g.y, g.heading);
+    drive.replaceCar(spec, at.x, at.y, at.heading);
     for (final f in onCarChanged) {
       f(car);
     }
@@ -281,16 +290,17 @@ class CarFleet {
 
   /// Starts a test drive of [car] on the garage's parking point: the catalog car (no upgrades,
   /// default look), not owned. A stolen car is towed first (`select` of the first own car).
-  bool startTest(String car) {
+  bool startTest(String car, {bool here = false}) {
     final g = garage;
     if (g == null || !canTest(car)) return false;
+    final at = _spawnPoint(g, here);
     if (state.stolen && state.owned.isNotEmpty) state = rules.apply(state, CarsAction.select(state.owned.first));
     // The own car stays in the garage: copies of it left parked in town go.
     for (final p in parked.where((q) => q.chunk == null && q.owner == 'player' && q.carId == state.driving).toList()) {
       _remove(p);
     }
     testing = TestDrive(car, tuning.cars.testDriveS);
-    drive.replaceCar(spec, g.x, g.y, g.heading);
+    drive.replaceCar(spec, at.x, at.y, at.heading);
     for (final f in onCarChanged) {
       f(car);
     }

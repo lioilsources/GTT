@@ -8,7 +8,7 @@ import 'garage_controller.dart';
 import 'garage_tabs.dart';
 
 /// Phone app Garáž (specs/garage.md "Garáž", specs/phone.md): the owned cars with their levels and
-/// looks, read only, and the shelf; buying happens only at the garage.
+/// looks, read only, and the shelf; "Otevřít garáž" opens the full garage sheet anywhere (specs/testdrive.md v2).
 class GarageAppScreen extends StatelessWidget {
   const GarageAppScreen({super.key, required this.garage});
   final GarageController garage;
@@ -33,6 +33,16 @@ class GarageAppScreen extends StatelessWidget {
                 fontWeight: FontWeight.w700,
               ),
             ),
+            // The full garage sheet anywhere (specs/testdrive.md v2 "Garáž z telefonu").
+            if (garage.canOpenAnywhere)
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: Tokens.spaceSm),
+                child: FilledButton(
+                  key: const ValueKey('garageOpen'),
+                  onPressed: garage.openSheet,
+                  child: Text(l.garageOpen),
+                ),
+              ),
             for (final id in garage.owned)
               Padding(
                 key: ValueKey('garageAppCar:$id'),

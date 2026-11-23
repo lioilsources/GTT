@@ -1,5 +1,7 @@
 name: metropole_workspace
 publish_to: none
+# Not a pub field (ignored by pub): licence of the code, see LICENSE and NOTICE.
+license: MIT
 environment:
   sdk: ^3.12.2
 workspace:

@@ -116,7 +116,8 @@ parkovacího bodu je před autem), čára vede rovnou po hraně.
 
 ## Ladění
 
-- W: `?goto=<spotId>` spustí po načtení navigaci ke spotu; `?feedSeed=<n>` dá prvnímu balíčku seed.
+- W: `?goto=<spotId>` spustí po načtení navigaci ke spotu; `?feedSeed=<n>` dá prvnímu balíčku seed;
+  `?route=<id>` vede navigaci po pevné trase z `content/bench/` (`specs/bench.md` v2).
 
 ## Verze
 

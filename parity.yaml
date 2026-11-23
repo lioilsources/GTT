@@ -26,11 +26,11 @@
 - id: F-004
   name: M0 drive physics (tyre model, handbrake, layers)
   level: P1
-  spec: specs/drive.md@1
+  spec: specs/drive.md@2
   scenarios: scenarios/drive
-  lead: flutter
-  flutter: wip
-  web: wip
+  lead: web
+  flutter: todo
+  web: todo
 - id: F-005
   name: M0 controls A/B/C
   level: P1
@@ -41,7 +41,7 @@
 - id: F-006
   name: D1 benchmark (route, autopilot, measurement)
   level: P1
-  spec: specs/bench.md@1
+  spec: specs/bench.md@2
   lead: web
   flutter: todo
   web: todo
@@ -248,7 +248,7 @@
 - id: F-030
   name: Trams (tracks, generated stops, articulated cars, right of way)
   level: P1
-  spec: specs/trams.md@1
+  spec: specs/trams.md@2
   lead: web
   flutter: done
   web: done
@@ -293,8 +293,9 @@
   level: P1
   spec: specs/hop.md@2
   lead: web
-  flutter: todo
-  web: todo
+  flutter: done
+  web: done
+  checks: {flutter: pass, web: pass}
 - id: F-036
   name: Wanted level 3 with a roadblock of two standing patrols
   level: P1
@@ -613,11 +614,11 @@
 - id: F-070
   name: "Svahy a skoky (M5-S6, T1)"
   level: P1
-  spec: specs/terrain.md@1
+  spec: specs/terrain.md@3
   scenarios: scenarios/terrain
   lead: web
   flutter: todo
-  web: done
+  web: todo
 
 - id: F-071
   name: "Reliéf v pohledu shora: promítání, stínování, šipky, HUD (M5-S6)"
@@ -651,12 +652,19 @@
   spec: specs/terrain.md@1
   lead: web
   flutter: todo
-  web: todo
+  web: done
 
 - id: F-075
   name: "Zkušební jízda v garáži a ladicí hotovost (dogfooding)"
   level: P2
-  spec: specs/testdrive.md@1
+  spec: specs/testdrive.md@2
+  lead: web
+  flutter: todo
+  web: todo
+- id: F-076
+  name: "První spuštění: postup stahování v % a úvodní karta (L-S7)"
+  level: P2
+  spec: specs/firstrun.md@1
   lead: web
   flutter: todo
   web: todo

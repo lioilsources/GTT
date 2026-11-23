@@ -133,7 +133,8 @@ Future<Map<String, double>> runScenario(String name, List<Map<String, Object?>> 
       ..reset()
       ..throttle = inNum(inp, 'throttle')
       ..steer = inNum(inp, 'steer')
-      ..brake = inNum(inp, 'brake');
+      ..brake = inNum(inp, 'brake')
+      ..boost = inNum(inp, 'boost') > 0;
     preX = d.car.x;
     preY = d.car.y;
     d.update(dt);
