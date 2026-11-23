@@ -130,14 +130,27 @@
 }
 
 /* Feed */
+/* Feed: a vertical strip of pages (prev / current / next), moved by transforms only (specs/phone.md v5). */
 .feed {
   position: absolute;
   inset: 0;
+  overflow: hidden;
+  touch-action: none;
+  user-select: none;
+}
+
+.feed-strip,
+.feed-page {
+  position: absolute;
+  inset: 0;
+  will-change: transform;
 }
 
 .feed-card {
   position: absolute;
   inset: 0;
+  transform-origin: 50% 100%;
+  will-change: transform;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -252,6 +265,32 @@
   font-weight: 800;
 }
 
+/* Sideways action hint, faded in by the drag (opacity set inline). */
+.feed-hint {
+  position: absolute;
+  top: var(--space-xl);
+  padding: var(--space-xs) var(--space-md);
+  border-radius: var(--radius-pill);
+  font-size: var(--font-speed);
+  font-weight: 800;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.feed-hint.go {
+  left: var(--space-lg);
+  background: var(--color-phone-go);
+  color: var(--color-ui-text);
+  transform: rotate(-12deg);
+}
+
+.feed-hint.less {
+  right: var(--space-lg);
+  background: var(--color-phone-app-off);
+  color: var(--color-ui-text);
+  transform: rotate(12deg);
+}
+
 .feed-foot {
   font-size: var(--font-hud-small);
   color: var(--color-ui-text-faint);
@@ -266,6 +305,7 @@
   align-items: center;
   justify-content: center;
   gap: var(--space-sm);
+  background: var(--color-phone-screen);
   color: var(--color-ui-text-muted);
 }
 
