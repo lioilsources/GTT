@@ -3,6 +3,7 @@ import 'package:mg_cara/mg_cara.dart';
 import 'package:mg_ctyri/mg_ctyri.dart';
 import 'package:mg_dama/mg_dama.dart';
 import 'package:mg_desetitisic/mg_desetitisic.dart';
+import 'package:mg_kostky/mg_kostky.dart';
 import 'package:mg_koulena/mg_koulena.dart';
 import 'package:mg_kulicky/mg_kulicky.dart';
 import 'package:mg_kviz/mg_kviz.dart';
@@ -12,9 +13,12 @@ import 'package:mg_nohejbal/mg_nohejbal.dart';
 import 'package:mg_oko/mg_oko.dart';
 import 'package:mg_piskvorky/mg_piskvorky.dart';
 import 'package:mg_posuvne/mg_posuvne.dart';
+import 'package:mg_prase/mg_prase.dart';
+import 'package:mg_prsi/mg_prsi.dart';
 import 'package:mg_reversi/mg_reversi.dart';
 import 'package:mg_sipky/mg_sipky.dart';
 import 'package:mg_sirky/mg_sirky.dart';
+import 'package:mg_srdce/mg_srdce.dart';
 import 'package:mg_strelnice/mg_strelnice.dart';
 import 'package:shared_gen/shared_gen.dart';
 
@@ -40,6 +44,11 @@ const Map<MinigameId, Minigame> minigames = {
   MinigameId.lode: LodeGame(),
   MinigameId.posuvne: PosuvneGame(),
   MinigameId.kviz: KvizGame(),
+  // M2-S9 batch B (cards, dice).
+  MinigameId.prsi: PrsiGame(),
+  MinigameId.srdce: SrdceGame(),
+  MinigameId.kostky: KostkyGame(),
+  MinigameId.prase: PraseGame(),
   // World minigame: the Gallery card starts the shift in the city (specs/minigames/taxi.md).
   MinigameId.taxi: TaxiGame(),
 };

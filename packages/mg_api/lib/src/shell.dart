@@ -35,6 +35,7 @@ class MinigameShell extends StatefulWidget {
     required this.id,
     required this.env,
     required this.rules,
+    this.ruleArgs = const {},
     required this.timeCapS,
     required this.onFinish,
     required this.body,
@@ -45,6 +46,9 @@ class MinigameShell extends StatefulWidget {
 
   /// Up to three rule cards (9.2).
   final List<MessageKey> rules;
+
+  /// Placeholder values for the rule cards (e.g. a target from tuning).
+  final Map<String, Object> ruleArgs;
   final int timeCapS;
   final void Function(MinigameResult) onFinish;
   final GameBodyBuilder body;
@@ -216,7 +220,11 @@ class _MinigameShellState extends State<MinigameShell> with WidgetsBindingObserv
         children = [
           Text(t(_nameKey), style: text.copyWith(fontSize: 22, fontWeight: FontWeight.w700)),
           const SizedBox(height: Tokens.spaceMd),
-          Text(t(widget.rules[_card]), textAlign: TextAlign.center, style: text.copyWith(fontSize: 18)),
+          Text(
+            t(widget.rules[_card], widget.ruleArgs),
+            textAlign: TextAlign.center,
+            style: text.copyWith(fontSize: 18),
+          ),
           const SizedBox(height: Tokens.spaceMd),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,

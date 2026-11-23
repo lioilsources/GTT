@@ -216,13 +216,13 @@ class _DesetBodyState extends State<_DesetBody> {
                               onTap: keep && _myMove ? () => _toggle(i) : null,
                               child: CustomPaint(
                                 size: Size.square(side),
-                                painter: _DiePainter(
+                                painter: DiePainter(
                                   value: values[i],
                                   ring: keep
-                                      ? (_selected.contains(i) ? _Ring.selected : _Ring.none)
+                                      ? (_selected.contains(i) ? DieRing.selected : DieRing.none)
                                       : _busted
-                                      ? _Ring.bust
-                                      : (_kept.contains(i) ? _Ring.selected : _Ring.none),
+                                      ? DieRing.bust
+                                      : (_kept.contains(i) ? DieRing.selected : DieRing.none),
                                 ),
                               ),
                             ),
@@ -249,46 +249,4 @@ class _DesetBodyState extends State<_DesetBody> {
       ),
     );
   }
-}
-
-enum _Ring { none, selected, bust }
-
-/// One die with pips (same pip layout as the web client).
-class _DiePainter extends CustomPainter {
-  _DiePainter({required this.value, required this.ring});
-
-  final int value;
-  final _Ring ring;
-
-  static const _pips = <int, List<(double, double)>>{
-    1: [(0.5, 0.5)],
-    2: [(0.27, 0.27), (0.73, 0.73)],
-    3: [(0.27, 0.27), (0.5, 0.5), (0.73, 0.73)],
-    4: [(0.27, 0.27), (0.73, 0.27), (0.27, 0.73), (0.73, 0.73)],
-    5: [(0.27, 0.27), (0.73, 0.27), (0.5, 0.5), (0.27, 0.73), (0.73, 0.73)],
-    6: [(0.27, 0.25), (0.73, 0.25), (0.27, 0.5), (0.73, 0.5), (0.27, 0.75), (0.73, 0.75)],
-  };
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final s = size.shortestSide;
-    final rect = RRect.fromRectAndRadius(Offset.zero & Size.square(s), Radius.circular(s * 0.19));
-    canvas.drawRRect(rect, Paint()..color = Color(Tokens.colorWorldDayFacades[0]));
-    final stroke = Paint()
-      ..style = PaintingStyle.stroke
-      ..color = Color(switch (ring) {
-        _Ring.none => Tokens.colorUiTextFaint,
-        _Ring.selected => Tokens.colorBrandAccent,
-        _Ring.bust => Tokens.colorUiControlBrake,
-      })
-      ..strokeWidth = s * (ring == _Ring.none ? 0.03 : 0.09);
-    canvas.drawRRect(rect, stroke);
-    final pip = Paint()..color = const Color(Tokens.colorUiBackground);
-    for (final (x, y) in _pips[value] ?? const <(double, double)>[]) {
-      canvas.drawCircle(Offset(x * s, y * s), s * 0.1, pip);
-    }
-  }
-
-  @override
-  bool shouldRepaint(_DiePainter old) => old.value != value || old.ring != ring;
 }
