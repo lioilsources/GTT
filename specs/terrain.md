@@ -167,25 +167,33 @@ gestem (dvojí klepnutí dvěma prsty); výchozí je pohled shora (K1 = A). Rozp
 
 ### Upřesnění T2 (klient W, F-074)
 - **Kamera:** směr za autem se vyhlazuje jako shora (`camera.heading_follow_rate`, při couvání se
-  nedotáčí); kamera stojí `distance_m` za autem ve výšce `z_ref + height_m`, cíl je `look_ahead_m`
-  před autem ve výšce `z_ref`. `fov_deg` platí pro kratší stranu obrazovky (na výšku vodorovně).
-  Oddálení na hraně a při tvrdém dopadu násobí `distance_m` i `height_m`, třes posouvá kameru i cíl.
-- **Zprůhlednění:** fragment budovy nebo mostovky, který je blíž kameře než auto a nejvýš 6 m od
-  úsečky kamera–auto, se kreslí rastrem 4 × 4 s pokrytím 0,3 (alfa 0,3 bez řazení průhledných ploch);
-  stejně i v hloubkovém průchodu risografu, aby auto bylo vidět.
+  nedotáčí); kamera stojí `distance_m` za autem ve výšce `z_ref + height_m` (nejméně 4 m nad zemí
+  pod sebou), cíl je `look_ahead_m` před autem ve výšce `z_ref`. `fov_deg` platí pro kratší stranu
+  obrazovky (na výšku vodorovně). Oddálení na hraně a při tvrdém dopadu násobí `distance_m` i
+  `height_m`, třes posouvá kameru i cíl.
+- **Blízko a daleko:** načtený chunk se zblízka (terén, zem, budovy, silnice) kreslí jen do 300 m od
+  auta (nejbližší bod chunku); dál ho kreslí prstenec. Provoz a chodci se drží do 300 m, popisky a
+  ikony nad světem (ulice, stanice, budky, trasa GPS) se kreslí jen do 300 m od auta.
+- **Zprůhlednění:** fragment budovy, mostovky, koruny nebo kmene, který je blíž kameře než auto,
+  nejvýš 6 m od úsečky kamera–auto (auto = 1 m nad svou základnou) a výš než polovina auta, se kreslí
+  rastrem 4 × 4 s pokrytím 0,3 (alfa 0,3 bez řazení průhledných ploch); stejně i v hloubkovém
+  průchodu risografu, aby auto bylo vidět. Mostovka pod autem zůstává plná.
 - **Prstenec:** dlaždice `lod/`, jejichž obdélník zasahuje do 1,5 km od auta, jedna síť a jeden
-  draw call na dlaždici; kreslí se jen mimo načtené chunky (maska chunků v shaderu). Terén z mřížky
-  33 × 33 v barvě `land` × stínování ze sklonu mřížky se sluncem jako `shade` (az. 315°, výška 45°);
-  hmoty bloků od `base_z` do zobrazené výšky budovy (`extrusion`) v barvách fasád; `wood` a
-  `parkland` jako zelené hmoty `color.green.wood` / `color.green.parkland` do `height_m`; voda jako
-  jedna plocha v barvě `water` ve výšce hladiny okolní mřížky.
-- **Mlha a obloha:** lineární mlha od 0,5 do 1,5 km do barvy `color.world.sky.horizon` (v noci
-  `nightHorizon`), obloha přechodem od horizontu k `color.world.sky.zenith` (`nightZenith`). Shora
-  mlha ani obloha nejsou.
+  draw call na dlaždici; maska chunků v shaderu ji skryje pod chunky kreslenými zblízka. Terén z
+  mřížky 33 × 33 v barvě `land` × stínování ze sklonu mřížky se sluncem jako `shade` (az. 315°, výška
+  45°); hmoty bloků od `base_z` do zobrazené výšky budovy (`extrusion`) v barvách fasád; `wood` a
+  `parkland` jako zelené hmoty `color.green.wood` / `color.green.parkland` do zobrazené `height_m`;
+  voda jako jedna plocha v barvě třídy ve výšce `z_dm` + 0,3 m, vzorky mřížky pod vodou nejvýš
+  hladina − `terrain.pipeline.underwater_m` (jako zblízka).
+- **Stromy:** kmeny se v šikmém pohledu kreslí jako sloupky od země ke koruně do 150 m od auta.
+- **Mlha a obloha:** mlha jen na prstenci a vodní ploše, podíl `((d − 0,5 km) / 1 km)²` oříznutý
+  do 0–1, barva `color.world.sky.horizon` (v noci `nightHorizon`); obloha přechodem od horizontu k
+  `color.world.sky.zenith` (`nightZenith`). Shora mlha ani obloha nejsou.
 - **Přepínač:** kulaté tlačítko v HUD, dvojí klepnutí dvěma prsty (druhé do 0,35 s)
   a aplikace Nastavení v telefonu (`cameraTopdown` / `cameraChase`). Přepnutí za jízdy je okamžité,
   dlaždice prstence se načítají na pozadí a staví po jedné za snímek. Volba se pamatuje jen ve W v
   `localStorage` (`metro:camera`); uložení hry (`specs/save.md`, P0) se nemění. Ladění `?camera=chase`.
+  Během záběru Foťáku (`specs/photo.md`) se kreslí shora.
 
 ## Hraniční případy
 - Balíček bez výšek: `groundZ = 0`, `grad = 0`, nikdy `airborne`; vše jako před v1.
