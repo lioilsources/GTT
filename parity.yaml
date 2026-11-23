@@ -395,7 +395,7 @@
   spec: specs/cities.md@2
   lead: web
   flutter: todo
-  web: todo
+  web: done
   checks: {flutter: pass, web: pass}
 
 - id: F-047
