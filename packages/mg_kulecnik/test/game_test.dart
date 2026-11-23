@@ -20,7 +20,7 @@ void main() {
         ),
       ),
     );
-    expect(find.text('Drag back from the white ball: the direction aims, the length sets the power.'), findsOneWidget);
+    expect(find.text(tr('en', MessageKey.kulecnikRules1)), findsOneWidget);
     await tester.tap(find.text('Next'));
     await tester.pump();
     await tester.tap(find.text('Next'));
