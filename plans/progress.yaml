@@ -164,7 +164,7 @@ items:
   - {id: M2-S8, milestone: M2, name: "40 aut v NYC", size: L, status: "čeká na Ol1na", started: 2026-11-23T00:08,
      done: 2026-11-23T00:48, commit: 03aa847, evidence: "specs/cars.md v2, 34 nových aut (40 v NYC), PR #148, #150–#153, parita F-045 a F-018; přehled tříd ověřený ve webu (?cars) a Flutter testu"}
   - {id: M2-S9A, milestone: M2, name: "minihry dávka A: Piškvorky, Čtyři v řadě, Mlýn, Reversi, Lodě, Posuvné puzzle, Městský kvíz", size: L, status: wip, started: 2026-11-23T01:01}
-  - {id: M2-S9B, milestone: M2, name: "minihry dávka B: Prší, Srdce, Kostkový poker, Prase", size: L, status: todo}
+  - {id: M2-S9B, milestone: M2, name: "minihry dávka B: Prší, Srdce, Kostkový poker, Prase", size: L, status: wip, started: 2026-11-23T03:10}
   - {id: M2-S9C, milestone: M2, name: "minihry dávka C: Kulečník, Bowling, Minigolf, Had, Cihly, Bouchni krtka, Vzdušný hokej", size: L, status: todo}
   - {id: M2-S9D, milestone: M2, name: "minihry dávka D: Drift zóna, Sprint A→B", size: M, status: todo}
   - {id: M2-S9E, milestone: M2, name: "místní minihry: Stickball, Double Dutch (engine rhythm)", size: L, status: todo}
