@@ -609,8 +609,9 @@
   spec: specs/flow.md@2
   scenarios: scenarios/flow
   lead: web
-  flutter: todo
+  flutter: done
   web: done
+  checks: {flutter: pass, web: pass}
 
 - id: F-070
   name: "Svahy a skoky (M5-S6, T1)"
