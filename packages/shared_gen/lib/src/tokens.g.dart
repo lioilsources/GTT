@@ -112,6 +112,10 @@ abstract final class Tokens {
   static const int colorWorldNightTunnel = 0xFF14141A;
   static const int colorWorldNightLandmark = 0xFFFFF0D0;
   static const List<int> colorWorldNightFacades = [0xFFE6DCF0, 0xFFE8C8C0, 0xFFC8D8FF, 0xFFDCDCE6, 0xFFB8C8E6, 0xFFE6D8D0, 0xFFD8B8B8];
+  static const int colorWorldSkyZenith = 0xFF8DB8DF;
+  static const int colorWorldSkyHorizon = 0xFFDCE5EC;
+  static const int colorWorldSkyNightZenith = 0xFF0A0F22;
+  static const int colorWorldSkyNightHorizon = 0xFF2A3148;
   static const int colorWorldTunnelShade = 0x99000000;
   static const int colorWorldRoadblockA = 0xFFFF7A00;
   static const int colorWorldRoadblockB = 0xFFFFFFFF;
