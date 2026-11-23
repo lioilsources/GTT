@@ -652,3 +652,11 @@
   lead: web
   flutter: todo
   web: todo
+
+- id: F-075
+  name: "Zkušební jízda v garáži a ladicí hotovost (dogfooding)"
+  level: P2
+  spec: specs/testdrive.md@1
+  lead: web
+  flutter: todo
+  web: todo

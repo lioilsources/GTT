@@ -29,6 +29,8 @@ type edgeSeg struct{ a, b geo.Pt }
 type obstacles struct {
 	roads     []roadSeg
 	roadGrid  map[[2]int][]int
+	decks     []roadSeg // bridges, ramps, viaducts: footprint on the ground below
+	deckGrid  map[[2]int][]int
 	polys     []polyRef
 	polyKind  []int // 0 building, 1 water
 	polyGrid  map[[2]int][]int
@@ -51,9 +53,12 @@ func cellOf(p geo.Pt) [2]int {
 }
 
 func newObstacles(e *Env, g *pb.Graph, masses []MassRow, water []NaturePiece) *obstacles {
-	ob := &obstacles{roadGrid: map[[2]int][]int{}, polyGrid: map[[2]int][]int{}, edgeGrid: map[[2]int][]int{}, sidewalkM: e.C.Tuning.SidewalkWidthM}
+	ob := &obstacles{roadGrid: map[[2]int][]int{}, deckGrid: map[[2]int][]int{}, polyGrid: map[[2]int][]int{}, edgeGrid: map[[2]int][]int{}, sidewalkM: e.C.Tuning.SidewalkWidthM}
 	for _, ed := range g.Edges {
 		if !groundEdge(ed) { // a sunken road that is not a tunnel lies on the terrain too
+			if !ed.Tunnel {
+				ob.addDeck(ed)
+			}
 			continue
 		}
 		hw := float64(ed.WidthM) / 2
@@ -132,6 +137,31 @@ func (ob *obstacles) inBuilding(p geo.Pt, r float64) bool {
 
 func (ob *obstacles) inWater(p geo.Pt, r float64) bool {
 	return ob.inside(p, 1) || ob.nearEdge(p, r, 1)
+}
+
+// addDeck indexes a bridge, ramp or viaduct (also an Overture bridge on layer 0): no tree grows
+// in its footprint, the car on the deck would hit the crown (dogfooding: knocked off bridges).
+func (ob *obstacles) addDeck(ed *pb.Edge) {
+	hw := float64(ed.WidthM) / 2
+	pts := EdgePts(ed)
+	for k := 1; k < len(pts); k++ {
+		s := roadSeg{a: pts[k-1], b: pts[k], hw: hw, hc: hw}
+		ob.decks = append(ob.decks, s)
+		r := hw + obstacleReach
+		cellsOf(math.Min(s.a.X, s.b.X)-r, math.Min(s.a.Y, s.b.Y)-r, math.Max(s.a.X, s.b.X)+r, math.Max(s.a.Y, s.b.Y)+r,
+			func(c [2]int) { ob.deckGrid[c] = append(ob.deckGrid[c], len(ob.decks)-1) })
+	}
+}
+
+// underDeck: within r of a deck footprint (road width).
+func (ob *obstacles) underDeck(p geo.Pt, r float64) bool {
+	for _, si := range ob.deckGrid[cellOf(p)] {
+		s := ob.decks[si]
+		if q, _ := geo.ClosestOnSegment(p, s.a, s.b); q.Dist(p) < s.hw+r {
+			return true
+		}
+	}
+	return false
 }
 
 // nearRoad: within r of any ground road corridor (sidewalks included).

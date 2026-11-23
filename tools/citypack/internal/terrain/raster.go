@@ -148,14 +148,20 @@ func (r *Raster) Blur(sigma float64) {
 // Shade is the Horn hillshade of the raster as 0–255 with 128 = flat (specs/terrain.md):
 // shade = 128 · v / cos(zenith), v the lit fraction, so a flat cell multiplies colour by 1.
 func (r *Raster) Shade(azimuthDeg, altitudeDeg float64) []uint8 {
+	return r.ShadeZ(azimuthDeg, altitudeDeg, 1)
+}
+
+// ShadeZ is Shade with the slopes scaled by zFactor (terrain.pipeline.shade_strength): stronger
+// relief in the shade channel only; flat ground stays 128.
+func (r *Raster) ShadeZ(azimuthDeg, altitudeDeg, zFactor float64) []uint8 {
 	zen := (90 - altitudeDeg) * math.Pi / 180
 	az := math.Mod(360-azimuthDeg+90, 360) * math.Pi / 180
 	out := make([]uint8, len(r.Z))
 	for j := 0; j < r.H; j++ {
 		for i := 0; i < r.W; i++ {
-			dzdx := (r.At(i+1, j) - r.At(i-1, j)) / (2 * r.Step)
+			dzdx := zFactor * (r.At(i+1, j) - r.At(i-1, j)) / (2 * r.Step)
 			// Row j grows north; the Horn formula wants dz along the southward image axis.
-			dzdy := -(r.At(i, j+1) - r.At(i, j-1)) / (2 * r.Step)
+			dzdy := -zFactor * (r.At(i, j+1) - r.At(i, j-1)) / (2 * r.Step)
 			slope := math.Atan(math.Hypot(dzdx, dzdy))
 			aspect := math.Atan2(dzdy, -dzdx)
 			v := math.Cos(zen)*math.Cos(slope) + math.Sin(zen)*math.Sin(slope)*math.Cos(az-aspect)
