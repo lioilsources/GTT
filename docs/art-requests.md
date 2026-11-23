@@ -211,3 +211,4 @@ vzorem). Do té doby klient kreslí ikonu a jméno.
   traffic_sedan a police_patrol (bez masky), procedurálně (`tools/art/cars_proc.py`), plátna podle tabulky.
   Lidovka: k hotovému body.png lak převeden na šedou, výřezy pro kola, doplněny maska, kolo a světla
   (`tools/art/post_lidovka.py`).
+- **Kosmetika garáže (dávka garage1):** polepy `assets/garage/decals/<id>.png` 512×1024 (stripes, flames, checker, stars, lightning, waves, camo, halftone = volby 1–8), předek nahoru, bílý motiv na alfě, tvary navržené pro poměr auta ~2,6 a s roztažením 2,2–3,5 snesitelné; kola `assets/garage/wheels/<id>.png` 128² (sport, whitewall, five_spoke, mesh, turbine, offroad = volby 1–6), tmavá pneumatika a světlý disk. `tools/art/garage_cosmetics.py`. Rastr (halftone) je z kosočtverců, ne z kroužků.

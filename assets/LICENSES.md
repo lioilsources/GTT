@@ -15,6 +15,7 @@ není uvedeno jinak. Reprodukce: `tools/art/` (prompty, seedy, parametry workflo
 | `cars/lidovka/body.png` | Qwen-Image (fp8), ComfyUI + BiRefNet-general | Apache 2.0 / MIT | vlastní dílo projektu GTT | oprava 1, seed 316 (`tools/art/make_fix1.py`), ručně ořezáno a zmenšeno na 32 px/m; lak převeden na šedou, výřezy pro kola (`tools/art/post_lidovka.py`) |
 | `cars/lidovka/{paint_mask,wheel,lights}.png` | vlastní skript (`tools/art/post_lidovka.py`, numpy) | – | vlastní dílo projektu GTT | maska laku podle barvy z body.png, kolo a světla procedurálně |
 | `cars/{m0_coupe,taxi_metro,hatch_pip,sedan_harbor,sedan_crown,van_courier,mini_pebble,pickup_hauler,muscle_brute,traffic_sedan,police_patrol}/*.png` | vlastní skript (`tools/art/cars_proc.py`, PIL) | – | vlastní dílo projektu GTT | dávka cars1, procedurální vektor kolmo shora, bez modelu; siluety podle `specs/cars.md`, fiktivní tvary bez značek |
+| `garage/{decals,wheels}/*.png` (8 polepů, 6 kol) | vlastní skript (`tools/art/garage_cosmetics.py`, PIL) | – | vlastní dílo projektu GTT | dávka garage1, procedurální vektor; polepy bílý motiv na alfě 512×1024, kola 128² se světlým diskem, tónovatelné |
 | `souvenirs/*.png` | Qwen-Image (fp8), ComfyUI + BiRefNet-general | Apache 2.0 / MIT | vlastní dílo projektu GTT | suvenýry 1, seedy 601–604 (`tools/art/make_souv1.py`), výběr a ořez 512² (`tools/art/post_souv.py`) |
 
 Nepoužívat pro herní assety: modely s nekomerční licencí (např. FLUX.1-dev, RMBG-2.0) a modely
