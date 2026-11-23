@@ -140,6 +140,9 @@ controls:
   a_dead_zone_height: 0.06      # vertical travel before brake/boost, fraction of screen height
   a_full_brake_height: 0.08     # extra travel to full brake
   c_max_wheel_rad: 1.885
+  boost_hint_after_s: 25.0      # driving at cruise without boost before the hint shows again
+  boost_hint_min_speed_mps: 10.0  # counts as cruise driving from this speed
+  boost_hint_max: 3             # the boost hint shows at most this many times per device
 
 # Street furniture (procedural per chunk, never stored).
 props:
