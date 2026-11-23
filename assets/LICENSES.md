@@ -30,6 +30,7 @@ s omezující licencí (Illustrious-XL).
 | `cities/nyc/asphalt.png` | Qwen-Image (fp8), ComfyUI | Apache 2.0 | vlastní dílo projektu GTT | oprava 2, seed 413 (`tools/art/make_fix2.py`), 512², bezešvé (`tools/art/post_fix2.py`) |
 | `cities/nyc/{sidewalk_concrete,roof_tar}.png` | vlastní skript (`tools/art/proc_tex.py`, numpy) | – | vlastní dílo projektu GTT | procedurální, bez modelu, seedy 511 a 512, 512² bezešvé |
 | `cities/tokyo/{asphalt,sidewalk_tile,roof}.png` | vlastní skript (`tools/art/proc_tex_tokyo.py`, numpy) | – | vlastní dílo projektu GTT | procedurální, bez modelu, seedy 521–523, 512² bezešvé |
+| `cities/moscow/{asphalt,sidewalk,roof}.png` | vlastní skript (`tools/art/proc_tex_moscow.py`, numpy) | – | vlastní dílo projektu GTT | procedurální, bez modelu, seedy 531–533, 512² bezešvé, styl E (ploché tóny, paleta `color.city.moscow`) |
 
 ## Tokio (styl D, anime cel)
 
