@@ -36,7 +36,8 @@ Pocit z jízdy shodný v obou klientech. Čísla jsou v `content/tuning.yaml` (`
 ## Změny verzí
 - v2: `speed_mps.cruise` 25 → 14 m/s (bez vstupu auto jezdí městským tempem, rychleji jen s boostem do
   `top`), držení tempa z kopce (`drive.cruise_hold_mps2`). Scénáře `flow`, `nature` a `terrain`, které
-  jedou automatickým plynem, se nahrály znovu (vede W).
+  jedou automatickým plynem, se nahrály znovu (vede W). `flow/wall_30` a `terrain/uphill_launch` jedou s boostem
+  (kontrola při 20 m/s je nad městským tempem); vstup scénáře `boost` (1 = boost) čtou oba klienti.
 
 ## Scénáře (D1, nahraje F)
 Rozjezd na cestovní rychlost, maximální rychlost, brzdná dráha, poloměr ustáleného zatáčení při 15 m/s,
