@@ -138,6 +138,10 @@ class LoopController extends ChangeNotifier {
   /// Minigame id of the "coming soon" toast, or null.
   final soon = ValueNotifier<String?>(null);
   Timer? _soonTimer;
+
+  /// "No taxi shift during a test drive" toast (specs/testdrive.md).
+  final noTaxi = ValueNotifier<bool>(false);
+  Timer? _noTaxiTimer;
   double _holdS = 0;
   bool _resetting = false;
 
@@ -224,6 +228,13 @@ class LoopController extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// Debug cash (specs/testdrive.md "Ladicí hotovost"): + economy.debug_grant, saved.
+  void grantDebugCash() {
+    game.fleet.grantDebugCash();
+    save();
+    notifyListeners();
+  }
+
   /// Tow fee hook for a wrecked car (specs/economy.md).
   void tow() {
     book.tow();
@@ -260,6 +271,16 @@ class LoopController extends ChangeNotifier {
       soon.value = chosen;
       _soonTimer = Timer(Duration(milliseconds: (tuning.nav.toastS * 1000).round()), () => soon.value = null);
       return;
+    }
+    // Test drive (specs/testdrive.md): no taxi shift meanwhile; any other minigame ends it.
+    if (game.fleet.testing != null) {
+      if (id == MinigameId.taxi) {
+        _noTaxiTimer?.cancel();
+        noTaxi.value = true;
+        _noTaxiTimer = Timer(Duration(milliseconds: (tuning.nav.toastS * 1000).round()), () => noTaxi.value = false);
+        return;
+      }
+      game.fleet.endTest();
     }
     final a = phone.accepted;
     final card = a != null && a.spot == spotId ? a : null;
@@ -340,7 +361,12 @@ class LoopController extends ChangeNotifier {
     if (!busy && !phone.isOpen && !phone.nav.active && !_inWorldGame && !(yieldTo?.call() ?? false)) {
       final hidden = playHidden;
       final now = spotInReach(
-        hidden == null ? _loopSpots : [for (final p in _loopSpots) if (!hidden(p.id)) p],
+        hidden == null
+            ? _loopSpots
+            : [
+                for (final p in _loopSpots)
+                  if (!hidden(p.id)) p,
+              ],
         c.x,
         c.y,
         c.speed,
@@ -366,10 +392,12 @@ class LoopController extends ChangeNotifier {
     phone.onArrived.remove(_arrived);
     _life.dispose();
     _soonTimer?.cancel();
+    _noTaxiTimer?.cancel();
     request.dispose();
     outcome.dispose();
     playSpot.dispose();
     soon.dispose();
+    noTaxi.dispose();
     super.dispose();
   }
 }
