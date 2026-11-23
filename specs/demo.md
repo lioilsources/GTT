@@ -24,7 +24,8 @@ se stejným výsledkem.
   spustí se skok (`specs/hop.md`), jednou za záběr. Po dopadu autopilot odbočí a dojede trasu.
 - Záběr končí po `demo.duration_s`.
 - Počasí jasno, den; všechny náhodné seedy hry = `demo.seed`.
-- Bez úvodní karty, ladicího HUD, telefonu a tlačítek; jen svět (kamera jako ve hře).
+- Kamera šikmo za autem (`chase`, `specs/terrain.md` T2). Bez úvodní karty, ladicího HUD, telefonu
+  a tlačítek; jen svět.
 
 ## Pevný krok
 
@@ -37,5 +38,6 @@ se stejným výsledkem.
 
 - Na výšku 1080 × 1920 (CSS 360 × 640, DPR 3), `demo.duration_s` × `demo.fps` snímků →
   `run/media/demo_roadster.webm` (VP9, mimo git).
-- Snímek na šířku 1200 × 630 v čase `demo.og_at_s` → `web/public/og.png` (náhled odkazu, README).
+- Náhled odkazu 1200 × 630 → `web/public/og.png` (i pro README): vlevo snímek na výšku v čase
+  `demo.og_at_s` (0 = polovina letu skoku), vpravo název hry a `ogTagline`; barvy z `design/tokens.json`.
 - Skript vypíše polohu auta v 10. sekundě.

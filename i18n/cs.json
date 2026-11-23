@@ -691,5 +691,6 @@
   "testDriveOver": "Zkušební jízda skončila, sedíš zase ve svém autě",
   "testDriveNoTaxi": "Při zkušební jízdě taxi směnu nevezmeš",
   "debugCash": "+{amount}",
-  "garageOpen": "Otevřít garáž"
+  "garageOpen": "Otevřít garáž",
+  "ogTagline": "Volné ježdění po Praze, New Yorku a Tokiu. Na telefonu, v prohlížeči, zdarma."
 }

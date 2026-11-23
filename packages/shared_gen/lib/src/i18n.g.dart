@@ -698,6 +698,7 @@ enum MessageKey {
   testDriveNoTaxi('testDriveNoTaxi'),
   debugCash('debugCash'),
   garageOpen('garageOpen'),
+  ogTagline('ogTagline'),
   ;
 
   const MessageKey(this.key);
@@ -1401,6 +1402,7 @@ const Map<String, Map<String, String>> _messages = {
     'testDriveNoTaxi': 'Při zkušební jízdě taxi směnu nevezmeš',
     'debugCash': '+{amount}',
     'garageOpen': 'Otevřít garáž',
+    'ogTagline': 'Volné ježdění po Praze, New Yorku a Tokiu. Na telefonu, v prohlížeči, zdarma.',
   },
   'en': {
     'appTitle': 'Metropole',
@@ -2096,6 +2098,7 @@ const Map<String, Map<String, String>> _messages = {
     'testDriveNoTaxi': 'No taxi shift during a test drive',
     'debugCash': '+{amount}',
     'garageOpen': 'Open garage',
+    'ogTagline': 'Free driving through Prague, New York and Tokyo. On your phone, in the browser, for free.',
   },
 };
 

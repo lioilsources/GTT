@@ -697,6 +697,7 @@ export type MessageKey =
   | "testDriveNoTaxi"
   | "debugCash"
   | "garageOpen"
+  | "ogTagline"
 ;
 
 export const messages: Record<Locale, Record<MessageKey, string>> = {
@@ -1394,6 +1395,7 @@ export const messages: Record<Locale, Record<MessageKey, string>> = {
     testDriveNoTaxi: "Při zkušební jízdě taxi směnu nevezmeš",
     debugCash: "+{amount}",
     garageOpen: "Otevřít garáž",
+    ogTagline: "Volné ježdění po Praze, New Yorku a Tokiu. Na telefonu, v prohlížeči, zdarma.",
   },
   "en": {
     appTitle: "Metropole",
@@ -2089,6 +2091,7 @@ export const messages: Record<Locale, Record<MessageKey, string>> = {
     testDriveNoTaxi: "No taxi shift during a test drive",
     debugCash: "+{amount}",
     garageOpen: "Open garage",
+    ogTagline: "Free driving through Prague, New York and Tokyo. On your phone, in the browser, for free.",
   },
 };
 
