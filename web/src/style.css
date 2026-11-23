@@ -760,6 +760,72 @@ body {
   color: var(--color-ui-notice);
 }
 
+/* Batch C canvas minigames (kulecnik, bowling, minigolf, had, cihly, krtek, hokej). */
+.mgc {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-sm) var(--space-md) var(--space-md);
+  gap: var(--space-sm);
+}
+.mgc-info,
+.mgc-frames {
+  text-align: center;
+  color: var(--color-ui-text-muted);
+  min-height: 1.2em;
+}
+.mgc-frames {
+  font-variant-numeric: tabular-nums;
+  font-size: var(--font-faint);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.mgc-wrap {
+  flex: 1;
+  min-height: 0;
+  position: relative;
+}
+.mgc-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  touch-action: none;
+}
+.mgc-power {
+  height: 8px;
+  border-radius: 4px;
+  background: var(--color-ui-control-half);
+  overflow: hidden;
+}
+.mgc-power-fill {
+  height: 100%;
+  width: 0;
+  background: var(--color-brand-accent);
+}
+.mgc-toast {
+  position: absolute;
+  left: 50%;
+  top: 40%;
+  transform: translate(-50%, -50%);
+  padding: var(--space-sm) var(--space-lg);
+  border-radius: var(--radius-pill);
+  background: var(--color-ui-pill);
+  color: var(--color-ui-notice);
+  font-size: var(--font-notice);
+  font-weight: 700;
+  pointer-events: none;
+  animation: mgc-toast 1.2s ease-out forwards;
+}
+@keyframes mgc-toast {
+  0% { opacity: 0; transform: translate(-50%, -30%); }
+  15% { opacity: 1; transform: translate(-50%, -50%); }
+  80% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
 /* Cars (specs/cars.md): car name above the speed, context button, garage sheet. */
 #car-name {
   position: absolute;

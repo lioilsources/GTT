@@ -22,6 +22,13 @@ import { prsi } from './prsi/game';
 import { srdce } from './srdce/game';
 import { kostky } from './kostky/game';
 import { prase } from './prase/game';
+import { kulecnik } from './kulecnik/game';
+import { bowling } from './bowling/game';
+import { minigolf } from './minigolf/game';
+import { had } from './had/game';
+import { cihly } from './cihly/game';
+import { krtek } from './krtek/game';
+import { hokej } from './hokej/game';
 
 /** Minigames this client implements; the Gallery greys out the rest. */
 export const minigames: Partial<Record<MinigameId, (env: MinigameEnv) => Minigame>> = {
@@ -47,4 +54,11 @@ export const minigames: Partial<Record<MinigameId, (env: MinigameEnv) => Minigam
   srdce,
   kostky,
   prase,
+  kulecnik,
+  bowling,
+  minigolf,
+  had,
+  cihly,
+  krtek,
+  hokej,
 };
