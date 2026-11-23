@@ -566,6 +566,24 @@ void main() {
       stop(w);
     }, skip: !has);
 
+    testWidgets('the phone app has "Open garage" (specs/testdrive.md v2)', (tester) async {
+      final w = (await tester.runAsync(start))!;
+      tester.view
+        ..physicalSize = const Size(420, 900)
+        ..devicePixelRatio = 1;
+      await tester.pumpWidget(_app(GarageAppScreen(garage: w.garage)));
+      expect(find.byKey(const ValueKey('garageOpen')), findsNothing, reason: 'no opener set');
+      var opened = 0;
+      w.garage.openSheet = () => opened++;
+      await tester.pumpWidget(const SizedBox());
+      await tester.pumpWidget(_app(GarageAppScreen(garage: w.garage)));
+      expect(find.text('Open garage'), findsOneWidget);
+      await tester.tap(find.byKey(const ValueKey('garageOpen')));
+      expect(opened, 1);
+      stop(w);
+      tester.view.reset();
+    }, skip: !has);
+
     testWidgets('every car for sale has "Test drive"; it starts the drive and closes the sheet', (tester) async {
       final w = (await tester.runAsync(start))!;
       tester.view

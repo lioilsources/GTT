@@ -335,7 +335,7 @@ async function main(): Promise<void> {
     city, tuning, locale, t, drive, fleet, phone, loop, carsHud, npcPack, hud: $('hud'), rig: view.rig,
   });
   // Tuning and looks (specs/garage.md): after the shops (the shelf tab); rebuilds the car from its upgrades.
-  const garage = installGarage({ tuning, t, fleet, carsHud, loop, view, shops });
+  const garage = installGarage({ tuning, t, fleet, carsHud, loop, view, shops, phone });
   // Weather (specs/weather.md): random seed per start, starts clear; ?weather= sets a kind.
   const weather = installWeather({ cityId, tuning, t, drive, view, hud: $('hud'), params });
   installTravel({ cityId, tuning, t, phone, tracker: passport.tracker, store: loop.store, save: () => loop.save(), onSwitch: () => booths.clear() });

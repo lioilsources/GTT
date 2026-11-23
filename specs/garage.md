@@ -115,7 +115,8 @@ dřív než základní. Plná zatáčka při 15 m/s po 3 s: auto s `tyres` 3 má
   zdarma.
 - Po nákupu toast `garageBought` a uložení.
 - Aplikace **Garáž** v telefonu (`specs/phone.md`) ukazuje vlastní auta s úrovněmi a vzhledem jen
-  ke čtení a Poličku; nakupuje se jen u garáže.
+  ke čtení a Poličku. Tlačítko „Otevřít garáž“ otevře celý seznam garáže kdekoli
+  (`specs/testdrive.md` v2 „Garáž z telefonu“).
 
 ## Kreslení (P1)
 - `paint` mění barvu karoserie (sklo zůstává lak + 12 % bílé). Zaparkované vlastní auto, které
