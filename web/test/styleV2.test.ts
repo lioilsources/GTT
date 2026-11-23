@@ -65,6 +65,18 @@ describe('style A flat vector (specs/style.md v2)', () => {
     expect(cityFlag(st.castShadow, 'toString', false)).toBe(false);
   });
 
+  it('tokyo: own skin with roof, roofEdge and castShadow; shadows and zebras on, risograph off', () => {
+    const p = cityPalette('tokyo');
+    expect(p).not.toBe(dayPalette);
+    expect(p.facades).toEqual(tokens.colorCityTokyoFacades.map((h) => rgba(h)));
+    expect(p.roof).toEqual(rgba(tokens.colorCityTokyoRoof));
+    expect(p.roofEdge).toEqual(rgba(tokens.colorCityTokyoRoofEdge));
+    expect(p.castShadow).toEqual(rgba(tokens.colorCityTokyoCastShadow));
+    expect(cityFlag(st.castShadow, 'tokyo', false)).toBe(true);
+    expect(cityFlag(st.crosswalks, 'tokyo', false)).toBe(true);
+    expect(cityFlag(st.risograph, 'tokyo', false)).toBe(false);
+  });
+
   it('palette: nyc gets roof, roofEdge and castShadow; prague, the default and night do not', () => {
     const p = cityPalette('nyc');
     expect(p.roof).toEqual(rgba(tokens.colorCityNycRoof));

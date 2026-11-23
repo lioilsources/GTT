@@ -62,6 +62,7 @@ export function installTaxi(env: TaxiEnv): TaxiApi {
     lensDm: edgeLengthsDm(city.graphPb),
     straightPct: tuning.feed.straightPct,
     searchM: tuning.nav.searchM,
+    leftHand: city.manifest.driveSide === 'left',
   };
   const dests = taxiDests(g, city.landmarks.items, tt.destSearchM);
 

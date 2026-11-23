@@ -62,6 +62,8 @@ export interface TaxiWorld {
   straightPct: number;
   /** nav.search_m: start edge search radius. */
   searchM: number;
+  /** manifest driveSide = left (specs/cities.md v2): passengers wait left of the edge direction. */
+  leftHand: boolean;
 }
 
 /** One 4-minute shift. `update` once per frame with the world dt (scaled like driving). */
@@ -130,7 +132,7 @@ export class TaxiShift {
     const stopped = car.speed <= this.t.stopSpeedMps && car.layer === 0;
     if (this.state.phase === 'wait') {
       if (!this.passenger && this.dests.length > 0) {
-        this.passenger = spawnPassenger(this.world.graph, car, this.t);
+        this.passenger = spawnPassenger(this.world.graph, car, this.t, this.world.leftHand);
         if (this.passenger) ev.push({ kind: 'spawn', passenger: this.passenger });
       }
       const p = this.passenger;
@@ -164,9 +166,10 @@ export class TaxiShift {
 /**
  * The next passenger: from the car's heading in 45° steps (0, +45, −45, +90 …), the nearest kept
  * ground edge to the point (pickup_min_m + pickup_max_m) / 2 away that lies pickup_min_m … pickup_max_m
- * from the car; the passenger stands at the curb on the right of the edge direction.
+ * from the car; the passenger stands at the curb on the right of the edge direction (on the left in a
+ * left-hand city, specs/cities.md v2).
  */
-export function spawnPassenger(g: RoadGraph, car: TaxiPose, t: TuningMinigamesTaxi): TaxiPassenger | null {
+export function spawnPassenger(g: RoadGraph, car: TaxiPose, t: TuningMinigamesTaxi, leftHand: boolean): TaxiPassenger | null {
   const mid = (t.pickupMinM + t.pickupMaxM) / 2, search = (t.pickupMaxM - t.pickupMinM) / 2;
   for (const k of [0, 1, -1, 2, -2, 3, -3, 4]) {
     const a = car.heading + (k * Math.PI) / 4;
@@ -175,8 +178,9 @@ export function spawnPassenger(g: RoadGraph, car: TaxiPose, t: TuningMinigamesTa
     const d = Math.hypot(h.x - car.x, h.y - car.y);
     if (d < t.pickupMinM || d > t.pickupMaxM) continue;
     const half = h.edge.width / 2;
-    // Right-hand normal of the segment direction.
-    const nx = h.dirY, ny = -h.dirX;
+    // Normal of the segment direction towards the driving side's curb.
+    const sgn = leftHand ? -1 : 1;
+    const nx = h.dirY * sgn, ny = -h.dirX * sgn;
     return {
       x: h.x + nx * (half + t.curbM),
       y: h.y + ny * (half + t.curbM),
