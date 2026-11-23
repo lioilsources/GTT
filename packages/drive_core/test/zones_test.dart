@@ -160,8 +160,9 @@ void main() {
     double yaw(String cls) {
       final w = World(gravity: Vector2.zero());
       final car = Car(w, specOf(cls), d, x: 0, y: 0, heading: 0, scale: tuning.carScale);
+      // Boost: well above city cruise (specs/drive.md v2), where the yaw kick is strong.
       for (var i = 0; i < 4 * d.stepHz; i++) {
-        car.drive(ControlInput(), 1 / d.stepHz, cruise: tuning.speedMps.cruise, top: tuning.speedMps.topDefault);
+        car.drive(ControlInput()..boost = true, 1 / d.stepHz, cruise: tuning.speedMps.cruise, top: tuning.speedMps.topDefault);
         w.step(1 / d.stepHz, subStepCount: d.substeps);
       }
       // One step of handbrake straight ahead with full steer: only the yaw impulse turns the car
