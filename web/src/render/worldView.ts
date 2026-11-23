@@ -38,6 +38,9 @@ import { glowStrength, lookRim } from '../garage/looks';
 import type { Look } from '../garage/rules';
 import { hopArc, hopFlip } from '../drive/hop';
 import type { CarFleet } from '../cars/fleet';
+import { CarSpriteView, LIGHTS_BRAKE, LIGHTS_FULL, LIGHTS_OFF } from './carSprites';
+import { lookPaint } from '../garage/looks';
+import { paintHex } from '../cars/shape';
 
 /** Rotating follow camera state (port of world_engine camera.dart). */
 export class CameraRig {
@@ -174,6 +177,8 @@ export class WorldView {
     lift: TransformNode; top: TransformNode; under: Mesh; shadow: TransformNode;
     /** Underglow of an own car (specs/garage.md), null without one. */
     glow: Mesh | null;
+    /** The sprite's lights.png shows the brake lights (the procedural brake mesh stays off). */
+    spriteLights: boolean;
   };
   /**
    * Looks of own cars (specs/garage.md "Kreslení"): the driven car's (null for a stolen car or no
@@ -194,10 +199,18 @@ export class WorldView {
   private readonly projArr = new Float32Array(16);
   private inTunnel = false;
   private readonly instr: SceneInstrumentation;
+  private readonly spriteM = Matrix.Identity();
   /** Parked cars (specs/cars.md), one merged mesh rebuilt when the fleet's version changes. */
   private fleet: CarFleet | null = null;
   private parkedMesh: Mesh | null = null;
   private parkedVersion = -1;
+  /**
+   * Car sprites (specs/art.md v2 "Auta"): atlases and three thin-instance meshes shared with
+   * traffic and patrols; null until the fleet is set. Cars without a sprite stay procedural.
+   */
+  sprites: CarSpriteView | null = null;
+  /** The driven car draws its sprite (decided in buildCar). */
+  private carSprite = false;
   /** Risograph: second camera for everything above the world layer, the pass, depth-only material. */
   private readonly topCamera: TargetCamera;
   private readonly depthMat: StandardMaterial;
@@ -510,8 +523,13 @@ export class WorldView {
     const z = 0.0;
     // Class-specific vector shape (specs/cars.md "Kreslení"); lights go above its top part.
     const look = this.looks?.driven() ?? null;
-    const top = carTris(body, car.spec, hl, hw, car.axleOffset, 0, 0, 0, z - 0.01, night, false, false, undefined, look) - 0.01;
-    this.mesh('car-body', body, this.flatMat, true, false).parent = root;
+    // Sprite (specs/art.md v2): the body, wheels and lights.png come from the sprite meshes; the
+    // shadow, cone, glow, underside and reverse lights stay here.
+    const sp = this.sprites;
+    if (sp && look) sp.requireDecals([[car.spec.id, look.decal ?? 0]]);
+    const sprite = (this.carSprite = !!sp && sp.has(car.spec.id, look?.decal ?? 0));
+    const top = sprite ? 0.035 : carTris(body, car.spec, hl, hw, car.axleOffset, 0, 0, 0, z - 0.01, night, false, false, undefined, look) - 0.01;
+    if (!sprite) this.mesh('car-body', body, this.flatMat, true, false).parent = root;
     const shadow = new Tris();
     carShadowTris(shadow, car.spec, hl, hw, z - 0.01, this.palette.shadow);
     this.mesh('car-shadow', shadow, this.flatMat, true, false).parent = shadowNode;
@@ -541,6 +559,8 @@ export class WorldView {
       return m;
     };
     const brake = lights(tokens.colorCarBrake), reverse = lights(tokens.colorCarReverse);
+    // lights.png brakes instead (rear half by day, specs/art.md "Světla").
+    const spriteLights = sprite && sp!.hasLights(car.spec.id);
 
     const cone = new Tris();
     const a = cone.vertex(hl, hw * 0.6, z + 0.01, rgba(tokens.colorCarHeadlightCone));
@@ -555,7 +575,7 @@ export class WorldView {
 
     const wheels: TransformNode[] = [];
     // Wheels by class (specs/cars.md); the single front wheel of a trike or rickshaw sits over the body.
-    for (const r of wheelRects(hl, hw, car.axleOffset, car.spec.class, car.spec.length_m)) {
+    for (const r of sprite ? [] : wheelRects(hl, hw, car.axleOffset, car.spec.class, car.spec.length_m)) {
       const wz = r.top ? top + 0.02 : z + 0.01;
       const cx = (r.x0 + r.x1) / 2, cy = (r.y0 + r.y1) / 2;
       const tyre = new Tris();
@@ -568,12 +588,20 @@ export class WorldView {
       this.mesh('tyre', tyre, this.flatMat, false, false).parent = w;
       if (r.front) wheels.push(w);
     }
-    this.carParts = { wheels, brake, reverse, cone: coneMesh, root: holder, lights: !micro, lift, top: root, under, shadow: shadowNode, glow };
+    this.carParts = { wheels, brake, reverse, cone: coneMesh, root: holder, lights: !micro, lift, top: root, under, shadow: shadowNode, glow,
+      spriteLights };
   }
 
   setFleet(f: CarFleet): void {
     this.fleet = f;
     this.parkedVersion = -1;
+    if (!this.sprites) {
+      const sp = (this.sprites = new CarSpriteView(this.scene, this.tuning, this.city.id, f.specs));
+      sp.onReady(() => {
+        this.buildCar(this.drive.car);
+        this.parkedVersion = -1;
+      });
+    }
   }
 
   private updateParked(): void {
@@ -583,9 +611,29 @@ export class WorldView {
     this.parkedMesh?.dispose();
     const looks = this.looks;
     const glow = { margin: this.tuning.garage.glowMarginM, strength: glowStrength(this.palette.night, false, this.tuning.garage.glowDay) };
+    const sp = this.sprites;
+    const lookOf = looks ? (p: ParkedCar): Look | null => looks.parked(p) : null;
+    if (sp && lookOf) sp.requireDecals(f.parked.map((p) => [p.carId, lookOf(p)?.decal ?? 0] as [string, number]));
     const t = parkedTris(f.parked, f.specs, this.tuning.carScale, this.tuning.drive.axleOffset, Z.car, this.palette.shadow,
-      looks ? (p) => looks.parked(p) : null, glow);
+      lookOf, glow, sp ? (p, look) => sp.has(p.carId, look?.decal ?? 0) : null);
     this.parkedMesh = t.empty ? null : this.mesh('parked-cars', t, this.flatMat, true, false);
+    if (!sp) return;
+    // Parked sprites: straight wheels, no lights (specs/cars.md "bez světlometů").
+    sp.begin('parked');
+    const scale = this.tuning.carScale, m = this.spriteM;
+    for (const p of f.parked) {
+      const s = f.specs.get(p.carId), look = lookOf?.(p) ?? null, decal = look?.decal ?? 0;
+      if (!s || !sp.has(p.carId, decal)) continue;
+      const px = sp.size(p.carId)!;
+      Matrix.RotationYToRef(-p.heading, m);
+      m.setTranslationFromFloats(p.x, Z.car, p.y);
+      const hl = (s.length_m * scale) / 2, hw = (s.width_m * scale) / 2;
+      sp.add('parked', {
+        id: p.carId, decal, world: m, len: (px.h / 32) * scale, wid: (px.w / 32) * scale, hl, hw, axle: hl * this.tuning.drive.axleOffset,
+        paint: rgba(look ? lookPaint(s, look) : paintHex(s.paint)), steer: 0,
+        wheelTint: look && (look.wheels ?? 0) > 0 ? rgba(lookRim(look)) : null, lights: LIGHTS_OFF,
+      });
+    }
   }
 
   /** Rebuilds the car after a respawn (new body, maybe new size). */
@@ -607,9 +655,32 @@ export class WorldView {
     for (const w of this.carParts.wheels) w.rotation.y = -car.wheelAngle;
     const glow = this.carParts.glow;
     if (glow) glow.visibility = glowStrength(this.palette.night, car.layer < 0, this.tuning.garage.glowDay);
-    this.carParts.brake.setEnabled(this.carParts.lights && car.braking && !car.reversing);
+    this.carParts.brake.setEnabled(this.carParts.lights && !this.carParts.spriteLights && car.braking && !car.reversing);
     this.carParts.reverse.setEnabled(this.carParts.lights && car.reversing);
     this.updateHop();
+    this.updateCarSprite(car);
+  }
+
+  /** The driven car's sprite instance, following the body node (lift and flip of a hop). */
+  private updateCarSprite(car: Car): void {
+    const sp = this.sprites;
+    if (!sp) return;
+    sp.begin('player');
+    const top = this.carParts.top;
+    if (!this.carSprite || !top.isEnabled(false)) return;
+    const look = this.looks?.driven() ?? null;
+    const px = sp.size(car.spec.id)!, scale = this.tuning.carScale;
+    const night = this.palette.night;
+    // Forced up the chain: before scene.render the cached matrices are a frame old.
+    for (const n of [this.carRoot, this.carParts.root, this.carParts.lift]) n.computeWorldMatrix(true);
+    const braking = this.carParts.lights && car.braking && !car.reversing;
+    sp.add('player', {
+      id: car.spec.id, decal: look?.decal ?? 0, world: top.computeWorldMatrix(true),
+      len: (px.h / 32) * scale, wid: (px.w / 32) * scale, hl: car.halfLength, hw: car.halfWidth, axle: car.axleOffset,
+      paint: rgba(lookPaint(car.spec, look)), steer: car.wheelAngle,
+      wheelTint: look && (look.wheels ?? 0) > 0 ? rgba(lookRim(look)) : null,
+      lights: !this.carParts.lights ? LIGHTS_OFF : night ? LIGHTS_FULL : braking ? LIGHTS_BRAKE : LIGHTS_OFF,
+    });
   }
 
   /**
@@ -790,6 +861,7 @@ export class WorldView {
     this.updateBollards();
     this.updateParked();
     this.updateSkids(car.halfWidth * 0.32);
+    this.sprites?.flush();
     this.scene.render();
     this.stats.chunks = this.chunks.size;
     this.stats.drawCalls = this.instr.drawCallsCounter.current;
@@ -797,6 +869,7 @@ export class WorldView {
   }
 
   dispose(): void {
+    this.sprites?.dispose();
     this.scene.dispose();
   }
 }
