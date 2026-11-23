@@ -165,6 +165,16 @@ export class Tuning {
   readonly loop: TuningLoop;
   /** tuning and cosmetics (specs/garage.md); colours in design/tokens.json color.garage */
   readonly garage: TuningGarage;
+  /** Terrain relief (specs/terrain.md, Prompts/02-METROPOLE_TERRAIN_PLAN.md). Defaults, tuned in T3. */
+  readonly terrain: TuningTerrain;
+  readonly slopePhysics: TuningSlopePhysics;
+  /**
+   * Water and green (specs/nature.md, Prompts/03-METROPOLE_NATURE_PLAN.md + 04 forest decision).
+   * Colours in design/tokens.json color.water and color.green.
+   */
+  readonly nature: TuningNature;
+  /** Smooth driving: soft trees, wall slide, rescue (specs/flow.md, Prompts/04-METROPOLE_FLOW_PLAN.md). */
+  readonly flow: TuningFlow;
 
   private constructor(r: R) {
     this.carScale = r.d('car_scale');
@@ -210,6 +220,10 @@ export class Tuning {
     this.economy = new TuningEconomy(r.sub('economy'));
     this.loop = new TuningLoop(r.sub('loop'));
     this.garage = new TuningGarage(r.sub('garage'));
+    this.terrain = new TuningTerrain(r.sub('terrain'));
+    this.slopePhysics = new TuningSlopePhysics(r.sub('slope_physics'));
+    this.nature = new TuningNature(r.sub('nature'));
+    this.flow = new TuningFlow(r.sub('flow'));
   }
 
   toJson(): Record<string, unknown> {
@@ -257,6 +271,10 @@ export class Tuning {
       economy: this.economy.toJson(),
       loop: this.loop.toJson(),
       garage: this.garage.toJson(),
+      terrain: this.terrain.toJson(),
+      slope_physics: this.slopePhysics.toJson(),
+      nature: this.nature.toJson(),
+      flow: this.flow.toJson(),
     };
   }
 
@@ -783,32 +801,95 @@ export class TuningCamera {
   headingFollowRate: number;
   /** 1/s */
   zoomFollowRate: number;
+  /** specs/terrain.md: camera height above the smoothed ground (projection H) */
+  readonly topdown: TuningCameraTopdown;
+  /** oblique view, web only (T2) */
+  readonly chase: TuningCameraChase;
 
   constructor(r: R) {
     this.headingFollowRate = r.d('heading_follow_rate');
     this.zoomFollowRate = r.d('zoom_follow_rate');
+    this.topdown = new TuningCameraTopdown(r.sub('topdown'));
+    this.chase = new TuningCameraChase(r.sub('chase'));
   }
 
   toJson(): Record<string, unknown> {
     return {
       heading_follow_rate: this.headingFollowRate,
       zoom_follow_rate: this.zoomFollowRate,
+      topdown: this.topdown.toJson(),
+      chase: this.chase.toJson(),
+    };
+  }
+}
+
+/** specs/terrain.md: camera height above the smoothed ground (projection H) */
+export class TuningCameraTopdown {
+  heightM: number;
+
+  constructor(r: R) {
+    this.heightM = r.d('height_m');
+  }
+
+  toJson(): Record<string, unknown> {
+    return {
+      height_m: this.heightM,
     };
   }
 
   /** Value by YAML key, undefined when the key is unknown. */
   get(key: string): number | undefined {
     switch (key) {
-      case 'heading_follow_rate':
-        return this.headingFollowRate;
-      case 'zoom_follow_rate':
-        return this.zoomFollowRate;
+      case 'height_m':
+        return this.heightM;
       default:
         return undefined;
     }
   }
 
-  static readonly keys = ['heading_follow_rate', 'zoom_follow_rate'] as const;
+  static readonly keys = ['height_m'] as const;
+}
+
+/** oblique view, web only (T2) */
+export class TuningCameraChase {
+  distanceM: number;
+  heightM: number;
+  lookAheadM: number;
+  fovDeg: number;
+
+  constructor(r: R) {
+    this.distanceM = r.d('distance_m');
+    this.heightM = r.d('height_m');
+    this.lookAheadM = r.d('look_ahead_m');
+    this.fovDeg = r.d('fov_deg');
+  }
+
+  toJson(): Record<string, unknown> {
+    return {
+      distance_m: this.distanceM,
+      height_m: this.heightM,
+      look_ahead_m: this.lookAheadM,
+      fov_deg: this.fovDeg,
+    };
+  }
+
+  /** Value by YAML key, undefined when the key is unknown. */
+  get(key: string): number | undefined {
+    switch (key) {
+      case 'distance_m':
+        return this.distanceM;
+      case 'height_m':
+        return this.heightM;
+      case 'look_ahead_m':
+        return this.lookAheadM;
+      case 'fov_deg':
+        return this.fovDeg;
+      default:
+        return undefined;
+    }
+  }
+
+  static readonly keys = ['distance_m', 'height_m', 'look_ahead_m', 'fov_deg'] as const;
 }
 
 /** Tyre model and car handling (METROPOLE_PLAN 7.2). Per-car values live in content/cars/. */
@@ -1368,6 +1449,12 @@ export class TuningMinigames {
   readonly strelnice: TuningMinigamesStrelnice;
   /** Taxi shift (specs/minigames/taxi.md): a world minigame in the taxi_metro car. */
   readonly taxi: TuningMinigamesTaxi;
+  /** M2-S9 batch D: world minigames on engine drive (specs/minigames/drift.md, sprint.md) */
+  readonly drift: TuningMinigamesDrift;
+  readonly sprint: TuningMinigamesSprint;
+  /** M2-S9 NYC local games (specs/minigames/stickball.md, doubledutch.md) */
+  readonly stickball: TuningMinigamesStickball;
+  readonly doubledutch: TuningMinigamesDoubledutch;
 
   constructor(r: R) {
     this.timeCapS = r.i('time_cap_s');
@@ -1400,6 +1487,10 @@ export class TuningMinigames {
     this.nohejbal = new TuningMinigamesNohejbal(r.sub('nohejbal'));
     this.strelnice = new TuningMinigamesStrelnice(r.sub('strelnice'));
     this.taxi = new TuningMinigamesTaxi(r.sub('taxi'));
+    this.drift = new TuningMinigamesDrift(r.sub('drift'));
+    this.sprint = new TuningMinigamesSprint(r.sub('sprint'));
+    this.stickball = new TuningMinigamesStickball(r.sub('stickball'));
+    this.doubledutch = new TuningMinigamesDoubledutch(r.sub('doubledutch'));
   }
 
   toJson(): Record<string, unknown> {
@@ -1434,6 +1525,10 @@ export class TuningMinigames {
       nohejbal: this.nohejbal.toJson(),
       strelnice: this.strelnice.toJson(),
       taxi: this.taxi.toJson(),
+      drift: this.drift.toJson(),
+      sprint: this.sprint.toJson(),
+      stickball: this.stickball.toJson(),
+      doubledutch: this.doubledutch.toJson(),
     };
   }
 }
@@ -2706,6 +2801,255 @@ export class TuningMinigamesTaxi {
       passenger_m: this.passengerM,
       passenger_px: this.passengerPx,
       curb_m: this.curbM,
+    };
+  }
+}
+
+/** M2-S9 batch D: world minigames on engine drive (specs/minigames/drift.md, sprint.md) */
+export class TuningMinigamesDrift {
+  /** |beta| counted from / capped at (mrad) */
+  minSlipMrad: number;
+  maxSlipMrad: number;
+  /** speed counted from / capped at (cm/s) */
+  minSpeedCms: number;
+  maxSpeedCms: number;
+  ptsDiv: number;
+  /** longest counted gap between samples */
+  maxDtMs: number;
+  /** a drift may drop out this long before the chain is banked */
+  graceMs: number;
+  /** +1 multiplier per this much drifting in one chain */
+  multStepMs: number;
+  maxMult: number;
+  /** 3, 2, 1 stars at difficulty 3 */
+  starScores: number[];
+  /** star thresholds x % by difficulty 1-5 */
+  levelPct: number[];
+  /** UI only */
+  sessionS: number;
+  /** zone radius around the spot's parking point */
+  zoneM: number;
+  /** UI only */
+  sampleHz: number;
+  /** UI only */
+  hitMinMps: number;
+  /** UI only */
+  lowS: number;
+
+  constructor(r: R) {
+    this.minSlipMrad = r.i('min_slip_mrad');
+    this.maxSlipMrad = r.i('max_slip_mrad');
+    this.minSpeedCms = r.i('min_speed_cms');
+    this.maxSpeedCms = r.i('max_speed_cms');
+    this.ptsDiv = r.i('pts_div');
+    this.maxDtMs = r.i('max_dt_ms');
+    this.graceMs = r.i('grace_ms');
+    this.multStepMs = r.i('mult_step_ms');
+    this.maxMult = r.i('max_mult');
+    this.starScores = r.il('star_scores');
+    this.levelPct = r.il('level_pct');
+    this.sessionS = r.i('session_s');
+    this.zoneM = r.d('zone_m');
+    this.sampleHz = r.i('sample_hz');
+    this.hitMinMps = r.d('hit_min_mps');
+    this.lowS = r.d('low_s');
+  }
+
+  toJson(): Record<string, unknown> {
+    return {
+      min_slip_mrad: this.minSlipMrad,
+      max_slip_mrad: this.maxSlipMrad,
+      min_speed_cms: this.minSpeedCms,
+      max_speed_cms: this.maxSpeedCms,
+      pts_div: this.ptsDiv,
+      max_dt_ms: this.maxDtMs,
+      grace_ms: this.graceMs,
+      mult_step_ms: this.multStepMs,
+      max_mult: this.maxMult,
+      star_scores: this.starScores,
+      level_pct: this.levelPct,
+      session_s: this.sessionS,
+      zone_m: this.zoneM,
+      sample_hz: this.sampleHz,
+      hit_min_mps: this.hitMinMps,
+      low_s: this.lowS,
+    };
+  }
+}
+
+export class TuningMinigamesSprint {
+  parBaseMs: number;
+  /** par average speed by difficulty 1-5 */
+  parDmPerS: number[];
+  hitPenaltyMs: number;
+  /** time in % of par for 3, 2, 1 stars */
+  starPct: number[];
+  destMinM: number;
+  destMaxM: number;
+  destSearchM: number;
+  cpEveryM: number;
+  cpRadiusM: number;
+  /** UI only */
+  countdownS: number;
+  /** UI only */
+  timeCapS: number;
+  /** UI only */
+  hitMinMps: number;
+
+  constructor(r: R) {
+    this.parBaseMs = r.i('par_base_ms');
+    this.parDmPerS = r.il('par_dm_per_s');
+    this.hitPenaltyMs = r.i('hit_penalty_ms');
+    this.starPct = r.il('star_pct');
+    this.destMinM = r.d('dest_min_m');
+    this.destMaxM = r.d('dest_max_m');
+    this.destSearchM = r.d('dest_search_m');
+    this.cpEveryM = r.d('cp_every_m');
+    this.cpRadiusM = r.d('cp_radius_m');
+    this.countdownS = r.i('countdown_s');
+    this.timeCapS = r.i('time_cap_s');
+    this.hitMinMps = r.d('hit_min_mps');
+  }
+
+  toJson(): Record<string, unknown> {
+    return {
+      par_base_ms: this.parBaseMs,
+      par_dm_per_s: this.parDmPerS,
+      hit_penalty_ms: this.hitPenaltyMs,
+      star_pct: this.starPct,
+      dest_min_m: this.destMinM,
+      dest_max_m: this.destMaxM,
+      dest_search_m: this.destSearchM,
+      cp_every_m: this.cpEveryM,
+      cp_radius_m: this.cpRadiusM,
+      countdown_s: this.countdownS,
+      time_cap_s: this.timeCapS,
+      hit_min_mps: this.hitMinMps,
+    };
+  }
+}
+
+/** M2-S9 NYC local games (specs/minigames/stickball.md, doubledutch.md) */
+export class TuningMinigamesStickball {
+  maxOuts: number;
+  strikesOut: number;
+  ballsWalk: number;
+  zonePct: number[];
+  /** ms */
+  flightMin: number[];
+  flightVar: number[];
+  perfectMs: number;
+  goodMs: number;
+  okMs: number;
+  foulMs: number;
+  catchPct: number[];
+  starRuns: number[];
+  timeCapS: number;
+
+  constructor(r: R) {
+    this.maxOuts = r.i('max_outs');
+    this.strikesOut = r.i('strikes_out');
+    this.ballsWalk = r.i('balls_walk');
+    this.zonePct = r.il('zone_pct');
+    this.flightMin = r.il('flight_min');
+    this.flightVar = r.il('flight_var');
+    this.perfectMs = r.i('perfect_ms');
+    this.goodMs = r.i('good_ms');
+    this.okMs = r.i('ok_ms');
+    this.foulMs = r.i('foul_ms');
+    this.catchPct = r.il('catch_pct');
+    this.starRuns = r.il('star_runs');
+    this.timeCapS = r.i('time_cap_s');
+  }
+
+  toJson(): Record<string, unknown> {
+    return {
+      max_outs: this.maxOuts,
+      strikes_out: this.strikesOut,
+      balls_walk: this.ballsWalk,
+      zone_pct: this.zonePct,
+      flight_min: this.flightMin,
+      flight_var: this.flightVar,
+      perfect_ms: this.perfectMs,
+      good_ms: this.goodMs,
+      ok_ms: this.okMs,
+      foul_ms: this.foulMs,
+      catch_pct: this.catchPct,
+      star_runs: this.starRuns,
+      time_cap_s: this.timeCapS,
+    };
+  }
+}
+
+export class TuningMinigamesDoubledutch {
+  beats: number;
+  introBeats: number;
+  startGapMs: number[];
+  minGapMs: number[];
+  speedupEvery: number;
+  speedupMs: number;
+  trickPct: number[];
+  perfectMs: number;
+  goodMs: number;
+  okMs: number;
+  maxTrips: number;
+  perfectPts: number;
+  goodPts: number;
+  okPts: number;
+  trickMult: number;
+  comboStep: number;
+  maxMult: number;
+  starPct: number[];
+  /** UI only */
+  leadInMs: number;
+  /** UI only */
+  timeCapS: number;
+
+  constructor(r: R) {
+    this.beats = r.i('beats');
+    this.introBeats = r.i('intro_beats');
+    this.startGapMs = r.il('start_gap_ms');
+    this.minGapMs = r.il('min_gap_ms');
+    this.speedupEvery = r.i('speedup_every');
+    this.speedupMs = r.i('speedup_ms');
+    this.trickPct = r.il('trick_pct');
+    this.perfectMs = r.i('perfect_ms');
+    this.goodMs = r.i('good_ms');
+    this.okMs = r.i('ok_ms');
+    this.maxTrips = r.i('max_trips');
+    this.perfectPts = r.i('perfect_pts');
+    this.goodPts = r.i('good_pts');
+    this.okPts = r.i('ok_pts');
+    this.trickMult = r.i('trick_mult');
+    this.comboStep = r.i('combo_step');
+    this.maxMult = r.i('max_mult');
+    this.starPct = r.il('star_pct');
+    this.leadInMs = r.i('lead_in_ms');
+    this.timeCapS = r.i('time_cap_s');
+  }
+
+  toJson(): Record<string, unknown> {
+    return {
+      beats: this.beats,
+      intro_beats: this.introBeats,
+      start_gap_ms: this.startGapMs,
+      min_gap_ms: this.minGapMs,
+      speedup_every: this.speedupEvery,
+      speedup_ms: this.speedupMs,
+      trick_pct: this.trickPct,
+      perfect_ms: this.perfectMs,
+      good_ms: this.goodMs,
+      ok_ms: this.okMs,
+      max_trips: this.maxTrips,
+      perfect_pts: this.perfectPts,
+      good_pts: this.goodPts,
+      ok_pts: this.okPts,
+      trick_mult: this.trickMult,
+      combo_step: this.comboStep,
+      max_mult: this.maxMult,
+      star_pct: this.starPct,
+      lead_in_ms: this.leadInMs,
+      time_cap_s: this.timeCapS,
     };
   }
 }
@@ -4232,6 +4576,719 @@ export class TuningGarage {
       look_price_smoke: this.lookPriceSmoke,
       glow_margin_m: this.glowMarginM,
       glow_day: this.glowDay,
+    };
+  }
+}
+
+/** Terrain relief (specs/terrain.md, Prompts/02-METROPOLE_TERRAIN_PLAN.md). Defaults, tuned in T3. */
+export class TuningTerrain {
+  /** game height = z0 + (real − z0) x this (K2) */
+  exaggeration: number;
+  /** terrain grid step in chunks (33 x 33 per 256 m chunk) */
+  gridM: number;
+  /** road-to-terrain blend distance */
+  blendM: number;
+  readonly maxGrade: TuningTerrainMaxGrade;
+  readonly bridge: TuningTerrainBridge;
+  readonly tunnel: TuningTerrainTunnel;
+
+  constructor(r: R) {
+    this.exaggeration = r.d('exaggeration');
+    this.gridM = r.i('grid_m');
+    this.blendM = r.i('blend_m');
+    this.maxGrade = new TuningTerrainMaxGrade(r.sub('max_grade'));
+    this.bridge = new TuningTerrainBridge(r.sub('bridge'));
+    this.tunnel = new TuningTerrainTunnel(r.sub('tunnel'));
+  }
+
+  toJson(): Record<string, unknown> {
+    return {
+      exaggeration: this.exaggeration,
+      grid_m: this.gridM,
+      blend_m: this.blendM,
+      max_grade: this.maxGrade.toJson(),
+      bridge: this.bridge.toJson(),
+      tunnel: this.tunnel.toJson(),
+    };
+  }
+}
+
+export class TuningTerrainMaxGrade {
+  motorway: number;
+  trunk: number;
+  primary: number;
+  secondary: number;
+  tertiary: number;
+  alley: number;
+
+  constructor(r: R) {
+    this.motorway = r.d('motorway');
+    this.trunk = r.d('trunk');
+    this.primary = r.d('primary');
+    this.secondary = r.d('secondary');
+    this.tertiary = r.d('tertiary');
+    this.alley = r.d('alley');
+  }
+
+  toJson(): Record<string, unknown> {
+    return {
+      motorway: this.motorway,
+      trunk: this.trunk,
+      primary: this.primary,
+      secondary: this.secondary,
+      tertiary: this.tertiary,
+      alley: this.alley,
+    };
+  }
+
+  /** Value by YAML key, undefined when the key is unknown. */
+  get(key: string): number | undefined {
+    switch (key) {
+      case 'motorway':
+        return this.motorway;
+      case 'trunk':
+        return this.trunk;
+      case 'primary':
+        return this.primary;
+      case 'secondary':
+        return this.secondary;
+      case 'tertiary':
+        return this.tertiary;
+      case 'alley':
+        return this.alley;
+      default:
+        return undefined;
+    }
+  }
+
+  static readonly keys = ['motorway', 'trunk', 'primary', 'secondary', 'tertiary', 'alley'] as const;
+}
+
+export class TuningTerrainBridge {
+  clearWaterM: number;
+  clearRoadM: number;
+  maxGrade: number;
+
+  constructor(r: R) {
+    this.clearWaterM = r.d('clear_water_m');
+    this.clearRoadM = r.d('clear_road_m');
+    this.maxGrade = r.d('max_grade');
+  }
+
+  toJson(): Record<string, unknown> {
+    return {
+      clear_water_m: this.clearWaterM,
+      clear_road_m: this.clearRoadM,
+      max_grade: this.maxGrade,
+    };
+  }
+
+  /** Value by YAML key, undefined when the key is unknown. */
+  get(key: string): number | undefined {
+    switch (key) {
+      case 'clear_water_m':
+        return this.clearWaterM;
+      case 'clear_road_m':
+        return this.clearRoadM;
+      case 'max_grade':
+        return this.maxGrade;
+      default:
+        return undefined;
+    }
+  }
+
+  static readonly keys = ['clear_water_m', 'clear_road_m', 'max_grade'] as const;
+}
+
+export class TuningTerrainTunnel {
+  depthWaterM: number;
+  depthLandM: number;
+  maxGrade: number;
+
+  constructor(r: R) {
+    this.depthWaterM = r.d('depth_water_m');
+    this.depthLandM = r.d('depth_land_m');
+    this.maxGrade = r.d('max_grade');
+  }
+
+  toJson(): Record<string, unknown> {
+    return {
+      depth_water_m: this.depthWaterM,
+      depth_land_m: this.depthLandM,
+      max_grade: this.maxGrade,
+    };
+  }
+
+  /** Value by YAML key, undefined when the key is unknown. */
+  get(key: string): number | undefined {
+    switch (key) {
+      case 'depth_water_m':
+        return this.depthWaterM;
+      case 'depth_land_m':
+        return this.depthLandM;
+      case 'max_grade':
+        return this.maxGrade;
+      default:
+        return undefined;
+    }
+  }
+
+  static readonly keys = ['depth_water_m', 'depth_land_m', 'max_grade'] as const;
+}
+
+export class TuningSlopePhysics {
+  /** m/s² in game units */
+  gravity: number;
+  slopeForceScale: number;
+  /** m the wheels follow the ground before the car flies */
+  suspensionTravel: number;
+  /** m/s landing speed counted as hard (speed x 0.85, camera shake) */
+  hardLanding: number;
+
+  constructor(r: R) {
+    this.gravity = r.d('gravity');
+    this.slopeForceScale = r.d('slope_force_scale');
+    this.suspensionTravel = r.d('suspension_travel');
+    this.hardLanding = r.d('hard_landing');
+  }
+
+  toJson(): Record<string, unknown> {
+    return {
+      gravity: this.gravity,
+      slope_force_scale: this.slopeForceScale,
+      suspension_travel: this.suspensionTravel,
+      hard_landing: this.hardLanding,
+    };
+  }
+
+  /** Value by YAML key, undefined when the key is unknown. */
+  get(key: string): number | undefined {
+    switch (key) {
+      case 'gravity':
+        return this.gravity;
+      case 'slope_force_scale':
+        return this.slopeForceScale;
+      case 'suspension_travel':
+        return this.suspensionTravel;
+      case 'hard_landing':
+        return this.hardLanding;
+      default:
+        return undefined;
+    }
+  }
+
+  static readonly keys = ['gravity', 'slope_force_scale', 'suspension_travel', 'hard_landing'] as const;
+}
+
+/**
+ * Water and green (specs/nature.md, Prompts/03-METROPOLE_NATURE_PLAN.md + 04 forest decision).
+ * Colours in design/tokens.json color.water and color.green.
+ */
+export class TuningNature {
+  /** game metres, not scaled by car_scale */
+  readonly treeSizes: TuningNatureTreeSizes;
+  readonly treesPerHa: TuningNatureTreesPerHa;
+  treesPerChunkMax: number;
+  /** lod ring only; the forest itself is single trees (FLOW F1) */
+  readonly wood: TuningNatureWood;
+  shoreBandM: number;
+  trunkRadiusM: number;
+  readonly grip: TuningNatureGrip;
+  readonly crownFade: TuningNatureCrownFade;
+  readonly waterFall: TuningNatureWaterFall;
+
+  constructor(r: R) {
+    this.treeSizes = new TuningNatureTreeSizes(r.sub('tree_sizes'));
+    this.treesPerHa = new TuningNatureTreesPerHa(r.sub('trees_per_ha'));
+    this.treesPerChunkMax = r.i('trees_per_chunk_max');
+    this.wood = new TuningNatureWood(r.sub('wood'));
+    this.shoreBandM = r.d('shore_band_m');
+    this.trunkRadiusM = r.d('trunk_radius_m');
+    this.grip = new TuningNatureGrip(r.sub('grip'));
+    this.crownFade = new TuningNatureCrownFade(r.sub('crown_fade'));
+    this.waterFall = new TuningNatureWaterFall(r.sub('water_fall'));
+  }
+
+  toJson(): Record<string, unknown> {
+    return {
+      tree_sizes: this.treeSizes.toJson(),
+      trees_per_ha: this.treesPerHa.toJson(),
+      trees_per_chunk_max: this.treesPerChunkMax,
+      wood: this.wood.toJson(),
+      shore_band_m: this.shoreBandM,
+      trunk_radius_m: this.trunkRadiusM,
+      grip: this.grip.toJson(),
+      crown_fade: this.crownFade.toJson(),
+      water_fall: this.waterFall.toJson(),
+    };
+  }
+}
+
+/** game metres, not scaled by car_scale */
+export class TuningNatureTreeSizes {
+  readonly s: TuningNatureTreeSizesS;
+  readonly m: TuningNatureTreeSizesM;
+  readonly l: TuningNatureTreeSizesL;
+
+  constructor(r: R) {
+    this.s = new TuningNatureTreeSizesS(r.sub('S'));
+    this.m = new TuningNatureTreeSizesM(r.sub('M'));
+    this.l = new TuningNatureTreeSizesL(r.sub('L'));
+  }
+
+  toJson(): Record<string, unknown> {
+    return {
+      S: this.s.toJson(),
+      M: this.m.toJson(),
+      L: this.l.toJson(),
+    };
+  }
+}
+
+export class TuningNatureTreeSizesS {
+  crownR: number;
+  height: number;
+
+  constructor(r: R) {
+    this.crownR = r.d('crown_r');
+    this.height = r.d('height');
+  }
+
+  toJson(): Record<string, unknown> {
+    return {
+      crown_r: this.crownR,
+      height: this.height,
+    };
+  }
+
+  /** Value by YAML key, undefined when the key is unknown. */
+  get(key: string): number | undefined {
+    switch (key) {
+      case 'crown_r':
+        return this.crownR;
+      case 'height':
+        return this.height;
+      default:
+        return undefined;
+    }
+  }
+
+  static readonly keys = ['crown_r', 'height'] as const;
+}
+
+export class TuningNatureTreeSizesM {
+  crownR: number;
+  height: number;
+
+  constructor(r: R) {
+    this.crownR = r.d('crown_r');
+    this.height = r.d('height');
+  }
+
+  toJson(): Record<string, unknown> {
+    return {
+      crown_r: this.crownR,
+      height: this.height,
+    };
+  }
+
+  /** Value by YAML key, undefined when the key is unknown. */
+  get(key: string): number | undefined {
+    switch (key) {
+      case 'crown_r':
+        return this.crownR;
+      case 'height':
+        return this.height;
+      default:
+        return undefined;
+    }
+  }
+
+  static readonly keys = ['crown_r', 'height'] as const;
+}
+
+export class TuningNatureTreeSizesL {
+  crownR: number;
+  height: number;
+
+  constructor(r: R) {
+    this.crownR = r.d('crown_r');
+    this.height = r.d('height');
+  }
+
+  toJson(): Record<string, unknown> {
+    return {
+      crown_r: this.crownR,
+      height: this.height,
+    };
+  }
+
+  /** Value by YAML key, undefined when the key is unknown. */
+  get(key: string): number | undefined {
+    switch (key) {
+      case 'crown_r':
+        return this.crownR;
+      case 'height':
+        return this.height;
+      default:
+        return undefined;
+    }
+  }
+
+  static readonly keys = ['crown_r', 'height'] as const;
+}
+
+export class TuningNatureTreesPerHa {
+  wood: number;
+  parkland: number;
+  garden: number;
+  cemetery: number;
+
+  constructor(r: R) {
+    this.wood = r.i('wood');
+    this.parkland = r.i('parkland');
+    this.garden = r.i('garden');
+    this.cemetery = r.i('cemetery');
+  }
+
+  toJson(): Record<string, unknown> {
+    return {
+      wood: this.wood,
+      parkland: this.parkland,
+      garden: this.garden,
+      cemetery: this.cemetery,
+    };
+  }
+
+  /** Value by YAML key, undefined when the key is unknown. */
+  get(key: string): number | undefined {
+    switch (key) {
+      case 'wood':
+        return this.wood;
+      case 'parkland':
+        return this.parkland;
+      case 'garden':
+        return this.garden;
+      case 'cemetery':
+        return this.cemetery;
+      default:
+        return undefined;
+    }
+  }
+
+  static readonly keys = ['wood', 'parkland', 'garden', 'cemetery'] as const;
+}
+
+/** lod ring only; the forest itself is single trees (FLOW F1) */
+export class TuningNatureWood {
+  canopyHeightM: number;
+
+  constructor(r: R) {
+    this.canopyHeightM = r.d('canopy_height_m');
+  }
+
+  toJson(): Record<string, unknown> {
+    return {
+      canopy_height_m: this.canopyHeightM,
+    };
+  }
+
+  /** Value by YAML key, undefined when the key is unknown. */
+  get(key: string): number | undefined {
+    switch (key) {
+      case 'canopy_height_m':
+        return this.canopyHeightM;
+      default:
+        return undefined;
+    }
+  }
+
+  static readonly keys = ['canopy_height_m'] as const;
+}
+
+export class TuningNatureGrip {
+  asphalt: number;
+  dirt: number;
+  grass: number;
+  sand: number;
+
+  constructor(r: R) {
+    this.asphalt = r.d('asphalt');
+    this.dirt = r.d('dirt');
+    this.grass = r.d('grass');
+    this.sand = r.d('sand');
+  }
+
+  toJson(): Record<string, unknown> {
+    return {
+      asphalt: this.asphalt,
+      dirt: this.dirt,
+      grass: this.grass,
+      sand: this.sand,
+    };
+  }
+
+  /** Value by YAML key, undefined when the key is unknown. */
+  get(key: string): number | undefined {
+    switch (key) {
+      case 'asphalt':
+        return this.asphalt;
+      case 'dirt':
+        return this.dirt;
+      case 'grass':
+        return this.grass;
+      case 'sand':
+        return this.sand;
+      default:
+        return undefined;
+    }
+  }
+
+  static readonly keys = ['asphalt', 'dirt', 'grass', 'sand'] as const;
+}
+
+export class TuningNatureCrownFade {
+  radiusM: number;
+  alpha: number;
+
+  constructor(r: R) {
+    this.radiusM = r.d('radius_m');
+    this.alpha = r.d('alpha');
+  }
+
+  toJson(): Record<string, unknown> {
+    return {
+      radius_m: this.radiusM,
+      alpha: this.alpha,
+    };
+  }
+
+  /** Value by YAML key, undefined when the key is unknown. */
+  get(key: string): number | undefined {
+    switch (key) {
+      case 'radius_m':
+        return this.radiusM;
+      case 'alpha':
+        return this.alpha;
+      default:
+        return undefined;
+    }
+  }
+
+  static readonly keys = ['radius_m', 'alpha'] as const;
+}
+
+export class TuningNatureWaterFall {
+  sinkS: number;
+
+  constructor(r: R) {
+    this.sinkS = r.d('sink_s');
+  }
+
+  toJson(): Record<string, unknown> {
+    return {
+      sink_s: this.sinkS,
+    };
+  }
+
+  /** Value by YAML key, undefined when the key is unknown. */
+  get(key: string): number | undefined {
+    switch (key) {
+      case 'sink_s':
+        return this.sinkS;
+      default:
+        return undefined;
+    }
+  }
+
+  static readonly keys = ['sink_s'] as const;
+}
+
+/** Smooth driving: soft trees, wall slide, rescue (specs/flow.md, Prompts/04-METROPOLE_FLOW_PLAN.md). */
+export class TuningFlow {
+  readonly forest: TuningFlowForest;
+  readonly treeHit: TuningFlowTreeHit;
+  readonly wall: TuningFlowWall;
+  readonly rescue: TuningFlowRescue;
+  /** citypack: building gaps and alleys narrower than this */
+  gapCloseM: number;
+  /** acceptance P3 */
+  stuckLimitPer10min: number;
+
+  constructor(r: R) {
+    this.forest = new TuningFlowForest(r.sub('forest'));
+    this.treeHit = new TuningFlowTreeHit(r.sub('tree_hit'));
+    this.wall = new TuningFlowWall(r.sub('wall'));
+    this.rescue = new TuningFlowRescue(r.sub('rescue'));
+    this.gapCloseM = r.d('gap_close_m');
+    this.stuckLimitPer10min = r.i('stuck_limit_per_10min');
+  }
+
+  toJson(): Record<string, unknown> {
+    return {
+      forest: this.forest.toJson(),
+      tree_hit: this.treeHit.toJson(),
+      wall: this.wall.toJson(),
+      rescue: this.rescue.toJson(),
+      gap_close_m: this.gapCloseM,
+      stuck_limit_per_10min: this.stuckLimitPer10min,
+    };
+  }
+}
+
+export class TuningFlowForest {
+  grip: number;
+  speedFactor: number;
+  crownFadeRadiusM: number;
+
+  constructor(r: R) {
+    this.grip = r.d('grip');
+    this.speedFactor = r.d('speed_factor');
+    this.crownFadeRadiusM = r.d('crown_fade_radius_m');
+  }
+
+  toJson(): Record<string, unknown> {
+    return {
+      grip: this.grip,
+      speed_factor: this.speedFactor,
+      crown_fade_radius_m: this.crownFadeRadiusM,
+    };
+  }
+
+  /** Value by YAML key, undefined when the key is unknown. */
+  get(key: string): number | undefined {
+    switch (key) {
+      case 'grip':
+        return this.grip;
+      case 'speed_factor':
+        return this.speedFactor;
+      case 'crown_fade_radius_m':
+        return this.crownFadeRadiusM;
+      default:
+        return undefined;
+    }
+  }
+
+  static readonly keys = ['grip', 'speed_factor', 'crown_fade_radius_m'] as const;
+}
+
+export class TuningFlowTreeHit {
+  /** medium and large tree */
+  speedKeep: number;
+  /** size S */
+  saplingSpeedKeep: number;
+  /** a hit never drops the speed below this (if it was above) */
+  minSpeedMps: number;
+  /** sideways push away from the trunk */
+  pushMps: number;
+  yawKickDeg: number;
+  cooldownS: number;
+
+  constructor(r: R) {
+    this.speedKeep = r.d('speed_keep');
+    this.saplingSpeedKeep = r.d('sapling_speed_keep');
+    this.minSpeedMps = r.d('min_speed_mps');
+    this.pushMps = r.d('push_mps');
+    this.yawKickDeg = r.d('yaw_kick_deg');
+    this.cooldownS = r.d('cooldown_s');
+  }
+
+  toJson(): Record<string, unknown> {
+    return {
+      speed_keep: this.speedKeep,
+      sapling_speed_keep: this.saplingSpeedKeep,
+      min_speed_mps: this.minSpeedMps,
+      push_mps: this.pushMps,
+      yaw_kick_deg: this.yawKickDeg,
+      cooldown_s: this.cooldownS,
+    };
+  }
+
+  /** Value by YAML key, undefined when the key is unknown. */
+  get(key: string): number | undefined {
+    switch (key) {
+      case 'speed_keep':
+        return this.speedKeep;
+      case 'sapling_speed_keep':
+        return this.saplingSpeedKeep;
+      case 'min_speed_mps':
+        return this.minSpeedMps;
+      case 'push_mps':
+        return this.pushMps;
+      case 'yaw_kick_deg':
+        return this.yawKickDeg;
+      case 'cooldown_s':
+        return this.cooldownS;
+      default:
+        return undefined;
+    }
+  }
+
+  static readonly keys = ['speed_keep', 'sapling_speed_keep', 'min_speed_mps', 'push_mps', 'yaw_kick_deg', 'cooldown_s'] as const;
+}
+
+export class TuningFlowWall {
+  /** below: slide along the wall, above: bounce */
+  slideAngleDeg: number;
+  slideSpeedKeep: number;
+  restitution: number;
+  friction: number;
+
+  constructor(r: R) {
+    this.slideAngleDeg = r.d('slide_angle_deg');
+    this.slideSpeedKeep = r.d('slide_speed_keep');
+    this.restitution = r.d('restitution');
+    this.friction = r.d('friction');
+  }
+
+  toJson(): Record<string, unknown> {
+    return {
+      slide_angle_deg: this.slideAngleDeg,
+      slide_speed_keep: this.slideSpeedKeep,
+      restitution: this.restitution,
+      friction: this.friction,
+    };
+  }
+
+  /** Value by YAML key, undefined when the key is unknown. */
+  get(key: string): number | undefined {
+    switch (key) {
+      case 'slide_angle_deg':
+        return this.slideAngleDeg;
+      case 'slide_speed_keep':
+        return this.slideSpeedKeep;
+      case 'restitution':
+        return this.restitution;
+      case 'friction':
+        return this.friction;
+      default:
+        return undefined;
+    }
+  }
+
+  static readonly keys = ['slide_angle_deg', 'slide_speed_keep', 'restitution', 'friction'] as const;
+}
+
+export class TuningFlowRescue {
+  stuckSpeedMps: number;
+  stuckTimeS: number;
+  /** first and second attempt; the third moves to the road */
+  rewindM: number[];
+  buttonAfterS: number;
+
+  constructor(r: R) {
+    this.stuckSpeedMps = r.d('stuck_speed_mps');
+    this.stuckTimeS = r.d('stuck_time_s');
+    this.rewindM = r.dl('rewind_m');
+    this.buttonAfterS = r.d('button_after_s');
+  }
+
+  toJson(): Record<string, unknown> {
+    return {
+      stuck_speed_mps: this.stuckSpeedMps,
+      stuck_time_s: this.stuckTimeS,
+      rewind_m: this.rewindM,
+      button_after_s: this.buttonAfterS,
     };
   }
 }

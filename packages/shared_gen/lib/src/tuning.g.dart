@@ -110,7 +110,11 @@ class Tuning {
         police = TuningPolice._(r.sub('police')),
         economy = TuningEconomy._(r.sub('economy')),
         loop = TuningLoop._(r.sub('loop')),
-        garage = TuningGarage._(r.sub('garage'));
+        garage = TuningGarage._(r.sub('garage')),
+        terrain = TuningTerrain._(r.sub('terrain')),
+        slopePhysics = TuningSlopePhysics._(r.sub('slope_physics')),
+        nature = TuningNature._(r.sub('nature')),
+        flow = TuningFlow._(r.sub('flow'));
 
   factory Tuning.fromYaml(String src) {
     final y = loadYaml(src);
@@ -245,6 +249,18 @@ class Tuning {
   /// tuning and cosmetics (specs/garage.md); colours in design/tokens.json color.garage
   final TuningGarage garage;
 
+  /// Terrain relief (specs/terrain.md, Prompts/02-METROPOLE_TERRAIN_PLAN.md). Defaults, tuned in T3.
+  final TuningTerrain terrain;
+
+  final TuningSlopePhysics slopePhysics;
+
+  /// Water and green (specs/nature.md, Prompts/03-METROPOLE_NATURE_PLAN.md + 04 forest decision).
+  /// Colours in design/tokens.json color.water and color.green.
+  final TuningNature nature;
+
+  /// Smooth driving: soft trees, wall slide, rescue (specs/flow.md, Prompts/04-METROPOLE_FLOW_PLAN.md).
+  final TuningFlow flow;
+
   Map<String, Object> toJson() => {
         'car_scale': carScale,
         'lane_width_m': laneWidthM,
@@ -289,6 +305,10 @@ class Tuning {
         'economy': economy.toJson(),
         'loop': loop.toJson(),
         'garage': garage.toJson(),
+        'terrain': terrain.toJson(),
+        'slope_physics': slopePhysics.toJson(),
+        'nature': nature.toJson(),
+        'flow': flow.toJson(),
       };
 
   /// Dotted YAML path → value, for diffs against the loaded file.
@@ -797,7 +817,9 @@ class TuningStreaming {
 class TuningCamera {
   TuningCamera._(_R r)
       : headingFollowRate = r.d('heading_follow_rate'),
-        zoomFollowRate = r.d('zoom_follow_rate');
+        zoomFollowRate = r.d('zoom_follow_rate'),
+        topdown = TuningCameraTopdown._(r.sub('topdown')),
+        chase = TuningCameraChase._(r.sub('chase'));
 
   /// 1/s, exponential smoothing of the map rotation
   double headingFollowRate;
@@ -805,19 +827,73 @@ class TuningCamera {
   /// 1/s
   double zoomFollowRate;
 
+  /// specs/terrain.md: camera height above the smoothed ground (projection H)
+  final TuningCameraTopdown topdown;
+
+  /// oblique view, web only (T2)
+  final TuningCameraChase chase;
+
   Map<String, Object> toJson() => {
         'heading_follow_rate': headingFollowRate,
         'zoom_follow_rate': zoomFollowRate,
+        'topdown': topdown.toJson(),
+        'chase': chase.toJson(),
+      };
+}
+
+/// specs/terrain.md: camera height above the smoothed ground (projection H)
+class TuningCameraTopdown {
+  TuningCameraTopdown._(_R r)
+      : heightM = r.d('height_m');
+
+  double heightM;
+
+  Map<String, Object> toJson() => {
+        'height_m': heightM,
       };
 
   /// Value by YAML key, null when the key is unknown.
   double? operator [](String key) => switch (key) {
-        'heading_follow_rate' => headingFollowRate,
-        'zoom_follow_rate' => zoomFollowRate,
+        'height_m' => heightM,
         _ => null,
       };
 
-  static const keys = ['heading_follow_rate', 'zoom_follow_rate'];
+  static const keys = ['height_m'];
+}
+
+/// oblique view, web only (T2)
+class TuningCameraChase {
+  TuningCameraChase._(_R r)
+      : distanceM = r.d('distance_m'),
+        heightM = r.d('height_m'),
+        lookAheadM = r.d('look_ahead_m'),
+        fovDeg = r.d('fov_deg');
+
+  double distanceM;
+
+  double heightM;
+
+  double lookAheadM;
+
+  double fovDeg;
+
+  Map<String, Object> toJson() => {
+        'distance_m': distanceM,
+        'height_m': heightM,
+        'look_ahead_m': lookAheadM,
+        'fov_deg': fovDeg,
+      };
+
+  /// Value by YAML key, null when the key is unknown.
+  double? operator [](String key) => switch (key) {
+        'distance_m' => distanceM,
+        'height_m' => heightM,
+        'look_ahead_m' => lookAheadM,
+        'fov_deg' => fovDeg,
+        _ => null,
+      };
+
+  static const keys = ['distance_m', 'height_m', 'look_ahead_m', 'fov_deg'];
 }
 
 /// Tyre model and car handling (METROPOLE_PLAN 7.2). Per-car values live in content/cars/.
@@ -1377,7 +1453,11 @@ class TuningMinigames {
         cara = TuningMinigamesCara._(r.sub('cara')),
         nohejbal = TuningMinigamesNohejbal._(r.sub('nohejbal')),
         strelnice = TuningMinigamesStrelnice._(r.sub('strelnice')),
-        taxi = TuningMinigamesTaxi._(r.sub('taxi'));
+        taxi = TuningMinigamesTaxi._(r.sub('taxi')),
+        drift = TuningMinigamesDrift._(r.sub('drift')),
+        sprint = TuningMinigamesSprint._(r.sub('sprint')),
+        stickball = TuningMinigamesStickball._(r.sub('stickball')),
+        doubledutch = TuningMinigamesDoubledutch._(r.sub('doubledutch'));
 
   /// hard cap for every minigame (9.2)
   int timeCapS;
@@ -1442,6 +1522,16 @@ class TuningMinigames {
   /// Taxi shift (specs/minigames/taxi.md): a world minigame in the taxi_metro car.
   final TuningMinigamesTaxi taxi;
 
+  /// M2-S9 batch D: world minigames on engine drive (specs/minigames/drift.md, sprint.md)
+  final TuningMinigamesDrift drift;
+
+  final TuningMinigamesSprint sprint;
+
+  /// M2-S9 NYC local games (specs/minigames/stickball.md, doubledutch.md)
+  final TuningMinigamesStickball stickball;
+
+  final TuningMinigamesDoubledutch doubledutch;
+
   Map<String, Object> toJson() => {
         'time_cap_s': timeCapS,
         'sirky': sirky.toJson(),
@@ -1473,6 +1563,10 @@ class TuningMinigames {
         'nohejbal': nohejbal.toJson(),
         'strelnice': strelnice.toJson(),
         'taxi': taxi.toJson(),
+        'drift': drift.toJson(),
+        'sprint': sprint.toJson(),
+        'stickball': stickball.toJson(),
+        'doubledutch': doubledutch.toJson(),
       };
 }
 
@@ -2929,6 +3023,300 @@ class TuningMinigamesTaxi {
         'passenger_m': passengerM,
         'passenger_px': passengerPx,
         'curb_m': curbM,
+      };
+}
+
+/// M2-S9 batch D: world minigames on engine drive (specs/minigames/drift.md, sprint.md)
+class TuningMinigamesDrift {
+  TuningMinigamesDrift._(_R r)
+      : minSlipMrad = r.i('min_slip_mrad'),
+        maxSlipMrad = r.i('max_slip_mrad'),
+        minSpeedCms = r.i('min_speed_cms'),
+        maxSpeedCms = r.i('max_speed_cms'),
+        ptsDiv = r.i('pts_div'),
+        maxDtMs = r.i('max_dt_ms'),
+        graceMs = r.i('grace_ms'),
+        multStepMs = r.i('mult_step_ms'),
+        maxMult = r.i('max_mult'),
+        starScores = r.il('star_scores'),
+        levelPct = r.il('level_pct'),
+        sessionS = r.i('session_s'),
+        zoneM = r.d('zone_m'),
+        sampleHz = r.i('sample_hz'),
+        hitMinMps = r.d('hit_min_mps'),
+        lowS = r.d('low_s');
+
+  /// |beta| counted from / capped at (mrad)
+  int minSlipMrad;
+
+  int maxSlipMrad;
+
+  /// speed counted from / capped at (cm/s)
+  int minSpeedCms;
+
+  int maxSpeedCms;
+
+  int ptsDiv;
+
+  /// longest counted gap between samples
+  int maxDtMs;
+
+  /// a drift may drop out this long before the chain is banked
+  int graceMs;
+
+  /// +1 multiplier per this much drifting in one chain
+  int multStepMs;
+
+  int maxMult;
+
+  /// 3, 2, 1 stars at difficulty 3
+  List<int> starScores;
+
+  /// star thresholds x % by difficulty 1-5
+  List<int> levelPct;
+
+  /// UI only
+  int sessionS;
+
+  /// zone radius around the spot's parking point
+  double zoneM;
+
+  /// UI only
+  int sampleHz;
+
+  /// UI only
+  double hitMinMps;
+
+  /// UI only
+  double lowS;
+
+  Map<String, Object> toJson() => {
+        'min_slip_mrad': minSlipMrad,
+        'max_slip_mrad': maxSlipMrad,
+        'min_speed_cms': minSpeedCms,
+        'max_speed_cms': maxSpeedCms,
+        'pts_div': ptsDiv,
+        'max_dt_ms': maxDtMs,
+        'grace_ms': graceMs,
+        'mult_step_ms': multStepMs,
+        'max_mult': maxMult,
+        'star_scores': starScores,
+        'level_pct': levelPct,
+        'session_s': sessionS,
+        'zone_m': zoneM,
+        'sample_hz': sampleHz,
+        'hit_min_mps': hitMinMps,
+        'low_s': lowS,
+      };
+}
+
+class TuningMinigamesSprint {
+  TuningMinigamesSprint._(_R r)
+      : parBaseMs = r.i('par_base_ms'),
+        parDmPerS = r.il('par_dm_per_s'),
+        hitPenaltyMs = r.i('hit_penalty_ms'),
+        starPct = r.il('star_pct'),
+        destMinM = r.d('dest_min_m'),
+        destMaxM = r.d('dest_max_m'),
+        destSearchM = r.d('dest_search_m'),
+        cpEveryM = r.d('cp_every_m'),
+        cpRadiusM = r.d('cp_radius_m'),
+        countdownS = r.i('countdown_s'),
+        timeCapS = r.i('time_cap_s'),
+        hitMinMps = r.d('hit_min_mps');
+
+  int parBaseMs;
+
+  /// par average speed by difficulty 1-5
+  List<int> parDmPerS;
+
+  int hitPenaltyMs;
+
+  /// time in % of par for 3, 2, 1 stars
+  List<int> starPct;
+
+  double destMinM;
+
+  double destMaxM;
+
+  double destSearchM;
+
+  double cpEveryM;
+
+  double cpRadiusM;
+
+  /// UI only
+  int countdownS;
+
+  /// UI only
+  int timeCapS;
+
+  /// UI only
+  double hitMinMps;
+
+  Map<String, Object> toJson() => {
+        'par_base_ms': parBaseMs,
+        'par_dm_per_s': parDmPerS,
+        'hit_penalty_ms': hitPenaltyMs,
+        'star_pct': starPct,
+        'dest_min_m': destMinM,
+        'dest_max_m': destMaxM,
+        'dest_search_m': destSearchM,
+        'cp_every_m': cpEveryM,
+        'cp_radius_m': cpRadiusM,
+        'countdown_s': countdownS,
+        'time_cap_s': timeCapS,
+        'hit_min_mps': hitMinMps,
+      };
+}
+
+/// M2-S9 NYC local games (specs/minigames/stickball.md, doubledutch.md)
+class TuningMinigamesStickball {
+  TuningMinigamesStickball._(_R r)
+      : maxOuts = r.i('max_outs'),
+        strikesOut = r.i('strikes_out'),
+        ballsWalk = r.i('balls_walk'),
+        zonePct = r.il('zone_pct'),
+        flightMin = r.il('flight_min'),
+        flightVar = r.il('flight_var'),
+        perfectMs = r.i('perfect_ms'),
+        goodMs = r.i('good_ms'),
+        okMs = r.i('ok_ms'),
+        foulMs = r.i('foul_ms'),
+        catchPct = r.il('catch_pct'),
+        starRuns = r.il('star_runs'),
+        timeCapS = r.i('time_cap_s');
+
+  int maxOuts;
+
+  int strikesOut;
+
+  int ballsWalk;
+
+  List<int> zonePct;
+
+  /// ms
+  List<int> flightMin;
+
+  List<int> flightVar;
+
+  int perfectMs;
+
+  int goodMs;
+
+  int okMs;
+
+  int foulMs;
+
+  List<int> catchPct;
+
+  List<int> starRuns;
+
+  int timeCapS;
+
+  Map<String, Object> toJson() => {
+        'max_outs': maxOuts,
+        'strikes_out': strikesOut,
+        'balls_walk': ballsWalk,
+        'zone_pct': zonePct,
+        'flight_min': flightMin,
+        'flight_var': flightVar,
+        'perfect_ms': perfectMs,
+        'good_ms': goodMs,
+        'ok_ms': okMs,
+        'foul_ms': foulMs,
+        'catch_pct': catchPct,
+        'star_runs': starRuns,
+        'time_cap_s': timeCapS,
+      };
+}
+
+class TuningMinigamesDoubledutch {
+  TuningMinigamesDoubledutch._(_R r)
+      : beats = r.i('beats'),
+        introBeats = r.i('intro_beats'),
+        startGapMs = r.il('start_gap_ms'),
+        minGapMs = r.il('min_gap_ms'),
+        speedupEvery = r.i('speedup_every'),
+        speedupMs = r.i('speedup_ms'),
+        trickPct = r.il('trick_pct'),
+        perfectMs = r.i('perfect_ms'),
+        goodMs = r.i('good_ms'),
+        okMs = r.i('ok_ms'),
+        maxTrips = r.i('max_trips'),
+        perfectPts = r.i('perfect_pts'),
+        goodPts = r.i('good_pts'),
+        okPts = r.i('ok_pts'),
+        trickMult = r.i('trick_mult'),
+        comboStep = r.i('combo_step'),
+        maxMult = r.i('max_mult'),
+        starPct = r.il('star_pct'),
+        leadInMs = r.i('lead_in_ms'),
+        timeCapS = r.i('time_cap_s');
+
+  int beats;
+
+  int introBeats;
+
+  List<int> startGapMs;
+
+  List<int> minGapMs;
+
+  int speedupEvery;
+
+  int speedupMs;
+
+  List<int> trickPct;
+
+  int perfectMs;
+
+  int goodMs;
+
+  int okMs;
+
+  int maxTrips;
+
+  int perfectPts;
+
+  int goodPts;
+
+  int okPts;
+
+  int trickMult;
+
+  int comboStep;
+
+  int maxMult;
+
+  List<int> starPct;
+
+  /// UI only
+  int leadInMs;
+
+  /// UI only
+  int timeCapS;
+
+  Map<String, Object> toJson() => {
+        'beats': beats,
+        'intro_beats': introBeats,
+        'start_gap_ms': startGapMs,
+        'min_gap_ms': minGapMs,
+        'speedup_every': speedupEvery,
+        'speedup_ms': speedupMs,
+        'trick_pct': trickPct,
+        'perfect_ms': perfectMs,
+        'good_ms': goodMs,
+        'ok_ms': okMs,
+        'max_trips': maxTrips,
+        'perfect_pts': perfectPts,
+        'good_pts': goodPts,
+        'ok_pts': okPts,
+        'trick_mult': trickMult,
+        'combo_step': comboStep,
+        'max_mult': maxMult,
+        'star_pct': starPct,
+        'lead_in_ms': leadInMs,
+        'time_cap_s': timeCapS,
       };
 }
 
@@ -4615,5 +5003,619 @@ class TuningGarage {
         'look_price_smoke': lookPriceSmoke,
         'glow_margin_m': glowMarginM,
         'glow_day': glowDay,
+      };
+}
+
+/// Terrain relief (specs/terrain.md, Prompts/02-METROPOLE_TERRAIN_PLAN.md). Defaults, tuned in T3.
+class TuningTerrain {
+  TuningTerrain._(_R r)
+      : exaggeration = r.d('exaggeration'),
+        gridM = r.i('grid_m'),
+        blendM = r.i('blend_m'),
+        maxGrade = TuningTerrainMaxGrade._(r.sub('max_grade')),
+        bridge = TuningTerrainBridge._(r.sub('bridge')),
+        tunnel = TuningTerrainTunnel._(r.sub('tunnel'));
+
+  /// game height = z0 + (real − z0) x this (K2)
+  double exaggeration;
+
+  /// terrain grid step in chunks (33 x 33 per 256 m chunk)
+  int gridM;
+
+  /// road-to-terrain blend distance
+  int blendM;
+
+  final TuningTerrainMaxGrade maxGrade;
+
+  final TuningTerrainBridge bridge;
+
+  final TuningTerrainTunnel tunnel;
+
+  Map<String, Object> toJson() => {
+        'exaggeration': exaggeration,
+        'grid_m': gridM,
+        'blend_m': blendM,
+        'max_grade': maxGrade.toJson(),
+        'bridge': bridge.toJson(),
+        'tunnel': tunnel.toJson(),
+      };
+}
+
+class TuningTerrainMaxGrade {
+  TuningTerrainMaxGrade._(_R r)
+      : motorway = r.d('motorway'),
+        trunk = r.d('trunk'),
+        primary = r.d('primary'),
+        secondary = r.d('secondary'),
+        tertiary = r.d('tertiary'),
+        alley = r.d('alley');
+
+  double motorway;
+
+  double trunk;
+
+  double primary;
+
+  double secondary;
+
+  double tertiary;
+
+  double alley;
+
+  Map<String, Object> toJson() => {
+        'motorway': motorway,
+        'trunk': trunk,
+        'primary': primary,
+        'secondary': secondary,
+        'tertiary': tertiary,
+        'alley': alley,
+      };
+
+  /// Value by YAML key, null when the key is unknown.
+  double? operator [](String key) => switch (key) {
+        'motorway' => motorway,
+        'trunk' => trunk,
+        'primary' => primary,
+        'secondary' => secondary,
+        'tertiary' => tertiary,
+        'alley' => alley,
+        _ => null,
+      };
+
+  static const keys = ['motorway', 'trunk', 'primary', 'secondary', 'tertiary', 'alley'];
+}
+
+class TuningTerrainBridge {
+  TuningTerrainBridge._(_R r)
+      : clearWaterM = r.d('clear_water_m'),
+        clearRoadM = r.d('clear_road_m'),
+        maxGrade = r.d('max_grade');
+
+  double clearWaterM;
+
+  double clearRoadM;
+
+  double maxGrade;
+
+  Map<String, Object> toJson() => {
+        'clear_water_m': clearWaterM,
+        'clear_road_m': clearRoadM,
+        'max_grade': maxGrade,
+      };
+
+  /// Value by YAML key, null when the key is unknown.
+  double? operator [](String key) => switch (key) {
+        'clear_water_m' => clearWaterM,
+        'clear_road_m' => clearRoadM,
+        'max_grade' => maxGrade,
+        _ => null,
+      };
+
+  static const keys = ['clear_water_m', 'clear_road_m', 'max_grade'];
+}
+
+class TuningTerrainTunnel {
+  TuningTerrainTunnel._(_R r)
+      : depthWaterM = r.d('depth_water_m'),
+        depthLandM = r.d('depth_land_m'),
+        maxGrade = r.d('max_grade');
+
+  double depthWaterM;
+
+  double depthLandM;
+
+  double maxGrade;
+
+  Map<String, Object> toJson() => {
+        'depth_water_m': depthWaterM,
+        'depth_land_m': depthLandM,
+        'max_grade': maxGrade,
+      };
+
+  /// Value by YAML key, null when the key is unknown.
+  double? operator [](String key) => switch (key) {
+        'depth_water_m' => depthWaterM,
+        'depth_land_m' => depthLandM,
+        'max_grade' => maxGrade,
+        _ => null,
+      };
+
+  static const keys = ['depth_water_m', 'depth_land_m', 'max_grade'];
+}
+
+class TuningSlopePhysics {
+  TuningSlopePhysics._(_R r)
+      : gravity = r.d('gravity'),
+        slopeForceScale = r.d('slope_force_scale'),
+        suspensionTravel = r.d('suspension_travel'),
+        hardLanding = r.d('hard_landing');
+
+  /// m/s² in game units
+  double gravity;
+
+  double slopeForceScale;
+
+  /// m the wheels follow the ground before the car flies
+  double suspensionTravel;
+
+  /// m/s landing speed counted as hard (speed x 0.85, camera shake)
+  double hardLanding;
+
+  Map<String, Object> toJson() => {
+        'gravity': gravity,
+        'slope_force_scale': slopeForceScale,
+        'suspension_travel': suspensionTravel,
+        'hard_landing': hardLanding,
+      };
+
+  /// Value by YAML key, null when the key is unknown.
+  double? operator [](String key) => switch (key) {
+        'gravity' => gravity,
+        'slope_force_scale' => slopeForceScale,
+        'suspension_travel' => suspensionTravel,
+        'hard_landing' => hardLanding,
+        _ => null,
+      };
+
+  static const keys = ['gravity', 'slope_force_scale', 'suspension_travel', 'hard_landing'];
+}
+
+/// Water and green (specs/nature.md, Prompts/03-METROPOLE_NATURE_PLAN.md + 04 forest decision).
+/// Colours in design/tokens.json color.water and color.green.
+class TuningNature {
+  TuningNature._(_R r)
+      : treeSizes = TuningNatureTreeSizes._(r.sub('tree_sizes')),
+        treesPerHa = TuningNatureTreesPerHa._(r.sub('trees_per_ha')),
+        treesPerChunkMax = r.i('trees_per_chunk_max'),
+        wood = TuningNatureWood._(r.sub('wood')),
+        shoreBandM = r.d('shore_band_m'),
+        trunkRadiusM = r.d('trunk_radius_m'),
+        grip = TuningNatureGrip._(r.sub('grip')),
+        crownFade = TuningNatureCrownFade._(r.sub('crown_fade')),
+        waterFall = TuningNatureWaterFall._(r.sub('water_fall'));
+
+  /// game metres, not scaled by car_scale
+  final TuningNatureTreeSizes treeSizes;
+
+  final TuningNatureTreesPerHa treesPerHa;
+
+  int treesPerChunkMax;
+
+  /// lod ring only; the forest itself is single trees (FLOW F1)
+  final TuningNatureWood wood;
+
+  double shoreBandM;
+
+  double trunkRadiusM;
+
+  final TuningNatureGrip grip;
+
+  final TuningNatureCrownFade crownFade;
+
+  final TuningNatureWaterFall waterFall;
+
+  Map<String, Object> toJson() => {
+        'tree_sizes': treeSizes.toJson(),
+        'trees_per_ha': treesPerHa.toJson(),
+        'trees_per_chunk_max': treesPerChunkMax,
+        'wood': wood.toJson(),
+        'shore_band_m': shoreBandM,
+        'trunk_radius_m': trunkRadiusM,
+        'grip': grip.toJson(),
+        'crown_fade': crownFade.toJson(),
+        'water_fall': waterFall.toJson(),
+      };
+}
+
+/// game metres, not scaled by car_scale
+class TuningNatureTreeSizes {
+  TuningNatureTreeSizes._(_R r)
+      : s = TuningNatureTreeSizesS._(r.sub('S')),
+        m = TuningNatureTreeSizesM._(r.sub('M')),
+        l = TuningNatureTreeSizesL._(r.sub('L'));
+
+  final TuningNatureTreeSizesS s;
+
+  final TuningNatureTreeSizesM m;
+
+  final TuningNatureTreeSizesL l;
+
+  Map<String, Object> toJson() => {
+        'S': s.toJson(),
+        'M': m.toJson(),
+        'L': l.toJson(),
+      };
+}
+
+class TuningNatureTreeSizesS {
+  TuningNatureTreeSizesS._(_R r)
+      : crownR = r.d('crown_r'),
+        height = r.d('height');
+
+  double crownR;
+
+  double height;
+
+  Map<String, Object> toJson() => {
+        'crown_r': crownR,
+        'height': height,
+      };
+
+  /// Value by YAML key, null when the key is unknown.
+  double? operator [](String key) => switch (key) {
+        'crown_r' => crownR,
+        'height' => height,
+        _ => null,
+      };
+
+  static const keys = ['crown_r', 'height'];
+}
+
+class TuningNatureTreeSizesM {
+  TuningNatureTreeSizesM._(_R r)
+      : crownR = r.d('crown_r'),
+        height = r.d('height');
+
+  double crownR;
+
+  double height;
+
+  Map<String, Object> toJson() => {
+        'crown_r': crownR,
+        'height': height,
+      };
+
+  /// Value by YAML key, null when the key is unknown.
+  double? operator [](String key) => switch (key) {
+        'crown_r' => crownR,
+        'height' => height,
+        _ => null,
+      };
+
+  static const keys = ['crown_r', 'height'];
+}
+
+class TuningNatureTreeSizesL {
+  TuningNatureTreeSizesL._(_R r)
+      : crownR = r.d('crown_r'),
+        height = r.d('height');
+
+  double crownR;
+
+  double height;
+
+  Map<String, Object> toJson() => {
+        'crown_r': crownR,
+        'height': height,
+      };
+
+  /// Value by YAML key, null when the key is unknown.
+  double? operator [](String key) => switch (key) {
+        'crown_r' => crownR,
+        'height' => height,
+        _ => null,
+      };
+
+  static const keys = ['crown_r', 'height'];
+}
+
+class TuningNatureTreesPerHa {
+  TuningNatureTreesPerHa._(_R r)
+      : wood = r.i('wood'),
+        parkland = r.i('parkland'),
+        garden = r.i('garden'),
+        cemetery = r.i('cemetery');
+
+  int wood;
+
+  int parkland;
+
+  int garden;
+
+  int cemetery;
+
+  Map<String, Object> toJson() => {
+        'wood': wood,
+        'parkland': parkland,
+        'garden': garden,
+        'cemetery': cemetery,
+      };
+
+  /// Value by YAML key, null when the key is unknown.
+  int? operator [](String key) => switch (key) {
+        'wood' => wood,
+        'parkland' => parkland,
+        'garden' => garden,
+        'cemetery' => cemetery,
+        _ => null,
+      };
+
+  static const keys = ['wood', 'parkland', 'garden', 'cemetery'];
+}
+
+/// lod ring only; the forest itself is single trees (FLOW F1)
+class TuningNatureWood {
+  TuningNatureWood._(_R r)
+      : canopyHeightM = r.d('canopy_height_m');
+
+  double canopyHeightM;
+
+  Map<String, Object> toJson() => {
+        'canopy_height_m': canopyHeightM,
+      };
+
+  /// Value by YAML key, null when the key is unknown.
+  double? operator [](String key) => switch (key) {
+        'canopy_height_m' => canopyHeightM,
+        _ => null,
+      };
+
+  static const keys = ['canopy_height_m'];
+}
+
+class TuningNatureGrip {
+  TuningNatureGrip._(_R r)
+      : asphalt = r.d('asphalt'),
+        dirt = r.d('dirt'),
+        grass = r.d('grass'),
+        sand = r.d('sand');
+
+  double asphalt;
+
+  double dirt;
+
+  double grass;
+
+  double sand;
+
+  Map<String, Object> toJson() => {
+        'asphalt': asphalt,
+        'dirt': dirt,
+        'grass': grass,
+        'sand': sand,
+      };
+
+  /// Value by YAML key, null when the key is unknown.
+  double? operator [](String key) => switch (key) {
+        'asphalt' => asphalt,
+        'dirt' => dirt,
+        'grass' => grass,
+        'sand' => sand,
+        _ => null,
+      };
+
+  static const keys = ['asphalt', 'dirt', 'grass', 'sand'];
+}
+
+class TuningNatureCrownFade {
+  TuningNatureCrownFade._(_R r)
+      : radiusM = r.d('radius_m'),
+        alpha = r.d('alpha');
+
+  double radiusM;
+
+  double alpha;
+
+  Map<String, Object> toJson() => {
+        'radius_m': radiusM,
+        'alpha': alpha,
+      };
+
+  /// Value by YAML key, null when the key is unknown.
+  double? operator [](String key) => switch (key) {
+        'radius_m' => radiusM,
+        'alpha' => alpha,
+        _ => null,
+      };
+
+  static const keys = ['radius_m', 'alpha'];
+}
+
+class TuningNatureWaterFall {
+  TuningNatureWaterFall._(_R r)
+      : sinkS = r.d('sink_s');
+
+  double sinkS;
+
+  Map<String, Object> toJson() => {
+        'sink_s': sinkS,
+      };
+
+  /// Value by YAML key, null when the key is unknown.
+  double? operator [](String key) => switch (key) {
+        'sink_s' => sinkS,
+        _ => null,
+      };
+
+  static const keys = ['sink_s'];
+}
+
+/// Smooth driving: soft trees, wall slide, rescue (specs/flow.md, Prompts/04-METROPOLE_FLOW_PLAN.md).
+class TuningFlow {
+  TuningFlow._(_R r)
+      : forest = TuningFlowForest._(r.sub('forest')),
+        treeHit = TuningFlowTreeHit._(r.sub('tree_hit')),
+        wall = TuningFlowWall._(r.sub('wall')),
+        rescue = TuningFlowRescue._(r.sub('rescue')),
+        gapCloseM = r.d('gap_close_m'),
+        stuckLimitPer10min = r.i('stuck_limit_per_10min');
+
+  final TuningFlowForest forest;
+
+  final TuningFlowTreeHit treeHit;
+
+  final TuningFlowWall wall;
+
+  final TuningFlowRescue rescue;
+
+  /// citypack: building gaps and alleys narrower than this
+  double gapCloseM;
+
+  /// acceptance P3
+  int stuckLimitPer10min;
+
+  Map<String, Object> toJson() => {
+        'forest': forest.toJson(),
+        'tree_hit': treeHit.toJson(),
+        'wall': wall.toJson(),
+        'rescue': rescue.toJson(),
+        'gap_close_m': gapCloseM,
+        'stuck_limit_per_10min': stuckLimitPer10min,
+      };
+}
+
+class TuningFlowForest {
+  TuningFlowForest._(_R r)
+      : grip = r.d('grip'),
+        speedFactor = r.d('speed_factor'),
+        crownFadeRadiusM = r.d('crown_fade_radius_m');
+
+  double grip;
+
+  double speedFactor;
+
+  double crownFadeRadiusM;
+
+  Map<String, Object> toJson() => {
+        'grip': grip,
+        'speed_factor': speedFactor,
+        'crown_fade_radius_m': crownFadeRadiusM,
+      };
+
+  /// Value by YAML key, null when the key is unknown.
+  double? operator [](String key) => switch (key) {
+        'grip' => grip,
+        'speed_factor' => speedFactor,
+        'crown_fade_radius_m' => crownFadeRadiusM,
+        _ => null,
+      };
+
+  static const keys = ['grip', 'speed_factor', 'crown_fade_radius_m'];
+}
+
+class TuningFlowTreeHit {
+  TuningFlowTreeHit._(_R r)
+      : speedKeep = r.d('speed_keep'),
+        saplingSpeedKeep = r.d('sapling_speed_keep'),
+        minSpeedMps = r.d('min_speed_mps'),
+        pushMps = r.d('push_mps'),
+        yawKickDeg = r.d('yaw_kick_deg'),
+        cooldownS = r.d('cooldown_s');
+
+  /// medium and large tree
+  double speedKeep;
+
+  /// size S
+  double saplingSpeedKeep;
+
+  /// a hit never drops the speed below this (if it was above)
+  double minSpeedMps;
+
+  /// sideways push away from the trunk
+  double pushMps;
+
+  double yawKickDeg;
+
+  double cooldownS;
+
+  Map<String, Object> toJson() => {
+        'speed_keep': speedKeep,
+        'sapling_speed_keep': saplingSpeedKeep,
+        'min_speed_mps': minSpeedMps,
+        'push_mps': pushMps,
+        'yaw_kick_deg': yawKickDeg,
+        'cooldown_s': cooldownS,
+      };
+
+  /// Value by YAML key, null when the key is unknown.
+  double? operator [](String key) => switch (key) {
+        'speed_keep' => speedKeep,
+        'sapling_speed_keep' => saplingSpeedKeep,
+        'min_speed_mps' => minSpeedMps,
+        'push_mps' => pushMps,
+        'yaw_kick_deg' => yawKickDeg,
+        'cooldown_s' => cooldownS,
+        _ => null,
+      };
+
+  static const keys = ['speed_keep', 'sapling_speed_keep', 'min_speed_mps', 'push_mps', 'yaw_kick_deg', 'cooldown_s'];
+}
+
+class TuningFlowWall {
+  TuningFlowWall._(_R r)
+      : slideAngleDeg = r.d('slide_angle_deg'),
+        slideSpeedKeep = r.d('slide_speed_keep'),
+        restitution = r.d('restitution'),
+        friction = r.d('friction');
+
+  /// below: slide along the wall, above: bounce
+  double slideAngleDeg;
+
+  double slideSpeedKeep;
+
+  double restitution;
+
+  double friction;
+
+  Map<String, Object> toJson() => {
+        'slide_angle_deg': slideAngleDeg,
+        'slide_speed_keep': slideSpeedKeep,
+        'restitution': restitution,
+        'friction': friction,
+      };
+
+  /// Value by YAML key, null when the key is unknown.
+  double? operator [](String key) => switch (key) {
+        'slide_angle_deg' => slideAngleDeg,
+        'slide_speed_keep' => slideSpeedKeep,
+        'restitution' => restitution,
+        'friction' => friction,
+        _ => null,
+      };
+
+  static const keys = ['slide_angle_deg', 'slide_speed_keep', 'restitution', 'friction'];
+}
+
+class TuningFlowRescue {
+  TuningFlowRescue._(_R r)
+      : stuckSpeedMps = r.d('stuck_speed_mps'),
+        stuckTimeS = r.d('stuck_time_s'),
+        rewindM = r.dl('rewind_m'),
+        buttonAfterS = r.d('button_after_s');
+
+  double stuckSpeedMps;
+
+  double stuckTimeS;
+
+  /// first and second attempt; the third moves to the road
+  List<double> rewindM;
+
+  double buttonAfterS;
+
+  Map<String, Object> toJson() => {
+        'stuck_speed_mps': stuckSpeedMps,
+        'stuck_time_s': stuckTimeS,
+        'rewind_m': rewindM,
+        'button_after_s': buttonAfterS,
       };
 }

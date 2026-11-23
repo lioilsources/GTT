@@ -13,6 +13,7 @@ není uvedeno jinak. Reprodukce: `tools/art/` (prompty, seedy, parametry workflo
 | `postcards/prague/old_new_synagogue.png` | Qwen-Image (fp8), ComfyUI | Apache 2.0 | vlastní dílo projektu GTT | oprava 2, seed 214, styl C, nápis v okraji papíru přebarven (`tools/art/post_fix2.py`) |
 | `postcards/nyc/amnh.png` | Qwen-Image (fp8), ComfyUI | Apache 2.0 | vlastní dílo projektu GTT | oprava 3, seed 221 (`tools/art/make_fix3.py`), styl A, štít bez nápisu, podpis v rohu přebarven (`tools/art/post_fix3.py`) |
 | `cars/lidovka/body.png` | Qwen-Image (fp8), ComfyUI + BiRefNet-general | Apache 2.0 / MIT | vlastní dílo projektu GTT | oprava 1, seed 316 (`tools/art/make_fix1.py`), ručně ořezáno a zmenšeno na 32 px/m |
+| `souvenirs/*.png` | Qwen-Image (fp8), ComfyUI + BiRefNet-general | Apache 2.0 / MIT | vlastní dílo projektu GTT | suvenýry 1, seedy 601–604 (`tools/art/make_souv1.py`), výběr a ořez 512² (`tools/art/post_souv.py`) |
 
 Nepoužívat pro herní assety: modely s nekomerční licencí (např. FLUX.1-dev, RMBG-2.0) a modely
 s omezující licencí (Illustrious-XL).
@@ -24,3 +25,11 @@ s omezující licencí (Illustrious-XL).
 | `cities/prague/{cobblestone,mosaic_sidewalk,roof_tiles}.png` | Qwen-Image (fp8), ComfyUI | Apache 2.0 | vlastní dílo projektu GTT | dávka tex1, seedy 403, 401, 402 (`tools/art/make_tex1.py`), 512², bezešvé (roll + prolnutí) |
 | `cities/nyc/asphalt.png` | Qwen-Image (fp8), ComfyUI | Apache 2.0 | vlastní dílo projektu GTT | oprava 2, seed 413 (`tools/art/make_fix2.py`), 512², bezešvé (`tools/art/post_fix2.py`) |
 | `cities/nyc/{sidewalk_concrete,roof_tar}.png` | vlastní skript (`tools/art/proc_tex.py`, numpy) | – | vlastní dílo projektu GTT | procedurální, bez modelu, seedy 511 a 512, 512² bezešvé |
+| `cities/tokyo/{asphalt,sidewalk_tile,roof}.png` | vlastní skript (`tools/art/proc_tex_tokyo.py`, numpy) | – | vlastní dílo projektu GTT | procedurální, bez modelu, seedy 521–523, 512² bezešvé |
+
+## Tokio (styl D, anime cel)
+
+| Cesta | Model / nástroj | Licence modelu | Licence výstupu | Poznámka |
+|---|---|---|---|---|
+| `styleboard/tokyo/*.png` | Qwen-Image (fp8), ComfyUI | Apache 2.0 | vlastní dílo projektu GTT | kontrola stylu, seedy 11, 12 (`tools/art/make_tokyo1.py style`) |
+| `postcards/tokyo/*.png` | Qwen-Image (fp8), ComfyUI | Apache 2.0 | vlastní dílo projektu GTT | várky tokyo3 (seedy 221–223) a tokyo4 (seedy 231–233, `tools/art/make_tokyo1.py`), výběr a ploché přebarvení zbylých falešných nápisů na štítech, cedulkách a lampionech (`tools/art/post_tokyo.py`), ořez 1080×1350, 256 barev |

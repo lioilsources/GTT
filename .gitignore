@@ -31,3 +31,7 @@ web/public/shared/
 app/lib/l10n/app_localizations*.dart
 PARITY.md
 .claude/worktrees/
+
+# DEM sources stay local (plans/M5_TEREN_PRIRODA.md); only the README with download steps is tracked
+content/cities/*/dem/*
+!content/cities/*/dem/README.md

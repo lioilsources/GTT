@@ -6,7 +6,7 @@
 # reopened: list of {date, reason} when an item went back from hotovo/ověřeno (regression).
 # Dropped scope: M0 point 5 (Flutter web build) – replaced by D1, see docs/m0.md.
 
-milestones: [M0, D0, D1, D2, M1, D3, M3, M2, M4]
+milestones: [M0, D0, D1, D2, M1, D3, M3, M2, M4, M5]
 
 items:
   # ---------- M0 – Hračka (scope)
@@ -168,8 +168,8 @@ items:
   - {id: M2-S9B, milestone: M2, name: "minihry dávka B: Prší, Srdce, Kostkový poker, Prase", size: L, status: "čeká na Ol1na", started: 2026-11-23T03:10,
      done: 2026-11-23T04:23, commit: 448d42c, evidence: "specs v1 s Upřesněním, vektory 4 her (web lead), obě implementace, vektory projdou v obou klientech, Galerie, bary (prší, kostky) a spoty v NYC a Praze (PR #168, #170, #171, #174), parita F-054–F-057; chybí dohrát na telefonu"}
   - {id: M2-S9C, milestone: M2, name: "minihry dávka C: Kulečník, Bowling, Minigolf, Had, Cihly, Bouchni krtka, Vzdušný hokej", size: L, status: wip, started: 2026-11-23T04:00}
-  - {id: M2-S9D, milestone: M2, name: "minihry dávka D: Drift zóna, Sprint A→B", size: M, status: todo}
-  - {id: M2-S9E, milestone: M2, name: "místní minihry: Stickball, Double Dutch (engine rhythm)", size: L, status: todo}
+  - {id: M2-S9D, milestone: M2, name: "minihry dávka D: Drift zóna, Sprint A→B", size: M, status: wip, started: 2026-11-23T04:49}
+  - {id: M2-S9E, milestone: M2, name: "místní minihry: Stickball, Double Dutch (engine rhythm)", size: L, status: wip, started: 2026-11-23T04:49}
   - {id: M2-S10, milestone: M2, name: "rádio (kostra stanic)", size: S, status: todo}
   - {id: M2-A1, milestone: M2, name: "30 miniher v NYC: testy, vektory, Galerie v obou klientech", size: S, status: todo}
   - {id: M2-A2, milestone: M2, name: "soak 10 smyček s novými systémy bez pádu", size: S, status: todo}
@@ -190,9 +190,29 @@ items:
   - {id: M4-A3, milestone: M4, name: "přepnutí tří měst 10× bez pádu", size: S, status: todo}
   - {id: M4-A4, milestone: M4, name: "matice parity pro rozsah M4 zelená", size: M, status: todo}
 
+  # ---------- M5 – Terén, voda a zeleň, plynulá jízda (plans/M5_TEREN_PRIRODA.md, Prompts/02–04)
+  - {id: M5-S1, milestone: M5, name: "FL1 nárazy do zdí a vyproštění v obou klientech (F-069)", size: L, status: todo}
+  - {id: M5-S2, milestone: M5, name: "T0 výšky v datech New York: krok elevation, lod, validate, preview", size: L, status: todo}
+  - {id: M5-S3, milestone: M5, name: "N0 + FL0 voda, zeleň, stromy a štěrbiny v datech New York", size: L, status: todo}
+  - {id: M5-S4, milestone: M5, name: "T0/N0/FL0 Praha (DMR 5G, stromy)", size: M, status: todo}
+  - {id: M5-S5, milestone: M5, name: "T0/N0/FL0 Tokio", size: M, status: todo}
+  - {id: M5-S6, milestone: M5, name: "T1 svahy a skoky a reliéf shora v obou klientech (F-070, F-071)", size: L, status: todo}
+  - {id: M5-S7, milestone: M5, name: "N1 voda a zeleň shora a jízda v obou klientech (F-072)", size: L, status: todo}
+  - {id: M5-S8, milestone: M5, name: "FL2 les a měkké stromy v obou klientech (F-073)", size: M, status: todo}
+  - {id: M5-S9, milestone: M5, name: "T2 + N2 šikmý pohled ve W (F-074)", size: L, status: todo}
+  - {id: M5-S10, milestone: M5, name: "T3 ladění kopců Prahy, minihry z reliéfu, nejprudší ulice", size: M, status: todo}
+  - {id: M5-S11, milestone: M5, name: "metro stuckmap a počítadlo zaseknutí", size: S, status: todo}
+  - {id: M5-A1, milestone: M5, name: "citypack validate nyc, prague, tokyo s výškami a přírodou", size: S, status: todo}
+  - {id: M5-A2, milestone: M5, name: "scénáře terénu, přírody a flow v toleranci v obou klientech", size: M, status: todo}
+  - {id: M5-A3, milestone: M5, name: "60 fps s reliéfem a stromy na obou telefonech (šikmo ve W)", size: S, status: todo}
+  - {id: M5-A4, milestone: M5, name: "nejvýš 1 zaseknutí za 10 minut jízdy (dogfooding Ol1n)", size: S, status: todo}
+  - {id: M5-A5, milestone: M5, name: "Ol1n potvrdí kopce Prahy (Petřín, Letná, Hradčany)", size: S, status: todo}
+  - {id: M5-A6, milestone: M5, name: "slepý test: řeka a park ze snímku do 2 s", size: S, status: todo}
+
 # Content counters with targets. tests and fps are measured; the rest metro progress counts itself.
 counters:
   tests: {total: 1039, passing: 1038, measured: 2026-11-23T04:23}   # metro progress --tests
   fps:                                            # filled from phone measurements (D1-2, M0-A1)
     pixel_8a: {app: null, web: null, measured: null}
     iphone_12_mini: {app: null, web: null, measured: null}
+  stuck: {per_10min: null, target: 1, measured: null}   # specs/flow.md, M5-A4 (from stuck.log / overlay)
