@@ -53,6 +53,11 @@ describe('start city (specs/cities.md "Výchozí město")', () => {
     expect(pickStartCity(null, null, cityIdValues)).toBe('nyc');
   });
 
+  it('every generated city is selectable by ?city (Tokyo since M4)', () => {
+    for (const id of cityIdValues) expect(pickStartCity(id, null, cityIdValues)).toBe(id);
+    expect(cityIdValues as readonly string[]).toContain('tokyo');
+  });
+
   it('last city round trip through storage', () => {
     const s = new FakeStorage();
     expect(readLastCity(s)).toBeNull();
