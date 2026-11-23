@@ -1,6 +1,6 @@
 # Plynulá jízda – nárazy, měkké stromy, vyproštění
 
-**version: 1** · P1 (±5 %, scénáře `scenarios/flow/`) · plán `Prompts/04-METROPOLE_FLOW_PLAN.md`
+**version: 2** · P1 (±5 %, scénáře `scenarios/flow/`) · plán `Prompts/04-METROPOLE_FLOW_PLAN.md`
 · pod-plán `plans/M5_TEREN_PRIRODA.md` · parita F-069 (nárazy a vyproštění), F-073 (les a stromy)
 
 ## Účel
@@ -10,12 +10,22 @@ měří (F4). Čísla `content/tuning.yaml` → `flow`, hustota lesa `nature.tre
 Rozhodnutí Ol1na (defaulty): P1 = všechny stromy měkké, P2 = les zpomaluje na 60 %, P3 = limit
 1 zaseknutí za 10 minut.
 
+## Změny ve v2 (FL1, upřesnění z klienta W, F-069)
+- Odraz s odlepením 1 m jen na začátku kontaktu a jen „nabitý“ (níže); klouzání v každém kroku kontaktu.
+- Série vyproštění: každé do 5 s od **předchozího** (v1: „posledních 5 s“ od teď – nejkratší rozestup je
+  1,4 + 1,5 s, takže třetí pokus by nikdy nenastal).
+- Stopa drží body mladší 5 s (čas vzorku), návrat po stopě stopu za zvoleným bodem zkrátí.
+- Kontextové tlačítko automatické vyproštění neblokuje (blokuje jen otevřená nabídka, a ta pauzuje).
+- Syntetická trať a metriky scénářů FL1.
+
 ## Stav (navíc k `specs/drive.md`)
 ```
-trail:   [{x, y, heading}]   # nejvýš 20 bodů (5 s po 0,25 s), nejnovější na konci
+trail:   [{x, y, heading, t}] # body mladší 5 s, nejvýš 20 (po 0,25 s), nejnovější na konci
 stuckT:  s                    # jak dlouho je auto pomalé bez brzdy
 slowT:   s                    # jak dlouho je auto pomalé (tlačítko „Na silnici“)
-rescues: [{t, x, y}]          # automatická vyproštění za posledních 5 s
+rescues: [{t, x, y}]          # současná série automatických vyproštění (t = čas jízdy, x, y = kde stálo)
+armed:   bool                 # čelní odraz je nabitý
+freeT:   s                    # jak dlouho auto nemá statický kontakt
 graceT:  s                    # ochranná doba po přesunu
 treeCd:  {treeKey: s}         # cooldown zásahů stromů
 ```
@@ -33,6 +43,13 @@ jinak                                           # čelní náraz → odraz
     v'  = −(v·n)n · flow.wall.restitution + (v − (v·n)n)
     auto se posune o 1,0 m po n (odlepení od stěny), úhlová rychlost 0
 ```
+- **Který kontakt (v2):** ze všech dotýkajících se statických kontaktů po kroku (budovy, sloupky zón,
+  zábradlí mostu) se bere normála, do které `v` míří nejvíc (nejmenší `v·n`); `v·n ≥ 0` → nic.
+- **Kdy (v2):** klouzání v každém kroku kontaktu. Odraz jen v kroku, kdy kontakt začal (předchozí krok
+  bez statického kontaktu), a jen když `armed`; odraz nastaví `armed = false`. `armed = true` po
+  `flow.rescue.stuck_time_s` bez statického kontaktu (`freeT`) nebo po vyproštění. Jinak by auto
+  s automatickým plynem po každém odlepení narazilo znovu a nikdy by nestálo; takhle druhý náraz
+  vyřeší fyzika (tření a restituce níže) a auto se zastaví o stěnu.
 - Kontakt se statickou geometrií má tření `flow.wall.friction` (místo `drive.building_friction`)
   a restituci `flow.wall.restitution` (místo `drive.building_restitution`).
 - Kontrola: šikmo pod 30° při 20 m/s → po sklouznutí aspoň 14,7 m/s ve směru stěny
@@ -57,27 +74,38 @@ Povrch `forest`: `grip × flow.forest.grip`, cílová i maximální rychlost a s
 (les je úkryt, pravidlo úniku `specs/police.md` beze změny).
 
 ## Vyproštění
-**Stopa:** každých 0,25 s, když `|v| > 3 m/s` a auto není `airborne` (`specs/terrain.md`),
-přidá se `{x, y, heading}` na konec `trail`; drží se posledních 5 s (20 bodů).
+**Stopa:** každých 0,25 s, když `|v| > 3 m/s` a auto není `airborne` (`specs/terrain.md`) a neběží
+animace přesunu, přidá se `{x, y, heading, t}` na konec `trail`; každý krok se zahodí body starší 5 s
+(auto, které se dlouho plouží podél zdi, tak nemá stopu daleko za sebou), nejvýš 20 bodů.
 
-**Automaticky** – každý krok, mimo `graceT`, bez otevřené kontextové nabídky, pauzy, minihry:
+**Automaticky** – každý krok, mimo `graceT`, bez otevřené kontextové nabídky, pauzy, minihry
+(v2: zobrazené kontextové *tlačítko* – „Přesednout“, „Hrát“ … – neblokuje; stát bez brzdy znamená, že
+auto něco drží, automatický plyn by jinak jel dál. „Brzdí“ = brzda/couvání nebo ruční brzda):
 - když `|v| < flow.rescue.stuck_speed_mps` a hráč nebrzdí: `stuckT += dt`, jinak `stuckT = 0`
 - při `stuckT ≥ flow.rescue.stuck_time_s`:
-  1. `rescues` vyčistit na posledních 5 s; `n = len(rescues)`
-  2. `n = 0`: návrat po stopě o `rewind_m[0]`; `n = 1` (do 5 s od prvního, do 25 m od něj):
-     o `rewind_m[1]`; `n ≥ 2`: přesun na silnici (níže)
+  1. když je `rescues` prázdné, poslední je starší než 5 s nebo je auto dál než 25 m od prvního
+     z nich: `rescues = []`; `n = len(rescues)`
+  2. `n = 0`: návrat po stopě o `rewind_m[0]`; `n = 1`: o `rewind_m[1]`; `n ≥ 2`: přesun na silnici
   3. návrat po stopě: bod `trail` nejbližší (po délce stopy od konce) vzdálenosti `rewind_m[i]`
-     od aktuální polohy; když je stopa kratší, nejstarší bod; když je prázdná, přesun na silnici
-  4. přidat `{t, x, y}` do `rescues`, `stuckT = 0`, `graceT = 1,4 s` (0,4 s animace + 1 s)
+     od aktuální polohy (délka = od auta k nejnovějšímu bodu a dál mezi body); když je stopa kratší,
+     nejstarší bod; když je prázdná, přesun na silnici. Auto dostane polohu a natočení bodu,
+     `trail` se zkrátí na body do zvoleného včetně.
+  4. přidat `{t, x, y}` do `rescues`, `stuckT = slowT = 0`, `graceT = 1,4 s` (0,4 s animace + 1 s)
 - **Přesun na silnici:** nejbližší uzel ponechané silnice ve vrstvě 0 (`hop` hledání jako
   spawn, `layers.spawn_search_m`), čelem ve směru trasy GPS, bez trasy ve směru první hrany
-  uzlu; `trail` se vyprázdní.
+  uzlu; `trail` se vyprázdní. (v2: uzel = konec hrany s `kept` a vrstvou 0 na obou koncích, nejbližší
+  vzdušnou čarou, při shodě menší index. Trasa GPS = lomená čára zbývající trasy; platí, když její
+  nejbližší úsek je od uzlu do `layers.search_m`, směr toho úseku. Jinak první hrana uzlu
+  v `nodeEdges` s `kept` a vrstvou 0, směr od uzlu podél ní.)
 - Přesun = animace 0,4 s (auto zprůhlední a objeví se), rychlost 0, `z = groundZ`.
-  Vyproštění je zdarma.
+  Vyproštění je zdarma. (v2: auto je na novém místě od začátku animace a 0,4 s stojí – rychlost
+  i úhlová rychlost 0, vstup se ignoruje; kreslení ho během animace zviditelňuje z 0 na 1. Totéž
+  těleso, bez respawnu; vrstva se znovu určí jako při spawnu, `armed = true`.)
 
 **Ručně:** když `|v| < stuck_speed_mps` déle než `flow.rescue.button_after_s` (`slowT`, počítá se
 i s brzdou), HUD ukáže tlačítko „Na silnici“ (`flowToRoad`). Je vždy i v nabídce pauzy. Provede
-přesun na silnici. Zdarma.
+přesun na silnici. Zdarma. (v2: stejná animace a `graceT`; do `rescues` se nepočítá. Ve W je
+nabídkou pauzy domovská obrazovka telefonu.)
 
 Poplatek zůstává jen u pádu do vody (`specs/nature.md`) a u rozbitého auta.
 
@@ -92,6 +120,19 @@ Poplatek zůstává jen u pádu do vody (`specs/nature.md`) a u rozbitého auta.
   míst (shluky 25 m).
 
 ## Scénáře (`scenarios/flow/`, ±5 %, `sedan_regent`, syntetická trať)
+**Syntetická trať (v2):** graf `0 (−200, 0) ─e0─ 1 (0, 0) ─e1─ 2 (200, 0)`, obě hrany `primary`,
+2 pruhy, obousměrné, `kept`, šířka 20 m, vrstva 0. Budovy (kolize, výška 10 m): stěna W = obdélník
+x −100…60, y 40…60 (líc y = 40), blok B = x 60…80, y 15…60 (líc x = 60); kout W/B v (60, 40).
+Bez mobiliáře, provoz nepevný (`solid = false`), bez počasí, krok `drive.step_hz`. Start = poloha,
+natočení a počáteční rychlost ve směru natočení; vstupy podle souboru scénáře (`throttle`, `steer`,
+`brake` od času `t`). Kontakt = statický kontakt po kroku (výše). Testy W: `web/test/flow.test.ts`.
+
+| scénář | start (x, y, natočení, rychlost) | délka | metriky |
+|---|---|---|---|
+| `wall_30` | (0, 33,8), 30°, 20 m/s | 2 s | `along_wall_mps` = vx v kroku prvního kontaktu; `along_wall_min_1s_mps` = nejmenší vx v 1 s od něj; `rescues` |
+| `wall_head_on` | (0, 5), 90°, 0 | 8 s | `rescue_after_contact_s` = čas 1. vyproštění − čas 1. kontaktu; `rescue_kind` (1 = auto1, 2 = auto2, 3 = silnice); `rewind_m` = vzdálenost polohy před a po přesunu |
+| `corner_3x` | (20, 0), 47°, 0 | 20 s | `rescueN_kind` prvních tří vyproštění; `rescue3_on_road` = 1, když je auto po 3. přesunu na ponechané hraně (do 1 m); `rescue3_t_s` = čas jízdy 3. vyproštění |
+
 1. `forest_200` – 200 m lesem (stromy M po 11 m v pruhu) plnou rychlostí: min. rychlost ≥
    `min_speed_mps`, 0 vyproštění.
 2. `tree_head_on` – čelně do stromu M při 20 m/s: rychlost po nárazu 15 m/s, auto mine kmen.

@@ -605,11 +605,11 @@
 - id: F-069
   name: "Nárazy do zdí a vyproštění (M5-S1, FL1)"
   level: P1
-  spec: specs/flow.md@1
+  spec: specs/flow.md@2
   scenarios: scenarios/flow
   lead: web
   flutter: todo
-  web: todo
+  web: done
 
 - id: F-070
   name: "Svahy a skoky (M5-S6, T1)"
@@ -640,7 +640,7 @@
 - id: F-073
   name: "Les a měkké stromy (M5-S8, FL2)"
   level: P1
-  spec: specs/flow.md@1
+  spec: specs/flow.md@2
   scenarios: scenarios/flow
   lead: web
   flutter: todo
