@@ -162,7 +162,7 @@ export const tokens = {
   colorShopsDrunk: "#E8B83099",
   colorGaragePaints: ["#F2F2EE", "#1D1F24", "#2E6FD8", "#1E9E5A", "#F2C230", "#F07A1A", "#8E3BD6", "#E8508F", "#6B7A8F", "#7A3B2E"],
   colorGarageDecal: "#FFFFFF",
-  colorGarageWheels: ["#3A3C42", "#C9CDD4", "#F4F4F0"],
+  colorGarageWheels: ["#3A3C42", "#C9CDD4", "#F4F4F0", "#B8BEC8", "#D9C27A", "#8E959E", "#2B2D31"],
   colorGarageGlow: ["#3FA9F5CC", "#FF3FA4CC", "#5CFF8ACC", "#FFD23FCC", "#B04CFFCC"],
   colorGarageSmoke: ["#E8E8E8", "#FF6B6B", "#6BC8FF", "#7DFF8F", "#FFE66B"],
   colorGarageLevel: "#F2BD2C",

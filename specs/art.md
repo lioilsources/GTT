@@ -1,6 +1,6 @@
 # Napojení grafiky (portréty, pohlednice)
 
-**version: 2** · P2 UI · `docs/art-requests.md` (objednávka a stav), `assets/LICENSES.md` · parita F-040
+**version: 3** · P2 UI · `docs/art-requests.md` (objednávka a stav), `assets/LICENSES.md` · parita F-040
 
 ## Účel
 Hotová grafika z ComfyUI nahradí zástupné kresby tam, kde existuje. Kde soubor chybí, kreslí klient
@@ -74,6 +74,46 @@ stín zůstávají z JSON a z kódu. Formát souborů a seznam: `docs/art-reques
 - **Kde:** auto hráče, zaparkovaná auta, provoz, hlídky, náhled v garáži a v seznamu na prodej
   (stejný obrázek zmenšený).
 
+## Kosmetika z garáže (v3)
+Sprity polepů a kol (`specs/garage.md` v2, části `decal` a `wheels`). Platí pro auto hráče,
+odstavené vlastní auto a náhled v garáži (kde se vzhled kreslí). Zjištění přes `index.json`;
+soubor, který tam není, = procedurální záloha podle `specs/garage.md` → „Kreslení“.
+- **Polep** `decal = i ≥ 1`: `garage/decals/<id>.png` (512 × 1024, předek nahoru, bílý motiv
+  na alfě), `id` podle pořadí voleb: 1 `stripes`, 2 `flames`, 3 `checker`, 4 `stars`,
+  5 `lightning`, 6 `waves`, 7 `camo`, 8 `halftone`. Motiv se **roztáhne** na plátno karoserie
+  (u spritu auta `w × h` plátna `body.png`, u procedurálního auta na obdélník `2 hw × 2 hl`
+  bez okraje), alfa se vynásobí maskou laku (sprite: jas `paint_mask`; procedurální auto: jen
+  plocha karoserie v laku, bez skel a detailů) a barva = `color.garage.decal` × alfa. Kreslí se
+  nad lakem, pod skly a světly. Sprite polepu **nahrazuje** procedurální polep téhož indexu
+  (nekreslí se obojí).
+  - **W:** polepy do vlastního atlasu (512 × 1024 → zmenšené na ¼, 128 × 256, stačí), v shaderu
+    karoserie druhý vzorek s `decalRect` (vec4) v instanci; bez polepu `decalRect = 0`. Žádný draw
+    call navíc.
+  - **F:** předtónovaný obrázek (auto, lak, polep) jako dosud v LRU 48; polep se složí do něj
+    (`BlendMode.dstIn` s maskou, pak `srcOver`).
+- **Kola** `wheels = i ≥ 1`: `garage/wheels/<id>.png` (128 × 128, kolmo shora jako `wheel.png`,
+  světlý disk), `id`: 1 `sport`, 2 `whitewall`, 3 `five_spoke`, 4 `mesh`, 5 `turbine`,
+  6 `offroad`. Kreslí se **místo** `wheel.png` auta (nebo místo procedurálního kola), škálované
+  na rozměr `wheel.png` daného auta (procedurální auto: na procedurální kolo), natočení a pozice
+  beze změny, tón `color.garage.wheels[i]` (násobení). Bez souboru kolo auta v barvě ráfku jako
+  v2. Třída `micro` kola nemá (jsou v `body.png`): volba `wheels` se u ní jen uloží.
+  - **W:** kola z garáže do atlasu kol (stejná síť thin instances, `uvRect` podle volby).
+  - **F:** kolo z garáže jako další položka `drawAtlas` kol.
+
+## Ikony UI (v3)
+`ui/<id>.png`, 256 × 256, bílý glyf na alfě, tónovatelný. Id: `feed`, `map`, `taxi`, `garage`,
+`passport`, `camera`, `contacts`, `wallet`, `travel`, `settings` (= `phoneAppIds`, `specs/phone.md`),
+`radio`, `weather_clear`, `weather_rain`, `weather_fog`, `wanted_star`.
+- **Kde:** dlaždice aplikací na domovské obrazovce telefonu (id aplikace); indikátor počasí v HUD,
+  pokud ho klient kreslí (`specs/weather.md`: `weather_<stav>`); hvězdy hledanosti v HUD
+  (`wanted_star`, plné i prázdné stejný glyf, prázdné s alfou 0,35); aplikace Rádio
+  (`radio`, až bude, `specs/radio.md`).
+- **Barva a velikost:** glyf se násobí barvou, kterou má dnešní kresba na tom místě (ikona aplikace,
+  hvězda hledanosti, text HUD), velikost = dnešní velikost ikony. Ikona nemění rozložení.
+- **Bez souboru:** dnešní kresba (písmeno, emoji nebo procedurální tvar) beze změny.
+- **W:** `<img>` / CSS `mask-image` s `background-color` z tokenu. **F:** `Image.asset` s `color` a
+  `BlendMode.modulate` (nebo `ColorFiltered`), `cacheWidth` podle velikosti na obrazovce.
+
 ## Výkon a velikost
 Obrázky se načítají líně (při prvním zobrazení), dekódované se drží v cache s limitem 24 kusů
 (LRU). Na webu `loading="lazy"` / `decode()`, ve Flutteru `Image.asset` s `cacheWidth` podle
@@ -85,3 +125,6 @@ skutečné velikosti na obrazovce.
 - Auto s `body.png`, ale bez masky nebo kola: celé procedurálně (sprite se nepoužije).
 - Atlas se nevejde do 2048² (W): auta nad limit procedurálně, v pořadí `content/cars` id.
 - Noc a skin města (`specs/style.md`): sprite se nebarví paletou města, jen lakem.
+- Polep na autě bez `paint_mask` (hlídka): polep se nekreslí (hlídka ho v garáži mít nemůže).
+- Kolo z garáže větší nebo menší než `wheel.png`: vždy se škáluje na `wheel.png`, poměr stran 1 : 1
+  (kolo je shora obdélník, sprite kola z garáže se roztáhne).

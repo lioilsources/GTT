@@ -1,6 +1,6 @@
 {
  "module": "garage",
- "specVersion": 1,
+ "specVersion": 2,
  "cases": [
   {
    "name": "load keeps known cars and slots, clamps levels, drops zeros",
