@@ -72,6 +72,10 @@ g_prev   = g
   nepoškodí (K4).
 - `mezera` řídí oddělení a zmenšení stínu auta (`stín = 1 / (1 + mezera / 4)`).
 - Vozidla AI neskáčou (drží `z = g`).
+- `dopad` se hlásí při prvním dotyku (`z ≤ g`) poté, co auto bylo `airborne`: příznak `airborne`
+  spadne už při `mezera ≤ suspension_travel`, tedy o krok či několik dřív než samotný dotyk.
+- Pod `drive.stop_speed_mps` „bez plynu“ (síla svahu se neuplatní) = motor v tom kroku nedává
+  žádnou sílu (zrychlení z kroku 2 `drive.md` je 0: ruční brzda na místě, vstup `coast`).
 - Při přechodu na jiný `surface` (nájezd) se `g_prev` přepočítá na novém povrchu, aby přechod
   nevytvořil falešné `vg`.
 
@@ -89,13 +93,34 @@ ověřuje unit testem nad samotnou funkcí kroku skoku s tolerancí ±2 %.
 
 ## Scénáře P1 (`scenarios/terrain/`, tolerance ±5 %, auto `sedan_regent`)
 Plán uvádí `sedan_01`; v repu takové auto není, referenční sedan je `sedan_regent`.
-Scénáře běží na syntetické trati (rovina, rampy, hrana), kterou klient postaví z popisu ve
-scénáři, ne na balíčku města.
+Scénáře běží na syntetické trati (rovina, rampy, hrana), kterou klient postaví z popisu níže,
+ne na balíčku města.
 1. `downhill_coast` – sjezd 200 m při 10 % bez plynu z 0 m/s: rychlost na konci.
 2. `uphill_launch` – rozjezd do kopce 15 % s plným plynem: čas na 20 m/s.
 3. `jump_30_15` a `jump_40_20` – skoky z tabulky: doba letu, délka letu, rychlost dopadu.
 4. `hold_20` – stání na svahu 20 % bez plynu 5 s: posun 0 (tolerance 0,05 m).
 5. `bridge_7` – přejezd mostu s nájezdy 7 % plynem do `cruise`: rychlost na vrcholu a za mostem.
+
+**Syntetická trať:** balíček s `terrain_version` 1, `chunk_m` 256, `exaggeration` 1, `z0` 0;
+silnice podél osy x (y = 0), `primary`, 2 pruhy, obousměrná, `kept`, šířka 20 m. Terén všech
+chunků x −3…2, y −1…0 je profil `z(x)` (stejný pro každé y, vzorky po 8 m). Hrany mají body po
+16 m a výšky lineárně mezi uzly. Pozemní trať: uzly po 64 m od −512 do 512 m ve výšce profilu,
+všechny ve vrstvě 0. Bez budov, mobiliáře a provozu (`solid = false`), krok `drive.step_hz`.
+Start = (x, 0), natočení 0 (na východ), rychlost ve směru jízdy; vstupy podle souboru scénáře
+(`throttle`, `steer`, `brake` a `coast` od času `t`; `coast` = motor vypnutý: žádný automatický
+plyn ani brzdění motorem). Testy W: `web/test/terrainScenarios.test.ts`.
+
+| scénář | profil `z(x)` / trať | start x, rychlost | délka | metriky |
+|---|---|---|---|---|
+| `downhill_coast` | −0,1·x | −100, 0,5 m/s (= `stop_speed`, z klidu by auto drželo) | do x = 100 | `end_speed_mps`, `time_s` při x ≥ 100 |
+| `uphill_launch` | 0,15·x | −100, 0 | 30 s | `t_20_mps_s` = čas, kdy rychlost ≥ 20 |
+| `jump_30_15` | 0,15·x pro x < 0, jinak −0,15·x | −2, 30,3 m/s | 3 s | `takeoff_mps` (rychlost v 1. kroku `airborne`), `air_s` (součet kroků `airborne`), `air_m` (dráha v nich), `landing_mps` (`dopad`) |
+| `jump_40_20` | 0,2 / −0,2 | −2, 40,4 m/s | 3 s | jako výše + `after_mps` (rychlost na konci) |
+| `hold_20` | 0,2·x | 0, 0 | 5 s | `drift_m` = vzdálenost od startu |
+| `bridge_7` | terén 0; uzly (−400, 0) (−100, 0) (0, 7) (100, 7) (200, 0) (500, 0), hrany ve vrstvách 0→0, 0→1 most, 1→1 most, 1→0 most, 0→0 | −300, 25 m/s | 30 s | `v_at_m100_mps`, `v_at_0_mps`, `v_at_100_mps`, `v_at_200_mps`, `v_at_300_mps` = rychlost při prvním x ≥ −100, 0, 100, 200, 300 |
+
+Kontrolní tabulka skoků platí pro čistý model; skutečné auto ve scénářích ztrácí ve vzduchu
+rychlost odporem (`drag_*`), proto je let o několik procent kratší (40 m/s: délka −10 %).
 
 Hodnoty nahraje vedoucí klient (web), druhý je musí trefit (DUALSTACK 5.5).
 

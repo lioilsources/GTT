@@ -1,0 +1,29 @@
+{
+  "module": "terrain",
+  "name": "jump_30_15",
+  "car": "sedan_regent",
+  "inputs": [
+    {
+      "t": 0,
+      "coast": 1
+    }
+  ],
+  "expect": {
+    "takeoff_mps": {
+      "value": 29.966,
+      "tol": 0.05
+    },
+    "air_s": {
+      "value": 0.733,
+      "tol": 0.05
+    },
+    "air_m": {
+      "value": 21.392,
+      "tol": 0.05
+    },
+    "landing_mps": {
+      "value": 8.736,
+      "tol": 0.05
+    }
+  }
+}
