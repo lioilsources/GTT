@@ -12,7 +12,9 @@ není uvedeno jinak. Reprodukce: `tools/art/` (prompty, seedy, parametry workflo
 | `postcards/nyc/{guggenheim,msg}.png` | Qwen-Image (fp8), ComfyUI | Apache 2.0 | vlastní dílo projektu GTT | oprava 2, seed 214 (guggenheim) a 211 (msg), styl A, `tools/art/make_fix2.py` |
 | `postcards/prague/old_new_synagogue.png` | Qwen-Image (fp8), ComfyUI | Apache 2.0 | vlastní dílo projektu GTT | oprava 2, seed 214, styl C, nápis v okraji papíru přebarven (`tools/art/post_fix2.py`) |
 | `postcards/nyc/amnh.png` | Qwen-Image (fp8), ComfyUI | Apache 2.0 | vlastní dílo projektu GTT | oprava 3, seed 221 (`tools/art/make_fix3.py`), styl A, štít bez nápisu, podpis v rohu přebarven (`tools/art/post_fix3.py`) |
-| `cars/lidovka/body.png` | Qwen-Image (fp8), ComfyUI + BiRefNet-general | Apache 2.0 / MIT | vlastní dílo projektu GTT | oprava 1, seed 316 (`tools/art/make_fix1.py`), ručně ořezáno a zmenšeno na 32 px/m |
+| `cars/lidovka/body.png` | Qwen-Image (fp8), ComfyUI + BiRefNet-general | Apache 2.0 / MIT | vlastní dílo projektu GTT | oprava 1, seed 316 (`tools/art/make_fix1.py`), ručně ořezáno a zmenšeno na 32 px/m; lak převeden na šedou, výřezy pro kola (`tools/art/post_lidovka.py`) |
+| `cars/lidovka/{paint_mask,wheel,lights}.png` | vlastní skript (`tools/art/post_lidovka.py`, numpy) | – | vlastní dílo projektu GTT | maska laku podle barvy z body.png, kolo a světla procedurálně |
+| `cars/{m0_coupe,taxi_metro,hatch_pip,sedan_harbor,sedan_crown,van_courier,mini_pebble,pickup_hauler,muscle_brute,traffic_sedan,police_patrol}/*.png` | vlastní skript (`tools/art/cars_proc.py`, PIL) | – | vlastní dílo projektu GTT | dávka cars1, procedurální vektor kolmo shora, bez modelu; siluety podle `specs/cars.md`, fiktivní tvary bez značek |
 | `souvenirs/*.png` | Qwen-Image (fp8), ComfyUI + BiRefNet-general | Apache 2.0 / MIT | vlastní dílo projektu GTT | suvenýry 1, seedy 601–604 (`tools/art/make_souv1.py`), výběr a ořez 512² (`tools/art/post_souv.py`) |
 
 Nepoužívat pro herní assety: modely s nekomerční licencí (např. FLUX.1-dev, RMBG-2.0) a modely

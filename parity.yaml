@@ -560,7 +560,7 @@
 - id: F-064
   name: Vzdušný hokej (M2-S9 batch C)
   level: P0
-  spec: specs/minigames/hokej.md@1
+  spec: specs/minigames/hokej.md@2
   vectors: vectors/hokej.json
   lead: web
   flutter: todo

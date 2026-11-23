@@ -93,6 +93,8 @@ export class DriveWorld {
   readonly skids: number[] = [];
   private lastSkid: [number, number, number, number] | null = null;
   skidsVersion = 0;
+  /** Called when a bridge or tunnel rail stops the car, with the speed into the rail (m/s). */
+  onRail: ((outMps: number) => void) | null = null;
   /** Called before every fixed step (the benchmark autopilot sets the input here). */
   beforeStep: ((step: number) => void) | null = null;
   /** AI traffic and lights (specs/traffic.md); null when traffic.enabled is off. */
@@ -447,6 +449,7 @@ export class DriveWorld {
     const out = v.x * nx + v.y * ny;
     car.body.setTransform({ x: h.x + nx * limit, y: h.y + ny * limit }, car.body.getAngle());
     if (out > 0) {
+      this.onRail?.(out);
       const k = out * this.tuning.layers.railBounce;
       car.body.setLinearVelocity({ x: v.x - nx * k, y: v.y - ny * k });
       return { nx: -nx, ny: -ny };
