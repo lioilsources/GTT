@@ -2,7 +2,7 @@ import type { TuningMinigamesHokej } from '../../gen/tuning';
 import { IllegalAction, type Rules, type RulesResult } from '../rules';
 import { clamp, friction, isqrt, trunc } from '../physics';
 
-/** specs/minigames/hokej.md, version 1 (arithmetic and friction: specs/minigames/fyzika.md v1). No rng. */
+/** specs/minigames/hokej.md, version 2 (arithmetic and friction: specs/minigames/fyzika.md v1). No rng. */
 export interface HokejConfig {
   level: number;
   w: number;
@@ -123,7 +123,7 @@ export function aiTarget(c: HokejConfig, p: Puck, a: Mallet): { x: number; y: nu
 
 export class HokejRules implements Rules<HokejState, HokejAction, HokejResult, HokejConfig> {
   readonly id = 'hokej';
-  readonly specVersion = 1;
+  readonly specVersion = 2;
   private cfg: HokejConfig | null = null;
 
   init(config: HokejConfig, _seed?: number): HokejState {
@@ -184,8 +184,22 @@ export class HokejRules implements Rules<HokejState, HokejAction, HokejResult, H
     }
     const ma = drive(s.ai, c.aiSpeed[c.level - 1]!);
     const p = s.puck;
+    const x0 = p.x, y0 = p.y;
     p.x += p.vx;
     p.y += p.vy;
+    const r = c.puckR, e = c.eWall, mid = Math.floor(c.w / 2);
+    if (p.y < 0 || p.y > c.h) {
+      const mine = p.y > c.h;
+      // v2 step 5: x of the centre where it crosses the goal line, integer interpolation along the move.
+      let xc = x0;
+      if (!mine && y0 > 0) xc = x0 + trunc(p.vx * y0, y0 - p.y);
+      if (mine && y0 < c.h) xc = x0 + trunc(p.vx * (c.h - y0), p.y - y0);
+      if (Math.abs(xc - mid) > c.goalHalf) {
+        // Crossed outside the mouth: bounce off the end wall, position mirrored over the line.
+        p.y = mine ? 2 * c.h - p.y : 0 - p.y;
+        p.vy = 0 - trunc(p.vy * e, 1000);
+      }
+    }
     if (p.y < 0 || p.y > c.h) {
       const mine = p.y > c.h;
       if (mine) s.playerGoals += 1;
@@ -196,7 +210,6 @@ export class HokejRules implements Rules<HokejState, HokejAction, HokejResult, H
       if (s.playerGoals >= c.goals || s.aiGoals >= c.goals) s.over = true;
       return;
     }
-    const r = c.puckR, e = c.eWall, mid = Math.floor(c.w / 2);
     if ((p.x - r < 0 && p.vx < 0) || (p.x + r > c.w && p.vx > 0)) p.vx = 0 - trunc(p.vx * e, 1000);
     if (((p.y - r < 0 && p.vy < 0) || (p.y + r > c.h && p.vy > 0)) && Math.abs(p.x - mid) > c.goalHalf) {
       p.vy = 0 - trunc(p.vy * e, 1000);
