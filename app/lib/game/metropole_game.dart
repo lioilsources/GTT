@@ -196,6 +196,7 @@ class MetropoleGame extends Game {
       tr(ui.PlatformDispatcher.instance.locale.languageCode, MessageKey.pedestrianBubble),
       tuning.pedestrians.bubblePx,
     );
+    _boostLabel = tr(ui.PlatformDispatcher.instance.locale.languageCode, MessageKey.boostButton);
     passport = PassportTracker(passportCityOf(city), tuning.passport)..onStamp((e) => passportEvent.value = e);
     // Police and wanted level (specs/police.md); the HUD listens to its hooks.
     police = Police(drive, tuning, fleet);
@@ -206,6 +207,7 @@ class MetropoleGame extends Game {
   final GameAssets data;
   late final PedestrianWorld peds;
   late final PedBubblePainter _pedBubbles;
+  late final String _boostLabel;
   late final Tuning tuning;
   late final DriveWorld drive;
   late final CarFleet fleet;
@@ -256,6 +258,11 @@ class MetropoleGame extends Game {
   /// Rewrites the player's control input after the scheme and the keyboard (not under the
   /// autopilot or while paused): the drunk driver of specs/shops.md brakes to a stop.
   void Function(ControlInput input)? inputHook;
+
+  /// Boost hint (specs/controls.md v2): set by the screen once the stored count is read; the
+  /// callback persists the count and shows the toast. Off under the autopilot.
+  BoostHint? boostHint;
+  void Function(BoostHintEvent e)? onBoostHint;
 
   ui.Size _size = ui.Size.zero;
   double _hudTimer = 0;
@@ -450,6 +457,11 @@ class MetropoleGame extends Game {
     final stepDt = worldDt(dt);
     if (!pause) {
       drive.update(stepDt);
+      final hint = boostHint;
+      if (hint != null && pilot == null) {
+        final e = hint.step(stepDt, drive.car.speed, input.boost);
+        if (e != null) onBoostHint?.call(e);
+      }
       police.update(stepDt);
       _policeClock += stepDt;
       // Test drive countdown in game time (specs/testdrive.md "Odpočet").
@@ -614,7 +626,7 @@ class MetropoleGame extends Game {
     _streetLabels(canvas);
     paintScreen?.call(canvas, _size);
     _pedBubbles.paint(canvas, _size, peds, camera, tuning);
-    paintControls(canvas, _size, scheme);
+    paintControls(canvas, _size, scheme, _boostLabel);
   }
 
   /// Lift and roll of the car while it hops (specs/hop.md "Kreslení"), null on the ground.

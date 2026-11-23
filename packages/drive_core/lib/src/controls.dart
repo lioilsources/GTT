@@ -117,20 +117,33 @@ class SchemeA extends ControlScheme {
   }
 }
 
-/// B: hold the left or right half to steer; both halves brake (and reverse).
+/// B: hold the left or right half to steer; both halves brake (and reverse). v2: a finger that
+/// starts on the Boost button bottom centre boosts until lifted and steers nothing.
 class SchemeB extends ControlScheme {
   SchemeB(super.tuning);
 
   final Map<int, bool> _right = {};
+  final Set<int> _boost = {};
 
   bool get leftHeld => _right.values.any((v) => !v);
   bool get rightHeld => _right.values.any((v) => v);
+  bool get boostHeld => _boost.isNotEmpty;
 
   @override
   ControlSchemeId get id => ControlSchemeId.b;
 
+  /// Layout in screen-width units (presentation, specs/controls.md v2).
+  static ScreenRect boostButton(double w, double h) =>
+      (left: w * 0.38, top: h - w * 0.28, width: w * 0.24, height: w * 0.2);
+
   @override
-  void down(int pointer, ScreenPt p, double screenW, double screenH) => _right[pointer] = p.x > screenW / 2;
+  void down(int pointer, ScreenPt p, double screenW, double screenH) {
+    if (_inRect(boostButton(screenW, screenH), p, 8)) {
+      _boost.add(pointer);
+    } else {
+      _right[pointer] = p.x > screenW / 2;
+    }
+  }
 
   @override
   void move(int pointer, ScreenPt p, double screenW, double screenH) {
@@ -138,7 +151,10 @@ class SchemeB extends ControlScheme {
   }
 
   @override
-  void up(int pointer) => _right.remove(pointer);
+  void up(int pointer) {
+    _right.remove(pointer);
+    _boost.remove(pointer);
+  }
 
   @override
   void update(ControlInput out) {
@@ -149,11 +165,13 @@ class SchemeB extends ControlScheme {
     } else if (leftHeld) {
       out.steer = -1;
     }
+    if (_boost.isNotEmpty) out.boost = true;
   }
 }
 
 /// C: a virtual steering wheel at the bottom centre, brake pedal bottom right,
-/// handbrake button bottom left. The layout is expressed in screen-width units.
+/// handbrake button bottom left; v2: a Boost button above the brake pedal. The layout is
+/// expressed in screen-width units.
 class SchemeC extends ControlScheme {
   SchemeC(super.tuning);
 
@@ -164,9 +182,11 @@ class SchemeC extends ControlScheme {
   double wheelAngle = 0;
   final Set<int> _brake = {};
   final Set<int> _hand = {};
+  final Set<int> _boost = {};
 
   bool get brakeHeld => _brake.isNotEmpty;
   bool get handHeld => _hand.isNotEmpty;
+  bool get boostHeld => _boost.isNotEmpty;
 
   @override
   ControlSchemeId get id => ControlSchemeId.c;
@@ -176,6 +196,8 @@ class SchemeC extends ControlScheme {
   static ScreenRect pedal(double w, double h) => (left: w * 0.8, top: h - w * 0.42, width: w * 0.17, height: w * 0.3);
   static ScreenRect handButton(double w, double h) =>
       (left: w * 0.03, top: h - w * 0.3, width: w * 0.17, height: w * 0.17);
+  static ScreenRect boostButton(double w, double h) =>
+      (left: w * 0.8, top: h - w * 0.64, width: w * 0.17, height: w * 0.17);
 
   double _angle(ScreenPt p, double w, double h) {
     final c = wheelCentre(w, h);
@@ -187,6 +209,8 @@ class SchemeC extends ControlScheme {
     final c = wheelCentre(screenW, screenH);
     if (_inRect(pedal(screenW, screenH), p, 8)) {
       _brake.add(pointer);
+    } else if (_inRect(boostButton(screenW, screenH), p, 8)) {
+      _boost.add(pointer);
     } else if (_inRect(handButton(screenW, screenH), p, 8)) {
       _hand.add(pointer);
     } else if (_wheel == null && math.sqrt(math.pow(p.x - c.x, 2) + math.pow(p.y - c.y, 2)) < wheelRadius(screenW) * 1.6) {
@@ -216,6 +240,7 @@ class SchemeC extends ControlScheme {
     }
     _brake.remove(pointer);
     _hand.remove(pointer);
+    _boost.remove(pointer);
   }
 
   @override
@@ -223,5 +248,6 @@ class SchemeC extends ControlScheme {
     out.steer = wheelAngle / tuning.cMaxWheelRad;
     if (_brake.isNotEmpty) out.brake = 1;
     if (_hand.isNotEmpty) out.handbrake = true;
+    if (_boost.isNotEmpty) out.boost = true;
   }
 }
