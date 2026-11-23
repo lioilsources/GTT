@@ -169,8 +169,10 @@ items:
      done: 2026-11-23T04:23, commit: 448d42c, evidence: "specs v1 s Upřesněním, vektory 4 her (web lead), obě implementace, vektory projdou v obou klientech, Galerie, bary (prší, kostky) a spoty v NYC a Praze (PR #168, #170, #171, #174), parita F-054–F-057; chybí dohrát na telefonu"}
   - {id: M2-S9C, milestone: M2, name: "minihry dávka C: Kulečník, Bowling, Minigolf, Had, Cihly, Bouchni krtka, Vzdušný hokej", size: L, status: "čeká na Ol1na", started: 2026-11-23T04:00,
      done: 2026-11-23T05:45, commit: e576e00, evidence: "specs v1 s Upřesněním (hokej v2: gól jen v ústí), sdílená celočíselná fyzika (web physics.ts, Flutter mg_physics), vektory 7 her (web lead), obě implementace, vektory projdou v obou klientech, Galerie, bar (kulečník) a spoty v NYC a Praze (PR #180, #184, #187, #189, #190, #196), parita F-058–F-064; chybí dohrát na telefonu"}
-  - {id: M2-S9D, milestone: M2, name: "minihry dávka D: Drift zóna, Sprint A→B", size: M, status: wip, started: 2026-11-23T04:49}
-  - {id: M2-S9E, milestone: M2, name: "místní minihry: Stickball, Double Dutch (engine rhythm)", size: L, status: wip, started: 2026-11-23T04:49}
+  - {id: M2-S9D, milestone: M2, name: "minihry dávka D: Drift zóna, Sprint A→B", size: M, status: wip, started: 2026-11-23T04:49,
+     evidence: "W hotovo: PR #191 (web/minigames-d), vektory #192 (drift 12, sprint 12 případů), F-065/F-066 web done; F: kód v PR #201 (flutter/minigames-d) mergnutý, chybí přepnutí parity F-065/F-066 flutter done (shared/minigames-d-done)"}
+  - {id: M2-S9E, milestone: M2, name: "místní minihry: Stickball, Double Dutch (engine rhythm)", size: L, status: wip, started: 2026-11-23T04:49,
+     evidence: "W hotovo: PR #191, vektory #192 (stickball 11, doubledutch 10 případů), F-067/F-068 web done; F: kód v PR #201 mergnutý, chybí přepnutí parity F-067/F-068 flutter done"}
   - {id: M2-S10, milestone: M2, name: "rádio (kostra stanic)", size: S, status: todo}
   - {id: M2-A1, milestone: M2, name: "30 miniher v NYC: testy, vektory, Galerie v obou klientech", size: S, status: todo}
   - {id: M2-A2, milestone: M2, name: "soak 10 smyček s novými systémy bez pádu", size: S, status: todo}
@@ -202,11 +204,11 @@ items:
      started: 2026-11-23T05:10, done: 2026-11-23T07:05, commit: 1227456, evidence: "run/bin/citypack build prague (validate projde, 0 schodů); výšky zatím AWS Terrain Tiles místo DMR 5G (chybí PDAL/GDAL), stromy z OSM"}
   - {id: M5-S5, milestone: M5, name: "T0/N0/FL0 Tokio", size: M, status: todo}
   - {id: M5-S6, milestone: M5, name: "T1 svahy a skoky a reliéf shora v obou klientech (F-070, F-071)", size: L, status: wip, started: 2026-11-23T08:10,
-     evidence: "W hotovo: PR #220 (web/terrain-t1), scénáře scenarios/terrain ve W v toleranci, kontrolní tabulka skoků v unit testu ±2 %; F čeká"}
+     evidence: "W hotovo: PR #220 (web/terrain-t1), scénáře scenarios/terrain ve W v toleranci (#221), kontrolní tabulka skoků v unit testu ±2 %, data T3 #223; F chybí: čtení polí terénu, groundZ, svah a skok v drive_core, promítání kap. 6, nápovědy 7.1 (F-070/F-071 flutter todo, podle plánu 05 L3 až po vystřelení)"}
   - {id: M5-S7, milestone: M5, name: "N1 voda a zeleň shora a jízda v obou klientech (F-072)", size: L, status: wip, started: 2026-11-23T08:00,
-     evidence: "W hotovo: PR #218 (web/nature-n1), scénáře scenarios/nature (brake_*, water_fall, parkland_trees) ve W v toleranci; F čeká"}
+     evidence: "W hotovo: PR #218 (web/nature-n1), scénáře scenarios/nature (brake_*, water_fall, parkland_trees) ve W v toleranci (#219); F chybí: kreslení vody a zeleně shora, stromy, přilnavost povrchů, pád do vody, mapa v telefonu (F-072 flutter todo, L3 po vystřelení)"}
   - {id: M5-S8, milestone: M5, name: "FL2 les a měkké stromy v obou klientech (F-073)", size: M, status: wip, started: 2026-11-23T08:00,
-     evidence: "W hotovo: PR #218 (web/nature-n1), scénáře scenarios/flow/forest_200, tree_head_on ve W v toleranci; F čeká"}
+     evidence: "W hotovo: PR #218 (web/nature-n1), scénáře scenarios/flow/forest_200, tree_head_on ve W v toleranci (#219); F chybí: měkké stromy, les (grip/speed) v drive_core (F-073 flutter todo, L3 po vystřelení)"}
   - {id: M5-S9, milestone: M5, name: "T2 + N2 šikmý pohled ve W (F-074)", size: L, status: todo}
   - {id: M5-S10, milestone: M5, name: "T3 ladění kopců Prahy, minihry z reliéfu, nejprudší ulice", size: M, status: todo}
   - {id: M5-S11, milestone: M5, name: "metro stuckmap a počítadlo zaseknutí", size: S, status: todo}
