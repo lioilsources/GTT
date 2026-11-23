@@ -163,3 +163,44 @@ export function ridesEdge(e: RoadEdge | null, layer: number, dist: number, margi
   const ground = !e.bridge && !e.tunnel && e.layerFrom === 0 && e.layerTo === 0;
   return !ground && dist <= e.width / 2 + margin;
 }
+
+/**
+ * Collision layer of the player's car on its road edge (specs/terrain.md "Výška pod bodem"): the
+ * tracker's layer, except on the layer-0 part of a structure (a bridge, also an Overture level-0
+ * one, or a ramp): where its surface stands more than `clear` above the terrain it counts as +1,
+ * more than `clear` below it as −1 (level with the ground, at a junction, it stays 0), while the
+ * car is on that surface: within width/2 + margin of the axis and at its height (onSurface: a car
+ * on the road under a deck stays on 0). Buildings, bollards, trees,
+ * water and props of the ground then leave the car alone and the rails keep it on the deck.
+ */
+export function structureLayer(
+  e: RoadEdge, layer: number, dist: number, margin: number, edgeZ: number, terrainZ: number | null, carZ: number, clear: number,
+): number {
+  if (layer !== 0 || e.z === null) return layer;
+  if (!e.bridge && !e.tunnel && e.layerFrom === 0 && e.layerTo === 0) return 0;
+  if (dist > e.width / 2 + margin || !onSurface(edgeZ, terrainZ, carZ, clear)) return 0;
+  if (terrainZ !== null && edgeZ < terrainZ - clear) return -1;
+  return terrainZ !== null && edgeZ > terrainZ + clear ? 1 : 0;
+}
+
+/**
+ * The car (body height carZ) is on an edge surface at edgeZ, or over it: not more than `clear`
+ * below it (a car on the road under a deck is not on the deck; one flying over it will land
+ * there). A surface sunk under the terrain (a tunnel mouth) needs both ways, so a car on the
+ * ground above does not drop into it.
+ */
+export function onSurface(edgeZ: number, terrainZ: number | null, carZ: number, clear: number): boolean {
+  if (carZ < edgeZ - clear) return false;
+  return !(terrainZ !== null && edgeZ < terrainZ - clear) || carZ <= edgeZ + clear;
+}
+
+/**
+ * structureLayer for a pack without heights: on the layer-0 half of a ramp (an edge changing
+ * layer) the car is on the structure's layer (`drawLayer`: +1 bridge, −1 tunnel) while within
+ * width/2 + margin of the axis, but only when it got onto the edge along the graph (`linked`: from
+ * the ramp), never from a road under it. A level-0 edge stays 0 (nothing tells its height).
+ */
+export function flatStructureLayer(e: RoadEdge, layer: number, dist: number, margin: number, linked: boolean): number {
+  if (layer !== 0 || !linked || e.layerFrom === e.layerTo) return layer;
+  return dist > e.width / 2 + margin ? 0 : e.drawLayer;
+}

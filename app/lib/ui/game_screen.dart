@@ -4,7 +4,7 @@ import 'dart:convert';
 import 'package:drive_core/drive_core.dart';
 import 'package:flame/game.dart';
 
-import 'package:flutter/foundation.dart' show kDebugMode;
+import 'package:flutter/foundation.dart' show TargetPlatform, defaultTargetPlatform, kDebugMode;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:npc_dialogue/npc_dialogue.dart';
@@ -14,6 +14,7 @@ import '../booths/booths_controller.dart';
 import '../booths/booths_layer.dart';
 import '../cities/cities.dart';
 import '../cities/passport_percent.dart';
+import '../game/boost_hint_store.dart';
 import '../game/metropole_game.dart';
 import '../game/pause.dart';
 import '../game/stuck_log.dart';
@@ -79,6 +80,8 @@ class _GameScreenState extends State<GameScreen> {
   GarageController? _garage;
   final SaveStore _store = FileSaveStore();
   final CityStore _cities = FileCityStore();
+  final BoostHintStore _boostHints = FileBoostHintStore();
+  int _boostHintShown = 0;
   Object? _saved;
   DialogueSession? _npc;
   bool _hasBench = false;
@@ -113,6 +116,7 @@ class _GameScreenState extends State<GameScreen> {
     unawaited(_cities.write(widget.city.id));
     _hasBench = await _assetExists('${GameAssets.shared}content/bench/${widget.city.id}.json');
     _saved = await _store.read(widget.city.id);
+    _boostHintShown = await _boostHints.read();
     _npc = await ensureDialogueSession(
       assets.tuning,
       city: widget.city.id,
@@ -225,6 +229,16 @@ class _GameScreenState extends State<GameScreen> {
             ..passportPercent = ((c) => _passportPercent(game, c));
           // Wall slide and rescue (specs/flow.md, F-069): the road move faces along the GPS route, the
           // phone home screen (the pause menu) has "Na silnici", the debug build logs stuck events.
+          // Boost hint (specs/controls.md v2): toast for the active scheme, count kept on the device.
+          if (game.boostHint == null) {
+            final hint = game.boostHint = BoostHint(game.tuning.controls, _boostHintShown);
+            final keyboard = const {TargetPlatform.macOS, TargetPlatform.windows, TargetPlatform.linux}
+                .contains(defaultTargetPlatform);
+            game.onBoostHint = (e) {
+              unawaited(_boostHints.write(hint.shown));
+              if (e == BoostHintEvent.show) phone.showToast(BoostHint.textFor(game.scheme.id, keyboard: keyboard));
+            };
+          }
           if (phone.onToRoad == null) {
             phone.onToRoad = () => game.toRoad();
             game.drive.routeAhead = () {

@@ -13,7 +13,7 @@
   "steer_speed": 4.0,
   "top_speed": 36.0,
   "seats": 5,
-  "tags": ["nyc", "tokyo"],
+  "tags": ["nyc", "tokyo", "moscow"],
   "price": 15000,
   "rarity": "common",
   "tuning_slots": ["engine", "tyres", "brakes", "weight", "drift"],

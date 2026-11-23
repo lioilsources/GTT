@@ -15,6 +15,8 @@ není uvedeno jinak. Reprodukce: `tools/art/` (prompty, seedy, parametry workflo
 | `cars/lidovka/*.png` | vlastní skript (`tools/art/cars_proc.py`, PIL) | – | vlastní dílo projektu GTT | dávka cars2, procedurální vektor kolmo shora (nahrazuje body.png z opravy 1, Qwen-Image), 57×148 |
 | `cars/{m0_coupe,taxi_metro,hatch_pip,sedan_harbor,sedan_crown,van_courier,mini_pebble,pickup_hauler,muscle_brute,traffic_sedan,police_patrol}/*.png` | vlastní skript (`tools/art/cars_proc.py`, PIL) | – | vlastní dílo projektu GTT | dávka cars1, procedurální vektor kolmo shora, bez modelu; siluety podle `specs/cars.md`, fiktivní tvary bez značek |
 | `cars/<id>/*.png` (dávka 2: zbylých 33 aut z `docs/art-requests.md` kap. 3) | vlastní skript (`tools/art/cars_proc.py`, PIL) | – | vlastní dílo projektu GTT | dávka cars2, procedurální vektor kolmo shora, bez modelu; jezdci mikro a rikši stylizovaní dospělí bez rysů |
+| `ui/*.png` (15 ikon HUD a telefonu) | vlastní skript (`tools/art/ui_icons.py`, PIL) | – | vlastní dílo projektu GTT | dávka ui1, procedurální plochý vektor, bílý glyf na alfě 256², tónovatelný, bez textu a značek |
+| `garage/{decals,wheels}/*.png` (8 polepů, 6 kol) | vlastní skript (`tools/art/garage_cosmetics.py`, PIL) | – | vlastní dílo projektu GTT | dávka garage1, procedurální vektor; polepy bílý motiv na alfě 512×1024, kola 128² se světlým diskem, tónovatelné |
 | `souvenirs/*.png` | Qwen-Image (fp8), ComfyUI + BiRefNet-general | Apache 2.0 / MIT | vlastní dílo projektu GTT | suvenýry 1, seedy 601–604 (`tools/art/make_souv1.py`), výběr a ořez 512² (`tools/art/post_souv.py`) |
 
 Nepoužívat pro herní assety: modely s nekomerční licencí (např. FLUX.1-dev, RMBG-2.0) a modely

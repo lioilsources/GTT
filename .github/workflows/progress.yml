@@ -1,0 +1,51 @@
+name: progress
+# Regenerates plans/PROGRESS.md, the README status block and docs/verify.md on main after every
+# merge (Prompts/05 L-S2), so pull requests never carry these generated files and never conflict
+# on them. Commits only when something changed; a GITHUB_TOKEN push does not start other workflows.
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'plans/progress.yaml'
+      - 'plans/verify.yaml'
+      - 'parity.yaml'
+      - 'packs.lock'
+      - 'content/**'
+      - 'tools/metro/**'
+      - 'README.md'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: progress
+  cancel-in-progress: false
+
+jobs:
+  regenerate:
+    runs-on: ubuntu-latest
+    env:
+      TZ: Europe/Prague
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: main
+      - uses: actions/setup-go@v7
+        with:
+          go-version: '1.26'
+          cache-dependency-path: tools/*/go.sum
+      - name: Regenerate
+        run: |
+          mkdir -p run/bin
+          (cd tools/metro && go build -o ../../run/bin/metro ./cmd/metro)
+          run/bin/metro progress
+      - name: Commit if changed
+        run: |
+          git add plans/PROGRESS.md README.md
+          [ -f docs/verify.md ] && git add docs/verify.md
+          if git diff --cached --quiet; then echo "up to date"; exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Regenerate progress (metro progress)"
+          git push origin HEAD:main

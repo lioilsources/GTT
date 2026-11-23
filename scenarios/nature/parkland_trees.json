@@ -4,8 +4,8 @@
   "car": "sedan_regent",
   "inputs": [{"t": 0, "throttle": 0, "steer": 0, "brake": 0}, {"t": 1, "throttle": 0, "steer": 0.4, "brake": 0}, {"t": 2.2, "throttle": 0, "steer": -0.4, "brake": 0}, {"t": 4, "throttle": 0, "steer": 0.2, "brake": 0}, {"t": 5.5, "throttle": 0, "steer": 0, "brake": 0}],
   "expect": {
-    "tree_hits": {"value": 8, "tol": 0},
-    "saplings_fallen": {"value": 2, "tol": 0},
+    "tree_hits": {"value": 9, "tol": 0},
+    "saplings_fallen": {"value": 3, "tol": 0},
     "min_speed_mps": {"value": 12.12, "tol": 0.05},
     "rescues": {"value": 0, "tol": 0}
   }

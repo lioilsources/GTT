@@ -78,6 +78,7 @@ export class Tuning {
   readonly carAnchor: TuningCarAnchor;
   readonly extrusion: TuningExtrusion;
   chunkM: number;
+  /** cruise = no-input city pace (specs/drive.md v2); boost asks for top */
   readonly speedMps: TuningSpeedMps;
   /** citypack: road corridors and building masses. */
   readonly roads: TuningRoads;
@@ -403,6 +404,7 @@ export class TuningExtrusion {
   static readonly keys = ['k', 'knee_m', 'exp', 'max_scale'] as const;
 }
 
+/** cruise = no-input city pace (specs/drive.md v2); boost asks for top */
 export class TuningSpeedMps {
   cruise: number;
   topDefault: number;
@@ -702,6 +704,12 @@ export class TuningTrams {
   seed: number;
   /** drawn distance between the two rails (world metres) */
   railGaugeM: number;
+  /** trams.md v2: a node turn sharper than this is not a track connection */
+  maxSwitchDeg: number;
+  /** the turn at a node is measured this far along both edges */
+  turnProbeM: number;
+  /** acceptance: max change of a car's axis per metre of travel (test) */
+  maxTurnDegPerM: number;
 
   constructor(r: R) {
     this.enabled = r.b('enabled');
@@ -733,6 +741,9 @@ export class TuningTrams {
     this.despawnM = r.d('despawn_m');
     this.seed = r.i('seed');
     this.railGaugeM = r.d('rail_gauge_m');
+    this.maxSwitchDeg = r.d('max_switch_deg');
+    this.turnProbeM = r.d('turn_probe_m');
+    this.maxTurnDegPerM = r.d('max_turn_deg_per_m');
   }
 
   toJson(): Record<string, unknown> {
@@ -766,6 +777,9 @@ export class TuningTrams {
       despawn_m: this.despawnM,
       seed: this.seed,
       rail_gauge_m: this.railGaugeM,
+      max_switch_deg: this.maxSwitchDeg,
+      turn_probe_m: this.turnProbeM,
+      max_turn_deg_per_m: this.maxTurnDegPerM,
     };
   }
 }
@@ -923,6 +937,8 @@ export class TuningDrive {
   engineBrakeMps2: number;
   /** engine braking starts this far above the wanted speed */
   overspeedMps: number;
+  /** auto-cruise cancels the downhill slope pull up to this (specs/drive.md v2) */
+  cruiseHoldMps2: number;
   /** 1/s */
   dragLinear: number;
   /** 1/m */
@@ -961,6 +977,7 @@ export class TuningDrive {
     this.reversePower = r.d('reverse_power');
     this.engineBrakeMps2 = r.d('engine_brake_mps2');
     this.overspeedMps = r.d('overspeed_mps');
+    this.cruiseHoldMps2 = r.d('cruise_hold_mps2');
     this.dragLinear = r.d('drag_linear');
     this.dragQuadratic = r.d('drag_quadratic');
     this.handbrakeDecelMps2 = r.d('handbrake_decel_mps2');
@@ -996,6 +1013,7 @@ export class TuningDrive {
       reverse_power: this.reversePower,
       engine_brake_mps2: this.engineBrakeMps2,
       overspeed_mps: this.overspeedMps,
+      cruise_hold_mps2: this.cruiseHoldMps2,
       drag_linear: this.dragLinear,
       drag_quadratic: this.dragQuadratic,
       handbrake_decel_mps2: this.handbrakeDecelMps2,
@@ -1079,12 +1097,21 @@ export class TuningControls {
   /** extra travel to full brake */
   aFullBrakeHeight: number;
   cMaxWheelRad: number;
+  /** driving at cruise without boost before the hint shows again */
+  boostHintAfterS: number;
+  /** counts as cruise driving from this speed */
+  boostHintMinSpeedMps: number;
+  /** the boost hint shows at most this many times per device */
+  boostHintMax: number;
 
   constructor(r: R) {
     this.aFullSteerWidth = r.d('a_full_steer_width');
     this.aDeadZoneHeight = r.d('a_dead_zone_height');
     this.aFullBrakeHeight = r.d('a_full_brake_height');
     this.cMaxWheelRad = r.d('c_max_wheel_rad');
+    this.boostHintAfterS = r.d('boost_hint_after_s');
+    this.boostHintMinSpeedMps = r.d('boost_hint_min_speed_mps');
+    this.boostHintMax = r.i('boost_hint_max');
   }
 
   toJson(): Record<string, unknown> {
@@ -1093,26 +1120,11 @@ export class TuningControls {
       a_dead_zone_height: this.aDeadZoneHeight,
       a_full_brake_height: this.aFullBrakeHeight,
       c_max_wheel_rad: this.cMaxWheelRad,
+      boost_hint_after_s: this.boostHintAfterS,
+      boost_hint_min_speed_mps: this.boostHintMinSpeedMps,
+      boost_hint_max: this.boostHintMax,
     };
   }
-
-  /** Value by YAML key, undefined when the key is unknown. */
-  get(key: string): number | undefined {
-    switch (key) {
-      case 'a_full_steer_width':
-        return this.aFullSteerWidth;
-      case 'a_dead_zone_height':
-        return this.aDeadZoneHeight;
-      case 'a_full_brake_height':
-        return this.aFullBrakeHeight;
-      case 'c_max_wheel_rad':
-        return this.cMaxWheelRad;
-      default:
-        return undefined;
-    }
-  }
-
-  static readonly keys = ['a_full_steer_width', 'a_dead_zone_height', 'a_full_brake_height', 'c_max_wheel_rad'] as const;
 }
 
 /** Street furniture (procedural per chunk, never stored). */
@@ -3911,11 +3923,13 @@ export class TuningWeatherCities {
   nyc: boolean;
   prague: boolean;
   tokyo: boolean;
+  moscow: boolean;
 
   constructor(r: R) {
     this.nyc = r.b('nyc');
     this.prague = r.b('prague');
     this.tokyo = r.b('tokyo');
+    this.moscow = r.b('moscow');
   }
 
   toJson(): Record<string, unknown> {
@@ -3923,6 +3937,7 @@ export class TuningWeatherCities {
       nyc: this.nyc,
       prague: this.prague,
       tokyo: this.tokyo,
+      moscow: this.moscow,
     };
   }
 }
@@ -3978,11 +3993,13 @@ export class TuningShopsCities {
   nyc: boolean;
   prague: boolean;
   tokyo: boolean;
+  moscow: boolean;
 
   constructor(r: R) {
     this.nyc = r.b('nyc');
     this.prague = r.b('prague');
     this.tokyo = r.b('tokyo');
+    this.moscow = r.b('moscow');
   }
 
   toJson(): Record<string, unknown> {
@@ -3990,6 +4007,7 @@ export class TuningShopsCities {
       nyc: this.nyc,
       prague: this.prague,
       tokyo: this.tokyo,
+      moscow: this.moscow,
     };
   }
 }
@@ -4166,11 +4184,13 @@ export class TuningStyleRisograph {
   nyc: boolean;
   prague: boolean;
   tokyo: boolean;
+  moscow: boolean;
 
   constructor(r: R) {
     this.nyc = r.b('nyc');
     this.prague = r.b('prague');
     this.tokyo = r.b('tokyo');
+    this.moscow = r.b('moscow');
   }
 
   toJson(): Record<string, unknown> {
@@ -4178,6 +4198,7 @@ export class TuningStyleRisograph {
       nyc: this.nyc,
       prague: this.prague,
       tokyo: this.tokyo,
+      moscow: this.moscow,
     };
   }
 }
@@ -4187,11 +4208,13 @@ export class TuningStyleCastShadow {
   nyc: boolean;
   prague: boolean;
   tokyo: boolean;
+  moscow: boolean;
 
   constructor(r: R) {
     this.nyc = r.b('nyc');
     this.prague = r.b('prague');
     this.tokyo = r.b('tokyo');
+    this.moscow = r.b('moscow');
   }
 
   toJson(): Record<string, unknown> {
@@ -4199,6 +4222,7 @@ export class TuningStyleCastShadow {
       nyc: this.nyc,
       prague: this.prague,
       tokyo: this.tokyo,
+      moscow: this.moscow,
     };
   }
 }
@@ -4207,11 +4231,13 @@ export class TuningStyleCrosswalks {
   nyc: boolean;
   prague: boolean;
   tokyo: boolean;
+  moscow: boolean;
 
   constructor(r: R) {
     this.nyc = r.b('nyc');
     this.prague = r.b('prague');
     this.tokyo = r.b('tokyo');
+    this.moscow = r.b('moscow');
   }
 
   toJson(): Record<string, unknown> {
@@ -4219,6 +4245,7 @@ export class TuningStyleCrosswalks {
       nyc: this.nyc,
       prague: this.prague,
       tokyo: this.tokyo,
+      moscow: this.moscow,
     };
   }
 }
@@ -4846,7 +4873,10 @@ export class TuningTerrainPipeline {
   roadGapMaxM: number;
   /** validate: share of road edge samples allowed over road_gap_max_m */
   roadGapShare: number;
-  /** validate: |terrain − road profile| on kept carriageways (the car rides the terrain there) */
+  /**
+   * validate: |terrain − road profile| on kept carriageways (the car rides the terrain there)
+   * max_m 1.2: Moscow courtyard service ramps (Novoslobodskaya, Taganka) reach 1.18 m; Prague max 0.87, NYC 0.42
+   */
   readonly roadStrip: TuningTerrainPipelineRoadStrip;
   /** validate fails below water/road + this; below bridge.clear_* it warns */
   bridgeMinClearM: number;
@@ -4942,7 +4972,10 @@ export class TuningTerrainPipelineProfileWindowM {
   static readonly keys = ['lidar', 'coarse'] as const;
 }
 
-/** validate: |terrain − road profile| on kept carriageways (the car rides the terrain there) */
+/**
+ * validate: |terrain − road profile| on kept carriageways (the car rides the terrain there)
+ * max_m 1.2: Moscow courtyard service ramps (Novoslobodskaya, Taganka) reach 1.18 m; Prague max 0.87, NYC 0.42
+ */
 export class TuningTerrainPipelineRoadStrip {
   tolM: number;
   share: number;

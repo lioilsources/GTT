@@ -223,6 +223,9 @@ class PhoneController extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// Shows a short HUD message (the route toast), e.g. the boost hint (specs/controls.md v2).
+  void showToast(MessageKey k) => _showToast(k);
+
   void _showToast(MessageKey k) {
     toast.value = k;
     _toastS = tuning.nav.toastS;

@@ -7,21 +7,80 @@ import 'package:world_engine/core.dart';
 /// Deterministic parts of trams (specs/trams.md "Deterministické funkce"): the next track edge,
 /// articulated car poses along the travelled trail and the stop ahead.
 
-/// The next track edge after arriving at [node] along [from]: candidates are the node's edges in
-/// ascending index order without [from], picked with `rng.nextInt(count)`. No candidate = turn back
-/// along [from] (a terminus); a border node = −1, the tram disappears. [scratch] avoids allocations.
-int chooseNextTrack(TrackGraph g, int node, int from, Prng rng, [List<int>? scratch]) {
-  if (g.border[node]) return -1;
-  final cands = scratch ?? <int>[];
-  cands.clear();
+final Float64List _probeA = Float64List(4);
+final Float64List _probeB = Float64List(4);
+
+/// The point [probeM] metres along edge [ei] away from its end at [node] (or its far end when the
+/// edge is shorter), into [out].
+void _probe(TrackGraph g, int ei, int node, double probeM, Float64List out) {
+  final e = g.edges[ei];
+  final d = math.min(probeM, e.length);
+  e.sample(e.from == node ? d : e.length - d, out);
+}
+
+/// Cosine of the turn at [node] from arriving along edge [from] to leaving along edge [to]
+/// (specs/trams.md v2 "Sjízdnost"): arrival = from the point [probeM] along [from] to the node,
+/// departure = from the node to the point [probeM] along [to]. 1 when a direction is degenerate.
+double turnCos(TrackGraph g, int node, int from, int to, double probeM) {
+  final nx = g.nodeXY[2 * node], ny = g.nodeXY[2 * node + 1];
+  _probe(g, from, node, probeM, _probeA);
+  _probe(g, to, node, probeM, _probeB);
+  final ax = nx - _probeA[0], ay = ny - _probeA[1];
+  final bx = _probeB[0] - nx, by = _probeB[1] - ny;
+  final la = math.sqrt(ax * ax + ay * ay), lb = math.sqrt(bx * bx + by * by);
+  if (la <= 1e-6 || lb <= 1e-6) return 1;
+  return (ax * bx + ay * by) / (la * lb);
+}
+
+/// Track edges a tram arriving at [node] along [from] can go on to, into [out] in ascending index
+/// order: the node's edges without [from], duplicates and loops whose turn cosine is at least
+/// [cosMin] (cos of `trams.max_switch_deg`). Empty at a border node.
+List<int> feasibleNext(TrackGraph g, int node, int from, double cosMin, double probeM, List<int> out) {
+  out.clear();
+  if (g.border[node]) return out;
   final list = g.nodeEdges[node];
   for (var k = 0; k < list.length; k++) {
     final ei = list[k];
     if (ei == from || (k > 0 && list[k - 1] == ei)) continue;
-    cands.add(ei);
+    final e = g.edges[ei];
+    if (e.from != e.to && turnCos(g, node, from, ei, probeM) >= cosMin) out.add(ei);
   }
-  if (cands.isEmpty) return from;
+  return out;
+}
+
+/// The next track edge after arriving at [node] along [from]: one of [feasibleNext], picked with
+/// `rng.nextInt(count)`. No candidate = a terminus: returns [from] without drawing (the tram
+/// changes ends); a border node (or a loop as the only way) = −1, the tram disappears.
+int chooseNextTrack(TrackGraph g, int node, int from, Prng rng, double cosMin, double probeM, [List<int>? scratch]) {
+  if (g.border[node]) return -1;
+  final cands = feasibleNext(g, node, from, cosMin, probeM, scratch ?? <int>[]);
+  if (cands.isEmpty) {
+    final back = g.edges[from];
+    return back.from != back.to ? from : -1;
+  }
   return cands[rng.nextInt(cands.length)];
+}
+
+/// The straightest edge a tram could have come from into [node] before leaving along [to]
+/// (seeding the path behind a new tram, specs/trams.md v2): the largest turn cosine of at least
+/// [cosMin], the lower index on a tie; −1 at a border node or without one.
+int straightestPrev(TrackGraph g, int node, int to, double cosMin, double probeM) {
+  if (g.border[node]) return -1;
+  final list = g.nodeEdges[node];
+  var best = -1;
+  var bestCos = double.negativeInfinity;
+  for (var k = 0; k < list.length; k++) {
+    final ei = list[k];
+    if (ei == to || (k > 0 && list[k - 1] == ei)) continue;
+    final e = g.edges[ei];
+    if (e.from == e.to) continue;
+    final c = turnCos(g, node, ei, to, probeM);
+    if (c >= cosMin && c > bestCos) {
+      best = ei;
+      bestCos = c;
+    }
+  }
+  return best;
 }
 
 /// The nearest stop on [edge] ahead in travel direction [dir] (+1 from → to, −1 to → from) that is

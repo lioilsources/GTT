@@ -160,7 +160,7 @@ interface Scenario {
   module: string;
   name: string;
   car?: string;
-  inputs: Array<{ t: number; throttle?: number; steer?: number; brake?: number }>;
+  inputs: Array<{ t: number; throttle?: number; steer?: number; brake?: number; boost?: number }>;
   expect: Record<string, { value: number | null; tol: number }>;
 }
 
@@ -198,6 +198,7 @@ async function runScenario(name: string, inputs: Scenario['inputs']): Promise<Re
     d.input.throttle = inp.throttle ?? 0;
     d.input.steer = inp.steer ?? 0;
     d.input.brake = inp.brake ?? 0;
+    d.input.boost = (inp.boost ?? 0) > 0;
     pre = { x: d.car.x, y: d.car.y };
     d.update(dt);
     const v = d.car.body.getLinearVelocity();
@@ -240,7 +241,8 @@ async function runScenario(name: string, inputs: Scenario['inputs']): Promise<Re
 const round = (v: number): number => Math.round(v * 1000) / 1000;
 
 const DEFAULT_INPUTS: Record<string, Scenario['inputs']> = {
-  wall_30: [{ t: 0, throttle: 0, steer: 0, brake: 0 }],
+  // Boost keeps the 20 m/s of the check above city cruise (specs/drive.md v2).
+  wall_30: [{ t: 0, throttle: 0, steer: 0, brake: 0, boost: 1 }],
   wall_head_on: [{ t: 0, throttle: 1, steer: 0, brake: 0 }],
   corner_3x: [{ t: 0, throttle: 0, steer: 0, brake: 0 }],
 };
