@@ -404,8 +404,9 @@
   spec: specs/minigames/piskvorky.md@2
   vectors: vectors/piskvorky.json
   lead: web
-  flutter: todo
+  flutter: done
   web: done
+  checks: {flutter: pass, web: pass}
 
 - id: F-048
   name: Čtyři v řadě (M2-S9 batch A)
