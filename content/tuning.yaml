@@ -803,7 +803,7 @@ travel:
 # Shops and bars (specs/shops.md).
 weather:                        # specs/weather.md; colours in design/tokens.json color.weather
   enabled: true
-  cities: {nyc: true, prague: true, tokyo: true}
+  cities: {nyc: true, prague: true, tokyo: true, moscow: true}
   weight_clear: 6               # weighted draw of the next kind (never the current one)
   weight_rain: 3
   weight_fog: 2
@@ -821,7 +821,7 @@ weather:                        # specs/weather.md; colours in design/tokens.jso
   fog_inner: 0.25               # fog ramps up from this fraction of the half diagonal
 shops:                          # colours in design/tokens.json color.shops
   enabled: true
-  cities: {nyc: true, prague: false, tokyo: true}
+  cities: {nyc: true, prague: false, tokyo: true, moscow: true}
   price_food: 15
   price_souvenir: 120
   price_beer: 10
@@ -855,7 +855,7 @@ booths:
 # Police and wanted level (specs/police.md). P0 rules run in integer ticks: s → round(s · tick_hz).
 # Distances in world metres (after car_scale); patrols are traffic cars flagged as police.
 style:                        # city skins (specs/style.md); colours in design/tokens.json color.city
-  risograph: {nyc: false, prague: true, tokyo: false}
+  risograph: {nyc: false, prague: true, tokyo: false, moscow: false}
   misregistration_px: 1.5     # ink fringe offset at 1x, scaled by device pixel ratio
   fringe: 0.35                # ink strength of the misregistered fringe on edges
   grain_strength: 0.08        # paper grain, ± this much brightness
@@ -864,11 +864,11 @@ style:                        # city skins (specs/style.md); colours in design/t
   halftone_strength: 0.12     # darkening inside a halftone dot
   halftone_low: 0.25          # luminance band that gets dots (midtones only)
   halftone_high: 0.8
-  cast_shadow: {nyc: true, prague: false, tokyo: true}   # building shadows on the ground (style A, v2)
+  cast_shadow: {nyc: true, prague: false, tokyo: true, moscow: true}   # building shadows on the ground (style A, v2)
   shadow_ratio: 0.6           # shadow length per metre of building height
   shadow_max_m: 30.0          # cap, so towers don't shade half the map
   roof_edge_m: 0.9            # light parapet band inside the roof outline
-  crosswalks: {nyc: true, prague: false, tokyo: true}
+  crosswalks: {nyc: true, prague: false, tokyo: true, moscow: true}
   crosswalk_gap_m: 1.5        # from the junction box to the crossing
   crosswalk_len_m: 4.0        # crossing depth along the road
   crosswalk_stripe_m: 0.6     # stripe width = gap width
@@ -974,7 +974,8 @@ terrain:
     road_gap_max_m: 0.3         # validate: road edge vs terrain
     road_gap_share: 0.01        # validate: share of road edge samples allowed over road_gap_max_m
     # validate: |terrain − road profile| on kept carriageways (the car rides the terrain there)
-    road_strip: {tol_m: 0.15, share: 0.005, max_m: 1.0}
+    # max_m 1.2: Moscow courtyard service ramps (Novoslobodskaya, Taganka) reach 1.18 m; Prague max 0.87, NYC 0.42
+    road_strip: {tol_m: 0.15, share: 0.005, max_m: 1.2}
     bridge_min_clear_m: 2.0     # validate fails below water/road + this; below bridge.clear_* it warns
     bridge_over_water_m: 25.0   # a ground edge over water this long in one stretch is an (unflagged) bridge
     profile_fair_passes: 50     # after grade_clamp: smooth the sawtooth on steep hills (then clamp again)

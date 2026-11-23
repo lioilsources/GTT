@@ -1,0 +1,20 @@
+id: moscow
+name: Moskva
+origin: {lat: 55.7539, lon: 37.6208}   # Red Square
+drive_side: right
+units: metric
+area: area.geojson           # M6: inside the Garden Ring + Zamoskvorechye, Gorky Park, Komsomolskaya, Kutuzovsky bridgehead (plans/M6_MOSKVA.md)
+overture_release: "2026-11-18.0"
+height_sources: [overture]
+road_keep_classes: [motorway, trunk, primary, secondary, tertiary]
+road_keep_names: []
+name_langs: [en, ru-Latn]    # Overture primary names are Cyrillic: English or Latin transliteration first (clients carry no Cyrillic glyphs)
+style: style.yaml            # style E (constructivist poster), specs/style.md
+start: {lat: 55.75470, lon: 37.61240, heading_deg: 30, street: Mokhovaya Street}   # by the Manege, towards Theatre Square and the Bolshoi
+default_height_m: 18
+max_chunk_kb: 512
+districts: districts.yaml
+# Terrain (specs/terrain.md): no open local DEM checked yet; AWS Terrain Tiles (SRTM/EU-DEM blend,
+# a surface model, so `clean` removes buildings). Moscow is gentle: Moskva valley, Borovitsky hill.
+elevation_sources: [terrain_tiles]
+elevation_is_bare_earth: false

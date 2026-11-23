@@ -7,6 +7,9 @@ pack v `city.yaml` · parita F-039
 Každé město má vlastní vzhled. Ol1n vybral ze style boardu: New York = **A, plochý vektor**
 (teplý asfalt, cihlové nízké domy, ocelově modré věže, modré stíny), Praha = **C, sítotisk /
 risograf** (papír, okrová dlažba, měděnka, omezená sada barev s posunutým tiskem a zrnem).
+Moskva (M6) = **E, konstruktivistický plakát** (krémový papír, černá, rumělková červeň, okr,
+plné ploché výplně, černé okraje střech, vržené stíny a zebry jako styl A); zatím jen paleta a
+přepínače v `style`, vlastní efekt až s vyšší verzí po style checku (`plans/M6_MOSKVA.md`).
 Barvy jsou v `design/tokens.json` → `color.city.<city>`, čísla efektu v `content/tuning.yaml` →
 `style`. Pole `style: style.yaml` v `city.yaml` je zatím jen odkaz na tento dokument; soubor
 nevzniká, protože barvy a čísla mají svá místa.
