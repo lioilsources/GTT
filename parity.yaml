@@ -405,7 +405,7 @@
   vectors: vectors/piskvorky.json
   lead: web
   flutter: todo
-  web: todo
+  web: done
 
 - id: F-048
   name: Čtyři v řadě (M2-S9 batch A)
