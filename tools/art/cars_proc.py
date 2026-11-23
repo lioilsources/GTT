@@ -72,6 +72,7 @@ CARS = {
     "spec_grill":     dict(cls="foodtruck", L=7.0, W=2.3, cab=(0.66, 0.86), r=(0.35, 0.12)),
     "spec_trike":     dict(cls="trike", L=3.2, W=1.5, cab=(-0.35, 0.10), r=(0.30, 0.35)),
     "spec_rickshaw":  dict(cls="rickshaw", L=2.6, W=1.2, cab=(-0.90, 0.10), r=(0.25, 0.30)),
+    "lidovka":        dict(cls="sedan", L=4.2, W=1.6, cab=(-0.42, 0.22), r=(0.22, 0.20), chrome=True),
     "kolo":           dict(cls="micro", L=1.8, W=0.6),
     "micro_cruiser":  dict(cls="micro", L=1.8, W=0.6, cruiser=True),
     "kolobezka":      dict(cls="micro", L=1.2, W=0.55),

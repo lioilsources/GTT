@@ -216,3 +216,5 @@ vzorem). Do té doby klient kreslí ikonu a jméno.
   bez wheel.png a lights.png; rikša bez lights.png. Rozdíly proti procedurální kresbě kvůli pravidlu „kolo zvenku
   nezakryté“: markýza food trucku −0,42…0,40 hl (místo −0,60…0,30), blatníky veteránů jen uvnitř a před a za koly,
   rezerva terénních aut uvnitř obrysu.
+- **Lidovka, oprava**, 23. 11. 2026: `assets/cars/lidovka/*` nově procedurálně (`tools/art/cars_proc.py`), 57×148,
+  souměrná, karoserie 51 px na šířku, výřezy pro kola, čistě kolmo shora (nahrazuje body.png z ComfyUI).
