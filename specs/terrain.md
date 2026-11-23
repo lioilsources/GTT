@@ -1,6 +1,6 @@
 # Terén – výšky, svahy a skoky
 
-**version: 2** · data P0 (citypack, shodná v obou klientech) · fyzika P1 (±5 %, scénáře
+**version: 3** · data P0 (citypack, shodná v obou klientech) · fyzika P1 (±5 %, scénáře
 `scenarios/terrain/`) · pohled shora s reliéfem P2 · plán `Prompts/02-METROPOLE_TERRAIN_PLAN.md`,
 pod-plán `plans/M5_TEREN_PRIRODA.md` · parita F-070 (svahy a skoky), F-071 (reliéf shora),
 F-074 (šikmý pohled, jen W)
@@ -63,6 +63,9 @@ grip   = grip · k
 ```
 - Síla `m · a_svah` působí v těžišti. Pod `drive.stop_speed_mps` (0,5 m/s) bez plynu se
   neuplatní: stojící auto na svahu drží.
+- Automatický plyn (`specs/drive.md` v2 krok 2, „Držení tempa“) bere `a_svah` z tohoto kroku a z kopce
+  jeho složku ve směru jízdy ruší (do `drive.cruise_hold_mps2`), takže bez vstupu auto drží
+  `speed_mps.cruise`. Síla svahu se tím nemění, mění se jen síla motoru.
 - Provoz a hlídky (AI) sílu svahu nepočítají; sledují výšku a do kopce s `grad > 0,08` jedou
   rychlostí × 0,8.
 
@@ -109,10 +112,11 @@ Plán uvádí `sedan_01`; v repu takové auto není, referenční sedan je `seda
 Scénáře běží na syntetické trati (rovina, rampy, hrana), kterou klient postaví z popisu níže,
 ne na balíčku města.
 1. `downhill_coast` – sjezd 200 m při 10 % bez plynu z 0 m/s: rychlost na konci.
-2. `uphill_launch` – rozjezd do kopce 15 % s plným plynem: čas na 20 m/s.
+2. `uphill_launch` – rozjezd do kopce 15 % s plným plynem a boostem (v3; 20 m/s je nad `cruise`): čas na 20 m/s.
 3. `jump_30_15` a `jump_40_20` – skoky z tabulky: doba letu, délka letu, rychlost dopadu.
 4. `hold_20` – stání na svahu 20 % bez plynu 5 s: posun 0 (tolerance 0,05 m).
-5. `bridge_7` – přejezd mostu s nájezdy 7 % plynem do `cruise`: rychlost na vrcholu a za mostem.
+5. `bridge_7` – přejezd mostu s nájezdy 7 % automatickým plynem do `cruise` (start v `cruise`, v3): rychlost
+   na vrcholu a za mostem; z nájezdu dolů ji drží „Držení tempa“.
 
 **Syntetická trať:** balíček s `terrain_version` 1, `chunk_m` 256, `exaggeration` 1, `z0` 0;
 silnice podél osy x (y = 0), `primary`, 2 pruhy, obousměrná, `kept`, šířka 20 m. Terén všech
@@ -120,7 +124,7 @@ chunků x −3…2, y −1…0 je profil `z(x)` (stejný pro každé y, vzorky p
 16 m a výšky lineárně mezi uzly. Pozemní trať: uzly po 64 m od −512 do 512 m ve výšce profilu,
 všechny ve vrstvě 0. Bez budov, mobiliáře a provozu (`solid = false`), krok `drive.step_hz`.
 Start = (x, 0), natočení 0 (na východ), rychlost ve směru jízdy; vstupy podle souboru scénáře
-(`throttle`, `steer`, `brake` a `coast` od času `t`; `coast` = motor vypnutý: žádný automatický
+(`throttle`, `steer`, `brake`, `boost` a `coast` od času `t`; `coast` = motor vypnutý: žádný automatický
 plyn ani brzdění motorem). Testy W: `web/test/terrainScenarios.test.ts`.
 
 | scénář | profil `z(x)` / trať | start x, rychlost | délka | metriky |
@@ -130,7 +134,7 @@ plyn ani brzdění motorem). Testy W: `web/test/terrainScenarios.test.ts`.
 | `jump_30_15` | 0,15·x pro x < 0, jinak −0,15·x | −2, 30,3 m/s | 3 s | `takeoff_mps` (rychlost v 1. kroku `airborne`), `air_s` (součet kroků `airborne`), `air_m` (dráha v nich), `landing_mps` (`dopad`) |
 | `jump_40_20` | 0,2 / −0,2 | −2, 40,4 m/s | 3 s | jako výše + `after_mps` (rychlost na konci) |
 | `hold_20` | 0,2·x | 0, 0 | 5 s | `drift_m` = vzdálenost od startu |
-| `bridge_7` | terén 0; uzly (−400, 0) (−100, 0) (0, 7) (100, 7) (200, 0) (500, 0), hrany ve vrstvách 0→0, 0→1 most, 1→1 most, 1→0 most, 0→0 | −300, 25 m/s | 30 s | `v_at_m100_mps`, `v_at_0_mps`, `v_at_100_mps`, `v_at_200_mps`, `v_at_300_mps` = rychlost při prvním x ≥ −100, 0, 100, 200, 300 |
+| `bridge_7` | terén 0; uzly (−400, 0) (−100, 0) (0, 7) (100, 7) (200, 0) (500, 0), hrany ve vrstvách 0→0, 0→1 most, 1→1 most, 1→0 most, 0→0 | −300, `speed_mps.cruise` | 30 s | `v_at_m100_mps`, `v_at_0_mps`, `v_at_100_mps`, `v_at_200_mps`, `v_at_300_mps` = rychlost při prvním x ≥ −100, 0, 100, 200, 300 |
 
 Kontrolní tabulka skoků platí pro čistý model; skutečné auto ve scénářích ztrácí ve vzduchu
 rychlost odporem (`drag_*`), proto je let o několik procent kratší (40 m/s: délka −10 %).
