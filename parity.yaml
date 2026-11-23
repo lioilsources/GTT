@@ -336,8 +336,9 @@
   level: P2
   spec: specs/art.md@3
   lead: web
-  flutter: todo
-  web: todo
+  flutter: done
+  web: done
+  checks: {flutter: pass, web: pass}
 
 - id: F-041
   name: Photo spots and the Camera app (frame the view, Passport photo stamps)
@@ -375,8 +376,9 @@
   spec: specs/garage.md@2
   vectors: vectors/garage.json
   lead: web
-  flutter: todo
-  web: todo
+  flutter: done
+  web: done
+  checks: {flutter: pass, web: pass}
 
 - id: F-045
   name: Car classes drawn by their own shape (40 NYC cars, garage sale list order)
