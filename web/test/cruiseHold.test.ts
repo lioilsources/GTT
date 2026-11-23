@@ -83,7 +83,9 @@ async function ride(city: City, route: RoutePath, startV: number): Promise<Trace
     d.input.steer = Math.min(1, Math.max(-1, -b.steerGain * e));
     d.update(dt);
     const v = d.car.speed;
-    min = Math.min(min, v);
+    // Hairpins scrub speed sideways (tyres, not the engine): the lower bound counts only where the
+    // route does not turn sharply (the bench corner rule, specs/bench.md); the upper bound counts everywhere.
+    if (route.maxTurn(s - b.cornerLookaheadM / 2, s + b.cornerLookaheadM / 2) <= b.cornerTurnRad) min = Math.min(min, v);
     max = Math.max(max, v);
     if (s >= nextSample) {
       // Grade along the heading, + = uphill.
@@ -153,7 +155,7 @@ describe.skipIf(!existsSync(join(dir, 'manifest.pb')) || cruise > 20)('cruise ho
   }, 120000);
 
   const show = (name: string, t: Trace): void => {
-    console.log(`${name}: ${t.length.toFixed(0)} m, v ${t.min.toFixed(2)}..${t.max.toFixed(2)} m/s (cruise ${cruise})`);
+    console.log(`${name}: ${t.length.toFixed(0)} m, v ${t.min.toFixed(2)} (off hairpins)..${t.max.toFixed(2)} m/s (cruise ${cruise})`);
     console.log(t.samples.map((q) => `s${q.s} z${q.z} g${q.grade}% v${q.v}`).join(' | '));
   };
 
