@@ -1,6 +1,6 @@
 # Piškvorky
 
-**version: 1** · engine `board` · P0 · vektory `vectors/piskvorky.json` · kontrakt `specs/minigames/README.md`
+**version: 2** · engine `board` · P0 · vektory `vectors/piskvorky.json` · kontrakt `specs/minigames/README.md`
 
 ## Účel
 
@@ -51,7 +51,11 @@ Pole `i = r × size + c`, řádek `r` shora. `board` je řetězec `size²` znak�
 podle `i`. Prázdná deska: jen středové pole `(size div 2) × size + size div 2`.
 
 1. `r = ai.nextInt(100)`; `r < err` → `kandidáti[ai.nextInt(len)]`.
-2. Jinak skóre kandidáta `p = útok(p, o) + útok(p, x) × def ÷ 100` a vybere se nejvyšší (shoda:
+2. Jinak (v2) **vlastní výhra:** první kandidát v pořadí, na kterém by značka AI vytvořila řadu
+   délky ≥ 5 (v některém ze 4 směrů), se zahraje.
+3. Jinak (v2) **blok:** první kandidát v pořadí, na kterém by značka hráče vytvořila řadu délky ≥ 5,
+   se zahraje.
+4. Jinak skóre kandidáta `p = útok(p, o) + útok(p, x) × def ÷ 100` a vybere se nejvyšší (shoda:
    první v pořadí). `útok(p, s)`: součet přes 4 směry hodnoty řady, kterou by vytvořila značka `s`
    položená na `p`: `L` = délka souvislé řady `s` přes `p` v tom směru (včetně `p`), `E` = počet
    otevřených konců (pole hned za koncem řady je na desce a prázdné, 0–2).
@@ -80,6 +84,17 @@ na stejné pole potvrdí (velké prsty). Poslední tah AI zvýrazněný, vítěz
 
 - `r = ai.nextInt(100)` se losuje u každého tahu AI, i když je kandidát jen jeden (prázdná deska).
 - `útok(p, x) × def ÷ 100` se počítá ze součtu přes všechny 4 směry, celočíselně (ořez k nule).
-- Při `def > 100` (úroveň 5) může blokování hráčovy pětky přebít vlastní výhru – tak, jak je vzorec
-  napsaný (test ve `web/test/boardgames.test.ts`); jiné chování by byla nová verze.
 - `moves` roste jen po tahu hráče.
+
+## Upřesnění v2
+
+- Oprava v1: při `def > 100` (úroveň 5) skóre blokování hráčovy pětky přebilo vlastní výhru, AI
+  tak mohla minout výhru v ruce. Kroky 2 a 3 to řeší před hodnocením vzorů; vzorec v kroku 4 se
+  nemění.
+- Proud `ai` je stejný jako ve v1: `r = ai.nextInt(100)` se losuje u každého tahu AI jako první
+  a druhé losování (`ai.nextInt(len)`) jen při `r < err`. Kroky 2 a 3 nic nelosují a platí jen
+  pro tah, který není chybový (`r ≥ err`); chybový tah zůstává náhodný i s výhrou v ruce.
+- „Řada délky ≥ 5" = `L ≥ 5` z tabulky (souvislá řada přes `p` včetně `p`), bez ohledu na `E`;
+  šestka a delší se počítá. Pořadí kandidátů je totéž jako v kroku 4 (vzestupně podle `i`), takže
+  první vyhovující kandidát = nejmenší `i`.
+- Vítězné i blokující pole je vždy kandidát (sousedí se značkou), jiná pole se nezkoumají.
