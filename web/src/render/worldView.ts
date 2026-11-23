@@ -42,14 +42,14 @@ import type { ParkedCar } from '../cars/parked';
 import { glowStrength, lookRim } from '../garage/looks';
 import type { Look } from '../garage/rules';
 import { RESCUE_ANIM_S } from '../drive/flow';
-import { hopArc, hopFlip } from '../drive/hop';
+import { hopArc, hopFlip, hopRoll } from '../drive/hop';
 import type { CarFleet } from '../cars/fleet';
 import { CarSpriteView, LIGHTS_BRAKE, LIGHTS_FULL, LIGHTS_OFF } from './carSprites';
 import { lookPaint } from '../garage/looks';
 import { paintHex } from '../cars/shape';
 import { NatureView } from './natureView';
 import { bankTris, greenTris } from './natureGeometry';
-import { CHASE_NEAR_M, chaseFov, chasePose, FOG_END_M, FOG_START_M, type CameraMode, type ChasePose } from './chase';
+import { CHASE_BODY_M, CHASE_NEAR_M, chaseFov, chasePose, FOG_END_M, FOG_START_M, type CameraMode, type ChasePose } from './chase';
 import { FarRing, SKY_R } from './farRing';
 import { OccluderFadePlugin, type FadeState } from './occluderFade';
 import type { PackSource } from '../world/citypack';
@@ -235,6 +235,11 @@ export class WorldView {
     glow: Mesh | null;
     /** The sprite's lights.png shows the brake lights (the procedural brake mesh stays off). */
     spriteLights: boolean;
+    /** Height of the body's top (the underside plate is drawn there). */
+    topH: number;
+    /** Box sides of the chase view and the mode the parts are set up for (null = not yet). */
+    sides: Mesh;
+    chase: boolean | null;
   };
   /**
    * Looks of own cars (specs/garage.md "Kreslení"): the driven car's (null for a stolen car or no
@@ -744,6 +749,21 @@ export class WorldView {
     const under = this.mesh('car-under', underTris, this.flatMat, false, false);
     under.parent = lift;
     under.setEnabled(false);
+    // Chase view: the body is a box CHASE_BODY_M tall (the flat top drawing on its roof), so the hop's
+    // roll reads in 3D; the sides in the paint, darkened. Off from above.
+    const sideT = new Tris();
+    const paint = rgba(lookPaint(car.spec, look));
+    const sideC: Rgba = [paint[0] * 0.55, paint[1] * 0.55, paint[2] * 0.55, 1];
+    const corners = [[-hl, -hw], [hl, -hw], [hl, hw], [-hl, hw]] as const;
+    for (let i = 0; i < 4; i++) {
+      const [ax, ay] = corners[i]!, [bx, by] = corners[(i + 1) % 4]!;
+      const v0 = sideT.vertex(ax, ay, 0, sideC), v1 = sideT.vertex(bx, by, 0, sideC);
+      const v2 = sideT.vertex(bx, by, CHASE_BODY_M, sideC), v3 = sideT.vertex(ax, ay, CHASE_BODY_M, sideC);
+      sideT.idx.push(v0, v2, v1, v0, v3, v2);
+    }
+    const sides = this.mesh('car-sides', sideT, this.flatMat, false, false);
+    sides.parent = lift;
+    sides.setEnabled(false);
 
     const lights = (c: string): Mesh => {
       const t = new Tris();
@@ -786,7 +806,7 @@ export class WorldView {
       if (r.front) wheels.push(w);
     }
     this.carParts = { wheels, brake, reverse, cone: coneMesh, root: holder, lights: !micro, lift, top: root, under, shadow: shadowNode, glow,
-      spriteLights };
+      spriteLights, topH: top, sides, chase: null };
   }
 
   setFleet(f: CarFleet): void {
@@ -908,15 +928,36 @@ export class WorldView {
     const arc = hop.airborne ? hopArc(hop.t, ht.airS, ht.heightM) : 0;
     const flip = hop.airborne ? hopFlip(hop.t, ht.airS, ht.flips) : 1;
     const s = extrusionScale(arc, this.tuning);
-    p.lift.position.y = displayHeight(s, this.H);
-    p.lift.scaling.z = Math.abs(flip);
+    if (p.chase !== this.chaseOn) {
+      // Chase view: the top drawing on the box's roof, the underside plate turned to face down at its
+      // floor, the roll about the box's middle. From above: flat as before.
+      const c = (p.chase = this.chaseOn);
+      p.top.position.y = c ? CHASE_BODY_M : 0;
+      p.under.rotation.x = c ? Math.PI : 0;
+      p.under.position.y = c ? p.topH : 0;
+      p.sides.setEnabled(c);
+      p.lift.setPivotPoint(new Vector3(0, c ? (CHASE_BODY_M + p.topH) / 2 : p.topH / 2, 0));
+    }
+    if (this.chaseOn) {
+      // Chase view (specs/terrain.md "Upřesnění T2"): a real 3D arc hopArc(t) metres over the ride
+      // surface and a real roll about the long axis, no scale tricks.
+      p.lift.position.y = arc;
+      p.lift.scaling.z = 1;
+      p.lift.rotation.x = hop.airborne ? hopRoll(hop.t, ht.airS, ht.flips) : 0;
+    } else {
+      p.lift.position.y = displayHeight(s, this.H);
+      p.lift.scaling.z = Math.abs(flip);
+      p.lift.rotation.x = 0;
+    }
     // Terrain jump (specs/terrain.md): the shadow stays on the ground under the body, shrinks by
     // 1 / (1 + gap / 4) and slides away from the sun with the gap.
     const gap = this.relief ? this.drive.jump.gap : 0;
-    const k = shadowScale(gap);
-    p.shadow.scaling.x = p.shadow.scaling.z = k / s;
+    // Chase view: the hop height counts like a terrain gap (shrink 1 / (1 + h / 4), slide from the sun).
+    const air = this.chaseOn ? gap + arc : gap;
+    const k = shadowScale(air);
+    p.shadow.scaling.x = p.shadow.scaling.z = this.chaseOn ? k : k / s;
     const sl = Math.hypot(this.palette.sunX, this.palette.sunY);
-    const ox = sl > 1e-6 ? (-this.palette.sunX / sl) * gap : 0, oy = sl > 1e-6 ? (-this.palette.sunY / sl) * gap : 0;
+    const ox = sl > 1e-6 ? (-this.palette.sunX / sl) * air : 0, oy = sl > 1e-6 ? (-this.palette.sunY / sl) * air : 0;
     const hd = this.drive.car.heading, c = Math.cos(hd), sn = Math.sin(hd);
     // Local frame of the car (Babylon x = forward, z = left as world y rotated by −heading).
     p.shadow.position.set(ox * c + oy * sn, -gap, -ox * sn + oy * c);
