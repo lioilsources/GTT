@@ -167,7 +167,8 @@ items:
      done: 2026-11-23T03:25, commit: 48540b7, evidence: "specs v1 s Upřesněním, vektory 7 her (web lead), obě implementace, vektory projdou v obou klientech, Galerie a spoty v NYC (PR #156, #161, #163, #167), parita F-047–F-053; chybí dohrát na telefonu"}
   - {id: M2-S9B, milestone: M2, name: "minihry dávka B: Prší, Srdce, Kostkový poker, Prase", size: L, status: "čeká na Ol1na", started: 2026-11-23T03:10,
      done: 2026-11-23T04:23, commit: 448d42c, evidence: "specs v1 s Upřesněním, vektory 4 her (web lead), obě implementace, vektory projdou v obou klientech, Galerie, bary (prší, kostky) a spoty v NYC a Praze (PR #168, #170, #171, #174), parita F-054–F-057; chybí dohrát na telefonu"}
-  - {id: M2-S9C, milestone: M2, name: "minihry dávka C: Kulečník, Bowling, Minigolf, Had, Cihly, Bouchni krtka, Vzdušný hokej", size: L, status: wip, started: 2026-11-23T04:00}
+  - {id: M2-S9C, milestone: M2, name: "minihry dávka C: Kulečník, Bowling, Minigolf, Had, Cihly, Bouchni krtka, Vzdušný hokej", size: L, status: "čeká na Ol1na", started: 2026-11-23T04:00,
+     done: 2026-11-23T05:45, commit: e576e00, evidence: "specs v1 s Upřesněním (hokej v2: gól jen v ústí), sdílená celočíselná fyzika (web physics.ts, Flutter mg_physics), vektory 7 her (web lead), obě implementace, vektory projdou v obou klientech, Galerie, bar (kulečník) a spoty v NYC a Praze (PR #180, #184, #187, #189, #190, #196), parita F-058–F-064; chybí dohrát na telefonu"}
   - {id: M2-S9D, milestone: M2, name: "minihry dávka D: Drift zóna, Sprint A→B", size: M, status: wip, started: 2026-11-23T04:49}
   - {id: M2-S9E, milestone: M2, name: "místní minihry: Stickball, Double Dutch (engine rhythm)", size: L, status: wip, started: 2026-11-23T04:49}
   - {id: M2-S10, milestone: M2, name: "rádio (kostra stanic)", size: S, status: todo}
