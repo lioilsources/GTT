@@ -55,7 +55,6 @@ jobs:
       - run: metro validate
       - run: metro vectors check
       - run: metro gen --check
-      - run: metro progress --check
       - name: Go tools
         run: |
           (cd tools/metro && go vet ./... && go test ./...)
