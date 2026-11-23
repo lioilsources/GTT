@@ -31,7 +31,7 @@ import {
   DEPTH_LAYER, DYNAMIC_LAYERS, RISOGRAPH_FRAGMENT, RISOGRAPH_UNIFORMS, WORLD_LAYER, cityFlag, mainCameraMask, risographOn, risographUniforms,
 } from './risograph';
 import { facadeTexture } from './textures';
-import { CAR_PART_DZ, carGlowTris, carShadowTris, carTris, carUndersideTris, parkedTris, wheelRects } from '../cars/carTris';
+import { CAR_PART_DZ, carGlowTris, carShadowTris, carTris, carUndersideTris, parkedTris, polyTris, wheelPrims, wheelRects } from '../cars/carTris';
 import { carShape } from '../cars/shape';
 import type { ParkedCar } from '../cars/parked';
 import { glowStrength, lookRim } from '../garage/looks';
@@ -583,9 +583,8 @@ export class WorldView {
       const wz = r.top ? top + 0.02 : z + 0.01;
       const cx = (r.x0 + r.x1) / 2, cy = (r.y0 + r.y1) / 2;
       const tyre = new Tris();
-      tyre.rect(0, 0, 0, r.x0 - cx, r.y0 - cy, r.x1 - cx, r.y1 - cy, wz, rgba(tokens.colorCarTyre));
-      // Rim of an own car (specs/garage.md "wheels").
-      if (look) tyre.rect(0, 0, 0, r.rim[0] - cx, r.rim[1] - cy, r.rim[2] - cx, r.rim[3] - cy, wz + 0.005, rgba(lookRim(look)));
+      // Tyre and rim of an own car, or its garage wheel sprite (specs/garage.md v2 "wheels").
+      wheelPrims(r, look, cx, cy).forEach((p, i) => polyTris(tyre, 0, 0, 0, p.poly, wz + (i > 0 ? 0.005 : 0), p.color));
       const w = new TransformNode('wheel', this.scene);
       w.parent = root;
       w.position.set(cx, 0, cy);
@@ -635,7 +634,7 @@ export class WorldView {
       sp.add('parked', {
         id: p.carId, decal, world: m, len: (px.h / 32) * scale, wid: (px.w / 32) * scale, hl, hw, axle: hl * this.tuning.drive.axleOffset,
         paint: rgba(look ? lookPaint(s, look) : paintHex(s.paint)), steer: 0,
-        wheelTint: look && (look.wheels ?? 0) > 0 ? rgba(lookRim(look)) : null, lights: LIGHTS_OFF,
+        wheelTint: look && (look.wheels ?? 0) > 0 ? rgba(lookRim(look)) : null, wheel: look?.wheels ?? 0, lights: LIGHTS_OFF,
       });
     }
   }
@@ -689,7 +688,7 @@ export class WorldView {
       id: car.spec.id, decal: look?.decal ?? 0, world: top.computeWorldMatrix(true),
       len: (px.h / 32) * scale, wid: (px.w / 32) * scale, hl: car.halfLength, hw: car.halfWidth, axle: car.axleOffset,
       paint: rgba(lookPaint(car.spec, look)), steer: car.wheelAngle,
-      wheelTint: look && (look.wheels ?? 0) > 0 ? rgba(lookRim(look)) : null,
+      wheelTint: look && (look.wheels ?? 0) > 0 ? rgba(lookRim(look)) : null, wheel: look?.wheels ?? 0,
       lights: !this.carParts.lights ? LIGHTS_OFF : night ? LIGHTS_FULL : braking ? LIGHTS_BRAKE : LIGHTS_OFF,
       // Rescue fade-in (specs/flow.md) as for the procedural meshes.
       alpha: this.carAlpha,

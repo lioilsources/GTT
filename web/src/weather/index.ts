@@ -2,6 +2,7 @@
 // wet roads, the HUD icon and the toast on a change, and `?weather=clear|rain|fog`.
 import './weather.css';
 
+import { art, artIcon } from '../art';
 import type { DriveWorld } from '../drive/driveWorld';
 import type { MessageKey } from '../gen/i18n';
 import type { Tuning } from '../gen/tuning';
@@ -59,7 +60,10 @@ export function installWeather(env: WeatherEnv): WeatherFeature {
   env.hud.append(icon);
   document.body.append(toast);
   const showIcon = (k: WeatherKind): void => {
+    // ui/weather_<kind>.png (specs/art.md v3) in the HUD text colour, else the inline SVG.
+    const path = art().uiIcon(`weather_${k}`);
     icon.innerHTML = ICONS[k];
+    if (path) icon.replaceChildren(artIcon(path, 'weather-icon-art', () => showIcon(world.kind)));
     icon.title = t(weatherToastKey(k));
     icon.setAttribute('aria-label', icon.title);
   };

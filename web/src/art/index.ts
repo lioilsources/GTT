@@ -73,3 +73,27 @@ export function artImage(path: string, cls: string, onFail?: () => void): HTMLIm
   img.src = artUrl(path);
   return img;
 }
+
+/**
+ * A UI icon (specs/art.md v3 "Ikony UI") for an indexed `ui/<id>.png`: a span masked by the glyph
+ * over `currentColor` (the colour of today's drawing), sized by the caller's CSS. A file that does
+ * not load is dropped from the index and `onFail` puts today's drawing back.
+ */
+export function artIcon(path: string, cls = '', onFail?: () => void): HTMLSpanElement {
+  const el = document.createElement('span');
+  el.className = cls ? `art-icon ${cls}` : 'art-icon';
+  el.setAttribute('aria-hidden', 'true');
+  const url = artUrl(path);
+  el.style.setProperty('--art-icon', `url("${url}")`);
+  if (!decoded.has(path)) {
+    const probe = new Image();
+    probe.decoding = 'async';
+    probe.addEventListener('load', () => decoded.set(path, probe), { once: true });
+    probe.addEventListener('error', () => {
+      index.drop(path);
+      onFail?.();
+    }, { once: true });
+    probe.src = url;
+  }
+  return el;
+}
