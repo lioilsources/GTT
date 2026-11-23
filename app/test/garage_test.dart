@@ -516,4 +516,82 @@ void main() {
       tester.view.reset();
     }, skip: !has);
   });
+
+  group('test drive and debug cash (specs/testdrive.md)', () {
+    test('the catalog car with the default look; at 0 the tuned own car comes back in place', () async {
+      final w = await start(
+        saved: saveWith(
+          upgrades: const {
+            'm0_coupe': {'engine': 3},
+          },
+          looks: const {
+            'm0_coupe': {'paint': 2},
+          },
+        ),
+      );
+      final fleet = w.g.fleet;
+      expect(fleet.startTest('vega_roadster'), isTrue);
+      w.garage.leave(); // the sheet closes: the same test body again
+      final vega = assets.cars['vega_roadster']!;
+      expect(w.g.drive.car.spec.power, vega.power);
+      expect(w.g.playerLook!(), isNull);
+      // The save keeps the own car.
+      expect(w.loop.snapshot()['car'], 'm0_coupe');
+      // The timer runs out in game time: the own car with its upgrades and look, the toast.
+      fleet.testing!.left = 0.05;
+      final x = w.g.drive.car.x, y = w.g.drive.car.y;
+      w.g.update(0.1);
+      expect(fleet.testing, isNull);
+      expect(w.g.testDriveOverS, greaterThan(0));
+      expect(w.g.drive.spec.id, 'm0_coupe');
+      expect(
+        w.g.drive.car.spec.power,
+        closeTo(tunedSpec(assets.cars['m0_coupe']!, const {'engine': 3}, g).power, 1e-9),
+      );
+      expect(w.g.playerLook!()?.paint, w.garage.lookOf('m0_coupe').paint);
+      expect(w.g.playerLook!()?.paint, isNotNull);
+      expect(w.g.drive.car.x, closeTo(x, 1));
+      expect(w.g.drive.car.y, closeTo(y, 1));
+      stop(w);
+    }, skip: !has);
+
+    test('debug cash adds economy.debug_grant and saves', () async {
+      final w = await start(saved: saveWith(cash: 5));
+      final writes = w.store.writes;
+      w.loop.grantDebugCash();
+      expect(w.g.fleet.state.cash, 5 + tuning.economy.debugGrant);
+      await Future<void>.delayed(Duration.zero);
+      expect(w.store.writes, writes + 1);
+      expect(w.store.saves['nyc']!['cash'], 5 + tuning.economy.debugGrant);
+      stop(w);
+    }, skip: !has);
+
+    testWidgets('every car for sale has "Test drive"; it starts the drive and closes the sheet', (tester) async {
+      final w = (await tester.runAsync(start))!;
+      tester.view
+        ..physicalSize = const Size(420, 900)
+        ..devicePixelRatio = 1;
+      await tester.pumpWidget(
+        _app(
+          Builder(
+            builder: (context) => TextButton(
+              onPressed: () => showGarage(context, w.g.fleet, garage: w.garage),
+              child: const Text('open'),
+            ),
+          ),
+        ),
+      );
+      await tester.tap(find.text('open'));
+      await tester.pumpAndSettle();
+      final sale = saleOrder(assets.cars.values, w.g.fleet.owned, 'nyc');
+      expect(find.byKey(ValueKey('garageTestDrive:${sale.first.id}')), findsOneWidget);
+      expect(find.text('Test drive'), findsWidgets);
+      await tapKey(tester, 'garageTestDrive:${sale.first.id}');
+      await tester.pumpAndSettle();
+      expect(w.g.fleet.testing?.car, sale.first.id);
+      expect(find.byKey(const ValueKey('garageCars')), findsNothing);
+      stop(w);
+      tester.view.reset();
+    }, skip: !has);
+  });
 }

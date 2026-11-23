@@ -19,6 +19,7 @@ void showTuningPanel(
   required void Function(ControlSchemeId) onScheme,
   required Future<void> Function()? onBench,
   Future<void> Function()? onResetSave,
+  void Function()? onDebugCash,
   WeatherController? weather,
 }) {
   // The debug panel pauses the game while open (specs/pause.md).
@@ -29,8 +30,14 @@ void showTuningPanel(
       isScrollControlled: true,
       backgroundColor: const Color(Tokens.colorUiSheet),
       barrierColor: Colors.transparent,
-      builder: (_) =>
-          _TuningPanel(game: game, onScheme: onScheme, onBench: onBench, onResetSave: onResetSave, weather: weather),
+      builder: (_) => _TuningPanel(
+        game: game,
+        onScheme: onScheme,
+        onBench: onBench,
+        onResetSave: onResetSave,
+        onDebugCash: onDebugCash,
+        weather: weather,
+      ),
     ),
   );
 }
@@ -41,6 +48,7 @@ class _TuningPanel extends StatefulWidget {
     required this.onScheme,
     required this.onBench,
     this.onResetSave,
+    this.onDebugCash,
     this.weather,
   });
   final MetropoleGame game;
@@ -51,6 +59,9 @@ class _TuningPanel extends StatefulWidget {
 
   /// Debug "reset save" (specs/save.md).
   final Future<void> Function()? onResetSave;
+
+  /// Debug "+10 000" cash, written back and saved (specs/testdrive.md "Ladicí hotovost").
+  final void Function()? onDebugCash;
 
   /// Weather of the city (specs/weather.md "Ladění"): the button cycles the kinds (`set`).
   final WeatherController? weather;
@@ -249,6 +260,14 @@ class _TuningPanelState extends State<_TuningPanel> {
                     Navigator.of(context).pop();
                     reset();
                   },
+                ),
+              // Debug cash (specs/testdrive.md "Ladicí hotovost"), only in this debug panel.
+              if (widget.onDebugCash case final grant?)
+                OutlinedButton.icon(
+                  key: const ValueKey('debugCash'),
+                  icon: const Icon(Icons.payments, size: 16),
+                  label: Text(l.debugCash(widget.game.tuning.economy.debugGrant)),
+                  onPressed: () => setState(grant),
                 ),
             ],
           ),

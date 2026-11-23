@@ -127,7 +127,7 @@ func run(s scene) (Result, *Raster) {
 		func(q geo.Pt) (float64, bool) {
 			l, ok := s.water(q)
 			return (l - s.z0) * p.Exaggeration, ok
-		}, roads, ConformParams{PlateauM: 8, BlendM: 24, UnderwaterM: 3})
+		}, roads, ConformParams{SupportM: 8, BlendM: 24, UnderwaterM: 3})
 	return res, r
 }
 

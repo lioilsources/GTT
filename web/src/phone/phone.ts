@@ -62,6 +62,9 @@ export class Phone {
   private swipe(el: HTMLElement, done: (dy: number) => void): void {
     let y0: number | null = null;
     el.addEventListener('pointerdown', (e) => {
+      // Buttons on the bar (back, close) keep their own click: capturing the pointer on the bar
+      // would retarget the click to the bar and the buttons would never fire.
+      if ((e.target as HTMLElement | null)?.closest('button')) return;
       y0 = e.clientY;
       el.setPointerCapture(e.pointerId);
     });

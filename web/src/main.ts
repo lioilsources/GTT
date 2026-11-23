@@ -324,6 +324,7 @@ async function main(): Promise<void> {
 
   // Car name, "Přesednout" / garage button and the garage list (specs/cars.md).
   const carsHud = new CarsHud(fleet, t, $('hud'), () => view.carChanged());
+  carsHud.toast = (text) => phone.toast(text);
   // "Skok" over traffic (specs/hop.md): HUD button and key J.
   const hopHud = new HopHud(drive, t, $('hud'), tuning.nav.toastS);
   window.addEventListener('keydown', (e) => {
@@ -353,6 +354,8 @@ async function main(): Promise<void> {
       },
     },
   });
+  // No test drive during a world minigame (specs/testdrive.md "Pořadí").
+  carsHud.blockTest = () => loop.inWorldGame;
   // Taxi: a world minigame started by the loop at the taxi stand (specs/minigames/taxi.md).
   const taxi = installTaxi({ city, tuning, t, drive, fleet, phone, rig: view.rig, cars, hud: $('hud'), onCarChanged: () => view.carChanged() });
   loop.worldGames.taxi = taxi;
@@ -439,6 +442,8 @@ async function main(): Promise<void> {
     // Ticks with the game clock; the grip multiplier goes into this frame's drive step.
     weather.update(stepDt, dt);
     drive.update(stepDt);
+    // Test drive countdown in game time (specs/testdrive.md "Odpočet").
+    carsHud.tick(stepDt);
     police.update(stepDt, dt);
     phone.update(dt);
     taxi.update(stepDt);

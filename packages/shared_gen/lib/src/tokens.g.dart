@@ -288,6 +288,9 @@ abstract final class Tokens {
   static const int colorTaxiPassenger = 0xFFF7C531;
   static const int colorTaxiPassengerRing = 0xFF1B1B1F;
   static const int colorTaxiLow = 0xFFE0533A;
+  static const int colorTestDrivePill = 0xFF3A7BD5;
+  static const int colorTestDrivePillText = 0xFFFFFFFF;
+  static const int colorTestDriveLow = 0xFFE0533A;
   static const int colorDriftZone = 0xFFF2A93B;
   static const int colorDriftZoneFill = 0x33F2A93B;
   static const int colorDriftChain = 0xFFF7C531;

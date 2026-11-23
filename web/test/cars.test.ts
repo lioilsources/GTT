@@ -336,4 +336,70 @@ describe.skipIf(!existsSync(pack))('parked cars and boarding in NYC', () => {
     d.spawn(city.startX, city.startY, city.startHeading);
     expect(d.car.spec.id).toBe('pickup_hauler');
   });
+
+  it('test-drives a car for sale and gives the own car back in place (specs/testdrive.md)', () => {
+    const d = new DriveWorld(city, specs.get(tuning.cars.startCar)!, tuning);
+    const g = { id: 'g', x: d.car.x, y: d.car.y, heading: d.car.heading };
+    const fleet = new CarFleet(d, specs, tuning, g);
+    fleet.levelsOf = () => ({ engine: 3 });
+    const state0 = fleet.state;
+    const events: string[] = [];
+    fleet.on('carChanged', (e) => events.push(e.car));
+    expect(fleet.canTest('m0_coupe')).toBe(false); // owned
+    expect(fleet.canTest('vega_roadster')).toBe(true);
+    expect(fleet.startTest('vega_roadster')).toBe(true);
+    // The catalog car (no upgrades, no look), full hop tank; the cars state is unchanged.
+    expect(d.spec).toBe(specs.get('vega_roadster'));
+    expect(fleet.spec.id).toBe('vega_roadster');
+    expect(fleet.drivingOwn).toBe(false);
+    expect(fleet.drivenSpec).toBe(specs.get('vega_roadster'));
+    expect(d.hop.charges).toBeGreaterThan(0);
+    expect(fleet.state).toBe(state0);
+    expect(fleet.testing).toEqual({ car: 'vega_roadster', left: tuning.cars.testDriveS });
+    // Drive somewhere; the countdown runs in game seconds.
+    d.spawn(g.x + 40, g.y + 10, 1);
+    expect(fleet.tickTest(tuning.cars.testDriveS - 1)).toBe(false);
+    expect(fleet.testing!.left).toBeCloseTo(1);
+    expect(fleet.tickTest(2)).toBe(true);
+    expect(fleet.testing).toBeNull();
+    // Back in the own (upgraded) car where the test car was.
+    expect(d.spec.id).toBe('m0_coupe');
+    expect(d.spec.power).toBeGreaterThan(specs.get('m0_coupe')!.power);
+    expect(d.car.x).toBeCloseTo(g.x + 40);
+    expect(d.car.y).toBeCloseTo(g.y + 10);
+    expect(fleet.state).toBe(state0);
+    expect(events).toEqual(['vega_roadster', 'm0_coupe']);
+    expect(fleet.endTest()).toBe(false);
+  });
+
+  it('ends a test drive on boarding: the own car stays parked, the test car vanishes', () => {
+    const d = new DriveWorld(city, specs.get(tuning.cars.startCar)!, tuning);
+    const fleet = new CarFleet(d, specs, tuning, { id: 'g', x: d.car.x, y: d.car.y, heading: d.car.heading });
+    for (const c of chunks) {
+      d.addChunk(c);
+      fleet.addChunk(c);
+    }
+    const target = fleet.parked.find((p) => p.carId !== 'super_arrow')!;
+    fleet.startTest('super_arrow');
+    d.spawn(target.x + 6 * Math.cos(target.heading + Math.PI / 2), target.y + 6 * Math.sin(target.heading + Math.PI / 2), target.heading);
+    fleet.board(target);
+    expect(fleet.testing).toBeNull();
+    const left = fleet.parked.filter((p) => p.chunk === null);
+    expect(left).toHaveLength(1);
+    expect(left[0]).toMatchObject({ carId: 'm0_coupe', owner: 'player' });
+    expect(fleet.parked.some((p) => p.carId === 'super_arrow' && p.chunk === null)).toBe(false);
+  });
+
+  it('a stolen car is towed before a test drive; debug cash adds economy.debug_grant', () => {
+    const d = new DriveWorld(city, specs.get(tuning.cars.startCar)!, tuning);
+    const fleet = new CarFleet(d, specs, tuning, { id: 'g', x: d.car.x, y: d.car.y, heading: d.car.heading });
+    fleet.state = { ...fleet.state, driving: 'hatch_pip', stolen: true, thefts: 1 };
+    fleet.startTest('hatch_pip');
+    expect(fleet.state).toMatchObject({ driving: 'm0_coupe', stolen: false, thefts: 1 });
+    expect(d.spec.id).toBe('hatch_pip');
+    fleet.endTest();
+    expect(d.spec.id).toBe('m0_coupe');
+    expect(fleet.grantDebugCash()).toBe(tuning.economy.debugGrant);
+    expect(fleet.grantDebugCash()).toBe(2 * tuning.economy.debugGrant);
+  });
 });

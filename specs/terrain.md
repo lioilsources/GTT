@@ -1,6 +1,6 @@
 # Terén – výšky, svahy a skoky
 
-**version: 1** · data P0 (citypack, shodná v obou klientech) · fyzika P1 (±5 %, scénáře
+**version: 2** · data P0 (citypack, shodná v obou klientech) · fyzika P1 (±5 %, scénáře
 `scenarios/terrain/`) · pohled shora s reliéfem P2 · plán `Prompts/02-METROPOLE_TERRAIN_PLAN.md`,
 pod-plán `plans/M5_TEREN_PRIRODA.md` · parita F-070 (svahy a skoky), F-071 (reliéf shora),
 F-074 (šikmý pohled, jen W)
@@ -20,13 +20,26 @@ Všechny výšky jsou **herní** (po převýšení a omezení sklonu), v decimet
 |---|---|---|
 | `Manifest` | `terrain_version` (uint32), `z0_m` (float), `exaggeration` (float) | `terrain_version = 0` nebo chybí = bez výšek |
 | `Chunk` | `terrain` (bytes, 33 × 33 × int16 LE, řádky od jihu) | mřížka po `terrain.grid_m` (8 m), okraje sdílené se sousedy |
-| `Chunk` | `shade` (bytes, 33 × 33 × uint8) | stínování svahu 0–255 (128 = rovina), slunce az. 315°, výška 45° |
+| `Chunk` | `shade` (bytes, 33 × 33 × uint8) | stínování svahu 0–255 (128 = rovina), slunce az. 315°, výška 45°; sklony herního terénu násobené `terrain.pipeline.shade_strength` (v2: 3,0) |
 | `Node` | `z_dm` (sint32) | výška uzlu |
 | `Edge` | `z_dm` (repeated sint32, po vrcholech) | hrany s převýšením zhuštěné na úseky ≤ 16 m; `stairs` (bool) = schody, pro auta neprůjezdné |
 | pás silnice | `z_dm` u vrcholů | pásy zhuštěné po 8 m |
 | `Building` | `base_z_dm` | nejnižší bod terénu pod půdorysem |
 | `Ground` (voda) | `z_dm` | hladina |
 | `lod/{x}_{y}.pb` | hrubý terén 32 m + hmoty bloků, po 4 × 4 chuncích | jen šikmý pohled |
+
+Záruky dat (v2, `citypack validate`):
+- Terén řídí jen pozemní hrany (ne most, ne tunel, vrstva 0 na obou koncích). Pod mostem, nájezdem
+  a v tunelu má terén vlastní tvar, auto tam jede po povrchu hrany (`groundZ` výše). Most, který
+  Overture vede ve vrstvě 0 (Mánesův most), je pořád most.
+- Most, nájezd a estakáda (netunelová hrana mimo terén) mají spojitou desku: konec hrany má výšku
+  svého uzlu, uvnitř hrany žádný skok nad 0,05 m. V jejich půdorysu na zemi neroste strom.
+- Ve vodě neleží žádný bod mřížky nad hladinou. Výjimka: body, které nese pás pozemní silnice na
+  břehu (buňka 8 m nemůže z vozovky spadnout k vodě; hladina je překryje).
+- Na vozovce ponechané pozemní silnice čte bilineární terén profil silnice: odchylka ≤ 0,15 m
+  aspoň u 99,5 % vzorků, nikde nad 1,0 m (`terrain.pipeline.road_strip`). Výjimky jsou ostré
+  zatáčky serpentin, kde se profil ohne uvnitř jedné buňky. Vzorky, jejichž buňku sdílí jiná
+  silnice (nebo jiné rameno téže) v jiné výšce, se nepočítají.
 
 Klient, který výšky nepodporuje, nová pole ignoruje (protobuf).
 

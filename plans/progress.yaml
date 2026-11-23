@@ -6,7 +6,7 @@
 # reopened: list of {date, reason} when an item went back from hotovo/ověřeno (regression).
 # Dropped scope: M0 point 5 (Flutter web build) – replaced by D1, see docs/m0.md.
 
-milestones: [M0, D0, D1, D2, M1, D3, M3, M2, M4, M5]
+milestones: [M0, D0, D1, D2, M1, D3, M3, M2, M4, M5, L]
 
 items:
   # ---------- M0 – Hračka (scope)
@@ -216,6 +216,24 @@ items:
   - {id: M5-A4, milestone: M5, name: "nejvýš 1 zaseknutí za 10 minut jízdy (dogfooding Ol1n)", size: S, status: todo}
   - {id: M5-A5, milestone: M5, name: "Ol1n potvrdí kopce Prahy (Petřín, Letná, Hradčany)", size: S, status: todo}
   - {id: M5-A6, milestone: M5, name: "slepý test: řeka a park ze snímku do 2 s", size: S, status: todo}
+
+  # ---------- L – Vystřelení (Prompts/05, plans/L_LAUNCH.md)
+  - {id: L-S1, milestone: L, name: "T3 ladění kopců Prahy: trasy Petřín, Letná, Hradčany, docs/prague-hills.md", size: M, status: todo}
+  - {id: L-S2, milestone: L, name: "README podle skutečnosti, status blok z metro progress, --check v CI", size: S, status: todo}
+  - {id: L-S3, milestone: L, name: "počítadla skitů a miniher v metro progress + test", size: S, status: todo}
+  - {id: L-S4, milestone: L, name: "tracker dorovnat: důkazy rozdělaných položek, progress.log, padající test", size: S, status: todo}
+  - {id: L-S5, milestone: L, name: "LICENSE, NOTICE se zdroji dat, pole license, audit R10", size: S, status: todo}
+  - {id: L-S6, milestone: L, name: "kouřový test mobilního webu v CI (Pixel 8a, iPhone 12 mini)", size: M, status: todo}
+  - {id: L-S7, milestone: L, name: "první spuštění: postup stahování v %, karta ovládání a výběr města", size: S, status: todo}
+  - {id: L-S8, milestone: L, name: "náhled odkazu: og: a twitter: metadata", size: S, status: todo}
+  - {id: L-S9, milestone: L, name: "demo záběr ?demo=roadster, web/scripts/demo.ts, og.png", size: M, status: todo}
+  - {id: L-S10, milestone: L, name: "tramvaje plynule sledují kolej (test přes celou síť Prahy)", size: M, status: todo}
+  - {id: L-S11, milestone: L, name: "mosty a voda: na most jen z nájezdu, pod mostem po nábřeží, do vody pád", size: M, status: todo}
+  - {id: L-S12, milestone: L, name: "policie nezablokuje hru: police_box, soak 20 dopadení", size: M, status: todo}
+  - {id: L-S13, milestone: L, name: "regresní testy: průjezd zaparkovanými auty, swipe feedu", size: S, status: todo}
+  - {id: L-S14, milestone: L, name: "docs/verify.md z metro progress: průchody po 30 minutách", size: M, status: todo}
+  - {id: L-S15, milestone: L, name: "metro stats → plans/STATS.md", size: S, status: todo}
+  - {id: L-A1, milestone: L, name: "docs/launch.md, metro progress --check a kouřový test zelené na main, Pages nasazené", size: S, status: todo}
 
 # Content counters with targets. tests and fps are measured; the rest metro progress counts itself.
 counters:
