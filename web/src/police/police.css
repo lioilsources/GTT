@@ -18,8 +18,28 @@
   background: var(--color-police-star-empty);
   clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
 }
-.police-star.on {
+.police-star.art {
+  clip-path: none;
+  background: none;
+  color: var(--color-police-star);
+  font-size: 22px;
+  opacity: 0.35;
+}
+.police-star.art.on {
+  opacity: 1;
+}
+.police-star-art {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.police-star:not(.art) .police-star-art {
+  display: none;
+}
+.police-star.on:not(.art) {
   background: var(--color-police-star);
+}
+.police-star.on {
   animation: police-pulse 0.8s ease-in-out infinite alternate;
 }
 @keyframes police-pulse {

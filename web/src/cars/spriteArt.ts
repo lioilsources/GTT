@@ -4,6 +4,7 @@
 import { art, artUrl } from '../art';
 import { Lru } from '../art/rules';
 import { tokens } from '../gen/tokens';
+import { decalArt } from '../garage/cosmetics';
 import { decalPolys } from '../garage/looks';
 import { rgba } from '../render/palette';
 import { applyDecal, maskLuma, spriteFiles, SPRITE_PX_PER_M, type SpriteFiles } from './sprites';
@@ -21,16 +22,18 @@ export interface CarSprite {
 const loaded = new Map<string, Promise<CarSprite | null>>();
 const done = new Map<string, CarSprite | null>();
 
-async function pixels(path: string): Promise<ImageData> {
+/** Decoded pixels of an asset, optionally resampled to [w] × [h] (the decal atlas cells). */
+export async function pixels(path: string, w?: number, h?: number): Promise<ImageData> {
   const img = new Image();
   img.decoding = 'async';
   img.src = artUrl(path);
   await img.decode();
   const c = document.createElement('canvas');
-  c.width = img.naturalWidth;
-  c.height = img.naturalHeight;
+  c.width = w ?? img.naturalWidth;
+  c.height = h ?? img.naturalHeight;
   const ctx = c.getContext('2d', { willReadFrequently: true })!;
-  ctx.drawImage(img, 0, 0);
+  ctx.imageSmoothingQuality = 'high';
+  ctx.drawImage(img, 0, 0, c.width, c.height);
   return ctx.getImageData(0, 0, c.width, c.height);
 }
 
@@ -67,6 +70,8 @@ export function carSpriteNow(id: string): CarSprite | null | undefined {
 /**
  * Body and mask of a cell with the decal (`looks.decal`, specs/art.md "Polep") drawn into the
  * paint only. [carScale]: sprite px per world metre = 32 ÷ car_scale. Decal 0 = the plain layers.
+ * A decal with a sprite (specs/art.md v3) is stretched over the whole canvas instead of the
+ * procedural polygons (the world does the same in the body shader; this is for the previews).
  */
 export function composeBody(s: CarSprite, decal: number, carScale: number): { body: ImageData; mask: ImageData } {
   const w = s.body.width, h = s.body.height;
@@ -81,7 +86,16 @@ export function composeBody(s: CarSprite, decal: number, carScale: number): { bo
   const k = SPRITE_PX_PER_M / carScale;
   const hl = (h / 1.1 / 2) / k, hw = (w / 1.1 / 2) / k;
   ctx.fillStyle = '#ffffff';
-  for (const p of decalPolys(decal, { x0: -hl, y0: -hw, x1: hl, y1: hw })) {
+  const art = decalArt(decal);
+  if (art) {
+    const src = document.createElement('canvas');
+    src.width = art.width;
+    src.height = art.height;
+    src.getContext('2d')!.putImageData(new ImageData(new Uint8ClampedArray(art.data), art.width, art.height), 0, 0);
+    ctx.imageSmoothingEnabled = true;
+    ctx.drawImage(src, 0, 0, w, h);
+  }
+  for (const p of art ? [] : decalPolys(decal, { x0: -hl, y0: -hw, x1: hl, y1: hw })) {
     ctx.beginPath();
     for (let i = 0; i < p.length; i += 2) {
       const X = w / 2 - p[i + 1]! * k, Y = h / 2 - p[i]! * k;
@@ -118,7 +132,7 @@ const tinted = new Lru<string, HTMLCanvasElement>(48);
 
 /** The body tinted with [paintHex] (null = the patrol, untinted) and the decal, as a canvas. */
 export function tintedBody(s: CarSprite, paintHex: string | null, decal: number, carScale: number): HTMLCanvasElement {
-  const key = `${s.id}|${paintHex}|${decal}`;
+  const key = `${s.id}|${paintHex}|${decal}|${decalArt(decal) ? 'art' : ''}`;
   const hit = tinted.get(key);
   if (hit) return hit;
   const { body, mask } = composeBody(s, decal, carScale);

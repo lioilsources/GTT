@@ -51,8 +51,11 @@ const slotKeys: Record<GarageSlot, { name: MessageKey; effect: MessageKey }> = {
 const partKeys: Record<LookPart, MessageKey> = {
   paint: 'garagePartPaint', decal: 'garagePartDecal', wheels: 'garagePartWheels', glow: 'garagePartGlow', smoke: 'garagePartSmoke',
 };
-const decalKeys: MessageKey[] = ['garageDecalNone', 'garageDecalStripes', 'garageDecalFlames', 'garageDecalChecker'];
-const wheelKeys: MessageKey[] = ['garageWheelsStock', 'garageWheelsSport', 'garageWheelsWhite'];
+/** Labels of the decal and wheel choices in choice order (specs/garage.md v2 "Vzhled"). */
+export const decalKeys: MessageKey[] = ['garageDecalNone', 'garageDecalStripes', 'garageDecalFlames', 'garageDecalChecker',
+  'garageDecalStars', 'garageDecalLightning', 'garageDecalWaves', 'garageDecalCamo', 'garageDecalHalftone'];
+export const wheelKeys: MessageKey[] = ['garageWheelsStock', 'garageWheelsSport', 'garageWheelsWhite',
+  'garageWheelsFiveSpoke', 'garageWheelsMesh', 'garageWheelsTurbine', 'garageWheelsOffroad'];
 
 /** Percent gained by the next level of a slot (garageEffect<Slot>). */
 export function effectPct(tuning: Tuning, slot: GarageSlot): number {
