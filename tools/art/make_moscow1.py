@@ -17,7 +17,7 @@ NEG = ("text, letters, words, cyrillic, latin letters, typography, slogan, capti
        "inscription, banner with writing, signboard, billboard, logo, brand name, watermark, signature, license "
        "plate, hammer and sickle, emblem, coat of arms, flag, political symbol, portrait of a leader, propaganda "
        "figure, soldier, weapon, gradient, airbrush, photo, photorealistic, 3d render, blurry, low quality, deformed, "
-       "child, nsfw, border, frame, mockup")
+       "child, nsfw, border, frame, mockup, pennant, flags on roofs, red flag, flagpole, printed caption, small print in the margin, artist signature")
 NEG_NOSTAR = NEG + ", star, red star"
 out = []
 
