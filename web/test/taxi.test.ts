@@ -103,6 +103,7 @@ describe.skipIf(!existsSync(pack))('a scripted taxi shift in NYC', () => {
       lensDm: edgeLengthsDm(city.graphPb),
       straightPct: tuning.feed.straightPct,
       searchM: tuning.nav.searchM,
+      leftHand: city.manifest.driveSide === 'left',
     };
     const shift = new TaxiShift(world, tt, dests, 2024);
     const car: TaxiPose = { x: stand.parkX / 10, y: stand.parkY / 10, heading: stand.parkHeading, speed: 0, layer: 0 };
@@ -172,7 +173,7 @@ describe.skipIf(!existsSync(pack))('a scripted taxi shift in NYC', () => {
 
   it('spawns a passenger near the taxi stand', () => {
     const stand = city.spots.items.find((s) => s.minigame === 'taxi')!;
-    const p = spawnPassenger(city.graph, { x: stand.parkX / 10, y: stand.parkY / 10, heading: stand.parkHeading, speed: 0, layer: 0 }, tt);
+    const p = spawnPassenger(city.graph, { x: stand.parkX / 10, y: stand.parkY / 10, heading: stand.parkHeading, speed: 0, layer: 0 }, tt, city.manifest.driveSide === 'left');
     expect(p).not.toBeNull();
   });
 });

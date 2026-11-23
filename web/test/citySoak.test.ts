@@ -15,7 +15,8 @@ import { chunkPath, type PackSource } from '../src/world/citypack';
 import { prepareChunk, type ChunkData } from '../src/world/chunk';
 import { City } from '../src/world/model';
 
-// Soak M3-A3 (specs/cities.md "Testy"): switch NYC → Prague → NYC … 10 times without a crash,
+// Soak M3-A3 (specs/cities.md "Testy"): switch through every CityId in order (NYC → Prague → Tokyo
+// → NYC …) 10 times without a crash,
 // each city keeps its own save, and the physics world returns to its baseline body count after
 // the city's chunks, parked cars, traffic and trams are torn down (no leaked bodies).
 
@@ -50,14 +51,17 @@ class FakeStorage implements KeyValue {
 }
 
 const ROUNDS = 10;
+/** Every city of the build, in CityId order (no hardcoded list, plans/M4_TOKIO.md bod 2). */
+const cities: readonly string[] = cityIdValues;
+const roundsOf = (i: number): number => Math.ceil((ROUNDS - i) / cities.length);
 const SIM_S = 3;
 const dt = 1 / 60;
 
-describe.skipIf(!existsSync(packDir('nyc')) || !existsSync(packDir('prague')))('soak: city switch 10× (M3-A3)', () => {
+describe.skipIf(cities.length < 2 || !cities.every((id) => existsSync(packDir(id))))('soak: city switch 10× (M3-A3)', () => {
   it('no throw, own saves, physics bodies back to baseline every round', async () => {
     const store = new MemorySaveStore();
     const storage = new FakeStorage();
-    let href = 'https://example.test/?city=nyc';
+    let href = `https://example.test/?city=${cities[0]}`;
     const expected: Record<string, { cash: number; stamps: string[] }> = {};
     const baselines: Record<string, number[]> = {};
     const peaks: Record<string, number[]> = {};
@@ -65,7 +69,7 @@ describe.skipIf(!existsSync(packDir('nyc')) || !existsSync(packDir('prague')))('
     for (let round = 0; round < ROUNDS; round++) {
       // Page load: pick the city, load its save and pack, build the drive world like main.ts.
       const cityId = pickStartCity(new URL(href).searchParams.get('city'), readLastCity(storage), cityIdValues);
-      expect(cityId).toBe(round % 2 === 0 ? 'nyc' : 'prague');
+      expect(cityId).toBe(cities[round % cities.length]);
       const cfg = saveConfig(tuning, cityId, carIdValues);
       const save: Save = normalizeSave(cfg, await store.read(cityId));
       const want = expected[cityId] ?? { cash: tuning.cars.startCash, stamps: [] };
@@ -107,7 +111,7 @@ describe.skipIf(!existsSync(packDir('nyc')) || !existsSync(packDir('prague')))('
       expected[cityId] = { cash: played.cash, stamps: played.stamps };
 
       // Travel: save, navigate, tear the city down.
-      const next = cityId === 'nyc' ? 'prague' : 'nyc';
+      const next = cities[(round + 1) % cities.length]! as typeof cityId;
       await switchCity(next, { save: () => store.write(cityId, played), navigate: (u) => (href = u), href });
       for (const c of chunks) {
         fleet.removeChunk(c);
@@ -122,16 +126,16 @@ describe.skipIf(!existsSync(packDir('nyc')) || !existsSync(packDir('prague')))('
     }
 
     // Same baseline every round per city: nothing accumulates across switches.
-    for (const id of ['nyc', 'prague']) {
-      expect(baselines[id]!.length).toBe(ROUNDS / 2);
+    cities.forEach((id, i) => {
+      expect(baselines[id]!.length).toBe(roundsOf(i));
       expect(new Set(baselines[id]).size, `${id} baselines ${baselines[id]!.join(',')}`).toBe(1);
-    }
-    // Both saves survive the whole soak.
-    for (const id of ['nyc', 'prague']) {
+    });
+    // Every save survives the whole soak.
+    for (const [i, id] of cities.entries()) {
       const s = normalizeSave(saveConfig(tuning, id, carIdValues), await store.read(id));
       expect(s.cash).toBe(expected[id]!.cash);
       expect(s.stamps).toEqual(expected[id]!.stamps);
-      expect(s.stamps.length).toBe(ROUNDS / 2);
+      expect(s.stamps.length).toBe(roundsOf(i));
     }
   }, 600000);
 });

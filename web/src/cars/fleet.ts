@@ -104,7 +104,7 @@ export class CarFleet {
     const kept = this.parked.filter((p) => p.chunk === null);
     const city = this.drive.city;
     // Models are filtered by the pack's cityId (specs/cars.md).
-    for (const p of generateParked(city.graph, c.x, c.y, key, this.tuning, this.specs, kept, { x: car.x, y: car.y }, city.id)) {
+    for (const p of generateParked(city.graph, c.x, c.y, key, this.tuning, this.specs, kept, { x: car.x, y: car.y }, city.id, city.manifest.driveSide === 'left')) {
       this.addParked(p);
     }
   }

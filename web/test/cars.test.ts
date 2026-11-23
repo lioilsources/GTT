@@ -251,8 +251,8 @@ describe.skipIf(!existsSync(pack))('parked cars and boarding in NYC', () => {
   it('places parked cars deterministically at curbs, spaced apart', () => {
     let total = 0;
     for (const c of chunks) {
-      const a = generateParked(city.graph, c.x, c.y, 1, tuning, specs, [], { x: 1e9, y: 1e9 }, city.id);
-      const b = generateParked(city.graph, c.x, c.y, 1, tuning, specs, [], { x: 1e9, y: 1e9 }, city.id);
+      const a = generateParked(city.graph, c.x, c.y, 1, tuning, specs, [], { x: 1e9, y: 1e9 }, city.id, false);
+      const b = generateParked(city.graph, c.x, c.y, 1, tuning, specs, [], { x: 1e9, y: 1e9 }, city.id, false);
       expect(a).toEqual(b);
       expect(a.length).toBeLessThanOrEqual(tuning.cars.parked.perChunk);
       for (let i = 0; i < a.length; i++) {
@@ -271,11 +271,11 @@ describe.skipIf(!existsSync(pack))('parked cars and boarding in NYC', () => {
     const pool = parkedPool(tuning.cars.parked.models, specs, 'nyc');
     let total = 0;
     for (const c of chunks) {
-      const now = generateParked(city.graph, c.x, c.y, 1, tuning, specs, [], { x: 1e9, y: 1e9 }, 'nyc');
+      const now = generateParked(city.graph, c.x, c.y, 1, tuning, specs, [], { x: 1e9, y: 1e9 }, 'nyc', false);
       // Deterministic per chunk, and only models of the city's pool park there.
-      expect(now).toEqual(generateParked(city.graph, c.x, c.y, 1, tuning, specs, [], { x: 1e9, y: 1e9 }, 'nyc'));
+      expect(now).toEqual(generateParked(city.graph, c.x, c.y, 1, tuning, specs, [], { x: 1e9, y: 1e9 }, 'nyc', false));
       for (const p of now) expect(pool).toContain(p.carId);
-      expect(generateParked(city.graph, c.x, c.y, 1, tuning, specs, [], { x: 1e9, y: 1e9 }, 'nowhere')).toEqual([]);
+      expect(generateParked(city.graph, c.x, c.y, 1, tuning, specs, [], { x: 1e9, y: 1e9 }, 'nowhere', false)).toEqual([]);
       total += now.length;
     }
     expect(total).toBeGreaterThan(10);

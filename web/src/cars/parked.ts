@@ -40,7 +40,8 @@ export function parkedPool(models: readonly string[], specs: ReadonlyMap<string,
 
 /**
  * Places parked cars for chunk (cx, cy) with the shared PRNG; every attempt draws four numbers
- * (segment, position, side, model) so both clients consume the stream identically.
+ * (segment, position, side, model) so both clients consume the stream identically. [leftHand]
+ * (manifest driveSide = left) mirrors only the heading; the sides are drawn the same.
  */
 export function generateParked(
   graph: RoadGraph,
@@ -52,6 +53,7 @@ export function generateParked(
   avoid: ReadonlyArray<{ x: number; y: number }>,
   player: { x: number; y: number },
   cityId: string,
+  leftHand: boolean,
 ): ParkedCar[] {
   const t = tuning.cars.parked;
   const chunkM = tuning.chunkM;
@@ -91,7 +93,10 @@ export function generateParked(
     const y = seg.ay + seg.dy * d - seg.dx * offset * sgn;
     if (!out.every((p) => far(x, y, p, t.minSpacingM)) || !avoid.every((p) => far(x, y, p, t.minSpacingM))) continue;
     if (!far(x, y, player, t.clearPlayerM)) continue;
-    const heading = Math.atan2(seg.dy, seg.dx) + (side === 0 ? 0 : Math.PI);
+    // Faces along its lane: right-hand traffic right of the segment along it, left-hand traffic
+    // (manifest driveSide = left, specs/cities.md v2) left of the segment along it.
+    const alongLane = (side === 0) !== leftHand;
+    const heading = Math.atan2(seg.dy, seg.dx) + (alongLane ? 0 : Math.PI);
     out.push({ carId: model, owner: 'npc', x, y, heading, chunk });
   }
   return out;
