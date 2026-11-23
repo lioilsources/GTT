@@ -40,8 +40,11 @@ import { installDrift } from './minigames/drift';
 import { installSprint } from './minigames/sprint';
 import { installTravel } from './travel';
 import { installFastTravel } from './travel/fastTravel';
-import { cityUrl, pickStartCity, readLastCity, writeLastCity } from './travel/cities';
-import { HttpPackSource } from './world/citypack';
+import { cityUrl, pickStartCity, readLastCity, switchCity, writeLastCity } from './travel/cities';
+import { chunkPath, HttpPackSource } from './world/citypack';
+import { LoadProgress, ProgressSource } from './firstrun/progress';
+import { introStore, rememberIntro, shouldShowIntro, showIntro } from './firstrun/intro';
+import './firstrun/intro.css';
 import { City } from './world/model';
 import { ChunkStreamer } from './world/streaming';
 import { MapNatureSource } from './phone/mapNature';
@@ -132,7 +135,12 @@ async function main(): Promise<void> {
     HttpPackSource.open(ASSET_BASE_URL, cityId),
     artReady,
   ]);
-  const city = await City.load(source);
+  // Download progress in % until the first frame (specs/firstrun.md).
+  const progress = new LoadProgress((pct) => {
+    $('loading').textContent = t('loadingProgress', { city: cityIdNames[cityId], pct });
+  });
+  const loadSource = new ProgressSource(source.root, progress);
+  const city = await City.load(loadSource);
   // ?flat (debug, A/B): drive and draw the pack without its heights (specs/terrain.md flat pack).
   if (params.has('flat')) city.terrain.enabled = false;
   // The pack loaded: remember the city now, not only when leaving it (specs/cities.md).
@@ -182,7 +190,7 @@ async function main(): Promise<void> {
     police.setShadow(view.palette.shadow);
   };
   applyShadows();
-  const streamer = new ChunkStreamer(city, source, tuning, (c) => {
+  const streamer = new ChunkStreamer(city, loadSource, tuning, (c) => {
     drive.addChunk(c);
     fleet.addChunk(c);
     police.addChunk(c);
@@ -222,8 +230,15 @@ async function main(): Promise<void> {
     police.setSprites(view.sprites);
   }
   view.rig.snap(drive.car.x, drive.car.y, drive.car.heading, tuning);
-  // Own chunk and its ring first (3×3 = 9); the rest streams in while driving.
+  // Own chunk and its ring first (3×3 = 9); the rest streams in while driving. Their sizes join the
+  // download total from the manifest right away (specs/firstrun.md).
+  const sizes = new Map(city.manifest.chunks.map((c) => [chunkPath(c.x, c.y), c.bytes]));
+  for (const [cx, cy] of streamer.window.wanted(drive.car.x, drive.car.y, drive.car.heading).slice(0, 9)) {
+    const p = chunkPath(cx, cy);
+    progress.announce(p, sizes.get(p) ?? 0);
+  }
   await streamer.preload(drive.car.x, drive.car.y, drive.car.heading, 9);
+  progress.stop();
   $('loading').hidden = true;
   let firstFrameMs = 0;
   // In-game phone, feed, map and GPS navigation (specs/phone.md).
@@ -398,6 +413,19 @@ async function main(): Promise<void> {
   // Weather (specs/weather.md): random seed per start, starts clear; ?weather= sets a kind.
   const weather = installWeather({ cityId, tuning, t, drive, view, hud: $('hud'), params });
   installTravel({ cityId, tuning, t, phone, tracker: passport.tracker, store: loop.store, save: () => loop.save(), onSwitch: () => booths.clear() });
+  // First run intro card (specs/firstrun.md): controls and the city choice, once per device.
+  const store = introStore();
+  if (shouldShowIntro(params, store)) {
+    const release = overlays.open('intro');
+    showIntro({
+      parent: document.body, t, cities: cityIdValues, names: cityIdNames, current: cityId,
+      onClose: (target) => {
+        rememberIntro(store);
+        release();
+        if (target) void switchCity(target, { save: () => loop.save(), navigate: (url) => location.assign(url), href: location.href });
+      },
+    });
+  }
   // Fast travel by metro and taxi (specs/travel.md): stations unlock by passing, the move resets
   // traffic, patrols and pedestrians like a teleport.
   const fastTravel = installFastTravel({
