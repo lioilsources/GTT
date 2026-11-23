@@ -172,7 +172,10 @@ describe.skipIf(!existsSync(pack))('passport on the NYC pack', () => {
       expect(hit, l.id).not.toBeNull();
     }
     expect(t.state.catalog.district.length).toBeGreaterThan(30);
-    expect(t.state.catalog.minigame.length).toBeGreaterThanOrEqual(8);
+    // every distinct spot minigame of the pack, so new minigame spots don't break the test
+    const games = new Set(city.spots.items.map((s) => s.minigame).filter((m) => m !== ''));
+    expect(t.state.catalog.minigame.length).toBe(games.size);
+    expect(games.size).toBeGreaterThanOrEqual(8);
   });
 });
 
