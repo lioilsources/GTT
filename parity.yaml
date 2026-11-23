@@ -29,12 +29,12 @@
   spec: specs/drive.md@2
   scenarios: scenarios/drive
   lead: web
-  flutter: todo
-  web: todo
+  flutter: done
+  web: done
 - id: F-005
   name: M0 controls A/B/C
   level: P1
-  spec: specs/controls.md@1
+  spec: specs/controls.md@2
   lead: flutter
   flutter: wip
   web: wip
@@ -336,8 +336,9 @@
   level: P2
   spec: specs/art.md@3
   lead: web
-  flutter: todo
-  web: todo
+  flutter: done
+  web: done
+  checks: {flutter: pass, web: pass}
 
 - id: F-041
   name: Photo spots and the Camera app (frame the view, Passport photo stamps)
@@ -375,8 +376,9 @@
   spec: specs/garage.md@2
   vectors: vectors/garage.json
   lead: web
-  flutter: todo
-  web: todo
+  flutter: done
+  web: done
+  checks: {flutter: pass, web: pass}
 
 - id: F-045
   name: Car classes drawn by their own shape (40 NYC cars, garage sale list order)
@@ -618,7 +620,7 @@
   scenarios: scenarios/terrain
   lead: web
   flutter: todo
-  web: todo
+  web: done
 
 - id: F-071
   name: "Reliéf v pohledu shora: promítání, stínování, šipky, HUD (M5-S6)"
@@ -655,12 +657,14 @@
   web: done
 
 - id: F-075
-  name: "Zkušební jízda v garáži a ladicí hotovost (dogfooding)"
+  name: "Zkušební jízda v garáži, garáž z telefonu a ladicí hotovost (dogfooding)"
   level: P2
   spec: specs/testdrive.md@2
   lead: web
-  flutter: todo
-  web: todo
+  flutter: done
+  web: done
+  checks: {flutter: pass, web: pass}
+
 - id: F-076
   name: "První spuštění: postup stahování v % a úvodní karta (L-S7)"
   level: P2

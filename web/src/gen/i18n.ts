@@ -15,6 +15,11 @@ export type MessageKey =
   | "borderNotice"
   | "dayNight"
   | "controlScheme"
+  | "boostButton"
+  | "boostHintA"
+  | "boostHintB"
+  | "boostHintC"
+  | "boostHintKeys"
   | "schemeA"
   | "schemeB"
   | "schemeC"
@@ -704,6 +709,8 @@ export type MessageKey =
   | "introLine3"
   | "introCity"
   | "introGo"
+  | "ogTitle"
+  | "ogDescription"
 ;
 
 export const messages: Record<Locale, Record<MessageKey, string>> = {
@@ -719,6 +726,11 @@ export const messages: Record<Locale, Record<MessageKey, string>> = {
     borderNotice: "Tudy do New Jersey – příště!",
     dayNight: "Den / noc",
     controlScheme: "Ovládání",
+    boostButton: "Boost",
+    boostHintA: "Táhni palec nahoru = rychleji",
+    boostHintB: "Drž Boost = rychleji",
+    boostHintC: "Drž Boost nad brzdou = rychleji",
+    boostHintKeys: "Šipka nahoru / W = rychleji",
     schemeA: "A · tah palcem",
     schemeB: "B · poloviny obrazovky",
     schemeC: "C · volant + pedál",
@@ -1408,6 +1420,8 @@ export const messages: Record<Locale, Record<MessageKey, string>> = {
     introLine3: "Telefon vpravo nahoře: feed s minihrami, mapa a cesty do jiných měst.",
     introCity: "Kde chceš jezdit?",
     introGo: "Jedeme",
+    ogTitle: "Metropole (GTT) – volná jízda po skutečných metropolích",
+    ogDescription: "New York, Praha a Tokio v prohlížeči. Minihry z feedu, žádné násilí.",
   },
   "en": {
     appTitle: "Metropole",
@@ -1421,6 +1435,11 @@ export const messages: Record<Locale, Record<MessageKey, string>> = {
     borderNotice: "This way to New Jersey – next time!",
     dayNight: "Day / night",
     controlScheme: "Controls",
+    boostButton: "Boost",
+    boostHintA: "Drag your thumb up = faster",
+    boostHintB: "Hold Boost = faster",
+    boostHintC: "Hold Boost above the brake = faster",
+    boostHintKeys: "Arrow up / W = faster",
     schemeA: "A · thumb drag",
     schemeB: "B · screen halves",
     schemeC: "C · wheel + pedal",
@@ -2110,6 +2129,8 @@ export const messages: Record<Locale, Record<MessageKey, string>> = {
     introLine3: "The phone at the top right: a feed of minigames, the map and trips to other cities.",
     introCity: "Where do you want to drive?",
     introGo: "Let's go",
+    ogTitle: "Metropole (GTT) – free driving through real cities",
+    ogDescription: "New York, Prague and Tokyo in your browser. Minigames from a feed, no violence.",
   },
 };
 

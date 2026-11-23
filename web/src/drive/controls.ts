@@ -115,10 +115,14 @@ export class SchemeA implements ControlScheme {
   }
 }
 
-/** B: hold the left or right half to steer; both halves brake (and reverse). */
+/**
+ * B: hold the left or right half to steer; both halves brake (and reverse). v2: a finger that
+ * starts on the Boost button bottom centre boosts until lifted and steers nothing.
+ */
 export class SchemeB implements ControlScheme {
   readonly id = 'b' as const;
   private readonly right = new Map<number, boolean>();
+  private readonly boost = new Set<number>();
 
   get leftHeld(): boolean {
     for (const v of this.right.values()) if (!v) return true;
@@ -128,24 +132,38 @@ export class SchemeB implements ControlScheme {
     for (const v of this.right.values()) if (v) return true;
     return false;
   }
+  get boostHeld(): boolean {
+    return this.boost.size > 0;
+  }
 
-  down(pointer: number, p: ScreenPt, w: number): void {
-    this.right.set(pointer, p.x > w / 2);
+  // Layout in screen-width units (presentation, specs/controls.md v2).
+  static boostButton(w: number, h: number): ScreenRect {
+    return { left: w * 0.38, top: h - w * 0.28, width: w * 0.24, height: w * 0.2 };
+  }
+
+  down(pointer: number, p: ScreenPt, w: number, h: number): void {
+    if (inRect(SchemeB.boostButton(w, h), p, 8)) this.boost.add(pointer);
+    else this.right.set(pointer, p.x > w / 2);
   }
   move(pointer: number, p: ScreenPt, w: number): void {
     if (this.right.has(pointer)) this.right.set(pointer, p.x > w / 2);
   }
   up(pointer: number): void {
     this.right.delete(pointer);
+    this.boost.delete(pointer);
   }
   update(out: ControlInput): void {
     if (this.rightHeld && this.leftHeld) out.brake = 1;
     else if (this.rightHeld) out.steer = 1;
     else if (this.leftHeld) out.steer = -1;
+    if (this.boost.size > 0) out.boost = true;
   }
 }
 
-/** C: a virtual steering wheel bottom centre, brake pedal bottom right, handbrake bottom left. */
+/**
+ * C: a virtual steering wheel bottom centre, brake pedal bottom right, handbrake bottom left;
+ * v2: a Boost button above the brake pedal.
+ */
 export class SchemeC implements ControlScheme {
   readonly id = 'c' as const;
   private wheel: number | null = null;
@@ -154,6 +172,7 @@ export class SchemeC implements ControlScheme {
   wheelAngle = 0;
   private readonly brake = new Set<number>();
   private readonly hand = new Set<number>();
+  private readonly boost = new Set<number>();
 
   constructor(readonly t: TuningControls) {}
 
@@ -162,6 +181,9 @@ export class SchemeC implements ControlScheme {
   }
   get handHeld(): boolean {
     return this.hand.size > 0;
+  }
+  get boostHeld(): boolean {
+    return this.boost.size > 0;
   }
 
   // Layout in screen-width units (presentation, specs/controls.md).
@@ -177,6 +199,9 @@ export class SchemeC implements ControlScheme {
   static handButton(w: number, h: number): ScreenRect {
     return { left: w * 0.03, top: h - w * 0.3, width: w * 0.17, height: w * 0.17 };
   }
+  static boostButton(w: number, h: number): ScreenRect {
+    return { left: w * 0.8, top: h - w * 0.64, width: w * 0.17, height: w * 0.17 };
+  }
 
   private angle(p: ScreenPt, w: number, h: number): number {
     const c = SchemeC.wheelCentre(w, h);
@@ -186,6 +211,7 @@ export class SchemeC implements ControlScheme {
   down(pointer: number, p: ScreenPt, w: number, h: number): void {
     const c = SchemeC.wheelCentre(w, h);
     if (inRect(SchemeC.pedal(w, h), p, 8)) this.brake.add(pointer);
+    else if (inRect(SchemeC.boostButton(w, h), p, 8)) this.boost.add(pointer);
     else if (inRect(SchemeC.handButton(w, h), p, 8)) this.hand.add(pointer);
     else if (this.wheel === null && Math.hypot(p.x - c.x, p.y - c.y) < SchemeC.wheelRadius(w) * 1.6) {
       this.wheel = pointer;
@@ -208,12 +234,14 @@ export class SchemeC implements ControlScheme {
     }
     this.brake.delete(pointer);
     this.hand.delete(pointer);
+    this.boost.delete(pointer);
   }
 
   update(out: ControlInput): void {
     out.steer = this.wheelAngle / this.t.cMaxWheelRad;
     if (this.brake.size > 0) out.brake = 1;
     if (this.hand.size > 0) out.handbrake = true;
+    if (this.boost.size > 0) out.boost = true;
   }
 }
 

@@ -12,6 +12,11 @@
   "borderNotice": "Tudy do New Jersey – příště!",
   "dayNight": "Den / noc",
   "controlScheme": "Ovládání",
+  "boostButton": "Boost",
+  "boostHintA": "Táhni palec nahoru = rychleji",
+  "boostHintB": "Drž Boost = rychleji",
+  "boostHintC": "Drž Boost nad brzdou = rychleji",
+  "boostHintKeys": "Šipka nahoru / W = rychleji",
   "schemeA": "A · tah palcem",
   "schemeB": "B · poloviny obrazovky",
   "schemeC": "C · volant + pedál",
@@ -700,5 +705,7 @@
   "introLine2": "Táhni dolů – brzdíš, nahoru – přidáš. Druhý prst je ruční brzda.",
   "introLine3": "Telefon vpravo nahoře: feed s minihrami, mapa a cesty do jiných měst.",
   "introCity": "Kde chceš jezdit?",
-  "introGo": "Jedeme"
+  "introGo": "Jedeme",
+  "ogTitle": "Metropole (GTT) – volná jízda po skutečných metropolích",
+  "ogDescription": "New York, Praha a Tokio v prohlížeči. Minihry z feedu, žádné násilí."
 }

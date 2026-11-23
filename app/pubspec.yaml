@@ -130,6 +130,9 @@ flutter:
     - assets/shared/assets/npc/
     - assets/shared/assets/postcards/nyc/
     - assets/shared/assets/postcards/prague/
+    - assets/shared/assets/garage/decals/
+    - assets/shared/assets/garage/wheels/
+    - assets/shared/assets/ui/
     # Car sprites (specs/art.md v2 "Auta"): one line per car with art in assets/cars/.
     - assets/shared/assets/cars/bus_city/
     - assets/shared/assets/cars/coupe_nova/

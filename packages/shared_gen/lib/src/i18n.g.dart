@@ -16,6 +16,11 @@ enum MessageKey {
   borderNotice('borderNotice'),
   dayNight('dayNight'),
   controlScheme('controlScheme'),
+  boostButton('boostButton'),
+  boostHintA('boostHintA'),
+  boostHintB('boostHintB'),
+  boostHintC('boostHintC'),
+  boostHintKeys('boostHintKeys'),
   schemeA('schemeA'),
   schemeB('schemeB'),
   schemeC('schemeC'),
@@ -705,6 +710,8 @@ enum MessageKey {
   introLine3('introLine3'),
   introCity('introCity'),
   introGo('introGo'),
+  ogTitle('ogTitle'),
+  ogDescription('ogDescription'),
   ;
 
   const MessageKey(this.key);
@@ -726,6 +733,11 @@ const Map<String, Map<String, String>> _messages = {
     'borderNotice': 'Tudy do New Jersey – příště!',
     'dayNight': 'Den / noc',
     'controlScheme': 'Ovládání',
+    'boostButton': 'Boost',
+    'boostHintA': 'Táhni palec nahoru = rychleji',
+    'boostHintB': 'Drž Boost = rychleji',
+    'boostHintC': 'Drž Boost nad brzdou = rychleji',
+    'boostHintKeys': 'Šipka nahoru / W = rychleji',
     'schemeA': 'A · tah palcem',
     'schemeB': 'B · poloviny obrazovky',
     'schemeC': 'C · volant + pedál',
@@ -1415,6 +1427,8 @@ const Map<String, Map<String, String>> _messages = {
     'introLine3': 'Telefon vpravo nahoře: feed s minihrami, mapa a cesty do jiných měst.',
     'introCity': 'Kde chceš jezdit?',
     'introGo': 'Jedeme',
+    'ogTitle': 'Metropole (GTT) – volná jízda po skutečných metropolích',
+    'ogDescription': 'New York, Praha a Tokio v prohlížeči. Minihry z feedu, žádné násilí.',
   },
   'en': {
     'appTitle': 'Metropole',
@@ -1428,6 +1442,11 @@ const Map<String, Map<String, String>> _messages = {
     'borderNotice': 'This way to New Jersey – next time!',
     'dayNight': 'Day / night',
     'controlScheme': 'Controls',
+    'boostButton': 'Boost',
+    'boostHintA': 'Drag your thumb up = faster',
+    'boostHintB': 'Hold Boost = faster',
+    'boostHintC': 'Hold Boost above the brake = faster',
+    'boostHintKeys': 'Arrow up / W = faster',
     'schemeA': 'A · thumb drag',
     'schemeB': 'B · screen halves',
     'schemeC': 'C · wheel + pedal',
@@ -2117,6 +2136,8 @@ const Map<String, Map<String, String>> _messages = {
     'introLine3': 'The phone at the top right: a feed of minigames, the map and trips to other cities.',
     'introCity': 'Where do you want to drive?',
     'introGo': 'Let\'s go',
+    'ogTitle': 'Metropole (GTT) – free driving through real cities',
+    'ogDescription': 'New York, Prague and Tokyo in your browser. Minigames from a feed, no violence.',
   },
 };
 
