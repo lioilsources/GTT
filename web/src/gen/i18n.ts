@@ -433,6 +433,56 @@ export type MessageKey =
   | "garageFree"
   | "garageCurrent"
   | "garageBought"
+  | "lm_tokyo_tower_title"
+  | "lm_tokyo_tower_text"
+  | "lm_skytree_title"
+  | "lm_skytree_text"
+  | "lm_kaminarimon_title"
+  | "lm_kaminarimon_text"
+  | "lm_nakamise_title"
+  | "lm_nakamise_text"
+  | "lm_tokyo_station_title"
+  | "lm_tokyo_station_text"
+  | "lm_nijubashi_title"
+  | "lm_nijubashi_text"
+  | "lm_kabukiza_title"
+  | "lm_kabukiza_text"
+  | "lm_tokyo_national_museum_title"
+  | "lm_tokyo_national_museum_text"
+  | "lm_ginza_clock_title"
+  | "lm_ginza_clock_text"
+  | "lm_akihabara_title"
+  | "lm_akihabara_text"
+  | "lm_zojoji_title"
+  | "lm_zojoji_text"
+  | "lm_roppongi_hills_title"
+  | "lm_roppongi_hills_text"
+  | "lm_hamarikyu_title"
+  | "lm_hamarikyu_text"
+  | "lm_tokyo_dome_title"
+  | "lm_tokyo_dome_text"
+  | "lm_nihonbashi_title"
+  | "lm_nihonbashi_text"
+  | "lm_kokugikan_title"
+  | "lm_kokugikan_text"
+  | "lm_tsukiji_outer_title"
+  | "lm_tsukiji_outer_text"
+  | "lm_sumida_river_title"
+  | "lm_sumida_river_text"
+  | "lm_kanda_myojin_title"
+  | "lm_kanda_myojin_text"
+  | "lm_budokan_title"
+  | "lm_budokan_text"
+  | "lm_akasaka_palace_title"
+  | "lm_akasaka_palace_text"
+  | "lm_hie_shrine_title"
+  | "lm_hie_shrine_text"
+  | "lm_kachidoki_bridge_title"
+  | "lm_kachidoki_bridge_text"
+  | "lm_ameyoko_title"
+  | "lm_ameyoko_text"
+  | "lm_national_diet_title"
+  | "lm_national_diet_text"
   | "mg_piskvorky"
   | "mg_ctyri"
   | "mg_mlyn"
@@ -906,6 +956,56 @@ export const messages: Record<Locale, Record<MessageKey, string>> = {
     garageFree: "Zdarma",
     garageCurrent: "Současné",
     garageBought: "Hotovo – sluší mu to",
+    lm_tokyo_tower_title: "Tokyo Tower",
+    lm_tokyo_tower_text: "Červenobílá příhradová věž z roku 1958, vyšší než její pařížský vzor. Dodnes nese antény a v noci svítí oranžově.",
+    lm_skytree_title: "Tokyo Skytree",
+    lm_skytree_text: "Nejvyšší věž Japonska, 634 metrů, číslo připomíná staré jméno kraje. Půdorys začíná trojúhelníkem a nahoře se mění v kruh.",
+    lm_kaminarimon_title: "Kaminarimon (Sensō-ji)",
+    lm_kaminarimon_text: "Hromová brána nejstaršího chrámu v Asakuse, kterou střeží bohové větru a hromu. Obří červená lucerna je nejoblíbenější kulisa pro fotky.",
+    lm_nakamise_title: "Nakamise-dōri",
+    lm_nakamise_text: "Nákupní ulička, která k chrámu Sensódži vede asi tři sta let. Stánky prodávají rýžové krekry, vějíře a sladké fazolové koláčky.",
+    lm_tokyo_station_title: "Tokyo Station",
+    lm_tokyo_station_text: "Nádraží z červených cihel z roku 1914, kupole po válce obnovené a v roce 2012 zrestaurované. Za ním každých pár minut odjíždí rychlovlak.",
+    lm_nijubashi_title: "Nijūbashi",
+    lm_nijubashi_text: "Kamenný most přes palácový příkop, který se ve vodě zrcadlí jako dvojitý. Za ním leží sídlo císaře.",
+    lm_kabukiza_title: "Kabuki-za",
+    lm_kabukiza_text: "Hlavní scéna divadla kabuki se střechou jako u chrámu před moderní věží. Představení tu může trvat skoro celý den.",
+    lm_tokyo_national_museum_title: "Tokyo National Museum",
+    lm_tokyo_national_museum_text: "Nejstarší muzeum Japonska v parku Ueno, plné mečů, svitků a samurajských zbrojí. Hlavní budova má těžkou taškovou střechu na betonovém těle.",
+    lm_ginza_clock_title: "Ginza clock tower",
+    lm_ginza_clock_text: "Zaoblený nárožní dům s hodinami, které nad křižovatkou v Ginze bdí od roku 1932. Jejich zvonkohra odbíjí hodiny nad davy nakupujících.",
+    lm_akihabara_title: "Akihabara Electric Town",
+    lm_akihabara_text: "Kdysi černý trh se součástkami do rádií, dnes bludiště elektroniky, her a obchodů s anime. V neděli je hlavní ulice zavřená pro auta.",
+    lm_zojoji_title: "Zōjō-ji",
+    lm_zojoji_text: "Velký buddhistický chrám pod Tokijskou věží, kde je pohřbeno šest šógunů. Řady malých kamenných soch nosí pletené červené čepičky.",
+    lm_roppongi_hills_title: "Roppongi Hills",
+    lm_roppongi_hills_text: "Město ve městě: kanceláře, byty, muzeum v třiapadesátém patře a u paty obří socha pavouka. Shora je Tokijská věž jako na dlani.",
+    lm_hamarikyu_title: "Hama-rikyū Gardens",
+    lm_hamarikyu_text: "Bývalá zahrada šógunů pro lov kachen s jezírkem z mořské vody, které stoupá a klesá s přílivem. Čajovnu rámují mrakodrapy.",
+    lm_tokyo_dome_title: "Tokyo Dome",
+    lm_tokyo_dome_text: "Baseballový stadion pod nafukovací střechou, kterému místní říkají Velké vejce. Po sezóně ho plní koncerty a zápasy.",
+    lm_nihonbashi_title: "Nihonbashi Bridge",
+    lm_nihonbashi_text: "Most, od kterého se kdysi měřily všechny vzdálenosti v Japonsku. Dnes stojí ve stínu dálnice postavené nad ním v roce 1963.",
+    lm_kokugikan_title: "Ryōgoku Kokugikan",
+    lm_kokugikan_text: "Národní aréna suma, kde se zápasí tři ze šesti turnajů roku. V okolních ulicích potkáte zápasníky v lehkých kimonech.",
+    lm_tsukiji_outer_title: "Tsukiji Outer Market",
+    lm_tsukiji_outer_text: "Rybí aukce se odstěhovaly, ale úzké uličky se stánky zůstaly. Snídaně tu znamená tamagojaki a nejčerstvější suši ve městě.",
+    lm_sumida_river_title: "Sumida Park",
+    lm_sumida_river_text: "Park na nábřeží řeky Sumida v Asakuse s třešněmi podél vody. V létě se nad ním obloha plní ohňostrojem.",
+    lm_kanda_myojin_title: "Kanda Myōjin",
+    lm_kanda_myojin_text: "Svatyně s víc než 1 200 lety historie, natřená rumělkou a zlatem. Lidé z nedaleké Akihabary si sem chodí nechat požehnat svou elektroniku.",
+    lm_budokan_title: "Nippon Budōkan",
+    lm_budokan_text: "Osmiboká hala postavená pro judo na olympiádě 1964, se střechou ve tvaru hory Fudži. Později se z ní stala legendární koncertní scéna.",
+    lm_akasaka_palace_title: "Akasaka Palace",
+    lm_akasaka_palace_text: "Jediný novobarokní palác v Japonsku, postavený pro korunního prince, dnes státní hostinský dům. Spí tu králové a prezidenti na státních návštěvách.",
+    lm_hie_shrine_title: "Hie Shrine",
+    lm_hie_shrine_text: "Svatyně na kopci, ke které vede tunel červených bran torii. Její strážné opice hlídají vládní čtvrť pod ní.",
+    lm_kachidoki_bridge_title: "Kachidoki Bridge",
+    lm_kachidoki_bridge_text: "Ocelový zvedací most z roku 1940, jehož střed se kdysi otvíral pro lodě. Od roku 1970 zůstává zavřený a zvedá se už jen na starých fotkách.",
+    lm_ameyoko_title: "Ameya-Yokochō",
+    lm_ameyoko_text: "Hlučný trh pod železničními kolejemi v Uenu, který vznikl z poválečného černého trhu se sladkostmi. Dnes tu prodávají ryby, koření, tenisky i pochoutky.",
+    lm_national_diet_title: "National Diet Building",
+    lm_national_diet_text: "Žulové sídlo japonského parlamentu, dokončené v roce 1936 po sedmnácti letech stavby. Středová věž končí stupňovitou pyramidou.",
     mg_piskvorky: "Piškvorky",
     mg_ctyri: "Čtyři v řadě",
     mg_mlyn: "Mlýn",
@@ -1377,6 +1477,56 @@ export const messages: Record<Locale, Record<MessageKey, string>> = {
     garageFree: "Free",
     garageCurrent: "Current",
     garageBought: "Done – looking good",
+    lm_tokyo_tower_title: "Tokyo Tower",
+    lm_tokyo_tower_text: "A red and white lattice tower from 1958, taller than its Paris model. It still carries radio antennas and glows orange at night.",
+    lm_skytree_title: "Tokyo Skytree",
+    lm_skytree_text: "The tallest tower in Japan at 634 metres, a number that reads like the old name of the region. Its base is a triangle that turns into a circle on the way up.",
+    lm_kaminarimon_title: "Kaminarimon (Sensō-ji)",
+    lm_kaminarimon_text: "The Thunder Gate of Asakusa's oldest temple, guarded by the gods of wind and thunder. Its giant red lantern is the city's favourite photo backdrop.",
+    lm_nakamise_title: "Nakamise-dōri",
+    lm_nakamise_text: "A shopping lane that has led to Sensō-ji for about three hundred years. Stalls sell rice crackers, fans and sweet bean cakes.",
+    lm_tokyo_station_title: "Tokyo Station",
+    lm_tokyo_station_text: "A red brick station from 1914 whose domes were rebuilt after the war and restored in 2012. Behind it the bullet trains leave every few minutes.",
+    lm_nijubashi_title: "Nijūbashi",
+    lm_nijubashi_text: "A stone bridge over the palace moat, mirrored in the water like a double bridge. Beyond it lies the residence of the emperor.",
+    lm_kabukiza_title: "Kabuki-za",
+    lm_kabukiza_text: "The main stage of kabuki theatre, with a temple-like roof in front of a modern tower. Plays here can last most of a day.",
+    lm_tokyo_national_museum_title: "Tokyo National Museum",
+    lm_tokyo_national_museum_text: "The oldest museum in Japan, in Ueno Park, full of swords, scrolls and samurai armour. The main hall wears a heavy tiled roof on a concrete body.",
+    lm_ginza_clock_title: "Ginza clock tower",
+    lm_ginza_clock_text: "A curved corner building with a clock that has watched the Ginza crossing since 1932. Its chimes mark the hour above the shopping crowds.",
+    lm_akihabara_title: "Akihabara Electric Town",
+    lm_akihabara_text: "Once a black market for radio parts, now a maze of electronics, games and anime shops. On Sundays the main street closes to cars.",
+    lm_zojoji_title: "Zōjō-ji",
+    lm_zojoji_text: "A great Buddhist temple at the foot of Tokyo Tower, where six shoguns are buried. Rows of small stone statues wear knitted red caps.",
+    lm_roppongi_hills_title: "Roppongi Hills",
+    lm_roppongi_hills_text: "A city within the city: offices, homes, a museum on the 53rd floor and a giant spider sculpture at its feet. From the top you see Tokyo Tower up close.",
+    lm_hamarikyu_title: "Hama-rikyū Gardens",
+    lm_hamarikyu_text: "A former shogun's duck-hunting garden with a seawater pond that rises and falls with the tide. Skyscrapers frame its teahouse.",
+    lm_tokyo_dome_title: "Tokyo Dome",
+    lm_tokyo_dome_text: "A baseball stadium under an air-supported roof that locals call the Big Egg. Concerts and fights fill it when the season ends.",
+    lm_nihonbashi_title: "Nihonbashi Bridge",
+    lm_nihonbashi_text: "The bridge from which all distances in Japan were once measured. Today it sits in the shadow of an expressway built over it in 1963.",
+    lm_kokugikan_title: "Ryōgoku Kokugikan",
+    lm_kokugikan_text: "The national sumo arena, where three of the six yearly tournaments are fought. Wrestlers in light robes walk the streets around it.",
+    lm_tsukiji_outer_title: "Tsukiji Outer Market",
+    lm_tsukiji_outer_text: "The fish auctions moved away, but the narrow lanes of stalls stayed. Breakfast here means tamagoyaki and the freshest sushi in town.",
+    lm_sumida_river_title: "Sumida Park",
+    lm_sumida_river_text: "A riverside park in Asakusa with cherry trees along the Sumida. In summer the sky above it fills with fireworks.",
+    lm_kanda_myojin_title: "Kanda Myōjin",
+    lm_kanda_myojin_text: "A shrine with more than 1,200 years of history, painted vermilion and gold. The tech crowd of nearby Akihabara comes here to bless their gadgets.",
+    lm_budokan_title: "Nippon Budōkan",
+    lm_budokan_text: "An octagonal hall built for judo at the 1964 Olympics, its roof shaped like Mount Fuji. Later it became a legendary concert stage.",
+    lm_akasaka_palace_title: "Akasaka Palace",
+    lm_akasaka_palace_text: "Japan's only neo-baroque palace, built for a crown prince and now the state guest house. Kings and presidents sleep here on state visits.",
+    lm_hie_shrine_title: "Hie Shrine",
+    lm_hie_shrine_text: "A hilltop shrine reached through a tunnel of red torii gates. Its guardian monkeys watch over the government district below.",
+    lm_kachidoki_bridge_title: "Kachidoki Bridge",
+    lm_kachidoki_bridge_text: "A steel bascule bridge from 1940 whose middle once opened for ships. It has stayed shut since 1970 and now only lifts in old photos.",
+    lm_ameyoko_title: "Ameya-Yokochō",
+    lm_ameyoko_text: "A loud market under the railway tracks in Ueno, born from postwar black-market sweets. Today it sells fish, spices, sneakers and snacks.",
+    lm_national_diet_title: "National Diet Building",
+    lm_national_diet_text: "The granite home of Japan's parliament, finished in 1936 after seventeen years of work. Its central tower ends in a stepped pyramid.",
     mg_piskvorky: "Five in a row",
     mg_ctyri: "Four in a row",
     mg_mlyn: "Mill",

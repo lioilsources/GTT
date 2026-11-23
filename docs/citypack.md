@@ -63,6 +63,19 @@ náměstí, náplavky), Manhattan 253 a 475 (pěší náměstí jako Times Squar
 Tramvaje (M3-S5): Praha 3 247 hran kolejí, 174 generovaných zastávek, balíček 1,7 MB; New York
 prázdný `trams.pb`.
 
+## Tokio v číslech (M4)
+
+Chiyoda, Chūō, sever Minata (Roppongi, Shiba) a laloky přes Kandu, Akihabaru a Ueno do Asakusy,
+Ryōgoku a k Skytree (`plans/M4_TOKIO.md` T1, ~50 km²): 31 728 uzlů, 40 625 hran (14 424
+ponechaných, z toho 381 spojek kvůli jednosměrkám), 84 927 hmot budov (hustá zástavba, skoro
+3× Manhattan), 789 chunků, 43 spotů (7 se minihrou, 2 budky, 11 vstupů do metra, 10 fotomíst,
+8 obchodů a barů), balíček 3,7 MB. Levostranný provoz (`drive_side: left`). Build s fetch ~13 min.
+
+Jména silnic: Overture má v Tokiu `names.primary` japonsky. `city.yaml` `name_langs: [ja-Latn,
+en]` bere první `names.common` v tomto pořadí a `names.primary` jen v latince, japonská jména bez
+přepisu zahodí (klienti nemají písmo CJK). Jména jsou po segmentech nejednotná (`Harumi-dōri`,
+`Harumi Street`), HUD je ukáže, jak jsou.
+
 - Spoty mají pole `minigame` (id z katalogu): na tom místě se minihra hraje (9.5).
 - `validate` bere při kontrole „silnice v budově“ v úvahu dvory (díry v obrysu): příjezd do dvora
   Dakoty na 72nd St není kolize.

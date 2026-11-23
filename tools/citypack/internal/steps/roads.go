@@ -208,12 +208,12 @@ func (e *Env) loadSegments() ([]rawSegment, error) {
 // flags is the flag column (road_flags for roads, rail_flags for rail), read as road_flags.
 func (e *Env) exportSegments(label, tmp, flags, where string) ([]rawSegment, error) {
 	sql := fmt.Sprintf(`COPY (
-  SELECT id, class, subclass, names.primary AS name, connectors, %s AS road_flags, level_rules, access_restrictions,
+  SELECT id, class, subclass, %s AS name, connectors, %s AS road_flags, level_rules, access_restrictions,
          ST_AsGeoJSON(%s)::JSON AS geom
   FROM read_parquet(%s)
   WHERE %s
     AND ST_Intersects(geometry, ST_Buffer(ST_GeomFromText(%s), 0.003))
-) TO %s (FORMAT json);`, flags, e.projSQL("geometry"), duck.Quote(e.Raw("segment")), where, duck.Quote(e.C.City.AreaWKT()), duck.Quote(tmp))
+) TO %s (FORMAT json);`, e.C.City.NameSQL(), flags, e.projSQL("geometry"), duck.Quote(e.Raw("segment")), where, duck.Quote(e.C.City.AreaWKT()), duck.Quote(tmp))
 	if _, err := duck.Exec(label, sql); err != nil {
 		return nil, err
 	}

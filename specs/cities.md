@@ -1,11 +1,11 @@
 # Města a přepínání mezi nimi
 
-**version: 1** · P2 (UI, kdy se přepíná, poslední město) · plán: METROPOLE_PLAN 15 (M3 „přepínání
-měst“), `plans/M3_PRAHA.md` bod 3 · parita F-028
+**version: 2** · P2 (UI, kdy se přepíná, poslední město) · plán: METROPOLE_PLAN 15 (M3 „přepínání
+měst“), `plans/M3_PRAHA.md` bod 3, `plans/M4_TOKIO.md` · parita F-028, levostranný provoz F-046
 
 ## Účel
 
-Od M3 má hra víc měst (New York, Praha). Hráč se mezi nimi přesouvá z telefonu; každé město má
+Od M3 má hra víc měst (New York, Praha, od M4 Tokio). Hráč se mezi nimi přesouvá z telefonu; každé město má
 vlastní postup (`specs/save.md`: jedno uložení na `cityId`) a hra si pamatuje, kde hráč skončil.
 
 ## Seznam měst
@@ -49,6 +49,20 @@ Poslední město se zapíše při každém startu města (po načtení balíčku
 | dialogy NPC | `city` v `DialogueSession` | skity podle města (`specs/dialogue.md`) |
 | benchmark | `content/bench/<cityId>.json` | město bez souboru má tlačítko benchmarku vypnuté |
 | minihry podle měst | `content/minigames/catalog.yaml` `cities` | ve Feedu a na spotech jen hry pro město |
+
+## Levostranný provoz (v2)
+
+Město s `drive_side: left` (manifest `driveSide`, Tokio) jezdí vlevo. Všechno, co v pravidlech
+stojí „vpravo od směru jízdy“, se pro něj zrcadlí:
+- Provoz: pruhy a návěstidla (`specs/traffic.md`, už platí od v1 pravidel provozu).
+- Zaparkovaná auta (`specs/cars.md`): strana úseku se nemění (losuje se obě), ale natočení je
+  zrcadlené – vlevo od směru úseku směr úseku, vpravo +π (auto stojí po směru svého pruhu).
+- Taxi směna (`specs/minigames/taxi.md`): zákazník čeká na chodníku **vlevo** od směru hrany.
+- Hlídky, zátarasy a tramvaje používají pruhy provozu, tím jsou zrcadlené samy.
+- Ovládání, HUD a mapa se nemění (volant zůstává, jen se jezdí vlevo).
+
+Klient zrcadlí podle `manifest.driveSide`, nikde podle id města. Test v obou klientech: na
+syntetickém grafu s `driveSide = left` stojí zaparkované auto a zákazník taxi na levé straně.
 
 ## Texty
 

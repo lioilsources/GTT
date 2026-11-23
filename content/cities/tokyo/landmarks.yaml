@@ -1,0 +1,28 @@
+# Hand-curated Tokyo landmarks (same rules as nyc/landmarks.yaml). Coordinates approximate; Ol1n checks (M4).
+# R10: commercial buildings by place name (Roppongi Hills, Ginza clock tower), no company names.
+landmarks:
+  - {id: tokyo_tower, name: Tokyo Tower, lat: 35.65858, lon: 139.74543, height_m: 333, hero: true}
+  - {id: skytree, name: Tokyo Skytree, lat: 35.71006, lon: 139.81070, height_m: 634, hero: true}
+  - {id: kaminarimon, name: Kaminarimon (Sensō-ji), lat: 35.71110, lon: 139.79630, kind: plaza, hero: true}
+  - {id: nakamise, name: Nakamise-dōri, lat: 35.71290, lon: 139.79650, kind: plaza, hero: true}
+  - {id: tokyo_station, name: Tokyo Station, lat: 35.68120, lon: 139.76710, height_m: 46, hero: true}
+  - {id: nijubashi, name: Nijūbashi, lat: 35.68030, lon: 139.75280, kind: plaza, hero: true}
+  - {id: kabukiza, name: Kabuki-za, lat: 35.66950, lon: 139.76770, height_m: 30, hero: true}
+  - {id: tokyo_national_museum, name: Tokyo National Museum, lat: 35.71880, lon: 139.77650, height_m: 25, hero: true}
+  - {id: ginza_clock, name: Ginza clock tower, lat: 35.67190, lon: 139.76510, height_m: 39, hero: true}
+  - {id: akihabara, name: Akihabara Electric Town, lat: 35.69840, lon: 139.77310, kind: plaza, hero: true}
+  - {id: zojoji, name: Zōjō-ji, lat: 35.65750, lon: 139.74800, height_m: 21, hero: true}
+  - {id: roppongi_hills, name: Roppongi Hills, lat: 35.66040, lon: 139.72920, height_m: 238, hero: true}
+  - {id: hamarikyu, name: Hama-rikyū Gardens, lat: 35.65990, lon: 139.76330, kind: park, hero: true}
+  - {id: tokyo_dome, name: Tokyo Dome, lat: 35.70560, lon: 139.75190, height_m: 56, hero: true}
+  - {id: nihonbashi, name: Nihonbashi Bridge, lat: 35.68410, lon: 139.77460, kind: plaza, hero: true}
+  - {id: kokugikan, name: Ryōgoku Kokugikan, lat: 35.69690, lon: 139.79340, height_m: 40, hero: true}
+  - {id: tsukiji_outer, name: Tsukiji Outer Market, lat: 35.66540, lon: 139.77070, kind: plaza, hero: true}
+  - {id: sumida_river, name: Sumida Park, lat: 35.71200, lon: 139.80100, kind: park, hero: true}
+  - {id: kanda_myojin, name: Kanda Myōjin, lat: 35.70200, lon: 139.76790, height_m: 15, hero: true}
+  - {id: budokan, name: Nippon Budōkan, lat: 35.69330, lon: 139.74990, height_m: 42, hero: true}
+  - {id: akasaka_palace, name: Akasaka Palace, lat: 35.68030, lon: 139.72820, height_m: 25, hero: true}
+  - {id: hie_shrine, name: Hie Shrine, lat: 35.67460, lon: 139.73950, height_m: 12, hero: true}
+  - {id: kachidoki_bridge, name: Kachidoki Bridge, lat: 35.66270, lon: 139.77450, kind: plaza, hero: true}
+  - {id: ameyoko, name: Ameya-Yokochō, lat: 35.71000, lon: 139.77450, kind: plaza, hero: true}
+  - {id: national_diet, name: National Diet Building, lat: 35.67590, lon: 139.74480, height_m: 65, hero: true}

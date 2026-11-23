@@ -26,6 +26,7 @@ type City struct {
 	HeightSources   []string     `yaml:"height_sources"`
 	RoadKeepClasses []string     `yaml:"road_keep_classes"`
 	RoadKeepNames   []string     `yaml:"road_keep_names"`
+	NameLangs       []string     `yaml:"name_langs"` // e.g. [en, ja-Latn]: Overture names.common first, Latin-script primary last
 	Style           string       `yaml:"style"`
 	Start           Start        `yaml:"start"`
 	DefaultHeightM  float64      `yaml:"default_height_m"`
@@ -251,3 +252,19 @@ func (c *City) ProjString() string {
 	return fmt.Sprintf("+proj=eqc +lat_ts=%.7f +lat_0=%.7f +lon_0=%.7f +R=6371008.8 +units=m +no_defs",
 		c.Origin.Lat, c.Origin.Lat, c.Origin.Lon)
 }
+
+// NameSQL is the DuckDB expression for a feature's display name. Without name_langs it is
+// names.primary; with them the first non-null names.common[lang] wins and names.primary is used
+// only when it is in Latin script (clients' fonts carry no CJK glyphs).
+func (c *City) NameSQL() string {
+	if len(c.NameLangs) == 0 {
+		return "names.primary"
+	}
+	expr := "coalesce("
+	for _, l := range c.NameLangs {
+		expr += fmt.Sprintf("names.common['%s'], ", l)
+	}
+	expr += `CASE WHEN regexp_full_match(names.primary, '[\x{20}-\x{7E}\x{A0}-\x{24F}\x{1E00}-\x{1EFF}]*') THEN names.primary END)`
+	return expr
+}
+
