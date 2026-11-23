@@ -222,7 +222,7 @@ items:
   - {id: L-S1, milestone: L, name: "T3 ladění kopců Prahy: trasy Petřín, Letná, Hradčany, docs/prague-hills.md", size: M, status: todo}
   - {id: L-S2, milestone: L, name: "README podle skutečnosti, status blok z metro progress, --check v CI", size: S, status: wip, started: 2026-11-23T10:39, evidence: "README: odkaz na Pages, parametry URL, R7/R10, Jak přidat město, licence; blok <!-- metro:status --> z metro progress, metro progress --check v shared.yml; obrázek čeká na og.png z L-S9"}
   - {id: L-S3, milestone: L, name: "počítadla skitů a miniher v metro progress + test", size: S, status: hotovo, started: 2026-11-23T10:36, done: 2026-11-23T10:45, evidence: "minihry z content/minigames/catalog.yaml (33), skity z content/npc/skits (50); TestCountContentMinigamesAndSkits v tools/metro/internal/progress"}
-  - {id: L-S4, milestone: L, name: "tracker dorovnat: důkazy rozdělaných položek, progress.log, padající test", size: S, status: todo}
+  - {id: L-S4, milestone: L, name: "tracker dorovnat: důkazy rozdělaných položek, progress.log, padající test", size: S, status: hotovo, started: 2026-11-23T10:43, done: 2026-11-23T11:08, evidence: "(a) důkazy M2-S9D/E a M5-S6…S8 doplnila session MacBook; (b) plans/progress.log doplněn z gitu do 10:41; (c) metro progress --tests počítá všechny balíčky s test/ a vypisuje padající testy: 1787 / 1787. Lokální pády app/test byly zastaralé AppLocalizations (flutter gen-l10n), ne chyba kódu"}
   - {id: L-S5, milestone: L, name: "LICENSE, NOTICE se zdroji dat, pole license, audit R10", size: S, status: wip, started: 2026-11-23T10:46, evidence: "LICENSE (MIT, rozsah), NOTICE (licence podle cest, OSM, Overture, AWS Terrain Tiles, Street Tree Census, assets/LICENSES.md); pole license ve web/package.json a pubspec.yaml v klientských PR"}
   - {id: L-S6, milestone: L, name: "kouřový test mobilního webu v CI (Pixel 8a, iPhone 12 mini)", size: M, status: todo}
   - {id: L-S7, milestone: L, name: "první spuštění: postup stahování v %, karta ovládání a výběr města", size: S, status: todo}
@@ -238,7 +238,7 @@ items:
 
 # Content counters with targets. tests and fps are measured; the rest metro progress counts itself.
 counters:
-  tests: {total: 1039, passing: 1038, measured: 2026-11-23T04:23}   # metro progress --tests
+  tests: {total: 1787, passing: 1787, measured: 2026-11-23T10:59}   # metro progress --tests
   fps:                                            # filled from phone measurements (D1-2, M0-A1)
     pixel_8a: {app: null, web: null, measured: null}
     iphone_12_mini: {app: null, web: null, measured: null}
