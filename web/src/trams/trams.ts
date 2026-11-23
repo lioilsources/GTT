@@ -5,7 +5,7 @@ import { CAT_CAR, CAT_PARKED, CAT_TRAFFIC, CAT_TRAM, type Car } from '../drive/c
 import { Prng } from '../rules/prng';
 import { obbOverlap, type Traffic } from '../traffic/traffic';
 import type { TrackEdge, TrackGraph, TrackStop } from '../world/model';
-import { articulate, chooseNextTrack, nextStopAhead, stopTravelS, Trail, type CarPose } from './trackRules';
+import { articulate, chooseNextTrack, feasibleNext, nextStopAhead, stopTravelS, straightestPrev, Trail, type CarPose } from './trackRules';
 
 /** One articulated car of a tram: a kinematic box (specs/trams.md step 4). Read-only for others. */
 export class TramCar {
@@ -18,8 +18,8 @@ export class TramCar {
 
   constructor(
     readonly tram: Tram,
-    /** 0 = the leading car. */
-    readonly index: number,
+    /** 0 = the leading car (changes when the tram changes ends at a terminus). */
+    public index: number,
     readonly halfLength: number,
     readonly halfWidth: number,
     readonly body: Body,
@@ -39,6 +39,8 @@ export class Tram {
   hitTimer = 0;
   readonly cars: TramCar[] = [];
   readonly trail: Trail;
+  /** Ends changed at termini so far. */
+  reversals = 0;
 
   /** @internal path state */
   edge: TrackEdge;
@@ -52,6 +54,12 @@ export class Tram {
   /** Fixed step at which the tram entered its current edge (single-track right of way). */
   enteredAt = 0;
   touching = false;
+  /** Edges fully behind the head (specs/trams.md v2 "Historie"), newest first; a ring. */
+  private readonly histE: Int32Array;
+  private readonly histD: Int8Array;
+  private histStart = 0;
+  /** Number of edges in the history. */
+  histCount = 0;
 
   constructor(
     readonly id: number,
@@ -65,6 +73,38 @@ export class Tram {
     this.dir = dir;
     this.s = s;
     this.trail = new Trail(trailPoints);
+    this.histE = new Int32Array(Math.max(1, trailPoints));
+    this.histD = new Int8Array(Math.max(1, trailPoints));
+  }
+
+  /** @internal Edge i of the history (0 = the newest) and its travel direction. */
+  histEdge(i: number): number {
+    return this.histE[(this.histStart + i) % this.histE.length]!;
+  }
+  histDir(i: number): number {
+    return this.histD[(this.histStart + i) % this.histD.length]!;
+  }
+  /** @internal Adds the edge just left as the newest; the oldest drops out of a full ring. */
+  histPush(edge: number, dir: number): void {
+    const c = this.histE.length;
+    this.histStart = (this.histStart + c - 1) % c;
+    this.histE[this.histStart] = edge;
+    this.histD[this.histStart] = dir;
+    if (this.histCount < c) this.histCount++;
+  }
+  /** @internal Adds an edge behind the oldest (seeding); false when the ring is full. */
+  histPushOldest(edge: number, dir: number): boolean {
+    const c = this.histE.length;
+    if (this.histCount >= c) return false;
+    this.histE[(this.histStart + this.histCount) % c] = edge;
+    this.histD[(this.histStart + this.histCount) % c] = dir;
+    this.histCount++;
+    return true;
+  }
+  /** @internal */
+  histClear(): void {
+    this.histStart = 0;
+    this.histCount = 0;
   }
 }
 
@@ -112,6 +152,14 @@ export class Trams {
   private readonly pose: CarPose = { x: 0, y: 0, heading: 0 };
   private readonly halfLength: number;
   private readonly halfWidth: number;
+  /** cos of trams.max_switch_deg: the sharpest turn that is still a track connection. */
+  private readonly cosMin: number;
+  /** Length of a whole tram, nose to tail (cars and the gaps between them). */
+  readonly tramLength: number;
+  /** Per edge and travel direction (2·edge + (dir > 0 ? 1 : 0)): the end node is a terminus. */
+  private readonly deadEnd: Uint8Array;
+  private readonly revPts: number[] = [];
+  private readonly revHist: number[] = [];
   private spawnTimer = 0;
   private fresh = true;
   private nextId = 1;
@@ -129,6 +177,19 @@ export class Trams {
     this.rng = new Prng(tuning.trams.seed);
     this.halfLength = tuning.trams.carLengthM / 2;
     this.halfWidth = tuning.trams.carWidthM / 2;
+    const t = tuning.trams;
+    this.cosMin = Math.cos((t.maxSwitchDeg * Math.PI) / 180);
+    this.tramLength = t.carsPerTram * t.carLengthM + (t.carsPerTram - 1) * t.jointGapM;
+    this.deadEnd = new Uint8Array(graph.edges.length * 2);
+    for (const e of graph.edges) {
+      if (e.from === e.to) continue;
+      for (const node of [e.from, e.to]) {
+        if (graph.border[node]) continue;
+        if (feasibleNext(graph, node, e.index, this.cosMin, t.turnProbeM, this.scratch).length === 0) {
+          this.deadEnd[2 * e.index + (node === e.to ? 1 : 0)] = 1;
+        }
+      }
+    }
     this.boxes = new Float32Array(graph.edges.length * 4);
     for (const e of graph.edges) {
       let x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity;
@@ -304,6 +365,7 @@ export class Trams {
       const i = travelIdx(e, tr.dir, j);
       tr.trail.pushOldest(e.pts[2 * i]!, e.pts[2 * i + 1]!);
     }
+    this.seedBehind(tr);
     this.poseCars(tr);
     for (const c of tr.cars) {
       this.pos.x = c.x;
@@ -312,6 +374,118 @@ export class Trams {
     }
     this.trams.push(tr);
     return tr;
+  }
+
+  /**
+   * The path behind a new tram (specs/trams.md v2 "Vznik"): from the start of its edge back along
+   * the straightest connected edges until it covers the tram's length, a border node or a dead end.
+   */
+  private seedBehind(tr: Tram): void {
+    const g = this.graph, probeM = this.tuning.trams.turnProbeM;
+    let to = tr.edge.index;
+    let node = tr.dir > 0 ? tr.edge.from : tr.edge.to;
+    let covered = tr.s;
+    while (covered < this.tramLength) {
+      const p = straightestPrev(g, node, to, this.cosMin, probeM);
+      if (p < 0) return;
+      const pe = g.edges[p]!;
+      const pdir = pe.to === node ? 1 : -1;
+      if (!tr.histPushOldest(p, pdir)) return;
+      // Its points from the node backwards (the node itself is already in the trail).
+      for (let j = pe.pointCount - 2; j >= 0; j--) {
+        const i = travelIdx(pe, pdir, j);
+        tr.trail.pushOldest(pe.pts[2 * i]!, pe.pts[2 * i + 1]!);
+      }
+      covered += pe.length;
+      node = pdir > 0 ? pe.from : pe.to;
+      to = p;
+    }
+  }
+
+  /**
+   * Terminus (specs/trams.md v2 "Změna čela"): the tram stands with its nose on the end node and
+   * changes ends. The cars stay where they are; the rear joint of the last car becomes the nose,
+   * the car order reverses and each car's heading turns by π (its axis does not move). False when
+   * the tail is not on the known path (the tram disappears).
+   */
+  private reverse(tr: Tram): boolean {
+    const g = this.graph;
+    // The tail: tramLength back from the nose (the end of the current edge) along the path.
+    let rem = this.tramLength;
+    let k = -1; // −1 = the current edge, else a history index
+    let te = tr.edge, td = tr.dir;
+    while (rem > te.length) {
+      rem -= te.length;
+      k++;
+      if (k >= tr.histCount) return false;
+      te = g.edges[tr.histEdge(k)]!;
+      td = tr.histDir(k);
+    }
+    // Points from the tail to the old nose in old travel order: te beyond the tail, then
+    // history k−1 … 0, then the current edge.
+    const pts = this.revPts;
+    pts.length = 0;
+    const tailS = te.length - rem;
+    const addEdge = (e: TrackEdge, dir: number, after: number): void => {
+      for (let j = 0; j < e.pointCount; j++) {
+        if (travelCum(e, dir, j) <= after) continue;
+        const i = travelIdx(e, dir, j);
+        pts.push(e.pts[2 * i]!, e.pts[2 * i + 1]!);
+      }
+    };
+    addEdge(te, td, tailS);
+    const hist = this.revHist;
+    hist.length = 0;
+    for (let h = k - 1; h >= -1; h--) {
+      const e = h >= 0 ? g.edges[tr.histEdge(h)]! : tr.edge;
+      const dir = h >= 0 ? tr.histDir(h) : tr.dir;
+      addEdge(e, dir, 0);
+      hist.push(e.index, -dir);
+    }
+    // New history, newest first (nearest the new nose): history k−1 … 0, the current edge, reversed.
+    tr.histClear();
+    for (let i = 0; i < hist.length; i += 2) tr.histPushOldest(hist[i]!, hist[i + 1]!);
+    // The tail edge driven back: s = rem along the new direction.
+    tr.edge = te;
+    tr.dir = -td;
+    tr.s = rem;
+    tr.seg = 0;
+    while (tr.seg < te.pointCount - 2 && tr.s > travelCum(te, tr.dir, tr.seg + 1)) tr.seg++;
+    this.head(tr);
+    // Trail: the nose at the tail point, fixed vertices from the tail to the old nose (the oldest).
+    const trail = tr.trail;
+    const n = pts.length >> 1;
+    const ox = pts[2 * n - 2]!, oy = pts[2 * n - 1]!;
+    let tdx = -Math.cos(tr.cars[0]!.heading), tdy = -Math.sin(tr.cars[0]!.heading);
+    for (let i = n - 2; i >= -1; i--) {
+      // The newer neighbour of the oldest point gives the new travel direction there.
+      const qx = i >= 0 ? pts[2 * i]! : trail.headX, qy = i >= 0 ? pts[2 * i + 1]! : trail.headY;
+      const l = Math.sqrt((qx - ox) * (qx - ox) + (qy - oy) * (qy - oy));
+      if (l > 1e-9) {
+        tdx = (qx - ox) / l;
+        tdy = (qy - oy) / l;
+        break;
+      }
+    }
+    trail.reset(trail.headX, trail.headY, tdx, tdy);
+    for (let i = 0; i < n; i++) trail.pushOldest(pts[2 * i]!, pts[2 * i + 1]!);
+    // The cars: reversed order, headings turned by π, bodies placed directly (no spin).
+    tr.cars.reverse();
+    tr.cars.forEach((c, i) => {
+      c.index = i;
+      c.heading = wrap(c.heading + Math.PI);
+      this.pos.x = c.x;
+      this.pos.y = c.y;
+      c.body.setTransform(this.pos, c.heading);
+    });
+    tr.speed = 0;
+    tr.braking = false;
+    tr.dwellTimer = this.tuning.trams.dwellS;
+    tr.stop = -1;
+    tr.served = -1;
+    tr.enteredAt = this.stepCount;
+    tr.reversals++;
+    return true;
   }
 
   private remove(i: number): void {
@@ -373,8 +547,15 @@ export class Trams {
         tr.trail.push(e.pts[2 * i]!, e.pts[2 * i + 1]!);
       }
       const node = tr.dir > 0 ? e.to : e.from;
-      const next = chooseNextTrack(g, node, e.index, tr.rng, this.scratch);
+      const next = chooseNextTrack(g, node, e.index, tr.rng, this.cosMin, t.turnProbeM, this.scratch);
       if (next < 0) return false;
+      if (next === e.index) {
+        // Terminus: the nose stands on the end node, the tram changes ends.
+        tr.s = e.length;
+        if (!this.reverse(tr)) return false;
+        break;
+      }
+      tr.histPush(e.index, tr.dir);
       tr.s -= e.length;
       const ne = g.edges[next]!;
       tr.edge = ne;
@@ -464,6 +645,10 @@ export class Trams {
         if (o.edge !== tr.edge && Math.cos(c.heading) * hc + Math.sin(c.heading) * hs < 0.5) continue;
         gap = Math.min(gap, this.gapTo(h, hc, hs, c.x, c.y, c.halfLength, look));
       }
+    }
+    // A terminus at the end of this edge: the nose halts on the end node (v2).
+    if (this.deadEnd[2 * tr.edge.index + (tr.dir > 0 ? 1 : 0)]) {
+      gap = Math.min(gap, Math.max(0, tr.edge.length - tr.s + t.minGapM));
     }
     // The stop: the head halts on it (like traffic's stop line, min_gap_m is added back).
     if (tr.stop >= 0) {
