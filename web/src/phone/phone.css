@@ -366,3 +366,20 @@
   font-size: var(--font-hud-small);
   color: var(--color-ui-text-faint);
 }
+
+/* Actions under the home grid (the phone is the pause menu, specs/flow.md "Na silnici"). */
+.phone-actions {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-sm);
+  padding: 0 var(--space-md) var(--space-xl);
+}
+.phone-action {
+  min-height: 44px;
+  padding: 0 var(--space-lg);
+  border: 0;
+  border-radius: 22px;
+  background: var(--color-ui-pill);
+  color: var(--color-ui-text);
+  font: inherit;
+}
