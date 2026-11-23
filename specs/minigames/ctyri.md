@@ -58,3 +58,10 @@ Význam polí jako u `specs/minigames/piskvorky.md`.
 ## UI
 
 Klepnutí kamkoli do sloupce = tah; žeton spadne s krátkou animací. Vítězná čtveřice zvýrazněná.
+
+## Upřesnění v1
+
+- Pořadí kontrol v uzlu negamaxu: soupeř právě vyhrál → `−(100000 + depth)`; plná deska → 0;
+  `depth = 0` → hodnocení listu; jinak synové v pořadí sloupců. Kořen hledá s oknem `(α, +∞)`,
+  nový nejlepší tah jen při ostře vyšší hodnotě.
+- Okna se smíšenými žetony a okna s 1 kusem přispívají 0.

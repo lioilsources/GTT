@@ -81,3 +81,14 @@ a v ruce)`.
 
 Kladení klepnutím na bod; posun klepnutím na kámen a pak na cíl; po mlýnu desku přebarví a hráč
 klepne na kámen soupeře k odebrání (UI složí jednu akci). Počty kamenů v ruce u okraje.
+
+## Upřesnění v1
+
+- `quiet += 1` jen u posunu (`from ≥ 0`) bez mlýna; kladení `quiet` nemění.
+- Uzavře-li tah mlýn a soupeř nemá na desce žádný kámen, je jediná akce s `remove = −1`.
+- „Nemá legální tah“ ve fázi kladení = žádný prázdný bod (prakticky nenastane).
+- Uzel negamaxu: nejdřív prohra strany na tahu, pak `quiet ≥ quietLimit` (0), pak list; `apply`
+  po tahu kontroluje ve stejném pořadí.
+- „Počet legálních posunů“ v hodnocení = počet dvojic `(from, to)` včetně skoků (bez variant
+  `remove`), jen když jsou obě `hand` = 0.
+- `score = 100 × (9 − kameny AI na desce a v ruce)` platí pro každý výsledek, i prohru.

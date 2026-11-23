@@ -63,3 +63,9 @@ při `R < rounds` se prahy přepočtou `práh × R ÷ rounds`). `winner = "playe
 
 Otázka nahoře, čtyři velká tlačítka pod sebou (palec), odpočet `question_s` jako pruh. Po
 odpovědi na chvíli zelená/červená a správná možnost. Texty z banky podle jazyka UI.
+
+## Upřesnění v1
+
+- `rounds` ve výsledku = skutečný počet otázek `R`. Prahy při `R < rounds` celočíselně (ořez).
+- Prázdná banka (`R = 0`) skončí už v `init` (`over = true`); UI kvíz bez banky nenabízí.
+- Vektory: `bank` = indexy `answer` z `content/quiz/nyc.yaml` v pořadí souboru.

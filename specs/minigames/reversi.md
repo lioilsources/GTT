@@ -71,3 +71,9 @@ nebo jen vynechání.
 
 Legální pole jako malé tečky; klepnutí = tah. Bez legálního tahu UI samo pošle vynechání s
 krátkým toastem.
+
+## Upřesnění v1
+
+- Uzel negamaxu: nejdřív konec hry (plná deska, `passes ≥ 2`, strana na tahu bez kamene) →
+  koncová hodnota; pak `depth = 0` → váhy polí; jinak synové (vynechání zvýší `passes`, tah ho vynuluje).
+- `score = player × 10` pro každý výsledek.
