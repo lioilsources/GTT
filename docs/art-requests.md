@@ -138,3 +138,7 @@ vzorem). Do té doby klient kreslí ikonu a jméno.
   22. 11. 2026, tileable 512×512, 256 barev.
 - `assets/cities/nyc/{sidewalk_concrete,roof_tar}.png`, 22. 11. 2026, procedurálně (`tools/art/proc_tex.py`):
   chodník 4×4 desky se spárami, střecha štěrk se švy. Tím je sada textur kompletní.
+- **Tokio** (styl D, anime cel), 23. 11. 2026: `assets/postcards/tokyo/*.png` všech 25 podle
+  `content/cities/tokyo/landmarks.yaml`, bez nápisů (zbylé falešné znaky na štítech a lampionech přebarveny plochou
+  barvou), `assets/cities/tokyo/` asphalt, sidewalk_tile, roof (procedurálně), `assets/styleboard/tokyo/`
+  (2× křižovatka v pohledu 3/4 a 1× pohlednice, jen reference palety).
