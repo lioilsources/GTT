@@ -157,8 +157,9 @@ Lak = klíč barvy v `design/tokens.json` → `color.carPaint` (hra ho dosadí; 
 - Hlídka je v kapitole 3 (`assets/cars/police_patrol/…`).
 
 ### 5. M2 – budou potřeba později (stačí v pořadí)
-- **Ikony HUD a telefonu** `assets/ui/<id>.png` 256×256: aplikace Feed, Mapa, Garáž, Pas, Foťák,
-  Kontakty, Peněženka, Nastavení, Cesty, Rádio; počasí jasno/déšť/mlha; hledanost hvězda.
+- **Ikony HUD a telefonu** `assets/ui/<id>.png` 256×256, bílý glyf na alfě (tónovatelný,
+  `specs/art.md` v3): `feed`, `map`, `taxi`, `garage`, `passport`, `camera`, `contacts`, `wallet`,
+  `travel`, `settings`, `radio`, `weather_clear`, `weather_rain`, `weather_fog`, `wanted_star`.
 - **Obchody a bary** (fiktivní podniky, R10): 6 výloh / vývěsních štítů shora 256×256
   (`assets/shops/`): kavárna, bar, pizzerie, suvenýry, stánek s hot dogy, bodega.
 - **Telefonní budka** shora + zvonící stav (`assets/props/booth.png`, `booth_ring.png`).
@@ -167,7 +168,14 @@ Lak = klíč barvy v `design/tokens.json` → `color.carPaint` (hra ho dosadí; 
   `assets/photos/nyc/<id>.png`, seznam = spoty `kind: photo` v `content/cities/nyc/spots.yaml`
   (jméno = co je na obrázku). Zatím hra obrázek nepotřebuje, jen do zásoby.
 - **Počasí**: textura kapek a kaluží (tileable 512×512), mlha (gradient), odlesk mokré silnice.
-- **Kosmetika**: 8 polepů (vektorové motivy, tónovatelné), 6 typů kol, barvy kouře řeší kód.
+- **Kosmetika** (`specs/garage.md` v2, `specs/art.md` v3, barvy kouře řeší kód):
+  - 8 polepů `assets/garage/decals/<id>.png`, 512×1024, předek nahoru, bílý motiv na alfě
+    (tónuje se `color.garage.decal`, klient ho roztáhne na plátno karoserie a ořízne maskou laku,
+    takže žádné kruhy, které se v dlouhém autě zdeformují): `stripes`, `flames`, `checker`,
+    `stars`, `lightning`, `waves`, `camo`, `halftone`.
+  - 6 kol `assets/garage/wheels/<id>.png`, 128×128, kolmo shora jako `wheel.png`, světlý disk
+    (tónuje se `color.garage.wheels`): `sport`, `whitewall`, `five_spoke`, `mesh`, `turbine`,
+    `offroad`.
 - **Minihry M2 (22):** skiny stolů a herních ploch 1080×1920 (dřevo, plsť, asfalt NYC):
   karty (1 sada 52 + žolík, fiktivní rub „Metropole“), kostky, šachovnice/dáma, kulečník,
   bowling, minigolf (dráhy s motivem NYC), vzdušný hokej, stickball ulice, švihadla Double Dutch.

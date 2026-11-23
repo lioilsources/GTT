@@ -332,13 +332,12 @@
   checks: {flutter: pass, web: pass}
 
 - id: F-040
-  name: Generated art wired in (NPC portraits by vibe, feed busts, landmark postcards; v2 car sprites)
+  name: Generated art wired in (NPC portraits by vibe, feed busts, landmark postcards; v2 car sprites; v3 garage decals and wheels, UI icons)
   level: P2
-  spec: specs/art.md@2
+  spec: specs/art.md@3
   lead: web
-  flutter: done
-  web: done
-  checks: {flutter: pass, web: pass}
+  flutter: todo
+  web: todo
 
 - id: F-041
   name: Photo spots and the Camera app (frame the view, Passport photo stamps)
@@ -373,12 +372,11 @@
 - id: F-044
   name: Tuning and cosmetics (upgrade levels, looks, garage tabs)
   level: P0
-  spec: specs/garage.md@1
+  spec: specs/garage.md@2
   vectors: vectors/garage.json
   lead: web
-  flutter: done
-  web: done
-  checks: {flutter: pass, web: pass}
+  flutter: todo
+  web: todo
 
 - id: F-045
   name: Car classes drawn by their own shape (40 NYC cars, garage sale list order)

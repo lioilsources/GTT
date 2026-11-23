@@ -429,6 +429,15 @@ export type MessageKey =
   | "garageWheelsStock"
   | "garageWheelsSport"
   | "garageWheelsWhite"
+  | "garageDecalStars"
+  | "garageDecalLightning"
+  | "garageDecalWaves"
+  | "garageDecalCamo"
+  | "garageDecalHalftone"
+  | "garageWheelsFiveSpoke"
+  | "garageWheelsMesh"
+  | "garageWheelsTurbine"
+  | "garageWheelsOffroad"
   | "garageStock"
   | "garageLookBuy"
   | "garageFree"
@@ -1110,6 +1119,15 @@ export const messages: Record<Locale, Record<MessageKey, string>> = {
     garageWheelsStock: "Původní",
     garageWheelsSport: "Sportovní",
     garageWheelsWhite: "Bílé obruče",
+    garageDecalStars: "Hvězdy",
+    garageDecalLightning: "Blesky",
+    garageDecalWaves: "Vlny",
+    garageDecalCamo: "Maskáč",
+    garageDecalHalftone: "Rastr",
+    garageWheelsFiveSpoke: "Paprsky",
+    garageWheelsMesh: "Síť",
+    garageWheelsTurbine: "Turbína",
+    garageWheelsOffroad: "Terénní",
     garageStock: "Původní",
     garageLookBuy: "Koupit · {price}",
     garageFree: "Zdarma",
@@ -1789,6 +1807,15 @@ export const messages: Record<Locale, Record<MessageKey, string>> = {
     garageWheelsStock: "Stock",
     garageWheelsSport: "Sport",
     garageWheelsWhite: "White rims",
+    garageDecalStars: "Stars",
+    garageDecalLightning: "Lightning",
+    garageDecalWaves: "Waves",
+    garageDecalCamo: "Camo",
+    garageDecalHalftone: "Halftone",
+    garageWheelsFiveSpoke: "Five-spoke",
+    garageWheelsMesh: "Mesh",
+    garageWheelsTurbine: "Turbine",
+    garageWheelsOffroad: "Off-road",
     garageStock: "Stock",
     garageLookBuy: "Buy · {price}",
     garageFree: "Free",
