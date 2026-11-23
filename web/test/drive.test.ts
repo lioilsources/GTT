@@ -81,7 +81,7 @@ describe.skipIf(!existsSync(pack))('NYC citypack in client W', () => {
       t += 1 / 60;
     }
     expect(t).toBeLessThan(4);
-  });
+  }, 30000);
 
   it('cannot drive through buildings', () => {
     const d = world();

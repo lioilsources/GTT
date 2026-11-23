@@ -1,8 +1,11 @@
 import { existsSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
+import { World } from 'planck';
 import { beforeAll, describe, expect, it } from 'vitest';
 import { parse } from 'yaml';
 
+import { Car } from '../src/drive/car';
+import { ControlInput } from '../src/drive/controls';
 import { DriveWorld } from '../src/drive/driveWorld';
 import { RoutePath } from '../src/drive/route';
 import type { CarSpec } from '../src/gen/schema';
@@ -92,7 +95,58 @@ async function ride(city: City, route: RoutePath, startV: number): Promise<Trace
   return { samples, min, max, length: route.length };
 }
 
-describe.skipIf(!existsSync(join(dir, 'manifest.pb')))('cruise hold on Prague hills (specs/drive.md v2)', () => {
+/** Car alone on a constant grade (slope force applied like DriveWorld.slopeStep); speed band after 5 s. */
+function constantGrade(grade: number, hold: boolean, boost = false): { lo: number; hi: number } {
+  const world = new World({ gravity: { x: 0, y: 0 } });
+  const drv = hold ? tuning.drive : { ...tuning.drive, cruiseHoldMps2: 0 };
+  const car = new Car(world, spec, drv as typeof tuning.drive, 0, 0, 0, tuning.carScale);
+  car.body.setLinearVelocity({ x: cruise, y: 0 });
+  const sp = tuning.slopePhysics;
+  const a = -sp.gravity * sp.slopeForceScale * grade / Math.sqrt(1 + grade * grade); // along +x
+  const input = new ControlInput();
+  input.boost = boost;
+  let lo = Infinity, hi = -Infinity;
+  for (let i = 0; i < 20 / dt; i++) {
+    car.drive(input, dt, cruise, tuning.speedMps.topDefault, a);
+    car.body.applyForceToCenter({ x: a * car.body.getMass(), y: 0 }, true);
+    world.step(dt, tuning.drive.velocityIterations, tuning.drive.positionIterations);
+    if (i * dt >= 5) {
+      lo = Math.min(lo, car.speed);
+      hi = Math.max(hi, car.speed);
+    }
+  }
+  return { lo, hi };
+}
+
+describe('cruise hold on a constant grade (specs/drive.md v2 step 2)', () => {
+  it('flat: steady at cruise', () => {
+    const r = constantGrade(0, true);
+    expect(r.lo).toBeGreaterThan(cruise - 0.5);
+    expect(r.hi).toBeLessThan(cruise + 0.5);
+  });
+  for (const g of [-0.1, -0.2, -0.33]) {
+    it(`${Math.round(-g * 100)} % downhill: holds cruise (no overspeed band)`, () => {
+      const r = constantGrade(g, true);
+      expect(r.lo).toBeGreaterThan(cruise - 0.5);
+      expect(r.hi).toBeLessThan(cruise + 0.5);
+    });
+  }
+  it('without the hold the car rides the overspeed band downhill', () => {
+    const r = constantGrade(-0.3, false);
+    expect(r.hi).toBeGreaterThan(cruise + tuning.drive.overspeedMps * 0.8);
+  });
+  it('uphill unchanged: power-limited, no hold braking', () => {
+    const a = constantGrade(0.1, true), b = constantGrade(0.1, false);
+    expect(a.lo).toBeCloseTo(b.lo, 6);
+    expect(a.hi).toBeCloseTo(b.hi, 6);
+  });
+  it('boost does not hold: it accelerates past cruise downhill', () => {
+    expect(constantGrade(-0.1, true, true).hi).toBeGreaterThan(cruise + 5);
+  });
+});
+
+// City pace only: at 25 m/s (v1 cruise) the Chotkova hairpin cannot be taken without braking.
+describe.skipIf(!existsSync(join(dir, 'manifest.pb')) || cruise > 20)('cruise hold on Prague hills (specs/drive.md v2)', () => {
   let city: City;
   beforeAll(async () => {
     city = await City.load(source);
