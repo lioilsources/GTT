@@ -1,7 +1,8 @@
 import { Effect } from '@babylonjs/core/Materials/effect';
 import { ShaderMaterial } from '@babylonjs/core/Materials/shaderMaterial';
 import type { StandardMaterial } from '@babylonjs/core/Materials/standardMaterial';
-import { Vector2 } from '@babylonjs/core/Maths/math.vector';
+import { Color3 } from '@babylonjs/core/Maths/math.color';
+import { Vector2, Vector3 } from '@babylonjs/core/Maths/math.vector';
 import { Mesh } from '@babylonjs/core/Meshes/mesh';
 import { VertexData } from '@babylonjs/core/Meshes/mesh.vertexData';
 import type { Scene } from '@babylonjs/core/scene';
@@ -15,7 +16,7 @@ import { TREE_S, type Tree } from '../world/nature';
 import { displayHeight, extrusionScale } from '../world/camera';
 import { Tris } from './geometry';
 import { bridgeShadowTris, crownJitter, crownTris, trunkTris, visibleTrees, waterTris } from './natureGeometry';
-import { rgba, type Palette } from './palette';
+import { rgba, type Palette, type Rgba } from './palette';
 
 /**
  * Water plane, trees and hit effects of client W (specs/nature.md "Vykreslení shora", 5.4; P2).
@@ -36,6 +37,8 @@ const LEAVES_PER_HIT = 10;
 const LEAF_MAX = 120;
 /** Trunk dots above the sidewalks and markings, below the props. */
 const TRUNK_Z = 0.13;
+/** Chase view (specs/terrain.md "Šikmý pohled"): trunks as posts up to the crown within this range. */
+const POST_M = 150;
 
 Effect.ShadersStore['natureWaterVertexShader'] = `
 precision highp float;
@@ -44,9 +47,11 @@ attribute vec4 color;
 uniform mat4 worldViewProjection;
 varying vec4 vColor;
 varying vec2 vPos;
+varying vec3 vWorld;
 void main(void) {
   vColor = color;
   vPos = position.xz;
+  vWorld = position;
   gl_Position = worldViewProjection * vec4(position, 1.0);
 }`;
 
@@ -55,8 +60,12 @@ Effect.ShadersStore['natureWaterFragmentShader'] = `
 precision highp float;
 varying vec4 vColor;
 varying vec2 vPos;
+varying vec3 vWorld;
 uniform float time;
 uniform vec2 origin;
+uniform vec3 eye;
+uniform vec3 fogRange;
+uniform vec3 fogColor;
 float hash(vec2 p) { return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
 float noise(vec2 p) {
   vec2 i = floor(p), f = fract(p);
@@ -68,7 +77,9 @@ void main(void) {
   float n1 = noise(p * 0.07 + vec2(time * 0.06, time * 0.025));
   float n2 = noise(p * 0.19 + vec2(-time * 0.05, time * 0.07));
   float w = (n1 * 0.6 + n2 * 0.4 - 0.5) * 0.18 * vColor.a;
-  gl_FragColor = vec4(clamp(vColor.rgb * (1.0 + w), 0.0, 1.0), 1.0);
+  // Linear fog of the chase view (specs/terrain.md); from above it starts out of reach.
+  float f = clamp((distance(vWorld, eye) - fogRange.x) / (fogRange.y - fogRange.x), 0.0, 1.0);
+  gl_FragColor = vec4(mix(clamp(vColor.rgb * (1.0 + w), 0.0, 1.0), fogColor, f * f), 1.0);
 }`;
 
 export interface NatureViewEnv {
@@ -99,6 +110,9 @@ export class NatureView {
   private readonly trunkMat: StandardMaterial;
   private crowns: Mesh[] = [];
   private trunks!: Mesh;
+  /** Trunk posts of the chase view (a four-sided prism, unit height); off from above. */
+  private posts!: Mesh;
+  private chase = false;
   private leaves!: Mesh;
   private pal: Palette;
   private treeVersion = -1;
@@ -125,9 +139,12 @@ export class NatureView {
     const scene = env.scene;
     this.waterMat = new ShaderMaterial('nature-water', scene, { vertex: 'natureWater', fragment: 'natureWater' }, {
       attributes: ['position', 'color'],
-      uniforms: ['worldViewProjection', 'time', 'origin'],
+      uniforms: ['worldViewProjection', 'time', 'origin', 'eye', 'fogRange', 'fogColor'],
     });
     this.waterMat.backFaceCulling = false;
+    this.waterMat.setVector3('eye', Vector3.Zero());
+    this.waterMat.setVector3('fogRange', new Vector3(1e6, 2e6, 0));
+    this.waterMat.setColor3('fogColor', Color3.White());
     this.crownMat = env.unlit('crowns');
     this.trunkMat = env.unlit('trunks');
     this.buildModels();
@@ -138,6 +155,7 @@ export class NatureView {
     for (const m of this.crowns) m.dispose();
     this.trunks?.dispose();
     this.leaves?.dispose();
+    this.posts?.dispose();
     this.crowns = [sizes.s, sizes.m, sizes.l].map((s, i) => {
       const t = new Tris();
       crownTris(i, s.crownR, this.pal, t);
@@ -159,8 +177,36 @@ export class NatureView {
     this.leaves.alphaIndex = 14;
     this.leaves.alwaysSelectAsActiveMesh = true;
     this.leaves.setEnabled(false);
+    const pt = new Tris();
+    postTris(e.tuning.nature.trunkRadiusM, this.pal, pt);
+    this.posts = e.world(e.mesh('trunk-posts', pt, this.trunkMat, false, false));
+    this.posts.alwaysSelectAsActiveMesh = true;
+    this.posts.setEnabled(false);
     this.treeVersion = -1;
     this.waterVersion = -1;
+  }
+
+  /** Fog of the chase view (specs/terrain.md "Upřesnění T2"), squared ramp from start to end metres. */
+  setFog(start: number, end: number, color: Color3): void {
+    this.waterMat.setVector3('fogRange', new Vector3(start, end, 0));
+    this.waterMat.setColor3('fogColor', color);
+  }
+
+  /** Crowns and trunks: the chase view fades them between the eye and the car like buildings. */
+  get occluderMaterials(): StandardMaterial[] {
+    return [this.crownMat, this.trunkMat];
+  }
+
+  /** Chase view on or off: trunk posts under the crowns. */
+  setChase(on: boolean): void {
+    if (on === this.chase) return;
+    this.chase = on;
+    this.treeVersion = -1;
+  }
+
+  /** The chase camera's eye (world x east, y north, z up) for the water fog. */
+  setEye(x: number, y: number, z: number): void {
+    this.waterMat.setVector3('eye', new Vector3(x, z, y));
   }
 
   setPalette(pal: Palette): void {
@@ -221,6 +267,7 @@ export class NatureView {
     this.slots.clear();
     this.faded.clear();
     const trunk = new Float32Array(list.length * 16);
+    const posts: number[] = [];
     let ti = 0;
     for (let s = 0; s < 3; s++) {
       const trees = bySize[s]!;
@@ -234,6 +281,7 @@ export class NatureView {
         cols.set([j[0], j[1], j[2], 1], 4 * i);
         this.slots.set(t.key, { size: s, index: i, tree: t });
         writeMatrix(trunk, ti++, t.x, TRUNK_Z + this.groundAt(t.x, t.y), t.y, 0, 1);
+        if (this.chase && (t.x - px) ** 2 + (t.y - py) ** 2 < POST_M * POST_M) posts.push(t.x, this.groundAt(t.x, t.y), t.y, y);
       });
       this.mats[s] = mats;
       this.cols[s] = cols;
@@ -244,6 +292,13 @@ export class NatureView {
     }
     this.trunks.thinInstanceSetBuffer('matrix', list.length ? trunk : null, 16, false);
     this.trunks.setEnabled(list.length > 0);
+    const n = posts.length / 4, pm = new Float32Array(n * 16);
+    for (let i = 0; i < n; i++) {
+      writeMatrix(pm, i, posts[4 * i]!, posts[4 * i + 1]!, posts[4 * i + 2]!, 0, 1);
+      pm[16 * i + 5] = posts[4 * i + 3]!;
+    }
+    this.posts.thinInstanceSetBuffer('matrix', n ? pm : null, 16, false);
+    this.posts.setEnabled(n > 0);
   }
 
   /** Crowns within crown_fade.radius_m (in a forest flow.forest.crown_fade_radius_m) of the car get crown_fade.alpha. */
@@ -339,6 +394,22 @@ export class NatureView {
     for (const m of this.crowns) m.dispose();
     this.trunks.dispose();
     this.leaves.dispose();
+    this.posts.dispose();
+  }
+}
+
+/** A trunk post: four sides of radius r from 0 to 1 (scaled to the crown height), shaded by the sun. */
+function postTris(r: number, pal: Palette, out: Tris): void {
+  const c = pal.night ? pal.land : rgba(tokens.colorGreenTrunk);
+  const sl = Math.hypot(pal.sunX, pal.sunY) || 1;
+  for (let i = 0; i < 4; i++) {
+    const a0 = (i * Math.PI) / 2 + Math.PI / 4, a1 = a0 + Math.PI / 2;
+    const nx = Math.cos(a0 + Math.PI / 4), ny = Math.sin(a0 + Math.PI / 4);
+    const k = pal.ambient + (1 - pal.ambient) * Math.max(0, (nx * pal.sunX + ny * pal.sunY) / sl);
+    const col: Rgba = [c[0] * k, c[1] * k, c[2] * k, 1];
+    const ax = r * Math.cos(a0), ay = r * Math.sin(a0), bx = r * Math.cos(a1), by = r * Math.sin(a1);
+    const v0 = out.vertex(ax, ay, 0, col), v1 = out.vertex(bx, by, 0, col), v2 = out.vertex(bx, by, 1, col), v3 = out.vertex(ax, ay, 1, col);
+    out.idx.push(v0, v2, v1, v0, v3, v2);
   }
 }
 

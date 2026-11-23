@@ -18,8 +18,8 @@ Zadání: [Prompts/](Prompts/) (00–05), postup: [plans/PROGRESS.md](plans/PROG
 | Auta | 43 |
 | Památky | 87 |
 | Skity NPC | 50 |
-| Testy | 1038 / 1039 prochází (2026-11-23T04:23) |
-| Funkce (`parity.yaml`) | 57 v obou klientech, 8 jen web, 0 jen Flutter, 10 rozpracováno |
+| Testy | 1787 / 1787 prochází (2026-11-23T10:59) |
+| Funkce (`parity.yaml`) | 58 v obou klientech, 7 jen web, 0 jen Flutter, 11 rozpracováno |
 
 _Stav k 2026-11-23, generuje `metro progress`._
 <!-- /metro:status -->

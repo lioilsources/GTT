@@ -1,0 +1,11 @@
+{
+  "id": "letna",
+  "city": "prague",
+  "description": "L-S1 hills: from Klárov up the Chotkova hairpins to Letná, along Badeniho and Milady Horákové past Letenské náměstí and down to Veverkova.",
+  "oneway": true,
+  "start": {"a": "Klárov", "b": "Pod Bruskou"},
+  "legs": [
+    {"via": ["Pod Bruskou", "Chotkova"], "to": {"a": "Chotkova", "b": "Badeniho"}},
+    {"via": ["Badeniho", "Milady Horákové"], "to": {"a": "Milady Horákové", "b": "Veverkova"}}
+  ]
+}
