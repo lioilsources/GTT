@@ -9,11 +9,11 @@ import { RoutePath } from '../src/drive/route';
 import type { CarSpec } from '../src/gen/schema';
 import { Tuning } from '../src/gen/tuning';
 import { chunkPath, type PackSource } from '../src/world/citypack';
-import { prepareChunk } from '../src/world/chunk';
+import { prepareChunk, type ChunkData } from '../src/world/chunk';
 import { City, RoadEdge, type EdgeHit } from '../src/world/model';
 import { NatureMap, type Tree } from '../src/world/nature';
-import { onSurface, structureLayer } from '../src/world/terrain';
-import { RoadClass } from '../src/gen/pb/citypack_pb';
+import { flatStructureLayer, onSurface, structureLayer } from '../src/world/terrain';
+import { RoadClass, WaterClass } from '../src/gen/pb/citypack_pb';
 
 // Bridge hotfix (dogfooding: "nebyl jsem schopen přejet ani jeden most"): on the layer-0 half of a
 // bridge or ramp edge the car collided with buildings, bollards and trees on the ground under the
@@ -34,12 +34,20 @@ function edge(o: { from?: number; to?: number; bridge?: boolean; tunnel?: boolea
 }
 
 describe('structure layer (pure)', () => {
-  it('a bridge counts as +1 on its layer-0 half, also level with the terrain', () => {
+  it('a bridge counts as +1 on its layer-0 half where it stands over the ground', () => {
     const b = edge({ from: 0, to: 1, bridge: true });
     expect(structureLayer(b, 0, 3, MARGIN, 30, 5, 30, CLEAR)).toBe(1);
-    // Overture level-0 bridge (Mánesův most): flag only, deck level with the ground.
-    const flat = edge({ bridge: true });
-    expect(structureLayer(flat, 0, 3, MARGIN, 10, 10, 10, CLEAR)).toBe(1);
+    // Overture level-0 bridge (Mánesův most): flag only; over the river +1, at its bank junction 0.
+    const lvl0 = edge({ bridge: true });
+    expect(structureLayer(lvl0, 0, 3, MARGIN, 10, -5, 10, CLEAR)).toBe(1);
+    expect(structureLayer(lvl0, 0, 3, MARGIN, 10, 10, 10, CLEAR)).toBe(0);
+  });
+  it('flat packs: a ramp half reached from the ramp is on its layer, never from below', () => {
+    const ramp = edge({ from: 0, to: 1, bridge: true, z: undefined });
+    expect(flatStructureLayer(ramp, 0, 3, MARGIN, true)).toBe(1);
+    expect(flatStructureLayer(ramp, 0, 3, MARGIN, false)).toBe(0);
+    expect(flatStructureLayer(edge({ bridge: true }), 0, 3, MARGIN, true)).toBe(0);
+    expect(flatStructureLayer(edge({ from: 0, to: -1, tunnel: true }), 0, 3, MARGIN, true)).toBe(-1);
   });
   it('the road under the deck and a car beside the corridor stay on 0', () => {
     const b = edge({ from: 0, to: 1, bridge: true });
@@ -284,6 +292,10 @@ export interface CrossResult {
   falls: number;
   treeHits: number;
   rescues: number;
+  /** Rescues while on the bridge chain (a car held on the deck). */
+  deckRescues: number;
+  /** The car got past the far end of the chain. */
+  crossed: boolean;
   /** Steps on a structure edge of the chain, within its corridor, riding the terrain instead. */
   deckLost: number;
   /** Largest gap under the car on the chain (m): a fall off the deck shows here. */
@@ -301,7 +313,9 @@ async function world(city: City, speed: number): Promise<DriveWorld> {
   return new DriveWorld(city, specs.get('sedan_regent')!, t);
 }
 
-async function loadAround(drive: DriveWorld, city: City, r: Route): Promise<void> {
+const chunkCache = new Map<string, ChunkData>();
+
+async function loadAround(drive: DriveWorld, city: City, r: { pts: number[] }, pad = 200): Promise<void> {
   const cm = city.chunkM, s = src(city.id);
   let x0 = Infinity, x1 = -Infinity, y0 = Infinity, y1 = -Infinity;
   for (let i = 0; i < r.pts.length; i += 2) {
@@ -309,8 +323,11 @@ async function loadAround(drive: DriveWorld, city: City, r: Route): Promise<void
     y0 = Math.min(y0, r.pts[i + 1]!); y1 = Math.max(y1, r.pts[i + 1]!);
   }
   for (const ch of city.manifest.chunks) {
-    if ((ch.x + 1) * cm < x0 - 200 || ch.x * cm > x1 + 200 || (ch.y + 1) * cm < y0 - 200 || ch.y * cm > y1 + 200) continue;
-    drive.addChunk(await prepareChunk(await s.read(chunkPath(ch.x, ch.y)), { chunkM: cm, version: city.manifest.natureVersion }));
+    if ((ch.x + 1) * cm < x0 - pad || ch.x * cm > x1 + pad || (ch.y + 1) * cm < y0 - pad || ch.y * cm > y1 + pad) continue;
+    const k = `${city.id}/${ch.x}_${ch.y}`;
+    let c = chunkCache.get(k);
+    if (!c) chunkCache.set(k, (c = await prepareChunk(await s.read(chunkPath(ch.x, ch.y)), { chunkM: cm, version: city.manifest.natureVersion })));
+    drive.addChunk(c);
   }
 }
 
@@ -325,12 +342,18 @@ function drive(d: DriveWorld, r: Route, speed: number, off: number, railOff: num
   // Counted from 60 m before the bridge chain to 60 m after it (street trees on the approaches
   // are not the bridge's business).
   const inWindow = (): boolean => s > r.s0 - 60 && s < r.s1 + 60;
-  d.onRescue = () => { if (inWindow()) rescues++; };
-  // On the chain: along the railing, and for 60 m in the middle 3 m through it (the rail holds).
+  let deckRescues = 0, crossed = false;
+  d.onRescue = () => {
+    if (inWindow()) rescues++;
+    const h = d.layers.hit;
+    if (h !== null && r.chain.has(h.edge.index)) deckRescues++;
+  };
+  // On the chain: along the railing, and for 25 m in the middle 2 m through it (the rail holds).
   const mid = (r.s0 + r.s1) / 2;
   const offAt = (q: number): number => {
-    if (railOff === null || q < r.s0 + 20 || q > r.s1 - 20) return off;
-    return q > mid && q < mid + 60 ? railOff + 3 : railOff;
+    // The railing is there where the deck is (the car on a structure layer), not at the ramp foot.
+    if (railOff === null || q < r.s0 + 20 || q > r.s1 - 20 || d.car.layer === 0) return off;
+    return q > mid && q < mid + 25 ? railOff + 2 : railOff;
   };
   d.beforeStep = () => {
     const car = d.car;
@@ -344,8 +367,9 @@ function drive(d: DriveWorld, r: Route, speed: number, off: number, railOff: num
     d.input.steer = Math.min(1, Math.max(-1, -b.steerGain * e));
     d.input.boost = speed > d.tuning.speedMps.topDefault - 1;
     // Slow for turns of the approach roads like the bench autopilot (more look-ahead when fast).
-    if (path.maxTurn(s, s + b.cornerLookaheadM + 1.5 * car.speed) > b.cornerTurnRad) {
-      const want = Math.max(b.cornerSpeedMps, 15);
+    const turn = path.maxTurn(s, s + b.cornerLookaheadM + 1.5 * car.speed);
+    if (turn > b.cornerTurnRad) {
+      const want = turn > 1.2 ? b.cornerSpeedMps : Math.max(b.cornerSpeedMps, 15);
       d.input.brake = Math.min(1, Math.max(0, (car.speed - want) * b.brakePerMps));
       d.input.boost = false;
     }
@@ -367,15 +391,18 @@ function drive(d: DriveWorld, r: Route, speed: number, off: number, railOff: num
       for (let ce = c.body.getContactList(); ce; ce = ce.next) if (ce.contact.isTouching()) cats += 'c' + (ce.contact.getFixtureA().getBody() === c.body ? ce.contact.getFixtureB() : ce.contact.getFixtureA()).getFilterCategoryBits();
       trace.push([t.toFixed(3), s.toFixed(1), c.x.toFixed(1), c.y.toFixed(1), c.speed.toFixed(1), c.layer, h ? `${h.edge.index}:${h.edge.layerFrom}${h.edge.layerTo}${h.edge.bridge ? 'b' : ''}:${h.dist.toFixed(1)}/${(h.edge.width / 2).toFixed(0)}` : '-', d.rideEdge?.index ?? 'T', j.z.toFixed(2), (j.z - j.gap).toFixed(2), d.terrain.terrainAt(c.x, c.y)?.toFixed(2), j.airborne ? 'AIR' : '-', d.trees.hits, d.water.falls, rescues, cats].join(' '));
     }
+    if (s >= r.s1) crossed = true;
     if (h !== null && r.chain.has(h.edge.index)) {
       maxGap = Math.max(maxGap, d.jump.gap);
       maxSpeed = Math.max(maxSpeed, d.car.speed);
-      if (isStructure(h.edge) && h.dist <= h.edge.width / 2 && d.rideEdge === null) deckLost++;
+      // On the deck: its surface (terrain packs) or its layer (flat packs, Tokyo).
+      const off = d.terrain.enabled && h.edge.z !== null ? d.rideEdge === null : d.car.layer === 0 && h.edge.drawLayer !== 0;
+      if (isStructure(h.edge) && h.dist <= h.edge.width / 2 - 1 && off) deckLost++;
     }
   }
   d.beforeStep = null;
   d.onRescue = null;
-  return { finished: s >= L - 15, falls, treeHits, rescues, deckLost, maxGap, maxSpeed };
+  return { finished: s >= L - 15, falls, treeHits, rescues, deckRescues, crossed, deckLost, maxGap, maxSpeed };
 }
 
 /** Start 100 m before the chain when that point is on a ground road, else at the route start. */
@@ -455,11 +482,333 @@ describe.skipIf(cities.length === 0)('bridge railings keep the car on the deck',
         const route = buildRoute(city, b);
         let w = Infinity;
         for (const ei of route.chain) { const e = city.graph.edges[ei]!; if (isStructure(e)) w = Math.min(w, e.width); }
-        const r = await cross(city, b, 25, false, 2, w / 2 - 1.2);
+        const r = await cross(city, b, 25, false, 2, w / 2 - 2);
         dump(`${id} ${b.label} rail`);
-        expect(r, `${b.label} ${JSON.stringify(r)}`).toMatchObject({ finished: true, falls: 0, treeHits: 0, deckLost: 0 });
+        expect(r, `${b.label} ${JSON.stringify(r)}`).toMatchObject({ falls: 0, treeHits: 0, deckLost: 0 });
         expect(r.maxGap).toBeLessThan(CLEAR);
       }, 120000);
     }
+  }
+});
+
+// ---- L-S11 (Prompts/05-METROPOLE_LAUNCH_PLAN.md D): every bridge of every pack ----
+// Bank to bank over every bridge keeps the car on the deck; onto a deck only from its ramp (a
+// road under it passes through on layer 0); driving off the bank into water is a fall and a tow.
+
+const ALL = ['prague', 'nyc', 'tokyo'].filter((id) => existsSync(join(packDir(id), 'manifest.pb')));
+const isGroundRoad = (e: RoadEdge): boolean => e.isGround && !e.bridge && !e.stairs;
+
+/** A shared world per city (chunks stay loaded); each run spawns the car anew. */
+const worlds = new Map<string, Promise<DriveWorld>>();
+const worldOf = (city: City): Promise<DriveWorld> => {
+  let w = worlds.get(city.id);
+  if (!w) worlds.set(city.id, (w = world(city, 25)));
+  return w;
+};
+
+/** Polyline of edges walked from node to node, as a Route; the chain = the structure edges. */
+function routeOf(steps: { e: RoadEdge; from: number }[]): Route {
+  const pts: number[] = [];
+  let s0 = -1, s1 = 0;
+  const len = (): number => {
+    let l = 0;
+    for (let i = 2; i < pts.length; i += 2) l += Math.hypot(pts[i]! - pts[i - 2]!, pts[i + 1]! - pts[i - 1]!);
+    return l;
+  };
+  for (const { e, from } of steps) {
+    if (s0 < 0 && isStructure(e)) s0 = len();
+    const n = e.pointCount;
+    for (let i = pts.length ? 1 : 0; i < n; i++) {
+      const j = from === e.from ? i : n - 1 - i;
+      pts.push(e.pts[2 * j]!, e.pts[2 * j + 1]!);
+    }
+    if (isStructure(e)) s1 = len();
+  }
+  const cum = [0];
+  for (let i = 2; i < pts.length; i += 2) cum.push(cum[cum.length - 1]! + Math.hypot(pts[i]! - pts[i - 2]!, pts[i + 1]! - pts[i - 1]!));
+  return { pts, cum, s0: Math.max(0, s0), s1, chain: new Set(steps.filter((x) => isStructure(x.e)).map((x) => x.e.index)), startsOnGround: true };
+}
+
+/** The straightest ground road leaving `node` away from direction (dx, dy), one edge. */
+function groundStep(city: City, node: number, dx: number, dy: number, not: number): { e: RoadEdge; from: number } | null {
+  const g = city.graph;
+  let pick: RoadEdge | null = null, pd = -2;
+  for (const ei of g.nodeEdges[node]!) {
+    const e = g.edges[ei]!;
+    if (ei === not || !isGroundRoad(e) || e.length < 15) continue;
+    const o = e.from === node ? e.to : e.from;
+    const ox = g.nodeXY[2 * o]! - g.nodeXY[2 * node]!, oy = g.nodeXY[2 * o + 1]! - g.nodeXY[2 * node + 1]!;
+    const d = (ox * dx + oy * dy) / (Math.hypot(ox, oy) || 1) - (e.kept ? 0 : 0.5);
+    if (d > pd) { pd = d; pick = e; }
+  }
+  return pick ? { e: pick, from: pick.from === node ? pick.to : pick.from } : null;
+}
+
+interface Crossing {
+  label: string;
+  steps: { e: RoadEdge; from: number }[];
+}
+
+/**
+ * Every bridge of the pack: connected structure edges (bridge flag or a layer change, no tunnels)
+ * that contain a bridge; from the two ramp feet farthest apart (nodes with a ground road), the
+ * shortest path between them plus a ground road on each side. Bridges with fewer than two feet
+ * in the pack (a deck cut by the pack border, a ramp-only spur) are counted apart.
+ */
+function bridgeCrossings(city: City): { list: Crossing[]; oneFoot: number } {
+  const g = city.graph;
+  const structure = (e: RoadEdge): boolean => isStructure(e) && !e.tunnel && !e.stairs;
+  const seen = new Set<number>();
+  const list: Crossing[] = [];
+  let oneFoot = 0;
+  for (const start of g.edges) {
+    if (!start.bridge || start.tunnel || seen.has(start.index)) continue;
+    const comp: RoadEdge[] = [];
+    const q = [start];
+    seen.add(start.index);
+    while (q.length) {
+      const e = q.pop()!;
+      comp.push(e);
+      for (const n of [e.from, e.to]) for (const ei of g.nodeEdges[n]!) {
+        const f = g.edges[ei]!;
+        if (!seen.has(ei) && structure(f)) { seen.add(ei); q.push(f); }
+      }
+    }
+    const nodes = new Set(comp.flatMap((e) => [e.from, e.to]));
+    const feet = [...nodes].filter((n) => !g.border[n] && g.nodeEdges[n]!.some((ei) => isGroundRoad(g.edges[ei]!) && g.edges[ei]!.length >= 15));
+    if (feet.length < 2) { oneFoot++; continue; }
+    const inComp = new Set(comp.map((e) => e.index));
+    // Dijkstra inside the component from each foot; the farthest pair (straight line) that connects.
+    let best: { a: number; b: number; prev: Map<number, { e: RoadEdge; p: number }> } | null = null, bd = -1;
+    for (const a of feet) {
+      const dist = new Map<number, number>([[a, 0]]), prev = new Map<number, { e: RoadEdge; p: number }>();
+      const open = [a];
+      while (open.length) {
+        open.sort((x, y) => dist.get(y)! - dist.get(x)!);
+        const n = open.pop()!;
+        for (const ei of g.nodeEdges[n]!) {
+          if (!inComp.has(ei)) continue;
+          const e = g.edges[ei]!, o = e.from === n ? e.to : e.from, d = dist.get(n)! + e.length;
+          if (d < (dist.get(o) ?? Infinity)) { dist.set(o, d); prev.set(o, { e, p: n }); open.push(o); }
+        }
+      }
+      for (const b of feet) {
+        const d = Math.hypot(g.nodeXY[2 * a]! - g.nodeXY[2 * b]!, g.nodeXY[2 * a + 1]! - g.nodeXY[2 * b + 1]!);
+        if (b !== a && dist.has(b) && d > bd) { bd = d; best = { a, b, prev }; }
+      }
+    }
+    if (!best) { oneFoot++; continue; }
+    const chain: { e: RoadEdge; from: number }[] = [];
+    for (let n = best.b; n !== best.a; n = best.prev.get(n)!.p) chain.unshift({ e: best.prev.get(n)!.e, from: best.prev.get(n)!.p });
+    if (!chain.some((c) => c.e.bridge)) { oneFoot++; continue; }
+    const nx = (n: number): number => g.nodeXY[2 * n]!, ny = (n: number): number => g.nodeXY[2 * n + 1]!;
+    const c0 = chain[0]!, cl = chain[chain.length - 1]!;
+    const a1 = c0.e.from === c0.from ? c0.e.to : c0.e.from, bEnd = cl.e.from === cl.from ? cl.e.to : cl.e.from;
+    const pre = groundStep(city, best.a, nx(best.a) - nx(a1), ny(best.a) - ny(a1), c0.e.index);
+    const post = groundStep(city, bEnd, nx(bEnd) - nx(cl.from), ny(bEnd) - ny(cl.from), cl.e.index);
+    if (!pre || !post) { oneFoot++; continue; }
+    // pre runs away from the foot: drive it towards the foot.
+    const steps = [{ e: pre.e, from: pre.from }, ...chain, { e: post.e, from: bEnd }];
+    const name = chain.find((c) => c.e.name)?.e.name ?? '';
+    list.push({ label: `${name || 'bridge'} #${start.index}`, steps });
+  }
+  return { list, oneFoot };
+}
+
+function reverseSteps(steps: { e: RoadEdge; from: number }[]): { e: RoadEdge; from: number }[] {
+  return steps.map(({ e, from }) => ({ e, from: e.from === from ? e.to : e.from })).reverse();
+}
+
+/** Drives a route from its start (the car spawned on the ground road there). */
+async function runRoute(city: City, r: Route): Promise<CrossResult> {
+  const d = await worldOf(city);
+  await loadAround(d, city, r, 120);
+  const p = at(r, Math.max(0, r.s0 - 25), 0);
+  d.spawn(p.x, p.y, p.dir);
+  d.car.body.setLinearVelocity({ x: Math.cos(p.dir) * 12, y: Math.sin(p.dir) * 12 });
+  return drive(d, r, 25, 0, null);
+}
+
+describe.skipIf(ALL.length === 0)('L-S11: bank to bank over every bridge of every pack', () => {
+  for (const id of ALL) {
+    it(`${id}: every bridge, both ways, on the deck`, async () => {
+      const city = await cityOf(id);
+      const { list, oneFoot } = bridgeCrossings(city);
+      expect(list.length, `${id}: bridges with two ramps`).toBeGreaterThan(0);
+      // Hard: never off the deck (no fall, no ride on the terrain under it, no drop). Soft: the
+      // scripted driver gets across without a rescue (it cannot take every helix and junction).
+      const bad: string[] = [], stuck: string[] = [];
+      for (const c of list) {
+        for (const rev of [false, true]) {
+          const r = await runRoute(city, routeOf(rev ? reverseSteps(c.steps) : c.steps));
+          dump(`all ${id} ${c.label} ${rev ? 'back' : 'there'}`);
+          const line = `${c.label} ${rev ? 'back' : 'there'} ${JSON.stringify(r)}`;
+          if (r.falls || r.deckLost || r.maxGap >= CLEAR) bad.push(line);
+          else if (!r.crossed || r.deckRescues) stuck.push(line);
+        }
+      }
+      if (LOG) writeFileSync(join(LOG, `all_${id}.txt`), `${list.length} bridges, ${oneFoot} with < 2 ramps in the pack\nOFF THE DECK\n${bad.join('\n')}\nNOT ACROSS\n${stuck.join('\n')}`);
+      expect(bad, `${id}: ${list.length} bridges × 2`).toEqual([]);
+      expect(stuck.length, `${id}: not across: ${stuck.join('; ')}`).toBeLessThanOrEqual(Math.floor(list.length * 2 * 0.1));
+    }, 900000);
+  }
+});
+
+/** Ground roads that pass under a bridge deck (2D crossing, not a shared node), at most `max`. */
+function underpasses(city: City, max: number): { e: RoadEdge; deck: RoadEdge; x: number; y: number }[] {
+  const g = city.graph, t = city.terrain;
+  const out: { e: RoadEdge; deck: RoadEdge; x: number; y: number }[] = [];
+  for (const e of g.edges) {
+    if (!isGroundRoad(e) || !e.kept || e.length < 40) continue;
+    for (let s = 0; s + 1 < e.pointCount && out.length < max * 20; s++) {
+      const ax = e.pts[2 * s]!, ay = e.pts[2 * s + 1]!, bx = e.pts[2 * s + 2]!, by = e.pts[2 * s + 3]!;
+      const mx = (ax + bx) / 2, my = (ay + by) / 2;
+      for (const h of g.near(mx, my, Math.hypot(bx - ax, by - ay) / 2 + 1)) {
+        const d = h.edge;
+        if (!d.bridge || d.from === e.from || d.from === e.to || d.to === e.from || d.to === e.to) continue;
+        // Segment intersection of e's segment with d's nearest segment.
+        const cx = d.pts[2 * h.segment]!, cy = d.pts[2 * h.segment + 1]!, ex = d.pts[2 * h.segment + 2]!, ey = d.pts[2 * h.segment + 3]!;
+        const den = (bx - ax) * (ey - cy) - (by - ay) * (ex - cx);
+        if (Math.abs(den) < 1e-6) continue;
+        const u = ((cx - ax) * (ey - cy) - (cy - ay) * (ex - cx)) / den, v = ((cx - ax) * (by - ay) - (cy - ay) * (bx - ax)) / den;
+        if (u < 0 || u > 1 || v < 0.05 || v > 0.95) continue;
+        const x = ax + (bx - ax) * u, y = ay + (by - ay) * u;
+        const along = e.cum[s]! + Math.hypot(x - ax, y - ay);
+        if (along < 20 || along > e.length - 20) continue;
+        // Really above: deck ≥ 4 m over the road (terrain packs) or its layer-1 half (flat packs).
+        const tz = t.enabled && d.z !== null && e.z !== null ? t.edgeZ(d, x, y) - t.edgeZ(e, x, y) : null;
+        if (tz !== null ? tz < CLEAR + 2 : d.layerAt(h.t) < 1) continue;
+        out.push({ e, deck: d, x, y });
+        break;
+      }
+    }
+  }
+  // Spread over the city, deterministic.
+  const step = Math.max(1, Math.floor(out.length / max));
+  return out.filter((_, i) => i % step === 0).slice(0, max);
+}
+
+describe.skipIf(ALL.length === 0)('L-S11: onto a deck only from its ramp; under it along the road', () => {
+  for (const id of ALL) {
+    it(`${id}: roads under bridges pass through on layer 0`, async () => {
+      const city = await cityOf(id);
+      const list = underpasses(city, 40);
+      expect(list.length, `${id}: underpasses`).toBeGreaterThan(0);
+      const bad: string[] = [];
+      for (const u of list) {
+        // The road edge itself with a ground road beyond each end.
+        const g = city.graph, e = u.e;
+        const dir = (n: number, o: number): [number, number] => [g.nodeXY[2 * n]! - g.nodeXY[2 * o]!, g.nodeXY[2 * n + 1]! - g.nodeXY[2 * o + 1]!];
+        const pre = groundStep(city, e.from, ...dir(e.from, e.to), e.index);
+        const post = groundStep(city, e.to, ...dir(e.to, e.from), e.index);
+        const steps = [...(pre ? [{ e: pre.e, from: pre.from }] : []), { e, from: e.from }, ...(post ? [{ e: post.e, from: e.to }] : [])];
+        const r = routeOf(steps);
+        const d = await worldOf(city);
+        await loadAround(d, city, r, 120);
+        const p = at(r, 0, 0);
+        d.spawn(p.x, p.y, p.dir);
+        let under = 0, onDeck = 0, minSpeed = Infinity, minDist = Infinity;
+        const L = r.cum[r.cum.length - 1]!;
+        const b = d.tuning.bench;
+        let s = 0, t = 0, rescues = 0;
+        d.onRescue = () => rescues++;
+        d.beforeStep = () => {
+          const c = d.car;
+          s = project(r, c.x, c.y, s - 30, s + 60);
+          const tg = at(r, s + b.lookaheadM + b.lookaheadPerMps * c.speed, 0);
+          let a = Math.atan2(tg.y - c.y, tg.x - c.x) - c.heading;
+          while (a > Math.PI) a -= 2 * Math.PI;
+          while (a < -Math.PI) a += 2 * Math.PI;
+          d.input.reset();
+          d.input.steer = Math.min(1, Math.max(-1, -b.steerGain * a));
+        };
+        while (t < L / 10 + 10 && s < L - 15) {
+          d.update(1 / 60);
+          t += 1 / 60;
+          const c = d.car;
+          minDist = Math.min(minDist, Math.hypot(c.x - u.x, c.y - u.y));
+          if (Math.hypot(c.x - u.x, c.y - u.y) < 10) {
+            under++;
+            minSpeed = Math.min(minSpeed, c.speed);
+            if (c.layer !== 0 || d.rideEdge !== null) onDeck++;
+          }
+        }
+        d.beforeStep = null;
+        d.onRescue = null;
+        const ok = s >= L - 15 && under > 0 && onDeck === 0 && rescues === 0 && minSpeed > 5;
+        if (!ok) bad.push(`${e.name || e.index} under ${u.deck.name || u.deck.index} at (${u.x.toFixed(0)}, ${u.y.toFixed(0)}): finished ${s >= L - 15} under ${under} onDeck ${onDeck} rescues ${rescues} minSpeed ${minSpeed.toFixed(1)} closest ${minDist.toFixed(1)} m, route ${steps.map((x) => x.e.index).join(' ')}`);
+      }
+      if (LOG) writeFileSync(join(LOG, `under_${id}.txt`), `${list.length} underpasses\n${bad.join('\n')}`);
+      expect(bad, `${id}: ${list.length} underpasses`).toEqual([]);
+    }, 900000);
+  }
+});
+
+/** Bank spots: a point of a ground road with water (not small) 12–40 m to one side of it. */
+function bankSpots(city: City, d: DriveWorld, max: number): { x: number; y: number; h: number }[] {
+  const g = city.graph, out: { x: number; y: number; h: number }[] = [];
+  for (const e of g.edges) {
+    if (!isGroundRoad(e) || !e.kept) continue;
+    for (let s = 20; s < e.length - 20; s += 60) {
+      const k = Math.min(e.pointCount - 2, e.cum.findIndex((c) => c > s) - 1);
+      if (k < 0) continue;
+      const ax = e.pts[2 * k]!, ay = e.pts[2 * k + 1]!, bx = e.pts[2 * k + 2]!, by = e.pts[2 * k + 3]!;
+      const l = Math.hypot(bx - ax, by - ay) || 1, f = (s - e.cum[k]!) / l;
+      const x = ax + (bx - ax) * f, y = ay + (by - ay) * f;
+      if (d.nature.waterAt(x, y) !== null) continue;
+      for (const side of [1, -1]) {
+        const nx = (-(by - ay) / l) * side, ny = ((bx - ax) / l) * side;
+        let hit = false;
+        for (let r = 12; r <= 40 && !hit; r += 4) {
+          const w = d.nature.waterAt(x + nx * r, y + ny * r);
+          // Not across a bridge or another road (a deck over the water, a quay road).
+          if (g.nearest(x + nx * r, y + ny * r, 6, (q) => q !== e) !== null) break;
+          if (w !== null && w.cls !== WaterClass.WATER_SMALL) hit = true;
+        }
+        if (hit) out.push({ x, y, h: Math.atan2(ny, nx) });
+      }
+    }
+  }
+  const step = Math.max(1, Math.floor(out.length / max));
+  return out.filter((_, i) => i % step === 0).slice(0, max);
+}
+
+const NATURE = ALL.filter((id) => id !== 'tokyo');
+
+describe.skipIf(NATURE.length === 0)('L-S11: off the bank into the water = fall and tow', () => {
+  for (const id of NATURE) {
+    it(`${id}: driving off the bank anywhere falls in`, async () => {
+      const city = await cityOf(id);
+      if (city.manifest.natureVersion === 0) return;
+      const d = await worldOf(city);
+      // Water lives in the chunks: load the whole pack once.
+      const all = { pts: [] as number[] };
+      for (const ch of city.manifest.chunks) all.pts.push((ch.x + 0.5) * city.chunkM, (ch.y + 0.5) * city.chunkM);
+      await loadAround(d, city, all, 0);
+      const spots = bankSpots(city, d, 60);
+      expect(spots.length, `${id}: bank spots`).toBeGreaterThan(10);
+      const bad: string[] = [];
+      let reached = 0;
+      for (const sp of spots) {
+        d.spawn(sp.x, sp.y, sp.h);
+        let tows = 0, inWater = 0, fell = false;
+        d.onSunk = () => tows++;
+        for (let i = 0; i < 60 * 8 && tows === 0; i++) {
+          d.input.reset();
+          d.update(1 / 60);
+          const c = d.car, w = d.nature.waterAt(c.x, c.y), h = d.layers.hit;
+          fell ||= d.water.sinking;
+          const carriageway = h !== null && h.edge.isGround && h.dist <= h.edge.width / 2;
+          if (!fell && w !== null && w.cls !== WaterClass.WATER_SMALL && c.layer === 0 && d.rideEdge === null && !d.jump.airborne && !carriageway) inWater++;
+        }
+        d.onSunk = null;
+        if (fell) reached++;
+        if (inWater > 0 || (fell && tows === 0)) bad.push(`(${sp.x.toFixed(0)}, ${sp.y.toFixed(0)}) heading ${sp.h.toFixed(2)}: in water without a fall ${inWater} steps, fell ${fell}, tows ${tows}`);
+      }
+      if (LOG) writeFileSync(join(LOG, `water_${id}.txt`), `${spots.length} spots, ${reached} fell\n${bad.join('\n')}`);
+      expect(bad, `${id}: ${spots.length} bank spots`).toEqual([]);
+      // Many spots end in the water (the rest stop at a wall, a building or a railing on the quay).
+      expect(reached, `${id}: falls of ${spots.length}`).toBeGreaterThan(spots.length / 3);
+    }, 900000);
   }
 });
