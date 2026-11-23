@@ -2,9 +2,17 @@ import 'dart:async';
 
 import 'package:drive_core/drive_core.dart';
 import 'package:flutter/material.dart';
+import 'package:mg_api/mg_api.dart' show ArtIcon;
 import 'package:shared_gen/shared_gen.dart';
 
 import '../l10n/app_localizations.dart';
+
+/// Colour of the `wanted_star` glyph (specs/art.md v3 "Ikony UI"): full = `police.star`, empty
+/// = the same at alpha 0.35.
+Color wantedStarColor({required bool on}) {
+  const full = Color(Tokens.colorPoliceStar);
+  return on ? full : full.withValues(alpha: full.a * 0.35);
+}
 
 /// Police HUD (specs/police.md "Kreslení a HUD"): wanted badges top centre, a short reason toast
 /// the "roadblock" toast (specs/roadblock.md) and the "busted" card. Thin widget over the Police hooks.
@@ -108,10 +116,17 @@ class _PoliceHudState extends State<PoliceHud> {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         for (var i = 0; i < max; i++)
-                          Icon(
-                            Icons.star,
+                          // ui/wanted_star.png (specs/art.md v3): one glyph in police.star, the
+                          // empty ones at alpha 0.35 (as client W); else today's star.
+                          ArtIcon(
+                            'wanted_star',
                             size: 24,
-                            color: Color(i < _level ? Tokens.colorPoliceStar : Tokens.colorPoliceStarEmpty),
+                            color: wantedStarColor(on: i < _level),
+                            fallback: Icon(
+                              Icons.star,
+                              size: 24,
+                              color: Color(i < _level ? Tokens.colorPoliceStar : Tokens.colorPoliceStarEmpty),
+                            ),
                           ),
                       ],
                     ),

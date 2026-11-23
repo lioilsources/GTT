@@ -41,8 +41,9 @@ describe('hop rules (specs/hop.md)', () => {
       [vega, 1, 0, 0, v + 10, true],
       [vega, 0, 0, 0, v, false], // empty tank
       [vega, 3, 0.5, 0, v, false], // already in the air
-      [vega, 3, 0, 1, v, false], // on a bridge
-      [vega, 3, 0, -1, v, false], // in a tunnel
+      [vega, 3, 0, 1, v, true], // on a bridge (v2)
+      [vega, 3, 0, -1, v, true], // in a tunnel (v2)
+      [vega, 3, 0, 1, v - 0.01, false], // on a bridge, too slow
       [vega, 3, 0, 0, v - 0.01, false], // too slow
       [coupe, 3, 0, 0, v, false], // no hop
       [{ hop: { charges: 0 } }, 3, 0, 0, v, false],
