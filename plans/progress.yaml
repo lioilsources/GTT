@@ -207,7 +207,8 @@ items:
      evidence: "W hotovo: PR #218 (web/nature-n1), scénáře scenarios/nature (brake_*, water_fall, parkland_trees) ve W v toleranci; F čeká"}
   - {id: M5-S8, milestone: M5, name: "FL2 les a měkké stromy v obou klientech (F-073)", size: M, status: wip, started: 2026-11-23T08:00,
      evidence: "W hotovo: PR #218 (web/nature-n1), scénáře scenarios/flow/forest_200, tree_head_on ve W v toleranci; F čeká"}
-  - {id: M5-S9, milestone: M5, name: "T2 + N2 šikmý pohled ve W (F-074)", size: L, status: todo}
+  - {id: M5-S9, milestone: M5, name: "T2 + N2 šikmý pohled ve W (F-074)", size: L, status: čeká na Ol1na,
+     started: 2026-11-23T10:10, done: 2026-11-23T11:05, commit: 96cad26, evidence: "PR #250 (web/oblique-t2), #224: ?camera=chase nebo tlačítko ◎/◢; headless Metal 430×860 Praha Nerudova shora 47 draw / 81k tri, šikmo 60 / 111k, p50 16,7 ms, p95 16,9 ms, přepnutí max 18,6 ms; test/chase.test.ts; čeká na 60 fps na telefonech a Ol1nův pohled"}
   - {id: M5-S10, milestone: M5, name: "T3 ladění kopců Prahy, minihry z reliéfu, nejprudší ulice", size: M, status: todo}
   - {id: M5-S11, milestone: M5, name: "metro stuckmap a počítadlo zaseknutí", size: S, status: todo}
   - {id: M5-A1, milestone: M5, name: "citypack validate nyc, prague, tokyo s výškami a přírodou", size: S, status: todo}

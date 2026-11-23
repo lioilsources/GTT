@@ -652,7 +652,7 @@
   spec: specs/terrain.md@1
   lead: web
   flutter: todo
-  web: todo
+  web: done
 
 - id: F-075
   name: "Zkušební jízda v garáži a ladicí hotovost (dogfooding)"
