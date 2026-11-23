@@ -178,6 +178,14 @@ bench:
   search_back_m: 10.0           # route progress is searched in [s − back, s + ahead]
   search_ahead_m: 60.0
 
+# Mobile web smoke test in CI (specs/bench.md "Kouřový test", Prompts/05 L-S6); web only.
+smoke:
+  first_frame_ms: 30000         # budget from navigation to the first frame with the car's chunks
+  drag_px: 160                  # thumb dragged up (boost) for the drive step
+  drive_s: 5.0
+  min_drive_m: 20.0             # the car must cover at least this in drive_s
+  swipe_px: 320                 # feed swipe distance, up and down
+
 hud:
   street_labels_below_mps: 9.0
   street_label_radius_m: 70.0

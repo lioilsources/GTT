@@ -43,3 +43,24 @@ Výsledky se vkládají do `plans/BAKEOFF_REPORT.md`.
 ## Testy
 Oba klienti: trasa NYC se sestaví (5 úseků, délka 3–5 km) a autopilot ji v simulaci bez vykreslování
 dojede s `respawns` ≤ 2.
+
+## Kouřový test mobilního webu (CI)
+
+Plán `Prompts/05-METROPOLE_LAUNCH_PLAN.md` L-S6, jen W. `web/scripts/smoke.ts` (`npm run smoke`)
+spustí headless Chromium (Playwright) proti `vite preview` buildu a projde kroky ve dvou mobilních
+profilech: **Pixel 8a** 412 × 915, DPR 2,625 a **iPhone 12 mini** 375 × 812, DPR 3, oba
+s dotykem. Čísla jsou `smoke` v `content/tuning.yaml`; chování klienta se nemění.
+
+1. Kořenová URL s `?debug` se načte a `#loading` zmizí do `smoke.first_frame_ms`
+   (`metro.timing().firstFrameMs` od `performance.timeOrigin`).
+2. Úvodní karta (`specs/firstrun.md`), pokud je vidět, se zavře tlačítkem `introGo`.
+3. Dotyk: jeden prst tažený o `smoke.drag_px` nahoru a držený `smoke.drive_s`; auto ujede aspoň
+   `smoke.min_drive_m` (vzdálenost `metro.drive.car`).
+4. Tlačítko telefonu otevře feed; tah nahoru o `smoke.swipe_px` přepne kartu (jiné jméno
+   uprostřed feedu) a tah dolů vrátí původní kartu.
+5. Přepnutí měst New York → Praha → Tokio (`?city=<id>&debug&nointro`): každé se načte do
+   `smoke.first_frame_ms`.
+6. Konzole bez chyb (`console.error`, nezachycené výjimky) v celém průchodu; varování nevadí.
+
+Rozpočet `first_frame_ms` je změřený na CI runneru (softwarové WebGL) se zálohou; na telefonu
+platí cíle z D1 a M0-A1.
