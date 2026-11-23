@@ -433,7 +433,10 @@ export class DriveWorld {
     car.gripScale = this.gripScale * eff.grip * k;
     car.brakeScale = eff.grip;
     car.powerScale = eff.speed;
-    car.drive(this.input, 1 / this.tuning.drive.stepHz, this.tuning.speedMps.cruise * eff.speed, this.tuning.speedMps.topDefault * eff.speed);
+    // Slope pull along the heading for the cruise hold (specs/drive.md v2 step 2), same a_svah.
+    const h = car.heading;
+    const slopeF = this.terrain.enabled ? this.slopeA.x * Math.cos(h) + this.slopeA.y * Math.sin(h) : 0;
+    car.drive(this.input, 1 / this.tuning.drive.stepHz, this.tuning.speedMps.cruise * eff.speed, this.tuning.speedMps.topDefault * eff.speed, slopeF);
     if (!this.terrain.enabled) return;
     if (car.speed < this.tuning.drive.stopSpeedMps && car.accel === 0) return;
     const m = car.body.getMass();

@@ -64,8 +64,15 @@ describe.skipIf(!existsSync(pack))('NYC citypack in client W', () => {
   it('auto-throttles to cruise speed and brakes to a stop', () => {
     const d = world();
     for (let i = 0; i < 60 * 8; i++) d.update(1 / 60);
-    expect(d.car.speed).toBeGreaterThan(tuning.speedMps.cruise * 0.85);
-    expect(d.car.speed).toBeLessThan(tuning.speedMps.cruise + tuning.drive.overspeedMps + 1);
+    // Flat: steady at cruise (specs/drive.md v2, ± 1.5 m/s over 2 s).
+    let lo = Infinity, hi = -Infinity;
+    for (let i = 0; i < 60 * 2; i++) {
+      d.update(1 / 60);
+      lo = Math.min(lo, d.car.speed);
+      hi = Math.max(hi, d.car.speed);
+    }
+    expect(lo).toBeGreaterThan(tuning.speedMps.cruise - 1.5);
+    expect(hi).toBeLessThan(tuning.speedMps.cruise + 1.5);
     d.input.brake = 1;
     let t = 0;
     while (d.car.forwardSpeed > tuning.drive.brakeMinMps && t < 10) {
