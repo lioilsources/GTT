@@ -1351,6 +1351,14 @@ export class TuningMinigames {
   readonly srdce: TuningMinigamesSrdce;
   readonly kostky: TuningMinigamesKostky;
   readonly prase: TuningMinigamesPrase;
+  /** M2-S9 batch C (flick, arcade, sport); integer physics in specs/minigames/fyzika.md */
+  readonly kulecnik: TuningMinigamesKulecnik;
+  readonly bowling: TuningMinigamesBowling;
+  readonly minigolf: TuningMinigamesMinigolf;
+  readonly had: TuningMinigamesHad;
+  readonly cihly: TuningMinigamesCihly;
+  readonly krtek: TuningMinigamesKrtek;
+  readonly hokej: TuningMinigamesHokej;
   readonly desetitisic: TuningMinigamesDesetitisic;
   readonly sipky: TuningMinigamesSipky;
   readonly koulena: TuningMinigamesKoulena;
@@ -1377,6 +1385,13 @@ export class TuningMinigames {
     this.srdce = new TuningMinigamesSrdce(r.sub('srdce'));
     this.kostky = new TuningMinigamesKostky(r.sub('kostky'));
     this.prase = new TuningMinigamesPrase(r.sub('prase'));
+    this.kulecnik = new TuningMinigamesKulecnik(r.sub('kulecnik'));
+    this.bowling = new TuningMinigamesBowling(r.sub('bowling'));
+    this.minigolf = new TuningMinigamesMinigolf(r.sub('minigolf'));
+    this.had = new TuningMinigamesHad(r.sub('had'));
+    this.cihly = new TuningMinigamesCihly(r.sub('cihly'));
+    this.krtek = new TuningMinigamesKrtek(r.sub('krtek'));
+    this.hokej = new TuningMinigamesHokej(r.sub('hokej'));
     this.desetitisic = new TuningMinigamesDesetitisic(r.sub('desetitisic'));
     this.sipky = new TuningMinigamesSipky(r.sub('sipky'));
     this.koulena = new TuningMinigamesKoulena(r.sub('koulena'));
@@ -1404,6 +1419,13 @@ export class TuningMinigames {
       srdce: this.srdce.toJson(),
       kostky: this.kostky.toJson(),
       prase: this.prase.toJson(),
+      kulecnik: this.kulecnik.toJson(),
+      bowling: this.bowling.toJson(),
+      minigolf: this.minigolf.toJson(),
+      had: this.had.toJson(),
+      cihly: this.cihly.toJson(),
+      krtek: this.krtek.toJson(),
+      hokej: this.hokej.toJson(),
       desetitisic: this.desetitisic.toJson(),
       sipky: this.sipky.toJson(),
       koulena: this.koulena.toJson(),
@@ -1818,6 +1840,469 @@ export class TuningMinigamesPrase {
       star_margins: this.starMargins,
       time_cap_s: this.timeCapS,
       ai_think_s: this.aiThinkS,
+    };
+  }
+}
+
+/** M2-S9 batch C (flick, arcade, sport); integer physics in specs/minigames/fyzika.md */
+export class TuningMinigamesKulecnik {
+  /** u = 0.01 mm, portrait table, the player breaks from the bottom */
+  tableW: number;
+  tableH: number;
+  ballR: number;
+  /** (x, y, capture radius) */
+  pockets: number[];
+  rackDx: number;
+  rackDy: number;
+  rack: number[];
+  /** u per step at power 100, 240 steps/s */
+  maxSpeed: number;
+  dec: number;
+  /** per mille */
+  eBall: number;
+  eCushion: number;
+  maxSteps: number;
+  aiCandidates: number[];
+  aiScatter: number[];
+  aiPowerBase: number;
+  aiPowerPerM: number;
+  /** AI balls left on the table for 3 and 2 stars */
+  starLeft: number[];
+  stepsPerFrame: number;
+  timeCapS: number;
+  aiThinkS: number;
+
+  constructor(r: R) {
+    this.tableW = r.i('table_w');
+    this.tableH = r.i('table_h');
+    this.ballR = r.i('ball_r');
+    this.pockets = r.il('pockets');
+    this.rackDx = r.i('rack_dx');
+    this.rackDy = r.i('rack_dy');
+    this.rack = r.il('rack');
+    this.maxSpeed = r.i('max_speed');
+    this.dec = r.i('dec');
+    this.eBall = r.i('e_ball');
+    this.eCushion = r.i('e_cushion');
+    this.maxSteps = r.i('max_steps');
+    this.aiCandidates = r.il('ai_candidates');
+    this.aiScatter = r.il('ai_scatter');
+    this.aiPowerBase = r.i('ai_power_base');
+    this.aiPowerPerM = r.i('ai_power_per_m');
+    this.starLeft = r.il('star_left');
+    this.stepsPerFrame = r.i('steps_per_frame');
+    this.timeCapS = r.i('time_cap_s');
+    this.aiThinkS = r.d('ai_think_s');
+  }
+
+  toJson(): Record<string, unknown> {
+    return {
+      table_w: this.tableW,
+      table_h: this.tableH,
+      ball_r: this.ballR,
+      pockets: this.pockets,
+      rack_dx: this.rackDx,
+      rack_dy: this.rackDy,
+      rack: this.rack,
+      max_speed: this.maxSpeed,
+      dec: this.dec,
+      e_ball: this.eBall,
+      e_cushion: this.eCushion,
+      max_steps: this.maxSteps,
+      ai_candidates: this.aiCandidates,
+      ai_scatter: this.aiScatter,
+      ai_power_base: this.aiPowerBase,
+      ai_power_per_m: this.aiPowerPerM,
+      star_left: this.starLeft,
+      steps_per_frame: this.stepsPerFrame,
+      time_cap_s: this.timeCapS,
+      ai_think_s: this.aiThinkS,
+    };
+  }
+}
+
+export class TuningMinigamesBowling {
+  /** u = 0.01 mm */
+  laneW: number;
+  headY: number;
+  pinDx: number;
+  pinDy: number;
+  ballR: number;
+  ballM: number;
+  pinR: number;
+  pinM: number;
+  minSpeed: number;
+  maxSpeed: number;
+  pinDec: number;
+  ePin: number;
+  eWall: number;
+  deckY0: number;
+  deckY1: number;
+  knock: number;
+  maxSteps: number;
+  scatter: number[];
+  starScores: number[];
+  stepsPerFrame: number;
+  timeCapS: number;
+
+  constructor(r: R) {
+    this.laneW = r.i('lane_w');
+    this.headY = r.i('head_y');
+    this.pinDx = r.i('pin_dx');
+    this.pinDy = r.i('pin_dy');
+    this.ballR = r.i('ball_r');
+    this.ballM = r.i('ball_m');
+    this.pinR = r.i('pin_r');
+    this.pinM = r.i('pin_m');
+    this.minSpeed = r.i('min_speed');
+    this.maxSpeed = r.i('max_speed');
+    this.pinDec = r.i('pin_dec');
+    this.ePin = r.i('e_pin');
+    this.eWall = r.i('e_wall');
+    this.deckY0 = r.i('deck_y0');
+    this.deckY1 = r.i('deck_y1');
+    this.knock = r.i('knock');
+    this.maxSteps = r.i('max_steps');
+    this.scatter = r.il('scatter');
+    this.starScores = r.il('star_scores');
+    this.stepsPerFrame = r.i('steps_per_frame');
+    this.timeCapS = r.i('time_cap_s');
+  }
+
+  toJson(): Record<string, unknown> {
+    return {
+      lane_w: this.laneW,
+      head_y: this.headY,
+      pin_dx: this.pinDx,
+      pin_dy: this.pinDy,
+      ball_r: this.ballR,
+      ball_m: this.ballM,
+      pin_r: this.pinR,
+      pin_m: this.pinM,
+      min_speed: this.minSpeed,
+      max_speed: this.maxSpeed,
+      pin_dec: this.pinDec,
+      e_pin: this.ePin,
+      e_wall: this.eWall,
+      deck_y0: this.deckY0,
+      deck_y1: this.deckY1,
+      knock: this.knock,
+      max_steps: this.maxSteps,
+      scatter: this.scatter,
+      star_scores: this.starScores,
+      steps_per_frame: this.stepsPerFrame,
+      time_cap_s: this.timeCapS,
+    };
+  }
+}
+
+export class TuningMinigamesMinigolf {
+  /** holes in mm: [w, h, par, sx, sy, cx, cy, nRect, rects.., nCirc, circles.., nSand, rects.., nWater, rects..] */
+  h1: number[];
+  h2: number[];
+  h3: number[];
+  h4: number[];
+  h5: number[];
+  h6: number[];
+  /** u = 0.01 mm */
+  ballR: number;
+  cupR: number;
+  cupSpeed: number;
+  maxSpeed: number;
+  dec: number;
+  sandDec: number;
+  eWall: number;
+  eBumper: number;
+  maxSteps: number;
+  maxStrokes: number;
+  scatter: number[];
+  /** strokes over par for 3, 2, 1 stars */
+  starOver: number[];
+  stepsPerFrame: number;
+  timeCapS: number;
+
+  constructor(r: R) {
+    this.h1 = r.il('h1');
+    this.h2 = r.il('h2');
+    this.h3 = r.il('h3');
+    this.h4 = r.il('h4');
+    this.h5 = r.il('h5');
+    this.h6 = r.il('h6');
+    this.ballR = r.i('ball_r');
+    this.cupR = r.i('cup_r');
+    this.cupSpeed = r.i('cup_speed');
+    this.maxSpeed = r.i('max_speed');
+    this.dec = r.i('dec');
+    this.sandDec = r.i('sand_dec');
+    this.eWall = r.i('e_wall');
+    this.eBumper = r.i('e_bumper');
+    this.maxSteps = r.i('max_steps');
+    this.maxStrokes = r.i('max_strokes');
+    this.scatter = r.il('scatter');
+    this.starOver = r.il('star_over');
+    this.stepsPerFrame = r.i('steps_per_frame');
+    this.timeCapS = r.i('time_cap_s');
+  }
+
+  toJson(): Record<string, unknown> {
+    return {
+      h1: this.h1,
+      h2: this.h2,
+      h3: this.h3,
+      h4: this.h4,
+      h5: this.h5,
+      h6: this.h6,
+      ball_r: this.ballR,
+      cup_r: this.cupR,
+      cup_speed: this.cupSpeed,
+      max_speed: this.maxSpeed,
+      dec: this.dec,
+      sand_dec: this.sandDec,
+      e_wall: this.eWall,
+      e_bumper: this.eBumper,
+      max_steps: this.maxSteps,
+      max_strokes: this.maxStrokes,
+      scatter: this.scatter,
+      star_over: this.starOver,
+      steps_per_frame: this.stepsPerFrame,
+      time_cap_s: this.timeCapS,
+    };
+  }
+}
+
+export class TuningMinigamesHad {
+  w: number;
+  h: number;
+  startInterval: number[];
+  minInterval: number[];
+  speedupEvery: number;
+  foodPoints: number;
+  starScores: number[];
+  tickHz: number;
+  timeCapS: number;
+
+  constructor(r: R) {
+    this.w = r.i('w');
+    this.h = r.i('h');
+    this.startInterval = r.il('start_interval');
+    this.minInterval = r.il('min_interval');
+    this.speedupEvery = r.i('speedup_every');
+    this.foodPoints = r.i('food_points');
+    this.starScores = r.il('star_scores');
+    this.tickHz = r.i('tick_hz');
+    this.timeCapS = r.i('time_cap_s');
+  }
+
+  toJson(): Record<string, unknown> {
+    return {
+      w: this.w,
+      h: this.h,
+      start_interval: this.startInterval,
+      min_interval: this.minInterval,
+      speedup_every: this.speedupEvery,
+      food_points: this.foodPoints,
+      star_scores: this.starScores,
+      tick_hz: this.tickHz,
+      time_cap_s: this.timeCapS,
+    };
+  }
+}
+
+export class TuningMinigamesCihly {
+  w: number;
+  h: number;
+  ballR: number;
+  paddleY: number;
+  paddleH: number;
+  /** half width per difficulty */
+  paddleW: number[];
+  speed: number[];
+  maxVxPct: number;
+  serveTicks: number;
+  lives: number;
+  rows: number;
+  cols: number;
+  brickX0: number;
+  brickTop: number;
+  brickW: number;
+  brickH: number;
+  brickGap: number;
+  rowPoints: number[];
+  livesBonus: number;
+  starScores: number[];
+  tickHz: number;
+  timeCapS: number;
+
+  constructor(r: R) {
+    this.w = r.i('w');
+    this.h = r.i('h');
+    this.ballR = r.i('ball_r');
+    this.paddleY = r.i('paddle_y');
+    this.paddleH = r.i('paddle_h');
+    this.paddleW = r.il('paddle_w');
+    this.speed = r.il('speed');
+    this.maxVxPct = r.i('max_vx_pct');
+    this.serveTicks = r.i('serve_ticks');
+    this.lives = r.i('lives');
+    this.rows = r.i('rows');
+    this.cols = r.i('cols');
+    this.brickX0 = r.i('brick_x0');
+    this.brickTop = r.i('brick_top');
+    this.brickW = r.i('brick_w');
+    this.brickH = r.i('brick_h');
+    this.brickGap = r.i('brick_gap');
+    this.rowPoints = r.il('row_points');
+    this.livesBonus = r.i('lives_bonus');
+    this.starScores = r.il('star_scores');
+    this.tickHz = r.i('tick_hz');
+    this.timeCapS = r.i('time_cap_s');
+  }
+
+  toJson(): Record<string, unknown> {
+    return {
+      w: this.w,
+      h: this.h,
+      ball_r: this.ballR,
+      paddle_y: this.paddleY,
+      paddle_h: this.paddleH,
+      paddle_w: this.paddleW,
+      speed: this.speed,
+      max_vx_pct: this.maxVxPct,
+      serve_ticks: this.serveTicks,
+      lives: this.lives,
+      rows: this.rows,
+      cols: this.cols,
+      brick_x0: this.brickX0,
+      brick_top: this.brickTop,
+      brick_w: this.brickW,
+      brick_h: this.brickH,
+      brick_gap: this.brickGap,
+      row_points: this.rowPoints,
+      lives_bonus: this.livesBonus,
+      star_scores: this.starScores,
+      tick_hz: this.tickHz,
+      time_cap_s: this.timeCapS,
+    };
+  }
+}
+
+export class TuningMinigamesKrtek {
+  holes: number;
+  gameTicks: number;
+  firstSpawn: number;
+  spawnEvery: number[];
+  upTicks: number[];
+  goldPct: number;
+  bombPct: number[];
+  points: number;
+  goldPoints: number;
+  bombPenalty: number;
+  starScores: number[];
+  tickHz: number;
+  timeCapS: number;
+
+  constructor(r: R) {
+    this.holes = r.i('holes');
+    this.gameTicks = r.i('game_ticks');
+    this.firstSpawn = r.i('first_spawn');
+    this.spawnEvery = r.il('spawn_every');
+    this.upTicks = r.il('up_ticks');
+    this.goldPct = r.i('gold_pct');
+    this.bombPct = r.il('bomb_pct');
+    this.points = r.i('points');
+    this.goldPoints = r.i('gold_points');
+    this.bombPenalty = r.i('bomb_penalty');
+    this.starScores = r.il('star_scores');
+    this.tickHz = r.i('tick_hz');
+    this.timeCapS = r.i('time_cap_s');
+  }
+
+  toJson(): Record<string, unknown> {
+    return {
+      holes: this.holes,
+      game_ticks: this.gameTicks,
+      first_spawn: this.firstSpawn,
+      spawn_every: this.spawnEvery,
+      up_ticks: this.upTicks,
+      gold_pct: this.goldPct,
+      bomb_pct: this.bombPct,
+      points: this.points,
+      gold_points: this.goldPoints,
+      bomb_penalty: this.bombPenalty,
+      star_scores: this.starScores,
+      tick_hz: this.tickHz,
+      time_cap_s: this.timeCapS,
+    };
+  }
+}
+
+export class TuningMinigamesHokej {
+  w: number;
+  h: number;
+  puckR: number;
+  malletR: number;
+  goalHalf: number;
+  eWall: number;
+  eMallet: number;
+  dec: number;
+  maxPuck: number;
+  malletSpeed: number;
+  aiSpeed: number[];
+  aiReact: number[];
+  aiDefY: number;
+  homeY: number;
+  serveY: number;
+  goals: number;
+  goalPause: number;
+  starMargins: number[];
+  tickHz: number;
+  timeCapS: number;
+
+  constructor(r: R) {
+    this.w = r.i('w');
+    this.h = r.i('h');
+    this.puckR = r.i('puck_r');
+    this.malletR = r.i('mallet_r');
+    this.goalHalf = r.i('goal_half');
+    this.eWall = r.i('e_wall');
+    this.eMallet = r.i('e_mallet');
+    this.dec = r.i('dec');
+    this.maxPuck = r.i('max_puck');
+    this.malletSpeed = r.i('mallet_speed');
+    this.aiSpeed = r.il('ai_speed');
+    this.aiReact = r.il('ai_react');
+    this.aiDefY = r.i('ai_def_y');
+    this.homeY = r.i('home_y');
+    this.serveY = r.i('serve_y');
+    this.goals = r.i('goals');
+    this.goalPause = r.i('goal_pause');
+    this.starMargins = r.il('star_margins');
+    this.tickHz = r.i('tick_hz');
+    this.timeCapS = r.i('time_cap_s');
+  }
+
+  toJson(): Record<string, unknown> {
+    return {
+      w: this.w,
+      h: this.h,
+      puck_r: this.puckR,
+      mallet_r: this.malletR,
+      goal_half: this.goalHalf,
+      e_wall: this.eWall,
+      e_mallet: this.eMallet,
+      dec: this.dec,
+      max_puck: this.maxPuck,
+      mallet_speed: this.malletSpeed,
+      ai_speed: this.aiSpeed,
+      ai_react: this.aiReact,
+      ai_def_y: this.aiDefY,
+      home_y: this.homeY,
+      serve_y: this.serveY,
+      goals: this.goals,
+      goal_pause: this.goalPause,
+      star_margins: this.starMargins,
+      tick_hz: this.tickHz,
+      time_cap_s: this.timeCapS,
     };
   }
 }

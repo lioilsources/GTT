@@ -277,6 +277,140 @@ minigames:
     star_margins: [40, 15]
     time_cap_s: 300
     ai_think_s: 0.6
+  # M2-S9 batch C (flick, arcade, sport); integer physics in specs/minigames/fyzika.md
+  kulecnik:
+    table_w: 99000              # u = 0.01 mm, portrait table, the player breaks from the bottom
+    table_h: 198000
+    ball_r: 2860
+    pockets: [0, 0, 5600, 99000, 0, 5600, 0, 99000, 4800, 99000, 99000, 4800, 0, 198000, 5600, 99000, 198000, 5600]  # (x, y, capture radius)
+    rack_dx: 5740
+    rack_dy: 4972
+    rack: [1, 9, 2, 10, 8, 3, 11, 7, 14, 4, 5, 13, 15, 6, 12]
+    max_speed: 2500             # u per step at power 100, 240 steps/s
+    dec: 4
+    e_ball: 950                 # per mille
+    e_cushion: 750
+    max_steps: 4800
+    ai_candidates: [3, 6, 12, 18, 24]
+    ai_scatter: [3500, 2200, 1400, 800, 400]
+    ai_power_base: 25
+    ai_power_per_m: 30
+    star_left: [4, 2]           # AI balls left on the table for 3 and 2 stars
+    steps_per_frame: 4
+    time_cap_s: 600
+    ai_think_s: 0.8
+  bowling:
+    lane_w: 106600              # u = 0.01 mm
+    head_y: 1829000
+    pin_dx: 15240
+    pin_dy: 26396
+    ball_r: 10900
+    ball_m: 70
+    pin_r: 6050
+    pin_m: 15
+    min_speed: 2000
+    max_speed: 3600
+    pin_dec: 12
+    e_pin: 700
+    e_wall: 500
+    deck_y0: 1799000
+    deck_y1: 1950000
+    knock: 1500
+    max_steps: 1500
+    scatter: [600, 900, 1200, 1500, 1800]
+    star_scores: [170, 130, 90]
+    steps_per_frame: 4
+    time_cap_s: 480
+  minigolf:
+    # holes in mm: [w, h, par, sx, sy, cx, cy, nRect, rects.., nCirc, circles.., nSand, rects.., nWater, rects..]
+    h1: [1000, 3000, 2, 500, 300, 500, 2600, 0, 0, 0, 0]
+    h2: [1000, 3000, 2, 500, 300, 500, 2600, 1, 350, 1300, 650, 1500, 0, 0, 0]
+    h3: [1600, 3000, 3, 300, 300, 1300, 2600, 1, 600, 0, 700, 2000, 0, 0, 0]
+    h4: [1200, 3000, 3, 600, 300, 600, 2700, 0, 3, 400, 1500, 120, 800, 1500, 120, 600, 2100, 120, 0, 0]
+    h5: [1200, 3200, 3, 600, 300, 300, 2800, 1, 700, 2300, 1200, 2400, 0, 1, 300, 1400, 900, 1900, 0]
+    h6: [1200, 3400, 3, 600, 300, 600, 3000, 2, 480, 1500, 500, 1800, 700, 1500, 720, 1800, 0, 0, 2, 0, 1500, 480, 1800, 720, 1500, 1200, 1800]
+    ball_r: 2135                # u = 0.01 mm
+    cup_r: 5400
+    cup_speed: 350
+    max_speed: 800
+    dec: 1
+    sand_dec: 6
+    e_wall: 700
+    e_bumper: 800
+    max_steps: 3600
+    max_strokes: 6
+    scatter: [500, 900, 1300, 1700, 2100]
+    star_over: [2, 5, 9]        # strokes over par for 3, 2, 1 stars
+    steps_per_frame: 4
+    time_cap_s: 480
+  had:
+    w: 15
+    h: 21
+    start_interval: [14, 12, 10, 9, 8]
+    min_interval: [8, 7, 6, 5, 4]
+    speedup_every: 5
+    food_points: 10
+    star_scores: [250, 150, 80]
+    tick_hz: 60
+    time_cap_s: 300
+  cihly:
+    w: 10000
+    h: 16000
+    ball_r: 120
+    paddle_y: 1200
+    paddle_h: 150
+    paddle_w: [1300, 1150, 1000, 900, 800]   # half width per difficulty
+    speed: [70, 80, 90, 100, 110]
+    max_vx_pct: 80
+    serve_ticks: 60
+    lives: 3
+    rows: 6
+    cols: 8
+    brick_x0: 80
+    brick_top: 14500
+    brick_w: 1150
+    brick_h: 450
+    brick_gap: 80
+    row_points: [70, 70, 50, 50, 30, 10]
+    lives_bonus: 100
+    star_scores: [2400, 1600, 900]
+    tick_hz: 60
+    time_cap_s: 360
+  krtek:
+    holes: 9
+    game_ticks: 3600
+    first_spawn: 30
+    spawn_every: [50, 42, 36, 30, 26]
+    up_ticks: [80, 68, 56, 46, 38]
+    gold_pct: 10
+    bomb_pct: [0, 5, 8, 10, 12]
+    points: 10
+    gold_points: 30
+    bomb_penalty: 20
+    star_scores: [700, 450, 250]
+    tick_hz: 60
+    time_cap_s: 120
+  hokej:
+    w: 6000
+    h: 10000
+    puck_r: 250
+    mallet_r: 350
+    goal_half: 900
+    e_wall: 900
+    e_mallet: 900
+    dec: 1
+    max_puck: 450
+    mallet_speed: 600
+    ai_speed: [100, 140, 180, 220, 260]
+    ai_react: [16, 12, 8, 5, 3]
+    ai_def_y: 1200
+    home_y: 1200
+    serve_y: 1500
+    goals: 7
+    goal_pause: 60
+    star_margins: [5, 3]
+    tick_hz: 60
+    time_cap_s: 360
   desetitisic:
     target: 5000
     max_rounds: 10

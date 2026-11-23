@@ -31,6 +31,14 @@ spots:
   - {id: srdcova_dama, kind: cafe, name: Kavárna U Srdcové dámy, lat: 50.07550, lon: 14.44400, minigame: srdce}
   - {id: sest_kostek, kind: bar, name: Hostinec U Šesti kostek, lat: 50.07300, lon: 14.40600, minigame: kostky}
   - {id: grebovka_dice, kind: park, name: Havlíčkovy sady, lat: 50.06950, lon: 14.44750, minigame: prase}
+  # M2-S9 batch C minigames (flick, arcade, sport); venues are fictional (R10)
+  - {id: bila_koule, kind: bar, name: Herna U Bílé koule, lat: 50.08350, lon: 14.45800, minigame: kulecnik}
+  - {id: andel_bowling, kind: cafe, name: Bowling U Anděla, lat: 50.07100, lon: 14.40400, minigame: bowling}
+  - {id: zofin_minigolf, kind: park, name: Minigolf na Slovanském ostrově, lat: 50.07900, lon: 14.41300, minigame: minigolf}
+  - {id: herna_pixel, kind: cafe, name: Herna Pixel, lat: 50.07600, lon: 14.43800, minigame: had}
+  - {id: karlin_automaty, kind: cafe, name: Automaty Karlín, lat: 50.09200, lon: 14.45000, minigame: cihly}
+  - {id: letna_pout, kind: park, name: Letenská pouť, lat: 50.09600, lon: 14.42300, minigame: krtek}
+  - {id: herna_u_puku, kind: cafe, name: Herna U Puku, lat: 50.10100, lon: 14.43800, minigame: hokej}
   # Player garage (specs/cars.md)
   - {id: novomestska_garage, kind: garage, name: Parkovací dům Spálená, lat: 50.08000, lon: 14.42050}
   # Ringing phone booths (specs/booths.md): street corners, no minigame.
