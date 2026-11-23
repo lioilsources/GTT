@@ -189,11 +189,40 @@ class Palette {
     inks: [for (final c in Tokens.colorCityPragueInks) Color(c)],
   );
 
+  static final _tokyo = Palette._(
+    land: const Color(Tokens.colorCityTokyoLand),
+    water: const Color(Tokens.colorCityTokyoWater),
+    park: const Color(Tokens.colorCityTokyoPark),
+    plaza: const Color(Tokens.colorCityTokyoPlaza),
+    rail: const Color(Tokens.colorCityTokyoRail),
+    pedestrian: const Color(Tokens.colorCityTokyoPedestrian),
+    sidewalk: const Color(Tokens.colorCityTokyoSidewalk),
+    asphalt: const Color(Tokens.colorCityTokyoAsphalt),
+    alley: const Color(Tokens.colorCityTokyoAlley),
+    marking: const Color(Tokens.colorCityTokyoMarking),
+    centerLine: const Color(Tokens.colorCityTokyoCenterLine),
+    bridgeDeck: const Color(Tokens.colorCityTokyoBridgeDeck),
+    bridgeEdge: const Color(Tokens.colorCityTokyoBridgeEdge),
+    tunnel: const Color(Tokens.colorCityTokyoTunnel),
+    landmark: const Color(Tokens.colorCityTokyoLandmark),
+    facades: [for (final c in Tokens.colorCityTokyoFacades) Color(c)],
+    roofLight: Tokens.lightDayRoofLight,
+    sunX: Tokens.lightDaySunX,
+    sunY: Tokens.lightDaySunY,
+    ambient: Tokens.lightDayAmbient,
+    night: false,
+    shadow: const Color(Tokens.colorCityTokyoShadow),
+    roof: const Color(Tokens.colorCityTokyoRoof),
+    roofEdge: const Color(Tokens.colorCityTokyoRoofEdge),
+    castShadow: const Color(Tokens.colorCityTokyoCastShadow),
+  );
+
   /// Day palette of the city [cityId] (manifest id, specs/style.md): `color.city.<id>` with the
   /// shared `light.day`; a city without a skin gets [day]. Night stays [nightPalette] for all.
   static Palette forCity(String cityId) => switch (cityId) {
     'nyc' => _nyc,
     'prague' => _prague,
+    'tokyo' => _tokyo,
     _ => day,
   };
 
@@ -227,10 +256,5 @@ class Palette {
 /// it is day, and the city has inks to print with. Unknown cities never get it.
 bool risographEnabled(TuningStyle style, String cityId, {required bool night}) {
   if (night) return false;
-  final on = switch (cityId) {
-    'nyc' => style.risograph.nyc,
-    'prague' => style.risograph.prague,
-    _ => false,
-  };
-  return on && Palette.forCity(cityId).inks.isNotEmpty;
+  return style.risograph.toJson()[cityId] == true && Palette.forCity(cityId).inks.isNotEmpty;
 }

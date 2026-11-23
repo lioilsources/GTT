@@ -67,6 +67,7 @@ class TaxiWorld {
     required this.lensDm,
     required this.straightPct,
     required this.searchM,
+    this.leftHand = false,
   });
   final RoadGraph graph;
   final RouteGraph route;
@@ -75,6 +76,9 @@ class TaxiWorld {
   /// feed.straight_pct, nav.search_m.
   final int straightPct;
   final double searchM;
+
+  /// Manifest `driveSide == 'left'` (specs/cities.md v2): passengers wait on the left sidewalk.
+  final bool leftHand;
 }
 
 /// One 4-minute shift. [update] once per frame with the world dt (scaled like driving).
@@ -137,7 +141,7 @@ class TaxiShift {
     final stopped = car.speed <= t.stopSpeedMps && car.layer == 0;
     if (state.phase == 'wait') {
       if (passenger == null && dests.isNotEmpty) {
-        passenger = spawnPassenger(world.graph, car, t);
+        passenger = spawnPassenger(world.graph, car, t, leftHand: world.leftHand);
         if (passenger case final p?) ev.add(TaxiSpawn(p));
       }
       final p = passenger;
@@ -170,8 +174,9 @@ class TaxiShift {
 
 /// The next passenger: from the car's heading in 45° steps (0, +45, −45, +90 …), the nearest kept
 /// ground edge to the point (pickup_min_m + pickup_max_m) / 2 away that lies pickup_min_m … pickup_max_m
-/// from the car; the passenger stands curb_m beyond the corridor on the right of the edge direction.
-TaxiPassenger? spawnPassenger(RoadGraph g, TaxiPose car, TuningMinigamesTaxi t) {
+/// from the car; the passenger stands curb_m beyond the corridor on the right of the edge direction
+/// (on the left when [leftHand], specs/cities.md v2).
+TaxiPassenger? spawnPassenger(RoadGraph g, TaxiPose car, TuningMinigamesTaxi t, {bool leftHand = false}) {
   final mid = (t.pickupMinM + t.pickupMaxM) / 2, search = (t.pickupMaxM - t.pickupMinM) / 2;
   for (final k in const [0, 1, -1, 2, -2, 3, -3, 4]) {
     final a = car.heading + k * math.pi / 4;
@@ -185,8 +190,9 @@ TaxiPassenger? spawnPassenger(RoadGraph g, TaxiPose car, TuningMinigamesTaxi t) 
     final d = math.sqrt((h.x - car.x) * (h.x - car.x) + (h.y - car.y) * (h.y - car.y));
     if (d < t.pickupMinM || d > t.pickupMaxM) continue;
     final half = h.edge.width / 2;
-    // Right-hand normal of the segment direction.
-    final nx = h.dirY, ny = -h.dirX;
+    // Right-hand normal of the segment direction; the left one for left-hand traffic.
+    final side = leftHand ? -1.0 : 1.0;
+    final nx = h.dirY * side, ny = -h.dirX * side;
     return TaxiPassenger(
       h.x + nx * (half + t.curbM),
       h.y + ny * (half + t.curbM),

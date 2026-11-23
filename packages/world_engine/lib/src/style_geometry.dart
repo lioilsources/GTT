@@ -13,20 +13,12 @@ import 'model.dart';
 /// Whether buildings cast ground shadows in [cityId] (`style.cast_shadow.<city>`), by day only.
 bool castShadowOn(TuningStyle style, String cityId, {required bool night}) {
   if (night) return false;
-  return switch (cityId) {
-    'nyc' => style.castShadow.nyc,
-    'prague' => style.castShadow.prague,
-    _ => false,
-  };
+  return style.castShadow.toJson()[cityId] == true;
 }
 
 /// Whether junctions of [cityId] get zebra crossings (`style.crosswalks.<city>`). The meshes are
 /// built per city; the renderer leaves them out at night.
-bool crosswalksOn(TuningStyle style, String cityId) => switch (cityId) {
-  'nyc' => style.crosswalks.nyc,
-  'prague' => style.crosswalks.prague,
-  _ => false,
-};
+bool crosswalksOn(TuningStyle style, String cityId) => style.crosswalks.toJson()[cityId] == true;
 
 /// Shadow direction `s = −(sunX, sunY) / |(sunX, sunY)|`; zero when the sun has no horizontal part.
 (double, double) shadowDirection(double sunX, double sunY) {

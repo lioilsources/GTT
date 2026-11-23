@@ -26,6 +26,7 @@ class TaxiController extends ChangeNotifier implements WorldMinigame {
       lensDm: edgeLengthsDm(city.graphPb),
       straightPct: tuning.feed.straightPct,
       searchM: tuning.nav.searchM,
+      leftHand: city.leftHand,
     );
     dests = taxiDests(city.graph, [
       for (final l in city.landmarks.items) (id: l.id, name: l.name, x: l.x, y: l.y, hero: l.hero),

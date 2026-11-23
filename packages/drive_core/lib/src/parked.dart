@@ -44,7 +44,8 @@ List<String> parkedModels(Tuning tuning, Map<String, CarSpec> specs, String city
 
 /// Places parked cars for chunk (cx, cy) of city [cityId] with the shared PRNG; every attempt draws
 /// four numbers (segment, position, side, model) so both clients consume the stream identically.
-/// Port of web/src/cars/parked.ts.
+/// [leftHand] (manifest `driveSide == 'left'`, specs/cities.md v2) mirrors the heading: a car left of
+/// the segment direction faces along it, one on the right +π. Port of web/src/cars/parked.ts.
 List<ParkedCar> generateParked(
   RoadGraph graph,
   int cx,
@@ -55,6 +56,7 @@ List<ParkedCar> generateParked(
   List<({double x, double y})> avoid,
   ({double x, double y}) player, {
   required String cityId,
+  bool leftHand = false,
 }) {
   final t = tuning.cars.parked;
   final models = parkedModels(tuning, specs, cityId);
@@ -99,7 +101,9 @@ List<ParkedCar> generateParked(
       continue;
     }
     if (!far(x, y, player.x, player.y, t.clearPlayerM)) continue;
-    final heading = math.atan2(dy, dx) + (side == 0 ? 0 : math.pi);
+    // Cars face along their lane: right side along the segment, left +π; mirrored for left-hand.
+    final withSeg = (side == 0) != leftHand;
+    final heading = math.atan2(dy, dx) + (withSeg ? 0 : math.pi);
     out.add(ParkedCar(carId: model, owner: 'npc', x: x, y: y, heading: heading, chunk: chunk));
   }
   return out;
