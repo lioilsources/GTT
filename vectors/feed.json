@@ -1,6 +1,6 @@
 {
  "module": "feed",
- "specVersion": 1,
+ "specVersion": 2,
  "cases": [
   {
    "name": "nyc-first-deck",

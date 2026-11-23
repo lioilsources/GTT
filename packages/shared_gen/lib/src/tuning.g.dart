@@ -3492,6 +3492,13 @@ class TuningPhone {
         edgePx = r.d('edge_px'),
         pullPx = r.d('pull_px'),
         swipePx = r.d('swipe_px'),
+        feedAxisLockPx = r.d('feed_axis_lock_px'),
+        feedCommitPct = r.i('feed_commit_pct'),
+        feedFlickPxS = r.d('feed_flick_px_s'),
+        feedVelocityMs = r.i('feed_velocity_ms'),
+        feedSnapMs = r.i('feed_snap_ms'),
+        feedRubber = r.d('feed_rubber'),
+        feedTiltDeg = r.d('feed_tilt_deg'),
         doubleTapMs = r.i('double_tap_ms'),
         mapPaddingPx = r.d('map_padding_px'),
         mapSpotPx = r.d('map_spot_px'),
@@ -3510,8 +3517,29 @@ class TuningPhone {
   /// swipe up this far to open
   double pullPx;
 
-  /// feed card swipe threshold
+  /// feed card sideways commit (accept / less)
   double swipePx;
+
+  /// finger travel before the drag locks to vertical or horizontal (specs/phone.md v5)
+  double feedAxisLockPx;
+
+  /// vertical: release past this % of the card height switches the card
+  int feedCommitPct;
+
+  /// or a release faster than this (px/s) in the drag direction
+  double feedFlickPxS;
+
+  /// release velocity = travel over the last this many ms of the drag
+  int feedVelocityMs;
+
+  /// snap / spring-back / fly-off duration (ease-out cubic)
+  int feedSnapMs;
+
+  /// drag factor where there is no page (first card down, feedDone)
+  double feedRubber;
+
+  /// sideways tilt at a full-width drag
+  double feedTiltDeg;
 
   int doubleTapMs;
 
@@ -3529,6 +3557,13 @@ class TuningPhone {
         'edge_px': edgePx,
         'pull_px': pullPx,
         'swipe_px': swipePx,
+        'feed_axis_lock_px': feedAxisLockPx,
+        'feed_commit_pct': feedCommitPct,
+        'feed_flick_px_s': feedFlickPxS,
+        'feed_velocity_ms': feedVelocityMs,
+        'feed_snap_ms': feedSnapMs,
+        'feed_rubber': feedRubber,
+        'feed_tilt_deg': feedTiltDeg,
         'double_tap_ms': doubleTapMs,
         'map_padding_px': mapPaddingPx,
         'map_spot_px': mapSpotPx,
