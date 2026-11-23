@@ -3665,6 +3665,10 @@ export class TuningCars {
   garageSpeedMps: number;
   /** the context button stays this long after the stop (auto-throttle moves on) */
   actionHoldS: number;
+  /** garage test drive of a car for sale, game seconds (specs/testdrive.md) */
+  testDriveS: number;
+  /** the countdown pill turns red below this */
+  testDriveLowS: number;
   readonly parked: TuningCarsParked;
 
   constructor(r: R) {
@@ -3676,6 +3680,8 @@ export class TuningCars {
     this.garageRadiusM = r.d('garage_radius_m');
     this.garageSpeedMps = r.d('garage_speed_mps');
     this.actionHoldS = r.d('action_hold_s');
+    this.testDriveS = r.d('test_drive_s');
+    this.testDriveLowS = r.d('test_drive_low_s');
     this.parked = new TuningCarsParked(r.sub('parked'));
   }
 
@@ -3689,6 +3695,8 @@ export class TuningCars {
       garage_radius_m: this.garageRadiusM,
       garage_speed_mps: this.garageSpeedMps,
       action_hold_s: this.actionHoldS,
+      test_drive_s: this.testDriveS,
+      test_drive_low_s: this.testDriveLowS,
       parked: this.parked.toJson(),
     };
   }
@@ -4382,6 +4390,8 @@ export class TuningEconomy {
   firstMinStars: number;
   /** wrecked car (paid up to the cash the player has) */
   towFee: number;
+  /** debug-only "+10 000" cash button (specs/testdrive.md) */
+  debugGrant: number;
 
   constructor(r: R) {
     this.base = r.i('base');
@@ -4392,6 +4402,7 @@ export class TuningEconomy {
     this.firstBonus = r.i('first_bonus');
     this.firstMinStars = r.i('first_min_stars');
     this.towFee = r.i('tow_fee');
+    this.debugGrant = r.i('debug_grant');
   }
 
   toJson(): Record<string, unknown> {
@@ -4404,6 +4415,7 @@ export class TuningEconomy {
       first_bonus: this.firstBonus,
       first_min_stars: this.firstMinStars,
       tow_fee: this.towFee,
+      debug_grant: this.debugGrant,
     };
   }
 }

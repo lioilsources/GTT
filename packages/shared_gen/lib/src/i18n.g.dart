@@ -691,6 +691,12 @@ enum MessageKey {
   natureTow('natureTow'),
   cameraChase('cameraChase'),
   cameraTopdown('cameraTopdown'),
+  garageTestDrive('garageTestDrive'),
+  testDriveLeft('testDriveLeft'),
+  testDriveEnd('testDriveEnd'),
+  testDriveOver('testDriveOver'),
+  testDriveNoTaxi('testDriveNoTaxi'),
+  debugCash('debugCash'),
   ;
 
   const MessageKey(this.key);
@@ -1387,6 +1393,12 @@ const Map<String, Map<String, String>> _messages = {
     'natureTow': 'Auto se potopilo. Odtah: {fee}',
     'cameraChase': 'Kamera za autem',
     'cameraTopdown': 'Kamera shora',
+    'garageTestDrive': 'Vyzkoušet',
+    'testDriveLeft': 'Zkušební jízda {time}',
+    'testDriveEnd': 'Ukončit zkušební jízdu',
+    'testDriveOver': 'Zkušební jízda skončila, sedíš zase ve svém autě',
+    'testDriveNoTaxi': 'Při zkušební jízdě taxi směnu nevezmeš',
+    'debugCash': '+{amount}',
   },
   'en': {
     'appTitle': 'Metropole',
@@ -2075,6 +2087,12 @@ const Map<String, Map<String, String>> _messages = {
     'natureTow': 'Your car sank. Tow: {fee}',
     'cameraChase': 'Chase camera',
     'cameraTopdown': 'Top-down camera',
+    'garageTestDrive': 'Test drive',
+    'testDriveLeft': 'Test drive {time}',
+    'testDriveEnd': 'End test drive',
+    'testDriveOver': 'Test drive over, back in your own car',
+    'testDriveNoTaxi': 'No taxi shift during a test drive',
+    'debugCash': '+{amount}',
   },
 };
 

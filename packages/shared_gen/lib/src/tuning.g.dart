@@ -4018,6 +4018,8 @@ class TuningCars {
         garageRadiusM = r.d('garage_radius_m'),
         garageSpeedMps = r.d('garage_speed_mps'),
         actionHoldS = r.d('action_hold_s'),
+        testDriveS = r.d('test_drive_s'),
+        testDriveLowS = r.d('test_drive_low_s'),
         parked = TuningCarsParked._(r.sub('parked'));
 
   String startCar;
@@ -4039,6 +4041,12 @@ class TuningCars {
   /// the context button stays this long after the stop (auto-throttle moves on)
   double actionHoldS;
 
+  /// garage test drive of a car for sale, game seconds (specs/testdrive.md)
+  double testDriveS;
+
+  /// the countdown pill turns red below this
+  double testDriveLowS;
+
   final TuningCarsParked parked;
 
   Map<String, Object> toJson() => {
@@ -4050,6 +4058,8 @@ class TuningCars {
         'garage_radius_m': garageRadiusM,
         'garage_speed_mps': garageSpeedMps,
         'action_hold_s': actionHoldS,
+        'test_drive_s': testDriveS,
+        'test_drive_low_s': testDriveLowS,
         'parked': parked.toJson(),
       };
 }
@@ -4801,7 +4811,8 @@ class TuningEconomy {
         bandBonus = r.il('band_bonus'),
         firstBonus = r.i('first_bonus'),
         firstMinStars = r.i('first_min_stars'),
-        towFee = r.i('tow_fee');
+        towFee = r.i('tow_fee'),
+        debugGrant = r.i('debug_grant');
 
   /// game money before engine and star percentages
   int base;
@@ -4825,6 +4836,9 @@ class TuningEconomy {
   /// wrecked car (paid up to the cash the player has)
   int towFee;
 
+  /// debug-only "+10 000" cash button (specs/testdrive.md)
+  int debugGrant;
+
   Map<String, Object> toJson() => {
         'base': base,
         'engine_pct': enginePct.toJson(),
@@ -4834,6 +4848,7 @@ class TuningEconomy {
         'first_bonus': firstBonus,
         'first_min_stars': firstMinStars,
         'tow_fee': towFee,
+        'debug_grant': debugGrant,
       };
 }
 

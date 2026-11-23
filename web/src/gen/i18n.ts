@@ -690,6 +690,12 @@ export type MessageKey =
   | "natureTow"
   | "cameraChase"
   | "cameraTopdown"
+  | "garageTestDrive"
+  | "testDriveLeft"
+  | "testDriveEnd"
+  | "testDriveOver"
+  | "testDriveNoTaxi"
+  | "debugCash"
 ;
 
 export const messages: Record<Locale, Record<MessageKey, string>> = {
@@ -1380,6 +1386,12 @@ export const messages: Record<Locale, Record<MessageKey, string>> = {
     natureTow: "Auto se potopilo. Odtah: {fee}",
     cameraChase: "Kamera za autem",
     cameraTopdown: "Kamera shora",
+    garageTestDrive: "Vyzkoušet",
+    testDriveLeft: "Zkušební jízda {time}",
+    testDriveEnd: "Ukončit zkušební jízdu",
+    testDriveOver: "Zkušební jízda skončila, sedíš zase ve svém autě",
+    testDriveNoTaxi: "Při zkušební jízdě taxi směnu nevezmeš",
+    debugCash: "+{amount}",
   },
   "en": {
     appTitle: "Metropole",
@@ -2068,6 +2080,12 @@ export const messages: Record<Locale, Record<MessageKey, string>> = {
     natureTow: "Your car sank. Tow: {fee}",
     cameraChase: "Chase camera",
     cameraTopdown: "Top-down camera",
+    garageTestDrive: "Test drive",
+    testDriveLeft: "Test drive {time}",
+    testDriveEnd: "End test drive",
+    testDriveOver: "Test drive over, back in your own car",
+    testDriveNoTaxi: "No taxi shift during a test drive",
+    debugCash: "+{amount}",
   },
 };
 
