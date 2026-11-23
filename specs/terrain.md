@@ -148,6 +148,28 @@ prstenec do 1,5 km z `lod/`, mlha, obloha, slunce shodné se stínováním. Pře
 gestem (dvojí klepnutí dvěma prsty); výchozí je pohled shora (K1 = A). Rozpočet navíc nejvýš
 40 draw calls a 60 tisíc trojúhelníků.
 
+### Upřesnění T2 (klient W, F-074)
+- **Kamera:** směr za autem se vyhlazuje jako shora (`camera.heading_follow_rate`, při couvání se
+  nedotáčí); kamera stojí `distance_m` za autem ve výšce `z_ref + height_m`, cíl je `look_ahead_m`
+  před autem ve výšce `z_ref`. `fov_deg` platí pro kratší stranu obrazovky (na výšku vodorovně).
+  Oddálení na hraně a při tvrdém dopadu násobí `distance_m` i `height_m`, třes posouvá kameru i cíl.
+- **Zprůhlednění:** fragment budovy nebo mostovky, který je blíž kameře než auto a nejvýš 6 m od
+  úsečky kamera–auto, se kreslí rastrem 4 × 4 s pokrytím 0,3 (alfa 0,3 bez řazení průhledných ploch);
+  stejně i v hloubkovém průchodu risografu, aby auto bylo vidět.
+- **Prstenec:** dlaždice `lod/`, jejichž obdélník zasahuje do 1,5 km od auta, jedna síť a jeden
+  draw call na dlaždici; kreslí se jen mimo načtené chunky (maska chunků v shaderu). Terén z mřížky
+  33 × 33 v barvě `land` × stínování ze sklonu mřížky se sluncem jako `shade` (az. 315°, výška 45°);
+  hmoty bloků od `base_z` do zobrazené výšky budovy (`extrusion`) v barvách fasád; `wood` a
+  `parkland` jako zelené hmoty `color.green.wood` / `color.green.parkland` do `height_m`; voda jako
+  jedna plocha v barvě `water` ve výšce hladiny okolní mřížky.
+- **Mlha a obloha:** lineární mlha od 0,5 do 1,5 km do barvy `color.world.sky.horizon` (v noci
+  `nightHorizon`), obloha přechodem od horizontu k `color.world.sky.zenith` (`nightZenith`). Shora
+  mlha ani obloha nejsou.
+- **Přepínač:** kulaté tlačítko v HUD, dvojí klepnutí dvěma prsty (druhé do 0,35 s)
+  a aplikace Nastavení v telefonu (`cameraTopdown` / `cameraChase`). Přepnutí za jízdy je okamžité,
+  dlaždice prstence se načítají na pozadí a staví po jedné za snímek. Volba se pamatuje jen ve W v
+  `localStorage` (`metro:camera`); uložení hry (`specs/save.md`, P0) se nemění. Ladění `?camera=chase`.
+
 ## Hraniční případy
 - Balíček bez výšek: `groundZ = 0`, `grad = 0`, nikdy `airborne`; vše jako před v1.
 - Hrana `stairs`: pro auta zeď (jako budova ve vrstvě 0), chodci po ní chodí.
