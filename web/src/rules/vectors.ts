@@ -21,6 +21,13 @@ import { PrsiRules } from '../minigames/prsi/rules';
 import { SrdceRules } from '../minigames/srdce/rules';
 import { KostkyRules } from '../minigames/kostky/rules';
 import { PraseRules } from '../minigames/prase/rules';
+import { KulecnikRules } from '../minigames/kulecnik/rules';
+import { BowlingRules } from '../minigames/bowling/rules';
+import { MinigolfRules } from '../minigames/minigolf/rules';
+import { HadRules } from '../minigames/had/rules';
+import { CihlyRules } from '../minigames/cihly/rules';
+import { KrtekRules } from '../minigames/krtek/rules';
+import { HokejRules } from '../minigames/hokej/rules';
 import { RouteRules } from '../drive/gps';
 import { FeedRules } from '../phone/feed';
 import { PassportRules } from '../passport/rules';
@@ -88,6 +95,13 @@ export const rulesModules: Record<string, () => AnyRules> = {
   srdce: () => new SrdceRules() as unknown as AnyRules,
   kostky: () => new KostkyRules() as unknown as AnyRules,
   prase: () => new PraseRules() as unknown as AnyRules,
+  kulecnik: () => new KulecnikRules() as unknown as AnyRules,
+  bowling: () => new BowlingRules() as unknown as AnyRules,
+  minigolf: () => new MinigolfRules() as unknown as AnyRules,
+  had: () => new HadRules() as unknown as AnyRules,
+  cihly: () => new CihlyRules() as unknown as AnyRules,
+  krtek: () => new KrtekRules() as unknown as AnyRules,
+  hokej: () => new HokejRules() as unknown as AnyRules,
   passport: () => new PassportRules() as unknown as AnyRules,
   dialogue: () => new DialogueRules() as unknown as AnyRules,
   cars: () => new CarsRules() as unknown as AnyRules,
