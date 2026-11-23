@@ -35,3 +35,9 @@ minigames:
   - {id: cihly, engine: arcade, target_min: 5, casino_like: false}
   - {id: krtek, engine: arcade, target_min: 2, casino_like: false}
   - {id: hokej, engine: sport, target_min: 5, casino_like: false}
+  # M2-S9 batch D (drive, world minigames like Taxi), plans/M2_NYC.md bod 9
+  - {id: drift, engine: drive, target_min: 2, casino_like: false}
+  - {id: sprint, engine: drive, target_min: 3, casino_like: false}
+  # M2-S9 NYC local games (plans/M2_NYC.md bod 9, místní)
+  - {id: stickball, engine: sport, target_min: 5, cities: [nyc], casino_like: false}
+  - {id: doubledutch, engine: rhythm, target_min: 3, cities: [nyc], casino_like: false}

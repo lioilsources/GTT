@@ -519,6 +519,73 @@ minigames:
     passenger_m: 2.0            # passenger marker radius (min passenger_px)
     passenger_px: 6.0
     curb_m: 1.0                 # passenger beyond the corridor edge
+  # M2-S9 batch D: world minigames on engine drive (specs/minigames/drift.md, sprint.md)
+  drift:
+    min_slip_mrad: 250          # |beta| counted from / capped at (mrad)
+    max_slip_mrad: 800
+    min_speed_cms: 800          # speed counted from / capped at (cm/s)
+    max_speed_cms: 2500
+    pts_div: 1000
+    max_dt_ms: 250              # longest counted gap between samples
+    grace_ms: 600               # a drift may drop out this long before the chain is banked
+    mult_step_ms: 2000          # +1 multiplier per this much drifting in one chain
+    max_mult: 5
+    star_scores: [40000, 20000, 8000]   # 3, 2, 1 stars at difficulty 3
+    level_pct: [60, 80, 100, 120, 140]  # star thresholds x % by difficulty 1-5
+    session_s: 90               # UI only
+    zone_m: 45.0                # zone radius around the spot's parking point
+    sample_hz: 10               # UI only
+    hit_min_mps: 2.0            # UI only
+    low_s: 15.0                 # UI only
+  sprint:
+    par_base_ms: 5000
+    par_dm_per_s: [90, 110, 130, 150, 170]   # par average speed by difficulty 1-5
+    hit_penalty_ms: 2000
+    star_pct: [100, 120, 145]   # time in % of par for 3, 2, 1 stars
+    dest_min_m: 800.0
+    dest_max_m: 2500.0
+    dest_search_m: 120.0
+    cp_every_m: 300.0
+    cp_radius_m: 15.0
+    countdown_s: 3              # UI only
+    time_cap_s: 300             # UI only
+    hit_min_mps: 2.0            # UI only
+  # M2-S9 NYC local games (specs/minigames/stickball.md, doubledutch.md)
+  stickball:
+    max_outs: 6
+    strikes_out: 3
+    balls_walk: 4
+    zone_pct: [85, 80, 75, 70, 65]
+    flight_min: [900, 800, 700, 600, 520]   # ms
+    flight_var: [200, 250, 300, 350, 400]
+    perfect_ms: 40
+    good_ms: 80
+    ok_ms: 130
+    foul_ms: 200
+    catch_pct: [10, 15, 20, 25, 30]
+    star_runs: [8, 5, 2]
+    time_cap_s: 300
+  doubledutch:
+    beats: 60
+    intro_beats: 4
+    start_gap_ms: [700, 640, 580, 520, 470]
+    min_gap_ms: [520, 470, 420, 380, 340]
+    speedup_every: 8
+    speedup_ms: 20
+    trick_pct: [0, 10, 15, 20, 25]
+    perfect_ms: 45
+    good_ms: 90
+    ok_ms: 140
+    max_trips: 3
+    perfect_pts: 100
+    good_pts: 60
+    ok_pts: 30
+    trick_mult: 2
+    combo_step: 10
+    max_mult: 4
+    star_pct: [85, 65, 40]
+    lead_in_ms: 1500            # UI only
+    time_cap_s: 180             # UI only
 
 # GPS route (specs/route.md). class_cost: per RoadClass index (unknown, motorway, trunk, primary,
 # secondary, tertiary, residential, service); integer multipliers of the length in dm.

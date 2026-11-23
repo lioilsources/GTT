@@ -1453,7 +1453,11 @@ class TuningMinigames {
         cara = TuningMinigamesCara._(r.sub('cara')),
         nohejbal = TuningMinigamesNohejbal._(r.sub('nohejbal')),
         strelnice = TuningMinigamesStrelnice._(r.sub('strelnice')),
-        taxi = TuningMinigamesTaxi._(r.sub('taxi'));
+        taxi = TuningMinigamesTaxi._(r.sub('taxi')),
+        drift = TuningMinigamesDrift._(r.sub('drift')),
+        sprint = TuningMinigamesSprint._(r.sub('sprint')),
+        stickball = TuningMinigamesStickball._(r.sub('stickball')),
+        doubledutch = TuningMinigamesDoubledutch._(r.sub('doubledutch'));
 
   /// hard cap for every minigame (9.2)
   int timeCapS;
@@ -1518,6 +1522,16 @@ class TuningMinigames {
   /// Taxi shift (specs/minigames/taxi.md): a world minigame in the taxi_metro car.
   final TuningMinigamesTaxi taxi;
 
+  /// M2-S9 batch D: world minigames on engine drive (specs/minigames/drift.md, sprint.md)
+  final TuningMinigamesDrift drift;
+
+  final TuningMinigamesSprint sprint;
+
+  /// M2-S9 NYC local games (specs/minigames/stickball.md, doubledutch.md)
+  final TuningMinigamesStickball stickball;
+
+  final TuningMinigamesDoubledutch doubledutch;
+
   Map<String, Object> toJson() => {
         'time_cap_s': timeCapS,
         'sirky': sirky.toJson(),
@@ -1549,6 +1563,10 @@ class TuningMinigames {
         'nohejbal': nohejbal.toJson(),
         'strelnice': strelnice.toJson(),
         'taxi': taxi.toJson(),
+        'drift': drift.toJson(),
+        'sprint': sprint.toJson(),
+        'stickball': stickball.toJson(),
+        'doubledutch': doubledutch.toJson(),
       };
 }
 
@@ -3005,6 +3023,300 @@ class TuningMinigamesTaxi {
         'passenger_m': passengerM,
         'passenger_px': passengerPx,
         'curb_m': curbM,
+      };
+}
+
+/// M2-S9 batch D: world minigames on engine drive (specs/minigames/drift.md, sprint.md)
+class TuningMinigamesDrift {
+  TuningMinigamesDrift._(_R r)
+      : minSlipMrad = r.i('min_slip_mrad'),
+        maxSlipMrad = r.i('max_slip_mrad'),
+        minSpeedCms = r.i('min_speed_cms'),
+        maxSpeedCms = r.i('max_speed_cms'),
+        ptsDiv = r.i('pts_div'),
+        maxDtMs = r.i('max_dt_ms'),
+        graceMs = r.i('grace_ms'),
+        multStepMs = r.i('mult_step_ms'),
+        maxMult = r.i('max_mult'),
+        starScores = r.il('star_scores'),
+        levelPct = r.il('level_pct'),
+        sessionS = r.i('session_s'),
+        zoneM = r.d('zone_m'),
+        sampleHz = r.i('sample_hz'),
+        hitMinMps = r.d('hit_min_mps'),
+        lowS = r.d('low_s');
+
+  /// |beta| counted from / capped at (mrad)
+  int minSlipMrad;
+
+  int maxSlipMrad;
+
+  /// speed counted from / capped at (cm/s)
+  int minSpeedCms;
+
+  int maxSpeedCms;
+
+  int ptsDiv;
+
+  /// longest counted gap between samples
+  int maxDtMs;
+
+  /// a drift may drop out this long before the chain is banked
+  int graceMs;
+
+  /// +1 multiplier per this much drifting in one chain
+  int multStepMs;
+
+  int maxMult;
+
+  /// 3, 2, 1 stars at difficulty 3
+  List<int> starScores;
+
+  /// star thresholds x % by difficulty 1-5
+  List<int> levelPct;
+
+  /// UI only
+  int sessionS;
+
+  /// zone radius around the spot's parking point
+  double zoneM;
+
+  /// UI only
+  int sampleHz;
+
+  /// UI only
+  double hitMinMps;
+
+  /// UI only
+  double lowS;
+
+  Map<String, Object> toJson() => {
+        'min_slip_mrad': minSlipMrad,
+        'max_slip_mrad': maxSlipMrad,
+        'min_speed_cms': minSpeedCms,
+        'max_speed_cms': maxSpeedCms,
+        'pts_div': ptsDiv,
+        'max_dt_ms': maxDtMs,
+        'grace_ms': graceMs,
+        'mult_step_ms': multStepMs,
+        'max_mult': maxMult,
+        'star_scores': starScores,
+        'level_pct': levelPct,
+        'session_s': sessionS,
+        'zone_m': zoneM,
+        'sample_hz': sampleHz,
+        'hit_min_mps': hitMinMps,
+        'low_s': lowS,
+      };
+}
+
+class TuningMinigamesSprint {
+  TuningMinigamesSprint._(_R r)
+      : parBaseMs = r.i('par_base_ms'),
+        parDmPerS = r.il('par_dm_per_s'),
+        hitPenaltyMs = r.i('hit_penalty_ms'),
+        starPct = r.il('star_pct'),
+        destMinM = r.d('dest_min_m'),
+        destMaxM = r.d('dest_max_m'),
+        destSearchM = r.d('dest_search_m'),
+        cpEveryM = r.d('cp_every_m'),
+        cpRadiusM = r.d('cp_radius_m'),
+        countdownS = r.i('countdown_s'),
+        timeCapS = r.i('time_cap_s'),
+        hitMinMps = r.d('hit_min_mps');
+
+  int parBaseMs;
+
+  /// par average speed by difficulty 1-5
+  List<int> parDmPerS;
+
+  int hitPenaltyMs;
+
+  /// time in % of par for 3, 2, 1 stars
+  List<int> starPct;
+
+  double destMinM;
+
+  double destMaxM;
+
+  double destSearchM;
+
+  double cpEveryM;
+
+  double cpRadiusM;
+
+  /// UI only
+  int countdownS;
+
+  /// UI only
+  int timeCapS;
+
+  /// UI only
+  double hitMinMps;
+
+  Map<String, Object> toJson() => {
+        'par_base_ms': parBaseMs,
+        'par_dm_per_s': parDmPerS,
+        'hit_penalty_ms': hitPenaltyMs,
+        'star_pct': starPct,
+        'dest_min_m': destMinM,
+        'dest_max_m': destMaxM,
+        'dest_search_m': destSearchM,
+        'cp_every_m': cpEveryM,
+        'cp_radius_m': cpRadiusM,
+        'countdown_s': countdownS,
+        'time_cap_s': timeCapS,
+        'hit_min_mps': hitMinMps,
+      };
+}
+
+/// M2-S9 NYC local games (specs/minigames/stickball.md, doubledutch.md)
+class TuningMinigamesStickball {
+  TuningMinigamesStickball._(_R r)
+      : maxOuts = r.i('max_outs'),
+        strikesOut = r.i('strikes_out'),
+        ballsWalk = r.i('balls_walk'),
+        zonePct = r.il('zone_pct'),
+        flightMin = r.il('flight_min'),
+        flightVar = r.il('flight_var'),
+        perfectMs = r.i('perfect_ms'),
+        goodMs = r.i('good_ms'),
+        okMs = r.i('ok_ms'),
+        foulMs = r.i('foul_ms'),
+        catchPct = r.il('catch_pct'),
+        starRuns = r.il('star_runs'),
+        timeCapS = r.i('time_cap_s');
+
+  int maxOuts;
+
+  int strikesOut;
+
+  int ballsWalk;
+
+  List<int> zonePct;
+
+  /// ms
+  List<int> flightMin;
+
+  List<int> flightVar;
+
+  int perfectMs;
+
+  int goodMs;
+
+  int okMs;
+
+  int foulMs;
+
+  List<int> catchPct;
+
+  List<int> starRuns;
+
+  int timeCapS;
+
+  Map<String, Object> toJson() => {
+        'max_outs': maxOuts,
+        'strikes_out': strikesOut,
+        'balls_walk': ballsWalk,
+        'zone_pct': zonePct,
+        'flight_min': flightMin,
+        'flight_var': flightVar,
+        'perfect_ms': perfectMs,
+        'good_ms': goodMs,
+        'ok_ms': okMs,
+        'foul_ms': foulMs,
+        'catch_pct': catchPct,
+        'star_runs': starRuns,
+        'time_cap_s': timeCapS,
+      };
+}
+
+class TuningMinigamesDoubledutch {
+  TuningMinigamesDoubledutch._(_R r)
+      : beats = r.i('beats'),
+        introBeats = r.i('intro_beats'),
+        startGapMs = r.il('start_gap_ms'),
+        minGapMs = r.il('min_gap_ms'),
+        speedupEvery = r.i('speedup_every'),
+        speedupMs = r.i('speedup_ms'),
+        trickPct = r.il('trick_pct'),
+        perfectMs = r.i('perfect_ms'),
+        goodMs = r.i('good_ms'),
+        okMs = r.i('ok_ms'),
+        maxTrips = r.i('max_trips'),
+        perfectPts = r.i('perfect_pts'),
+        goodPts = r.i('good_pts'),
+        okPts = r.i('ok_pts'),
+        trickMult = r.i('trick_mult'),
+        comboStep = r.i('combo_step'),
+        maxMult = r.i('max_mult'),
+        starPct = r.il('star_pct'),
+        leadInMs = r.i('lead_in_ms'),
+        timeCapS = r.i('time_cap_s');
+
+  int beats;
+
+  int introBeats;
+
+  List<int> startGapMs;
+
+  List<int> minGapMs;
+
+  int speedupEvery;
+
+  int speedupMs;
+
+  List<int> trickPct;
+
+  int perfectMs;
+
+  int goodMs;
+
+  int okMs;
+
+  int maxTrips;
+
+  int perfectPts;
+
+  int goodPts;
+
+  int okPts;
+
+  int trickMult;
+
+  int comboStep;
+
+  int maxMult;
+
+  List<int> starPct;
+
+  /// UI only
+  int leadInMs;
+
+  /// UI only
+  int timeCapS;
+
+  Map<String, Object> toJson() => {
+        'beats': beats,
+        'intro_beats': introBeats,
+        'start_gap_ms': startGapMs,
+        'min_gap_ms': minGapMs,
+        'speedup_every': speedupEvery,
+        'speedup_ms': speedupMs,
+        'trick_pct': trickPct,
+        'perfect_ms': perfectMs,
+        'good_ms': goodMs,
+        'ok_ms': okMs,
+        'max_trips': maxTrips,
+        'perfect_pts': perfectPts,
+        'good_pts': goodPts,
+        'ok_pts': okPts,
+        'trick_mult': trickMult,
+        'combo_step': comboStep,
+        'max_mult': maxMult,
+        'star_pct': starPct,
+        'lead_in_ms': leadInMs,
+        'time_cap_s': timeCapS,
       };
 }
 

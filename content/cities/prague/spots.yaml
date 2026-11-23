@@ -39,6 +39,9 @@ spots:
   - {id: karlin_automaty, kind: cafe, name: Automaty Karlín, lat: 50.09200, lon: 14.45000, minigame: cihly}
   - {id: letna_pout, kind: park, name: Letenská pouť, lat: 50.09600, lon: 14.42300, minigame: krtek}
   - {id: herna_u_puku, kind: cafe, name: Herna U Puku, lat: 50.10100, lon: 14.43800, minigame: hokej}
+  # M2-S9 batch D (drive, world minigames); venues fictional (R10)
+  - {id: vystaviste_drift, kind: plaza, name: Parkoviště u Výstaviště, lat: 50.10600, lon: 14.43200, minigame: drift}
+  - {id: letna_start, kind: plaza, name: Start na Letenské pláni, lat: 50.09750, lon: 14.42150, minigame: sprint}
   # Player garage (specs/cars.md)
   - {id: novomestska_garage, kind: garage, name: Parkovací dům Spálená, lat: 50.08000, lon: 14.42050}
   # Ringing phone booths (specs/booths.md): street corners, no minigame.
