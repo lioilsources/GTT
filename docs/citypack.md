@@ -47,7 +47,7 @@ Cache nesleduje změny konfigurace: po úpravě `city.yaml`, `tuning.yaml` (ší
 
 Manhattan jižně od 110th St s mosty Brooklyn, Manhattan, Williamsburg a Queensboro a krátkými předmostími
 (DUMBO, Williamsburg, Long Island City): 17 065 uzlů, 20 037 hran, 32 246 hmot budov, 896 chunků,
-68 spotů (8 se minihrou, 8 budek, 12 vstupů do metra, 20 fotomíst, 6 občerstvení, 5 obchodů se suvenýry, 1 bar bez minihry), balíček 2,6 MB. Build s `-refetch` ~5 min.
+75 spotů (15 se minihrou, 8 budek, 12 vstupů do metra, 20 fotomíst, 6 občerstvení, 5 obchodů se suvenýry, 1 bar bez minihry), balíček 2,6 MB. Build s `-refetch` ~5 min.
 
 ## Praha v číslech (M3)
 

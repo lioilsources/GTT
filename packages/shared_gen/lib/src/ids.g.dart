@@ -125,6 +125,13 @@ enum MinigameId {
   kulicky('kulicky'),
   cara('cara'),
   nohejbal('nohejbal'),
+  piskvorky('piskvorky'),
+  ctyri('ctyri'),
+  mlyn('mlyn'),
+  reversi('reversi'),
+  lode('lode'),
+  posuvne('posuvne'),
+  kviz('kviz'),
   ;
 
   const MinigameId(this.id);
@@ -153,4 +160,11 @@ final Map<MinigameId, MinigameMeta> minigameCatalog = {
   MinigameId.kulicky: MinigameMeta(id: 'kulicky', engine: 'flick', targetLengthS: 300, cities: ['prague'], casinoLike: false),
   MinigameId.cara: MinigameMeta(id: 'cara', engine: 'flick', targetLengthS: 240, cities: ['prague'], casinoLike: false),
   MinigameId.nohejbal: MinigameMeta(id: 'nohejbal', engine: 'sport', targetLengthS: 360, cities: ['prague'], casinoLike: false),
+  MinigameId.piskvorky: MinigameMeta(id: 'piskvorky', engine: 'board', targetLengthS: 360, cities: [], casinoLike: false),
+  MinigameId.ctyri: MinigameMeta(id: 'ctyri', engine: 'board', targetLengthS: 240, cities: [], casinoLike: false),
+  MinigameId.mlyn: MinigameMeta(id: 'mlyn', engine: 'board', targetLengthS: 420, cities: [], casinoLike: false),
+  MinigameId.reversi: MinigameMeta(id: 'reversi', engine: 'board', targetLengthS: 420, cities: [], casinoLike: false),
+  MinigameId.lode: MinigameMeta(id: 'lode', engine: 'board', targetLengthS: 360, cities: [], casinoLike: false),
+  MinigameId.posuvne: MinigameMeta(id: 'posuvne', engine: 'puzzle', targetLengthS: 240, cities: [], casinoLike: false),
+  MinigameId.kviz: MinigameMeta(id: 'kviz', engine: 'puzzle', targetLengthS: 240, cities: [], casinoLike: false),
 };

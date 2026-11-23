@@ -30,6 +30,7 @@ const (
 	Tuning        = "content/tuning.yaml"
 	Cars          = "content/cars"
 	Bench         = "content/bench"
+	Quiz          = "content/quiz"
 	Cities        = "content/cities"
 	Catalog       = "content/minigames/catalog.yaml"
 	NpcCharacters = "content/npc/characters.yaml"

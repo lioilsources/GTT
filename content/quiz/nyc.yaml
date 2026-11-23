@@ -1,0 +1,642 @@
+# City quiz bank for nyc (specs/minigames/kviz.md). answer = index into options as written.
+questions:
+- id: brooklyn_bridge
+  q:
+    en: Which bridge opened in 1883 between Manhattan and Brooklyn?
+    cs: Který most spojil v roce 1883 Manhattan s Brooklynem?
+  options:
+    en:
+    - Brooklyn Bridge
+    - Manhattan Bridge
+    - Williamsburg Bridge
+    - Queensboro Bridge
+    cs:
+    - Brooklynský most
+    - Manhattanský most
+    - Williamsburský most
+    - Queensborský most
+  answer: 0
+- id: boroughs
+  q:
+    en: How many boroughs does New York City have?
+    cs: Kolik obvodů (boroughs) má New York?
+  options:
+    en:
+    - '3'
+    - '4'
+    - '5'
+    - '7'
+    cs:
+    - '3'
+    - '4'
+    - '5'
+    - '7'
+  answer: 2
+- id: west_river
+  q:
+    en: Which river runs along Manhattan's west side?
+    cs: Která řeka teče podél západní strany Manhattanu?
+  options:
+    en:
+    - East River
+    - Hudson River
+    - Harlem River
+    - Bronx River
+    cs:
+    - East River
+    - Hudson
+    - Harlem River
+    - Bronx River
+  answer: 1
+- id: east_river_un
+  q:
+    en: On which river does the United Nations headquarters stand?
+    cs: Na břehu které řeky stojí sídlo OSN?
+  options:
+    en:
+    - Hudson River
+    - Harlem River
+    - East River
+    - Passaic River
+    cs:
+    - Hudson
+    - Harlem River
+    - East River
+    - Passaic
+  answer: 2
+- id: liberty_island
+  q:
+    en: On which island stands the Statue of Liberty?
+    cs: Na kterém ostrově stojí Socha svobody?
+  options:
+    en:
+    - Ellis Island
+    - Governors Island
+    - Roosevelt Island
+    - Liberty Island
+    cs:
+    - Ellis Island
+    - Governors Island
+    - Roosevelt Island
+    - Liberty Island
+  answer: 3
+- id: liberty_gift
+  q:
+    en: Which country gave the Statue of Liberty to the United States?
+    cs: Která země darovala Spojeným státům Sochu svobody?
+  options:
+    en:
+    - France
+    - United Kingdom
+    - Spain
+    - Netherlands
+    cs:
+    - Francie
+    - Spojené království
+    - Španělsko
+    - Nizozemsko
+  answer: 0
+- id: liberty_year
+  q:
+    en: In which year was the Statue of Liberty dedicated?
+    cs: Kdy byla Socha svobody slavnostně odhalena?
+  options:
+    en:
+    - '1776'
+    - '1886'
+    - '1912'
+    - '1931'
+    cs:
+    - '1776'
+    - '1886'
+    - '1912'
+    - '1931'
+  answer: 1
+- id: liberty_hand
+  q:
+    en: What does the Statue of Liberty hold in her raised hand?
+    cs: Co drží Socha svobody ve zdvižené ruce?
+  options:
+    en:
+    - A sword
+    - A book
+    - A torch
+    - A flag
+    cs:
+    - Meč
+    - Knihu
+    - Pochodeň
+    - Vlajku
+  answer: 2
+- id: ellis_island
+  q:
+    en: What was Ellis Island famous for?
+    cs: Čím byl proslulý Ellis Island?
+  options:
+    en:
+    - A lighthouse
+    - An immigration station
+    - A naval shipyard
+    - A zoo
+    cs:
+    - Majákem
+    - Imigrační stanicí
+    - Námořní loděnicí
+    - Zoo
+  answer: 1
+- id: new_amsterdam
+  q:
+    en: What was New York called under Dutch rule?
+    cs: Jak se New York jmenoval za nizozemské vlády?
+  options:
+    en:
+    - New Amsterdam
+    - New London
+    - New Haven
+    - New Jersey
+    cs:
+    - Nový Amsterdam
+    - Nový Londýn
+    - New Haven
+    - New Jersey
+  answer: 0
+- id: wall_street
+  q:
+    en: Where does the name Wall Street come from?
+    cs: Odkud má jméno Wall Street?
+  options:
+    en:
+    - A banker named Wall
+    - A wall built by Dutch settlers
+    - A wall of skyscrapers
+    - A painted mural
+    cs:
+    - Od bankéře jménem Wall
+    - Od hradby, kterou postavili nizozemští osadníci
+    - Od zdi mrakodrapů
+    - Od nástěnné malby
+  answer: 1
+- id: grid_1811
+  q:
+    en: In which year was Manhattan's street grid planned?
+    cs: Ve kterém roce vznikl plán pravoúhlé sítě ulic Manhattanu?
+  options:
+    en:
+    - '1776'
+    - '1811'
+    - '1898'
+    - '1929'
+    cs:
+    - '1776'
+    - '1811'
+    - '1898'
+    - '1929'
+  answer: 1
+- id: consolidation
+  q:
+    en: In which year did the five boroughs join into one city?
+    cs: Ve kterém roce se pět obvodů spojilo v jedno město?
+  options:
+    en:
+    - '1811'
+    - '1863'
+    - '1898'
+    - '1945'
+    cs:
+    - '1811'
+    - '1863'
+    - '1898'
+    - '1945'
+  answer: 2
+- id: broadway_diagonal
+  q:
+    en: Which street cuts diagonally across Manhattan's grid?
+    cs: Která ulice protíná síť Manhattanu šikmo?
+  options:
+    en:
+    - Park Avenue
+    - Broadway
+    - Lexington Avenue
+    - Houston Street
+    cs:
+    - Park Avenue
+    - Broadway
+    - Lexington Avenue
+    - Houston Street
+  answer: 1
+- id: fifth_divides
+  q:
+    en: Which avenue divides East and West street addresses in Manhattan?
+    cs: Která avenue dělí na Manhattanu adresy na východní a západní?
+  options:
+    en:
+    - First Avenue
+    - Fifth Avenue
+    - Eighth Avenue
+    - Tenth Avenue
+    cs:
+    - První
+    - Pátá
+    - Osmá
+    - Desátá
+  answer: 1
+- id: central_park_sides
+  q:
+    en: Central Park lies between Fifth Avenue and…
+    cs: Central Park leží mezi Pátou avenue a…
+  options:
+    en:
+    - Central Park West
+    - Park Avenue
+    - Broadway
+    - Lexington Avenue
+    cs:
+    - Central Park West
+    - Park Avenue
+    - Broadway
+    - Lexington Avenue
+  answer: 0
+- id: bronx_mainland
+  q:
+    en: Which borough lies mostly on the mainland?
+    cs: Který obvod leží převážně na pevnině?
+  options:
+    en:
+    - Manhattan
+    - Brooklyn
+    - Staten Island
+    - The Bronx
+    cs:
+    - Manhattan
+    - Brooklyn
+    - Staten Island
+    - Bronx
+  answer: 3
+- id: not_borough
+  q:
+    en: Which of these is NOT a New York City borough?
+    cs: Co z toho NENÍ obvod New Yorku?
+  options:
+    en:
+    - Queens
+    - Staten Island
+    - Newark
+    - The Bronx
+    cs:
+    - Queens
+    - Staten Island
+    - Newark
+    - Bronx
+  answer: 2
+- id: coney_island
+  q:
+    en: In which borough is Coney Island?
+    cs: Ve kterém obvodu leží Coney Island?
+  options:
+    en:
+    - Queens
+    - Brooklyn
+    - Manhattan
+    - Staten Island
+    cs:
+    - Queens
+    - Brooklyn
+    - Manhattan
+    - Staten Island
+  answer: 1
+- id: battery_park
+  q:
+    en: Where in Manhattan is Battery Park?
+    cs: Kde na Manhattanu leží Battery Park?
+  options:
+    en:
+    - At the southern tip
+    - In Harlem
+    - Next to Central Park
+    - On Roosevelt Island
+    cs:
+    - Na jižním cípu
+    - V Harlemu
+    - U Central Parku
+    - Na Roosevelt Islandu
+  answer: 0
+- id: harlem
+  q:
+    en: In which part of Manhattan is Harlem?
+    cs: Ve které části Manhattanu leží Harlem?
+  options:
+    en:
+    - South
+    - North
+    - West of the Hudson
+    - On an island in the harbor
+    cs:
+    - Na jihu
+    - Na severu
+    - Za Hudsonem
+    - Na ostrově v přístavu
+  answer: 1
+- id: empire_state_year
+  q:
+    en: In which year was the Empire State Building completed?
+    cs: Kdy byl dokončen Empire State Building?
+  options:
+    en:
+    - '1902'
+    - '1931'
+    - '1952'
+    - '1973'
+    cs:
+    - '1902'
+    - '1931'
+    - '1952'
+    - '1973'
+  answer: 1
+- id: chrysler_style
+  q:
+    en: In which style is the Chrysler Building built?
+    cs: V jakém stylu je postavena Chrysler Building?
+  options:
+    en:
+    - Gothic
+    - Art Deco
+    - Baroque
+    - Brutalism
+    cs:
+    - Gotika
+    - Art deco
+    - Baroko
+    - Brutalismus
+  answer: 1
+- id: flatiron_shape
+  q:
+    en: What shape is the Flatiron Building's floor plan?
+    cs: Jaký tvar má půdorys Flatiron Building?
+  options:
+    en:
+    - Round
+    - Square
+    - Triangular
+    - L-shaped
+    cs:
+    - Kulatý
+    - Čtvercový
+    - Trojúhelníkový
+    - Tvaru L
+  answer: 2
+- id: grand_central_ceiling
+  q:
+    en: What is painted on the ceiling of Grand Central's main hall?
+    cs: Co je namalované na stropě hlavní haly Grand Central?
+  options:
+    en:
+    - Constellations
+    - A map of Manhattan
+    - Clouds and birds
+    - Portraits of mayors
+    cs:
+    - Souhvězdí
+    - Mapa Manhattanu
+    - Mraky a ptáci
+    - Portréty starostů
+  answer: 0
+- id: high_line
+  q:
+    en: What was the High Line park built on?
+    cs: Na čem vznikl park High Line?
+  options:
+    en:
+    - A former elevated freight railway
+    - An old highway
+    - A pier
+    - A subway tunnel
+    cs:
+    - Na bývalé nadzemní nákladní trati
+    - Na staré dálnici
+    - Na molu
+    - V tunelu metra
+  answer: 0
+- id: hudson_yards
+  q:
+    en: Hudson Yards was built over…
+    cs: Hudson Yards vznikly nad…
+  options:
+    en:
+    - A lake
+    - Rail yards
+    - A cemetery
+    - A stadium
+    cs:
+    - Jezerem
+    - Kolejištěm
+    - Hřbitovem
+    - Stadionem
+  answer: 1
+- id: subway_1904
+  q:
+    en: In which year did New York's first subway line open?
+    cs: Ve kterém roce se otevřela první linka newyorského metra?
+  options:
+    en:
+    - '1863'
+    - '1904'
+    - '1931'
+    - '1950'
+    cs:
+    - '1863'
+    - '1904'
+    - '1931'
+    - '1950'
+  answer: 1
+- id: washington_arch
+  q:
+    en: What stands at the north end of Washington Square Park?
+    cs: Co stojí na severním konci Washington Square Parku?
+  options:
+    en:
+    - A marble arch
+    - A clock tower
+    - A fountain of horses
+    - A lighthouse
+    cs:
+    - Mramorový oblouk
+    - Hodinová věž
+    - Fontána s koňmi
+    - Maják
+  answer: 0
+- id: rockefeller_winter
+  q:
+    en: What appears at Rockefeller Center every winter?
+    cs: Co se každou zimu objeví v Rockefeller Center?
+  options:
+    en:
+    - A ski slope
+    - An ice rink
+    - A ferris wheel
+    - A snow maze
+    cs:
+    - Sjezdovka
+    - Kluziště
+    - Ruské kolo
+    - Sněhové bludiště
+  answer: 1
+- id: taxi_colour
+  q:
+    en: What colour are New York's classic taxis?
+    cs: Jakou barvu mají klasická newyorská taxi?
+  options:
+    en:
+    - Black
+    - Green
+    - Yellow
+    - White
+    cs:
+    - Černou
+    - Zelenou
+    - Žlutou
+    - Bílou
+  answer: 2
+- id: canal_street
+  q:
+    en: What was Canal Street originally?
+    cs: Čím byla původně Canal Street?
+  options:
+    en:
+    - A canal
+    - A railway
+    - A city wall
+    - A beach
+    cs:
+    - Kanálem
+    - Železnicí
+    - Hradbou
+    - Pláží
+  answer: 0
+- id: roosevelt_island
+  q:
+    en: In which river lies Roosevelt Island?
+    cs: Ve které řece leží Roosevelt Island?
+  options:
+    en:
+    - Hudson River
+    - East River
+    - Harlem River
+    - Raritan River
+    cs:
+    - Hudson
+    - East River
+    - Harlem River
+    - Raritan
+  answer: 1
+- id: tramway
+  q:
+    en: Which bridge has an aerial tramway running beside it?
+    cs: Vedle kterého mostu jezdí kabinová lanovka?
+  options:
+    en:
+    - Queensboro Bridge
+    - Brooklyn Bridge
+    - George Washington Bridge
+    - Verrazzano Bridge
+    cs:
+    - Queensborský most
+    - Brooklynský most
+    - Most George Washingtona
+    - Verrazzanův most
+  answer: 0
+- id: williamsburg
+  q:
+    en: The Williamsburg Bridge links Manhattan with…
+    cs: Williamsburský most spojuje Manhattan s…
+  options:
+    en:
+    - Queens
+    - Brooklyn
+    - New Jersey
+    - The Bronx
+    cs:
+    - Queensem
+    - Brooklynem
+    - New Jersey
+    - Bronxem
+  answer: 1
+- id: theater_district
+  q:
+    en: Around which square is the Broadway theater district?
+    cs: Kolem kterého náměstí je divadelní čtvrť Broadway?
+  options:
+    en:
+    - Union Square
+    - Washington Square
+    - Times Square
+    - Madison Square
+    cs:
+    - Union Square
+    - Washington Square
+    - Times Square
+    - Madison Square
+  answer: 2
+- id: times_square_name
+  q:
+    en: Times Square is named after…
+    cs: Times Square je pojmenované po…
+  options:
+    en:
+    - A newspaper
+    - A clockmaker
+    - A mayor
+    - A ship
+    cs:
+    - Novinách
+    - Hodináři
+    - Starostovi
+    - Lodi
+  answer: 0
+- id: central_park_size
+  q:
+    en: Which is larger?
+    cs: Co je větší?
+  options:
+    en:
+    - Central Park
+    - Bryant Park
+    - Union Square
+    - Washington Square Park
+    cs:
+    - Central Park
+    - Bryant Park
+    - Union Square
+    - Washington Square Park
+  answer: 0
+- id: staten_ferry
+  q:
+    en: How do most people reach Staten Island from Manhattan for free?
+    cs: Jak se z Manhattanu na Staten Island dostanete zadarmo?
+  options:
+    en:
+    - By ferry
+    - By cable car
+    - By subway
+    - By bridge on foot
+    cs:
+    - Trajektem
+    - Lanovkou
+    - Metrem
+    - Pěšky po mostě
+  answer: 0
+- id: chinatown_borough
+  q:
+    en: In which borough is Manhattan's Chinatown?
+    cs: Ve kterém obvodu je manhattanská čínská čtvrť?
+  options:
+    en:
+    - Manhattan
+    - Queens
+    - Brooklyn
+    - The Bronx
+    cs:
+    - Manhattan
+    - Queens
+    - Brooklyn
+    - Bronx
+  answer: 0
