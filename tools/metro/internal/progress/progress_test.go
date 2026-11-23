@@ -87,3 +87,35 @@ func TestStatusBlockReplaceAndStale(t *testing.T) {
 		t.Fatal("missing markers must fail")
 	}
 }
+
+func TestVerifyPasses(t *testing.T) {
+	v := &VerifyFile{PassMin: 30, Base: "https://x/", Checks: map[string]Check{
+		"A": {City: "prague", Q: "city=prague", Min: 20, Client: "w", Expect: "a"},
+		"B": {City: "nyc", Min: 25, Client: "w", Expect: "b"},
+		"C": {City: "prague", Min: 15, Client: "w", Expect: "c"},
+		"D": {City: "", Min: 5, Client: "decide", Expect: "d"},
+		"E": {City: "nyc", Min: 5, Client: "w", Expect: "e"},
+		"G": {City: "nyc", Min: 5, Client: "w", Expect: "g"},
+	}}
+	items := []Item{{ID: "A", Status: Ceka}, {ID: "B", Status: Ceka}, {ID: "C", Status: Ceka},
+		{ID: "D", Status: Ceka}, {ID: "E", Status: Ceka}, {ID: "F", Status: Ceka}, {ID: "G", Status: Hotovo}}
+	ps := Passes(items, v)
+	got := []string{}
+	for _, p := range ps {
+		ids := []string{}
+		for _, it := range p.items {
+			ids = append(ids, it.ID)
+		}
+		got = append(got, p.city+":"+strings.Join(ids, ","))
+	}
+	// NYC first; B+E = 30 fits; Prague A (20) + C (15) > 30 → two passes; G is done, D a decision.
+	if strings.Join(got, " ") != "nyc:B,E prague:A prague:C" {
+		t.Fatalf("passes %v", got)
+	}
+	md := RenderVerify(&File{Items: items}, v, "2026-11-23 12:00")
+	for _, want := range []string{"## Průchod 1 · New York · 30 min", "[`?city=prague`](https://x/?city=prague)", "## Rozhodnutí a měření", "## Bez návodu", "**F**"} {
+		if !strings.Contains(md, want) {
+			t.Errorf("verify.md misses %q", want)
+		}
+	}
+}

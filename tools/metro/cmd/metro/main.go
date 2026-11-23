@@ -155,8 +155,18 @@ func runProgress(root string, tests, check bool) error {
 	if err != nil {
 		return err
 	}
-	slog.Info("progress", "file", "plans/PROGRESS.md", "readme", "status block")
-	return os.WriteFile(rp, []byte(out), 0o644)
+	if err := os.WriteFile(rp, []byte(out), 0o644); err != nil {
+		return err
+	}
+	v, err := progress.LoadVerify(root)
+	if err != nil {
+		return err
+	}
+	if err := os.WriteFile(filepath.Join(root, "docs", "verify.md"), []byte(progress.RenderVerify(f, v, now.Format("2006-01-02 15:04"))), 0o644); err != nil {
+		return err
+	}
+	slog.Info("progress", "file", "plans/PROGRESS.md", "readme", "status block", "verify", "docs/verify.md")
+	return nil
 }
 
 func runGen(root string, check bool) error {
