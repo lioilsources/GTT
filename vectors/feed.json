@@ -3202,6 +3202,2531 @@
     }
    ],
    "result": null
+  },
+  {
+   "name": "prev-back-to-first-card",
+   "config": {
+    "deckSize": 6,
+    "novelty": 30,
+    "prefStep": 10,
+    "prefMin": -3,
+    "prefMax": 3,
+    "driveDmPerS": 110,
+    "bandMinS": 60,
+    "bandMaxS": 180,
+    "bandPoints": 40,
+    "nearPoints": 15,
+    "bandFalloffS": 120,
+    "districtBonus": 20,
+    "landmarkBonus": 15,
+    "jitter": 12,
+    "hostLines": 6,
+    "rewardBase": 50,
+    "rewardPerMin": 20,
+    "difficultyBase": 2,
+    "difficultyMax": 5,
+    "candidates": [
+     {
+      "spot": "east_village_bar",
+      "game": "sirky",
+      "engine": "puzzle",
+      "local": false,
+      "district": "East Village",
+      "distDm": 14200,
+      "visits": 0,
+      "landmark": false
+     },
+     {
+      "spot": "little_italy_club",
+      "game": "oko",
+      "engine": "cards",
+      "local": false,
+      "district": "Little Italy",
+      "distDm": 19800,
+      "visits": 0,
+      "landmark": true
+     },
+     {
+      "spot": "washington_square",
+      "game": "dama",
+      "engine": "board",
+      "local": false,
+      "district": "Greenwich Village",
+      "distDm": 9100,
+      "visits": 0,
+      "landmark": true
+     },
+     {
+      "spot": "columbus_park",
+      "game": "desetitisic",
+      "engine": "dice",
+      "local": false,
+      "district": "Chinatown",
+      "distDm": 23500,
+      "visits": 0,
+      "landmark": false
+     },
+     {
+      "spot": "hells_kitchen_pub",
+      "game": "sipky",
+      "engine": "flick",
+      "local": false,
+      "district": "Hell's Kitchen",
+      "distDm": 4100,
+      "visits": 0,
+      "landmark": false
+     },
+     {
+      "spot": "pier_62",
+      "game": "strelnice",
+      "engine": "flick",
+      "local": false,
+      "district": "Chelsea",
+      "distDm": 8800,
+      "visits": 0,
+      "landmark": false
+     },
+     {
+      "spot": "seaport_boardwalk",
+      "game": "koulena",
+      "engine": "flick",
+      "local": true,
+      "district": "Financial District",
+      "distDm": 31000,
+      "visits": 0,
+      "landmark": false
+     },
+     {
+      "spot": "penn_taxi_stand",
+      "game": "taxi",
+      "engine": "drive",
+      "local": false,
+      "district": "Midtown",
+      "distDm": 2300,
+      "visits": 0,
+      "landmark": true
+     }
+    ],
+    "prefs": {},
+    "visitedDistricts": []
+   },
+   "seed": 42,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "next"
+     },
+     "state": {
+      "deck": [
+       {
+        "spot": "little_italy_club",
+        "game": "oko",
+        "engine": "cards",
+        "district": "Little Italy",
+        "local": false,
+        "driveS": 180,
+        "distDm": 19800,
+        "score": 112,
+        "host": 1,
+        "reward": 110,
+        "difficulty": 2
+       },
+       {
+        "spot": "washington_square",
+        "game": "dama",
+        "engine": "board",
+        "district": "Greenwich Village",
+        "local": false,
+        "driveS": 82,
+        "distDm": 9100,
+        "score": 109,
+        "host": 5,
+        "reward": 77,
+        "difficulty": 2
+       },
+       {
+        "spot": "east_village_bar",
+        "game": "sirky",
+        "engine": "puzzle",
+        "district": "East Village",
+        "local": false,
+        "driveS": 129,
+        "distDm": 14200,
+        "score": 100,
+        "host": 4,
+        "reward": 93,
+        "difficulty": 2
+       },
+       {
+        "spot": "pier_62",
+        "game": "strelnice",
+        "engine": "flick",
+        "district": "Chelsea",
+        "local": false,
+        "driveS": 80,
+        "distDm": 8800,
+        "score": 96,
+        "host": 1,
+        "reward": 76,
+        "difficulty": 2
+       },
+       {
+        "spot": "penn_taxi_stand",
+        "game": "taxi",
+        "engine": "drive",
+        "district": "Midtown",
+        "local": false,
+        "driveS": 20,
+        "distDm": 2300,
+        "score": 82,
+        "host": 4,
+        "reward": 56,
+        "difficulty": 2
+       },
+       {
+        "spot": "seaport_boardwalk",
+        "game": "koulena",
+        "engine": "flick",
+        "district": "Financial District",
+        "local": true,
+        "driveS": 281,
+        "distDm": 31000,
+        "score": 62,
+        "host": 2,
+        "reward": 143,
+        "difficulty": 2
+       }
+      ],
+      "at": 1,
+      "prefs": {},
+      "liked": [],
+      "accepted": "",
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "next"
+     },
+     "state": {
+      "deck": [
+       {
+        "spot": "little_italy_club",
+        "game": "oko",
+        "engine": "cards",
+        "district": "Little Italy",
+        "local": false,
+        "driveS": 180,
+        "distDm": 19800,
+        "score": 112,
+        "host": 1,
+        "reward": 110,
+        "difficulty": 2
+       },
+       {
+        "spot": "washington_square",
+        "game": "dama",
+        "engine": "board",
+        "district": "Greenwich Village",
+        "local": false,
+        "driveS": 82,
+        "distDm": 9100,
+        "score": 109,
+        "host": 5,
+        "reward": 77,
+        "difficulty": 2
+       },
+       {
+        "spot": "east_village_bar",
+        "game": "sirky",
+        "engine": "puzzle",
+        "district": "East Village",
+        "local": false,
+        "driveS": 129,
+        "distDm": 14200,
+        "score": 100,
+        "host": 4,
+        "reward": 93,
+        "difficulty": 2
+       },
+       {
+        "spot": "pier_62",
+        "game": "strelnice",
+        "engine": "flick",
+        "district": "Chelsea",
+        "local": false,
+        "driveS": 80,
+        "distDm": 8800,
+        "score": 96,
+        "host": 1,
+        "reward": 76,
+        "difficulty": 2
+       },
+       {
+        "spot": "penn_taxi_stand",
+        "game": "taxi",
+        "engine": "drive",
+        "district": "Midtown",
+        "local": false,
+        "driveS": 20,
+        "distDm": 2300,
+        "score": 82,
+        "host": 4,
+        "reward": 56,
+        "difficulty": 2
+       },
+       {
+        "spot": "seaport_boardwalk",
+        "game": "koulena",
+        "engine": "flick",
+        "district": "Financial District",
+        "local": true,
+        "driveS": 281,
+        "distDm": 31000,
+        "score": 62,
+        "host": 2,
+        "reward": 143,
+        "difficulty": 2
+       }
+      ],
+      "at": 2,
+      "prefs": {},
+      "liked": [],
+      "accepted": "",
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "prev"
+     },
+     "state": {
+      "deck": [
+       {
+        "spot": "little_italy_club",
+        "game": "oko",
+        "engine": "cards",
+        "district": "Little Italy",
+        "local": false,
+        "driveS": 180,
+        "distDm": 19800,
+        "score": 112,
+        "host": 1,
+        "reward": 110,
+        "difficulty": 2
+       },
+       {
+        "spot": "washington_square",
+        "game": "dama",
+        "engine": "board",
+        "district": "Greenwich Village",
+        "local": false,
+        "driveS": 82,
+        "distDm": 9100,
+        "score": 109,
+        "host": 5,
+        "reward": 77,
+        "difficulty": 2
+       },
+       {
+        "spot": "east_village_bar",
+        "game": "sirky",
+        "engine": "puzzle",
+        "district": "East Village",
+        "local": false,
+        "driveS": 129,
+        "distDm": 14200,
+        "score": 100,
+        "host": 4,
+        "reward": 93,
+        "difficulty": 2
+       },
+       {
+        "spot": "pier_62",
+        "game": "strelnice",
+        "engine": "flick",
+        "district": "Chelsea",
+        "local": false,
+        "driveS": 80,
+        "distDm": 8800,
+        "score": 96,
+        "host": 1,
+        "reward": 76,
+        "difficulty": 2
+       },
+       {
+        "spot": "penn_taxi_stand",
+        "game": "taxi",
+        "engine": "drive",
+        "district": "Midtown",
+        "local": false,
+        "driveS": 20,
+        "distDm": 2300,
+        "score": 82,
+        "host": 4,
+        "reward": 56,
+        "difficulty": 2
+       },
+       {
+        "spot": "seaport_boardwalk",
+        "game": "koulena",
+        "engine": "flick",
+        "district": "Financial District",
+        "local": true,
+        "driveS": 281,
+        "distDm": 31000,
+        "score": 62,
+        "host": 2,
+        "reward": 143,
+        "difficulty": 2
+       }
+      ],
+      "at": 1,
+      "prefs": {},
+      "liked": [],
+      "accepted": "",
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "prev"
+     },
+     "state": {
+      "deck": [
+       {
+        "spot": "little_italy_club",
+        "game": "oko",
+        "engine": "cards",
+        "district": "Little Italy",
+        "local": false,
+        "driveS": 180,
+        "distDm": 19800,
+        "score": 112,
+        "host": 1,
+        "reward": 110,
+        "difficulty": 2
+       },
+       {
+        "spot": "washington_square",
+        "game": "dama",
+        "engine": "board",
+        "district": "Greenwich Village",
+        "local": false,
+        "driveS": 82,
+        "distDm": 9100,
+        "score": 109,
+        "host": 5,
+        "reward": 77,
+        "difficulty": 2
+       },
+       {
+        "spot": "east_village_bar",
+        "game": "sirky",
+        "engine": "puzzle",
+        "district": "East Village",
+        "local": false,
+        "driveS": 129,
+        "distDm": 14200,
+        "score": 100,
+        "host": 4,
+        "reward": 93,
+        "difficulty": 2
+       },
+       {
+        "spot": "pier_62",
+        "game": "strelnice",
+        "engine": "flick",
+        "district": "Chelsea",
+        "local": false,
+        "driveS": 80,
+        "distDm": 8800,
+        "score": 96,
+        "host": 1,
+        "reward": 76,
+        "difficulty": 2
+       },
+       {
+        "spot": "penn_taxi_stand",
+        "game": "taxi",
+        "engine": "drive",
+        "district": "Midtown",
+        "local": false,
+        "driveS": 20,
+        "distDm": 2300,
+        "score": 82,
+        "host": 4,
+        "reward": 56,
+        "difficulty": 2
+       },
+       {
+        "spot": "seaport_boardwalk",
+        "game": "koulena",
+        "engine": "flick",
+        "district": "Financial District",
+        "local": true,
+        "driveS": 281,
+        "distDm": 31000,
+        "score": 62,
+        "host": 2,
+        "reward": 143,
+        "difficulty": 2
+       }
+      ],
+      "at": 0,
+      "prefs": {},
+      "liked": [],
+      "accepted": "",
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "like"
+     },
+     "state": {
+      "deck": [
+       {
+        "spot": "little_italy_club",
+        "game": "oko",
+        "engine": "cards",
+        "district": "Little Italy",
+        "local": false,
+        "driveS": 180,
+        "distDm": 19800,
+        "score": 112,
+        "host": 1,
+        "reward": 110,
+        "difficulty": 2
+       },
+       {
+        "spot": "washington_square",
+        "game": "dama",
+        "engine": "board",
+        "district": "Greenwich Village",
+        "local": false,
+        "driveS": 82,
+        "distDm": 9100,
+        "score": 109,
+        "host": 5,
+        "reward": 77,
+        "difficulty": 2
+       },
+       {
+        "spot": "east_village_bar",
+        "game": "sirky",
+        "engine": "puzzle",
+        "district": "East Village",
+        "local": false,
+        "driveS": 129,
+        "distDm": 14200,
+        "score": 100,
+        "host": 4,
+        "reward": 93,
+        "difficulty": 2
+       },
+       {
+        "spot": "pier_62",
+        "game": "strelnice",
+        "engine": "flick",
+        "district": "Chelsea",
+        "local": false,
+        "driveS": 80,
+        "distDm": 8800,
+        "score": 96,
+        "host": 1,
+        "reward": 76,
+        "difficulty": 2
+       },
+       {
+        "spot": "penn_taxi_stand",
+        "game": "taxi",
+        "engine": "drive",
+        "district": "Midtown",
+        "local": false,
+        "driveS": 20,
+        "distDm": 2300,
+        "score": 82,
+        "host": 4,
+        "reward": 56,
+        "difficulty": 2
+       },
+       {
+        "spot": "seaport_boardwalk",
+        "game": "koulena",
+        "engine": "flick",
+        "district": "Financial District",
+        "local": true,
+        "driveS": 281,
+        "distDm": 31000,
+        "score": 62,
+        "host": 2,
+        "reward": 143,
+        "difficulty": 2
+       }
+      ],
+      "at": 0,
+      "prefs": {
+       "cards": 1
+      },
+      "liked": [
+       "little_italy_club"
+      ],
+      "accepted": "",
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "next"
+     },
+     "state": {
+      "deck": [
+       {
+        "spot": "little_italy_club",
+        "game": "oko",
+        "engine": "cards",
+        "district": "Little Italy",
+        "local": false,
+        "driveS": 180,
+        "distDm": 19800,
+        "score": 112,
+        "host": 1,
+        "reward": 110,
+        "difficulty": 2
+       },
+       {
+        "spot": "washington_square",
+        "game": "dama",
+        "engine": "board",
+        "district": "Greenwich Village",
+        "local": false,
+        "driveS": 82,
+        "distDm": 9100,
+        "score": 109,
+        "host": 5,
+        "reward": 77,
+        "difficulty": 2
+       },
+       {
+        "spot": "east_village_bar",
+        "game": "sirky",
+        "engine": "puzzle",
+        "district": "East Village",
+        "local": false,
+        "driveS": 129,
+        "distDm": 14200,
+        "score": 100,
+        "host": 4,
+        "reward": 93,
+        "difficulty": 2
+       },
+       {
+        "spot": "pier_62",
+        "game": "strelnice",
+        "engine": "flick",
+        "district": "Chelsea",
+        "local": false,
+        "driveS": 80,
+        "distDm": 8800,
+        "score": 96,
+        "host": 1,
+        "reward": 76,
+        "difficulty": 2
+       },
+       {
+        "spot": "penn_taxi_stand",
+        "game": "taxi",
+        "engine": "drive",
+        "district": "Midtown",
+        "local": false,
+        "driveS": 20,
+        "distDm": 2300,
+        "score": 82,
+        "host": 4,
+        "reward": 56,
+        "difficulty": 2
+       },
+       {
+        "spot": "seaport_boardwalk",
+        "game": "koulena",
+        "engine": "flick",
+        "district": "Financial District",
+        "local": true,
+        "driveS": 281,
+        "distDm": 31000,
+        "score": 62,
+        "host": 2,
+        "reward": 143,
+        "difficulty": 2
+       }
+      ],
+      "at": 1,
+      "prefs": {
+       "cards": 1
+      },
+      "liked": [
+       "little_italy_club"
+      ],
+      "accepted": "",
+      "over": false
+     }
+    }
+   ],
+   "result": null
+  },
+  {
+   "name": "prev-then-next",
+   "config": {
+    "deckSize": 6,
+    "novelty": 30,
+    "prefStep": 10,
+    "prefMin": -3,
+    "prefMax": 3,
+    "driveDmPerS": 110,
+    "bandMinS": 60,
+    "bandMaxS": 180,
+    "bandPoints": 40,
+    "nearPoints": 15,
+    "bandFalloffS": 120,
+    "districtBonus": 20,
+    "landmarkBonus": 15,
+    "jitter": 12,
+    "hostLines": 6,
+    "rewardBase": 50,
+    "rewardPerMin": 20,
+    "difficultyBase": 2,
+    "difficultyMax": 5,
+    "candidates": [
+     {
+      "spot": "east_village_bar",
+      "game": "sirky",
+      "engine": "puzzle",
+      "local": false,
+      "district": "East Village",
+      "distDm": 14200,
+      "visits": 0,
+      "landmark": false
+     },
+     {
+      "spot": "little_italy_club",
+      "game": "oko",
+      "engine": "cards",
+      "local": false,
+      "district": "Little Italy",
+      "distDm": 19800,
+      "visits": 0,
+      "landmark": true
+     },
+     {
+      "spot": "washington_square",
+      "game": "dama",
+      "engine": "board",
+      "local": false,
+      "district": "Greenwich Village",
+      "distDm": 9100,
+      "visits": 0,
+      "landmark": true
+     },
+     {
+      "spot": "columbus_park",
+      "game": "desetitisic",
+      "engine": "dice",
+      "local": false,
+      "district": "Chinatown",
+      "distDm": 23500,
+      "visits": 0,
+      "landmark": false
+     },
+     {
+      "spot": "hells_kitchen_pub",
+      "game": "sipky",
+      "engine": "flick",
+      "local": false,
+      "district": "Hell's Kitchen",
+      "distDm": 4100,
+      "visits": 0,
+      "landmark": false
+     },
+     {
+      "spot": "pier_62",
+      "game": "strelnice",
+      "engine": "flick",
+      "local": false,
+      "district": "Chelsea",
+      "distDm": 8800,
+      "visits": 0,
+      "landmark": false
+     },
+     {
+      "spot": "seaport_boardwalk",
+      "game": "koulena",
+      "engine": "flick",
+      "local": true,
+      "district": "Financial District",
+      "distDm": 31000,
+      "visits": 0,
+      "landmark": false
+     },
+     {
+      "spot": "penn_taxi_stand",
+      "game": "taxi",
+      "engine": "drive",
+      "local": false,
+      "district": "Midtown",
+      "distDm": 2300,
+      "visits": 0,
+      "landmark": true
+     }
+    ],
+    "prefs": {},
+    "visitedDistricts": []
+   },
+   "seed": 11,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "next"
+     },
+     "state": {
+      "deck": [
+       {
+        "spot": "little_italy_club",
+        "game": "oko",
+        "engine": "cards",
+        "district": "Little Italy",
+        "local": false,
+        "driveS": 180,
+        "distDm": 19800,
+        "score": 109,
+        "host": 1,
+        "reward": 110,
+        "difficulty": 2
+       },
+       {
+        "spot": "washington_square",
+        "game": "dama",
+        "engine": "board",
+        "district": "Greenwich Village",
+        "local": false,
+        "driveS": 82,
+        "distDm": 9100,
+        "score": 105,
+        "host": 4,
+        "reward": 77,
+        "difficulty": 2
+       },
+       {
+        "spot": "east_village_bar",
+        "game": "sirky",
+        "engine": "puzzle",
+        "district": "East Village",
+        "local": false,
+        "driveS": 129,
+        "distDm": 14200,
+        "score": 100,
+        "host": 5,
+        "reward": 93,
+        "difficulty": 2
+       },
+       {
+        "spot": "pier_62",
+        "game": "strelnice",
+        "engine": "flick",
+        "district": "Chelsea",
+        "local": false,
+        "driveS": 80,
+        "distDm": 8800,
+        "score": 92,
+        "host": 3,
+        "reward": 76,
+        "difficulty": 2
+       },
+       {
+        "spot": "penn_taxi_stand",
+        "game": "taxi",
+        "engine": "drive",
+        "district": "Midtown",
+        "local": false,
+        "driveS": 20,
+        "distDm": 2300,
+        "score": 87,
+        "host": 5,
+        "reward": 56,
+        "difficulty": 2
+       },
+       {
+        "spot": "seaport_boardwalk",
+        "game": "koulena",
+        "engine": "flick",
+        "district": "Financial District",
+        "local": true,
+        "driveS": 281,
+        "distDm": 31000,
+        "score": 64,
+        "host": 0,
+        "reward": 143,
+        "difficulty": 2
+       }
+      ],
+      "at": 1,
+      "prefs": {},
+      "liked": [],
+      "accepted": "",
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "prev"
+     },
+     "state": {
+      "deck": [
+       {
+        "spot": "little_italy_club",
+        "game": "oko",
+        "engine": "cards",
+        "district": "Little Italy",
+        "local": false,
+        "driveS": 180,
+        "distDm": 19800,
+        "score": 109,
+        "host": 1,
+        "reward": 110,
+        "difficulty": 2
+       },
+       {
+        "spot": "washington_square",
+        "game": "dama",
+        "engine": "board",
+        "district": "Greenwich Village",
+        "local": false,
+        "driveS": 82,
+        "distDm": 9100,
+        "score": 105,
+        "host": 4,
+        "reward": 77,
+        "difficulty": 2
+       },
+       {
+        "spot": "east_village_bar",
+        "game": "sirky",
+        "engine": "puzzle",
+        "district": "East Village",
+        "local": false,
+        "driveS": 129,
+        "distDm": 14200,
+        "score": 100,
+        "host": 5,
+        "reward": 93,
+        "difficulty": 2
+       },
+       {
+        "spot": "pier_62",
+        "game": "strelnice",
+        "engine": "flick",
+        "district": "Chelsea",
+        "local": false,
+        "driveS": 80,
+        "distDm": 8800,
+        "score": 92,
+        "host": 3,
+        "reward": 76,
+        "difficulty": 2
+       },
+       {
+        "spot": "penn_taxi_stand",
+        "game": "taxi",
+        "engine": "drive",
+        "district": "Midtown",
+        "local": false,
+        "driveS": 20,
+        "distDm": 2300,
+        "score": 87,
+        "host": 5,
+        "reward": 56,
+        "difficulty": 2
+       },
+       {
+        "spot": "seaport_boardwalk",
+        "game": "koulena",
+        "engine": "flick",
+        "district": "Financial District",
+        "local": true,
+        "driveS": 281,
+        "distDm": 31000,
+        "score": 64,
+        "host": 0,
+        "reward": 143,
+        "difficulty": 2
+       }
+      ],
+      "at": 0,
+      "prefs": {},
+      "liked": [],
+      "accepted": "",
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "next"
+     },
+     "state": {
+      "deck": [
+       {
+        "spot": "little_italy_club",
+        "game": "oko",
+        "engine": "cards",
+        "district": "Little Italy",
+        "local": false,
+        "driveS": 180,
+        "distDm": 19800,
+        "score": 109,
+        "host": 1,
+        "reward": 110,
+        "difficulty": 2
+       },
+       {
+        "spot": "washington_square",
+        "game": "dama",
+        "engine": "board",
+        "district": "Greenwich Village",
+        "local": false,
+        "driveS": 82,
+        "distDm": 9100,
+        "score": 105,
+        "host": 4,
+        "reward": 77,
+        "difficulty": 2
+       },
+       {
+        "spot": "east_village_bar",
+        "game": "sirky",
+        "engine": "puzzle",
+        "district": "East Village",
+        "local": false,
+        "driveS": 129,
+        "distDm": 14200,
+        "score": 100,
+        "host": 5,
+        "reward": 93,
+        "difficulty": 2
+       },
+       {
+        "spot": "pier_62",
+        "game": "strelnice",
+        "engine": "flick",
+        "district": "Chelsea",
+        "local": false,
+        "driveS": 80,
+        "distDm": 8800,
+        "score": 92,
+        "host": 3,
+        "reward": 76,
+        "difficulty": 2
+       },
+       {
+        "spot": "penn_taxi_stand",
+        "game": "taxi",
+        "engine": "drive",
+        "district": "Midtown",
+        "local": false,
+        "driveS": 20,
+        "distDm": 2300,
+        "score": 87,
+        "host": 5,
+        "reward": 56,
+        "difficulty": 2
+       },
+       {
+        "spot": "seaport_boardwalk",
+        "game": "koulena",
+        "engine": "flick",
+        "district": "Financial District",
+        "local": true,
+        "driveS": 281,
+        "distDm": 31000,
+        "score": 64,
+        "host": 0,
+        "reward": 143,
+        "difficulty": 2
+       }
+      ],
+      "at": 1,
+      "prefs": {},
+      "liked": [],
+      "accepted": "",
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "next"
+     },
+     "state": {
+      "deck": [
+       {
+        "spot": "little_italy_club",
+        "game": "oko",
+        "engine": "cards",
+        "district": "Little Italy",
+        "local": false,
+        "driveS": 180,
+        "distDm": 19800,
+        "score": 109,
+        "host": 1,
+        "reward": 110,
+        "difficulty": 2
+       },
+       {
+        "spot": "washington_square",
+        "game": "dama",
+        "engine": "board",
+        "district": "Greenwich Village",
+        "local": false,
+        "driveS": 82,
+        "distDm": 9100,
+        "score": 105,
+        "host": 4,
+        "reward": 77,
+        "difficulty": 2
+       },
+       {
+        "spot": "east_village_bar",
+        "game": "sirky",
+        "engine": "puzzle",
+        "district": "East Village",
+        "local": false,
+        "driveS": 129,
+        "distDm": 14200,
+        "score": 100,
+        "host": 5,
+        "reward": 93,
+        "difficulty": 2
+       },
+       {
+        "spot": "pier_62",
+        "game": "strelnice",
+        "engine": "flick",
+        "district": "Chelsea",
+        "local": false,
+        "driveS": 80,
+        "distDm": 8800,
+        "score": 92,
+        "host": 3,
+        "reward": 76,
+        "difficulty": 2
+       },
+       {
+        "spot": "penn_taxi_stand",
+        "game": "taxi",
+        "engine": "drive",
+        "district": "Midtown",
+        "local": false,
+        "driveS": 20,
+        "distDm": 2300,
+        "score": 87,
+        "host": 5,
+        "reward": 56,
+        "difficulty": 2
+       },
+       {
+        "spot": "seaport_boardwalk",
+        "game": "koulena",
+        "engine": "flick",
+        "district": "Financial District",
+        "local": true,
+        "driveS": 281,
+        "distDm": 31000,
+        "score": 64,
+        "host": 0,
+        "reward": 143,
+        "difficulty": 2
+       }
+      ],
+      "at": 2,
+      "prefs": {},
+      "liked": [],
+      "accepted": "",
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "next"
+     },
+     "state": {
+      "deck": [
+       {
+        "spot": "little_italy_club",
+        "game": "oko",
+        "engine": "cards",
+        "district": "Little Italy",
+        "local": false,
+        "driveS": 180,
+        "distDm": 19800,
+        "score": 109,
+        "host": 1,
+        "reward": 110,
+        "difficulty": 2
+       },
+       {
+        "spot": "washington_square",
+        "game": "dama",
+        "engine": "board",
+        "district": "Greenwich Village",
+        "local": false,
+        "driveS": 82,
+        "distDm": 9100,
+        "score": 105,
+        "host": 4,
+        "reward": 77,
+        "difficulty": 2
+       },
+       {
+        "spot": "east_village_bar",
+        "game": "sirky",
+        "engine": "puzzle",
+        "district": "East Village",
+        "local": false,
+        "driveS": 129,
+        "distDm": 14200,
+        "score": 100,
+        "host": 5,
+        "reward": 93,
+        "difficulty": 2
+       },
+       {
+        "spot": "pier_62",
+        "game": "strelnice",
+        "engine": "flick",
+        "district": "Chelsea",
+        "local": false,
+        "driveS": 80,
+        "distDm": 8800,
+        "score": 92,
+        "host": 3,
+        "reward": 76,
+        "difficulty": 2
+       },
+       {
+        "spot": "penn_taxi_stand",
+        "game": "taxi",
+        "engine": "drive",
+        "district": "Midtown",
+        "local": false,
+        "driveS": 20,
+        "distDm": 2300,
+        "score": 87,
+        "host": 5,
+        "reward": 56,
+        "difficulty": 2
+       },
+       {
+        "spot": "seaport_boardwalk",
+        "game": "koulena",
+        "engine": "flick",
+        "district": "Financial District",
+        "local": true,
+        "driveS": 281,
+        "distDm": 31000,
+        "score": 64,
+        "host": 0,
+        "reward": 143,
+        "difficulty": 2
+       }
+      ],
+      "at": 3,
+      "prefs": {},
+      "liked": [],
+      "accepted": "",
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "next"
+     },
+     "state": {
+      "deck": [
+       {
+        "spot": "little_italy_club",
+        "game": "oko",
+        "engine": "cards",
+        "district": "Little Italy",
+        "local": false,
+        "driveS": 180,
+        "distDm": 19800,
+        "score": 109,
+        "host": 1,
+        "reward": 110,
+        "difficulty": 2
+       },
+       {
+        "spot": "washington_square",
+        "game": "dama",
+        "engine": "board",
+        "district": "Greenwich Village",
+        "local": false,
+        "driveS": 82,
+        "distDm": 9100,
+        "score": 105,
+        "host": 4,
+        "reward": 77,
+        "difficulty": 2
+       },
+       {
+        "spot": "east_village_bar",
+        "game": "sirky",
+        "engine": "puzzle",
+        "district": "East Village",
+        "local": false,
+        "driveS": 129,
+        "distDm": 14200,
+        "score": 100,
+        "host": 5,
+        "reward": 93,
+        "difficulty": 2
+       },
+       {
+        "spot": "pier_62",
+        "game": "strelnice",
+        "engine": "flick",
+        "district": "Chelsea",
+        "local": false,
+        "driveS": 80,
+        "distDm": 8800,
+        "score": 92,
+        "host": 3,
+        "reward": 76,
+        "difficulty": 2
+       },
+       {
+        "spot": "penn_taxi_stand",
+        "game": "taxi",
+        "engine": "drive",
+        "district": "Midtown",
+        "local": false,
+        "driveS": 20,
+        "distDm": 2300,
+        "score": 87,
+        "host": 5,
+        "reward": 56,
+        "difficulty": 2
+       },
+       {
+        "spot": "seaport_boardwalk",
+        "game": "koulena",
+        "engine": "flick",
+        "district": "Financial District",
+        "local": true,
+        "driveS": 281,
+        "distDm": 31000,
+        "score": 64,
+        "host": 0,
+        "reward": 143,
+        "difficulty": 2
+       }
+      ],
+      "at": 4,
+      "prefs": {},
+      "liked": [],
+      "accepted": "",
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "next"
+     },
+     "state": {
+      "deck": [
+       {
+        "spot": "little_italy_club",
+        "game": "oko",
+        "engine": "cards",
+        "district": "Little Italy",
+        "local": false,
+        "driveS": 180,
+        "distDm": 19800,
+        "score": 109,
+        "host": 1,
+        "reward": 110,
+        "difficulty": 2
+       },
+       {
+        "spot": "washington_square",
+        "game": "dama",
+        "engine": "board",
+        "district": "Greenwich Village",
+        "local": false,
+        "driveS": 82,
+        "distDm": 9100,
+        "score": 105,
+        "host": 4,
+        "reward": 77,
+        "difficulty": 2
+       },
+       {
+        "spot": "east_village_bar",
+        "game": "sirky",
+        "engine": "puzzle",
+        "district": "East Village",
+        "local": false,
+        "driveS": 129,
+        "distDm": 14200,
+        "score": 100,
+        "host": 5,
+        "reward": 93,
+        "difficulty": 2
+       },
+       {
+        "spot": "pier_62",
+        "game": "strelnice",
+        "engine": "flick",
+        "district": "Chelsea",
+        "local": false,
+        "driveS": 80,
+        "distDm": 8800,
+        "score": 92,
+        "host": 3,
+        "reward": 76,
+        "difficulty": 2
+       },
+       {
+        "spot": "penn_taxi_stand",
+        "game": "taxi",
+        "engine": "drive",
+        "district": "Midtown",
+        "local": false,
+        "driveS": 20,
+        "distDm": 2300,
+        "score": 87,
+        "host": 5,
+        "reward": 56,
+        "difficulty": 2
+       },
+       {
+        "spot": "seaport_boardwalk",
+        "game": "koulena",
+        "engine": "flick",
+        "district": "Financial District",
+        "local": true,
+        "driveS": 281,
+        "distDm": 31000,
+        "score": 64,
+        "host": 0,
+        "reward": 143,
+        "difficulty": 2
+       }
+      ],
+      "at": 5,
+      "prefs": {},
+      "liked": [],
+      "accepted": "",
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "next"
+     },
+     "state": {
+      "deck": [
+       {
+        "spot": "little_italy_club",
+        "game": "oko",
+        "engine": "cards",
+        "district": "Little Italy",
+        "local": false,
+        "driveS": 180,
+        "distDm": 19800,
+        "score": 109,
+        "host": 1,
+        "reward": 110,
+        "difficulty": 2
+       },
+       {
+        "spot": "washington_square",
+        "game": "dama",
+        "engine": "board",
+        "district": "Greenwich Village",
+        "local": false,
+        "driveS": 82,
+        "distDm": 9100,
+        "score": 105,
+        "host": 4,
+        "reward": 77,
+        "difficulty": 2
+       },
+       {
+        "spot": "east_village_bar",
+        "game": "sirky",
+        "engine": "puzzle",
+        "district": "East Village",
+        "local": false,
+        "driveS": 129,
+        "distDm": 14200,
+        "score": 100,
+        "host": 5,
+        "reward": 93,
+        "difficulty": 2
+       },
+       {
+        "spot": "pier_62",
+        "game": "strelnice",
+        "engine": "flick",
+        "district": "Chelsea",
+        "local": false,
+        "driveS": 80,
+        "distDm": 8800,
+        "score": 92,
+        "host": 3,
+        "reward": 76,
+        "difficulty": 2
+       },
+       {
+        "spot": "penn_taxi_stand",
+        "game": "taxi",
+        "engine": "drive",
+        "district": "Midtown",
+        "local": false,
+        "driveS": 20,
+        "distDm": 2300,
+        "score": 87,
+        "host": 5,
+        "reward": 56,
+        "difficulty": 2
+       },
+       {
+        "spot": "seaport_boardwalk",
+        "game": "koulena",
+        "engine": "flick",
+        "district": "Financial District",
+        "local": true,
+        "driveS": 281,
+        "distDm": 31000,
+        "score": 64,
+        "host": 0,
+        "reward": 143,
+        "difficulty": 2
+       }
+      ],
+      "at": 6,
+      "prefs": {},
+      "liked": [],
+      "accepted": "",
+      "over": true
+     }
+    }
+   ],
+   "result": null
+  },
+  {
+   "name": "prev-after-like-and-less",
+   "config": {
+    "deckSize": 6,
+    "novelty": 30,
+    "prefStep": 10,
+    "prefMin": -3,
+    "prefMax": 3,
+    "driveDmPerS": 110,
+    "bandMinS": 60,
+    "bandMaxS": 180,
+    "bandPoints": 40,
+    "nearPoints": 15,
+    "bandFalloffS": 120,
+    "districtBonus": 20,
+    "landmarkBonus": 15,
+    "jitter": 12,
+    "hostLines": 6,
+    "rewardBase": 50,
+    "rewardPerMin": 20,
+    "difficultyBase": 2,
+    "difficultyMax": 5,
+    "candidates": [
+     {
+      "spot": "east_village_bar",
+      "game": "sirky",
+      "engine": "puzzle",
+      "local": false,
+      "district": "East Village",
+      "distDm": 14200,
+      "visits": 0,
+      "landmark": false
+     },
+     {
+      "spot": "little_italy_club",
+      "game": "oko",
+      "engine": "cards",
+      "local": false,
+      "district": "Little Italy",
+      "distDm": 19800,
+      "visits": 0,
+      "landmark": true
+     },
+     {
+      "spot": "washington_square",
+      "game": "dama",
+      "engine": "board",
+      "local": false,
+      "district": "Greenwich Village",
+      "distDm": 9100,
+      "visits": 0,
+      "landmark": true
+     },
+     {
+      "spot": "columbus_park",
+      "game": "desetitisic",
+      "engine": "dice",
+      "local": false,
+      "district": "Chinatown",
+      "distDm": 23500,
+      "visits": 0,
+      "landmark": false
+     },
+     {
+      "spot": "hells_kitchen_pub",
+      "game": "sipky",
+      "engine": "flick",
+      "local": false,
+      "district": "Hell's Kitchen",
+      "distDm": 4100,
+      "visits": 0,
+      "landmark": false
+     },
+     {
+      "spot": "pier_62",
+      "game": "strelnice",
+      "engine": "flick",
+      "local": false,
+      "district": "Chelsea",
+      "distDm": 8800,
+      "visits": 0,
+      "landmark": false
+     },
+     {
+      "spot": "seaport_boardwalk",
+      "game": "koulena",
+      "engine": "flick",
+      "local": true,
+      "district": "Financial District",
+      "distDm": 31000,
+      "visits": 0,
+      "landmark": false
+     },
+     {
+      "spot": "penn_taxi_stand",
+      "game": "taxi",
+      "engine": "drive",
+      "local": false,
+      "district": "Midtown",
+      "distDm": 2300,
+      "visits": 0,
+      "landmark": true
+     }
+    ],
+    "prefs": {},
+    "visitedDistricts": []
+   },
+   "seed": 2024,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "like"
+     },
+     "state": {
+      "deck": [
+       {
+        "spot": "washington_square",
+        "game": "dama",
+        "engine": "board",
+        "district": "Greenwich Village",
+        "local": false,
+        "driveS": 82,
+        "distDm": 9100,
+        "score": 115,
+        "host": 1,
+        "reward": 77,
+        "difficulty": 2
+       },
+       {
+        "spot": "little_italy_club",
+        "game": "oko",
+        "engine": "cards",
+        "district": "Little Italy",
+        "local": false,
+        "driveS": 180,
+        "distDm": 19800,
+        "score": 111,
+        "host": 1,
+        "reward": 110,
+        "difficulty": 2
+       },
+       {
+        "spot": "pier_62",
+        "game": "strelnice",
+        "engine": "flick",
+        "district": "Chelsea",
+        "local": false,
+        "driveS": 80,
+        "distDm": 8800,
+        "score": 101,
+        "host": 1,
+        "reward": 76,
+        "difficulty": 2
+       },
+       {
+        "spot": "east_village_bar",
+        "game": "sirky",
+        "engine": "puzzle",
+        "district": "East Village",
+        "local": false,
+        "driveS": 129,
+        "distDm": 14200,
+        "score": 91,
+        "host": 3,
+        "reward": 93,
+        "difficulty": 2
+       },
+       {
+        "spot": "penn_taxi_stand",
+        "game": "taxi",
+        "engine": "drive",
+        "district": "Midtown",
+        "local": false,
+        "driveS": 20,
+        "distDm": 2300,
+        "score": 88,
+        "host": 2,
+        "reward": 56,
+        "difficulty": 2
+       },
+       {
+        "spot": "seaport_boardwalk",
+        "game": "koulena",
+        "engine": "flick",
+        "district": "Financial District",
+        "local": true,
+        "driveS": 281,
+        "distDm": 31000,
+        "score": 60,
+        "host": 2,
+        "reward": 143,
+        "difficulty": 2
+       }
+      ],
+      "at": 0,
+      "prefs": {
+       "board": 1
+      },
+      "liked": [
+       "washington_square"
+      ],
+      "accepted": "",
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "less"
+     },
+     "state": {
+      "deck": [
+       {
+        "spot": "washington_square",
+        "game": "dama",
+        "engine": "board",
+        "district": "Greenwich Village",
+        "local": false,
+        "driveS": 82,
+        "distDm": 9100,
+        "score": 115,
+        "host": 1,
+        "reward": 77,
+        "difficulty": 2
+       },
+       {
+        "spot": "little_italy_club",
+        "game": "oko",
+        "engine": "cards",
+        "district": "Little Italy",
+        "local": false,
+        "driveS": 180,
+        "distDm": 19800,
+        "score": 111,
+        "host": 1,
+        "reward": 110,
+        "difficulty": 2
+       },
+       {
+        "spot": "pier_62",
+        "game": "strelnice",
+        "engine": "flick",
+        "district": "Chelsea",
+        "local": false,
+        "driveS": 80,
+        "distDm": 8800,
+        "score": 101,
+        "host": 1,
+        "reward": 76,
+        "difficulty": 2
+       },
+       {
+        "spot": "east_village_bar",
+        "game": "sirky",
+        "engine": "puzzle",
+        "district": "East Village",
+        "local": false,
+        "driveS": 129,
+        "distDm": 14200,
+        "score": 91,
+        "host": 3,
+        "reward": 93,
+        "difficulty": 2
+       },
+       {
+        "spot": "penn_taxi_stand",
+        "game": "taxi",
+        "engine": "drive",
+        "district": "Midtown",
+        "local": false,
+        "driveS": 20,
+        "distDm": 2300,
+        "score": 88,
+        "host": 2,
+        "reward": 56,
+        "difficulty": 2
+       },
+       {
+        "spot": "seaport_boardwalk",
+        "game": "koulena",
+        "engine": "flick",
+        "district": "Financial District",
+        "local": true,
+        "driveS": 281,
+        "distDm": 31000,
+        "score": 60,
+        "host": 2,
+        "reward": 143,
+        "difficulty": 2
+       }
+      ],
+      "at": 1,
+      "prefs": {
+       "board": 0
+      },
+      "liked": [
+       "washington_square"
+      ],
+      "accepted": "",
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "prev"
+     },
+     "state": {
+      "deck": [
+       {
+        "spot": "washington_square",
+        "game": "dama",
+        "engine": "board",
+        "district": "Greenwich Village",
+        "local": false,
+        "driveS": 82,
+        "distDm": 9100,
+        "score": 115,
+        "host": 1,
+        "reward": 77,
+        "difficulty": 2
+       },
+       {
+        "spot": "little_italy_club",
+        "game": "oko",
+        "engine": "cards",
+        "district": "Little Italy",
+        "local": false,
+        "driveS": 180,
+        "distDm": 19800,
+        "score": 111,
+        "host": 1,
+        "reward": 110,
+        "difficulty": 2
+       },
+       {
+        "spot": "pier_62",
+        "game": "strelnice",
+        "engine": "flick",
+        "district": "Chelsea",
+        "local": false,
+        "driveS": 80,
+        "distDm": 8800,
+        "score": 101,
+        "host": 1,
+        "reward": 76,
+        "difficulty": 2
+       },
+       {
+        "spot": "east_village_bar",
+        "game": "sirky",
+        "engine": "puzzle",
+        "district": "East Village",
+        "local": false,
+        "driveS": 129,
+        "distDm": 14200,
+        "score": 91,
+        "host": 3,
+        "reward": 93,
+        "difficulty": 2
+       },
+       {
+        "spot": "penn_taxi_stand",
+        "game": "taxi",
+        "engine": "drive",
+        "district": "Midtown",
+        "local": false,
+        "driveS": 20,
+        "distDm": 2300,
+        "score": 88,
+        "host": 2,
+        "reward": 56,
+        "difficulty": 2
+       },
+       {
+        "spot": "seaport_boardwalk",
+        "game": "koulena",
+        "engine": "flick",
+        "district": "Financial District",
+        "local": true,
+        "driveS": 281,
+        "distDm": 31000,
+        "score": 60,
+        "host": 2,
+        "reward": 143,
+        "difficulty": 2
+       }
+      ],
+      "at": 0,
+      "prefs": {
+       "board": 0
+      },
+      "liked": [
+       "washington_square"
+      ],
+      "accepted": "",
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "less"
+     },
+     "state": {
+      "deck": [
+       {
+        "spot": "washington_square",
+        "game": "dama",
+        "engine": "board",
+        "district": "Greenwich Village",
+        "local": false,
+        "driveS": 82,
+        "distDm": 9100,
+        "score": 115,
+        "host": 1,
+        "reward": 77,
+        "difficulty": 2
+       },
+       {
+        "spot": "little_italy_club",
+        "game": "oko",
+        "engine": "cards",
+        "district": "Little Italy",
+        "local": false,
+        "driveS": 180,
+        "distDm": 19800,
+        "score": 111,
+        "host": 1,
+        "reward": 110,
+        "difficulty": 2
+       },
+       {
+        "spot": "pier_62",
+        "game": "strelnice",
+        "engine": "flick",
+        "district": "Chelsea",
+        "local": false,
+        "driveS": 80,
+        "distDm": 8800,
+        "score": 101,
+        "host": 1,
+        "reward": 76,
+        "difficulty": 2
+       },
+       {
+        "spot": "east_village_bar",
+        "game": "sirky",
+        "engine": "puzzle",
+        "district": "East Village",
+        "local": false,
+        "driveS": 129,
+        "distDm": 14200,
+        "score": 91,
+        "host": 3,
+        "reward": 93,
+        "difficulty": 2
+       },
+       {
+        "spot": "penn_taxi_stand",
+        "game": "taxi",
+        "engine": "drive",
+        "district": "Midtown",
+        "local": false,
+        "driveS": 20,
+        "distDm": 2300,
+        "score": 88,
+        "host": 2,
+        "reward": 56,
+        "difficulty": 2
+       },
+       {
+        "spot": "seaport_boardwalk",
+        "game": "koulena",
+        "engine": "flick",
+        "district": "Financial District",
+        "local": true,
+        "driveS": 281,
+        "distDm": 31000,
+        "score": 60,
+        "host": 2,
+        "reward": 143,
+        "difficulty": 2
+       }
+      ],
+      "at": 1,
+      "prefs": {
+       "board": -1
+      },
+      "liked": [
+       "washington_square"
+      ],
+      "accepted": "",
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "prev"
+     },
+     "state": {
+      "deck": [
+       {
+        "spot": "washington_square",
+        "game": "dama",
+        "engine": "board",
+        "district": "Greenwich Village",
+        "local": false,
+        "driveS": 82,
+        "distDm": 9100,
+        "score": 115,
+        "host": 1,
+        "reward": 77,
+        "difficulty": 2
+       },
+       {
+        "spot": "little_italy_club",
+        "game": "oko",
+        "engine": "cards",
+        "district": "Little Italy",
+        "local": false,
+        "driveS": 180,
+        "distDm": 19800,
+        "score": 111,
+        "host": 1,
+        "reward": 110,
+        "difficulty": 2
+       },
+       {
+        "spot": "pier_62",
+        "game": "strelnice",
+        "engine": "flick",
+        "district": "Chelsea",
+        "local": false,
+        "driveS": 80,
+        "distDm": 8800,
+        "score": 101,
+        "host": 1,
+        "reward": 76,
+        "difficulty": 2
+       },
+       {
+        "spot": "east_village_bar",
+        "game": "sirky",
+        "engine": "puzzle",
+        "district": "East Village",
+        "local": false,
+        "driveS": 129,
+        "distDm": 14200,
+        "score": 91,
+        "host": 3,
+        "reward": 93,
+        "difficulty": 2
+       },
+       {
+        "spot": "penn_taxi_stand",
+        "game": "taxi",
+        "engine": "drive",
+        "district": "Midtown",
+        "local": false,
+        "driveS": 20,
+        "distDm": 2300,
+        "score": 88,
+        "host": 2,
+        "reward": 56,
+        "difficulty": 2
+       },
+       {
+        "spot": "seaport_boardwalk",
+        "game": "koulena",
+        "engine": "flick",
+        "district": "Financial District",
+        "local": true,
+        "driveS": 281,
+        "distDm": 31000,
+        "score": 60,
+        "host": 2,
+        "reward": 143,
+        "difficulty": 2
+       }
+      ],
+      "at": 0,
+      "prefs": {
+       "board": -1
+      },
+      "liked": [
+       "washington_square"
+      ],
+      "accepted": "",
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "next"
+     },
+     "state": {
+      "deck": [
+       {
+        "spot": "washington_square",
+        "game": "dama",
+        "engine": "board",
+        "district": "Greenwich Village",
+        "local": false,
+        "driveS": 82,
+        "distDm": 9100,
+        "score": 115,
+        "host": 1,
+        "reward": 77,
+        "difficulty": 2
+       },
+       {
+        "spot": "little_italy_club",
+        "game": "oko",
+        "engine": "cards",
+        "district": "Little Italy",
+        "local": false,
+        "driveS": 180,
+        "distDm": 19800,
+        "score": 111,
+        "host": 1,
+        "reward": 110,
+        "difficulty": 2
+       },
+       {
+        "spot": "pier_62",
+        "game": "strelnice",
+        "engine": "flick",
+        "district": "Chelsea",
+        "local": false,
+        "driveS": 80,
+        "distDm": 8800,
+        "score": 101,
+        "host": 1,
+        "reward": 76,
+        "difficulty": 2
+       },
+       {
+        "spot": "east_village_bar",
+        "game": "sirky",
+        "engine": "puzzle",
+        "district": "East Village",
+        "local": false,
+        "driveS": 129,
+        "distDm": 14200,
+        "score": 91,
+        "host": 3,
+        "reward": 93,
+        "difficulty": 2
+       },
+       {
+        "spot": "penn_taxi_stand",
+        "game": "taxi",
+        "engine": "drive",
+        "district": "Midtown",
+        "local": false,
+        "driveS": 20,
+        "distDm": 2300,
+        "score": 88,
+        "host": 2,
+        "reward": 56,
+        "difficulty": 2
+       },
+       {
+        "spot": "seaport_boardwalk",
+        "game": "koulena",
+        "engine": "flick",
+        "district": "Financial District",
+        "local": true,
+        "driveS": 281,
+        "distDm": 31000,
+        "score": 60,
+        "host": 2,
+        "reward": 143,
+        "difficulty": 2
+       }
+      ],
+      "at": 1,
+      "prefs": {
+       "board": -1
+      },
+      "liked": [
+       "washington_square"
+      ],
+      "accepted": "",
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "like"
+     },
+     "state": {
+      "deck": [
+       {
+        "spot": "washington_square",
+        "game": "dama",
+        "engine": "board",
+        "district": "Greenwich Village",
+        "local": false,
+        "driveS": 82,
+        "distDm": 9100,
+        "score": 115,
+        "host": 1,
+        "reward": 77,
+        "difficulty": 2
+       },
+       {
+        "spot": "little_italy_club",
+        "game": "oko",
+        "engine": "cards",
+        "district": "Little Italy",
+        "local": false,
+        "driveS": 180,
+        "distDm": 19800,
+        "score": 111,
+        "host": 1,
+        "reward": 110,
+        "difficulty": 2
+       },
+       {
+        "spot": "pier_62",
+        "game": "strelnice",
+        "engine": "flick",
+        "district": "Chelsea",
+        "local": false,
+        "driveS": 80,
+        "distDm": 8800,
+        "score": 101,
+        "host": 1,
+        "reward": 76,
+        "difficulty": 2
+       },
+       {
+        "spot": "east_village_bar",
+        "game": "sirky",
+        "engine": "puzzle",
+        "district": "East Village",
+        "local": false,
+        "driveS": 129,
+        "distDm": 14200,
+        "score": 91,
+        "host": 3,
+        "reward": 93,
+        "difficulty": 2
+       },
+       {
+        "spot": "penn_taxi_stand",
+        "game": "taxi",
+        "engine": "drive",
+        "district": "Midtown",
+        "local": false,
+        "driveS": 20,
+        "distDm": 2300,
+        "score": 88,
+        "host": 2,
+        "reward": 56,
+        "difficulty": 2
+       },
+       {
+        "spot": "seaport_boardwalk",
+        "game": "koulena",
+        "engine": "flick",
+        "district": "Financial District",
+        "local": true,
+        "driveS": 281,
+        "distDm": 31000,
+        "score": 60,
+        "host": 2,
+        "reward": 143,
+        "difficulty": 2
+       }
+      ],
+      "at": 1,
+      "prefs": {
+       "board": -1,
+       "cards": 1
+      },
+      "liked": [
+       "washington_square",
+       "little_italy_club"
+      ],
+      "accepted": "",
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "prev"
+     },
+     "state": {
+      "deck": [
+       {
+        "spot": "washington_square",
+        "game": "dama",
+        "engine": "board",
+        "district": "Greenwich Village",
+        "local": false,
+        "driveS": 82,
+        "distDm": 9100,
+        "score": 115,
+        "host": 1,
+        "reward": 77,
+        "difficulty": 2
+       },
+       {
+        "spot": "little_italy_club",
+        "game": "oko",
+        "engine": "cards",
+        "district": "Little Italy",
+        "local": false,
+        "driveS": 180,
+        "distDm": 19800,
+        "score": 111,
+        "host": 1,
+        "reward": 110,
+        "difficulty": 2
+       },
+       {
+        "spot": "pier_62",
+        "game": "strelnice",
+        "engine": "flick",
+        "district": "Chelsea",
+        "local": false,
+        "driveS": 80,
+        "distDm": 8800,
+        "score": 101,
+        "host": 1,
+        "reward": 76,
+        "difficulty": 2
+       },
+       {
+        "spot": "east_village_bar",
+        "game": "sirky",
+        "engine": "puzzle",
+        "district": "East Village",
+        "local": false,
+        "driveS": 129,
+        "distDm": 14200,
+        "score": 91,
+        "host": 3,
+        "reward": 93,
+        "difficulty": 2
+       },
+       {
+        "spot": "penn_taxi_stand",
+        "game": "taxi",
+        "engine": "drive",
+        "district": "Midtown",
+        "local": false,
+        "driveS": 20,
+        "distDm": 2300,
+        "score": 88,
+        "host": 2,
+        "reward": 56,
+        "difficulty": 2
+       },
+       {
+        "spot": "seaport_boardwalk",
+        "game": "koulena",
+        "engine": "flick",
+        "district": "Financial District",
+        "local": true,
+        "driveS": 281,
+        "distDm": 31000,
+        "score": 60,
+        "host": 2,
+        "reward": 143,
+        "difficulty": 2
+       }
+      ],
+      "at": 0,
+      "prefs": {
+       "board": -1,
+       "cards": 1
+      },
+      "liked": [
+       "washington_square",
+       "little_italy_club"
+      ],
+      "accepted": "",
+      "over": false
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "accept"
+     },
+     "state": {
+      "deck": [
+       {
+        "spot": "washington_square",
+        "game": "dama",
+        "engine": "board",
+        "district": "Greenwich Village",
+        "local": false,
+        "driveS": 82,
+        "distDm": 9100,
+        "score": 115,
+        "host": 1,
+        "reward": 77,
+        "difficulty": 2
+       },
+       {
+        "spot": "little_italy_club",
+        "game": "oko",
+        "engine": "cards",
+        "district": "Little Italy",
+        "local": false,
+        "driveS": 180,
+        "distDm": 19800,
+        "score": 111,
+        "host": 1,
+        "reward": 110,
+        "difficulty": 2
+       },
+       {
+        "spot": "pier_62",
+        "game": "strelnice",
+        "engine": "flick",
+        "district": "Chelsea",
+        "local": false,
+        "driveS": 80,
+        "distDm": 8800,
+        "score": 101,
+        "host": 1,
+        "reward": 76,
+        "difficulty": 2
+       },
+       {
+        "spot": "east_village_bar",
+        "game": "sirky",
+        "engine": "puzzle",
+        "district": "East Village",
+        "local": false,
+        "driveS": 129,
+        "distDm": 14200,
+        "score": 91,
+        "host": 3,
+        "reward": 93,
+        "difficulty": 2
+       },
+       {
+        "spot": "penn_taxi_stand",
+        "game": "taxi",
+        "engine": "drive",
+        "district": "Midtown",
+        "local": false,
+        "driveS": 20,
+        "distDm": 2300,
+        "score": 88,
+        "host": 2,
+        "reward": 56,
+        "difficulty": 2
+       },
+       {
+        "spot": "seaport_boardwalk",
+        "game": "koulena",
+        "engine": "flick",
+        "district": "Financial District",
+        "local": true,
+        "driveS": 281,
+        "distDm": 31000,
+        "score": 60,
+        "host": 2,
+        "reward": 143,
+        "difficulty": 2
+       }
+      ],
+      "at": 0,
+      "prefs": {
+       "board": -1,
+       "cards": 1
+      },
+      "liked": [
+       "washington_square",
+       "little_italy_club"
+      ],
+      "accepted": "washington_square",
+      "over": true
+     }
+    }
+   ],
+   "result": null
   }
  ]
 }

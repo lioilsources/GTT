@@ -140,16 +140,16 @@
   vectors: vectors/feed.json
   lead: web
   flutter: todo
-  web: todo
-  checks: {flutter: pending, web: pending}
+  web: done
+  checks: {flutter: pending, web: pass}
 - id: F-023
   name: Phone, Map and GPS navigation UI (v5 TikTok feed swipe)
   level: P2
   spec: specs/phone.md@5
   lead: web
   flutter: todo
-  web: todo
-  checks: {flutter: pending, web: pending}
+  web: done
+  checks: {flutter: pending, web: pass}
 - id: F-016
   name: Traffic and two-phase traffic lights
   level: P1
@@ -609,8 +609,9 @@
   spec: specs/flow.md@2
   scenarios: scenarios/flow
   lead: web
-  flutter: todo
+  flutter: done
   web: done
+  checks: {flutter: pass, web: pass}
 
 - id: F-070
   name: "Svahy a skoky (M5-S6, T1)"

@@ -2,7 +2,7 @@ import type { TuningFeed } from '../gen/tuning';
 import { Prng } from '../rules/prng';
 import { IllegalAction, type Rules, type RulesResult } from '../minigames/rules';
 
-/** Feed deck selection, specs/feed.md version 1 (P0, integers only). */
+/** Feed deck selection, specs/feed.md version 2 (P0, integers only). */
 export interface FeedCandidate {
   spot: string;
   game: string;
@@ -62,7 +62,7 @@ export interface FeedState {
   over: boolean;
 }
 
-export type FeedOp = 'next' | 'like' | 'less' | 'accept';
+export type FeedOp = 'next' | 'prev' | 'like' | 'less' | 'accept';
 export interface FeedAction {
   by: 'player';
   op: FeedOp;
@@ -97,7 +97,7 @@ export function bandScore(c: FeedConfig, driveS: number): number {
 
 export class FeedRules implements Rules<FeedState, FeedAction, RulesResult, FeedConfig> {
   readonly id = 'feed';
-  readonly specVersion = 1;
+  readonly specVersion = 2;
   private cfg: FeedConfig | null = null;
 
   init(config: FeedConfig, seed: number): FeedState {
@@ -151,7 +151,10 @@ export class FeedRules implements Rules<FeedState, FeedAction, RulesResult, Feed
   legalActions(s: FeedState): FeedAction[] {
     if (s.over) return [];
     const card = s.deck[s.at]!;
-    const ops: FeedOp[] = s.liked.includes(card.spot) ? ['next', 'less', 'accept'] : ['next', 'like', 'less', 'accept'];
+    const ops: FeedOp[] = ['next'];
+    if (s.at > 0) ops.push('prev');
+    if (!s.liked.includes(card.spot)) ops.push('like');
+    ops.push('less', 'accept');
     return ops.map((op) => ({ by: 'player', op }));
   }
 
@@ -163,6 +166,8 @@ export class FeedRules implements Rules<FeedState, FeedAction, RulesResult, Feed
     switch (a.op) {
       case 'next':
         return step(s);
+      case 'prev':
+        return { ...s, at: s.at - 1 };
       case 'like':
         prefs[card.engine] = Math.min(this.c.prefMax, (prefs[card.engine] ?? 0) + 1);
         return { ...s, prefs, liked: [...s.liked, card.spot] };
