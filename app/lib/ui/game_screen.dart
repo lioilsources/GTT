@@ -273,6 +273,30 @@ class _GameScreenState extends State<GameScreen> {
           final weather = _weather ??= WeatherController(game);
           // Tuning and cosmetics (specs/garage.md): the garage tabs, the tuned body, the looks.
           final garage = _garage ??= GarageController(game, loop, phone: phone)..shelf = shops.shelf;
+          // The garage sheet: from the context button at the spot, or from the phone Garage app
+          // anywhere (specs/testdrive.md v2: away from the spot cars appear in place).
+          Future<void> openGarage() async {
+            // Opening the garage ends a test drive: back in the own car (specs/testdrive.md).
+            game.fleet.endTest();
+            final here = !game.fleet.atGarage();
+            await game.pauseOverlays.hold(
+              GameOverlay.garage,
+              showGarage(
+                context,
+                game.fleet,
+                shelf: shops.shelf,
+                garage: garage,
+                testBlocked: loop.inWorldGame,
+                here: here,
+              ),
+            );
+            garage.leave();
+          }
+
+          garage.openSheet = () {
+            phone.close();
+            openGarage();
+          };
           return Stack(
             fit: StackFit.expand,
             children: [
@@ -291,13 +315,7 @@ class _GameScreenState extends State<GameScreen> {
                 onPhone: phone.toggle,
                 onCarAction: (a) async {
                   if (a == CarAction.board) return game.boardCandidate();
-                  // Opening the garage ends a test drive: back in the own car (specs/testdrive.md).
-                  game.fleet.endTest();
-                  await game.pauseOverlays.hold(
-                    GameOverlay.garage,
-                    showGarage(context, game.fleet, shelf: shops.shelf, garage: garage, testBlocked: loop.inWorldGame),
-                  );
-                  garage.leave();
+                  await openGarage();
                 },
                 onHop: game.hop,
                 onToRoad: () {
