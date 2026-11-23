@@ -1,7 +1,8 @@
 import { Effect } from '@babylonjs/core/Materials/effect';
 import { ShaderMaterial } from '@babylonjs/core/Materials/shaderMaterial';
 import type { StandardMaterial } from '@babylonjs/core/Materials/standardMaterial';
-import { Vector2 } from '@babylonjs/core/Maths/math.vector';
+import { Color3 } from '@babylonjs/core/Maths/math.color';
+import { Vector2, Vector3 } from '@babylonjs/core/Maths/math.vector';
 import { Mesh } from '@babylonjs/core/Meshes/mesh';
 import { VertexData } from '@babylonjs/core/Meshes/mesh.vertexData';
 import type { Scene } from '@babylonjs/core/scene';
@@ -44,9 +45,11 @@ attribute vec4 color;
 uniform mat4 worldViewProjection;
 varying vec4 vColor;
 varying vec2 vPos;
+varying vec3 vWorld;
 void main(void) {
   vColor = color;
   vPos = position.xz;
+  vWorld = position;
   gl_Position = worldViewProjection * vec4(position, 1.0);
 }`;
 
@@ -55,8 +58,12 @@ Effect.ShadersStore['natureWaterFragmentShader'] = `
 precision highp float;
 varying vec4 vColor;
 varying vec2 vPos;
+varying vec3 vWorld;
 uniform float time;
 uniform vec2 origin;
+uniform vec3 eye;
+uniform vec3 fogRange;
+uniform vec3 fogColor;
 float hash(vec2 p) { return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
 float noise(vec2 p) {
   vec2 i = floor(p), f = fract(p);
@@ -68,7 +75,9 @@ void main(void) {
   float n1 = noise(p * 0.07 + vec2(time * 0.06, time * 0.025));
   float n2 = noise(p * 0.19 + vec2(-time * 0.05, time * 0.07));
   float w = (n1 * 0.6 + n2 * 0.4 - 0.5) * 0.18 * vColor.a;
-  gl_FragColor = vec4(clamp(vColor.rgb * (1.0 + w), 0.0, 1.0), 1.0);
+  // Linear fog of the chase view (specs/terrain.md); from above it starts out of reach.
+  float f = clamp((distance(vWorld, eye) - fogRange.x) / (fogRange.y - fogRange.x), 0.0, 1.0);
+  gl_FragColor = vec4(mix(clamp(vColor.rgb * (1.0 + w), 0.0, 1.0), fogColor, f * f), 1.0);
 }`;
 
 export interface NatureViewEnv {
@@ -125,9 +134,12 @@ export class NatureView {
     const scene = env.scene;
     this.waterMat = new ShaderMaterial('nature-water', scene, { vertex: 'natureWater', fragment: 'natureWater' }, {
       attributes: ['position', 'color'],
-      uniforms: ['worldViewProjection', 'time', 'origin'],
+      uniforms: ['worldViewProjection', 'time', 'origin', 'eye', 'fogRange', 'fogColor'],
     });
     this.waterMat.backFaceCulling = false;
+    this.waterMat.setVector3('eye', Vector3.Zero());
+    this.waterMat.setVector3('fogRange', new Vector3(1e6, 2e6, 0));
+    this.waterMat.setColor3('fogColor', Color3.White());
     this.crownMat = env.unlit('crowns');
     this.trunkMat = env.unlit('trunks');
     this.buildModels();
@@ -161,6 +173,17 @@ export class NatureView {
     this.leaves.setEnabled(false);
     this.treeVersion = -1;
     this.waterVersion = -1;
+  }
+
+  /** Fog of the chase view (specs/terrain.md "Upřesnění T2"), squared ramp from start to end metres. */
+  setFog(start: number, end: number, color: Color3): void {
+    this.waterMat.setVector3('fogRange', new Vector3(start, end, 0));
+    this.waterMat.setColor3('fogColor', color);
+  }
+
+  /** The chase camera's eye (world x east, y north, z up) for the water fog. */
+  setEye(x: number, y: number, z: number): void {
+    this.waterMat.setVector3('eye', new Vector3(x, z, y));
   }
 
   setPalette(pal: Palette): void {
