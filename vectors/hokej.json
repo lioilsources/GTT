@@ -1,6 +1,6 @@
 {
  "module": "hokej",
- "specVersion": 1,
+ "specVersion": 2,
  "$comment": "M2-S9 dávka C: vzdušný hokej (specs/minigames/hokej.md v1); zmenšený stůl, automat bez rng.",
  "cases": [
   {
