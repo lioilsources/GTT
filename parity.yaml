@@ -560,11 +560,11 @@
 - id: F-064
   name: Vzdušný hokej (M2-S9 batch C)
   level: P0
-  spec: specs/minigames/hokej.md@1
+  spec: specs/minigames/hokej.md@2
   vectors: vectors/hokej.json
   lead: web
   flutter: todo
-  web: done
+  web: todo
 
 - id: F-065
   name: Drift zóna (engine drive, world minigame, M2-S9 batch D)
