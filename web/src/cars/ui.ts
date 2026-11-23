@@ -102,8 +102,9 @@ export class CarsHud {
   /** Starts a test drive of a car for sale from the garage list (specs/testdrive.md "Start"). */
   testDrive(car: string): void {
     if (this.blockTest()) return;
+    const here = this.away;
     this.closeGarage();
-    if (this.fleet.startTest(car)) this.onCarChanged();
+    if (this.fleet.startTest(car, here)) this.onCarChanged();
     this.update();
   }
 
@@ -165,7 +166,21 @@ export class CarsHud {
     this.release?.();
     this.release = null;
     this.tab = 'cars';
+    this.away = false;
     for (const fn of this.onClose) fn();
+  }
+
+  /**
+   * True while the list is open from the phone away from the garage spot: a chosen or tried car
+   * appears in place of the player's car (specs/testdrive.md v2 "Garáž z telefonu").
+   */
+  private away = false;
+
+  /** "Otevřít garáž" in the phone Garage app: the full list anywhere (no garage spot = no-op). */
+  openAnywhere(tab = 'cars'): void {
+    if (!this.fleet.garage) return;
+    if (this.sheet.hidden) this.away = !this.fleet.atGarage();
+    this.openGarage(tab);
   }
 
   /** Opens the garage list on [tab] (default the last one shown, "Auta" when it was closed). */
@@ -208,7 +223,7 @@ export class CarsHud {
           type: 'button',
           disabled: !f.canSelect(id),
           onclick: () => {
-            f.select(id);
+            f.select(id, this.away);
             this.onCarChanged();
             this.closeGarage();
             this.update();
