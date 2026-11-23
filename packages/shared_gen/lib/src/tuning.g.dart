@@ -90,6 +90,7 @@ class Tuning {
         props = TuningProps._(r.sub('props')),
         skids = TuningSkids._(r.sub('skids')),
         bench = TuningBench._(r.sub('bench')),
+        demo = TuningDemo._(r.sub('demo')),
         hud = TuningHud._(r.sub('hud')),
         minigames = TuningMinigames._(r.sub('minigames')),
         route = TuningRoute._(r.sub('route')),
@@ -179,6 +180,9 @@ class Tuning {
 
   /// D1 measurement autopilot (specs/bench.md); route in content/bench/<city>.json.
   final TuningBench bench;
+
+  /// Demo shot ?demo=roadster (specs/demo.md, Prompts/05 L-S9); web only, presentation.
+  final TuningDemo demo;
 
   final TuningHud hud;
 
@@ -285,6 +289,7 @@ class Tuning {
         'props': props.toJson(),
         'skids': skids.toJson(),
         'bench': bench.toJson(),
+        'demo': demo.toJson(),
         'hud': hud.toJson(),
         'minigames': minigames.toJson(),
         'route': route.toJson(),
@@ -1403,6 +1408,55 @@ class TuningBench {
       };
 
   static const keys = ['lookahead_m', 'lookahead_per_mps', 'steer_gain', 'corner_lookahead_m', 'corner_turn_rad', 'corner_speed_mps', 'brake_per_mps', 'stuck_s', 'stuck_mps', 'respawn_ahead_m', 'arrive_m', 'warmup_s', 'search_back_m', 'search_ahead_m'];
+}
+
+/// Demo shot ?demo=roadster (specs/demo.md, Prompts/05 L-S9); web only, presentation.
+class TuningDemo {
+  TuningDemo._(_R r)
+      : seed = r.i('seed'),
+        fps = r.i('fps'),
+        durationS = r.d('duration_s'),
+        tramAtM = r.d('tram_at_m'),
+        trackSearchM = r.d('track_search_m'),
+        queueCars = r.i('queue_cars'),
+        queueGapM = r.d('queue_gap_m'),
+        hopAtM = r.d('hop_at_m'),
+        ogAtS = r.d('og_at_s');
+
+  /// every random seed of the game in the demo
+  int seed;
+
+  /// fixed step per rendered frame
+  int fps;
+
+  double durationS;
+
+  /// tram on the track next to the route this far from the start
+  double tramAtM;
+
+  double trackSearchM;
+
+  int queueCars;
+
+  double queueGapM;
+
+  /// hop when the queue's last car is this close ahead
+  double hopAtM;
+
+  /// link preview frame; 0 = mid-air of the hop
+  double ogAtS;
+
+  Map<String, Object> toJson() => {
+        'seed': seed,
+        'fps': fps,
+        'duration_s': durationS,
+        'tram_at_m': tramAtM,
+        'track_search_m': trackSearchM,
+        'queue_cars': queueCars,
+        'queue_gap_m': queueGapM,
+        'hop_at_m': hopAtM,
+        'og_at_s': ogAtS,
+      };
 }
 
 class TuningHud {

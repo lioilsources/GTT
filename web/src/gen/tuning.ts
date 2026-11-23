@@ -103,6 +103,8 @@ export class Tuning {
   readonly skids: TuningSkids;
   /** D1 measurement autopilot (specs/bench.md); route in content/bench/<city>.json. */
   readonly bench: TuningBench;
+  /** Demo shot ?demo=roadster (specs/demo.md, Prompts/05 L-S9); web only, presentation. */
+  readonly demo: TuningDemo;
   readonly hud: TuningHud;
   /** Minigames (METROPOLE_PLAN 9, specs/minigames/). Rules read these through the generated Tuning. */
   readonly minigames: TuningMinigames;
@@ -200,6 +202,7 @@ export class Tuning {
     this.props = new TuningProps(r.sub('props'));
     this.skids = new TuningSkids(r.sub('skids'));
     this.bench = new TuningBench(r.sub('bench'));
+    this.demo = new TuningDemo(r.sub('demo'));
     this.hud = new TuningHud(r.sub('hud'));
     this.minigames = new TuningMinigames(r.sub('minigames'));
     this.route = new TuningRoute(r.sub('route'));
@@ -251,6 +254,7 @@ export class Tuning {
       props: this.props.toJson(),
       skids: this.skids.toJson(),
       bench: this.bench.toJson(),
+      demo: this.demo.toJson(),
       hud: this.hud.toJson(),
       minigames: this.minigames.toJson(),
       route: this.route.toJson(),
@@ -1395,6 +1399,50 @@ export class TuningBench {
   }
 
   static readonly keys = ['lookahead_m', 'lookahead_per_mps', 'steer_gain', 'corner_lookahead_m', 'corner_turn_rad', 'corner_speed_mps', 'brake_per_mps', 'stuck_s', 'stuck_mps', 'respawn_ahead_m', 'arrive_m', 'warmup_s', 'search_back_m', 'search_ahead_m'] as const;
+}
+
+/** Demo shot ?demo=roadster (specs/demo.md, Prompts/05 L-S9); web only, presentation. */
+export class TuningDemo {
+  /** every random seed of the game in the demo */
+  seed: number;
+  /** fixed step per rendered frame */
+  fps: number;
+  durationS: number;
+  /** tram on the track next to the route this far from the start */
+  tramAtM: number;
+  trackSearchM: number;
+  queueCars: number;
+  queueGapM: number;
+  /** hop when the queue's last car is this close ahead */
+  hopAtM: number;
+  /** link preview frame; 0 = mid-air of the hop */
+  ogAtS: number;
+
+  constructor(r: R) {
+    this.seed = r.i('seed');
+    this.fps = r.i('fps');
+    this.durationS = r.d('duration_s');
+    this.tramAtM = r.d('tram_at_m');
+    this.trackSearchM = r.d('track_search_m');
+    this.queueCars = r.i('queue_cars');
+    this.queueGapM = r.d('queue_gap_m');
+    this.hopAtM = r.d('hop_at_m');
+    this.ogAtS = r.d('og_at_s');
+  }
+
+  toJson(): Record<string, unknown> {
+    return {
+      seed: this.seed,
+      fps: this.fps,
+      duration_s: this.durationS,
+      tram_at_m: this.tramAtM,
+      track_search_m: this.trackSearchM,
+      queue_cars: this.queueCars,
+      queue_gap_m: this.queueGapM,
+      hop_at_m: this.hopAtM,
+      og_at_s: this.ogAtS,
+    };
+  }
 }
 
 export class TuningHud {
