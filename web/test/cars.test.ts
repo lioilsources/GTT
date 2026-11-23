@@ -390,6 +390,26 @@ describe.skipIf(!existsSync(pack))('parked cars and boarding in NYC', () => {
     expect(fleet.parked.some((p) => p.carId === 'super_arrow' && p.chunk === null)).toBe(false);
   });
 
+  it('the garage from the phone away from the spot: the car appears in place (specs/testdrive.md v2)', () => {
+    const d = new DriveWorld(city, specs.get(tuning.cars.startCar)!, tuning);
+    const g = { id: 'g', x: d.car.x, y: d.car.y, heading: d.car.heading };
+    const fleet = new CarFleet(d, specs, tuning, g);
+    d.spawn(g.x + 30, g.y - 20, 0.5);
+    fleet.startTest('vega_roadster', true);
+    expect(d.car.x).toBeCloseTo(g.x + 30);
+    expect(d.car.y).toBeCloseTo(g.y - 20);
+    fleet.state = { ...fleet.state, owned: ['m0_coupe', 'pickup_hauler'] };
+    d.spawn(g.x + 50, g.y + 5, 0.2);
+    fleet.select('pickup_hauler', true);
+    expect(fleet.testing).toBeNull();
+    expect(d.spec.id).toBe('pickup_hauler');
+    expect(d.car.x).toBeCloseTo(g.x + 50);
+    expect(d.car.y).toBeCloseTo(g.y + 5);
+    // At the spot: the parking point as before.
+    fleet.select('m0_coupe');
+    expect(d.car.x).toBeCloseTo(g.x);
+  });
+
   it('a stolen car is towed before a test drive; debug cash adds economy.debug_grant', () => {
     const d = new DriveWorld(city, specs.get(tuning.cars.startCar)!, tuning);
     const fleet = new CarFleet(d, specs, tuning, { id: 'g', x: d.car.x, y: d.car.y, heading: d.car.heading });
