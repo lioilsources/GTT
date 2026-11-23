@@ -78,7 +78,7 @@ export class Tuning {
   readonly carAnchor: TuningCarAnchor;
   readonly extrusion: TuningExtrusion;
   chunkM: number;
-  /** cruise = no-input pace; 14.0 with specs/drive.md v2 (flipped in shared/cruise-v2-scenarios) */
+  /** cruise = no-input city pace (specs/drive.md v2); boost asks for top */
   readonly speedMps: TuningSpeedMps;
   /** citypack: road corridors and building masses. */
   readonly roads: TuningRoads;
@@ -103,6 +103,8 @@ export class Tuning {
   readonly skids: TuningSkids;
   /** D1 measurement autopilot (specs/bench.md); route in content/bench/<city>.json. */
   readonly bench: TuningBench;
+  /** Mobile web smoke test in CI (specs/bench.md "Kouřový test", Prompts/05 L-S6); web only. */
+  readonly smoke: TuningSmoke;
   /** Demo shot ?demo=roadster (specs/demo.md, Prompts/05 L-S9); web only, presentation. */
   readonly demo: TuningDemo;
   readonly hud: TuningHud;
@@ -202,6 +204,7 @@ export class Tuning {
     this.props = new TuningProps(r.sub('props'));
     this.skids = new TuningSkids(r.sub('skids'));
     this.bench = new TuningBench(r.sub('bench'));
+    this.smoke = new TuningSmoke(r.sub('smoke'));
     this.demo = new TuningDemo(r.sub('demo'));
     this.hud = new TuningHud(r.sub('hud'));
     this.minigames = new TuningMinigames(r.sub('minigames'));
@@ -254,6 +257,7 @@ export class Tuning {
       props: this.props.toJson(),
       skids: this.skids.toJson(),
       bench: this.bench.toJson(),
+      smoke: this.smoke.toJson(),
       demo: this.demo.toJson(),
       hud: this.hud.toJson(),
       minigames: this.minigames.toJson(),
@@ -404,7 +408,7 @@ export class TuningExtrusion {
   static readonly keys = ['k', 'knee_m', 'exp', 'max_scale'] as const;
 }
 
-/** cruise = no-input pace; 14.0 with specs/drive.md v2 (flipped in shared/cruise-v2-scenarios) */
+/** cruise = no-input city pace (specs/drive.md v2); boost asks for top */
 export class TuningSpeedMps {
   cruise: number;
   topDefault: number;
@@ -1097,12 +1101,21 @@ export class TuningControls {
   /** extra travel to full brake */
   aFullBrakeHeight: number;
   cMaxWheelRad: number;
+  /** driving at cruise without boost before the hint shows again */
+  boostHintAfterS: number;
+  /** counts as cruise driving from this speed */
+  boostHintMinSpeedMps: number;
+  /** the boost hint shows at most this many times per device */
+  boostHintMax: number;
 
   constructor(r: R) {
     this.aFullSteerWidth = r.d('a_full_steer_width');
     this.aDeadZoneHeight = r.d('a_dead_zone_height');
     this.aFullBrakeHeight = r.d('a_full_brake_height');
     this.cMaxWheelRad = r.d('c_max_wheel_rad');
+    this.boostHintAfterS = r.d('boost_hint_after_s');
+    this.boostHintMinSpeedMps = r.d('boost_hint_min_speed_mps');
+    this.boostHintMax = r.i('boost_hint_max');
   }
 
   toJson(): Record<string, unknown> {
@@ -1111,26 +1124,11 @@ export class TuningControls {
       a_dead_zone_height: this.aDeadZoneHeight,
       a_full_brake_height: this.aFullBrakeHeight,
       c_max_wheel_rad: this.cMaxWheelRad,
+      boost_hint_after_s: this.boostHintAfterS,
+      boost_hint_min_speed_mps: this.boostHintMinSpeedMps,
+      boost_hint_max: this.boostHintMax,
     };
   }
-
-  /** Value by YAML key, undefined when the key is unknown. */
-  get(key: string): number | undefined {
-    switch (key) {
-      case 'a_full_steer_width':
-        return this.aFullSteerWidth;
-      case 'a_dead_zone_height':
-        return this.aDeadZoneHeight;
-      case 'a_full_brake_height':
-        return this.aFullBrakeHeight;
-      case 'c_max_wheel_rad':
-        return this.cMaxWheelRad;
-      default:
-        return undefined;
-    }
-  }
-
-  static readonly keys = ['a_full_steer_width', 'a_dead_zone_height', 'a_full_brake_height', 'c_max_wheel_rad'] as const;
 }
 
 /** Street furniture (procedural per chunk, never stored). */
@@ -1411,6 +1409,37 @@ export class TuningBench {
   }
 
   static readonly keys = ['lookahead_m', 'lookahead_per_mps', 'steer_gain', 'corner_lookahead_m', 'corner_turn_rad', 'corner_speed_mps', 'brake_per_mps', 'stuck_s', 'stuck_mps', 'respawn_ahead_m', 'arrive_m', 'warmup_s', 'search_back_m', 'search_ahead_m'] as const;
+}
+
+/** Mobile web smoke test in CI (specs/bench.md "Kouřový test", Prompts/05 L-S6); web only. */
+export class TuningSmoke {
+  /** budget from navigation to the first frame with the car's chunks */
+  firstFrameMs: number;
+  /** thumb dragged up (boost) for the drive step */
+  dragPx: number;
+  driveS: number;
+  /** the car must cover at least this in drive_s */
+  minDriveM: number;
+  /** feed swipe distance, up and down */
+  swipePx: number;
+
+  constructor(r: R) {
+    this.firstFrameMs = r.i('first_frame_ms');
+    this.dragPx = r.i('drag_px');
+    this.driveS = r.d('drive_s');
+    this.minDriveM = r.d('min_drive_m');
+    this.swipePx = r.i('swipe_px');
+  }
+
+  toJson(): Record<string, unknown> {
+    return {
+      first_frame_ms: this.firstFrameMs,
+      drag_px: this.dragPx,
+      drive_s: this.driveS,
+      min_drive_m: this.minDriveM,
+      swipe_px: this.swipePx,
+    };
+  }
 }
 
 /** Demo shot ?demo=roadster (specs/demo.md, Prompts/05 L-S9); web only, presentation. */
@@ -3947,11 +3976,13 @@ export class TuningWeatherCities {
   nyc: boolean;
   prague: boolean;
   tokyo: boolean;
+  moscow: boolean;
 
   constructor(r: R) {
     this.nyc = r.b('nyc');
     this.prague = r.b('prague');
     this.tokyo = r.b('tokyo');
+    this.moscow = r.b('moscow');
   }
 
   toJson(): Record<string, unknown> {
@@ -3959,6 +3990,7 @@ export class TuningWeatherCities {
       nyc: this.nyc,
       prague: this.prague,
       tokyo: this.tokyo,
+      moscow: this.moscow,
     };
   }
 }
@@ -4014,11 +4046,13 @@ export class TuningShopsCities {
   nyc: boolean;
   prague: boolean;
   tokyo: boolean;
+  moscow: boolean;
 
   constructor(r: R) {
     this.nyc = r.b('nyc');
     this.prague = r.b('prague');
     this.tokyo = r.b('tokyo');
+    this.moscow = r.b('moscow');
   }
 
   toJson(): Record<string, unknown> {
@@ -4026,6 +4060,7 @@ export class TuningShopsCities {
       nyc: this.nyc,
       prague: this.prague,
       tokyo: this.tokyo,
+      moscow: this.moscow,
     };
   }
 }
@@ -4202,11 +4237,13 @@ export class TuningStyleRisograph {
   nyc: boolean;
   prague: boolean;
   tokyo: boolean;
+  moscow: boolean;
 
   constructor(r: R) {
     this.nyc = r.b('nyc');
     this.prague = r.b('prague');
     this.tokyo = r.b('tokyo');
+    this.moscow = r.b('moscow');
   }
 
   toJson(): Record<string, unknown> {
@@ -4214,6 +4251,7 @@ export class TuningStyleRisograph {
       nyc: this.nyc,
       prague: this.prague,
       tokyo: this.tokyo,
+      moscow: this.moscow,
     };
   }
 }
@@ -4223,11 +4261,13 @@ export class TuningStyleCastShadow {
   nyc: boolean;
   prague: boolean;
   tokyo: boolean;
+  moscow: boolean;
 
   constructor(r: R) {
     this.nyc = r.b('nyc');
     this.prague = r.b('prague');
     this.tokyo = r.b('tokyo');
+    this.moscow = r.b('moscow');
   }
 
   toJson(): Record<string, unknown> {
@@ -4235,6 +4275,7 @@ export class TuningStyleCastShadow {
       nyc: this.nyc,
       prague: this.prague,
       tokyo: this.tokyo,
+      moscow: this.moscow,
     };
   }
 }
@@ -4243,11 +4284,13 @@ export class TuningStyleCrosswalks {
   nyc: boolean;
   prague: boolean;
   tokyo: boolean;
+  moscow: boolean;
 
   constructor(r: R) {
     this.nyc = r.b('nyc');
     this.prague = r.b('prague');
     this.tokyo = r.b('tokyo');
+    this.moscow = r.b('moscow');
   }
 
   toJson(): Record<string, unknown> {
@@ -4255,6 +4298,7 @@ export class TuningStyleCrosswalks {
       nyc: this.nyc,
       prague: this.prague,
       tokyo: this.tokyo,
+      moscow: this.moscow,
     };
   }
 }
@@ -4882,7 +4926,10 @@ export class TuningTerrainPipeline {
   roadGapMaxM: number;
   /** validate: share of road edge samples allowed over road_gap_max_m */
   roadGapShare: number;
-  /** validate: |terrain − road profile| on kept carriageways (the car rides the terrain there) */
+  /**
+   * validate: |terrain − road profile| on kept carriageways (the car rides the terrain there)
+   * max_m 1.2: Moscow courtyard service ramps (Novoslobodskaya, Taganka) reach 1.18 m; Prague max 0.87, NYC 0.42
+   */
   readonly roadStrip: TuningTerrainPipelineRoadStrip;
   /** validate fails below water/road + this; below bridge.clear_* it warns */
   bridgeMinClearM: number;
@@ -4978,7 +5025,10 @@ export class TuningTerrainPipelineProfileWindowM {
   static readonly keys = ['lidar', 'coarse'] as const;
 }
 
-/** validate: |terrain − road profile| on kept carriageways (the car rides the terrain there) */
+/**
+ * validate: |terrain − road profile| on kept carriageways (the car rides the terrain there)
+ * max_m 1.2: Moscow courtyard service ramps (Novoslobodskaya, Taganka) reach 1.18 m; Prague max 0.87, NYC 0.42
+ */
 export class TuningTerrainPipelineRoadStrip {
   tolM: number;
   share: number;

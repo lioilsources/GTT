@@ -4,6 +4,7 @@ import 'schema.g.dart';
 
 /// Cities with a content/cities/<id>/city.yaml.
 enum CityId {
+  moscow('moscow', "Moskva"),
   nyc('nyc', "New York"),
   prague('prague', "Praha"),
   tokyo('tokyo', "Tokio"),

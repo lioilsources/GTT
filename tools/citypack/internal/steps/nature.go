@@ -85,7 +85,7 @@ CREATE TABLE cells AS
 
 -- ── Water: classes (specs/nature.md), precedence lake > canal > river > sea, named over unnamed.
 CREATE TABLE wraw AS
-  SELECT subtype, class, names.primary AS name, ST_MakeValid(%[7]s) AS g FROM read_parquet(%[8]s)
+  SELECT subtype, class, %[39]s AS name, ST_MakeValid(%[7]s) AS g FROM read_parquet(%[8]s)
   WHERE ST_GeometryType(geometry) IN ('POLYGON', 'MULTIPOLYGON') AND subtype NOT IN ('physical')
     AND class NOT IN ('swimming_pool')
     -- Underground water (tunnel, culvert: Rudolfova štola under Letná) is not on the map.
@@ -111,12 +111,13 @@ DELETE FROM wbody WHERE ST_IsEmpty(g);
 CREATE TABLE wall AS SELECT ST_Union_Agg(g) AS g FROM wbody;
 -- Named water features (centre lines, label-only polygons and points) name unnamed sea/river pieces.
 CREATE TABLE wnames AS
-  SELECT names.primary AS name,
+  SELECT %[39]s AS name,
          CASE WHEN subtype IN ('river', 'stream') OR class IN ('tidal_channel', 'river', 'stream') THEN %[10]d
-              WHEN class IN ('bay', 'strait', 'harbour', 'sound') THEN %[9]d ELSE 0 END AS cls,
+              WHEN class IN ('bay', 'strait', 'harbour', 'sound') THEN %[9]d
+              WHEN subtype = 'canal' OR class = 'canal' THEN %[11]d ELSE 0 END AS cls,
          %[7]s AS g
   FROM read_parquet(%[8]s)
-  WHERE names.primary IS NOT NULL AND (ST_GeometryType(geometry) IN ('LINESTRING', 'MULTILINESTRING')
+  WHERE %[39]s IS NOT NULL AND (ST_GeometryType(geometry) IN ('LINESTRING', 'MULTILINESTRING')
     OR (subtype = 'physical' AND class IN ('bay', 'strait', 'harbour', 'sound')))
     AND coalesce(level, 0) >= 0 AND NOT list_contains(map_keys(source_tags), 'tunnel');
 DELETE FROM wnames WHERE NOT ST_Intersects(g, (SELECT g FROM env));
@@ -129,7 +130,7 @@ CREATE TABLE wpiece1 AS SELECT row_number() OVER (ORDER BY cx, cy, cls, ST_XMin(
 CREATE TABLE wnear AS
   SELECT p.pid, arg_min(n.name, ST_Distance(ST_PointOnSurface(p.g), n.g) * 1e3 + hash(n.name) %% 1000) AS name,
          arg_min(n.cls, ST_Distance(ST_PointOnSurface(p.g), n.g) * 1e3 + hash(n.name) %% 1000) AS ncls
-  FROM wpiece1 p JOIN wnames n ON p.name IS NULL AND p.cls IN (%[9]d, %[10]d) AND ST_DWithin(ST_PointOnSurface(p.g), n.g, %[17]f)
+  FROM wpiece1 p JOIN wnames n ON p.name IS NULL AND p.cls IN (%[9]d, %[10]d, %[11]d) AND ST_DWithin(ST_PointOnSurface(p.g), n.g, %[17]f)
   GROUP BY p.pid;
 CREATE TABLE wpiece AS
   SELECT p.cx, p.cy, CASE WHEN p.name IS NULL AND w.ncls > 0 THEN w.ncls ELSE p.cls END AS cls0,
@@ -150,20 +151,20 @@ COPY (
 
 -- ── Green: wood > grass, sand > cemetery, garden > parkland, all minus water, roads, buildings.
 CREATE TABLE gsrc AS
-  SELECT %[22]d AS cls, names.primary AS name, ST_MakeValid(%[7]s) AS g FROM read_parquet(%[23]s)
+  SELECT %[22]d AS cls, %[39]s AS name, ST_MakeValid(%[7]s) AS g FROM read_parquet(%[23]s)
     WHERE subtype = 'forest' AND ST_GeometryType(geometry) IN ('POLYGON', 'MULTIPOLYGON')
-  UNION ALL SELECT %[26]d, names.primary, ST_MakeValid(%[7]s) FROM read_parquet(%[23]s)
+  UNION ALL SELECT %[26]d, %[39]s, ST_MakeValid(%[7]s) FROM read_parquet(%[23]s)
     WHERE subtype = 'grass' AND ST_GeometryType(geometry) IN ('POLYGON', 'MULTIPOLYGON')
-  UNION ALL SELECT %[27]d, names.primary, ST_MakeValid(%[7]s) FROM read_parquet(%[23]s)
+  UNION ALL SELECT %[27]d, %[39]s, ST_MakeValid(%[7]s) FROM read_parquet(%[23]s)
     WHERE subtype = 'sand' AND ST_GeometryType(geometry) IN ('POLYGON', 'MULTIPOLYGON')
-  UNION ALL SELECT %[28]d, names.primary, ST_MakeValid(%[7]s) FROM read_parquet(%[23]s)
+  UNION ALL SELECT %[28]d, %[39]s, ST_MakeValid(%[7]s) FROM read_parquet(%[23]s)
     WHERE subtype = 'shrub' AND ST_GeometryType(geometry) IN ('POLYGON', 'MULTIPOLYGON')
   UNION ALL SELECT CASE
       WHEN subtype = 'cemetery' THEN %[24]d
       WHEN subtype = 'horticulture' THEN %[25]d
       WHEN subtype = 'managed' OR class IN ('grass', 'meadow', 'pitch', 'village_green', 'green', 'driving_range', 'golf_course') THEN %[26]d
       WHEN class = 'forest' OR class = 'wood' THEN %[22]d
-      ELSE %[28]d END, names.primary, ST_MakeValid(%[7]s) FROM read_parquet(%[29]s)
+      ELSE %[28]d END, %[39]s, ST_MakeValid(%[7]s) FROM read_parquet(%[29]s)
     WHERE (subtype IN ('park', 'cemetery', 'horticulture', 'managed', 'golf', 'protected')
         OR class IN ('recreation_ground', 'pitch', 'meadow', 'zoo', 'village_green'))
       AND ST_GeometryType(geometry) IN ('POLYGON', 'MULTIPOLYGON');
@@ -226,7 +227,7 @@ COPY (
 		pb.GreenClass_GREEN_GRASS, pb.GreenClass_GREEN_SAND, pb.GreenClass_GREEN_PARKLAND, duck.Quote(e.Raw("land_use")),
 		np.BigParkHa*1e4, duck.Quote(e.Raw("land_cover")), np.WoodCoverHa*1e4, empty,
 		duck.Quote(e.W("road_buffers.csv")), duck.Quote(e.W("buildings.jsonl")), e.C.Tuning.Ground.MinAreaM2,
-		duck.Quote(e.W("nature_green.jsonl.tmp")), duck.Quote(e.W("nature_names.jsonl.tmp")))
+		duck.Quote(e.W("nature_green.jsonl.tmp")), duck.Quote(e.W("nature_names.jsonl.tmp")), e.C.City.NameSQL())
 	if _, err := duck.Exec("nature", sql); err != nil {
 		return err
 	}

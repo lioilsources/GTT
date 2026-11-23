@@ -15,6 +15,11 @@ export type MessageKey =
   | "borderNotice"
   | "dayNight"
   | "controlScheme"
+  | "boostButton"
+  | "boostHintA"
+  | "boostHintB"
+  | "boostHintC"
+  | "boostHintKeys"
   | "schemeA"
   | "schemeB"
   | "schemeC"
@@ -704,6 +709,58 @@ export type MessageKey =
   | "introLine3"
   | "introCity"
   | "introGo"
+  | "lm_spasskaya_tower_title"
+  | "lm_spasskaya_tower_text"
+  | "lm_borovitskaya_tower_title"
+  | "lm_borovitskaya_tower_text"
+  | "lm_red_square_title"
+  | "lm_red_square_text"
+  | "lm_st_basils_title"
+  | "lm_st_basils_text"
+  | "lm_upper_trading_rows_title"
+  | "lm_upper_trading_rows_text"
+  | "lm_historical_museum_title"
+  | "lm_historical_museum_text"
+  | "lm_bolshoi_title"
+  | "lm_bolshoi_text"
+  | "lm_christ_saviour_title"
+  | "lm_christ_saviour_text"
+  | "lm_pushkin_museum_title"
+  | "lm_pushkin_museum_text"
+  | "lm_tretyakov_title"
+  | "lm_tretyakov_text"
+  | "lm_old_arbat_title"
+  | "lm_old_arbat_text"
+  | "lm_patriarch_ponds_title"
+  | "lm_patriarch_ponds_text"
+  | "lm_gorky_park_title"
+  | "lm_gorky_park_text"
+  | "lm_zaryadye_title"
+  | "lm_zaryadye_text"
+  | "lm_kotelnicheskaya_title"
+  | "lm_kotelnicheskaya_text"
+  | "lm_foreign_ministry_title"
+  | "lm_foreign_ministry_text"
+  | "lm_kudrinskaya_title"
+  | "lm_kudrinskaya_text"
+  | "lm_red_gates_title"
+  | "lm_red_gates_text"
+  | "lm_lubyanka_square_title"
+  | "lm_lubyanka_square_text"
+  | "lm_manege_title"
+  | "lm_manege_text"
+  | "lm_state_library_title"
+  | "lm_state_library_text"
+  | "lm_house_on_embankment_title"
+  | "lm_house_on_embankment_text"
+  | "lm_bolshoy_kamenny_title"
+  | "lm_bolshoy_kamenny_text"
+  | "lm_pushkin_square_title"
+  | "lm_pushkin_square_text"
+  | "lm_komsomolskaya_title"
+  | "lm_komsomolskaya_text"
+  | "ogTitle"
+  | "ogDescription"
   | "ogTagline"
 ;
 
@@ -720,6 +777,11 @@ export const messages: Record<Locale, Record<MessageKey, string>> = {
     borderNotice: "Tudy do New Jersey – příště!",
     dayNight: "Den / noc",
     controlScheme: "Ovládání",
+    boostButton: "Boost",
+    boostHintA: "Táhni palec nahoru = rychleji",
+    boostHintB: "Drž Boost = rychleji",
+    boostHintC: "Drž Boost nad brzdou = rychleji",
+    boostHintKeys: "Šipka nahoru / W = rychleji",
     schemeA: "A · tah palcem",
     schemeB: "B · poloviny obrazovky",
     schemeC: "C · volant + pedál",
@@ -1409,6 +1471,58 @@ export const messages: Record<Locale, Record<MessageKey, string>> = {
     introLine3: "Telefon vpravo nahoře: feed s minihrami, mapa a cesty do jiných měst.",
     introCity: "Kde chceš jezdit?",
     introGo: "Jedeme",
+    lm_spasskaya_tower_title: "Spasskaya Tower",
+    lm_spasskaya_tower_text: "Hlavní brána kremelské hradby, dostavěná roku 1491 a v sedmnáctém století ozdobená hodinami. Její zvonkohra se nad Rudým náměstím ozývá každou čtvrthodinu.",
+    lm_borovitskaya_tower_title: "Borovitskaya Tower",
+    lm_borovitskaya_tower_text: "Stupňovitá kremelská věž nad starou Borovickou bránou, jedním z nejstarších vstupů do pevnosti. Silnice vedle ní dodnes vede auta do areálu Kremlu.",
+    lm_red_square_title: "Red Square",
+    lm_red_square_text: "Dlouhé dlážděné náměstí mezi Kremlem a starou kupeckou čtvrtí. Jméno má ze starého slova pro krásné, ne podle barvy.",
+    lm_st_basils_title: "Saint Basil's Cathedral",
+    lm_st_basils_text: "Chrám s devíti kaplemi pod barevnými cibulovitými kopulemi z padesátých let šestnáctého století. Každá kopule má jiný vzor, takže žádné dvě nejsou stejné.",
+    lm_upper_trading_rows_title: "Upper Trading Rows",
+    lm_upper_trading_rows_text: "Dlouhá obchodní pasáž naproti Rudému náměstí, přestavěná roku 1893 pod skleněnou střechou. Tři souběžné pasáže spojují v patrech můstky.",
+    lm_historical_museum_title: "State Historical Museum",
+    lm_historical_museum_text: "Červená cihlová budova se špičatými věžemi uzavírá Rudé náměstí ze severu. Otevřela roku 1883 a vypráví dlouhé dějiny země.",
+    lm_bolshoi_title: "Bolshoi Theatre",
+    lm_bolshoi_text: "Velké divadlo pro operu a balet s průčelím z osmi bílých sloupů. Nad portikem jede vůz se čtyřmi koňmi.",
+    lm_christ_saviour_title: "Cathedral of Christ the Saviour",
+    lm_christ_saviour_text: "Bílý chrám se zlatými kopulemi na břehu Moskvy, nejvyšší pravoslavný chrám světa. Dnešní stavba vznikla znovu v devadesátých letech poté, co byl původní chrám zbořen.",
+    lm_pushkin_museum_title: "Pushkin Museum of Fine Arts",
+    lm_pushkin_museum_text: "Muzeum umění se sloupovým průčelím otevřené roku 1912 pro sádrové odlitky antických soch. Dnes v něm visí i obrazy z mnoha staletí.",
+    lm_tretyakov_title: "Tretyakov Gallery",
+    lm_tretyakov_text: "Galerie s pohádkovým průčelím v tiché uličce Zamoskvorečje. Začala jako soukromá sbírka ruské malby jednoho kupce.",
+    lm_old_arbat_title: "Old Arbat",
+    lm_old_arbat_text: "Jedna z nejstarších ulic města, uzavřená autům a lemovaná malovanými domy. Celý den tu hrají pouliční muzikanti a kreslí portrétisté.",
+    lm_patriarch_ponds_title: "Patriarch's Ponds",
+    lm_patriarch_ponds_text: "Malý čtvercový rybník obklopený stromy a starými činžáky. V zimě se z něj stává kluziště s pavilonem na jednom konci.",
+    lm_gorky_park_title: "Gorky Park",
+    lm_gorky_park_text: "Velký park u řeky s dlouhými promenádami, fontánami a letním kinem. V zimě z jeho cest vznikne jedno z největších kluzišť ve městě.",
+    lm_zaryadye_title: "Zaryadye Park",
+    lm_zaryadye_text: "Nový park vedle Kremlu na terasách, které napodobují krajiny celé země. Betonový most se z něj stáčí nad řeku a na konci nemá žádnou podporu.",
+    lm_kotelnicheskaya_title: "Kotelnicheskaya Embankment Building",
+    lm_kotelnicheskaya_text: "Jedna ze sedmi vysokých stupňovitých věží z padesátých let, stojí tam, kde se Jauza vlévá do Moskvy. Její střední věž se zvedá 176 metrů nad nábřeží.",
+    lm_foreign_ministry_title: "Ministry of Foreign Affairs Building",
+    lm_foreign_ministry_text: "Stupňovitá výšková budova z padesátých let na Sadovém okruhu zakončená štíhlou věží. Je jednou ze sedmi podobných věží, které rámují centrum.",
+    lm_kudrinskaya_title: "Kudrinskaya Square Building",
+    lm_kudrinskaya_text: "Vysoký obytný dům z padesátých let nad Kudrinským náměstím na Sadovém okruhu. Jeho křídla stoupají ke střední věži jako svatební dort.",
+    lm_red_gates_title: "Red Gates Building",
+    lm_red_gates_text: "Stupňovitá věž z padesátých let s kancelářemi a byty nad rušnou křižovatkou Sadového okruhu. Jméno má po vítězném oblouku, který stával nedaleko.",
+    lm_lubyanka_square_title: "Lubyanka Square",
+    lm_lubyanka_square_text: "Široké náměstí, kde se na okraji Kitaj-gorodu sbíhá několik starých cest. Ze severu na něj hledí velký obchodní dům pro děti se skleněným atriem.",
+    lm_manege_title: "Manege",
+    lm_manege_text: "Dlouhá jízdárna z roku 1817 se střechou, která překlenuje celý vnitřek bez sloupů. Dnes v ní u Alexandrovské zahrady pořádají výstavy.",
+    lm_state_library_title: "Russian State Library",
+    lm_state_library_text: "Národní knihovna se žulovým průčelím z vysokých hranatých pilířů. Ve skladech má desítky milionů knih, map a rukopisů.",
+    lm_house_on_embankment_title: "House on the Embankment",
+    lm_house_on_embankment_text: "Obrovský šedý činžovní blok z roku 1931 naproti Kremlu přes řeku. Postavili ho jako město ve městě s vlastními obchody a kinem.",
+    lm_bolshoy_kamenny_title: "Bolshoy Kamenny Bridge",
+    lm_bolshoy_kamenny_text: "Ocelový obloukový most, který vede silnici od Kremlu přes Moskvu. Z jeho mostovky je klasický pohled na kremelské hradby a věže.",
+    lm_pushkin_square_title: "Pushkin Square",
+    lm_pushkin_square_text: "Zelené náměstí na Tverské ulici kolem bronzové sochy básníka. Patří k nejoblíbenějším místům schůzek ve městě.",
+    lm_komsomolskaya_title: "Komsomolskaya Square",
+    lm_komsomolskaya_text: "Náměstí, kde stojí vedle sebe tři velká nádraží, každé v jiném stylu. Vlaky odtud jezdí na sever, na východ i na Dálný východ.",
+    ogTitle: "Metropole (GTT) – volná jízda po skutečných metropolích",
+    ogDescription: "New York, Praha a Tokio v prohlížeči. Minihry z feedu, žádné násilí.",
     ogTagline: "Volné ježdění po Praze, New Yorku a Tokiu. Na telefonu, v prohlížeči, zdarma.",
   },
   "en": {
@@ -1423,6 +1537,11 @@ export const messages: Record<Locale, Record<MessageKey, string>> = {
     borderNotice: "This way to New Jersey – next time!",
     dayNight: "Day / night",
     controlScheme: "Controls",
+    boostButton: "Boost",
+    boostHintA: "Drag your thumb up = faster",
+    boostHintB: "Hold Boost = faster",
+    boostHintC: "Hold Boost above the brake = faster",
+    boostHintKeys: "Arrow up / W = faster",
     schemeA: "A · thumb drag",
     schemeB: "B · screen halves",
     schemeC: "C · wheel + pedal",
@@ -2112,6 +2231,58 @@ export const messages: Record<Locale, Record<MessageKey, string>> = {
     introLine3: "The phone at the top right: a feed of minigames, the map and trips to other cities.",
     introCity: "Where do you want to drive?",
     introGo: "Let's go",
+    lm_spasskaya_tower_title: "Spasskaya Tower",
+    lm_spasskaya_tower_text: "The main gate tower of the Kremlin wall, finished in 1491 and topped with a clock in the 1600s. Its chimes ring out over Red Square every quarter hour.",
+    lm_borovitskaya_tower_title: "Borovitskaya Tower",
+    lm_borovitskaya_tower_text: "A stepped Kremlin tower above the old Borovitsky gate, one of the oldest ways into the fortress. The road beside it still leads cars into the Kremlin grounds.",
+    lm_red_square_title: "Red Square",
+    lm_red_square_text: "The long cobbled square between the Kremlin and the old merchant quarter. Its name comes from an old word meaning beautiful, not from the colour.",
+    lm_st_basils_title: "Saint Basil's Cathedral",
+    lm_st_basils_text: "A cathedral of nine chapels under colourful onion domes, built in the 1550s. Each dome has its own pattern, so no two look alike.",
+    lm_upper_trading_rows_title: "Upper Trading Rows",
+    lm_upper_trading_rows_text: "A long arcade of shops facing Red Square, rebuilt in 1893 under a glass roof. Three parallel passages are linked by bridges on the upper floors.",
+    lm_historical_museum_title: "State Historical Museum",
+    lm_historical_museum_text: "A red brick building with pointed towers that closes the north end of Red Square. It opened in 1883 and tells the long story of the country.",
+    lm_bolshoi_title: "Bolshoi Theatre",
+    lm_bolshoi_text: "The city's great theatre for opera and ballet, fronted by eight white columns. A chariot with four horses rides on top of the portico.",
+    lm_christ_saviour_title: "Cathedral of Christ the Saviour",
+    lm_christ_saviour_text: "A white cathedral with golden domes on the Moskva bank, the tallest Orthodox church in the world. The building you see was rebuilt in the 1990s after the original was demolished.",
+    lm_pushkin_museum_title: "Pushkin Museum of Fine Arts",
+    lm_pushkin_museum_text: "An art museum with a columned front, opened in 1912 for plaster casts of ancient sculpture. Today it also holds paintings from many centuries.",
+    lm_tretyakov_title: "Tretyakov Gallery",
+    lm_tretyakov_text: "A gallery with a fairy-tale facade in a quiet Zamoskvorechye lane. It began as a merchant's private collection of Russian painting.",
+    lm_old_arbat_title: "Old Arbat",
+    lm_old_arbat_text: "One of the oldest streets in the city, closed to cars and lined with painted houses. Street musicians and portrait artists work along it all day.",
+    lm_patriarch_ponds_title: "Patriarch's Ponds",
+    lm_patriarch_ponds_text: "A small square pond surrounded by trees and old apartment houses. In winter it becomes an ice rink with a pavilion at one end.",
+    lm_gorky_park_title: "Gorky Park",
+    lm_gorky_park_text: "A large riverside park with long promenades, fountains and an open-air cinema. In winter its paths freeze into one of the biggest skating rinks in town.",
+    lm_zaryadye_title: "Zaryadye Park",
+    lm_zaryadye_text: "A new park next to the Kremlin, laid out on terraces that copy the country's landscapes. A concrete bridge loops out over the river without any support at its tip.",
+    lm_kotelnicheskaya_title: "Kotelnicheskaya Embankment Building",
+    lm_kotelnicheskaya_text: "One of seven tall stepped towers built in the 1950s, standing where the Yauza meets the Moskva. Its central spire rises 176 metres above the embankment.",
+    lm_foreign_ministry_title: "Ministry of Foreign Affairs Building",
+    lm_foreign_ministry_text: "A stepped high-rise of the 1950s on the Garden Ring, crowned by a slim spire. It is one of seven similar towers that frame the city centre.",
+    lm_kudrinskaya_title: "Kudrinskaya Square Building",
+    lm_kudrinskaya_text: "A tall residential tower of the 1950s above Kudrinskaya Square on the Garden Ring. Its wings step down around a central spire like a wedding cake.",
+    lm_red_gates_title: "Red Gates Building",
+    lm_red_gates_text: "A stepped tower of the 1950s with offices and flats above a busy junction of the Garden Ring. It takes its name from a triumphal arch that once stood nearby.",
+    lm_lubyanka_square_title: "Lubyanka Square",
+    lm_lubyanka_square_text: "A wide square where several old roads meet at the edge of Kitay-gorod. A large children's store with a glass atrium faces it from the north.",
+    lm_manege_title: "Manege",
+    lm_manege_text: "A long riding hall from 1817 with a roof that spans the whole interior without columns. Today it hosts exhibitions next to the Alexander Garden.",
+    lm_state_library_title: "Russian State Library",
+    lm_state_library_text: "The national library with a granite front of tall square pillars. Its stacks hold tens of millions of books, maps and manuscripts.",
+    lm_house_on_embankment_title: "House on the Embankment",
+    lm_house_on_embankment_text: "A huge grey apartment block of 1931 opposite the Kremlin across the river. It was built as a city within a city, with its own shops and cinema.",
+    lm_bolshoy_kamenny_title: "Bolshoy Kamenny Bridge",
+    lm_bolshoy_kamenny_text: "A steel arch bridge carrying the road from the Kremlin across the Moskva. Its deck offers the classic view of the Kremlin walls and towers.",
+    lm_pushkin_square_title: "Pushkin Square",
+    lm_pushkin_square_text: "A green square on Tverskaya Street around the bronze statue of the poet. It is one of the most popular meeting points in the city.",
+    lm_komsomolskaya_title: "Komsomolskaya Square",
+    lm_komsomolskaya_text: "A square where three grand railway stations stand side by side, each in its own style. Trains leave from here for the north, the east and the far east.",
+    ogTitle: "Metropole (GTT) – free driving through real cities",
+    ogDescription: "New York, Prague and Tokyo in your browser. Minigames from a feed, no violence.",
     ogTagline: "Free driving through Prague, New York and Tokyo. On your phone, in the browser, for free.",
   },
 };

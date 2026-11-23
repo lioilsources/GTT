@@ -11,7 +11,7 @@ view_width_m: {slow: 50.0, fast: 85.0}     # zoom by speed
 car_anchor: {x: 0.5, y: 0.72}          # car position on screen
 extrusion: {k: 0.004, knee_m: 50.0, exp: 0.85, max_scale: 2.2}
 chunk_m: 256
-speed_mps: {cruise: 25.0, top_default: 40.0}   # cruise = no-input pace; 14.0 with specs/drive.md v2 (flipped in shared/cruise-v2-scenarios)
+speed_mps: {cruise: 14.0, top_default: 40.0}   # cruise = no-input city pace (specs/drive.md v2); boost asks for top
 
 # citypack: road corridors and building masses.
 roads:
@@ -140,6 +140,9 @@ controls:
   a_dead_zone_height: 0.06      # vertical travel before brake/boost, fraction of screen height
   a_full_brake_height: 0.08     # extra travel to full brake
   c_max_wheel_rad: 1.885
+  boost_hint_after_s: 25.0      # driving at cruise without boost before the hint shows again
+  boost_hint_min_speed_mps: 10.0  # counts as cruise driving from this speed
+  boost_hint_max: 3             # the boost hint shows at most this many times per device
 
 # Street furniture (procedural per chunk, never stored).
 props:
@@ -182,6 +185,13 @@ bench:
   search_back_m: 10.0           # route progress is searched in [s − back, s + ahead]
   search_ahead_m: 60.0
 
+# Mobile web smoke test in CI (specs/bench.md "Kouřový test", Prompts/05 L-S6); web only.
+smoke:
+  first_frame_ms: 30000         # budget from navigation to the first frame with the car's chunks
+  drag_px: 160                  # thumb dragged up (boost) for the drive step
+  drive_s: 5.0
+  min_drive_m: 20.0             # the car must cover at least this in drive_s
+  swipe_px: 320                 # feed swipe distance, up and down
 
 # Demo shot ?demo=roadster (specs/demo.md, Prompts/05 L-S9); web only, presentation.
 demo:
@@ -814,7 +824,7 @@ travel:
 # Shops and bars (specs/shops.md).
 weather:                        # specs/weather.md; colours in design/tokens.json color.weather
   enabled: true
-  cities: {nyc: true, prague: true, tokyo: true}
+  cities: {nyc: true, prague: true, tokyo: true, moscow: true}
   weight_clear: 6               # weighted draw of the next kind (never the current one)
   weight_rain: 3
   weight_fog: 2
@@ -832,7 +842,7 @@ weather:                        # specs/weather.md; colours in design/tokens.jso
   fog_inner: 0.25               # fog ramps up from this fraction of the half diagonal
 shops:                          # colours in design/tokens.json color.shops
   enabled: true
-  cities: {nyc: true, prague: false, tokyo: true}
+  cities: {nyc: true, prague: false, tokyo: true, moscow: true}
   price_food: 15
   price_souvenir: 120
   price_beer: 10
@@ -866,7 +876,7 @@ booths:
 # Police and wanted level (specs/police.md). P0 rules run in integer ticks: s → round(s · tick_hz).
 # Distances in world metres (after car_scale); patrols are traffic cars flagged as police.
 style:                        # city skins (specs/style.md); colours in design/tokens.json color.city
-  risograph: {nyc: false, prague: true, tokyo: false}
+  risograph: {nyc: false, prague: true, tokyo: false, moscow: false}
   misregistration_px: 1.5     # ink fringe offset at 1x, scaled by device pixel ratio
   fringe: 0.35                # ink strength of the misregistered fringe on edges
   grain_strength: 0.08        # paper grain, ± this much brightness
@@ -875,11 +885,11 @@ style:                        # city skins (specs/style.md); colours in design/t
   halftone_strength: 0.12     # darkening inside a halftone dot
   halftone_low: 0.25          # luminance band that gets dots (midtones only)
   halftone_high: 0.8
-  cast_shadow: {nyc: true, prague: false, tokyo: true}   # building shadows on the ground (style A, v2)
+  cast_shadow: {nyc: true, prague: false, tokyo: true, moscow: true}   # building shadows on the ground (style A, v2)
   shadow_ratio: 0.6           # shadow length per metre of building height
   shadow_max_m: 30.0          # cap, so towers don't shade half the map
   roof_edge_m: 0.9            # light parapet band inside the roof outline
-  crosswalks: {nyc: true, prague: false, tokyo: true}
+  crosswalks: {nyc: true, prague: false, tokyo: true, moscow: true}
   crosswalk_gap_m: 1.5        # from the junction box to the crossing
   crosswalk_len_m: 4.0        # crossing depth along the road
   crosswalk_stripe_m: 0.6     # stripe width = gap width
@@ -985,7 +995,8 @@ terrain:
     road_gap_max_m: 0.3         # validate: road edge vs terrain
     road_gap_share: 0.01        # validate: share of road edge samples allowed over road_gap_max_m
     # validate: |terrain − road profile| on kept carriageways (the car rides the terrain there)
-    road_strip: {tol_m: 0.15, share: 0.005, max_m: 1.0}
+    # max_m 1.2: Moscow courtyard service ramps (Novoslobodskaya, Taganka) reach 1.18 m; Prague max 0.87, NYC 0.42
+    road_strip: {tol_m: 0.15, share: 0.005, max_m: 1.2}
     bridge_min_clear_m: 2.0     # validate fails below water/road + this; below bridge.clear_* it warns
     bridge_over_water_m: 25.0   # a ground edge over water this long in one stretch is an (unflagged) bridge
     profile_fair_passes: 50     # after grade_clamp: smooth the sawtooth on steep hills (then clamp again)

@@ -1,0 +1,28 @@
+# Hand-curated Moscow landmarks (same rules as nyc/landmarks.yaml). Coordinates approximate; Ol1n checks (M6).
+# R10: commercial buildings by historic place name (Upper Trading Rows), no company or store brands.
+landmarks:
+  - {id: spasskaya_tower, name: Spasskaya Tower, lat: 55.75250, lon: 37.62140, height_m: 71, hero: true}
+  - {id: borovitskaya_tower, name: Borovitskaya Tower, lat: 55.74960, lon: 37.61190, kind: plaza, hero: true}   # no Overture building at the tower
+  - {id: red_square, name: Red Square, lat: 55.75390, lon: 37.62080, kind: plaza, hero: true}
+  - {id: st_basils, name: Saint Basil's Cathedral, lat: 55.75250, lon: 37.62310, height_m: 65, hero: true}
+  - {id: upper_trading_rows, name: Upper Trading Rows, lat: 55.75470, lon: 37.62150, height_m: 30, hero: true}
+  - {id: historical_museum, name: State Historical Museum, lat: 55.75530, lon: 37.61780, height_m: 65, hero: true}
+  - {id: bolshoi, name: Bolshoi Theatre, lat: 55.76010, lon: 37.61860, height_m: 40, hero: true}
+  - {id: christ_saviour, name: Cathedral of Christ the Saviour, lat: 55.74460, lon: 37.60550, height_m: 103, hero: true}
+  - {id: pushkin_museum, name: Pushkin Museum of Fine Arts, lat: 55.74730, lon: 37.60510, height_m: 25, hero: true}
+  - {id: tretyakov, name: Tretyakov Gallery, lat: 55.74140, lon: 37.62080, height_m: 20, hero: true}
+  - {id: old_arbat, name: Old Arbat, lat: 55.74940, lon: 37.59150, kind: plaza, hero: true}
+  - {id: patriarch_ponds, name: Patriarch's Ponds, lat: 55.76370, lon: 37.59270, kind: park, hero: true}
+  - {id: gorky_park, name: Gorky Park, lat: 55.72980, lon: 37.60100, kind: park, hero: true}
+  - {id: zaryadye, name: Zaryadye Park, lat: 55.75120, lon: 37.62900, kind: park, hero: true}
+  - {id: kotelnicheskaya, name: Kotelnicheskaya Embankment Building, lat: 55.74710, lon: 37.64270, height_m: 176, hero: true}
+  - {id: foreign_ministry, name: Ministry of Foreign Affairs Building, lat: 55.74610, lon: 37.58450, height_m: 172, hero: true}
+  - {id: kudrinskaya, name: Kudrinskaya Square Building, lat: 55.75930, lon: 37.58100, height_m: 156, hero: true}
+  - {id: red_gates, name: Red Gates Building, lat: 55.76870, lon: 37.64840, height_m: 133, hero: true}
+  - {id: lubyanka_square, name: Lubyanka Square, lat: 55.75960, lon: 37.62680, kind: plaza, hero: true}
+  - {id: manege, name: Manege, lat: 55.75310, lon: 37.61160, height_m: 15, hero: true}
+  - {id: state_library, name: Russian State Library, lat: 55.75180, lon: 37.60940, height_m: 40, hero: true}
+  - {id: house_on_embankment, name: House on the Embankment, lat: 55.74490, lon: 37.61180, height_m: 50, hero: true}
+  - {id: bolshoy_kamenny, name: Bolshoy Kamenny Bridge, lat: 55.74730, lon: 37.61270, kind: plaza, hero: true}
+  - {id: pushkin_square, name: Pushkin Square, lat: 55.76550, lon: 37.60610, kind: plaza, hero: true}
+  - {id: komsomolskaya, name: Komsomolskaya Square, lat: 55.77650, lon: 37.65550, kind: plaza, hero: true}
