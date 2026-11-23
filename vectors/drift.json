@@ -1,0 +1,6466 @@
+{
+ "module": "drift",
+ "specVersion": 1,
+ "$comment": "specs/minigames/drift.md; samples written out as the world would send them, no rng; recorded by web (metro vectors record --client web --module drift).",
+ "cases": [
+  {
+   "name": "3 stars at level 3: two long chains at the caps, banked after the grace time",
+   "config": {
+    "level": 3,
+    "minSlipMrad": 250,
+    "maxSlipMrad": 800,
+    "minSpeedCms": 800,
+    "maxSpeedCms": 2500,
+    "ptsDiv": 1000,
+    "maxDtMs": 250,
+    "graceMs": 600,
+    "multStepMs": 2000,
+    "maxMult": 5,
+    "starScores": [
+     40000,
+     20000,
+     8000
+    ],
+    "levelPct": [
+     60,
+     80,
+     100,
+     120,
+     140
+    ]
+   },
+   "seed": 1,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 250,
+      "slipMrad": 800,
+      "speedCms": 2500,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 250,
+      "lastDriftMs": 250,
+      "score": 0,
+      "chain": 500,
+      "chainMs": 250,
+      "mult": 1,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 500,
+      "slipMrad": 800,
+      "speedCms": 2500,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 500,
+      "lastDriftMs": 500,
+      "score": 0,
+      "chain": 1000,
+      "chainMs": 500,
+      "mult": 1,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 750,
+      "slipMrad": 800,
+      "speedCms": 2500,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 750,
+      "lastDriftMs": 750,
+      "score": 0,
+      "chain": 1500,
+      "chainMs": 750,
+      "mult": 1,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 1000,
+      "slipMrad": 800,
+      "speedCms": 2500,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 1000,
+      "lastDriftMs": 1000,
+      "score": 0,
+      "chain": 2000,
+      "chainMs": 1000,
+      "mult": 1,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 1250,
+      "slipMrad": 800,
+      "speedCms": 2500,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 1250,
+      "lastDriftMs": 1250,
+      "score": 0,
+      "chain": 2500,
+      "chainMs": 1250,
+      "mult": 1,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 1500,
+      "slipMrad": 800,
+      "speedCms": 2500,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 1500,
+      "lastDriftMs": 1500,
+      "score": 0,
+      "chain": 3000,
+      "chainMs": 1500,
+      "mult": 1,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 1750,
+      "slipMrad": 800,
+      "speedCms": 2500,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 1750,
+      "lastDriftMs": 1750,
+      "score": 0,
+      "chain": 3500,
+      "chainMs": 1750,
+      "mult": 1,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 2000,
+      "slipMrad": 800,
+      "speedCms": 2500,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 2000,
+      "lastDriftMs": 2000,
+      "score": 0,
+      "chain": 4000,
+      "chainMs": 2000,
+      "mult": 2,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 2250,
+      "slipMrad": 800,
+      "speedCms": 2500,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 2250,
+      "lastDriftMs": 2250,
+      "score": 0,
+      "chain": 4500,
+      "chainMs": 2250,
+      "mult": 2,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 2500,
+      "slipMrad": 800,
+      "speedCms": 2500,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 2500,
+      "lastDriftMs": 2500,
+      "score": 0,
+      "chain": 5000,
+      "chainMs": 2500,
+      "mult": 2,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 2750,
+      "slipMrad": 800,
+      "speedCms": 2500,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 2750,
+      "lastDriftMs": 2750,
+      "score": 0,
+      "chain": 5500,
+      "chainMs": 2750,
+      "mult": 2,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 3000,
+      "slipMrad": 800,
+      "speedCms": 2500,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 3000,
+      "lastDriftMs": 3000,
+      "score": 0,
+      "chain": 6000,
+      "chainMs": 3000,
+      "mult": 2,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 3250,
+      "slipMrad": 800,
+      "speedCms": 2500,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 3250,
+      "lastDriftMs": 3250,
+      "score": 0,
+      "chain": 6500,
+      "chainMs": 3250,
+      "mult": 2,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 3500,
+      "slipMrad": 800,
+      "speedCms": 2500,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 3500,
+      "lastDriftMs": 3500,
+      "score": 0,
+      "chain": 7000,
+      "chainMs": 3500,
+      "mult": 2,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 3750,
+      "slipMrad": 800,
+      "speedCms": 2500,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 3750,
+      "lastDriftMs": 3750,
+      "score": 0,
+      "chain": 7500,
+      "chainMs": 3750,
+      "mult": 2,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 4000,
+      "slipMrad": 800,
+      "speedCms": 2500,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 4000,
+      "lastDriftMs": 4000,
+      "score": 0,
+      "chain": 8000,
+      "chainMs": 4000,
+      "mult": 3,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 4250,
+      "slipMrad": 800,
+      "speedCms": 2500,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 4250,
+      "lastDriftMs": 4250,
+      "score": 0,
+      "chain": 8500,
+      "chainMs": 4250,
+      "mult": 3,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 4500,
+      "slipMrad": 800,
+      "speedCms": 2500,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 4500,
+      "lastDriftMs": 4500,
+      "score": 0,
+      "chain": 9000,
+      "chainMs": 4500,
+      "mult": 3,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 4750,
+      "slipMrad": 800,
+      "speedCms": 2500,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 4750,
+      "lastDriftMs": 4750,
+      "score": 0,
+      "chain": 9500,
+      "chainMs": 4750,
+      "mult": 3,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 5000,
+      "slipMrad": 800,
+      "speedCms": 2500,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 5000,
+      "lastDriftMs": 5000,
+      "score": 0,
+      "chain": 10000,
+      "chainMs": 5000,
+      "mult": 3,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 5250,
+      "slipMrad": 800,
+      "speedCms": 2500,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 5250,
+      "lastDriftMs": 5250,
+      "score": 0,
+      "chain": 10500,
+      "chainMs": 5250,
+      "mult": 3,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 5500,
+      "slipMrad": 800,
+      "speedCms": 2500,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 5500,
+      "lastDriftMs": 5500,
+      "score": 0,
+      "chain": 11000,
+      "chainMs": 5500,
+      "mult": 3,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 5750,
+      "slipMrad": 800,
+      "speedCms": 2500,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 5750,
+      "lastDriftMs": 5750,
+      "score": 0,
+      "chain": 11500,
+      "chainMs": 5750,
+      "mult": 3,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 6000,
+      "slipMrad": 800,
+      "speedCms": 2500,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 6000,
+      "lastDriftMs": 6000,
+      "score": 0,
+      "chain": 12000,
+      "chainMs": 6000,
+      "mult": 4,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 6250,
+      "slipMrad": 40,
+      "speedCms": 1200,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 6250,
+      "lastDriftMs": 6000,
+      "score": 0,
+      "chain": 12000,
+      "chainMs": 6000,
+      "mult": 4,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 6500,
+      "slipMrad": 40,
+      "speedCms": 1200,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 6500,
+      "lastDriftMs": 6000,
+      "score": 0,
+      "chain": 12000,
+      "chainMs": 6000,
+      "mult": 4,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 6750,
+      "slipMrad": 40,
+      "speedCms": 1200,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 6750,
+      "lastDriftMs": 6000,
+      "score": 48000,
+      "chain": 0,
+      "chainMs": 0,
+      "mult": 1,
+      "best": 48000,
+      "drifts": 1,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 7000,
+      "slipMrad": 40,
+      "speedCms": 1200,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 7000,
+      "lastDriftMs": 6000,
+      "score": 48000,
+      "chain": 0,
+      "chainMs": 0,
+      "mult": 1,
+      "best": 48000,
+      "drifts": 1,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 7250,
+      "slipMrad": 700,
+      "speedCms": 2400,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 7250,
+      "lastDriftMs": 7250,
+      "score": 48000,
+      "chain": 420,
+      "chainMs": 250,
+      "mult": 1,
+      "best": 48000,
+      "drifts": 1,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 7500,
+      "slipMrad": 700,
+      "speedCms": 2400,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 7500,
+      "lastDriftMs": 7500,
+      "score": 48000,
+      "chain": 840,
+      "chainMs": 500,
+      "mult": 1,
+      "best": 48000,
+      "drifts": 1,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 7750,
+      "slipMrad": 700,
+      "speedCms": 2400,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 7750,
+      "lastDriftMs": 7750,
+      "score": 48000,
+      "chain": 1260,
+      "chainMs": 750,
+      "mult": 1,
+      "best": 48000,
+      "drifts": 1,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 8000,
+      "slipMrad": 700,
+      "speedCms": 2400,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 8000,
+      "lastDriftMs": 8000,
+      "score": 48000,
+      "chain": 1680,
+      "chainMs": 1000,
+      "mult": 1,
+      "best": 48000,
+      "drifts": 1,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 8250,
+      "slipMrad": 700,
+      "speedCms": 2400,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 8250,
+      "lastDriftMs": 8250,
+      "score": 48000,
+      "chain": 2100,
+      "chainMs": 1250,
+      "mult": 1,
+      "best": 48000,
+      "drifts": 1,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 8500,
+      "slipMrad": 700,
+      "speedCms": 2400,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 8500,
+      "lastDriftMs": 8500,
+      "score": 48000,
+      "chain": 2520,
+      "chainMs": 1500,
+      "mult": 1,
+      "best": 48000,
+      "drifts": 1,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 8750,
+      "slipMrad": 700,
+      "speedCms": 2400,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 8750,
+      "lastDriftMs": 8750,
+      "score": 48000,
+      "chain": 2940,
+      "chainMs": 1750,
+      "mult": 1,
+      "best": 48000,
+      "drifts": 1,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 9000,
+      "slipMrad": 700,
+      "speedCms": 2400,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 9000,
+      "lastDriftMs": 9000,
+      "score": 48000,
+      "chain": 3360,
+      "chainMs": 2000,
+      "mult": 2,
+      "best": 48000,
+      "drifts": 1,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 9250,
+      "slipMrad": 700,
+      "speedCms": 2400,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 9250,
+      "lastDriftMs": 9250,
+      "score": 48000,
+      "chain": 3780,
+      "chainMs": 2250,
+      "mult": 2,
+      "best": 48000,
+      "drifts": 1,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 9500,
+      "slipMrad": 700,
+      "speedCms": 2400,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 9500,
+      "lastDriftMs": 9500,
+      "score": 48000,
+      "chain": 4200,
+      "chainMs": 2500,
+      "mult": 2,
+      "best": 48000,
+      "drifts": 1,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 9750,
+      "slipMrad": 700,
+      "speedCms": 2400,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 9750,
+      "lastDriftMs": 9750,
+      "score": 48000,
+      "chain": 4620,
+      "chainMs": 2750,
+      "mult": 2,
+      "best": 48000,
+      "drifts": 1,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 10000,
+      "slipMrad": 700,
+      "speedCms": 2400,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 10000,
+      "lastDriftMs": 10000,
+      "score": 48000,
+      "chain": 5040,
+      "chainMs": 3000,
+      "mult": 2,
+      "best": 48000,
+      "drifts": 1,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 10250,
+      "slipMrad": 40,
+      "speedCms": 1200,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 10250,
+      "lastDriftMs": 10000,
+      "score": 48000,
+      "chain": 5040,
+      "chainMs": 3000,
+      "mult": 2,
+      "best": 48000,
+      "drifts": 1,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 10500,
+      "slipMrad": 40,
+      "speedCms": 1200,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 10500,
+      "lastDriftMs": 10000,
+      "score": 48000,
+      "chain": 5040,
+      "chainMs": 3000,
+      "mult": 2,
+      "best": 48000,
+      "drifts": 1,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 10750,
+      "slipMrad": 40,
+      "speedCms": 1200,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 10750,
+      "lastDriftMs": 10000,
+      "score": 58080,
+      "chain": 0,
+      "chainMs": 0,
+      "mult": 1,
+      "best": 48000,
+      "drifts": 2,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 11000,
+      "slipMrad": 40,
+      "speedCms": 1200,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 11000,
+      "lastDriftMs": 10000,
+      "score": 58080,
+      "chain": 0,
+      "chainMs": 0,
+      "mult": 1,
+      "best": 48000,
+      "drifts": 2,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "timeout"
+     },
+     "state": {
+      "phase": "over",
+      "clockMs": 11000,
+      "lastDriftMs": 10000,
+      "score": 58080,
+      "chain": 0,
+      "chainMs": 0,
+      "mult": 1,
+      "best": 48000,
+      "drifts": 2,
+      "hits": 0
+     }
+    }
+   ],
+   "result": {
+    "winner": "player",
+    "stars": 3,
+    "score": 58080,
+    "best": 48000,
+    "drifts": 2,
+    "hits": 0
+   }
+  },
+  {
+   "name": "2 stars at level 3",
+   "config": {
+    "level": 3,
+    "minSlipMrad": 250,
+    "maxSlipMrad": 800,
+    "minSpeedCms": 800,
+    "maxSpeedCms": 2500,
+    "ptsDiv": 1000,
+    "maxDtMs": 250,
+    "graceMs": 600,
+    "multStepMs": 2000,
+    "maxMult": 5,
+    "starScores": [
+     40000,
+     20000,
+     8000
+    ],
+    "levelPct": [
+     60,
+     80,
+     100,
+     120,
+     140
+    ]
+   },
+   "seed": 1,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 250,
+      "slipMrad": 800,
+      "speedCms": 2500,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 250,
+      "lastDriftMs": 250,
+      "score": 0,
+      "chain": 500,
+      "chainMs": 250,
+      "mult": 1,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 500,
+      "slipMrad": 800,
+      "speedCms": 2500,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 500,
+      "lastDriftMs": 500,
+      "score": 0,
+      "chain": 1000,
+      "chainMs": 500,
+      "mult": 1,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 750,
+      "slipMrad": 800,
+      "speedCms": 2500,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 750,
+      "lastDriftMs": 750,
+      "score": 0,
+      "chain": 1500,
+      "chainMs": 750,
+      "mult": 1,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 1000,
+      "slipMrad": 800,
+      "speedCms": 2500,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 1000,
+      "lastDriftMs": 1000,
+      "score": 0,
+      "chain": 2000,
+      "chainMs": 1000,
+      "mult": 1,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 1250,
+      "slipMrad": 800,
+      "speedCms": 2500,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 1250,
+      "lastDriftMs": 1250,
+      "score": 0,
+      "chain": 2500,
+      "chainMs": 1250,
+      "mult": 1,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 1500,
+      "slipMrad": 800,
+      "speedCms": 2500,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 1500,
+      "lastDriftMs": 1500,
+      "score": 0,
+      "chain": 3000,
+      "chainMs": 1500,
+      "mult": 1,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 1750,
+      "slipMrad": 800,
+      "speedCms": 2500,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 1750,
+      "lastDriftMs": 1750,
+      "score": 0,
+      "chain": 3500,
+      "chainMs": 1750,
+      "mult": 1,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 2000,
+      "slipMrad": 800,
+      "speedCms": 2500,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 2000,
+      "lastDriftMs": 2000,
+      "score": 0,
+      "chain": 4000,
+      "chainMs": 2000,
+      "mult": 2,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 2250,
+      "slipMrad": 800,
+      "speedCms": 2500,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 2250,
+      "lastDriftMs": 2250,
+      "score": 0,
+      "chain": 4500,
+      "chainMs": 2250,
+      "mult": 2,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 2500,
+      "slipMrad": 800,
+      "speedCms": 2500,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 2500,
+      "lastDriftMs": 2500,
+      "score": 0,
+      "chain": 5000,
+      "chainMs": 2500,
+      "mult": 2,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 2750,
+      "slipMrad": 800,
+      "speedCms": 2500,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 2750,
+      "lastDriftMs": 2750,
+      "score": 0,
+      "chain": 5500,
+      "chainMs": 2750,
+      "mult": 2,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 3000,
+      "slipMrad": 800,
+      "speedCms": 2500,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 3000,
+      "lastDriftMs": 3000,
+      "score": 0,
+      "chain": 6000,
+      "chainMs": 3000,
+      "mult": 2,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 3250,
+      "slipMrad": 800,
+      "speedCms": 2500,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 3250,
+      "lastDriftMs": 3250,
+      "score": 0,
+      "chain": 6500,
+      "chainMs": 3250,
+      "mult": 2,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 3500,
+      "slipMrad": 800,
+      "speedCms": 2500,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 3500,
+      "lastDriftMs": 3500,
+      "score": 0,
+      "chain": 7000,
+      "chainMs": 3500,
+      "mult": 2,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 3750,
+      "slipMrad": 800,
+      "speedCms": 2500,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 3750,
+      "lastDriftMs": 3750,
+      "score": 0,
+      "chain": 7500,
+      "chainMs": 3750,
+      "mult": 2,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 4000,
+      "slipMrad": 800,
+      "speedCms": 2500,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 4000,
+      "lastDriftMs": 4000,
+      "score": 0,
+      "chain": 8000,
+      "chainMs": 4000,
+      "mult": 3,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 4250,
+      "slipMrad": 40,
+      "speedCms": 1200,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 4250,
+      "lastDriftMs": 4000,
+      "score": 0,
+      "chain": 8000,
+      "chainMs": 4000,
+      "mult": 3,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 4500,
+      "slipMrad": 40,
+      "speedCms": 1200,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 4500,
+      "lastDriftMs": 4000,
+      "score": 0,
+      "chain": 8000,
+      "chainMs": 4000,
+      "mult": 3,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 4750,
+      "slipMrad": 40,
+      "speedCms": 1200,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 4750,
+      "lastDriftMs": 4000,
+      "score": 24000,
+      "chain": 0,
+      "chainMs": 0,
+      "mult": 1,
+      "best": 24000,
+      "drifts": 1,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 5000,
+      "slipMrad": 40,
+      "speedCms": 1200,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 5000,
+      "lastDriftMs": 4000,
+      "score": 24000,
+      "chain": 0,
+      "chainMs": 0,
+      "mult": 1,
+      "best": 24000,
+      "drifts": 1,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "timeout"
+     },
+     "state": {
+      "phase": "over",
+      "clockMs": 5000,
+      "lastDriftMs": 4000,
+      "score": 24000,
+      "chain": 0,
+      "chainMs": 0,
+      "mult": 1,
+      "best": 24000,
+      "drifts": 1,
+      "hits": 0
+     }
+    }
+   ],
+   "result": {
+    "winner": "player",
+    "stars": 2,
+    "score": 24000,
+    "best": 24000,
+    "drifts": 1,
+    "hits": 0
+   }
+  },
+  {
+   "name": "1 star at level 1 (thresholds 60 %)",
+   "config": {
+    "level": 1,
+    "minSlipMrad": 250,
+    "maxSlipMrad": 800,
+    "minSpeedCms": 800,
+    "maxSpeedCms": 2500,
+    "ptsDiv": 1000,
+    "maxDtMs": 250,
+    "graceMs": 600,
+    "multStepMs": 2000,
+    "maxMult": 5,
+    "starScores": [
+     40000,
+     20000,
+     8000
+    ],
+    "levelPct": [
+     60,
+     80,
+     100,
+     120,
+     140
+    ]
+   },
+   "seed": 1,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 100,
+      "slipMrad": 500,
+      "speedCms": 1500,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 100,
+      "lastDriftMs": 100,
+      "score": 0,
+      "chain": 75,
+      "chainMs": 100,
+      "mult": 1,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 200,
+      "slipMrad": 500,
+      "speedCms": 1500,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 200,
+      "lastDriftMs": 200,
+      "score": 0,
+      "chain": 150,
+      "chainMs": 200,
+      "mult": 1,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 300,
+      "slipMrad": 500,
+      "speedCms": 1500,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 300,
+      "lastDriftMs": 300,
+      "score": 0,
+      "chain": 225,
+      "chainMs": 300,
+      "mult": 1,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 400,
+      "slipMrad": 500,
+      "speedCms": 1500,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 400,
+      "lastDriftMs": 400,
+      "score": 0,
+      "chain": 300,
+      "chainMs": 400,
+      "mult": 1,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 500,
+      "slipMrad": 500,
+      "speedCms": 1500,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 500,
+      "lastDriftMs": 500,
+      "score": 0,
+      "chain": 375,
+      "chainMs": 500,
+      "mult": 1,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 600,
+      "slipMrad": 500,
+      "speedCms": 1500,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 600,
+      "lastDriftMs": 600,
+      "score": 0,
+      "chain": 450,
+      "chainMs": 600,
+      "mult": 1,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 700,
+      "slipMrad": 500,
+      "speedCms": 1500,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 700,
+      "lastDriftMs": 700,
+      "score": 0,
+      "chain": 525,
+      "chainMs": 700,
+      "mult": 1,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 800,
+      "slipMrad": 500,
+      "speedCms": 1500,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 800,
+      "lastDriftMs": 800,
+      "score": 0,
+      "chain": 600,
+      "chainMs": 800,
+      "mult": 1,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 900,
+      "slipMrad": 500,
+      "speedCms": 1500,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 900,
+      "lastDriftMs": 900,
+      "score": 0,
+      "chain": 675,
+      "chainMs": 900,
+      "mult": 1,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 1000,
+      "slipMrad": 500,
+      "speedCms": 1500,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 1000,
+      "lastDriftMs": 1000,
+      "score": 0,
+      "chain": 750,
+      "chainMs": 1000,
+      "mult": 1,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 1100,
+      "slipMrad": 500,
+      "speedCms": 1500,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 1100,
+      "lastDriftMs": 1100,
+      "score": 0,
+      "chain": 825,
+      "chainMs": 1100,
+      "mult": 1,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 1200,
+      "slipMrad": 500,
+      "speedCms": 1500,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 1200,
+      "lastDriftMs": 1200,
+      "score": 0,
+      "chain": 900,
+      "chainMs": 1200,
+      "mult": 1,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 1300,
+      "slipMrad": 500,
+      "speedCms": 1500,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 1300,
+      "lastDriftMs": 1300,
+      "score": 0,
+      "chain": 975,
+      "chainMs": 1300,
+      "mult": 1,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 1400,
+      "slipMrad": 500,
+      "speedCms": 1500,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 1400,
+      "lastDriftMs": 1400,
+      "score": 0,
+      "chain": 1050,
+      "chainMs": 1400,
+      "mult": 1,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 1500,
+      "slipMrad": 500,
+      "speedCms": 1500,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 1500,
+      "lastDriftMs": 1500,
+      "score": 0,
+      "chain": 1125,
+      "chainMs": 1500,
+      "mult": 1,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 1600,
+      "slipMrad": 500,
+      "speedCms": 1500,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 1600,
+      "lastDriftMs": 1600,
+      "score": 0,
+      "chain": 1200,
+      "chainMs": 1600,
+      "mult": 1,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 1700,
+      "slipMrad": 500,
+      "speedCms": 1500,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 1700,
+      "lastDriftMs": 1700,
+      "score": 0,
+      "chain": 1275,
+      "chainMs": 1700,
+      "mult": 1,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 1800,
+      "slipMrad": 500,
+      "speedCms": 1500,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 1800,
+      "lastDriftMs": 1800,
+      "score": 0,
+      "chain": 1350,
+      "chainMs": 1800,
+      "mult": 1,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 1900,
+      "slipMrad": 500,
+      "speedCms": 1500,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 1900,
+      "lastDriftMs": 1900,
+      "score": 0,
+      "chain": 1425,
+      "chainMs": 1900,
+      "mult": 1,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 2000,
+      "slipMrad": 500,
+      "speedCms": 1500,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 2000,
+      "lastDriftMs": 2000,
+      "score": 0,
+      "chain": 1500,
+      "chainMs": 2000,
+      "mult": 2,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 2100,
+      "slipMrad": 500,
+      "speedCms": 1500,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 2100,
+      "lastDriftMs": 2100,
+      "score": 0,
+      "chain": 1575,
+      "chainMs": 2100,
+      "mult": 2,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 2200,
+      "slipMrad": 500,
+      "speedCms": 1500,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 2200,
+      "lastDriftMs": 2200,
+      "score": 0,
+      "chain": 1650,
+      "chainMs": 2200,
+      "mult": 2,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 2300,
+      "slipMrad": 500,
+      "speedCms": 1500,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 2300,
+      "lastDriftMs": 2300,
+      "score": 0,
+      "chain": 1725,
+      "chainMs": 2300,
+      "mult": 2,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 2400,
+      "slipMrad": 500,
+      "speedCms": 1500,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 2400,
+      "lastDriftMs": 2400,
+      "score": 0,
+      "chain": 1800,
+      "chainMs": 2400,
+      "mult": 2,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 2500,
+      "slipMrad": 500,
+      "speedCms": 1500,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 2500,
+      "lastDriftMs": 2500,
+      "score": 0,
+      "chain": 1875,
+      "chainMs": 2500,
+      "mult": 2,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 2600,
+      "slipMrad": 500,
+      "speedCms": 1500,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 2600,
+      "lastDriftMs": 2600,
+      "score": 0,
+      "chain": 1950,
+      "chainMs": 2600,
+      "mult": 2,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 2700,
+      "slipMrad": 500,
+      "speedCms": 1500,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 2700,
+      "lastDriftMs": 2700,
+      "score": 0,
+      "chain": 2025,
+      "chainMs": 2700,
+      "mult": 2,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 2800,
+      "slipMrad": 500,
+      "speedCms": 1500,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 2800,
+      "lastDriftMs": 2800,
+      "score": 0,
+      "chain": 2100,
+      "chainMs": 2800,
+      "mult": 2,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 2900,
+      "slipMrad": 500,
+      "speedCms": 1500,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 2900,
+      "lastDriftMs": 2900,
+      "score": 0,
+      "chain": 2175,
+      "chainMs": 2900,
+      "mult": 2,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 3000,
+      "slipMrad": 500,
+      "speedCms": 1500,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 3000,
+      "lastDriftMs": 3000,
+      "score": 0,
+      "chain": 2250,
+      "chainMs": 3000,
+      "mult": 2,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 3100,
+      "slipMrad": 500,
+      "speedCms": 1500,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 3100,
+      "lastDriftMs": 3100,
+      "score": 0,
+      "chain": 2325,
+      "chainMs": 3100,
+      "mult": 2,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 3200,
+      "slipMrad": 500,
+      "speedCms": 1500,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 3200,
+      "lastDriftMs": 3200,
+      "score": 0,
+      "chain": 2400,
+      "chainMs": 3200,
+      "mult": 2,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 3300,
+      "slipMrad": 500,
+      "speedCms": 1500,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 3300,
+      "lastDriftMs": 3300,
+      "score": 0,
+      "chain": 2475,
+      "chainMs": 3300,
+      "mult": 2,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 3400,
+      "slipMrad": 500,
+      "speedCms": 1500,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 3400,
+      "lastDriftMs": 3400,
+      "score": 0,
+      "chain": 2550,
+      "chainMs": 3400,
+      "mult": 2,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 3500,
+      "slipMrad": 500,
+      "speedCms": 1500,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 3500,
+      "lastDriftMs": 3500,
+      "score": 0,
+      "chain": 2625,
+      "chainMs": 3500,
+      "mult": 2,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 3600,
+      "slipMrad": 500,
+      "speedCms": 1500,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 3600,
+      "lastDriftMs": 3600,
+      "score": 0,
+      "chain": 2700,
+      "chainMs": 3600,
+      "mult": 2,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 3700,
+      "slipMrad": 500,
+      "speedCms": 1500,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 3700,
+      "lastDriftMs": 3700,
+      "score": 0,
+      "chain": 2775,
+      "chainMs": 3700,
+      "mult": 2,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 3800,
+      "slipMrad": 500,
+      "speedCms": 1500,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 3800,
+      "lastDriftMs": 3800,
+      "score": 0,
+      "chain": 2850,
+      "chainMs": 3800,
+      "mult": 2,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 3900,
+      "slipMrad": 500,
+      "speedCms": 1500,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 3900,
+      "lastDriftMs": 3900,
+      "score": 0,
+      "chain": 2925,
+      "chainMs": 3900,
+      "mult": 2,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 4000,
+      "slipMrad": 500,
+      "speedCms": 1500,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 4000,
+      "lastDriftMs": 4000,
+      "score": 0,
+      "chain": 3000,
+      "chainMs": 4000,
+      "mult": 3,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 4250,
+      "slipMrad": 40,
+      "speedCms": 1200,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 4250,
+      "lastDriftMs": 4000,
+      "score": 0,
+      "chain": 3000,
+      "chainMs": 4000,
+      "mult": 3,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 4500,
+      "slipMrad": 40,
+      "speedCms": 1200,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 4500,
+      "lastDriftMs": 4000,
+      "score": 0,
+      "chain": 3000,
+      "chainMs": 4000,
+      "mult": 3,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 4750,
+      "slipMrad": 40,
+      "speedCms": 1200,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 4750,
+      "lastDriftMs": 4000,
+      "score": 9000,
+      "chain": 0,
+      "chainMs": 0,
+      "mult": 1,
+      "best": 9000,
+      "drifts": 1,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 5000,
+      "slipMrad": 40,
+      "speedCms": 1200,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 5000,
+      "lastDriftMs": 4000,
+      "score": 9000,
+      "chain": 0,
+      "chainMs": 0,
+      "mult": 1,
+      "best": 9000,
+      "drifts": 1,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "timeout"
+     },
+     "state": {
+      "phase": "over",
+      "clockMs": 5000,
+      "lastDriftMs": 4000,
+      "score": 9000,
+      "chain": 0,
+      "chainMs": 0,
+      "mult": 1,
+      "best": 9000,
+      "drifts": 1,
+      "hits": 0
+     }
+    }
+   ],
+   "result": {
+    "winner": "player",
+    "stars": 1,
+    "score": 9000,
+    "best": 9000,
+    "drifts": 1,
+    "hits": 0
+   }
+  },
+  {
+   "name": "0 stars at level 5 (thresholds 140 %), short drifts and a crash",
+   "config": {
+    "level": 5,
+    "minSlipMrad": 250,
+    "maxSlipMrad": 800,
+    "minSpeedCms": 800,
+    "maxSpeedCms": 2500,
+    "ptsDiv": 1000,
+    "maxDtMs": 250,
+    "graceMs": 600,
+    "multStepMs": 2000,
+    "maxMult": 5,
+    "starScores": [
+     40000,
+     20000,
+     8000
+    ],
+    "levelPct": [
+     60,
+     80,
+     100,
+     120,
+     140
+    ]
+   },
+   "seed": 1,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 100,
+      "slipMrad": 400,
+      "speedCms": 1200,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 100,
+      "lastDriftMs": 100,
+      "score": 0,
+      "chain": 48,
+      "chainMs": 100,
+      "mult": 1,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 200,
+      "slipMrad": 400,
+      "speedCms": 1200,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 200,
+      "lastDriftMs": 200,
+      "score": 0,
+      "chain": 96,
+      "chainMs": 200,
+      "mult": 1,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 300,
+      "slipMrad": 400,
+      "speedCms": 1200,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 300,
+      "lastDriftMs": 300,
+      "score": 0,
+      "chain": 144,
+      "chainMs": 300,
+      "mult": 1,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 400,
+      "slipMrad": 400,
+      "speedCms": 1200,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 400,
+      "lastDriftMs": 400,
+      "score": 0,
+      "chain": 192,
+      "chainMs": 400,
+      "mult": 1,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 500,
+      "slipMrad": 400,
+      "speedCms": 1200,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 500,
+      "lastDriftMs": 500,
+      "score": 0,
+      "chain": 240,
+      "chainMs": 500,
+      "mult": 1,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 600,
+      "slipMrad": 400,
+      "speedCms": 1200,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 600,
+      "lastDriftMs": 600,
+      "score": 0,
+      "chain": 288,
+      "chainMs": 600,
+      "mult": 1,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 700,
+      "slipMrad": 400,
+      "speedCms": 1200,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 700,
+      "lastDriftMs": 700,
+      "score": 0,
+      "chain": 336,
+      "chainMs": 700,
+      "mult": 1,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 800,
+      "slipMrad": 400,
+      "speedCms": 1200,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 800,
+      "lastDriftMs": 800,
+      "score": 0,
+      "chain": 384,
+      "chainMs": 800,
+      "mult": 1,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 900,
+      "slipMrad": 400,
+      "speedCms": 1200,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 900,
+      "lastDriftMs": 900,
+      "score": 0,
+      "chain": 432,
+      "chainMs": 900,
+      "mult": 1,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 1000,
+      "slipMrad": 400,
+      "speedCms": 1200,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 1000,
+      "lastDriftMs": 1000,
+      "score": 0,
+      "chain": 480,
+      "chainMs": 1000,
+      "mult": 1,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 1100,
+      "slipMrad": 400,
+      "speedCms": 1200,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 1100,
+      "lastDriftMs": 1100,
+      "score": 0,
+      "chain": 528,
+      "chainMs": 1100,
+      "mult": 1,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 1200,
+      "slipMrad": 400,
+      "speedCms": 1200,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 1200,
+      "lastDriftMs": 1200,
+      "score": 0,
+      "chain": 576,
+      "chainMs": 1200,
+      "mult": 1,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 1300,
+      "slipMrad": 400,
+      "speedCms": 1200,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 1300,
+      "lastDriftMs": 1300,
+      "score": 0,
+      "chain": 624,
+      "chainMs": 1300,
+      "mult": 1,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 1400,
+      "slipMrad": 400,
+      "speedCms": 1200,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 1400,
+      "lastDriftMs": 1400,
+      "score": 0,
+      "chain": 672,
+      "chainMs": 1400,
+      "mult": 1,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 1500,
+      "slipMrad": 400,
+      "speedCms": 1200,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 1500,
+      "lastDriftMs": 1500,
+      "score": 0,
+      "chain": 720,
+      "chainMs": 1500,
+      "mult": 1,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 1600,
+      "slipMrad": 400,
+      "speedCms": 1200,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 1600,
+      "lastDriftMs": 1600,
+      "score": 0,
+      "chain": 768,
+      "chainMs": 1600,
+      "mult": 1,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 1700,
+      "slipMrad": 400,
+      "speedCms": 1200,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 1700,
+      "lastDriftMs": 1700,
+      "score": 0,
+      "chain": 816,
+      "chainMs": 1700,
+      "mult": 1,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 1800,
+      "slipMrad": 400,
+      "speedCms": 1200,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 1800,
+      "lastDriftMs": 1800,
+      "score": 0,
+      "chain": 864,
+      "chainMs": 1800,
+      "mult": 1,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 1900,
+      "slipMrad": 400,
+      "speedCms": 1200,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 1900,
+      "lastDriftMs": 1900,
+      "score": 0,
+      "chain": 912,
+      "chainMs": 1900,
+      "mult": 1,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 2000,
+      "slipMrad": 400,
+      "speedCms": 1200,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 2000,
+      "lastDriftMs": 2000,
+      "score": 0,
+      "chain": 960,
+      "chainMs": 2000,
+      "mult": 2,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 2250,
+      "slipMrad": 40,
+      "speedCms": 1200,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 2250,
+      "lastDriftMs": 2000,
+      "score": 0,
+      "chain": 960,
+      "chainMs": 2000,
+      "mult": 2,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 2500,
+      "slipMrad": 40,
+      "speedCms": 1200,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 2500,
+      "lastDriftMs": 2000,
+      "score": 0,
+      "chain": 960,
+      "chainMs": 2000,
+      "mult": 2,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 2750,
+      "slipMrad": 40,
+      "speedCms": 1200,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 2750,
+      "lastDriftMs": 2000,
+      "score": 1920,
+      "chain": 0,
+      "chainMs": 0,
+      "mult": 1,
+      "best": 1920,
+      "drifts": 1,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 3000,
+      "slipMrad": 40,
+      "speedCms": 1200,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 3000,
+      "lastDriftMs": 2000,
+      "score": 1920,
+      "chain": 0,
+      "chainMs": 0,
+      "mult": 1,
+      "best": 1920,
+      "drifts": 1,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 3100,
+      "slipMrad": 400,
+      "speedCms": 1200,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 3100,
+      "lastDriftMs": 3100,
+      "score": 1920,
+      "chain": 48,
+      "chainMs": 100,
+      "mult": 1,
+      "best": 1920,
+      "drifts": 1,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 3200,
+      "slipMrad": 400,
+      "speedCms": 1200,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 3200,
+      "lastDriftMs": 3200,
+      "score": 1920,
+      "chain": 96,
+      "chainMs": 200,
+      "mult": 1,
+      "best": 1920,
+      "drifts": 1,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 3300,
+      "slipMrad": 400,
+      "speedCms": 1200,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 3300,
+      "lastDriftMs": 3300,
+      "score": 1920,
+      "chain": 144,
+      "chainMs": 300,
+      "mult": 1,
+      "best": 1920,
+      "drifts": 1,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 3400,
+      "slipMrad": 400,
+      "speedCms": 1200,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 3400,
+      "lastDriftMs": 3400,
+      "score": 1920,
+      "chain": 192,
+      "chainMs": 400,
+      "mult": 1,
+      "best": 1920,
+      "drifts": 1,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 3500,
+      "slipMrad": 400,
+      "speedCms": 1200,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 3500,
+      "lastDriftMs": 3500,
+      "score": 1920,
+      "chain": 240,
+      "chainMs": 500,
+      "mult": 1,
+      "best": 1920,
+      "drifts": 1,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 3600,
+      "slipMrad": 400,
+      "speedCms": 1200,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 3600,
+      "lastDriftMs": 3600,
+      "score": 1920,
+      "chain": 288,
+      "chainMs": 600,
+      "mult": 1,
+      "best": 1920,
+      "drifts": 1,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 3700,
+      "slipMrad": 400,
+      "speedCms": 1200,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 3700,
+      "lastDriftMs": 3700,
+      "score": 1920,
+      "chain": 336,
+      "chainMs": 700,
+      "mult": 1,
+      "best": 1920,
+      "drifts": 1,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 3800,
+      "slipMrad": 400,
+      "speedCms": 1200,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 3800,
+      "lastDriftMs": 3800,
+      "score": 1920,
+      "chain": 384,
+      "chainMs": 800,
+      "mult": 1,
+      "best": 1920,
+      "drifts": 1,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 3900,
+      "slipMrad": 400,
+      "speedCms": 1200,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 3900,
+      "lastDriftMs": 3900,
+      "score": 1920,
+      "chain": 432,
+      "chainMs": 900,
+      "mult": 1,
+      "best": 1920,
+      "drifts": 1,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 4000,
+      "slipMrad": 400,
+      "speedCms": 1200,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 4000,
+      "lastDriftMs": 4000,
+      "score": 1920,
+      "chain": 480,
+      "chainMs": 1000,
+      "mult": 1,
+      "best": 1920,
+      "drifts": 1,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "hit",
+      "atMs": 4050
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 4050,
+      "lastDriftMs": 4000,
+      "score": 1920,
+      "chain": 0,
+      "chainMs": 0,
+      "mult": 1,
+      "best": 1920,
+      "drifts": 1,
+      "hits": 1
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 4300,
+      "slipMrad": 40,
+      "speedCms": 1200,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 4300,
+      "lastDriftMs": 4000,
+      "score": 1920,
+      "chain": 0,
+      "chainMs": 0,
+      "mult": 1,
+      "best": 1920,
+      "drifts": 1,
+      "hits": 1
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 4550,
+      "slipMrad": 40,
+      "speedCms": 1200,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 4550,
+      "lastDriftMs": 4000,
+      "score": 1920,
+      "chain": 0,
+      "chainMs": 0,
+      "mult": 1,
+      "best": 1920,
+      "drifts": 1,
+      "hits": 1
+     }
+    },
+    {
+     "action": {
+      "by": "timeout"
+     },
+     "state": {
+      "phase": "over",
+      "clockMs": 4550,
+      "lastDriftMs": 4000,
+      "score": 1920,
+      "chain": 0,
+      "chainMs": 0,
+      "mult": 1,
+      "best": 1920,
+      "drifts": 1,
+      "hits": 1
+     }
+    }
+   ],
+   "result": {
+    "winner": "draw",
+    "stars": 0,
+    "score": 1920,
+    "best": 1920,
+    "drifts": 1,
+    "hits": 1
+   }
+  },
+  {
+   "name": "chain banked only once more than graceMs passed since the last drift",
+   "config": {
+    "level": 3,
+    "minSlipMrad": 250,
+    "maxSlipMrad": 800,
+    "minSpeedCms": 800,
+    "maxSpeedCms": 2500,
+    "ptsDiv": 1000,
+    "maxDtMs": 250,
+    "graceMs": 600,
+    "multStepMs": 2000,
+    "maxMult": 5,
+    "starScores": [
+     40000,
+     20000,
+     8000
+    ],
+    "levelPct": [
+     60,
+     80,
+     100,
+     120,
+     140
+    ]
+   },
+   "seed": 1,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 100,
+      "slipMrad": 400,
+      "speedCms": 1000,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 100,
+      "lastDriftMs": 100,
+      "score": 0,
+      "chain": 40,
+      "chainMs": 100,
+      "mult": 1,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 200,
+      "slipMrad": 400,
+      "speedCms": 1000,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 200,
+      "lastDriftMs": 200,
+      "score": 0,
+      "chain": 80,
+      "chainMs": 200,
+      "mult": 1,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 300,
+      "slipMrad": 400,
+      "speedCms": 1000,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 300,
+      "lastDriftMs": 300,
+      "score": 0,
+      "chain": 120,
+      "chainMs": 300,
+      "mult": 1,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 400,
+      "slipMrad": 400,
+      "speedCms": 1000,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 400,
+      "lastDriftMs": 400,
+      "score": 0,
+      "chain": 160,
+      "chainMs": 400,
+      "mult": 1,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 1000,
+      "slipMrad": 0,
+      "speedCms": 0,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 1000,
+      "lastDriftMs": 400,
+      "score": 0,
+      "chain": 160,
+      "chainMs": 400,
+      "mult": 1,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 1001,
+      "slipMrad": 0,
+      "speedCms": 0,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 1001,
+      "lastDriftMs": 400,
+      "score": 160,
+      "chain": 0,
+      "chainMs": 0,
+      "mult": 1,
+      "best": 160,
+      "drifts": 1,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "timeout"
+     },
+     "state": {
+      "phase": "over",
+      "clockMs": 1001,
+      "lastDriftMs": 400,
+      "score": 160,
+      "chain": 0,
+      "chainMs": 0,
+      "mult": 1,
+      "best": 160,
+      "drifts": 1,
+      "hits": 0
+     }
+    }
+   ],
+   "result": {
+    "winner": "draw",
+    "stars": 0,
+    "score": 160,
+    "best": 160,
+    "drifts": 1,
+    "hits": 0
+   }
+  },
+  {
+   "name": "chain lost to a hit, then a hit with an empty chain",
+   "config": {
+    "level": 3,
+    "minSlipMrad": 250,
+    "maxSlipMrad": 800,
+    "minSpeedCms": 800,
+    "maxSpeedCms": 2500,
+    "ptsDiv": 1000,
+    "maxDtMs": 250,
+    "graceMs": 600,
+    "multStepMs": 2000,
+    "maxMult": 5,
+    "starScores": [
+     40000,
+     20000,
+     8000
+    ],
+    "levelPct": [
+     60,
+     80,
+     100,
+     120,
+     140
+    ]
+   },
+   "seed": 1,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 100,
+      "slipMrad": 600,
+      "speedCms": 2000,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 100,
+      "lastDriftMs": 100,
+      "score": 0,
+      "chain": 120,
+      "chainMs": 100,
+      "mult": 1,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 200,
+      "slipMrad": 600,
+      "speedCms": 2000,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 200,
+      "lastDriftMs": 200,
+      "score": 0,
+      "chain": 240,
+      "chainMs": 200,
+      "mult": 1,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 300,
+      "slipMrad": 600,
+      "speedCms": 2000,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 300,
+      "lastDriftMs": 300,
+      "score": 0,
+      "chain": 360,
+      "chainMs": 300,
+      "mult": 1,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 400,
+      "slipMrad": 600,
+      "speedCms": 2000,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 400,
+      "lastDriftMs": 400,
+      "score": 0,
+      "chain": 480,
+      "chainMs": 400,
+      "mult": 1,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 500,
+      "slipMrad": 600,
+      "speedCms": 2000,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 500,
+      "lastDriftMs": 500,
+      "score": 0,
+      "chain": 600,
+      "chainMs": 500,
+      "mult": 1,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 600,
+      "slipMrad": 600,
+      "speedCms": 2000,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 600,
+      "lastDriftMs": 600,
+      "score": 0,
+      "chain": 720,
+      "chainMs": 600,
+      "mult": 1,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 700,
+      "slipMrad": 600,
+      "speedCms": 2000,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 700,
+      "lastDriftMs": 700,
+      "score": 0,
+      "chain": 840,
+      "chainMs": 700,
+      "mult": 1,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 800,
+      "slipMrad": 600,
+      "speedCms": 2000,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 800,
+      "lastDriftMs": 800,
+      "score": 0,
+      "chain": 960,
+      "chainMs": 800,
+      "mult": 1,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 900,
+      "slipMrad": 600,
+      "speedCms": 2000,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 900,
+      "lastDriftMs": 900,
+      "score": 0,
+      "chain": 1080,
+      "chainMs": 900,
+      "mult": 1,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 1000,
+      "slipMrad": 600,
+      "speedCms": 2000,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 1000,
+      "lastDriftMs": 1000,
+      "score": 0,
+      "chain": 1200,
+      "chainMs": 1000,
+      "mult": 1,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "hit",
+      "atMs": 1020
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 1020,
+      "lastDriftMs": 1000,
+      "score": 0,
+      "chain": 0,
+      "chainMs": 0,
+      "mult": 1,
+      "best": 0,
+      "drifts": 0,
+      "hits": 1
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 1270,
+      "slipMrad": 40,
+      "speedCms": 1200,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 1270,
+      "lastDriftMs": 1000,
+      "score": 0,
+      "chain": 0,
+      "chainMs": 0,
+      "mult": 1,
+      "best": 0,
+      "drifts": 0,
+      "hits": 1
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 1520,
+      "slipMrad": 40,
+      "speedCms": 1200,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 1520,
+      "lastDriftMs": 1000,
+      "score": 0,
+      "chain": 0,
+      "chainMs": 0,
+      "mult": 1,
+      "best": 0,
+      "drifts": 0,
+      "hits": 1
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 1770,
+      "slipMrad": 40,
+      "speedCms": 1200,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 1770,
+      "lastDriftMs": 1000,
+      "score": 0,
+      "chain": 0,
+      "chainMs": 0,
+      "mult": 1,
+      "best": 0,
+      "drifts": 0,
+      "hits": 1
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "hit",
+      "atMs": 1780
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 1780,
+      "lastDriftMs": 1000,
+      "score": 0,
+      "chain": 0,
+      "chainMs": 0,
+      "mult": 1,
+      "best": 0,
+      "drifts": 0,
+      "hits": 2
+     }
+    },
+    {
+     "action": {
+      "by": "timeout"
+     },
+     "state": {
+      "phase": "over",
+      "clockMs": 1780,
+      "lastDriftMs": 1000,
+      "score": 0,
+      "chain": 0,
+      "chainMs": 0,
+      "mult": 1,
+      "best": 0,
+      "drifts": 0,
+      "hits": 2
+     }
+    }
+   ],
+   "result": {
+    "winner": "draw",
+    "stars": 0,
+    "score": 0,
+    "best": 0,
+    "drifts": 0,
+    "hits": 2
+   }
+  },
+  {
+   "name": "leaving the zone mid-drift ends the drift, banked after grace",
+   "config": {
+    "level": 3,
+    "minSlipMrad": 250,
+    "maxSlipMrad": 800,
+    "minSpeedCms": 800,
+    "maxSpeedCms": 2500,
+    "ptsDiv": 1000,
+    "maxDtMs": 250,
+    "graceMs": 600,
+    "multStepMs": 2000,
+    "maxMult": 5,
+    "starScores": [
+     40000,
+     20000,
+     8000
+    ],
+    "levelPct": [
+     60,
+     80,
+     100,
+     120,
+     140
+    ]
+   },
+   "seed": 1,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 100,
+      "slipMrad": 600,
+      "speedCms": 2000,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 100,
+      "lastDriftMs": 100,
+      "score": 0,
+      "chain": 120,
+      "chainMs": 100,
+      "mult": 1,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 200,
+      "slipMrad": 600,
+      "speedCms": 2000,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 200,
+      "lastDriftMs": 200,
+      "score": 0,
+      "chain": 240,
+      "chainMs": 200,
+      "mult": 1,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 300,
+      "slipMrad": 600,
+      "speedCms": 2000,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 300,
+      "lastDriftMs": 300,
+      "score": 0,
+      "chain": 360,
+      "chainMs": 300,
+      "mult": 1,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 400,
+      "slipMrad": 600,
+      "speedCms": 2000,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 400,
+      "lastDriftMs": 400,
+      "score": 0,
+      "chain": 480,
+      "chainMs": 400,
+      "mult": 1,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 500,
+      "slipMrad": 600,
+      "speedCms": 2000,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 500,
+      "lastDriftMs": 500,
+      "score": 0,
+      "chain": 600,
+      "chainMs": 500,
+      "mult": 1,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 600,
+      "slipMrad": 600,
+      "speedCms": 2000,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 600,
+      "lastDriftMs": 600,
+      "score": 0,
+      "chain": 720,
+      "chainMs": 600,
+      "mult": 1,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 700,
+      "slipMrad": 600,
+      "speedCms": 2000,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 700,
+      "lastDriftMs": 700,
+      "score": 0,
+      "chain": 840,
+      "chainMs": 700,
+      "mult": 1,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 800,
+      "slipMrad": 600,
+      "speedCms": 2000,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 800,
+      "lastDriftMs": 800,
+      "score": 0,
+      "chain": 960,
+      "chainMs": 800,
+      "mult": 1,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 900,
+      "slipMrad": 600,
+      "speedCms": 2000,
+      "inZone": false
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 900,
+      "lastDriftMs": 800,
+      "score": 0,
+      "chain": 960,
+      "chainMs": 800,
+      "mult": 1,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 1000,
+      "slipMrad": 650,
+      "speedCms": 2100,
+      "inZone": false
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 1000,
+      "lastDriftMs": 800,
+      "score": 0,
+      "chain": 960,
+      "chainMs": 800,
+      "mult": 1,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 1300,
+      "slipMrad": 650,
+      "speedCms": 2100,
+      "inZone": false
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 1300,
+      "lastDriftMs": 800,
+      "score": 0,
+      "chain": 960,
+      "chainMs": 800,
+      "mult": 1,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 1600,
+      "slipMrad": 650,
+      "speedCms": 2100,
+      "inZone": false
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 1600,
+      "lastDriftMs": 800,
+      "score": 960,
+      "chain": 0,
+      "chainMs": 0,
+      "mult": 1,
+      "best": 960,
+      "drifts": 1,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "timeout"
+     },
+     "state": {
+      "phase": "over",
+      "clockMs": 1600,
+      "lastDriftMs": 800,
+      "score": 960,
+      "chain": 0,
+      "chainMs": 0,
+      "mult": 1,
+      "best": 960,
+      "drifts": 1,
+      "hits": 0
+     }
+    }
+   ],
+   "result": {
+    "winner": "draw",
+    "stars": 0,
+    "score": 960,
+    "best": 960,
+    "drifts": 1,
+    "hits": 0
+   }
+  },
+  {
+   "name": "multiplier climbs to max_mult and stays capped",
+   "config": {
+    "level": 3,
+    "minSlipMrad": 250,
+    "maxSlipMrad": 800,
+    "minSpeedCms": 800,
+    "maxSpeedCms": 2500,
+    "ptsDiv": 1000,
+    "maxDtMs": 250,
+    "graceMs": 600,
+    "multStepMs": 2000,
+    "maxMult": 5,
+    "starScores": [
+     40000,
+     20000,
+     8000
+    ],
+    "levelPct": [
+     60,
+     80,
+     100,
+     120,
+     140
+    ]
+   },
+   "seed": 1,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 250,
+      "slipMrad": 300,
+      "speedCms": 900,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 250,
+      "lastDriftMs": 250,
+      "score": 0,
+      "chain": 67,
+      "chainMs": 250,
+      "mult": 1,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 500,
+      "slipMrad": 300,
+      "speedCms": 900,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 500,
+      "lastDriftMs": 500,
+      "score": 0,
+      "chain": 134,
+      "chainMs": 500,
+      "mult": 1,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 750,
+      "slipMrad": 300,
+      "speedCms": 900,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 750,
+      "lastDriftMs": 750,
+      "score": 0,
+      "chain": 201,
+      "chainMs": 750,
+      "mult": 1,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 1000,
+      "slipMrad": 300,
+      "speedCms": 900,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 1000,
+      "lastDriftMs": 1000,
+      "score": 0,
+      "chain": 268,
+      "chainMs": 1000,
+      "mult": 1,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 1250,
+      "slipMrad": 300,
+      "speedCms": 900,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 1250,
+      "lastDriftMs": 1250,
+      "score": 0,
+      "chain": 335,
+      "chainMs": 1250,
+      "mult": 1,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 1500,
+      "slipMrad": 300,
+      "speedCms": 900,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 1500,
+      "lastDriftMs": 1500,
+      "score": 0,
+      "chain": 402,
+      "chainMs": 1500,
+      "mult": 1,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 1750,
+      "slipMrad": 300,
+      "speedCms": 900,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 1750,
+      "lastDriftMs": 1750,
+      "score": 0,
+      "chain": 469,
+      "chainMs": 1750,
+      "mult": 1,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 2000,
+      "slipMrad": 300,
+      "speedCms": 900,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 2000,
+      "lastDriftMs": 2000,
+      "score": 0,
+      "chain": 536,
+      "chainMs": 2000,
+      "mult": 2,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 2250,
+      "slipMrad": 300,
+      "speedCms": 900,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 2250,
+      "lastDriftMs": 2250,
+      "score": 0,
+      "chain": 603,
+      "chainMs": 2250,
+      "mult": 2,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 2500,
+      "slipMrad": 300,
+      "speedCms": 900,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 2500,
+      "lastDriftMs": 2500,
+      "score": 0,
+      "chain": 670,
+      "chainMs": 2500,
+      "mult": 2,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 2750,
+      "slipMrad": 300,
+      "speedCms": 900,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 2750,
+      "lastDriftMs": 2750,
+      "score": 0,
+      "chain": 737,
+      "chainMs": 2750,
+      "mult": 2,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 3000,
+      "slipMrad": 300,
+      "speedCms": 900,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 3000,
+      "lastDriftMs": 3000,
+      "score": 0,
+      "chain": 804,
+      "chainMs": 3000,
+      "mult": 2,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 3250,
+      "slipMrad": 300,
+      "speedCms": 900,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 3250,
+      "lastDriftMs": 3250,
+      "score": 0,
+      "chain": 871,
+      "chainMs": 3250,
+      "mult": 2,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 3500,
+      "slipMrad": 300,
+      "speedCms": 900,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 3500,
+      "lastDriftMs": 3500,
+      "score": 0,
+      "chain": 938,
+      "chainMs": 3500,
+      "mult": 2,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 3750,
+      "slipMrad": 300,
+      "speedCms": 900,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 3750,
+      "lastDriftMs": 3750,
+      "score": 0,
+      "chain": 1005,
+      "chainMs": 3750,
+      "mult": 2,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 4000,
+      "slipMrad": 300,
+      "speedCms": 900,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 4000,
+      "lastDriftMs": 4000,
+      "score": 0,
+      "chain": 1072,
+      "chainMs": 4000,
+      "mult": 3,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 4250,
+      "slipMrad": 300,
+      "speedCms": 900,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 4250,
+      "lastDriftMs": 4250,
+      "score": 0,
+      "chain": 1139,
+      "chainMs": 4250,
+      "mult": 3,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 4500,
+      "slipMrad": 300,
+      "speedCms": 900,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 4500,
+      "lastDriftMs": 4500,
+      "score": 0,
+      "chain": 1206,
+      "chainMs": 4500,
+      "mult": 3,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 4750,
+      "slipMrad": 300,
+      "speedCms": 900,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 4750,
+      "lastDriftMs": 4750,
+      "score": 0,
+      "chain": 1273,
+      "chainMs": 4750,
+      "mult": 3,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 5000,
+      "slipMrad": 300,
+      "speedCms": 900,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 5000,
+      "lastDriftMs": 5000,
+      "score": 0,
+      "chain": 1340,
+      "chainMs": 5000,
+      "mult": 3,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 5250,
+      "slipMrad": 300,
+      "speedCms": 900,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 5250,
+      "lastDriftMs": 5250,
+      "score": 0,
+      "chain": 1407,
+      "chainMs": 5250,
+      "mult": 3,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 5500,
+      "slipMrad": 300,
+      "speedCms": 900,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 5500,
+      "lastDriftMs": 5500,
+      "score": 0,
+      "chain": 1474,
+      "chainMs": 5500,
+      "mult": 3,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 5750,
+      "slipMrad": 300,
+      "speedCms": 900,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 5750,
+      "lastDriftMs": 5750,
+      "score": 0,
+      "chain": 1541,
+      "chainMs": 5750,
+      "mult": 3,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 6000,
+      "slipMrad": 300,
+      "speedCms": 900,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 6000,
+      "lastDriftMs": 6000,
+      "score": 0,
+      "chain": 1608,
+      "chainMs": 6000,
+      "mult": 4,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 6250,
+      "slipMrad": 300,
+      "speedCms": 900,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 6250,
+      "lastDriftMs": 6250,
+      "score": 0,
+      "chain": 1675,
+      "chainMs": 6250,
+      "mult": 4,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 6500,
+      "slipMrad": 300,
+      "speedCms": 900,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 6500,
+      "lastDriftMs": 6500,
+      "score": 0,
+      "chain": 1742,
+      "chainMs": 6500,
+      "mult": 4,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 6750,
+      "slipMrad": 300,
+      "speedCms": 900,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 6750,
+      "lastDriftMs": 6750,
+      "score": 0,
+      "chain": 1809,
+      "chainMs": 6750,
+      "mult": 4,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 7000,
+      "slipMrad": 300,
+      "speedCms": 900,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 7000,
+      "lastDriftMs": 7000,
+      "score": 0,
+      "chain": 1876,
+      "chainMs": 7000,
+      "mult": 4,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 7250,
+      "slipMrad": 300,
+      "speedCms": 900,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 7250,
+      "lastDriftMs": 7250,
+      "score": 0,
+      "chain": 1943,
+      "chainMs": 7250,
+      "mult": 4,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 7500,
+      "slipMrad": 300,
+      "speedCms": 900,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 7500,
+      "lastDriftMs": 7500,
+      "score": 0,
+      "chain": 2010,
+      "chainMs": 7500,
+      "mult": 4,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 7750,
+      "slipMrad": 300,
+      "speedCms": 900,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 7750,
+      "lastDriftMs": 7750,
+      "score": 0,
+      "chain": 2077,
+      "chainMs": 7750,
+      "mult": 4,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 8000,
+      "slipMrad": 300,
+      "speedCms": 900,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 8000,
+      "lastDriftMs": 8000,
+      "score": 0,
+      "chain": 2144,
+      "chainMs": 8000,
+      "mult": 5,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 8250,
+      "slipMrad": 300,
+      "speedCms": 900,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 8250,
+      "lastDriftMs": 8250,
+      "score": 0,
+      "chain": 2211,
+      "chainMs": 8250,
+      "mult": 5,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 8500,
+      "slipMrad": 300,
+      "speedCms": 900,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 8500,
+      "lastDriftMs": 8500,
+      "score": 0,
+      "chain": 2278,
+      "chainMs": 8500,
+      "mult": 5,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 8750,
+      "slipMrad": 300,
+      "speedCms": 900,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 8750,
+      "lastDriftMs": 8750,
+      "score": 0,
+      "chain": 2345,
+      "chainMs": 8750,
+      "mult": 5,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 9000,
+      "slipMrad": 300,
+      "speedCms": 900,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 9000,
+      "lastDriftMs": 9000,
+      "score": 0,
+      "chain": 2412,
+      "chainMs": 9000,
+      "mult": 5,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 9250,
+      "slipMrad": 300,
+      "speedCms": 900,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 9250,
+      "lastDriftMs": 9250,
+      "score": 0,
+      "chain": 2479,
+      "chainMs": 9250,
+      "mult": 5,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 9500,
+      "slipMrad": 300,
+      "speedCms": 900,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 9500,
+      "lastDriftMs": 9500,
+      "score": 0,
+      "chain": 2546,
+      "chainMs": 9500,
+      "mult": 5,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 9750,
+      "slipMrad": 300,
+      "speedCms": 900,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 9750,
+      "lastDriftMs": 9750,
+      "score": 0,
+      "chain": 2613,
+      "chainMs": 9750,
+      "mult": 5,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 10000,
+      "slipMrad": 300,
+      "speedCms": 900,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 10000,
+      "lastDriftMs": 10000,
+      "score": 0,
+      "chain": 2680,
+      "chainMs": 10000,
+      "mult": 5,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 10250,
+      "slipMrad": 300,
+      "speedCms": 900,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 10250,
+      "lastDriftMs": 10250,
+      "score": 0,
+      "chain": 2747,
+      "chainMs": 10250,
+      "mult": 5,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 10500,
+      "slipMrad": 300,
+      "speedCms": 900,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 10500,
+      "lastDriftMs": 10500,
+      "score": 0,
+      "chain": 2814,
+      "chainMs": 10500,
+      "mult": 5,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 10750,
+      "slipMrad": 300,
+      "speedCms": 900,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 10750,
+      "lastDriftMs": 10750,
+      "score": 0,
+      "chain": 2881,
+      "chainMs": 10750,
+      "mult": 5,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 11000,
+      "slipMrad": 300,
+      "speedCms": 900,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 11000,
+      "lastDriftMs": 11000,
+      "score": 0,
+      "chain": 2948,
+      "chainMs": 11000,
+      "mult": 5,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 11250,
+      "slipMrad": 300,
+      "speedCms": 900,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 11250,
+      "lastDriftMs": 11250,
+      "score": 0,
+      "chain": 3015,
+      "chainMs": 11250,
+      "mult": 5,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 11500,
+      "slipMrad": 300,
+      "speedCms": 900,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 11500,
+      "lastDriftMs": 11500,
+      "score": 0,
+      "chain": 3082,
+      "chainMs": 11500,
+      "mult": 5,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 11750,
+      "slipMrad": 300,
+      "speedCms": 900,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 11750,
+      "lastDriftMs": 11750,
+      "score": 0,
+      "chain": 3149,
+      "chainMs": 11750,
+      "mult": 5,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 12000,
+      "slipMrad": 300,
+      "speedCms": 900,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 12000,
+      "lastDriftMs": 12000,
+      "score": 0,
+      "chain": 3216,
+      "chainMs": 12000,
+      "mult": 5,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 12250,
+      "slipMrad": 300,
+      "speedCms": 900,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 12250,
+      "lastDriftMs": 12250,
+      "score": 0,
+      "chain": 3283,
+      "chainMs": 12250,
+      "mult": 5,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 12500,
+      "slipMrad": 300,
+      "speedCms": 900,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 12500,
+      "lastDriftMs": 12500,
+      "score": 0,
+      "chain": 3350,
+      "chainMs": 12500,
+      "mult": 5,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 12750,
+      "slipMrad": 300,
+      "speedCms": 900,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 12750,
+      "lastDriftMs": 12750,
+      "score": 0,
+      "chain": 3417,
+      "chainMs": 12750,
+      "mult": 5,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 13000,
+      "slipMrad": 300,
+      "speedCms": 900,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 13000,
+      "lastDriftMs": 13000,
+      "score": 0,
+      "chain": 3484,
+      "chainMs": 13000,
+      "mult": 5,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 13250,
+      "slipMrad": 300,
+      "speedCms": 900,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 13250,
+      "lastDriftMs": 13250,
+      "score": 0,
+      "chain": 3551,
+      "chainMs": 13250,
+      "mult": 5,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 13500,
+      "slipMrad": 300,
+      "speedCms": 900,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 13500,
+      "lastDriftMs": 13500,
+      "score": 0,
+      "chain": 3618,
+      "chainMs": 13500,
+      "mult": 5,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 13750,
+      "slipMrad": 300,
+      "speedCms": 900,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 13750,
+      "lastDriftMs": 13750,
+      "score": 0,
+      "chain": 3685,
+      "chainMs": 13750,
+      "mult": 5,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 14000,
+      "slipMrad": 300,
+      "speedCms": 900,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 14000,
+      "lastDriftMs": 14000,
+      "score": 0,
+      "chain": 3752,
+      "chainMs": 14000,
+      "mult": 5,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 14250,
+      "slipMrad": 300,
+      "speedCms": 900,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 14250,
+      "lastDriftMs": 14250,
+      "score": 0,
+      "chain": 3819,
+      "chainMs": 14250,
+      "mult": 5,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 14500,
+      "slipMrad": 300,
+      "speedCms": 900,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 14500,
+      "lastDriftMs": 14500,
+      "score": 0,
+      "chain": 3886,
+      "chainMs": 14500,
+      "mult": 5,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 14750,
+      "slipMrad": 300,
+      "speedCms": 900,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 14750,
+      "lastDriftMs": 14750,
+      "score": 0,
+      "chain": 3953,
+      "chainMs": 14750,
+      "mult": 5,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 15000,
+      "slipMrad": 300,
+      "speedCms": 900,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 15000,
+      "lastDriftMs": 15000,
+      "score": 0,
+      "chain": 4020,
+      "chainMs": 15000,
+      "mult": 5,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 15250,
+      "slipMrad": 40,
+      "speedCms": 1200,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 15250,
+      "lastDriftMs": 15000,
+      "score": 0,
+      "chain": 4020,
+      "chainMs": 15000,
+      "mult": 5,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 15500,
+      "slipMrad": 40,
+      "speedCms": 1200,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 15500,
+      "lastDriftMs": 15000,
+      "score": 0,
+      "chain": 4020,
+      "chainMs": 15000,
+      "mult": 5,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 15750,
+      "slipMrad": 40,
+      "speedCms": 1200,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 15750,
+      "lastDriftMs": 15000,
+      "score": 20100,
+      "chain": 0,
+      "chainMs": 0,
+      "mult": 1,
+      "best": 20100,
+      "drifts": 1,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 16000,
+      "slipMrad": 40,
+      "speedCms": 1200,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 16000,
+      "lastDriftMs": 15000,
+      "score": 20100,
+      "chain": 0,
+      "chainMs": 0,
+      "mult": 1,
+      "best": 20100,
+      "drifts": 1,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "timeout"
+     },
+     "state": {
+      "phase": "over",
+      "clockMs": 16000,
+      "lastDriftMs": 15000,
+      "score": 20100,
+      "chain": 0,
+      "chainMs": 0,
+      "mult": 1,
+      "best": 20100,
+      "drifts": 1,
+      "hits": 0
+     }
+    }
+   ],
+   "result": {
+    "winner": "player",
+    "stars": 2,
+    "score": 20100,
+    "best": 20100,
+    "drifts": 1,
+    "hits": 0
+   }
+  },
+  {
+   "name": "gap longer than maxDtMs is clipped (slow phone)",
+   "config": {
+    "level": 3,
+    "minSlipMrad": 250,
+    "maxSlipMrad": 800,
+    "minSpeedCms": 800,
+    "maxSpeedCms": 2500,
+    "ptsDiv": 1000,
+    "maxDtMs": 250,
+    "graceMs": 600,
+    "multStepMs": 2000,
+    "maxMult": 5,
+    "starScores": [
+     40000,
+     20000,
+     8000
+    ],
+    "levelPct": [
+     60,
+     80,
+     100,
+     120,
+     140
+    ]
+   },
+   "seed": 1,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 100,
+      "slipMrad": 500,
+      "speedCms": 1500,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 100,
+      "lastDriftMs": 100,
+      "score": 0,
+      "chain": 75,
+      "chainMs": 100,
+      "mult": 1,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 1600,
+      "slipMrad": 500,
+      "speedCms": 1500,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 1600,
+      "lastDriftMs": 1600,
+      "score": 0,
+      "chain": 262,
+      "chainMs": 350,
+      "mult": 1,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 1700,
+      "slipMrad": 500,
+      "speedCms": 1500,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 1700,
+      "lastDriftMs": 1700,
+      "score": 0,
+      "chain": 337,
+      "chainMs": 450,
+      "mult": 1,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 5000,
+      "slipMrad": 500,
+      "speedCms": 1500,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 5000,
+      "lastDriftMs": 5000,
+      "score": 0,
+      "chain": 524,
+      "chainMs": 700,
+      "mult": 1,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "timeout"
+     },
+     "state": {
+      "phase": "over",
+      "clockMs": 5000,
+      "lastDriftMs": 5000,
+      "score": 524,
+      "chain": 0,
+      "chainMs": 0,
+      "mult": 1,
+      "best": 524,
+      "drifts": 1,
+      "hits": 0
+     }
+    }
+   ],
+   "result": {
+    "winner": "draw",
+    "stars": 0,
+    "score": 524,
+    "best": 524,
+    "drifts": 1,
+    "hits": 0
+   }
+  },
+  {
+   "name": "open chain banked at timeout",
+   "config": {
+    "level": 3,
+    "minSlipMrad": 250,
+    "maxSlipMrad": 800,
+    "minSpeedCms": 800,
+    "maxSpeedCms": 2500,
+    "ptsDiv": 1000,
+    "maxDtMs": 250,
+    "graceMs": 600,
+    "multStepMs": 2000,
+    "maxMult": 5,
+    "starScores": [
+     40000,
+     20000,
+     8000
+    ],
+    "levelPct": [
+     60,
+     80,
+     100,
+     120,
+     140
+    ]
+   },
+   "seed": 1,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 200,
+      "slipMrad": 550,
+      "speedCms": 1800,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 200,
+      "lastDriftMs": 200,
+      "score": 0,
+      "chain": 198,
+      "chainMs": 200,
+      "mult": 1,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 400,
+      "slipMrad": 550,
+      "speedCms": 1800,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 400,
+      "lastDriftMs": 400,
+      "score": 0,
+      "chain": 396,
+      "chainMs": 400,
+      "mult": 1,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 600,
+      "slipMrad": 550,
+      "speedCms": 1800,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 600,
+      "lastDriftMs": 600,
+      "score": 0,
+      "chain": 594,
+      "chainMs": 600,
+      "mult": 1,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 800,
+      "slipMrad": 550,
+      "speedCms": 1800,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 800,
+      "lastDriftMs": 800,
+      "score": 0,
+      "chain": 792,
+      "chainMs": 800,
+      "mult": 1,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 1000,
+      "slipMrad": 550,
+      "speedCms": 1800,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 1000,
+      "lastDriftMs": 1000,
+      "score": 0,
+      "chain": 990,
+      "chainMs": 1000,
+      "mult": 1,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 1200,
+      "slipMrad": 550,
+      "speedCms": 1800,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 1200,
+      "lastDriftMs": 1200,
+      "score": 0,
+      "chain": 1188,
+      "chainMs": 1200,
+      "mult": 1,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 1400,
+      "slipMrad": 550,
+      "speedCms": 1800,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 1400,
+      "lastDriftMs": 1400,
+      "score": 0,
+      "chain": 1386,
+      "chainMs": 1400,
+      "mult": 1,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 1600,
+      "slipMrad": 550,
+      "speedCms": 1800,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 1600,
+      "lastDriftMs": 1600,
+      "score": 0,
+      "chain": 1584,
+      "chainMs": 1600,
+      "mult": 1,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 1800,
+      "slipMrad": 550,
+      "speedCms": 1800,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 1800,
+      "lastDriftMs": 1800,
+      "score": 0,
+      "chain": 1782,
+      "chainMs": 1800,
+      "mult": 1,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 2000,
+      "slipMrad": 550,
+      "speedCms": 1800,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 2000,
+      "lastDriftMs": 2000,
+      "score": 0,
+      "chain": 1980,
+      "chainMs": 2000,
+      "mult": 2,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 2200,
+      "slipMrad": 550,
+      "speedCms": 1800,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 2200,
+      "lastDriftMs": 2200,
+      "score": 0,
+      "chain": 2178,
+      "chainMs": 2200,
+      "mult": 2,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 2400,
+      "slipMrad": 550,
+      "speedCms": 1800,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 2400,
+      "lastDriftMs": 2400,
+      "score": 0,
+      "chain": 2376,
+      "chainMs": 2400,
+      "mult": 2,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "timeout"
+     },
+     "state": {
+      "phase": "over",
+      "clockMs": 2400,
+      "lastDriftMs": 2400,
+      "score": 4752,
+      "chain": 0,
+      "chainMs": 0,
+      "mult": 1,
+      "best": 4752,
+      "drifts": 1,
+      "hits": 0
+     }
+    }
+   ],
+   "result": {
+    "winner": "draw",
+    "stars": 0,
+    "score": 4752,
+    "best": 4752,
+    "drifts": 1,
+    "hits": 0
+   }
+  },
+  {
+   "name": "slip and speed exactly at the minimum count, one below does not, above the caps are capped",
+   "config": {
+    "level": 3,
+    "minSlipMrad": 250,
+    "maxSlipMrad": 800,
+    "minSpeedCms": 800,
+    "maxSpeedCms": 2500,
+    "ptsDiv": 1000,
+    "maxDtMs": 250,
+    "graceMs": 600,
+    "multStepMs": 2000,
+    "maxMult": 5,
+    "starScores": [
+     40000,
+     20000,
+     8000
+    ],
+    "levelPct": [
+     60,
+     80,
+     100,
+     120,
+     140
+    ]
+   },
+   "seed": 1,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 100,
+      "slipMrad": 250,
+      "speedCms": 800,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 100,
+      "lastDriftMs": 100,
+      "score": 0,
+      "chain": 20,
+      "chainMs": 100,
+      "mult": 1,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 200,
+      "slipMrad": 249,
+      "speedCms": 3000,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 200,
+      "lastDriftMs": 100,
+      "score": 0,
+      "chain": 20,
+      "chainMs": 100,
+      "mult": 1,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 300,
+      "slipMrad": 900,
+      "speedCms": 799,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 300,
+      "lastDriftMs": 100,
+      "score": 0,
+      "chain": 20,
+      "chainMs": 100,
+      "mult": 1,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 400,
+      "slipMrad": 800,
+      "speedCms": 2500,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 400,
+      "lastDriftMs": 400,
+      "score": 0,
+      "chain": 220,
+      "chainMs": 200,
+      "mult": 1,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 500,
+      "slipMrad": 2000,
+      "speedCms": 9000,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 500,
+      "lastDriftMs": 500,
+      "score": 0,
+      "chain": 420,
+      "chainMs": 300,
+      "mult": 1,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "sample",
+      "atMs": 600,
+      "slipMrad": 3141,
+      "speedCms": 4000,
+      "inZone": true
+     },
+     "state": {
+      "phase": "run",
+      "clockMs": 600,
+      "lastDriftMs": 600,
+      "score": 0,
+      "chain": 620,
+      "chainMs": 400,
+      "mult": 1,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    },
+    {
+     "action": {
+      "by": "timeout"
+     },
+     "state": {
+      "phase": "over",
+      "clockMs": 600,
+      "lastDriftMs": 600,
+      "score": 620,
+      "chain": 0,
+      "chainMs": 0,
+      "mult": 1,
+      "best": 620,
+      "drifts": 1,
+      "hits": 0
+     }
+    }
+   ],
+   "result": {
+    "winner": "draw",
+    "stars": 0,
+    "score": 620,
+    "best": 620,
+    "drifts": 1,
+    "hits": 0
+   }
+  },
+  {
+   "name": "timeout at once: nothing scored",
+   "config": {
+    "level": 3,
+    "minSlipMrad": 250,
+    "maxSlipMrad": 800,
+    "minSpeedCms": 800,
+    "maxSpeedCms": 2500,
+    "ptsDiv": 1000,
+    "maxDtMs": 250,
+    "graceMs": 600,
+    "multStepMs": 2000,
+    "maxMult": 5,
+    "starScores": [
+     40000,
+     20000,
+     8000
+    ],
+    "levelPct": [
+     60,
+     80,
+     100,
+     120,
+     140
+    ]
+   },
+   "seed": 1,
+   "steps": [
+    {
+     "action": {
+      "by": "timeout"
+     },
+     "state": {
+      "phase": "over",
+      "clockMs": 0,
+      "lastDriftMs": 0,
+      "score": 0,
+      "chain": 0,
+      "chainMs": 0,
+      "mult": 1,
+      "best": 0,
+      "drifts": 0,
+      "hits": 0
+     }
+    }
+   ],
+   "result": {
+    "winner": "draw",
+    "stars": 0,
+    "score": 0,
+    "best": 0,
+    "drifts": 0,
+    "hits": 0
+   }
+  }
+ ]
+}

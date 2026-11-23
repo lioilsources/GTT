@@ -573,7 +573,7 @@
   vectors: vectors/drift.json
   lead: web
   flutter: todo
-  web: todo
+  web: done
 
 - id: F-066
   name: Sprint A→B (engine drive, world minigame, M2-S9 batch D)
@@ -582,7 +582,7 @@
   vectors: vectors/sprint.json
   lead: web
   flutter: todo
-  web: todo
+  web: done
 
 - id: F-067
   name: Stickball (NYC local, engine sport)
@@ -591,7 +591,7 @@
   vectors: vectors/stickball.json
   lead: web
   flutter: todo
-  web: todo
+  web: done
 
 - id: F-068
   name: Double Dutch (NYC local, first engine rhythm)
@@ -600,7 +600,7 @@
   vectors: vectors/doubledutch.json
   lead: web
   flutter: todo
-  web: todo
+  web: done
 
 - id: F-069
   name: "Nárazy do zdí a vyproštění (M5-S1, FL1)"
