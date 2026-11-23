@@ -425,7 +425,8 @@
     }
   },
   "feedLiked": "Liked",
-  "feedHint": "Up: next · right: go · left: less · double tap: like",
+  "feedLess": "Less",
+  "feedHint": "Up: next · down: back · right: go · left: less · double tap: like",
   "feedCount": "{n} / {total}",
   "@feedCount": {
     "placeholders": {

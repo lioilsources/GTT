@@ -156,6 +156,7 @@ export type MessageKey =
   | "feedDriveMin"
   | "feedReward"
   | "feedLiked"
+  | "feedLess"
   | "feedHint"
   | "feedCount"
   | "noRoute"
@@ -836,7 +837,8 @@ export const messages: Record<Locale, Record<MessageKey, string>> = {
     feedDriveMin: "{min} min jízdy",
     feedReward: "Odměna {cash}",
     feedLiked: "Líbí se",
-    feedHint: "Nahoru: další · vpravo: jedu · vlevo: míň · 2× klep: líbí",
+    feedLess: "Míň",
+    feedHint: "Nahoru: další · dolů: zpět · vpravo: jedu · vlevo: míň · 2× klep: líbí",
     feedCount: "{n} / {total}",
     noRoute: "Trasa nenalezena, jeď podle šipky",
     engine_cards: "Karty",
@@ -1514,7 +1516,8 @@ export const messages: Record<Locale, Record<MessageKey, string>> = {
     feedDriveMin: "{min} min drive",
     feedReward: "Reward {cash}",
     feedLiked: "Liked",
-    feedHint: "Up: next · right: go · left: less · double tap: like",
+    feedLess: "Less",
+    feedHint: "Up: next · down: back · right: go · left: less · double tap: like",
     feedCount: "{n} / {total}",
     noRoute: "No road route, follow the arrow",
     engine_cards: "Cards",

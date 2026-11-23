@@ -134,22 +134,22 @@
   web: done
   checks: {flutter: pass, web: pass}
 - id: F-022
-  name: Feed deck selection (6 cards)
+  name: Feed deck selection (6 cards; v2 prev = back to the previous card)
   level: P0
-  spec: specs/feed.md@1
+  spec: specs/feed.md@2
   vectors: vectors/feed.json
   lead: web
-  flutter: done
-  web: done
-  checks: {flutter: pass, web: pass}
+  flutter: todo
+  web: todo
+  checks: {flutter: pending, web: pending}
 - id: F-023
-  name: Phone, Map and GPS navigation UI
+  name: Phone, Map and GPS navigation UI (v5 TikTok feed swipe)
   level: P2
-  spec: specs/phone.md@4
+  spec: specs/phone.md@5
   lead: web
-  flutter: done
-  web: done
-  checks: {flutter: pass, web: pass}
+  flutter: todo
+  web: todo
+  checks: {flutter: pending, web: pending}
 - id: F-016
   name: Traffic and two-phase traffic lights
   level: P1

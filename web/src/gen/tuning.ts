@@ -3206,8 +3206,22 @@ export class TuningPhone {
   edgePx: number;
   /** swipe up this far to open */
   pullPx: number;
-  /** feed card swipe threshold */
+  /** feed card sideways commit (accept / less) */
   swipePx: number;
+  /** finger travel before the drag locks to vertical or horizontal (specs/phone.md v5) */
+  feedAxisLockPx: number;
+  /** vertical: release past this % of the card height switches the card */
+  feedCommitPct: number;
+  /** or a release faster than this (px/s) in the drag direction */
+  feedFlickPxS: number;
+  /** release velocity = travel over the last this many ms of the drag */
+  feedVelocityMs: number;
+  /** snap / spring-back / fly-off duration (ease-out cubic) */
+  feedSnapMs: number;
+  /** drag factor where there is no page (first card down, feedDone) */
+  feedRubber: number;
+  /** sideways tilt at a full-width drag */
+  feedTiltDeg: number;
   doubleTapMs: number;
   mapPaddingPx: number;
   mapSpotPx: number;
@@ -3220,6 +3234,13 @@ export class TuningPhone {
     this.edgePx = r.d('edge_px');
     this.pullPx = r.d('pull_px');
     this.swipePx = r.d('swipe_px');
+    this.feedAxisLockPx = r.d('feed_axis_lock_px');
+    this.feedCommitPct = r.i('feed_commit_pct');
+    this.feedFlickPxS = r.d('feed_flick_px_s');
+    this.feedVelocityMs = r.i('feed_velocity_ms');
+    this.feedSnapMs = r.i('feed_snap_ms');
+    this.feedRubber = r.d('feed_rubber');
+    this.feedTiltDeg = r.d('feed_tilt_deg');
     this.doubleTapMs = r.i('double_tap_ms');
     this.mapPaddingPx = r.d('map_padding_px');
     this.mapSpotPx = r.d('map_spot_px');
@@ -3234,6 +3255,13 @@ export class TuningPhone {
       edge_px: this.edgePx,
       pull_px: this.pullPx,
       swipe_px: this.swipePx,
+      feed_axis_lock_px: this.feedAxisLockPx,
+      feed_commit_pct: this.feedCommitPct,
+      feed_flick_px_s: this.feedFlickPxS,
+      feed_velocity_ms: this.feedVelocityMs,
+      feed_snap_ms: this.feedSnapMs,
+      feed_rubber: this.feedRubber,
+      feed_tilt_deg: this.feedTiltDeg,
       double_tap_ms: this.doubleTapMs,
       map_padding_px: this.mapPaddingPx,
       map_spot_px: this.mapSpotPx,
