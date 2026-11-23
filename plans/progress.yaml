@@ -194,9 +194,12 @@ items:
   # ---------- M5 – Terén, voda a zeleň, plynulá jízda (plans/M5_TEREN_PRIRODA.md, Prompts/02–04)
   - {id: M5-S1, milestone: M5, name: "FL1 nárazy do zdí a vyproštění v obou klientech (F-069)", size: L, status: "čeká na Ol1na", started: 2026-11-23T05:05,
      done: 2026-11-23T06:44, commit: d591dd6, evidence: "PR #194, #195 (web, scénáře scenarios/flow), #202 (Flutter drive_core); scénáře wall_30, wall_head_on, corner_3x v obou klientech v toleranci (web/test/flow.test.ts, packages/drive_core/test/flow_test.dart); dogfooding ≤ 1 zaseknutí za 10 min (M5-A4) je na Ol1novi"}
-  - {id: M5-S2, milestone: M5, name: "T0 výšky v datech New York: krok elevation, lod, validate, preview", size: L, status: todo}
-  - {id: M5-S3, milestone: M5, name: "N0 + FL0 voda, zeleň, stromy a štěrbiny v datech New York", size: L, status: todo}
-  - {id: M5-S4, milestone: M5, name: "T0/N0/FL0 Praha (DMR 5G, stromy)", size: M, status: todo}
+  - {id: M5-S2, milestone: M5, name: "T0 výšky v datech New York: krok elevation, lod, validate, preview", size: L, status: hotovo,
+     started: 2026-11-23T05:10, done: 2026-11-23T07:05, commit: 1227456, evidence: "run/bin/citypack build nyc (validate: 0 schodů, okraj silnice 0,08 %); go test ./... v tools/citypack (syntetické scény)"}
+  - {id: M5-S3, milestone: M5, name: "N0 + FL0 voda, zeleň, stromy a štěrbiny v datech New York", size: L, status: hotovo,
+     started: 2026-11-23T05:10, done: 2026-11-23T07:05, commit: 1227456, evidence: "run/bin/citypack build nyc (validate: 61 764 stromů mimo vozovku, budovy a vodu, 9 080 štěrbin, řeky pojmenované); preview/nyc_nature.png"}
+  - {id: M5-S4, milestone: M5, name: "T0/N0/FL0 Praha (DMR 5G, stromy)", size: M, status: čeká na Ol1na,
+     started: 2026-11-23T05:10, done: 2026-11-23T07:05, commit: 1227456, evidence: "run/bin/citypack build prague (validate projde, 0 schodů); výšky zatím AWS Terrain Tiles místo DMR 5G (chybí PDAL/GDAL), stromy z OSM"}
   - {id: M5-S5, milestone: M5, name: "T0/N0/FL0 Tokio", size: M, status: todo}
   - {id: M5-S6, milestone: M5, name: "T1 svahy a skoky a reliéf shora v obou klientech (F-070, F-071)", size: L, status: todo}
   - {id: M5-S7, milestone: M5, name: "N1 voda a zeleň shora a jízda v obou klientech (F-072)", size: L, status: todo}
