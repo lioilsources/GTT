@@ -1,0 +1,24 @@
+name: mg_mlyn
+description: Mlýn (nine men's morris) minigame, specs/minigames/mlyn.md. Pure rules in lib/src/rules.dart, UI in lib/src/game.dart.
+version: 0.1.0
+publish_to: none
+resolution: workspace
+
+environment:
+  sdk: ^3.12.2
+  flutter: ">=3.44.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  mg_api:
+    path: ../mg_api
+  rules_core:
+    path: ../rules_core
+  shared_gen:
+    path: ../shared_gen
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
