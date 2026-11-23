@@ -11,6 +11,13 @@ import { taxi } from './taxi/game';
 import { kulicky } from './kulicky/game';
 import { cara } from './cara/game';
 import { nohejbal } from './nohejbal/game';
+import { piskvorky } from './piskvorky/game';
+import { ctyri } from './ctyri/game';
+import { mlyn } from './mlyn/game';
+import { reversi } from './reversi/game';
+import { lode } from './lode/game';
+import { posuvne } from './posuvne/game';
+import { kviz } from './kviz/game';
 
 /** Minigames this client implements; the Gallery greys out the rest. */
 export const minigames: Partial<Record<MinigameId, (env: MinigameEnv) => Minigame>> = {
@@ -25,4 +32,11 @@ export const minigames: Partial<Record<MinigameId, (env: MinigameEnv) => Minigam
   kulicky,
   cara,
   nohejbal,
+  piskvorky,
+  ctyri,
+  mlyn,
+  reversi,
+  lode,
+  posuvne,
+  kviz,
 };

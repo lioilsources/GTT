@@ -835,3 +835,218 @@ body {
 #hop-toast[hidden] {
   display: none;
 }
+/* M2-S9 batch A board and puzzle minigames (piskvorky, ctyri, mlyn, reversi, lode, posuvne, kviz). */
+.board-game,
+.quiz {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-md);
+  gap: var(--space-sm);
+  min-height: 0;
+}
+.board-info,
+.board-note {
+  text-align: center;
+  color: var(--color-ui-text-muted);
+  min-height: 1.4em;
+}
+.board-note {
+  font-weight: 700;
+  color: var(--color-ui-notice);
+}
+.board-note.right {
+  color: var(--color-world-day-park);
+}
+.board-note.wrong {
+  color: var(--color-ui-control-brake);
+}
+.grid-board,
+.mill-board {
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+}
+.grid-cell,
+.mill-point {
+  cursor: pointer;
+}
+.grid-board .sq {
+  fill: var(--color-world-day-land);
+  stroke: var(--color-world-day-facades-6);
+  stroke-width: 0.25;
+}
+.grid-board .sq.sel {
+  fill: var(--color-ui-control-hand);
+}
+.grid-board .sq.win {
+  fill: var(--color-brand-accent);
+}
+.grid-board .mark {
+  fill: none;
+  stroke-width: 1.4;
+  stroke-linecap: round;
+}
+.grid-board .mark.player {
+  stroke: var(--color-world-day-bridge-edge);
+}
+.grid-board .mark.ai {
+  stroke: var(--color-world-night-asphalt);
+}
+.grid-board .mark.ai.last {
+  stroke: var(--color-ui-notice);
+}
+.grid-board .mark.ghost {
+  stroke: var(--color-ui-text-faint);
+}
+.grid-board .disc {
+  stroke-width: 0.6;
+}
+.grid-board .disc.player {
+  fill: var(--color-world-day-marking);
+  stroke: var(--color-world-day-bridge-edge);
+}
+.grid-board .disc.ai {
+  fill: var(--color-world-night-asphalt);
+  stroke: var(--color-world-night-marking);
+}
+.grid-board .disc.win,
+.grid-board .disc.last {
+  stroke: var(--color-brand-accent);
+  stroke-width: 1.2;
+}
+.grid-board .disc.drop {
+  animation: disc-drop 0.25s ease-in;
+}
+@keyframes disc-drop {
+  from {
+    transform: translateY(var(--drop));
+  }
+}
+.grid-board .hole {
+  fill: var(--color-ui-background);
+}
+.grid-board .c4-frame {
+  fill: var(--color-world-day-facades-4);
+}
+.grid-board .col-hit {
+  fill: transparent;
+  cursor: pointer;
+}
+.grid-board .sq.felt {
+  fill: var(--color-world-day-park);
+  stroke: var(--color-world-night-asphalt);
+}
+.grid-board .dot.target,
+.mill-board .dot.target {
+  fill: var(--color-brand-accent);
+}
+.mill-board .mill-line {
+  stroke: var(--color-world-day-facades-6);
+  stroke-width: 0.8;
+}
+.mill-board .hit {
+  fill: transparent;
+}
+.mill-board .dot {
+  fill: var(--color-world-day-facades-6);
+}
+.mill-board .stone {
+  stroke-width: 0.8;
+}
+.mill-board .stone.player {
+  fill: var(--color-world-day-marking);
+  stroke: var(--color-world-day-bridge-edge);
+}
+.mill-board .stone.ai {
+  fill: var(--color-world-night-asphalt);
+  stroke: var(--color-world-night-marking);
+}
+.mill-board .stone.last {
+  stroke: var(--color-ui-notice);
+}
+.mill-board .stone.movable {
+  stroke: var(--color-ui-control-hand);
+}
+.mill-board .stone.selected,
+.mill-board .stone.take {
+  stroke: var(--color-brand-accent);
+  stroke-width: 1.8;
+}
+.lode .grid-board.sea {
+  flex: 3;
+}
+.lode .grid-board.sea.own {
+  flex: 2;
+}
+.lode .mg-btn[hidden] {
+  display: none;
+}
+.grid-board .sq.water {
+  fill: var(--color-world-day-land);
+}
+.grid-board .sq.ship {
+  fill: var(--color-world-day-facades-5);
+}
+.grid-board .miss {
+  fill: var(--color-ui-text-faint);
+}
+.grid-board .hitmark {
+  stroke: var(--color-ui-control-brake);
+  stroke-width: 1.4;
+  stroke-linecap: round;
+}
+.grid-board .sunk {
+  fill: none;
+  stroke: var(--color-ui-notice);
+  stroke-width: 1;
+}
+.grid-board .last {
+  fill: none;
+  stroke: var(--color-brand-accent);
+  stroke-width: 0.8;
+}
+.slide-board .tile {
+  fill: var(--color-world-day-facades-1);
+  stroke: var(--color-world-day-facades-6);
+  stroke-width: 0.6;
+}
+.slide-board .tile.home {
+  fill: var(--color-world-day-park);
+}
+.slide-board .tile-num {
+  fill: var(--color-ui-text);
+  font-size: 10px;
+  font-weight: 700;
+  text-anchor: middle;
+  dominant-baseline: middle;
+  pointer-events: none;
+}
+.quiz-q {
+  font-size: 20px;
+  font-weight: 700;
+  text-align: center;
+  padding: var(--space-md) 0;
+}
+.quiz-bar {
+  height: 6px;
+  border-radius: var(--radius-pill);
+  background: var(--color-ui-pill);
+  overflow: hidden;
+}
+.quiz-fill {
+  height: 100%;
+  background: var(--color-brand-accent);
+}
+.quiz-options {
+  margin-top: auto;
+}
+.quiz-opt.right {
+  background: var(--color-world-day-park);
+}
+.quiz-opt.wrong {
+  background: var(--color-ui-control-brake);
+}
+.quiz-opt:disabled {
+  opacity: 1;
+}
