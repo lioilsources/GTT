@@ -232,7 +232,7 @@ items:
   - {id: L-S12, milestone: L, name: "policie nezablokuje hru: police_box, soak 20 dopadení", size: M, status: todo}
   - {id: L-S13, milestone: L, name: "regresní testy: průjezd zaparkovanými auty, swipe feedu", size: S, status: todo}
   - {id: L-S14, milestone: L, name: "docs/verify.md z metro progress: průchody po 30 minutách", size: M, status: todo}
-  - {id: L-S15, milestone: L, name: "metro stats → plans/STATS.md", size: S, status: todo}
+  - {id: L-S15, milestone: L, name: "metro stats → plans/STATS.md", size: S, status: hotovo, started: 2026-11-23T11:02, done: 2026-11-23T11:08, evidence: "run/bin/metro stats → plans/STATS.md; go test ./internal/stats (Summarize, Classify)"}
   - {id: L-A1, milestone: L, name: "docs/launch.md, metro progress --check a kouřový test zelené na main, Pages nasazené", size: S, status: todo}
 
 # Content counters with targets. tests and fps are measured; the rest metro progress counts itself.
