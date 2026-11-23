@@ -90,6 +90,7 @@ class Tuning {
         props = TuningProps._(r.sub('props')),
         skids = TuningSkids._(r.sub('skids')),
         bench = TuningBench._(r.sub('bench')),
+        smoke = TuningSmoke._(r.sub('smoke')),
         hud = TuningHud._(r.sub('hud')),
         minigames = TuningMinigames._(r.sub('minigames')),
         route = TuningRoute._(r.sub('route')),
@@ -179,6 +180,9 @@ class Tuning {
 
   /// D1 measurement autopilot (specs/bench.md); route in content/bench/<city>.json.
   final TuningBench bench;
+
+  /// Mobile web smoke test in CI (specs/bench.md "Kouřový test", Prompts/05 L-S6); web only.
+  final TuningSmoke smoke;
 
   final TuningHud hud;
 
@@ -285,6 +289,7 @@ class Tuning {
         'props': props.toJson(),
         'skids': skids.toJson(),
         'bench': bench.toJson(),
+        'smoke': smoke.toJson(),
         'hud': hud.toJson(),
         'minigames': minigames.toJson(),
         'route': route.toJson(),
@@ -1422,6 +1427,38 @@ class TuningBench {
       };
 
   static const keys = ['lookahead_m', 'lookahead_per_mps', 'steer_gain', 'corner_lookahead_m', 'corner_turn_rad', 'corner_speed_mps', 'brake_per_mps', 'stuck_s', 'stuck_mps', 'respawn_ahead_m', 'arrive_m', 'warmup_s', 'search_back_m', 'search_ahead_m'];
+}
+
+/// Mobile web smoke test in CI (specs/bench.md "Kouřový test", Prompts/05 L-S6); web only.
+class TuningSmoke {
+  TuningSmoke._(_R r)
+      : firstFrameMs = r.i('first_frame_ms'),
+        dragPx = r.i('drag_px'),
+        driveS = r.d('drive_s'),
+        minDriveM = r.d('min_drive_m'),
+        swipePx = r.i('swipe_px');
+
+  /// budget from navigation to the first frame with the car's chunks
+  int firstFrameMs;
+
+  /// thumb dragged up (boost) for the drive step
+  int dragPx;
+
+  double driveS;
+
+  /// the car must cover at least this in drive_s
+  double minDriveM;
+
+  /// feed swipe distance, up and down
+  int swipePx;
+
+  Map<String, Object> toJson() => {
+        'first_frame_ms': firstFrameMs,
+        'drag_px': dragPx,
+        'drive_s': driveS,
+        'min_drive_m': minDriveM,
+        'swipe_px': swipePx,
+      };
 }
 
 class TuningHud {

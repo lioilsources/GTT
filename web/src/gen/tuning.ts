@@ -103,6 +103,8 @@ export class Tuning {
   readonly skids: TuningSkids;
   /** D1 measurement autopilot (specs/bench.md); route in content/bench/<city>.json. */
   readonly bench: TuningBench;
+  /** Mobile web smoke test in CI (specs/bench.md "Kouřový test", Prompts/05 L-S6); web only. */
+  readonly smoke: TuningSmoke;
   readonly hud: TuningHud;
   /** Minigames (METROPOLE_PLAN 9, specs/minigames/). Rules read these through the generated Tuning. */
   readonly minigames: TuningMinigames;
@@ -200,6 +202,7 @@ export class Tuning {
     this.props = new TuningProps(r.sub('props'));
     this.skids = new TuningSkids(r.sub('skids'));
     this.bench = new TuningBench(r.sub('bench'));
+    this.smoke = new TuningSmoke(r.sub('smoke'));
     this.hud = new TuningHud(r.sub('hud'));
     this.minigames = new TuningMinigames(r.sub('minigames'));
     this.route = new TuningRoute(r.sub('route'));
@@ -251,6 +254,7 @@ export class Tuning {
       props: this.props.toJson(),
       skids: this.skids.toJson(),
       bench: this.bench.toJson(),
+      smoke: this.smoke.toJson(),
       hud: this.hud.toJson(),
       minigames: this.minigames.toJson(),
       route: this.route.toJson(),
@@ -1401,6 +1405,37 @@ export class TuningBench {
   }
 
   static readonly keys = ['lookahead_m', 'lookahead_per_mps', 'steer_gain', 'corner_lookahead_m', 'corner_turn_rad', 'corner_speed_mps', 'brake_per_mps', 'stuck_s', 'stuck_mps', 'respawn_ahead_m', 'arrive_m', 'warmup_s', 'search_back_m', 'search_ahead_m'] as const;
+}
+
+/** Mobile web smoke test in CI (specs/bench.md "Kouřový test", Prompts/05 L-S6); web only. */
+export class TuningSmoke {
+  /** budget from navigation to the first frame with the car's chunks */
+  firstFrameMs: number;
+  /** thumb dragged up (boost) for the drive step */
+  dragPx: number;
+  driveS: number;
+  /** the car must cover at least this in drive_s */
+  minDriveM: number;
+  /** feed swipe distance, up and down */
+  swipePx: number;
+
+  constructor(r: R) {
+    this.firstFrameMs = r.i('first_frame_ms');
+    this.dragPx = r.i('drag_px');
+    this.driveS = r.d('drive_s');
+    this.minDriveM = r.d('min_drive_m');
+    this.swipePx = r.i('swipe_px');
+  }
+
+  toJson(): Record<string, unknown> {
+    return {
+      first_frame_ms: this.firstFrameMs,
+      drag_px: this.dragPx,
+      drive_s: this.driveS,
+      min_drive_m: this.minDriveM,
+      swipe_px: this.swipePx,
+    };
+  }
 }
 
 export class TuningHud {
