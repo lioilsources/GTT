@@ -60,6 +60,7 @@ type Params struct {
 	GradeTolM    float64 // grade_clamp stops below this excess
 	GradePasses  int
 	ZTolM        float64 // inserted samples within this of the straight profile are dropped
+	FairPasses   int     // fairing after the clamp: Laplacian passes on chain samples (0 = off)
 }
 
 // Edge is one graph edge as the profile sees it.
@@ -384,6 +385,41 @@ func Profile(in Input, p Params) Result {
 			break
 		}
 		res.Relaxed += relaxed
+	}
+	// 6b. fairing: the clamp leaves a sawtooth (flat, max grade, flat…) where the terrain is
+	// steeper than max_grade along the road. A car riding the 8 m terrain grid cannot follow
+	// that; each sample moves halfway to the inverse-length mean of its neighbours (within its
+	// bounds; dead ends stay), then the clamp runs again.
+	if p.FairPasses > 0 {
+		for f := 0; f < p.FairPasses; f++ {
+			for i := range vs {
+				v := &vs[i]
+				if v.fixed || len(adj[i]) < 2 {
+					continue
+				}
+				// Inverse-length weights: on a chain this is the straight line between the two
+				// neighbours; at a junction the mean of the roads meeting there.
+				sw, sz := 0.0, 0.0
+				for _, li := range adj[i] {
+					l := links[li]
+					o := l.a
+					if o == i {
+						o = l.b
+					}
+					if l.l < 1e-6 {
+						sw = 0
+						break
+					}
+					sw += 1 / l.l
+					sz += vs[o].z / l.l
+				}
+				if sw == 0 {
+					continue
+				}
+				v.z = math.Min(math.Max(0.5*v.z+0.5*sz/sw, v.lo), v.hi)
+			}
+		}
+		clampPasses()
 	}
 	for i := range vs {
 		if math.Abs(vs[i].z-start[i]) > p.GradeTolM {

@@ -5219,8 +5219,13 @@ class TuningTerrainPipeline {
         zToleranceM = r.d('z_tolerance_m'),
         roadGapMaxM = r.d('road_gap_max_m'),
         roadGapShare = r.d('road_gap_share'),
+        roadStrip = TuningTerrainPipelineRoadStrip._(r.sub('road_strip')),
         bridgeMinClearM = r.d('bridge_min_clear_m'),
-        sun = TuningTerrainPipelineSun._(r.sub('sun'));
+        bridgeOverWaterM = r.d('bridge_over_water_m'),
+        profileFairPasses = r.i('profile_fair_passes'),
+        conformFit = TuningTerrainPipelineConformFit._(r.sub('conform_fit')),
+        sun = TuningTerrainPipelineSun._(r.sub('sun')),
+        shadeStrength = r.d('shade_strength');
 
   /// DEM read around the area
   double demMarginM;
@@ -5262,10 +5267,25 @@ class TuningTerrainPipeline {
   /// validate: share of road edge samples allowed over road_gap_max_m
   double roadGapShare;
 
+  /// validate: |terrain − road profile| on kept carriageways (the car rides the terrain there)
+  final TuningTerrainPipelineRoadStrip roadStrip;
+
   /// validate fails below water/road + this; below bridge.clear_* it warns
   double bridgeMinClearM;
 
+  /// a ground edge over water this long in one stretch is an (unflagged) bridge
+  double bridgeOverWaterM;
+
+  /// after grade_clamp: smooth the sawtooth on steep hills (then clamp again)
+  int profileFairPasses;
+
+  /// road strip samples that fit the grid nodes to the road profile
+  final TuningTerrainPipelineConformFit conformFit;
+
   final TuningTerrainPipelineSun sun;
+
+  /// z-factor on game slopes in the Chunk.shade channel only (1 = plain hillshade)
+  double shadeStrength;
 
   Map<String, Object> toJson() => {
         'dem_margin_m': demMarginM,
@@ -5282,8 +5302,13 @@ class TuningTerrainPipeline {
         'z_tolerance_m': zToleranceM,
         'road_gap_max_m': roadGapMaxM,
         'road_gap_share': roadGapShare,
+        'road_strip': roadStrip.toJson(),
         'bridge_min_clear_m': bridgeMinClearM,
+        'bridge_over_water_m': bridgeOverWaterM,
+        'profile_fair_passes': profileFairPasses,
+        'conform_fit': conformFit.toJson(),
         'sun': sun.toJson(),
+        'shade_strength': shadeStrength,
       };
 }
 
@@ -5309,6 +5334,52 @@ class TuningTerrainPipelineProfileWindowM {
       };
 
   static const keys = ['lidar', 'coarse'];
+}
+
+/// validate: |terrain − road profile| on kept carriageways (the car rides the terrain there)
+class TuningTerrainPipelineRoadStrip {
+  TuningTerrainPipelineRoadStrip._(_R r)
+      : tolM = r.d('tol_m'),
+        share = r.d('share'),
+        maxM = r.d('max_m');
+
+  double tolM;
+
+  double share;
+
+  double maxM;
+
+  Map<String, Object> toJson() => {
+        'tol_m': tolM,
+        'share': share,
+        'max_m': maxM,
+      };
+
+  /// Value by YAML key, null when the key is unknown.
+  double? operator [](String key) => switch (key) {
+        'tol_m' => tolM,
+        'share' => share,
+        'max_m' => maxM,
+        _ => null,
+      };
+
+  static const keys = ['tol_m', 'share', 'max_m'];
+}
+
+/// road strip samples that fit the grid nodes to the road profile
+class TuningTerrainPipelineConformFit {
+  TuningTerrainPipelineConformFit._(_R r)
+      : stepM = r.d('step_m'),
+        passes = r.i('passes');
+
+  double stepM;
+
+  int passes;
+
+  Map<String, Object> toJson() => {
+        'step_m': stepM,
+        'passes': passes,
+      };
 }
 
 class TuningTerrainPipelineSun {
@@ -5691,7 +5762,8 @@ class TuningNaturePipeline {
         treeSizeMix = r.dl('tree_size_mix'),
         streetTreeSnapM = r.d('street_tree_snap_m'),
         treeMinSpacingM = r.d('tree_min_spacing_m'),
-        treeRowStepM = r.d('tree_row_step_m');
+        treeRowStepM = r.d('tree_row_step_m'),
+        deckTreeMarginM = r.d('deck_tree_margin_m');
 
   /// outline simplification (river widths kept)
   double simplifyM;
@@ -5733,6 +5805,9 @@ class TuningNaturePipeline {
 
   double treeRowStepM;
 
+  /// no crown within this of a bridge, ramp or viaduct footprint (on the ground below)
+  double deckTreeMarginM;
+
   Map<String, Object> toJson() => {
         'simplify_m': simplifyM,
         'small_water_m2': smallWaterM2,
@@ -5749,6 +5824,7 @@ class TuningNaturePipeline {
         'street_tree_snap_m': streetTreeSnapM,
         'tree_min_spacing_m': treeMinSpacingM,
         'tree_row_step_m': treeRowStepM,
+        'deck_tree_margin_m': deckTreeMarginM,
       };
 }
 
