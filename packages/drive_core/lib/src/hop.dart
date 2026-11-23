@@ -7,9 +7,10 @@ int? hopCharges(CarSpec spec) {
 }
 
 /// Whether a hop can start now (specs/hop.md "Pravidla"): the car has `hop`, the tank is not
-/// empty, the car is on the ground, on layer 0 and at least `hop.min_speed_mps` fast.
+/// empty, the car is on the ground and at least `hop.min_speed_mps` fast, on any layer (v2: bridges
+/// and tunnels too; [layer] stays in the signature of the spec).
 bool canHop(CarSpec spec, int charges, double air, int layer, double speed, TuningHop t) =>
-    hopCharges(spec) != null && charges > 0 && air <= 0 && layer == 0 && speed >= t.minSpeedMps;
+    hopCharges(spec) != null && charges > 0 && air <= 0 && speed >= t.minSpeedMps;
 
 /// Height of the arc (metres) [t] seconds into a hop of [airS] seconds peaking at [heightM].
 double hopArc(double t, double airS, double heightM) {

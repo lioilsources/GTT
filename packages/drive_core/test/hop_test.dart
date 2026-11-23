@@ -38,8 +38,9 @@ void main() {
         (roadster, 1, 0, 0, v + 10, true),
         (roadster, 0, 0, 0, v, false), // empty tank
         (roadster, 3, 0.5, 0, v, false), // already in the air
-        (roadster, 3, 0, 1, v, false), // bridge
-        (roadster, 3, 0, -1, v, false), // tunnel
+        (roadster, 3, 0, 1, v, true), // bridge (v2)
+        (roadster, 3, 0, -1, v, true), // tunnel (v2)
+        (roadster, 3, 0, 1, v - 0.01, false), // bridge, too slow
         (roadster, 3, 0, 0, v - 0.01, false), // too slow
         (coupe, 3, 0, 0, v, false), // no hop
       ];
