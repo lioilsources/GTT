@@ -220,6 +220,82 @@ describe.skipIf(!existsSync(pack))('police in the NYC pack', () => {
     expect(fines[0]).toBeGreaterThan(0);
     expect(p.wantedLevel).toBe(0);
   }, 30000);
+
+  // police_box (Prompts/05 L-S12): three patrols round the standing player – ahead, behind and
+  // alongside. After the busted card the player must get away (auto-throttle or rescue).
+  it('police_box: three patrols box in the standing player; after busted the player drives off', () => {
+    const { d, p } = world();
+    const tr = d.traffic!;
+    const hit = straight(d);
+    const e = hit.edge;
+    const s = Math.min(e.length - 40, Math.max(40, hit.t * e.length));
+    tr.reset();
+    const ahead = tr.addCar(e.index, 1, s + 7, 0)!;
+    const behind = tr.addCar(e.index, 1, s - 7, 0)!;
+    const side = tr.addCar(e.index, -1, e.length - s, 0) ?? tr.addCar(e.index, 1, s, 1)!;
+    for (const c of [ahead, behind, side]) c.police = true;
+    const px = (ahead.x + behind.x) / 2, py = (ahead.y + behind.y) / 2;
+    d.spawn(px, py, ahead.heading);
+    (p as unknown as { state: { level: number } }).state = { ...(p as unknown as { state: object }).state, level: 2 } as { level: number };
+    let busted = -1;
+    p.onFined(() => (busted = 0));
+    let t = 0;
+    for (let i = 0; i < 20 * 60 && busted < 0; i++, t++) {
+      d.input.reset();
+      d.input.brake = 1;
+      d.update(1 / 60);
+      p.update(1 / 60);
+    }
+    expect(busted).toBe(0);
+    // The card is gone; the player lets the auto-throttle drive for 15 s.
+    const bx = d.car.x, by = d.car.y;
+    let far = 0;
+    for (let i = 0; i < 15 * 60; i++) {
+      d.input.reset();
+      d.update(1 / 60);
+      p.update(1 / 60);
+      far = Math.max(far, Math.hypot(d.car.x - bx, d.car.y - by));
+    }
+    expect(p.wantedLevel).toBe(0);
+    expect(far).toBeGreaterThan(30);
+  }, 60000);
+
+  // Soak (L-S12): 20 busts in a row at levels 1–3 (level 3 also puts up a roadblock); after each one
+  // the player gets 30 m away within 15 s.
+  it('soak: 20 busts in a row never trap the player', () => {
+    const { d, p } = world();
+    const tr = d.traffic!;
+    let busts = 0;
+    p.onFined(() => busts++);
+    for (let k = 0; k < 20; k++) {
+      const hit = straight(d);
+      const e = hit.edge;
+      const s = Math.min(e.length - 40, Math.max(40, hit.t * e.length));
+      tr.reset();
+      const ahead = tr.addCar(e.index, 1, s + 7, 0)!;
+      const behind = tr.addCar(e.index, 1, s - 7, 0)!;
+      for (const c of [ahead, behind]) c.police = true;
+      d.spawn((ahead.x + behind.x) / 2, (ahead.y + behind.y) / 2, ahead.heading);
+      (p as unknown as { state: { level: number } }).state = { ...(p as unknown as { state: object }).state, level: 1 + (k % 3) } as { level: number };
+      const before = busts;
+      for (let i = 0; i < 30 * 60 && busts === before; i++) {
+        d.input.reset();
+        d.input.brake = 1;
+        d.update(1 / 60);
+        p.update(1 / 60);
+      }
+      expect(busts, `bust ${k + 1}`).toBe(before + 1);
+      const bx = d.car.x, by = d.car.y;
+      let far = 0;
+      for (let i = 0; i < 15 * 60 && far <= 30; i++) {
+        d.input.reset();
+        d.update(1 / 60);
+        p.update(1 / 60);
+        far = Math.max(far, Math.hypot(d.car.x - bx, d.car.y - by));
+      }
+      expect(far, `away after bust ${k + 1} (level ${1 + (k % 3)}, roadblock ${p.roadblock ? 'up' : 'none'})`).toBeGreaterThan(30);
+    }
+  }, 240000);
 });
 
 /**

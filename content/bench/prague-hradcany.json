@@ -1,0 +1,11 @@
+{
+  "id": "hradcany",
+  "city": "prague",
+  "oneway": true,
+  "description": "L-S1 hills: from Malostranské náměstí up Nerudova and Úvoz to Pohořelec (Hradčany).",
+  "start": {"a": "Malostranské náměstí", "b": "Nerudova"},
+  "legs": [
+    {"via": ["Nerudova"], "to": {"a": "Nerudova", "b": "Úvoz"}},
+    {"via": ["Úvoz"], "to": {"a": "Úvoz", "b": "Pohořelec"}}
+  ]
+}
