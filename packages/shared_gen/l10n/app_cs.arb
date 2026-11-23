@@ -12,6 +12,11 @@
   "borderNotice": "Tudy do New Jersey – příště!",
   "dayNight": "Den / noc",
   "controlScheme": "Ovládání",
+  "boostButton": "Boost",
+  "boostHintA": "Táhni palec nahoru = rychleji",
+  "boostHintB": "Drž Boost = rychleji",
+  "boostHintC": "Drž Boost nad brzdou = rychleji",
+  "boostHintKeys": "Šipka nahoru / W = rychleji",
   "schemeA": "A · tah palcem",
   "schemeB": "B · poloviny obrazovky",
   "schemeC": "C · volant + pedál",
@@ -750,5 +755,7 @@
   "lm_pushkin_square_title": "Pushkin Square",
   "lm_pushkin_square_text": "Zelené náměstí na Tverské ulici kolem bronzové sochy básníka. Patří k nejoblíbenějším místům schůzek ve městě.",
   "lm_komsomolskaya_title": "Komsomolskaya Square",
-  "lm_komsomolskaya_text": "Náměstí, kde stojí vedle sebe tři velká nádraží, každé v jiném stylu. Vlaky odtud jezdí na sever, na východ i na Dálný východ."
+  "lm_komsomolskaya_text": "Náměstí, kde stojí vedle sebe tři velká nádraží, každé v jiném stylu. Vlaky odtud jezdí na sever, na východ i na Dálný východ.",
+  "ogTitle": "Metropole (GTT) – volná jízda po skutečných metropolích",
+  "ogDescription": "New York, Praha a Tokio v prohlížeči. Minihry z feedu, žádné násilí."
 }

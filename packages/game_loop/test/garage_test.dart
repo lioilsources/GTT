@@ -32,7 +32,7 @@ void main() {
   group('garage rules (specs/garage.md)', () {
     test('id, spec version; init is empty and ignores the seed', () {
       final r = GarageRules();
-      expect((r.id, r.specVersion), ('garage', 1));
+      expect((r.id, r.specVersion), ('garage', 2));
       final j = _json(cfg);
       expect(r.stateToJson(r.init(j, 1)), r.stateToJson(r.init(j, 99)));
       expect(r.stateToJson(r.init(j, 1)), {

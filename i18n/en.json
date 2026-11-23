@@ -38,6 +38,11 @@
   "borderNotice": "This way to New Jersey – next time!",
   "dayNight": "Day / night",
   "controlScheme": "Controls",
+  "boostButton": "Boost",
+  "boostHintA": "Drag your thumb up = faster",
+  "boostHintB": "Hold Boost = faster",
+  "boostHintC": "Hold Boost above the brake = faster",
+  "boostHintKeys": "Arrow up / W = faster",
   "schemeA": "A · thumb drag",
   "schemeB": "B · screen halves",
   "schemeC": "C · wheel + pedal",
@@ -1327,5 +1332,7 @@
   "lm_pushkin_square_title": "Pushkin Square",
   "lm_pushkin_square_text": "A green square on Tverskaya Street around the bronze statue of the poet. It is one of the most popular meeting points in the city.",
   "lm_komsomolskaya_title": "Komsomolskaya Square",
-  "lm_komsomolskaya_text": "A square where three grand railway stations stand side by side, each in its own style. Trains leave from here for the north, the east and the far east."
+  "lm_komsomolskaya_text": "A square where three grand railway stations stand side by side, each in its own style. Trains leave from here for the north, the east and the far east.",
+  "ogTitle": "Metropole (GTT) – free driving through real cities",
+  "ogDescription": "New York, Prague and Tokyo in your browser. Minigames from a feed, no violence."
 }

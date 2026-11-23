@@ -170,7 +170,7 @@ class GarageRules extends MgRules<GarageState, GarageAction, Map<String, Object?
   @override
   String get id => 'garage';
   @override
-  int get specVersion => 1;
+  int get specVersion => 2;
 
   GarageConfig? _cfg;
   GarageConfig get config => _cfg ?? (throw StateError('garage: init first'));

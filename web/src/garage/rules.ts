@@ -140,7 +140,7 @@ function put(m: Record<string, Record<string, number>>, car: string, key: string
 
 export class GarageRules implements Rules<GarageState, GarageAction, RulesResult, GarageConfig> {
   readonly id = 'garage';
-  readonly specVersion = 1;
+  readonly specVersion = 2;
   private cfg: GarageConfig | null = null;
 
   get config(): GarageConfig {

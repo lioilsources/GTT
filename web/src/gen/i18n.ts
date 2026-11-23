@@ -15,6 +15,11 @@ export type MessageKey =
   | "borderNotice"
   | "dayNight"
   | "controlScheme"
+  | "boostButton"
+  | "boostHintA"
+  | "boostHintB"
+  | "boostHintC"
+  | "boostHintKeys"
   | "schemeA"
   | "schemeB"
   | "schemeC"
@@ -754,6 +759,8 @@ export type MessageKey =
   | "lm_pushkin_square_text"
   | "lm_komsomolskaya_title"
   | "lm_komsomolskaya_text"
+  | "ogTitle"
+  | "ogDescription"
 ;
 
 export const messages: Record<Locale, Record<MessageKey, string>> = {
@@ -769,6 +776,11 @@ export const messages: Record<Locale, Record<MessageKey, string>> = {
     borderNotice: "Tudy do New Jersey – příště!",
     dayNight: "Den / noc",
     controlScheme: "Ovládání",
+    boostButton: "Boost",
+    boostHintA: "Táhni palec nahoru = rychleji",
+    boostHintB: "Drž Boost = rychleji",
+    boostHintC: "Drž Boost nad brzdou = rychleji",
+    boostHintKeys: "Šipka nahoru / W = rychleji",
     schemeA: "A · tah palcem",
     schemeB: "B · poloviny obrazovky",
     schemeC: "C · volant + pedál",
@@ -1508,6 +1520,8 @@ export const messages: Record<Locale, Record<MessageKey, string>> = {
     lm_pushkin_square_text: "Zelené náměstí na Tverské ulici kolem bronzové sochy básníka. Patří k nejoblíbenějším místům schůzek ve městě.",
     lm_komsomolskaya_title: "Komsomolskaya Square",
     lm_komsomolskaya_text: "Náměstí, kde stojí vedle sebe tři velká nádraží, každé v jiném stylu. Vlaky odtud jezdí na sever, na východ i na Dálný východ.",
+    ogTitle: "Metropole (GTT) – volná jízda po skutečných metropolích",
+    ogDescription: "New York, Praha a Tokio v prohlížeči. Minihry z feedu, žádné násilí.",
   },
   "en": {
     appTitle: "Metropole",
@@ -1521,6 +1535,11 @@ export const messages: Record<Locale, Record<MessageKey, string>> = {
     borderNotice: "This way to New Jersey – next time!",
     dayNight: "Day / night",
     controlScheme: "Controls",
+    boostButton: "Boost",
+    boostHintA: "Drag your thumb up = faster",
+    boostHintB: "Hold Boost = faster",
+    boostHintC: "Hold Boost above the brake = faster",
+    boostHintKeys: "Arrow up / W = faster",
     schemeA: "A · thumb drag",
     schemeB: "B · screen halves",
     schemeC: "C · wheel + pedal",
@@ -2260,6 +2279,8 @@ export const messages: Record<Locale, Record<MessageKey, string>> = {
     lm_pushkin_square_text: "A green square on Tverskaya Street around the bronze statue of the poet. It is one of the most popular meeting points in the city.",
     lm_komsomolskaya_title: "Komsomolskaya Square",
     lm_komsomolskaya_text: "A square where three grand railway stations stand side by side, each in its own style. Trains leave from here for the north, the east and the far east.",
+    ogTitle: "Metropole (GTT) – free driving through real cities",
+    ogDescription: "New York, Prague and Tokyo in your browser. Minigames from a feed, no violence.",
   },
 };
 

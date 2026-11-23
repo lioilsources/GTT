@@ -140,7 +140,7 @@ class Tuning {
 
   int chunkM;
 
-  /// cruise = no-input pace; 14.0 with specs/drive.md v2 (flipped in shared/cruise-v2-scenarios)
+  /// cruise = no-input city pace (specs/drive.md v2); boost asks for top
   final TuningSpeedMps speedMps;
 
   /// citypack: road corridors and building masses.
@@ -415,7 +415,7 @@ class TuningExtrusion {
   static const keys = ['k', 'knee_m', 'exp', 'max_scale'];
 }
 
-/// cruise = no-input pace; 14.0 with specs/drive.md v2 (flipped in shared/cruise-v2-scenarios)
+/// cruise = no-input city pace (specs/drive.md v2); boost asks for top
 class TuningSpeedMps {
   TuningSpeedMps._(_R r)
       : cruise = r.d('cruise'),
@@ -1118,7 +1118,10 @@ class TuningControls {
       : aFullSteerWidth = r.d('a_full_steer_width'),
         aDeadZoneHeight = r.d('a_dead_zone_height'),
         aFullBrakeHeight = r.d('a_full_brake_height'),
-        cMaxWheelRad = r.d('c_max_wheel_rad');
+        cMaxWheelRad = r.d('c_max_wheel_rad'),
+        boostHintAfterS = r.d('boost_hint_after_s'),
+        boostHintMinSpeedMps = r.d('boost_hint_min_speed_mps'),
+        boostHintMax = r.i('boost_hint_max');
 
   /// thumb travel for full lock, fraction of screen width
   double aFullSteerWidth;
@@ -1131,23 +1134,24 @@ class TuningControls {
 
   double cMaxWheelRad;
 
+  /// driving at cruise without boost before the hint shows again
+  double boostHintAfterS;
+
+  /// counts as cruise driving from this speed
+  double boostHintMinSpeedMps;
+
+  /// the boost hint shows at most this many times per device
+  int boostHintMax;
+
   Map<String, Object> toJson() => {
         'a_full_steer_width': aFullSteerWidth,
         'a_dead_zone_height': aDeadZoneHeight,
         'a_full_brake_height': aFullBrakeHeight,
         'c_max_wheel_rad': cMaxWheelRad,
+        'boost_hint_after_s': boostHintAfterS,
+        'boost_hint_min_speed_mps': boostHintMinSpeedMps,
+        'boost_hint_max': boostHintMax,
       };
-
-  /// Value by YAML key, null when the key is unknown.
-  double? operator [](String key) => switch (key) {
-        'a_full_steer_width' => aFullSteerWidth,
-        'a_dead_zone_height' => aDeadZoneHeight,
-        'a_full_brake_height' => aFullBrakeHeight,
-        'c_max_wheel_rad' => cMaxWheelRad,
-        _ => null,
-      };
-
-  static const keys = ['a_full_steer_width', 'a_dead_zone_height', 'a_full_brake_height', 'c_max_wheel_rad'];
 }
 
 /// Street furniture (procedural per chunk, never stored).

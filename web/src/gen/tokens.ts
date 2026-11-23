@@ -19,6 +19,7 @@ export const tokens = {
   colorUiControlWheel: "#FFFFFF88",
   colorUiControlBrake: "#FF5050AA",
   colorUiControlHand: "#FFC040AA",
+  colorUiControlBoost: "#40C8FFAA",
   colorUiRoute: "#3FA9F5D0",
   colorUiRouteArrow: "#3FA9F5",
   colorCityNycLand: "#E9DCCB",

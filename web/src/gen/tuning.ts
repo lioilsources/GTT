@@ -78,7 +78,7 @@ export class Tuning {
   readonly carAnchor: TuningCarAnchor;
   readonly extrusion: TuningExtrusion;
   chunkM: number;
-  /** cruise = no-input pace; 14.0 with specs/drive.md v2 (flipped in shared/cruise-v2-scenarios) */
+  /** cruise = no-input city pace (specs/drive.md v2); boost asks for top */
   readonly speedMps: TuningSpeedMps;
   /** citypack: road corridors and building masses. */
   readonly roads: TuningRoads;
@@ -400,7 +400,7 @@ export class TuningExtrusion {
   static readonly keys = ['k', 'knee_m', 'exp', 'max_scale'] as const;
 }
 
-/** cruise = no-input pace; 14.0 with specs/drive.md v2 (flipped in shared/cruise-v2-scenarios) */
+/** cruise = no-input city pace (specs/drive.md v2); boost asks for top */
 export class TuningSpeedMps {
   cruise: number;
   topDefault: number;
@@ -1093,12 +1093,21 @@ export class TuningControls {
   /** extra travel to full brake */
   aFullBrakeHeight: number;
   cMaxWheelRad: number;
+  /** driving at cruise without boost before the hint shows again */
+  boostHintAfterS: number;
+  /** counts as cruise driving from this speed */
+  boostHintMinSpeedMps: number;
+  /** the boost hint shows at most this many times per device */
+  boostHintMax: number;
 
   constructor(r: R) {
     this.aFullSteerWidth = r.d('a_full_steer_width');
     this.aDeadZoneHeight = r.d('a_dead_zone_height');
     this.aFullBrakeHeight = r.d('a_full_brake_height');
     this.cMaxWheelRad = r.d('c_max_wheel_rad');
+    this.boostHintAfterS = r.d('boost_hint_after_s');
+    this.boostHintMinSpeedMps = r.d('boost_hint_min_speed_mps');
+    this.boostHintMax = r.i('boost_hint_max');
   }
 
   toJson(): Record<string, unknown> {
@@ -1107,26 +1116,11 @@ export class TuningControls {
       a_dead_zone_height: this.aDeadZoneHeight,
       a_full_brake_height: this.aFullBrakeHeight,
       c_max_wheel_rad: this.cMaxWheelRad,
+      boost_hint_after_s: this.boostHintAfterS,
+      boost_hint_min_speed_mps: this.boostHintMinSpeedMps,
+      boost_hint_max: this.boostHintMax,
     };
   }
-
-  /** Value by YAML key, undefined when the key is unknown. */
-  get(key: string): number | undefined {
-    switch (key) {
-      case 'a_full_steer_width':
-        return this.aFullSteerWidth;
-      case 'a_dead_zone_height':
-        return this.aDeadZoneHeight;
-      case 'a_full_brake_height':
-        return this.aFullBrakeHeight;
-      case 'c_max_wheel_rad':
-        return this.cMaxWheelRad;
-      default:
-        return undefined;
-    }
-  }
-
-  static readonly keys = ['a_full_steer_width', 'a_dead_zone_height', 'a_full_brake_height', 'c_max_wheel_rad'] as const;
 }
 
 /** Street furniture (procedural per chunk, never stored). */
