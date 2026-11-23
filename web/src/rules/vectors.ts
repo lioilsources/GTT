@@ -17,6 +17,10 @@ import { ReversiRules } from '../minigames/reversi/rules';
 import { LodeRules } from '../minigames/lode/rules';
 import { PosuvneRules } from '../minigames/posuvne/rules';
 import { KvizRules } from '../minigames/kviz/rules';
+import { PrsiRules } from '../minigames/prsi/rules';
+import { SrdceRules } from '../minigames/srdce/rules';
+import { KostkyRules } from '../minigames/kostky/rules';
+import { PraseRules } from '../minigames/prase/rules';
 import { RouteRules } from '../drive/gps';
 import { FeedRules } from '../phone/feed';
 import { PassportRules } from '../passport/rules';
@@ -80,6 +84,10 @@ export const rulesModules: Record<string, () => AnyRules> = {
   lode: () => new LodeRules() as unknown as AnyRules,
   posuvne: () => new PosuvneRules() as unknown as AnyRules,
   kviz: () => new KvizRules() as unknown as AnyRules,
+  prsi: () => new PrsiRules() as unknown as AnyRules,
+  srdce: () => new SrdceRules() as unknown as AnyRules,
+  kostky: () => new KostkyRules() as unknown as AnyRules,
+  prase: () => new PraseRules() as unknown as AnyRules,
   passport: () => new PassportRules() as unknown as AnyRules,
   dialogue: () => new DialogueRules() as unknown as AnyRules,
   cars: () => new CarsRules() as unknown as AnyRules,

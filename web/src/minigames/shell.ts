@@ -21,6 +21,8 @@ export interface ShellSpec {
   id: string;
   /** Up to three rule cards shown before the first game (9.2). */
   rules: MessageKey[];
+  /** Placeholder values for the rule cards (e.g. a target from tuning). */
+  ruleArgs?: Record<string, string | number>;
   timeCapS: number;
   /** Starts the game body; returns a cleanup and the timeout handler. */
   start(api: ShellApi): { stop(): void; timeout(): void };
@@ -137,7 +139,7 @@ export function mountShell(
     sheet.replaceChildren(
       h('div.mg-card', {},
         h('h2', {}, t(`mg_${spec.id}` as MessageKey)),
-        h('p.mg-rule', {}, t(spec.rules[i]!)),
+        h('p.mg-rule', {}, t(spec.rules[i]!, spec.ruleArgs)),
         h('div.mg-dots', {}, ...spec.rules.map((_, j) => h('span', { className: j === i ? 'on' : '' }))),
         h('button.mg-btn', { type: 'button', onclick: () => intro(i + 1) }, i + 1 < spec.rules.length ? t('next') : t('play'))),
     );
