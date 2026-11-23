@@ -108,3 +108,16 @@ flutter:
     - assets/shared/assets/npc/
     - assets/shared/assets/postcards/nyc/
     - assets/shared/assets/postcards/prague/
+    # Car sprites (specs/art.md v2 "Auta"): one line per car with art in assets/cars/.
+    - assets/shared/assets/cars/hatch_pip/
+    - assets/shared/assets/cars/lidovka/
+    - assets/shared/assets/cars/m0_coupe/
+    - assets/shared/assets/cars/mini_pebble/
+    - assets/shared/assets/cars/muscle_brute/
+    - assets/shared/assets/cars/pickup_hauler/
+    - assets/shared/assets/cars/police_patrol/
+    - assets/shared/assets/cars/sedan_crown/
+    - assets/shared/assets/cars/sedan_harbor/
+    - assets/shared/assets/cars/taxi_metro/
+    - assets/shared/assets/cars/traffic_sedan/
+    - assets/shared/assets/cars/van_courier/

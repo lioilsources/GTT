@@ -33,6 +33,8 @@ export class Phone {
   /** Release of the pause registration while open (specs/pause.md). */
   private release: (() => void) | null = null;
   onChange: (open: boolean) => void = () => {};
+  /** Actions under the home grid (the phone is the pause menu: "Na silnici", specs/flow.md). */
+  readonly homeActions: HTMLElement[] = [];
 
   constructor(
     parent: HTMLElement,
@@ -105,7 +107,7 @@ export class Phone {
         h('button.phone-app', { type: 'button', disabled: !mounts[id], onclick: () => this.launch(id) },
           h('span.phone-icon', {}, icons[id]),
           h('span.phone-label', {}, this.t(`app_${id}` as MessageKey)))));
-    this.screen.replaceChildren(grid);
+    this.screen.replaceChildren(grid, ...(this.homeActions.length > 0 ? [h('div.phone-actions', {}, ...this.homeActions)] : []));
   }
 
   launch(id: PhoneAppId): void {

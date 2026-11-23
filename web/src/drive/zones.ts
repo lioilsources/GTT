@@ -50,6 +50,8 @@ export class ZoneWorld {
   constructor(
     readonly world: World,
     readonly t: TuningDrive,
+    /** Static contact friction and restitution (specs/flow.md: flow.wall); drive.building_* without it. */
+    readonly wall?: { friction: number; restitution: number },
   ) {}
 
   /** Number of chunks with bollard bodies (tests). */
@@ -84,8 +86,8 @@ export class ZoneWorld {
     const body = this.world.createBody({ type: 'static' });
     // Cars bounce off bollards as off buildings (specs/zones.md).
     const opt = {
-      friction: this.t.buildingFriction,
-      restitution: this.t.buildingRestitution,
+      friction: this.wall?.friction ?? this.t.buildingFriction,
+      restitution: this.wall?.restitution ?? this.t.buildingRestitution,
       filterCategoryBits: CAT_ZONE,
       filterMaskBits: CAT_CAR,
     };
