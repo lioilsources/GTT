@@ -573,7 +573,7 @@
   spec: specs/minigames/drift.md@1
   vectors: vectors/drift.json
   lead: web
-  flutter: todo
+  flutter: done
   web: done
 
 - id: F-066
@@ -582,7 +582,7 @@
   spec: specs/minigames/sprint.md@1
   vectors: vectors/sprint.json
   lead: web
-  flutter: todo
+  flutter: done
   web: done
 
 - id: F-067
@@ -591,7 +591,7 @@
   spec: specs/minigames/stickball.md@1
   vectors: vectors/stickball.json
   lead: web
-  flutter: todo
+  flutter: done
   web: done
 
 - id: F-068
@@ -600,7 +600,7 @@
   spec: specs/minigames/doubledutch.md@1
   vectors: vectors/doubledutch.json
   lead: web
-  flutter: todo
+  flutter: done
   web: done
 
 - id: F-069
