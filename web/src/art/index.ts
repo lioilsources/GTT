@@ -83,7 +83,8 @@ export function artIcon(path: string, cls = '', onFail?: () => void): HTMLSpanEl
   const el = document.createElement('span');
   el.className = cls ? `art-icon ${cls}` : 'art-icon';
   el.setAttribute('aria-hidden', 'true');
-  const url = artUrl(path);
+  // Absolute: a relative url() inside a custom property would resolve against the stylesheet.
+  const url = new URL(artUrl(path), document.baseURI).href;
   el.style.setProperty('--art-icon', `url("${url}")`);
   if (!decoded.has(path)) {
     const probe = new Image();
