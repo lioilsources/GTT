@@ -126,6 +126,8 @@ Klient po každé úspěšné akci porovná stav před a po a ohlásí:
   Od v2 (40 aut) je seznam na prodej seřazený: nejdřív auta s `tags` aktuálního města, pak ostatní;
   uvnitř podle třídy v pořadí schématu (`mini` … `special`), pak ceny, pak id. U každého auta jméno,
   třída (`carClass.<třída>` v `i18n`), cena a malý náhled kreslený stejně jako ve světě.
+- Zkušební jízda auta na prodej (tlačítko „Vyzkoušet“): `specs/testdrive.md` (P2, pravidla
+  `cars` se nemění).
 
 ## Kreslení (P2)
 Pohled shora, vektorové obdélníky v souřadnicích auta (x dopředu, y doleva, `hl`, `hw` = půldélka
