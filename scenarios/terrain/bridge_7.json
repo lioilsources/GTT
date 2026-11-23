@@ -9,23 +9,23 @@
   ],
   "expect": {
     "v_at_m100_mps": {
-      "value": 24.975,
+      "value": 14.063,
       "tol": 0.05
     },
     "v_at_0_mps": {
-      "value": 25.044,
+      "value": 14.023,
       "tol": 0.05
     },
     "v_at_100_mps": {
-      "value": 25.035,
+      "value": 13.999,
       "tol": 0.05
     },
     "v_at_200_mps": {
-      "value": 25.027,
+      "value": 14.034,
       "tol": 0.05
     },
     "v_at_300_mps": {
-      "value": 25.011,
+      "value": 14.009,
       "tol": 0.05
     }
   }

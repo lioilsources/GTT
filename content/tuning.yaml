@@ -11,7 +11,7 @@ view_width_m: {slow: 50.0, fast: 85.0}     # zoom by speed
 car_anchor: {x: 0.5, y: 0.72}          # car position on screen
 extrusion: {k: 0.004, knee_m: 50.0, exp: 0.85, max_scale: 2.2}
 chunk_m: 256
-speed_mps: {cruise: 25.0, top_default: 40.0}   # cruise = no-input pace; 14.0 with specs/drive.md v2 (flipped in shared/cruise-v2-scenarios)
+speed_mps: {cruise: 14.0, top_default: 40.0}   # cruise = no-input city pace (specs/drive.md v2); boost asks for top
 
 # citypack: road corridors and building masses.
 roads:
