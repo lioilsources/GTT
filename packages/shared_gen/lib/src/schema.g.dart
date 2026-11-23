@@ -405,12 +405,13 @@ class SaveSettings {
       };
 }
 
-/// content/bench/<city>.json: the autopilot route of the D1 measurement (specs/bench.md). Intersections are named by two streets; each leg follows only the listed streets.
+/// content/bench/<city>.json: the autopilot route of the D1 measurement; content/bench/<city>-<id>.json: a further route, e.g. the Prague hills (specs/bench.md v2). Intersections are named by two streets; each leg follows only the listed streets.
 class BenchRoute {
   BenchRoute({
     required this.id,
     required this.city,
     this.description,
+    this.oneway,
     required this.start,
     required this.legs,
   });
@@ -419,6 +420,7 @@ class BenchRoute {
         id: _str(j['id'], 'id'),
         city: _str(j['city'], 'city'),
         description: j['description'] == null ? null : _str(j['description'], 'description'),
+        oneway: j['oneway'] == null ? null : _bool(j['oneway'], 'oneway'),
         start: Crossing.fromJson(_map(j['start'], 'start')),
         legs: [for (final e in _list(j['legs'], 'legs')) BenchLeg.fromJson(_map(e, 'legs[]'))],
       );
@@ -426,6 +428,8 @@ class BenchRoute {
   String id;
   String city;
   String? description;
+  /// bench v2: legs follow one-way streets only in their allowed direction (default false, the NYC benchmark ignores them).
+  bool? oneway;
   Crossing start;
   List<BenchLeg> legs;
 
@@ -433,6 +437,7 @@ class BenchRoute {
         'id': id,
         'city': city,
         if (description != null) 'description': description,
+        if (oneway != null) 'oneway': oneway,
         'start': start.toJson(),
         'legs': [for (final e in legs) e.toJson()],
       };

@@ -1,0 +1,18 @@
+{
+  "module": "terrain",
+  "name": "uphill_launch",
+  "car": "sedan_regent",
+  "inputs": [
+    {
+      "t": 0,
+      "throttle": 1,
+      "boost": 1
+    }
+  ],
+  "expect": {
+    "t_20_mps_s": {
+      "value": 3.75,
+      "tol": 0.05
+    }
+  }
+}

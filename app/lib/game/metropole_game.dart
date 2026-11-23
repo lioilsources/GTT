@@ -386,6 +386,9 @@ class MetropoleGame extends Game {
   /// A context button with priority ("Zvednout", specs/booths.md): while true, the car button hides.
   bool Function()? carActionYield;
 
+  /// Seconds the "test drive over" toast stays (specs/testdrive.md "Konec"); set when the timer ran out.
+  double testDriveOverS = 0;
+
   /// The context button: switch to the parked car, or open the garage (the UI shows the list).
   void boardCandidate() {
     final p = fleet.boardTarget;
@@ -449,7 +452,10 @@ class MetropoleGame extends Game {
       drive.update(stepDt);
       police.update(stepDt);
       _policeClock += stepDt;
+      // Test drive countdown in game time (specs/testdrive.md "Odpočet").
+      if (fleet.tickTest(stepDt)) testDriveOverS = tuning.nav.toastS;
     }
+    if (testDriveOverS > 0) testDriveOverS -= dt;
     afterUpdate?.call(dt);
     if (!pause) _benchFrame(dt);
     final car = drive.car;

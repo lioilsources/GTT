@@ -3,6 +3,7 @@ import { Box, type Body, type Fixture, type Vec2Value, type World } from 'planck
 import { tokens } from '../gen/tokens';
 import type { Tuning } from '../gen/tuning';
 import { CAT_BUILDINGS, CAT_CAR, CAT_PARKED, CAT_TRAFFIC, CAT_TRAM, type Car } from '../drive/car';
+import { TERRAIN_SPEC } from '../drive/slope';
 import { Prng } from '../rules/prng';
 import type { City, RoadEdge, RoadGraph } from '../world/model';
 import {
@@ -37,6 +38,8 @@ export class TrafficCar {
   /** Speed along the lane, m/s (never negative). */
   speed = 0;
   layer = 0;
+  /** Game height of the lane under the car (specs/terrain.md: AI follows the height, never jumps). */
+  z = 0;
   braking = false;
   /** Seconds left standing still after the player hit it. */
   hitTimer = 0;
@@ -425,7 +428,9 @@ export class Traffic {
       c.speed = 0;
     } else {
       const gap = this.gapAhead(c, player);
-      const vmax = c.pursuing ? this.pursuitSpeed(c) : (t.classSpeedMps[c.edge.roadClass] ?? t.classSpeedMps[0]!);
+      let vmax = c.pursuing ? this.pursuitSpeed(c) : (t.classSpeedMps[c.edge.roadClass] ?? t.classSpeedMps[0]!);
+      // Uphill steeper than 8 % at 0.8 × speed (specs/terrain.md "Svah"; no slope force for AI).
+      if (c.edge.gradeOfSeg(c.seg) * c.dir > TERRAIN_SPEC.aiUphillGrade) vmax *= TERRAIN_SPEC.aiUphillFactor;
       const free = Math.max(0, gap - t.minGapM);
       const want = Math.min(vmax, free / t.headwayS, Math.sqrt(2 * t.brakeMps2 * free));
       const dv = want - c.speed;
@@ -482,6 +487,7 @@ export class Traffic {
     const i = 2 * c.seg;
     const ax = e.pts[i]!, ay = e.pts[i + 1]!, bx = e.pts[i + 2]!, by = e.pts[i + 3]!;
     const f = len > 0 ? Math.min(1, Math.max(0, (d - c.segStart) / len)) : 0;
+    c.z = e.zOnSeg(c.seg, f);
     let ux = len > 0 ? (bx - ax) / len : 1, uy = len > 0 ? (by - ay) / len : 0;
     if (c.dir < 0) {
       ux = -ux;

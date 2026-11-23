@@ -1,0 +1,17 @@
+{
+  "module": "terrain",
+  "name": "hold_20",
+  "car": "sedan_regent",
+  "inputs": [
+    {
+      "t": 0,
+      "coast": 1
+    }
+  ],
+  "expect": {
+    "drift_m": {
+      "value": 0,
+      "tol": 0.05
+    }
+  }
+}

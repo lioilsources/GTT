@@ -39,4 +39,4 @@ landmarks:
   - {id: amnh, name: American Museum of Natural History, lat: 40.78132, lon: -73.97398, height_m: 35, hero: true}
   - {id: guggenheim, name: Solomon R. Guggenheim Museum, lat: 40.78296, lon: -73.95899, height_m: 28, hero: true}
   - {id: lincoln_center, name: Lincoln Center, lat: 40.77250, lon: -73.98350, kind: plaza, hero: true}
-  - {id: brooklyn_bridge, name: Brooklyn Bridge, lat: 40.70608, lon: -73.99686, kind: plaza, hero: true}
+  - {id: brooklyn_bridge, name: Brooklyn Bridge, lat: 40.70608, lon: -73.99686, kind: plaza, hero: true, deck_height_m: 39.0}

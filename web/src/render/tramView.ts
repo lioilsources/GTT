@@ -9,8 +9,9 @@ import '@babylonjs/core/Meshes/thinInstanceMesh';
 
 import { tokens } from '../gen/tokens';
 import type { Tuning } from '../gen/tuning';
+import type { Terrain } from '../world/terrain';
 import type { Trams } from '../trams/trams';
-import { Tris, Z } from './geometry';
+import { baseHeight, Tris, Z } from './geometry';
 import { rgba, type Rgba } from './palette';
 import { setCount, setShadowColour } from './shadow';
 
@@ -99,6 +100,9 @@ export class TramView {
     this.nightDirty = true;
   }
 
+  /** Heights of the city (specs/terrain.md); null = flat. */
+  terrain: Terrain | null = null;
+
   /** Writes the instance buffers; call once per frame before scene.render. */
   update(playerLayer: number): void {
     const lift = this.tuning.layers.deckLiftM;
@@ -107,7 +111,7 @@ export class TramView {
     let n = 0;
     for (const c of this.trams.items) {
       if (c.layer < 0 !== inTunnel || n >= max) continue;
-      const h = (c.layer > 0 ? lift * c.layer : 0) + Z.car;
+      const h = baseHeight(this.terrain, c.x, c.y, c.layer, lift) + Z.car;
       // Babylon rotates about +Y clockwise seen from above; world headings are CCW.
       Matrix.RotationYToRef(-c.heading, this.m);
       this.m.setTranslationFromFloats(c.x, h, c.y);

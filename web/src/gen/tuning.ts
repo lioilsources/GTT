@@ -78,6 +78,7 @@ export class Tuning {
   readonly carAnchor: TuningCarAnchor;
   readonly extrusion: TuningExtrusion;
   chunkM: number;
+  /** cruise = no-input pace; 14.0 with specs/drive.md v2 (flipped in shared/cruise-v2-scenarios) */
   readonly speedMps: TuningSpeedMps;
   /** citypack: road corridors and building masses. */
   readonly roads: TuningRoads;
@@ -399,6 +400,7 @@ export class TuningExtrusion {
   static readonly keys = ['k', 'knee_m', 'exp', 'max_scale'] as const;
 }
 
+/** cruise = no-input pace; 14.0 with specs/drive.md v2 (flipped in shared/cruise-v2-scenarios) */
 export class TuningSpeedMps {
   cruise: number;
   topDefault: number;
@@ -698,6 +700,12 @@ export class TuningTrams {
   seed: number;
   /** drawn distance between the two rails (world metres) */
   railGaugeM: number;
+  /** trams.md v2: a node turn sharper than this is not a track connection */
+  maxSwitchDeg: number;
+  /** the turn at a node is measured this far along both edges */
+  turnProbeM: number;
+  /** acceptance: max change of a car's axis per metre of travel (test) */
+  maxTurnDegPerM: number;
 
   constructor(r: R) {
     this.enabled = r.b('enabled');
@@ -729,6 +737,9 @@ export class TuningTrams {
     this.despawnM = r.d('despawn_m');
     this.seed = r.i('seed');
     this.railGaugeM = r.d('rail_gauge_m');
+    this.maxSwitchDeg = r.d('max_switch_deg');
+    this.turnProbeM = r.d('turn_probe_m');
+    this.maxTurnDegPerM = r.d('max_turn_deg_per_m');
   }
 
   toJson(): Record<string, unknown> {
@@ -762,6 +773,9 @@ export class TuningTrams {
       despawn_m: this.despawnM,
       seed: this.seed,
       rail_gauge_m: this.railGaugeM,
+      max_switch_deg: this.maxSwitchDeg,
+      turn_probe_m: this.turnProbeM,
+      max_turn_deg_per_m: this.maxTurnDegPerM,
     };
   }
 }
@@ -919,6 +933,8 @@ export class TuningDrive {
   engineBrakeMps2: number;
   /** engine braking starts this far above the wanted speed */
   overspeedMps: number;
+  /** auto-cruise cancels the downhill slope pull up to this (specs/drive.md v2) */
+  cruiseHoldMps2: number;
   /** 1/s */
   dragLinear: number;
   /** 1/m */
@@ -957,6 +973,7 @@ export class TuningDrive {
     this.reversePower = r.d('reverse_power');
     this.engineBrakeMps2 = r.d('engine_brake_mps2');
     this.overspeedMps = r.d('overspeed_mps');
+    this.cruiseHoldMps2 = r.d('cruise_hold_mps2');
     this.dragLinear = r.d('drag_linear');
     this.dragQuadratic = r.d('drag_quadratic');
     this.handbrakeDecelMps2 = r.d('handbrake_decel_mps2');
@@ -992,6 +1009,7 @@ export class TuningDrive {
       reverse_power: this.reversePower,
       engine_brake_mps2: this.engineBrakeMps2,
       overspeed_mps: this.overspeedMps,
+      cruise_hold_mps2: this.cruiseHoldMps2,
       drag_linear: this.dragLinear,
       drag_quadratic: this.dragQuadratic,
       handbrake_decel_mps2: this.handbrakeDecelMps2,
@@ -3665,6 +3683,10 @@ export class TuningCars {
   garageSpeedMps: number;
   /** the context button stays this long after the stop (auto-throttle moves on) */
   actionHoldS: number;
+  /** garage test drive of a car for sale, game seconds (specs/testdrive.md) */
+  testDriveS: number;
+  /** the countdown pill turns red below this */
+  testDriveLowS: number;
   readonly parked: TuningCarsParked;
 
   constructor(r: R) {
@@ -3676,6 +3698,8 @@ export class TuningCars {
     this.garageRadiusM = r.d('garage_radius_m');
     this.garageSpeedMps = r.d('garage_speed_mps');
     this.actionHoldS = r.d('action_hold_s');
+    this.testDriveS = r.d('test_drive_s');
+    this.testDriveLowS = r.d('test_drive_low_s');
     this.parked = new TuningCarsParked(r.sub('parked'));
   }
 
@@ -3689,6 +3713,8 @@ export class TuningCars {
       garage_radius_m: this.garageRadiusM,
       garage_speed_mps: this.garageSpeedMps,
       action_hold_s: this.actionHoldS,
+      test_drive_s: this.testDriveS,
+      test_drive_low_s: this.testDriveLowS,
       parked: this.parked.toJson(),
     };
   }
@@ -4382,6 +4408,8 @@ export class TuningEconomy {
   firstMinStars: number;
   /** wrecked car (paid up to the cash the player has) */
   towFee: number;
+  /** debug-only "+10 000" cash button (specs/testdrive.md) */
+  debugGrant: number;
 
   constructor(r: R) {
     this.base = r.i('base');
@@ -4392,6 +4420,7 @@ export class TuningEconomy {
     this.firstBonus = r.i('first_bonus');
     this.firstMinStars = r.i('first_min_stars');
     this.towFee = r.i('tow_fee');
+    this.debugGrant = r.i('debug_grant');
   }
 
   toJson(): Record<string, unknown> {
@@ -4404,6 +4433,7 @@ export class TuningEconomy {
       first_bonus: this.firstBonus,
       first_min_stars: this.firstMinStars,
       tow_fee: this.towFee,
+      debug_grant: this.debugGrant,
     };
   }
 }
@@ -4619,6 +4649,9 @@ export class TuningTerrain {
   readonly maxGrade: TuningTerrainMaxGrade;
   readonly bridge: TuningTerrainBridge;
   readonly tunnel: TuningTerrainTunnel;
+  /** citypack `elevation` and `lod` steps (plan ch. 4); clients do not read these. */
+  readonly pipeline: TuningTerrainPipeline;
+  readonly lod: TuningTerrainLod;
 
   constructor(r: R) {
     this.exaggeration = r.d('exaggeration');
@@ -4627,6 +4660,8 @@ export class TuningTerrain {
     this.maxGrade = new TuningTerrainMaxGrade(r.sub('max_grade'));
     this.bridge = new TuningTerrainBridge(r.sub('bridge'));
     this.tunnel = new TuningTerrainTunnel(r.sub('tunnel'));
+    this.pipeline = new TuningTerrainPipeline(r.sub('pipeline'));
+    this.lod = new TuningTerrainLod(r.sub('lod'));
   }
 
   toJson(): Record<string, unknown> {
@@ -4637,6 +4672,8 @@ export class TuningTerrain {
       max_grade: this.maxGrade.toJson(),
       bridge: this.bridge.toJson(),
       tunnel: this.tunnel.toJson(),
+      pipeline: this.pipeline.toJson(),
+      lod: this.lod.toJson(),
     };
   }
 }
@@ -4764,6 +4801,242 @@ export class TuningTerrainTunnel {
   static readonly keys = ['depth_water_m', 'depth_land_m', 'max_grade'] as const;
 }
 
+/** citypack `elevation` and `lod` steps (plan ch. 4); clients do not read these. */
+export class TuningTerrainPipeline {
+  /** DEM read around the area */
+  demMarginM: number;
+  /** working grid in local metres */
+  demGridM: number;
+  /** AWS Terrain Tiles zoom (~3.6 m/px at 40° N) */
+  demZoom: number;
+  /** smoothing after removing buildings from a surface model */
+  cleanSigmaM: number;
+  /** the same for a coarse one (~25 m EU-DEM smears blocks into streets) */
+  cleanSigmaCoarseM: number;
+  /** road profile samples (and densified edges) */
+  profileStepM: number;
+  readonly profileWindowM: TuningTerrainPipelineProfileWindowM;
+  /** viaduct over land: terrain + this */
+  elevatedM: number;
+  /** terrain under water: level − this */
+  underwaterM: number;
+  /** grade_clamp stops below this excess */
+  gradeToleranceM: number;
+  gradePasses: number;
+  /** densified samples on a straight profile are dropped */
+  zToleranceM: number;
+  /** validate: road edge vs terrain */
+  roadGapMaxM: number;
+  /** validate: share of road edge samples allowed over road_gap_max_m */
+  roadGapShare: number;
+  /** validate: |terrain − road profile| on kept carriageways (the car rides the terrain there) */
+  readonly roadStrip: TuningTerrainPipelineRoadStrip;
+  /** validate fails below water/road + this; below bridge.clear_* it warns */
+  bridgeMinClearM: number;
+  /** a ground edge over water this long in one stretch is an (unflagged) bridge */
+  bridgeOverWaterM: number;
+  /** after grade_clamp: smooth the sawtooth on steep hills (then clamp again) */
+  profileFairPasses: number;
+  /** road strip samples that fit the grid nodes to the road profile */
+  readonly conformFit: TuningTerrainPipelineConformFit;
+  readonly sun: TuningTerrainPipelineSun;
+  /** z-factor on game slopes in the Chunk.shade channel only (1 = plain hillshade) */
+  shadeStrength: number;
+
+  constructor(r: R) {
+    this.demMarginM = r.d('dem_margin_m');
+    this.demGridM = r.d('dem_grid_m');
+    this.demZoom = r.i('dem_zoom');
+    this.cleanSigmaM = r.d('clean_sigma_m');
+    this.cleanSigmaCoarseM = r.d('clean_sigma_coarse_m');
+    this.profileStepM = r.d('profile_step_m');
+    this.profileWindowM = new TuningTerrainPipelineProfileWindowM(r.sub('profile_window_m'));
+    this.elevatedM = r.d('elevated_m');
+    this.underwaterM = r.d('underwater_m');
+    this.gradeToleranceM = r.d('grade_tolerance_m');
+    this.gradePasses = r.i('grade_passes');
+    this.zToleranceM = r.d('z_tolerance_m');
+    this.roadGapMaxM = r.d('road_gap_max_m');
+    this.roadGapShare = r.d('road_gap_share');
+    this.roadStrip = new TuningTerrainPipelineRoadStrip(r.sub('road_strip'));
+    this.bridgeMinClearM = r.d('bridge_min_clear_m');
+    this.bridgeOverWaterM = r.d('bridge_over_water_m');
+    this.profileFairPasses = r.i('profile_fair_passes');
+    this.conformFit = new TuningTerrainPipelineConformFit(r.sub('conform_fit'));
+    this.sun = new TuningTerrainPipelineSun(r.sub('sun'));
+    this.shadeStrength = r.d('shade_strength');
+  }
+
+  toJson(): Record<string, unknown> {
+    return {
+      dem_margin_m: this.demMarginM,
+      dem_grid_m: this.demGridM,
+      dem_zoom: this.demZoom,
+      clean_sigma_m: this.cleanSigmaM,
+      clean_sigma_coarse_m: this.cleanSigmaCoarseM,
+      profile_step_m: this.profileStepM,
+      profile_window_m: this.profileWindowM.toJson(),
+      elevated_m: this.elevatedM,
+      underwater_m: this.underwaterM,
+      grade_tolerance_m: this.gradeToleranceM,
+      grade_passes: this.gradePasses,
+      z_tolerance_m: this.zToleranceM,
+      road_gap_max_m: this.roadGapMaxM,
+      road_gap_share: this.roadGapShare,
+      road_strip: this.roadStrip.toJson(),
+      bridge_min_clear_m: this.bridgeMinClearM,
+      bridge_over_water_m: this.bridgeOverWaterM,
+      profile_fair_passes: this.profileFairPasses,
+      conform_fit: this.conformFit.toJson(),
+      sun: this.sun.toJson(),
+      shade_strength: this.shadeStrength,
+    };
+  }
+}
+
+export class TuningTerrainPipelineProfileWindowM {
+  lidar: number;
+  coarse: number;
+
+  constructor(r: R) {
+    this.lidar = r.d('lidar');
+    this.coarse = r.d('coarse');
+  }
+
+  toJson(): Record<string, unknown> {
+    return {
+      lidar: this.lidar,
+      coarse: this.coarse,
+    };
+  }
+
+  /** Value by YAML key, undefined when the key is unknown. */
+  get(key: string): number | undefined {
+    switch (key) {
+      case 'lidar':
+        return this.lidar;
+      case 'coarse':
+        return this.coarse;
+      default:
+        return undefined;
+    }
+  }
+
+  static readonly keys = ['lidar', 'coarse'] as const;
+}
+
+/** validate: |terrain − road profile| on kept carriageways (the car rides the terrain there) */
+export class TuningTerrainPipelineRoadStrip {
+  tolM: number;
+  share: number;
+  maxM: number;
+
+  constructor(r: R) {
+    this.tolM = r.d('tol_m');
+    this.share = r.d('share');
+    this.maxM = r.d('max_m');
+  }
+
+  toJson(): Record<string, unknown> {
+    return {
+      tol_m: this.tolM,
+      share: this.share,
+      max_m: this.maxM,
+    };
+  }
+
+  /** Value by YAML key, undefined when the key is unknown. */
+  get(key: string): number | undefined {
+    switch (key) {
+      case 'tol_m':
+        return this.tolM;
+      case 'share':
+        return this.share;
+      case 'max_m':
+        return this.maxM;
+      default:
+        return undefined;
+    }
+  }
+
+  static readonly keys = ['tol_m', 'share', 'max_m'] as const;
+}
+
+/** road strip samples that fit the grid nodes to the road profile */
+export class TuningTerrainPipelineConformFit {
+  stepM: number;
+  passes: number;
+
+  constructor(r: R) {
+    this.stepM = r.d('step_m');
+    this.passes = r.i('passes');
+  }
+
+  toJson(): Record<string, unknown> {
+    return {
+      step_m: this.stepM,
+      passes: this.passes,
+    };
+  }
+}
+
+export class TuningTerrainPipelineSun {
+  azimuthDeg: number;
+  altitudeDeg: number;
+
+  constructor(r: R) {
+    this.azimuthDeg = r.d('azimuth_deg');
+    this.altitudeDeg = r.d('altitude_deg');
+  }
+
+  toJson(): Record<string, unknown> {
+    return {
+      azimuth_deg: this.azimuthDeg,
+      altitude_deg: this.altitudeDeg,
+    };
+  }
+
+  /** Value by YAML key, undefined when the key is unknown. */
+  get(key: string): number | undefined {
+    switch (key) {
+      case 'azimuth_deg':
+        return this.azimuthDeg;
+      case 'altitude_deg':
+        return this.altitudeDeg;
+      default:
+        return undefined;
+    }
+  }
+
+  static readonly keys = ['azimuth_deg', 'altitude_deg'] as const;
+}
+
+export class TuningTerrainLod {
+  gridM: number;
+  chunks: number;
+  blockMergeM: number;
+  simplifyM: number;
+  parklandHeightM: number;
+
+  constructor(r: R) {
+    this.gridM = r.i('grid_m');
+    this.chunks = r.i('chunks');
+    this.blockMergeM = r.d('block_merge_m');
+    this.simplifyM = r.d('simplify_m');
+    this.parklandHeightM = r.d('parkland_height_m');
+  }
+
+  toJson(): Record<string, unknown> {
+    return {
+      grid_m: this.gridM,
+      chunks: this.chunks,
+      block_merge_m: this.blockMergeM,
+      simplify_m: this.simplifyM,
+      parkland_height_m: this.parklandHeightM,
+    };
+  }
+}
+
 export class TuningSlopePhysics {
   /** m/s² in game units */
   gravity: number;
@@ -4824,6 +5097,8 @@ export class TuningNature {
   readonly grip: TuningNatureGrip;
   readonly crownFade: TuningNatureCrownFade;
   readonly waterFall: TuningNatureWaterFall;
+  /** citypack `nature` step (plan ch. 4); clients do not read these. */
+  readonly pipeline: TuningNaturePipeline;
 
   constructor(r: R) {
     this.treeSizes = new TuningNatureTreeSizes(r.sub('tree_sizes'));
@@ -4835,6 +5110,7 @@ export class TuningNature {
     this.grip = new TuningNatureGrip(r.sub('grip'));
     this.crownFade = new TuningNatureCrownFade(r.sub('crown_fade'));
     this.waterFall = new TuningNatureWaterFall(r.sub('water_fall'));
+    this.pipeline = new TuningNaturePipeline(r.sub('pipeline'));
   }
 
   toJson(): Record<string, unknown> {
@@ -4848,6 +5124,7 @@ export class TuningNature {
       grip: this.grip.toJson(),
       crown_fade: this.crownFade.toJson(),
       water_fall: this.waterFall.toJson(),
+      pipeline: this.pipeline.toJson(),
     };
   }
 }
@@ -5130,6 +5407,77 @@ export class TuningNatureWaterFall {
   }
 
   static readonly keys = ['sink_s'] as const;
+}
+
+/** citypack `nature` step (plan ch. 4); clients do not read these. */
+export class TuningNaturePipeline {
+  /** outline simplification (river widths kept) */
+  simplifyM: number;
+  /** below: class small */
+  smallWaterM2: number;
+  /** a stream polygon wider than this is a river */
+  streamRiverM: number;
+  /** unnamed river/sea pieces take the nearest named water line */
+  waterNameSearchM: number;
+  labelWaterHa: number;
+  labelGreenHa: number;
+  /** validate: bigger water bodies must have a name */
+  namedWaterHa: number;
+  /** spots.area_name: near named water */
+  areaNameWaterM: number;
+  /** spots.area_name: in or next to a named park */
+  areaNameParkM: number;
+  /** parks without inner surfaces are split by land_cover */
+  bigParkHa: number;
+  woodCoverHa: number;
+  /** S, M, L for scattered trees */
+  treeSizeMix: number[];
+  /** inventory and OSM trees this close to a street go to its sidewalk */
+  streetTreeSnapM: number;
+  treeMinSpacingM: number;
+  treeRowStepM: number;
+  /** no crown within this of a bridge, ramp or viaduct footprint (on the ground below) */
+  deckTreeMarginM: number;
+
+  constructor(r: R) {
+    this.simplifyM = r.d('simplify_m');
+    this.smallWaterM2 = r.d('small_water_m2');
+    this.streamRiverM = r.d('stream_river_m');
+    this.waterNameSearchM = r.d('water_name_search_m');
+    this.labelWaterHa = r.d('label_water_ha');
+    this.labelGreenHa = r.d('label_green_ha');
+    this.namedWaterHa = r.d('named_water_ha');
+    this.areaNameWaterM = r.d('area_name_water_m');
+    this.areaNameParkM = r.d('area_name_park_m');
+    this.bigParkHa = r.d('big_park_ha');
+    this.woodCoverHa = r.d('wood_cover_ha');
+    this.treeSizeMix = r.dl('tree_size_mix');
+    this.streetTreeSnapM = r.d('street_tree_snap_m');
+    this.treeMinSpacingM = r.d('tree_min_spacing_m');
+    this.treeRowStepM = r.d('tree_row_step_m');
+    this.deckTreeMarginM = r.d('deck_tree_margin_m');
+  }
+
+  toJson(): Record<string, unknown> {
+    return {
+      simplify_m: this.simplifyM,
+      small_water_m2: this.smallWaterM2,
+      stream_river_m: this.streamRiverM,
+      water_name_search_m: this.waterNameSearchM,
+      label_water_ha: this.labelWaterHa,
+      label_green_ha: this.labelGreenHa,
+      named_water_ha: this.namedWaterHa,
+      area_name_water_m: this.areaNameWaterM,
+      area_name_park_m: this.areaNameParkM,
+      big_park_ha: this.bigParkHa,
+      wood_cover_ha: this.woodCoverHa,
+      tree_size_mix: this.treeSizeMix,
+      street_tree_snap_m: this.streetTreeSnapM,
+      tree_min_spacing_m: this.treeMinSpacingM,
+      tree_row_step_m: this.treeRowStepM,
+      deck_tree_margin_m: this.deckTreeMarginM,
+    };
+  }
 }
 
 /** Smooth driving: soft trees, wall slide, rescue (specs/flow.md, Prompts/04-METROPOLE_FLOW_PLAN.md). */

@@ -1,0 +1,12 @@
+{
+  "module": "flow",
+  "name": "forest_200",
+  "car": "sedan_regent",
+  "inputs": [{"t": 0, "throttle": 1, "steer": 0, "brake": 0, "boost": 1}],
+  "expect": {
+    "min_speed_mps": {"value": 14.47, "tol": 0.05},
+    "time_200_s": {"value": 10.6, "tol": 0.05},
+    "tree_hits": {"value": 1, "tol": 0},
+    "rescues": {"value": 0, "tol": 0}
+  }
+}

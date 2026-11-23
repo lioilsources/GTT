@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:mg_api/mg_api.dart' show ArtIcon;
 import 'package:shared_gen/shared_gen.dart';
 
 import 'feed_screen.dart';
@@ -230,6 +231,7 @@ class _Home extends StatelessWidget {
               SizedBox(
                 width: (box.maxWidth - 2 * Tokens.spaceSm) / 4,
                 child: _AppIcon(
+                  id: id,
                   icon: _icons[id]!,
                   size: cell * 0.7,
                   label: phoneText(context, messageKey('app_${id.name}')),
@@ -264,7 +266,8 @@ class _Home extends StatelessWidget {
 }
 
 class _AppIcon extends StatelessWidget {
-  const _AppIcon({required this.icon, required this.size, required this.label, required this.onTap});
+  const _AppIcon({required this.id, required this.icon, required this.size, required this.label, required this.onTap});
+  final PhoneAppId id;
   final IconData icon;
   final double size;
   final String label;
@@ -285,7 +288,19 @@ class _AppIcon extends StatelessWidget {
               color: Color(on ? Tokens.colorPhoneApp : Tokens.colorPhoneAppOff),
               borderRadius: BorderRadius.circular(16),
             ),
-            child: Icon(icon, size: size * 0.5, color: Color(on ? Tokens.colorPhoneAppText : Tokens.colorUiTextFaint)),
+            // ui/<app id>.png (specs/art.md v3) in the tile's icon colour, else today's icon.
+            child: Center(
+              child: ArtIcon(
+                id.name,
+                size: size * 0.5,
+                color: Color(on ? Tokens.colorPhoneAppText : Tokens.colorUiTextFaint),
+                fallback: Icon(
+                  icon,
+                  size: size * 0.5,
+                  color: Color(on ? Tokens.colorPhoneAppText : Tokens.colorUiTextFaint),
+                ),
+              ),
+            ),
           ),
           const SizedBox(height: Tokens.spaceXs),
           Text(

@@ -57,6 +57,14 @@ export class CarsHud {
   private readonly name = h('div.pill', { id: 'car-name' });
   private readonly action = h('button.round', { id: 'car-action', type: 'button', hidden: true });
   private readonly sheet = h('div.mg-sheet', { id: 'garage', hidden: true });
+  /** Test-drive countdown pill with its end button (specs/testdrive.md). */
+  private readonly testPill = h('div.pill', {});
+  private readonly testBox = h('div', { id: 'test-drive-hud', hidden: true }, this.testPill,
+    h('button.round', { type: 'button', onclick: () => this.endTest() }, '✕'));
+  /** Short HUD message (main.ts: the phone toast); "Zkušební jízda skončila". */
+  toast: (text: string) => void = () => {};
+  /** True while a world minigame runs: "Vyzkoušet" is grey then (specs/testdrive.md "Pořadí"). */
+  blockTest: () => boolean = () => false;
   private mode: 'board' | 'garage' | null = null;
   private boardTarget: ParkedCar | null = null;
   private last = performance.now();
@@ -85,9 +93,35 @@ export class CarsHud {
     /** Called after the car changed (the view rebuilds the car mesh). */
     readonly onCarChanged: () => void,
   ) {
-    hud.append(this.name, this.action);
+    hud.append(this.name, this.action, this.testBox);
+    this.testBox.querySelector('button')!.title = t('testDriveEnd');
     document.body.append(this.sheet);
     this.action.addEventListener('click', () => this.press());
+  }
+
+  /** Starts a test drive of a car for sale from the garage list (specs/testdrive.md "Start"). */
+  testDrive(car: string): void {
+    if (this.blockTest()) return;
+    const here = this.away;
+    this.closeGarage();
+    if (this.fleet.startTest(car, here)) this.onCarChanged();
+    this.update();
+  }
+
+  /** Ends a running test drive early (the ✕ on the pill). */
+  endTest(): void {
+    if (this.fleet.endTest()) this.onCarChanged();
+    this.update();
+  }
+
+  /** Game-clock tick (main loop, stepDt): counts the test drive down, ends it at 0. */
+  tick(dt: number): void {
+    if (!this.fleet.testing) return;
+    if (this.fleet.tickTest(dt)) {
+      this.onCarChanged();
+      this.toast(this.t('testDriveOver'));
+      this.update();
+    }
   }
 
   private press(): void {
@@ -105,6 +139,13 @@ export class CarsHud {
 
   update(): void {
     this.name.textContent = this.fleet.spec.name;
+    const test = this.fleet.testing;
+    this.testBox.hidden = test === null;
+    if (test) {
+      const n = Math.ceil(test.left);
+      this.testPill.textContent = this.t('testDriveLeft', { time: `${Math.floor(n / 60)}:${String(n % 60).padStart(2, '0')}` });
+      this.testPill.classList.toggle('low', test.left <= this.fleet.tuning.cars.testDriveLowS);
+    }
     const now = performance.now();
     const a = this.fleet.action((now - this.last) / 1000);
     this.last = now;
@@ -125,12 +166,28 @@ export class CarsHud {
     this.release?.();
     this.release = null;
     this.tab = 'cars';
+    this.away = false;
     for (const fn of this.onClose) fn();
+  }
+
+  /**
+   * True while the list is open from the phone away from the garage spot: a chosen or tried car
+   * appears in place of the player's car (specs/testdrive.md v2 "Garáž z telefonu").
+   */
+  private away = false;
+
+  /** "Otevřít garáž" in the phone Garage app: the full list anywhere (no garage spot = no-op). */
+  openAnywhere(tab = 'cars'): void {
+    if (!this.fleet.garage) return;
+    if (this.sheet.hidden) this.away = !this.fleet.atGarage();
+    this.openGarage(tab);
   }
 
   /** Opens the garage list on [tab] (default the last one shown, "Auta" when it was closed). */
   openGarage(tab: string = this.tab): void {
     const t = this.t;
+    // Opening the garage ends a test drive: back in the own car (specs/testdrive.md "Konec").
+    if (this.fleet.endTest()) this.onCarChanged();
     const tabs = [{ id: 'cars', label: 'garageTabCars' as MessageKey, order: 0, render: () => this.carsTab() }, ...this.tabs]
       .sort((a, b) => a.order - b.order);
     this.tab = tabs.some((x) => x.id === tab) ? tab : 'cars';
@@ -166,7 +223,7 @@ export class CarsHud {
           type: 'button',
           disabled: !f.canSelect(id),
           onclick: () => {
-            f.select(id);
+            f.select(id, this.away);
             this.onCarChanged();
             this.closeGarage();
             this.update();
@@ -177,21 +234,28 @@ export class CarsHud {
     });
     // For sale (specs/economy.md "Nákup auta"): every car not owned, with its price.
     // Sorted by city, class, price and id, each with its class and a small preview (specs/cars.md "Garáž").
+    // Each with "Vyzkoušet" next to "Koupit" (specs/testdrive.md "Nabídka").
     const buyable = new Set(f.buyable());
+    const blocked = this.blockTest();
     const sale = saleOrder(f.specs.values(), f.owned, f.drive.city.id).map((spec) => {
       const canvas = h('canvas.garage-sale-thumb', { width: 40, height: 56 });
       requestAnimationFrame(() => drawCarPreview(canvas, spec, null, f.tuning));
-      return h('button.mg-btn.ghost.garage-sale', {
-        type: 'button',
-        'data-car': spec.id,
-        disabled: !buyable.has(spec.id),
-        onclick: () => {
-          f.buy(spec.id);
-          this.openGarage();
-        },
-      }, canvas, h('span.garage-sale-info', {},
+      return h('div.garage-sale', { 'data-car': spec.id }, canvas, h('span.garage-sale-info', {},
         h('strong', {}, spec.name), h('span', {}, t(classKeys[spec.class]))),
-      h('span.garage-sale-price', {}, t('garageBuy', { price: spec.price })));
+      h('span.garage-sale-actions', {},
+        h('button.mg-btn.garage-sale-buy', {
+          type: 'button',
+          disabled: !buyable.has(spec.id),
+          onclick: () => {
+            f.buy(spec.id);
+            this.openGarage();
+          },
+        }, t('garageBuy', { price: spec.price })),
+        h('button.mg-btn.ghost.garage-sale-test', {
+          type: 'button',
+          disabled: blocked || !f.canTest(spec.id),
+          onclick: () => this.testDrive(spec.id),
+        }, t('garageTestDrive'))));
     });
     // Air tank of a hop car (specs/hop.md): refilled to full for free.
     const refill = f.canRefillHop()

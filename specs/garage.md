@@ -1,6 +1,6 @@
 # Tuning a kosmetika (M2-S7)
 
-**version: 1** · P0 nákup vylepšení a vzhledu (`vectors/garage.json`) · P1 účinek na jízdu,
+**version: 2** · P0 nákup vylepšení a vzhledu (`vectors/garage.json`) · P1 účinek na jízdu,
 kreslení, garáž · METROPOLE_PLAN 10 (sloty auta), M2 bod 7 a N5 · parita F-044 · uložení
 `specs/save.md` v4 (formát 5)
 
@@ -22,15 +22,21 @@ měřitelně, vzhled jen kresbu. Čísla jsou v `content/tuning.yaml` → `garag
 Části (pevné pořadí): `paint`, `decal`, `wheels`, `glow`, `smoke`. Hodnota je index volby, 0 =
 výchozí:
 - `paint` – 0 = lak auta z katalogu (`paint`, `color.carPaint`), `i ≥ 1` = `color.garage.paints[i − 1]`.
-- `decal` – 0 bez polepu, 1 pruhy, 2 plameny, 3 šachovnice (kreslí se procedurálně, barva
-  `color.garage.decal`).
-- `wheels` – 0 původní, 1 sportovní, 2 bílé obruče (`color.garage.wheels[value]`).
+- `decal` – 0 bez polepu, 1 pruhy (`stripes`), 2 plameny (`flames`), 3 šachovnice (`checker`),
+  4 hvězdy (`stars`), 5 blesky (`lightning`), 6 vlny (`waves`), 7 maskáč (`camo`), 8 rastr
+  (`halftone`); barva `color.garage.decal`. Kresba: sprite `garage/decals/<id>.png`
+  (`specs/art.md` v3), bez něj procedurálně (kap. Kreslení).
+- `wheels` – 0 původní, 1 sportovní (`sport`), 2 bílé obruče (`whitewall`), 3 paprsky
+  (`five_spoke`), 4 síť (`mesh`), 5 turbína (`turbine`), 6 terénní (`offroad`); barva ráfku
+  `color.garage.wheels[value]`. Kresba: sprite `garage/wheels/<id>.png` (`specs/art.md` v3), bez
+  něj procedurální kolo jako dosud v barvě ráfku.
 - `glow` – 0 bez podsvícení, `i ≥ 1` = `color.garage.glow[i − 1]` (záře pod autem).
 - `smoke` – 0 výchozí, `i ≥ 1` = `color.garage.smoke[i − 1]`. Klienti kouř při driftu zatím
   nekreslí (jen stopy smyku), takže v1 se volba **jen ukládá a ukazuje v garáži**; kreslit se
   začne s kouřem.
-- Počet voleb části = `parts[part]`: `paint` 1 + počet `paints`, `decal` 4, `wheels` 3, `glow` a
-  `smoke` 1 + počet barev. Cena volby `i ≥ 1` = `garage.look_price_<part>`, návrat na 0 je zdarma.
+- Počet voleb části = `parts[part]`: `paint` 1 + počet `paints`, `decal` 9, `wheels` = počet
+  `color.garage.wheels` (7), `glow` a `smoke` 1 + počet barev. Klienti počty berou z tokenů a z
+  této tabulky, ne natvrdo jinde. Cena volby `i ≥ 1` = `garage.look_price_<part>`, návrat na 0 je zdarma.
   Vzhled jde měnit u všech vlastních aut (i `micro`).
 
 ## Stav (P0, modul `garage`)
@@ -109,15 +115,20 @@ dřív než základní. Plná zatáčka při 15 m/s po 3 s: auto s `tyres` 3 má
   zdarma.
 - Po nákupu toast `garageBought` a uložení.
 - Aplikace **Garáž** v telefonu (`specs/phone.md`) ukazuje vlastní auta s úrovněmi a vzhledem jen
-  ke čtení a Poličku; nakupuje se jen u garáže.
+  ke čtení a Poličku. Tlačítko „Otevřít garáž“ otevře celý seznam garáže kdekoli
+  (`specs/testdrive.md` v2 „Garáž z telefonu“).
 
 ## Kreslení (P1)
 - `paint` mění barvu karoserie (sklo zůstává lak + 12 % bílé). Zaparkované vlastní auto, které
   hráč odstavil, se kreslí se svým vzhledem; ostatní zaparkovaná auta a provoz podle katalogu.
-- `decal`: pruhy = dva podélné pruhy ±0,22 `hw` přes celé auto; plameny = tři trojúhelníky od
-  přídě do 0,35 `hl`; šachovnice = pás čtverců na obou bocích. Barva `color.garage.decal`; muscle a
-  taxi mají své detaily pod polepem.
-- `wheels`: barva ráfku `color.garage.wheels[value]`.
+- `decal`: má-li klient sprite polepu (`specs/art.md` v3), kreslí ho; jinak procedurálně:
+  pruhy = dva podélné pruhy ±0,22 `hw` přes celé auto; plameny = tři trojúhelníky od přídě do
+  0,35 `hl`; šachovnice = pás čtverců na obou bocích; hvězdy = tři kosočtverce na podélné ose
+  (středy +0,55, 0, −0,55 `hl`, úhlopříčky 0,5 `hw` napříč × 0,25 `hl` podél); blesky a vlny =
+  jako pruhy; maskáč a rastr = jako šachovnice. Barva `color.garage.decal`; muscle a taxi mají
+  své detaily pod polepem.
+- `wheels`: má-li klient sprite kola z garáže, kreslí ho místo `wheel.png` / procedurálního kola;
+  jinak kolo jako dosud v barvě ráfku `color.garage.wheels[value]`.
 - `glow`: zaoblený obdélník o `garage.glow_margin_m` větší než auto pod stínem, barva s alfou,
   jen v noci nebo v tunelu plnou silou, ve dne × `garage.glow_day`.
 
@@ -125,8 +136,15 @@ dřív než základní. Plná zatáčka při 15 m/s po 3 s: auto s `tyres` 3 má
 `specs/save.md` v4 (formát 5): `upgrades: {carId: {slot: int}}`, `looks: {carId: {part: int}}`,
 obě nepovinné (chybí = `{}`). Po startu `load` z uložení, po každém nákupu uložení.
 
+## Verze
+- **v2:** `decal` 9 voleb (4–8 nové), `wheels` 7 voleb (3–6 nové), sprity kosmetiky
+  (`specs/art.md` v3) s procedurální zálohou. Pravidla modulu se nemění; mění se jen `parts`
+  v configu. Uložené hodnoty z v1 (`decal` 0–3, `wheels` 0–2) zůstávají platné. Cena volby je
+  dál jedna na část (`look_price_<part>`).
+
 ## Hraniční případy
 - Auto z uložení, které už v katalogu není: `load` ho zahodí.
 - Auto, které ztratí slot v katalogu: úroveň slotu se zahodí.
 - Méně barev v tokenech než index ve vzhledu: `load` hodnotu zahodí (výchozí).
 - Garáž bez hotovosti: tlačítka šedá, návrat vzhledu na 0 jde vždy.
+- Uložená hodnota z budoucí verze mimo `parts` (např. `decal` 9): `load` ji zahodí (výchozí).

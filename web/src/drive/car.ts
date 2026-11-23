@@ -50,7 +50,13 @@ export class Car {
   braking = false;
   /** Multiplies both axles' grip (weather input, specs/weather.md); 1 = the spec's grip. */
   gripScale = 1;
+  /** Surface under the car (specs/nature.md "Jízda"): × brake deceleration; 1 on asphalt. */
+  brakeScale = 1;
+  /** Forest (specs/flow.md "Les"): × engine force; 1 elsewhere. */
+  powerScale = 1;
   reversing = false;
+  /** Longitudinal engine/brake acceleration of the last drive step (m/s²); 0 = no throttle. */
+  accel = 0;
 
   // Scratch vectors: no allocations in the step.
   private readonly f: Vec2Value = { x: 0, y: 0 };
@@ -151,7 +157,8 @@ export class Car {
 
   private refilter(): void {
     if (this.airborne) {
-      this.fixture.setFilterData({ groupIndex: 0, categoryBits: CAT_CAR, maskBits: CAT_BUILDINGS });
+      // In the air (specs/hop.md v2): buildings only, and they only exist on the ground layer.
+      this.fixture.setFilterData({ groupIndex: 0, categoryBits: CAT_CAR, maskBits: this.layer === 0 ? CAT_BUILDINGS : 0 });
       return;
     }
     // Buildings, parked cars and bollards only exist on the ground layer; bridges and tunnels use
@@ -160,8 +167,12 @@ export class Car {
     this.fixture.setFilterData({ groupIndex: 0, categoryBits: CAT_CAR, maskBits: (this.layer === 0 ? ground : 0) | CAT_TRAFFIC | CAT_TRAM });
   }
 
-  /** Applies controls and tyre forces; call before world.step. */
-  drive(input: ControlInput, dt: number, cruise: number, top: number): void {
+  /**
+   * Applies controls and tyre forces; call before world.step. [slopeF] = the slope acceleration
+   * along the heading this step (m/s², + = pulls forward, i.e. downhill; specs/terrain.md "Svah"),
+   * which the cruise hold cancels (specs/drive.md v2 step 2); 0 on the flat.
+   */
+  drive(input: ControlInput, dt: number, cruise: number, top: number, slopeF = 0): void {
     const t = this.t, spec = this.spec, body = this.body;
     const ang = body.getAngle();
     const fx = Math.cos(ang), fy = Math.sin(ang);
@@ -191,17 +202,22 @@ export class Car {
     this.reversing = false;
     if (input.brake > 0) {
       if (speedF > t.brakeMinMps) {
-        accel = -spec.brake * input.brake;
+        accel = -spec.brake * input.brake * this.brakeScale;
         this.braking = true;
       } else {
         this.reversing = true;
-        accel = speedF > -t.reverseMaxMps ? -spec.power * t.reversePower : 0;
+        accel = speedF > -t.reverseMaxMps ? -spec.power * this.powerScale * t.reversePower : 0;
       }
-    } else {
-      const thr = input.throttle > 0 ? input.throttle : speedF < wantSpeed ? 1 : 0;
+    } else if (!input.coast) {
+      const auto = input.throttle <= 0;
+      const thr = auto ? (speedF < wantSpeed ? 1 : 0) : input.throttle;
       const k = 1 - clamp(speedF / topSpeed, 0, 1) ** 2;
-      accel = spec.power * thr * k;
-      if (speedF > wantSpeed + t.overspeedMps) accel = -t.engineBrakeMps2;
+      accel = spec.power * this.powerScale * thr * k;
+      // Cruise hold (specs/drive.md v2): at or above the wanted speed the engine cancels the
+      // downhill pull, so the car neither runs away nor needs the overspeed brake to settle.
+      const hold = auto && !input.boost && !input.handbrake && speedF >= wantSpeed ? clamp(slopeF, 0, t.cruiseHoldMps2) : 0;
+      if (hold > 0) accel = -hold;
+      if (speedF > wantSpeed + t.overspeedMps) accel = -t.engineBrakeMps2 - hold;
     }
     if (input.handbrake) {
       accel = Math.min(accel, speedF > t.brakeMinMps ? -t.handbrakeDecelMps2 : 0);
@@ -212,6 +228,7 @@ export class Car {
         body.applyAngularImpulse(-input.steer * body.getInertia() * t.handbrakeYaw * k * dt, true);
       }
     }
+    this.accel = accel;
     const rearOff = -this.axleOffset;
     this.f.x = fx * accel * m;
     this.f.y = fy * accel * m;
@@ -249,6 +266,25 @@ export class Car {
     this.f.y = -vy * drag;
     body.applyForceToCenter(this.f, true);
     body.setAngularVelocity(0);
+    this.braking = false;
+    this.reversing = false;
+    this.rearSlip = 0;
+    this.frontSlip = 0;
+  }
+
+  /**
+   * One step airborne after a terrain edge (specs/terrain.md "Skok"): no tyres, throttle, brake,
+   * steering or slope, only drag; the angular velocity is kept. Call before world.step.
+   */
+  coast(): void {
+    const t = this.t, body = this.body;
+    const v = body.getLinearVelocity();
+    const speed = Math.sqrt(v.x * v.x + v.y * v.y);
+    const drag = body.getMass() * (t.dragLinear + t.dragQuadratic * speed);
+    this.f.x = -v.x * drag;
+    this.f.y = -v.y * drag;
+    body.applyForceToCenter(this.f, true);
+    this.accel = 0;
     this.braking = false;
     this.reversing = false;
     this.rearSlip = 0;

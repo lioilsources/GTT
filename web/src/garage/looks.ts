@@ -45,15 +45,26 @@ export type Poly = number[];
 const rect = (x0: number, y0: number, x1: number, y1: number): Poly => [x0, y0, x1, y0, x1, y1, x0, y1];
 
 /**
- * Decal polygons (`color.garage.decal`) over the body rectangle [b] of the shape: stripes = two
- * long stripes at ±0.22 hw over the whole car; flames = three triangles from the nose back to
- * 0.35 hl; checker = a band of squares along both sides.
+ * Procedural decal polygons (`color.garage.decal`, specs/garage.md v2 "Kreslení") over the body
+ * rectangle [b] of the shape: stripes = two long stripes at ±0.22 hw over the whole car; flames =
+ * three triangles from the nose back to 0.35 hl; checker = a band of squares along both sides;
+ * stars = three diamonds on the long axis (centres +0.55, 0, −0.55 hl, diagonals 0.5 hw across ×
+ * 0.25 hl along); lightning and waves as stripes; camo and halftone as checker. The fallback when
+ * the decal has no sprite (`garage/decals/<id>.png`).
  */
 export function decalPolys(decal: number, b: Pick<CarRect, 'x0' | 'y0' | 'x1' | 'y1'>): Poly[] {
   const hl = (b.x1 - b.x0) / 2, hw = (b.y1 - b.y0) / 2;
   const cx = (b.x0 + b.x1) / 2, cy = (b.y0 + b.y1) / 2;
   const out: Poly[] = [];
-  if (decal === 1) {
+  if (decal === 5 || decal === 6) decal = 1;
+  else if (decal === 7 || decal === 8) decal = 3;
+  if (decal === 4) {
+    const dx = hl * 0.125, dy = hw * 0.25;
+    for (const k of [0.55, 0, -0.55]) {
+      const x = cx + k * hl;
+      out.push([x + dx, cy, x, cy + dy, x - dx, cy, x, cy - dy]);
+    }
+  } else if (decal === 1) {
     const w = hw * 0.07;
     for (const s of [1, -1]) out.push(rect(cx - hl, cy + s * hw * 0.22 - w, cx + hl, cy + s * hw * 0.22 + w));
   } else if (decal === 2) {

@@ -11,7 +11,7 @@ import { tokens } from '../gen/tokens';
 import type { Tuning } from '../gen/tuning';
 import { LIGHT_AMBER, LIGHT_GREEN } from '../traffic/roadRules';
 import type { Traffic } from '../traffic/traffic';
-import { Tris, Z } from './geometry';
+import { baseHeight, Tris, Z } from './geometry';
 import { rgba, type Rgba } from './palette';
 import { setCount, setShadowColour } from './shadow';
 import { LIGHTS_BRAKE, LIGHTS_FULL, LIGHTS_OFF, type CarSpriteView } from './carSprites';
@@ -154,7 +154,7 @@ export class TrafficView {
     for (const c of tr.cars) {
       // Patrols are drawn by police/view.ts.
       if (c.layer < 0 !== inTunnel || c.police) continue;
-      const h = (c.layer > 0 ? lift * c.layer : 0) + Z.car;
+      const h = baseHeight(tr.city.terrain, c.x, c.y, c.layer, lift, c.z) + Z.car;
       // Babylon rotates about +Y clockwise seen from above; world headings are CCW.
       Matrix.RotationYToRef(-c.heading, this.m);
       this.m.setTranslationFromFloats(c.x, h, c.y);

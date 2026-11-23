@@ -9,6 +9,7 @@ import (
 	"math"
 	"os"
 	"strconv"
+	"strings"
 
 	"citypack/internal/duck"
 	"citypack/internal/geo"
@@ -114,6 +115,7 @@ func Buildings(e *Env) error {
 	}
 	def := e.C.City.DefaultHeightM
 	bt := e.C.Tuning.Buildings
+	gap := e.C.Tuning.Flow.GapCloseM
 	sql := fmt.Sprintf(`
 CREATE TABLE lm AS SELECT idx::INT AS idx, x::DOUBLE AS x, y::DOUBLE AS y, h::DOUBLE AS h, coalesce(overture_id, '') AS oid
   FROM read_csv(%[1]s, header=true, all_varchar=true);
@@ -152,13 +154,38 @@ CREATE TABLE all_rows AS
   SELECT id, g, h, 0.0 AS mh, 0 AS lm, false AS part FROM masses
   UNION ALL SELECT id, g, h, mh, lm, false FROM singles
   UNION ALL SELECT id, g, h * k, mh * k, lm, true FROM parts;
+-- FL0 (specs/flow.md): close gaps narrower than flow.gap_close_m between two or more ground masses (buffer
+-- +gap/2, union, buffer −gap/2), never into a road corridor; each gap joins its biggest neighbour.
+-- Inputs snap to a 1 cm grid so the overlays stay noded (GEOS TopologyException otherwise).
+CREATE TABLE r0 AS SELECT row_number() OVER (ORDER BY id, part, mh, h) AS rid, id, ST_MakeValid(ST_ReducePrecision(g, 0.01)) AS g, h, mh, lm, part FROM all_rows;
+CREATE TABLE roads AS SELECT ST_ReducePrecision(ST_Buffer(ST_GeomFromText(wkt), hw::DOUBLE, 4), 0.01) AS g FROM read_csv(%[12]s, header=true, quote='"');
+CREATE TABLE gr AS SELECT rid, g, ST_ClusterDBSCAN(g, %[13]f, 2) OVER () AS cl FROM r0 WHERE mh < 0.5 AND NOT ST_IsEmpty(g);
+CREATE TABLE cu AS SELECT cl, ST_Union_Agg(g) AS u FROM gr WHERE cl IS NOT NULL GROUP BY cl;
+CREATE TABLE gaps0 AS
+  SELECT cl, ST_Difference(ST_Buffer(ST_Buffer(u, %[14]f, 2, 'CAP_SQUARE', 'JOIN_MITRE', 5.0), -%[14]f, 2, 'CAP_SQUARE', 'JOIN_MITRE', 5.0), u) AS g FROM cu;
+CREATE TABLE gaps1 AS SELECT row_number() OVER () AS gid, cl, d.geom AS g FROM (SELECT cl, unnest(ST_Dump(g)) AS d FROM gaps0)
+  WHERE ST_GeometryType(d.geom) = 'POLYGON' AND ST_Area(d.geom) >= 1.0;
+CREATE TABLE gap_roads AS SELECT ga.gid, ST_Union_Agg(r.g) AS rg FROM gaps1 ga JOIN roads r ON ST_Intersects(ga.g, r.g) GROUP BY ga.gid;
+CREATE TABLE gaps2 AS SELECT ga.cl, CASE WHEN x.rg IS NULL THEN ga.g ELSE ST_Difference(ga.g, x.rg) END AS g FROM gaps1 ga LEFT JOIN gap_roads x USING (gid);
+CREATE TABLE gaps AS SELECT row_number() OVER () AS gid, cl, d.geom AS g FROM (SELECT cl, unnest(ST_Dump(g)) AS d FROM gaps2)
+  WHERE ST_GeometryType(d.geom) = 'POLYGON' AND ST_Area(d.geom) >= 1.0;
+CREATE TABLE gap_owner AS
+  SELECT ga.gid, arg_max(gr.rid, round(ST_Area(ST_Intersection(ST_Buffer(ga.g, 0.3), gr.g)), 2) * 1e7 - gr.rid) AS rid
+  FROM gaps ga JOIN gr ON gr.cl = ga.cl AND ST_DWithin(ga.g, gr.g, 0.3) GROUP BY ga.gid
+  HAVING count(DISTINCT gr.rid) >= 2;
+CREATE TABLE gap_add AS SELECT o.rid, ST_Union_Agg(ga.g) AS g FROM gap_owner o JOIN gaps ga USING (gid) GROUP BY o.rid;
+CREATE TABLE closed AS
+  SELECT r0.id, CASE WHEN a.g IS NULL THEN r0.g ELSE ST_Union(r0.g, a.g) END AS g, r0.h, r0.mh, r0.lm, r0.part
+  FROM r0 LEFT JOIN gap_add a USING (rid);
+COPY (SELECT count(*) AS n FROM gap_owner) TO %[15]s (FORMAT csv, HEADER true);
 COPY (
   SELECT id, coalesce(h, %[2]f) AS h, mh, lm, part, ST_AsGeoJSON(d.geom)::JSON AS geom
-  FROM (SELECT id, h, mh, lm, part, unnest(ST_Dump(ST_MakeValid(g))) AS d FROM all_rows)
+  FROM (SELECT id, h, mh, lm, part, unnest(ST_Dump(ST_MakeValid(g))) AS d FROM closed)
   WHERE ST_GeometryType(d.geom) = 'POLYGON' AND ST_Area(d.geom) >= %[11]f
 ) TO %[4]s (FORMAT json);
 `, duck.Quote(lmCSV), def, duck.Quote(e.W("buildings_clipped.parquet")), duck.Quote(out+".tmp"),
-		bt.FloorHeightM, bt.SimplifyM, bt.DegenerateM2, bt.LandmarkSearchM, bandSQL(bt.HeightBandsM), bt.MergeGapM, bt.MinAreaM2)
+		bt.FloorHeightM, bt.SimplifyM, bt.DegenerateM2, bt.LandmarkSearchM, bandSQL(bt.HeightBandsM), bt.MergeGapM, bt.MinAreaM2,
+		duck.Quote(e.W("road_buffers.csv")), gap, gap/2, duck.Quote(e.W("gaps.csv")))
 	if _, err := duck.Exec("buildings", sql); err != nil {
 		return err
 	}
@@ -180,8 +207,15 @@ COPY (
 			slog.Warn("landmark matched no building", "id", l.ID)
 		}
 	}
-	slog.Info("buildings", "masses", len(rows), "landmarks_matched", len(matched))
-	return nil
+	closed := 0
+	if b, err := os.ReadFile(e.W("gaps.csv")); err == nil {
+		var n int
+		if _, err := fmt.Sscanf(strings.TrimPrefix(string(b), "n\n"), "%d", &n); err == nil {
+			closed = n
+		}
+	}
+	slog.Info("buildings", "masses", len(rows), "landmarks_matched", len(matched), "closed_gaps", closed)
+	return writeJSON(e.W("flow_gaps.json"), map[string]int{"closed_gaps": closed})
 }
 
 // bandSQL turns height band edges into a CASE expression: band i holds heights below edge i.

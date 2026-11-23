@@ -2,6 +2,7 @@ import type { CarSpec } from '../gen/schema';
 import { tokens } from '../gen/tokens';
 import { Tris } from '../render/geometry';
 import { rgba, type Rgba } from '../render/palette';
+import { decalArt, decalRaster, wheelArt, wheelRaster } from '../garage/cosmetics';
 import { clipConvex, decalPolys, glowPoly, lookGlow, lookPaint, lookRim, type Poly } from '../garage/looks';
 import type { Look } from '../garage/rules';
 import type { ParkedCar } from './parked';
@@ -40,6 +41,9 @@ const rectPoly = (r: CarRect): Poly => r.poly ?? [r.x0, r.y0, r.x1, r.y0, r.x1, 
  * class shape (shadow first) in the look's paint, the decal over the body and the class details
  * (muscle stripes, taxi sign stay under it), then the lights. [look] null = catalog drawing.
  * Decals are clipped to the body outline (the trike's narrow nose). [axle] places veteran fenders.
+ * A decal with a sprite (specs/art.md v3, `decalArt`) replaces the procedural one: its raster
+ * over the car rectangle 2 hl × 2 hw, clipped to the body and drawn right over it (only the
+ * painted body, under the glass, details and lights).
  */
 export function carPrims(spec: CarSpec, hl: number, hw: number, night: boolean, look: Look | null = null,
   shadowCol: Rgba = rgba(tokens.colorCarShadow), axle = 0): CarPrim[] {
@@ -48,9 +52,18 @@ export function carPrims(spec: CarSpec, hl: number, hw: number, night: boolean, 
   const out: CarPrim[] = [];
   const body = shape.find((r) => r.part === 'body');
   const decal = body ? (look?.decal ?? 0) : 0;
+  const art = decal !== 0 ? decalArt(decal) : null;
   let pending = decal !== 0;
   const addDecal = (): void => {
     pending = false;
+    if (art) {
+      const clip = body!.poly ?? rectPoly(body!);
+      for (const p of decalRaster(art, hl, hw)) {
+        const poly = clipConvex(p, clip);
+        if (poly.length >= 6) out.push({ part: 'decal', poly, color: rgba(tokens.colorGarageDecal) });
+      }
+      return;
+    }
     for (const p of decalPolys(decal, body!)) {
       const poly = body!.poly ? clipConvex(p, body!.poly) : p;
       if (poly.length >= 6) out.push({ part: 'decal', poly, color: rgba(tokens.colorGarageDecal) });
@@ -59,6 +72,7 @@ export function carPrims(spec: CarSpec, hl: number, hw: number, night: boolean, 
   for (const r of shape) {
     if (pending && (r.part === 'head' || r.part === 'tail')) addDecal();
     out.push({ part: r.part, poly: rectPoly(r), color: partColor(r, paint, night, shadowCol) });
+    if (pending && art && r === body) addDecal();
   }
   if (pending) addDecal();
   return out;
@@ -87,6 +101,23 @@ export function wheelRects(hl: number, hw: number, axle: number, cls = 'coupe', 
   }));
 }
 
+/**
+ * One procedural wheel of a car with [look] (null = catalog: the tyre only), in car space shifted
+ * by (−dx, −dy): the tyre and the rim in `color.garage.wheels[value]`; with a garage wheel sprite
+ * (specs/art.md v3 "Kola", `wheelArt`) its raster over the tyre rectangle instead, tinted by the
+ * rim colour, mirrored on the left side.
+ */
+export function wheelPrims(w: WheelRect, look: Look | null, dx = 0, dy = 0): Array<{ poly: Poly; color: Rgba }> {
+  const r = (x0: number, y0: number, x1: number, y1: number): Poly => [x0 - dx, y0 - dy, x1 - dx, y0 - dy, x1 - dx, y1 - dy, x0 - dx, y1 - dy];
+  const v = look?.wheels ?? 0, art = v > 0 ? wheelArt(v) : null;
+  if (art) {
+    return wheelRaster(art, w.x0 - dx, w.y0 - dy, w.x1 - dx, w.y1 - dy, rgba(lookRim(look)), (w.y0 + w.y1) / 2 > 0);
+  }
+  const out = [{ poly: r(w.x0, w.y0, w.x1, w.y1), color: rgba(tokens.colorCarTyre) }];
+  if (look) out.push({ poly: r(w.rim[0], w.rim[1], w.rim[2], w.rim[3]), color: rgba(lookRim(look)) });
+  return out;
+}
+
 /** Adds a convex counter-clockwise polygon in a local frame at (ox, oy) rotated by ang. */
 export function polyTris(t: Tris, ox: number, oy: number, ang: number, p: Poly, h: number, c: Rgba): void {
   const cs = Math.cos(ang), sn = Math.sin(ang);
@@ -109,10 +140,8 @@ export function carTris(
 ): number {
   let z = h;
   const wheels = tyres ? wheelRects(hl, hw, axle, spec.class, spec.length_m) : [];
-  const tyre = rgba(tokens.colorCarTyre), rim = look ? rgba(lookRim(look)) : null;
   const wheel = (w: WheelRect, at: number): void => {
-    t.rect(ox, oy, ang, w.x0, w.y0, w.x1, w.y1, at, tyre);
-    if (rim) t.rect(ox, oy, ang, w.rim[0], w.rim[1], w.rim[2], w.rim[3], at + CAR_PART_DZ * 0.5, rim);
+    wheelPrims(w, look).forEach((p, i) => polyTris(t, ox, oy, ang, p.poly, at + (i > 0 ? CAR_PART_DZ * 0.5 : 0), p.color));
   };
   for (const w of wheels) if (!w.top) wheel(w, h + CAR_PART_DZ);
   carPrims(spec, hl, hw, night, look, shadowCol, axle).forEach((p, i) => {
@@ -162,11 +191,15 @@ export function parkedTris(
   glow: { margin: number; strength: number } = { margin: 0, strength: 0 },
   /** Cars drawn as sprites (specs/art.md v2): only their shadow (and underglow) go into the mesh. */
   sprite: ((p: ParkedCar, look: Look | null) => boolean) | null = null,
+  /** Relief (specs/terrain.md): base height of each car, added to h; null = flat. */
+  baseOf: ((p: ParkedCar) => number) | null = null,
 ): Tris {
   const t = new Tris();
+  const h0 = h;
   for (const p of cars) {
     const s = specs.get(p.carId);
     if (!s) continue;
+    h = h0 + (baseOf ? baseOf(p) : 0);
     const hl = (s.length_m * scale) / 2, hw = (s.width_m * scale) / 2;
     const look = lookOf?.(p) ?? null;
     if (look) carGlowTris(t, look, hl, hw, glow.margin, p.x, p.y, p.heading, h - CAR_PART_DZ, glow.strength);

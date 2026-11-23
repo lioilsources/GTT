@@ -131,15 +131,48 @@ flutter:
     - assets/shared/assets/postcards/nyc/
     - assets/shared/assets/postcards/prague/
     # Car sprites (specs/art.md v2 "Auta"): one line per car with art in assets/cars/.
+    - assets/shared/assets/cars/bus_city/
+    - assets/shared/assets/cars/coupe_nova/
+    - assets/shared/assets/cars/coupe_strada/
+    - assets/shared/assets/cars/hatch_city/
     - assets/shared/assets/cars/hatch_pip/
+    - assets/shared/assets/cars/hatch_rally/
+    - assets/shared/assets/cars/kolo/
+    - assets/shared/assets/cars/kolobezka/
+    - assets/shared/assets/cars/kombi_fjord/
+    - assets/shared/assets/cars/kombi_woody/
     - assets/shared/assets/cars/lidovka/
+    - assets/shared/assets/cars/limo_grand/
+    - assets/shared/assets/cars/limo_stretch/
     - assets/shared/assets/cars/m0_coupe/
+    - assets/shared/assets/cars/micro_cruiser/
+    - assets/shared/assets/cars/micro_scoot/
+    - assets/shared/assets/cars/mini_bolt/
+    - assets/shared/assets/cars/mini_dot/
     - assets/shared/assets/cars/mini_pebble/
     - assets/shared/assets/cars/muscle_brute/
+    - assets/shared/assets/cars/muscle_bulldog/
+    - assets/shared/assets/cars/muscle_thunder/
+    - assets/shared/assets/cars/off_bloc/
+    - assets/shared/assets/cars/off_ridge/
     - assets/shared/assets/cars/pickup_hauler/
+    - assets/shared/assets/cars/pickup_mesa/
     - assets/shared/assets/cars/police_patrol/
     - assets/shared/assets/cars/sedan_crown/
     - assets/shared/assets/cars/sedan_harbor/
+    - assets/shared/assets/cars/sedan_regent/
+    - assets/shared/assets/cars/spec_grill/
+    - assets/shared/assets/cars/spec_rickshaw/
+    - assets/shared/assets/cars/spec_trike/
+    - assets/shared/assets/cars/super_arrow/
+    - assets/shared/assets/cars/super_lumen/
+    - assets/shared/assets/cars/super_vento/
+    - assets/shared/assets/cars/taxi_classic/
     - assets/shared/assets/cars/taxi_metro/
     - assets/shared/assets/cars/traffic_sedan/
+    - assets/shared/assets/cars/van_box/
     - assets/shared/assets/cars/van_courier/
+    - assets/shared/assets/cars/van_wander/
+    - assets/shared/assets/cars/vega_roadster/
+    - assets/shared/assets/cars/vet_skyliner/
+    - assets/shared/assets/cars/vet_tourer/
