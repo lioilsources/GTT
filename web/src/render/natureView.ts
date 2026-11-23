@@ -177,8 +177,9 @@ export class NatureView {
     this.water?.dispose();
     this.water = null;
     const t = new Tris();
-    waterTris(nature, this.pal, t);
-    bridgeShadowTris(this.env.city, nature, this.pal, t);
+    const relief = this.env.city.terrain.enabled;
+    waterTris(nature, this.pal, t, relief);
+    bridgeShadowTris(this.env.city, nature, this.pal, t, relief);
     if (t.empty) return;
     const m = new Mesh('nature-water', this.env.scene);
     const vd = new VertexData();
@@ -194,6 +195,12 @@ export class NatureView {
   }
 
   // ---------- trees
+
+  /** Terrain height under a tree or leaf (specs/terrain.md); 0 in a flat pack. */
+  private groundAt(x: number, y: number): number {
+    const ter = this.env.city.terrain;
+    return ter.enabled ? ter.terrainAt(x, y) ?? 0 : 0;
+  }
 
   private crownY(size: number): number {
     const s = this.env.tuning.nature.treeSizes;
@@ -222,11 +229,11 @@ export class NatureView {
       trees.forEach((t, i) => {
         // Rotation from the jitter: the low-poly outline does not repeat.
         const a = (t.jitter * 2.399) % (2 * Math.PI);
-        writeMatrix(mats, i, t.x, y, t.y, a, 1);
+        writeMatrix(mats, i, t.x, y + this.groundAt(t.x, t.y), t.y, a, 1);
         const j = crownJitter(t.jitter);
         cols.set([j[0], j[1], j[2], 1], 4 * i);
         this.slots.set(t.key, { size: s, index: i, tree: t });
-        writeMatrix(trunk, ti++, t.x, TRUNK_Z, t.y, 0, 1);
+        writeMatrix(trunk, ti++, t.x, TRUNK_Z + this.groundAt(t.x, t.y), t.y, 0, 1);
       });
       this.mats[s] = mats;
       this.cols[s] = cols;
@@ -266,7 +273,7 @@ export class NatureView {
       this.lastEvent = e.t;
       if (e.size !== TREE_S) this.shaking.set(e.key, 0);
       this.onHit?.(e.size);
-      const z = this.crownY(e.size);
+      const z = this.crownY(e.size) + this.groundAt(e.x, e.y);
       for (let i = 0; i < LEAVES_PER_HIT && this.leafState.length < LEAF_MAX; i++) {
         const a = (i / LEAVES_PER_HIT) * 2 * Math.PI + e.t;
         const sp = 2 + (i % 3);
@@ -284,7 +291,7 @@ export class NatureView {
       const done = na >= SHAKE_S;
       const off = done ? 0 : Math.sin(na * 38) * SHAKE_M * (1 - na / SHAKE_S);
       const a = (s.tree.jitter * 2.399) % (2 * Math.PI);
-      writeMatrix(this.mats[s.size]!, s.index, s.tree.x + off, this.crownY(s.size), s.tree.y + off * 0.6, a, 1);
+      writeMatrix(this.mats[s.size]!, s.index, s.tree.x + off, this.crownY(s.size) + this.groundAt(s.tree.x, s.tree.y), s.tree.y + off * 0.6, a, 1);
       dirty[s.size] = true;
       if (done) this.shaking.delete(k);
       else this.shaking.set(k, na);
@@ -300,7 +307,7 @@ export class NatureView {
       l.t += dt;
       l.x += l.vx * dt;
       l.y += l.vy * dt;
-      l.z = Math.max(0.06, l.z + l.vz * dt);
+      l.z = Math.max(0.06 + this.groundAt(l.x, l.y), l.z + l.vz * dt);
       l.rot += dt * 6;
       if (l.t < LEAF_S) writeMatrix(buf, n++, l.x, l.z, l.y, l.rot, 1);
     }

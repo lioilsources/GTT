@@ -55,6 +55,8 @@ export class Car {
   /** Forest (specs/flow.md "Les"): × engine force; 1 elsewhere. */
   powerScale = 1;
   reversing = false;
+  /** Longitudinal engine/brake acceleration of the last drive step (m/s²); 0 = no throttle. */
+  accel = 0;
 
   // Scratch vectors: no allocations in the step.
   private readonly f: Vec2Value = { x: 0, y: 0 };
@@ -201,7 +203,7 @@ export class Car {
         this.reversing = true;
         accel = speedF > -t.reverseMaxMps ? -spec.power * this.powerScale * t.reversePower : 0;
       }
-    } else {
+    } else if (!input.coast) {
       const thr = input.throttle > 0 ? input.throttle : speedF < wantSpeed ? 1 : 0;
       const k = 1 - clamp(speedF / topSpeed, 0, 1) ** 2;
       accel = spec.power * this.powerScale * thr * k;
@@ -216,6 +218,7 @@ export class Car {
         body.applyAngularImpulse(-input.steer * body.getInertia() * t.handbrakeYaw * k * dt, true);
       }
     }
+    this.accel = accel;
     const rearOff = -this.axleOffset;
     this.f.x = fx * accel * m;
     this.f.y = fy * accel * m;
@@ -253,6 +256,25 @@ export class Car {
     this.f.y = -vy * drag;
     body.applyForceToCenter(this.f, true);
     body.setAngularVelocity(0);
+    this.braking = false;
+    this.reversing = false;
+    this.rearSlip = 0;
+    this.frontSlip = 0;
+  }
+
+  /**
+   * One step airborne after a terrain edge (specs/terrain.md "Skok"): no tyres, throttle, brake,
+   * steering or slope, only drag; the angular velocity is kept. Call before world.step.
+   */
+  coast(): void {
+    const t = this.t, body = this.body;
+    const v = body.getLinearVelocity();
+    const speed = Math.sqrt(v.x * v.x + v.y * v.y);
+    const drag = body.getMass() * (t.dragLinear + t.dragQuadratic * speed);
+    this.f.x = -v.x * drag;
+    this.f.y = -v.y * drag;
+    body.applyForceToCenter(this.f, true);
+    this.accel = 0;
     this.braking = false;
     this.reversing = false;
     this.rearSlip = 0;

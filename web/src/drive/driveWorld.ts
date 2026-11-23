@@ -12,6 +12,8 @@ import { generateProps, type Prop, type PropSet } from './props';
 import { Traffic } from '../traffic/traffic';
 import { Trams } from '../trams/trams';
 import { ZoneWorld } from './zones';
+import { JumpState, slopeAccel, TERRAIN_SPEC } from './slope';
+import { ridesEdge, type Terrain } from '../world/terrain';
 import { surfaceEffect, TreeContacts, WaterFall } from './nature';
 import { NatureMap, type SurfaceName } from '../world/nature';
 import { WaterClass } from '../gen/pb/citypack_pb';
@@ -94,6 +96,8 @@ export class DriveWorld {
 
   /** Skid marks: x0, y0, x1, y1 per segment, newest last. */
   readonly skids: number[] = [];
+  /** Ground height of every skid segment (specs/terrain.md: marks lie on the surface). */
+  readonly skidZ: number[] = [];
   private lastSkid: [number, number, number, number] | null = null;
   skidsVersion = 0;
   /** Called when a bridge or tunnel rail stops the car, with the speed into the rail (m/s). */
@@ -136,6 +140,21 @@ export class DriveWorld {
   // Velocity before the step (the "v before contact" of specs/flow.md).
   private preVx = 0;
   private preVy = 0;
+  /** Heights of the city (specs/terrain.md); flat without terrain_version. */
+  readonly terrain: Terrain;
+  /** Vertical state of the player's car: z, vz, airborne (specs/terrain.md "Skok"). */
+  readonly jump = new JumpState();
+  /** The edge whose own surface the car rides (ramp, bridge, tunnel), null = terrain (specs/terrain.md). */
+  rideEdge: RoadEdge | null = null;
+  /** Gradient of the ground under the car in the last step (m/m, world x/y). */
+  readonly grad = { x: 0, y: 0 };
+  /** Game time of the last take-off and hard landing (camera hints), −∞ before any. */
+  takeoffAt = -Infinity;
+  hardLandingAt = -Infinity;
+  /** Landing speed of the last touchdown after a jump (m/s), 0 before any. */
+  lastLanding = 0;
+  private readonly slopeA = { x: 0, y: 0 };
+  private terrainVersion = -1;
 
   constructor(
     readonly city: City,
@@ -146,10 +165,12 @@ export class DriveWorld {
     this.zones = new ZoneWorld(this.world, tuning.drive, tuning.flow.wall);
     this.flow = new FlowState(tuning.flow.rescue);
     this.layers = new LayerTracker(city.graph, tuning.layers);
+    this.terrain = city.terrain;
     this.nature = new NatureMap(city.chunkM);
     this.car = this.makeCar(city.startX, city.startY, city.startHeading);
     this.layers.reset(this.car.x, this.car.y);
     this.car.setLayer(this.layers.layer);
+    this.groundReset();
     this.traffic = tuning.traffic.enabled ? new Traffic(this.world, city, tuning) : null;
     this.trams = tuning.trams.enabled && !city.trams.isEmpty ? new Trams(this.world, city.trams, tuning, this.traffic) : null;
     if (this.traffic && this.trams) this.traffic.trams = this.trams.items;
@@ -175,6 +196,56 @@ export class DriveWorld {
     this.hop.air = 0;
     this.hop.t = 0;
     this.setPlayerAirborne(false);
+    this.groundReset();
+  }
+
+  /** Picks the surface under the car (specs/terrain.md: an edge on ramps, bridges and in tunnels). */
+  private pickSurface(): RoadEdge | null {
+    const h = this.layers.hit;
+    return ridesEdge(this.layers.edge, this.car.layer, h?.dist ?? Infinity, this.tuning.layers.switchMarginM) ? this.layers.edge : null;
+  }
+
+  /** Ground height under the car on its surface (0 in a flat pack). */
+  groundZ(): number {
+    return this.terrain.groundZ(this.car.x, this.car.y, this.rideEdge);
+  }
+
+  /** Teleport, rescue or a new body: z = g, vz = 0, on the ground (specs/terrain.md). */
+  private groundReset(): void {
+    this.rideEdge = this.pickSurface();
+    this.jump.reset(this.groundZ());
+    this.terrainVersion = this.terrain.version;
+  }
+
+  /**
+   * Vertical step after the horizontal move (specs/terrain.md "Skok"): a surface change or newly
+   * loaded terrain re-bases g_prev; a hard landing costs speed and shakes the camera.
+   */
+  private jumpStep(step: number): void {
+    const sp = this.tuning.slopePhysics, j = this.jump;
+    const surf = this.pickSurface();
+    if (surf !== this.rideEdge || this.terrain.version !== this.terrainVersion) {
+      this.rideEdge = surf;
+      this.terrainVersion = this.terrain.version;
+      j.rebase(this.groundZ());
+    }
+    const was = j.airborne;
+    const landing = j.step(this.groundZ(), step, sp.gravity, sp.suspensionTravel);
+    if (!was && j.airborne) this.takeoffAt = this.time;
+    if (landing !== null) {
+      this.lastLanding = landing;
+      if (landing > sp.hardLanding) {
+        const v = this.car.body.getLinearVelocity();
+        const k = TERRAIN_SPEC.hardLandingKeep;
+        this.car.body.setLinearVelocity({ x: v.x * k, y: v.y * k });
+        this.hardLandingAt = this.time;
+      }
+    }
+  }
+
+  /** The car flies after a terrain edge (not the hop). */
+  get jumping(): boolean {
+    return this.jump.airborne;
   }
 
   /** Switches to another car (specs/cars.md): a new body with that car's parameters, at rest. */
@@ -217,6 +288,7 @@ export class DriveWorld {
   addChunk(c: ChunkData): void {
     const key = chunkKey(c.x, c.y);
     if (this.colliders.has(key)) return;
+    this.terrain.addChunk(c);
     const w = this.tuning.flow.wall;
     const body = this.world.createBody({ type: 'static' });
     // Static contacts use flow.wall friction and restitution (specs/flow.md), not drive.building_*.
@@ -261,6 +333,7 @@ export class DriveWorld {
     if (body) this.world.destroyBody(body);
     this.colliders.delete(key);
     this.zones.removeChunk(c);
+    this.terrain.removeChunk(c);
     this.nature.remove(c.x, c.y);
     if (this.props.delete(key)) this.propsVersion++;
   }
@@ -294,16 +367,16 @@ export class DriveWorld {
     } else if (air) {
       // In the air (specs/hop.md): no input, no tyres, buildings only, the layer stays.
       this.car.fly();
+    } else if (this.jump.airborne) {
+      // Over a terrain edge (specs/terrain.md "Skok"): only drag.
+      this.updateZoneMask();
+      this.car.coast();
     } else {
       this.updateZoneMask();
       // Surface under the car (specs/nature.md "Jízda", specs/flow.md "Les"); asphalt off the ground layer.
       const car = this.car;
       this.surface = car.layer === 0 && !this.nature.empty ? this.nature.surfaceAt(car.x, car.y) : 'asphalt';
-      const eff = surfaceEffect(this.surface, this.tuning);
-      car.gripScale = this.gripScale * eff.grip;
-      car.brakeScale = eff.grip;
-      car.powerScale = eff.speed;
-      car.drive(this.input, step, this.tuning.speedMps.cruise * eff.speed, this.tuning.speedMps.topDefault * eff.speed);
+      this.slopeStep(surfaceEffect(this.surface, this.tuning));
     }
     this.traffic?.preStep(step, this.car);
     this.trams?.preStep(step, this.car);
@@ -317,6 +390,13 @@ export class DriveWorld {
     } else {
       this.layers.update(this.car.x, this.car.y);
       this.car.setLayer(this.layers.layer);
+    }
+    if (!this.terrain.enabled) {
+      // Flat pack: z = 0, never airborne (specs/terrain.md "Hraniční případy").
+    } else if (air || frozen) {
+      this.groundReset();
+    } else {
+      this.jumpStep(step);
     }
     this.traffic?.postStep(this.car);
     this.trams?.postStep(this.car);
@@ -335,6 +415,27 @@ export class DriveWorld {
     this.stepProps(step);
     this.skidMarks();
     this.rescueStep(step);
+  }
+
+  /**
+   * Tyres with the slope (specs/terrain.md "Svah", after drive step 5): grip × k and the force
+   * m · a_svah at the centre of mass; below stop_speed without throttle the car holds.
+   */
+  private slopeStep(eff: { grip: number; speed: number }): void {
+    const car = this.car, sp = this.tuning.slopePhysics;
+    let k = 1;
+    if (this.terrain.enabled) {
+      this.terrain.grad(car.x, car.y, this.rideEdge, this.grad);
+      k = slopeAccel(this.grad.x, this.grad.y, sp, this.slopeA);
+    }
+    car.gripScale = this.gripScale * eff.grip * k;
+    car.brakeScale = eff.grip;
+    car.powerScale = eff.speed;
+    car.drive(this.input, 1 / this.tuning.drive.stepHz, this.tuning.speedMps.cruise * eff.speed, this.tuning.speedMps.topDefault * eff.speed);
+    if (!this.terrain.enabled) return;
+    if (car.speed < this.tuning.drive.stopSpeedMps && car.accel === 0) return;
+    const m = car.body.getMass();
+    car.body.applyForceToCenter({ x: this.slopeA.x * m, y: this.slopeA.y * m }, true);
   }
 
   /**
@@ -447,7 +548,7 @@ export class DriveWorld {
     const car = this.car, inp = this.input;
     const plan = this.flow.step(step, this.time, {
       x: car.x, y: car.y, heading: car.heading, speed: car.speed,
-      braking: inp.brake > 0 || inp.handbrake, airborne: car.airborne,
+      braking: inp.brake > 0 || inp.handbrake, airborne: car.airborne || this.jump.airborne,
     }, this.flowBlocked() || this.water.sinking);
     if (plan === null) return;
     if (plan.kind === 'road') this.toRoadSpot();
@@ -488,6 +589,7 @@ export class DriveWorld {
     this.wallContact = false;
     this.bounceArmed = true;
     this.freeT = 0;
+    this.groundReset();
   }
 
   /**
@@ -569,7 +671,7 @@ export class DriveWorld {
           }
           continue;
         }
-        if (car.layer !== 0 || car.airborne || speed < t.knockMinMps) continue;
+        if (car.layer !== 0 || car.airborne || this.jump.airborne || speed < t.knockMinMps) continue;
         const dx = p.x - cx, dy = p.y - cy;
         const reachX = car.halfLength + p.radius, reachY = car.halfWidth + p.radius;
         if (Math.abs(dx) > reachX + reachY || Math.abs(dy) > reachX + reachY) continue;
@@ -603,8 +705,11 @@ export class DriveWorld {
     const last = this.lastSkid;
     if (last !== null) {
       this.skids.push(last[0], last[1], lx, ly, last[2], last[3], qx, qy);
+      const g = this.jump.z - this.jump.gap;
+      this.skidZ.push(g, g);
       const max = s.maxSegments * 4;
       if (this.skids.length > max) this.skids.splice(0, this.skids.length - max);
+      if (this.skidZ.length > s.maxSegments) this.skidZ.splice(0, this.skidZ.length - s.maxSegments);
       this.skidsVersion++;
     }
     this.lastSkid = [lx, ly, qx, qy];

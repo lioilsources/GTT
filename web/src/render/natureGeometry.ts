@@ -45,7 +45,7 @@ export function greenColor(cls: GreenClass, pal: Palette): Rgba {
   }
 }
 
-function greenZ(cls: GreenClass): number {
+export function greenZ(cls: GreenClass): number {
   return cls === GreenClass.GREEN_WOOD ? NZ.wood : cls === GreenClass.GREEN_GRASS || cls === GreenClass.GREEN_SAND ? NZ.meadow : NZ.park;
 }
 
@@ -64,11 +64,13 @@ export function greenTris(n: NatureChunk, pal: Palette, out: Tris): void {
  * The bank: edges of the chunk's water triangles that belong to one triangle only (shared edges
  * cancel, also across pieces), without the edges on the chunk grid; drawn as a dark line.
  */
-export function bankTris(n: NatureChunk, chunkM: number, pal: Palette, out: Tris): void {
+export function bankTris(n: NatureChunk, chunkM: number, pal: Palette, out: Tris, relief = false): void {
   const col = pal.night ? pal.water : rgba(tokens.colorWaterLine);
   const key = (x: number, y: number): string => `${Math.round(x * 10)},${Math.round(y * 10)}`;
-  const edges = new Map<string, [number, number, number, number, number]>();
+  const edges = new Map<string, [number, number, number, number, number, number]>();
   for (const w of n.water) {
+    // Relief (specs/terrain.md): the bank lies at the water's level.
+    const z = relief ? w.z : 0;
     const xy = w.xy, idx = w.idx;
     for (let i = 0; i + 2 < idx.length; i += 3) {
       for (let e = 0; e < 3; e++) {
@@ -78,29 +80,35 @@ export function bankTris(n: NatureChunk, chunkM: number, pal: Palette, out: Tris
         const k = ka < kb ? `${ka}|${kb}` : `${kb}|${ka}`;
         const prev = edges.get(k);
         if (prev) prev[4]++;
-        else edges.set(k, [ax, ay, bx, by, 1]);
+        else edges.set(k, [ax, ay, bx, by, 1, z]);
       }
     }
   }
   const x0 = n.x * chunkM, x1 = x0 + chunkM, y0 = n.y * chunkM, y1 = y0 + chunkM;
   const onGrid = (a: number, b: number, g: number): boolean => Math.abs(a - g) < 0.15 && Math.abs(b - g) < 0.15;
-  for (const [ax, ay, bx, by, count] of edges.values()) {
+  for (const [ax, ay, bx, by, count, z] of edges.values()) {
     if (count !== 1) continue;
     if (onGrid(ax, bx, x0) || onGrid(ax, bx, x1) || onGrid(ay, by, y0) || onGrid(ay, by, y1)) continue;
-    out.quad(ax, ay, bx, by, BANK_HW, NZ.bank, col);
-    out.disc(ax, ay, BANK_HW, NZ.bank, col, 6);
+    out.quad(ax, ay, bx, by, BANK_HW, NZ.bank + z, col);
+    out.disc(ax, ay, BANK_HW, NZ.bank + z, col, 6);
   }
 }
 
 /** The water plane of all loaded chunks with the shore band; colour alpha = wave strength (water shader). */
-export function waterTris(nature: NatureMap, pal: Palette, out: Tris): void {
+export function waterTris(nature: NatureMap, pal: Palette, out: Tris, relief = false): void {
   for (const n of nature.chunks.values()) {
     for (const w of n.water) {
       const c = waterColor(w.cls, pal);
-      pieceTris(w, NZ.water, [c[0], c[1], c[2], WAVE[w.cls] ?? 1], out);
+      pieceTris(w, NZ.water + (relief ? w.z : 0), [c[0], c[1], c[2], WAVE[w.cls] ?? 1], out);
     }
     const s = pal.night ? pal.water : rgba(tokens.colorWaterShore);
-    for (const p of n.shore) pieceTris(p, NZ.shore, [s[0], s[1], s[2], SHORE_WAVE], out);
+    // Relief: the shore band at the level of the water it lies in (the chunk's first one as fallback).
+    const level = (p: NaturePiece): number => {
+      if (!relief) return 0;
+      const mx = (p.x0 + p.x1) / 2, my = (p.y0 + p.y1) / 2;
+      return (nature.waterAt(mx, my) ?? n.water[0])?.z ?? 0;
+    };
+    for (const p of n.shore) pieceTris(p, NZ.shore + level(p), [s[0], s[1], s[2], SHORE_WAVE], out);
   }
 }
 
@@ -109,7 +117,7 @@ export function waterTris(nature: NatureMap, pal: Palette, out: Tris): void {
  * every 4 m, a piece kept when its midpoint is over water; the band is offset away from the sun.
  * Bucketed by chunk key like the roads; the water plane draws them (alpha 0 = still).
  */
-export function bridgeShadowTris(city: City, nature: NatureMap, pal: Palette, out: Tris): void {
+export function bridgeShadowTris(city: City, nature: NatureMap, pal: Palette, out: Tris, relief = false): void {
   const sl = Math.hypot(pal.sunX, pal.sunY);
   const ox = sl > 1e-6 ? (-pal.sunX / sl) * BRIDGE_SHADOW_OFFSET : 0, oy = sl > 1e-6 ? (-pal.sunY / sl) * BRIDGE_SHADOW_OFFSET : 0;
   const c = pal.night ? pal.water : rgba(tokens.colorWaterLine);
@@ -125,8 +133,9 @@ export function bridgeShadowTris(city: City, nature: NatureMap, pal: Palette, ou
         const t0 = i / n, t1 = (i + 1) / n;
         const px = ax + (bx - ax) * t0, py = ay + (by - ay) * t0, qx = ax + (bx - ax) * t1, qy = ay + (by - ay) * t1;
         const mx = (px + qx) / 2 + ox, my = (py + qy) / 2 + oy;
-        if (nature.waterAt(mx, my) === null) continue;
-        out.quad(px + ox, py + oy, qx + ox, qy + oy, hw, NZ.bridgeShadow, col);
+        const w = nature.waterAt(mx, my);
+        if (w === null) continue;
+        out.quad(px + ox, py + oy, qx + ox, qy + oy, hw, NZ.bridgeShadow + (relief ? w.z : 0), col);
       }
     }
   }

@@ -191,11 +191,15 @@ export function parkedTris(
   glow: { margin: number; strength: number } = { margin: 0, strength: 0 },
   /** Cars drawn as sprites (specs/art.md v2): only their shadow (and underglow) go into the mesh. */
   sprite: ((p: ParkedCar, look: Look | null) => boolean) | null = null,
+  /** Relief (specs/terrain.md): base height of each car, added to h; null = flat. */
+  baseOf: ((p: ParkedCar) => number) | null = null,
 ): Tris {
   const t = new Tris();
+  const h0 = h;
   for (const p of cars) {
     const s = specs.get(p.carId);
     if (!s) continue;
+    h = h0 + (baseOf ? baseOf(p) : 0);
     const hl = (s.length_m * scale) / 2, hw = (s.width_m * scale) / 2;
     const look = lookOf?.(p) ?? null;
     if (look) carGlowTris(t, look, hl, hw, glow.margin, p.x, p.y, p.heading, h - CAR_PART_DZ, glow.strength);

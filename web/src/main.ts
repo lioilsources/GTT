@@ -8,6 +8,7 @@ import { resolveRoute } from './drive/route';
 import { applyKeys, createScheme, SchemeA, SchemeB, SchemeC, type ControlScheme, type ControlSchemeId } from './drive/controls';
 import { DriveWorld } from './drive/driveWorld';
 import { installFlowHud } from './drive/flowHud';
+import { TERRAIN_SPEC } from './drive/slope';
 import { t as tr, type Locale, type MessageKey } from './gen/i18n';
 import { carIdValues, cityIdNames, cityIdValues, minigameCatalog, type CityId, type MinigameId } from './gen/ids';
 import { CarFleet } from './cars/fleet';
@@ -128,6 +129,8 @@ async function main(): Promise<void> {
     artReady,
   ]);
   const city = await City.load(source);
+  // ?flat (debug, A/B): drive and draw the pack without its heights (specs/terrain.md flat pack).
+  if (params.has('flat')) city.terrain.enabled = false;
   // The pack loaded: remember the city now, not only when leaving it (specs/cities.md).
   writeLastCity(cityId);
   backCity = null;
@@ -160,6 +163,9 @@ async function main(): Promise<void> {
   const trafficView = drive.traffic ? new TrafficView(view.scene, drive.traffic, tuning) : null;
   // Trams (specs/trams.md): drive.trams exposes items, onHit and stops for police and dialogue.
   const tramView = drive.trams ? new TramView(view.scene, drive.trams, tuning) : null;
+  // Heights (specs/terrain.md): trams and pedestrians stand on the terrain or their bridge.
+  if (tramView) tramView.terrain = city.terrain;
+  pedView.terrain = city.terrain;
   // Police and wanted level (specs/police.md).
   const police = installPolice({ drive, cars: fleet, tuning, t, hud: $('hud'), scene: view.scene });
   // Vehicle ground shadows in the city skin's colour by day (specs/style.md).
@@ -428,7 +434,7 @@ async function main(): Promise<void> {
     }
   });
 
-  const streetEl = $('street'), speedEl = $('speed'), perfEl = $('perf'), noticeEl = $('notice');
+  const streetEl = $('street'), speedEl = $('speed'), perfEl = $('perf'), noticeEl = $('notice'), terrainEl = $('terrain');
   noticeEl.textContent = t('borderNotice');
   function hud(): void {
     booths.hud();
@@ -450,6 +456,7 @@ async function main(): Promise<void> {
     speedEl.textContent = city.imperial
       ? t('speedMph', { speed: Math.round(c.speed * 2.23694) })
       : t('speedKmh', { speed: Math.round(c.speed * 3.6) });
+    terrainHud();
     const s = view.stats;
     // Stuck count of the last 10 minutes of driving (specs/flow.md "Měření zaseknutí").
     const stuck = flow.stuckLine();
@@ -463,6 +470,24 @@ async function main(): Promise<void> {
     noticeEl.hidden = !(d !== null && d < tuning.hud.borderNoticeM);
     if (!pilot) passport.update(c.x, c.y);
     loop.update(0.1);
+  }
+
+  /**
+   * Relief HUD (specs/terrain.md "Nápovědy reliéfu shora"): the grade along the direction of
+   * travel in % (rounded, only above 2 %) and the approximate elevation z0 + z / exaggeration.
+   */
+  function terrainHud(): void {
+    const ter = city.terrain;
+    terrainEl.hidden = !ter.enabled;
+    if (!ter.enabled) return;
+    const c = drive.car, v = c.body.getLinearVelocity();
+    const sp = Math.hypot(v.x, v.y);
+    const dx = sp > 0.5 ? v.x / sp : Math.cos(c.heading), dy = sp > 0.5 ? v.y / sp : Math.sin(c.heading);
+    const grade = drive.grad.x * dx + drive.grad.y * dy;
+    const parts: string[] = [];
+    if (Math.abs(grade) > TERRAIN_SPEC.hudMinGrade) parts.push(t('terrainGrade', { pct: Math.round(grade * 100) }));
+    parts.push(t('terrainAltitude', { m: Math.round(ter.altitude(drive.jump.z - drive.jump.gap)) }));
+    terrainEl.textContent = parts.join('  ·  ');
   }
 
   // ---------- benchmark (specs/bench.md)
