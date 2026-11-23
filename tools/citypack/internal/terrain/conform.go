@@ -7,33 +7,74 @@ import (
 )
 
 // Road is one ground-level piece of road surface for conform: a segment with game heights at
-// both ends and the corridor half width.
+// both ends, the corridor half width and the half width of the strip the car drives on
+// (StripM, 0 = the whole corridor).
 type Road struct {
 	A, B       geo.Pt
 	ZA, ZB     float64
 	HalfWidthM float64
+	StripM     float64
+	Kept       bool // a kept road wins the grid nodes it needs over alleys
+	Edge       int  // graph edge: the fit only lets an edge correct the nodes it owns
 }
 
-// ConformParams: plateau = band beyond the road edge that keeps the road height (one grid
-// diagonal, so every corner of the cell around a road edge point carries the road height and
-// bilinear sampling there reads the road), then a blend to the terrain.
+func (r Road) strip() float64 {
+	if r.StripM > 0 {
+		return r.StripM
+	}
+	return r.HalfWidthM
+}
+
+// ConformParams: SupportM = band beyond the strip edge whose grid nodes carry the road height.
+// One grid diagonal: every corner of every cell the strip touches carries the road height, so
+// bilinear sampling anywhere on the strip reads the road profile. Then a blend to the terrain.
 type ConformParams struct {
-	PlateauM    float64
+	SupportM    float64
 	BlendM      float64
 	UnderwaterM float64
+	// Fit: after the nodes take their road heights, samples every FitStepM along and across each
+	// strip correct their cell corners FitPasses times (Kaczmarz projection), so bilinear
+	// sampling follows the road profile also on bends and grade changes. 0 passes = off.
+	FitStepM  float64
+	FitPasses int
 }
 
 // Conform fills out (whose samples define the grid) with game heights: terrain(p) everywhere,
-// the road height on and next to ground roads, a smooth blend over BlendM, and water level −
-// UnderwaterM in water away from roads (plan ch. 4 step 7). terrain and water work in game metres.
+// the road height on the grid nodes that carry a ground road strip, a smooth blend over BlendM,
+// and water level − UnderwaterM in water (plan ch. 4 step 7). terrain and water work in game
+// metres.
+//
+// A node needed by several roads goes to a kept road before an alley (the car rides kept roads
+// at speed), then to the road whose strip is nearest, then to the higher one (crossings: the
+// road edge is never buried). Inside water a road raises only the nodes its strip needs (a road
+// on the bank); everything else there lies at the water floor.
 func Conform(out *Raster, terrain func(geo.Pt) float64, water func(geo.Pt) (float64, bool), roads []Road, p ConformParams) {
 	n := len(out.Z)
-	bestD := make([]float64, n)
-	bestZ := make([]float64, n)
-	for k := range bestD {
-		bestD[k] = math.Inf(1)
+	type pick struct {
+		rank int // 0 kept strip support, 1 other strip support, 2 blend only
+		d, z float64
+		edge int
 	}
-	reach := p.PlateauM + p.BlendM
+	better := func(a, b pick) bool {
+		if a.rank != b.rank {
+			return a.rank < b.rank
+		}
+		if math.Abs(a.d-b.d) > 1e-9 {
+			return a.d < b.d
+		}
+		return a.z > b.z
+	}
+	none := pick{rank: 3, d: math.Inf(1), edge: -1}
+	best := make([]pick, n)
+	for k := range best {
+		best[k] = none
+	}
+	inWater := make([]bool, n)
+	lvl := make([]float64, n)
+	for k := range inWater {
+		lvl[k], inWater[k] = water(out.Pos(k%out.W, k/out.W))
+	}
+	reach := p.SupportM + p.BlendM
 	for _, r := range roads {
 		ext := r.HalfWidthM + reach
 		i0 := int(math.Floor((math.Min(r.A.X, r.B.X) - ext - out.X0) / out.Step))
@@ -44,37 +85,53 @@ func Conform(out *Raster, terrain func(geo.Pt) float64, water func(geo.Pt) (floa
 			for i := max(0, i0); i <= min(out.W-1, i1); i++ {
 				q := out.Pos(i, j)
 				c, t := geo.ClosestOnSegment(q, r.A, r.B)
-				d := c.Dist(q) - r.HalfWidthM
+				dist := c.Dist(q)
+				ds := dist - r.strip()
+				pk := pick{rank: 2, d: dist - r.HalfWidthM, z: r.ZA + (r.ZB-r.ZA)*t, edge: r.Edge}
+				if ds <= p.SupportM {
+					pk.rank, pk.d = 1, ds
+					if r.Kept {
+						pk.rank = 0
+					}
+				}
 				k := j*out.W + i
-				z := r.ZA + (r.ZB-r.ZA)*t
-				// Ties (crossing roads) keep the higher surface so the road edge is never buried.
-				if d < bestD[k]-1e-9 || (math.Abs(d-bestD[k]) <= 1e-9 && z > bestZ[k]) {
-					bestD[k], bestZ[k] = d, z
+				if better(pk, best[k]) {
+					best[k] = pk
 				}
 			}
 		}
 	}
-	for j := 0; j < out.H; j++ {
-		for i := 0; i < out.W; i++ {
-			k := j*out.W + i
-			q := out.Pos(i, j)
-			d := bestD[k]
-			if d <= p.PlateauM {
-				out.Z[k] = bestZ[k]
-				continue
+	for k := range out.Z {
+		if inWater[k] {
+			if best[k].rank <= 1 {
+				out.Z[k] = best[k].z
+			} else {
+				out.Z[k] = lvl[k] - p.UnderwaterM
 			}
-			if lvl, ok := water(q); ok {
-				out.Z[k] = lvl - p.UnderwaterM
-				continue
-			}
-			base := terrain(q)
-			if d >= reach {
-				out.Z[k] = base
-				continue
-			}
-			t := (d - p.PlateauM) / p.BlendM
-			t = t * t * (3 - 2*t)
-			out.Z[k] = bestZ[k]*(1-t) + base*t
+			continue
+		}
+		b := best[k]
+		if b.rank <= 1 {
+			out.Z[k] = b.z
+			continue
+		}
+		base := terrain(out.Pos(k%out.W, k/out.W))
+		// Blend from the strip support edge: d is measured from the corridor edge here.
+		d := b.d - p.SupportM
+		if b.rank > 2 || d >= p.BlendM {
+			out.Z[k] = base
+			continue
+		}
+		t := math.Max(0, d) / p.BlendM
+		t = t * t * (3 - 2*t)
+		out.Z[k] = b.z*(1-t) + base*t
+	}
+	owner := make([]int, n)
+	for k, b := range best {
+		owner[k] = -1
+		if b.rank <= 1 {
+			owner[k] = b.edge
 		}
 	}
+	fitRoads(out, roads, owner, p)
 }

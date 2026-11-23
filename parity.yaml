@@ -291,11 +291,10 @@
 - id: F-035
   name: Hop over traffic (Vega Roadster air tank, garage refill)
   level: P1
-  spec: specs/hop.md@1
+  spec: specs/hop.md@2
   lead: web
-  flutter: done
-  web: done
-  checks: {flutter: pass, web: pass}
+  flutter: todo
+  web: todo
 - id: F-036
   name: Wanted level 3 with a roadblock of two standing patrols
   level: P1
@@ -650,6 +649,14 @@
   name: "Šikmý pohled: terén, lod, voda, lodě (M5-S9, jen W; F až T4 po G1)"
   level: P2
   spec: specs/terrain.md@1
+  lead: web
+  flutter: todo
+  web: todo
+
+- id: F-075
+  name: "Zkušební jízda v garáži a ladicí hotovost (dogfooding)"
+  level: P2
+  spec: specs/testdrive.md@1
   lead: web
   flutter: todo
   web: todo

@@ -55,16 +55,23 @@ export class CarFleet {
     if (drive.traffic) drive.traffic.parked = this.parked;
   }
 
+  /** The car driven now: the test-drive car while one runs, else the car of the state. */
   get spec(): CarSpec {
-    return this.specs.get(this.state.driving)!;
+    return this.specs.get(this.testing?.car ?? this.state.driving)!;
   }
+
+  /**
+   * Garage test drive (specs/testdrive.md, P2): the car tried and the game seconds left. The
+   * cars state does not know about it (`driving` stays the own car the player drove out with).
+   */
+  testing: { car: string; left: number } | null = null;
 
   /** Upgrade levels of an own car (the garage sets this, specs/garage.md); none by default. */
   levelsOf: (car: string) => Levels = () => ({});
 
   /** True when the driven car is the player's own (not stolen): upgrades and looks apply. */
   get drivingOwn(): boolean {
-    return this.state.owned.includes(this.state.driving) && !this.state.stolen;
+    return !this.testing && this.state.owned.includes(this.state.driving) && !this.state.stolen;
   }
 
   /**
@@ -219,6 +226,8 @@ export class CarFleet {
 
   /** "Přesednout": the current car stays parked, the player drives the parked one. */
   board(p: ParkedCar): void {
+    // A test drive ends first: the own car is left parked here, the test car vanishes.
+    this.endTest(false);
     const c = this.drive.car;
     const left: ParkedCar = { carId: this.state.driving, owner: this.currentOwner(), x: c.x, y: c.y, heading: c.heading, chunk: null };
     this.apply({ by: 'player', op: 'board', car: p.carId, owner: p.owner });
@@ -297,9 +306,64 @@ export class CarFleet {
   select(car: string): void {
     const g = this.garage;
     if (!g) return;
+    this.testing = null;
     this.apply({ by: 'player', op: 'select', car });
     for (const p of this.parked.filter((q) => q.chunk === null && q.owner === 'player' && q.carId === car)) this.removeParked(p);
     this.drive.replaceCar(this.drivenSpec, g.x, g.y, g.heading);
     this.emit('carChanged', { car });
+  }
+
+  // ---------- test drive (specs/testdrive.md)
+
+  /** A car for sale can be tried: a garage, a known car the player does not own. */
+  canTest(car: string): boolean {
+    return this.garage !== null && this.specs.has(car) && !this.state.owned.includes(car);
+  }
+
+  /**
+   * Starts a test drive of [car] on the garage's parking point: the catalog car (no upgrades,
+   * default look), not owned. A stolen car is towed first (`select` of the first own car).
+   */
+  startTest(car: string): boolean {
+    const g = this.garage;
+    if (!g || !this.canTest(car)) return false;
+    const first = this.state.owned[0];
+    if (this.state.stolen && first !== undefined) this.apply({ by: 'player', op: 'select', car: first });
+    // The own car stays in the garage: copies of it left parked in town go.
+    for (const p of this.parked.filter((q) => q.chunk === null && q.owner === 'player' && q.carId === this.state.driving)) this.removeParked(p);
+    this.testing = { car, left: this.tuning.cars.testDriveS };
+    this.drive.replaceCar(this.drivenSpec, g.x, g.y, g.heading);
+    this.emit('carChanged', { car });
+    return true;
+  }
+
+  /**
+   * Counts the test drive down by [dt] game seconds and ends it when the time is up. True when
+   * it ended on this call (the HUD shows "Zkušební jízda skončila").
+   */
+  tickTest(dt: number): boolean {
+    const t = this.testing;
+    if (!t) return false;
+    t.left = Math.max(0, t.left - dt);
+    return t.left <= 0 && this.endTest();
+  }
+
+  /**
+   * Ends a test drive: the own car of the state comes back in place of the test car (same place
+   * and heading, at rest). False when none ran.
+   */
+  endTest(notify = true): boolean {
+    if (!this.testing) return false;
+    this.testing = null;
+    const c = this.drive.car;
+    this.drive.replaceCar(this.drivenSpec, c.x, c.y, c.heading);
+    if (notify) this.emit('carChanged', { car: this.state.driving });
+    return true;
+  }
+
+  /** Debug cash (specs/testdrive.md "Ladicí hotovost"): cash += economy.debug_grant. */
+  grantDebugCash(): number {
+    this.setCash(this.state.cash + this.tuning.economy.debugGrant);
+    return this.state.cash;
   }
 }

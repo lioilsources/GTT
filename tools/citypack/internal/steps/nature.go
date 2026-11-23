@@ -87,7 +87,9 @@ CREATE TABLE cells AS
 CREATE TABLE wraw AS
   SELECT subtype, class, names.primary AS name, ST_MakeValid(%[7]s) AS g FROM read_parquet(%[8]s)
   WHERE ST_GeometryType(geometry) IN ('POLYGON', 'MULTIPOLYGON') AND subtype NOT IN ('physical')
-    AND class NOT IN ('swimming_pool');
+    AND class NOT IN ('swimming_pool')
+    -- Underground water (tunnel, culvert: Rudolfova štola under Letná) is not on the map.
+    AND coalesce(level, 0) >= 0 AND NOT list_contains(map_keys(source_tags), 'tunnel');
 DELETE FROM wraw WHERE NOT ST_Intersects(g, (SELECT g FROM env));
 CREATE TABLE wcls0 AS SELECT CASE
     WHEN subtype = 'ocean' THEN %[9]d
@@ -115,7 +117,8 @@ CREATE TABLE wnames AS
          %[7]s AS g
   FROM read_parquet(%[8]s)
   WHERE names.primary IS NOT NULL AND (ST_GeometryType(geometry) IN ('LINESTRING', 'MULTILINESTRING')
-    OR (subtype = 'physical' AND class IN ('bay', 'strait', 'harbour', 'sound')));
+    OR (subtype = 'physical' AND class IN ('bay', 'strait', 'harbour', 'sound')))
+    AND coalesce(level, 0) >= 0 AND NOT list_contains(map_keys(source_tags), 'tunnel');
 DELETE FROM wnames WHERE NOT ST_Intersects(g, (SELECT g FROM env));
 CREATE TABLE wpiece0 AS
   SELECT cx, cy, cls, name, d.geom AS g FROM (
