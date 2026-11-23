@@ -673,6 +673,13 @@
   flutter: todo
   web: todo
 
+- id: F-077
+  name: "Demo záběr ?demo=roadster s pevným krokem (L-S9)"
+  level: P2
+  spec: specs/demo.md@1
+  lead: web
+  flutter: todo
+  web: todo
 - id: F-078
   name: Moscow in the clients (bundled pack, palette style E, city switching)
   level: P2

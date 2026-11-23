@@ -762,6 +762,7 @@ enum MessageKey {
   lmKomsomolskayaText('lm_komsomolskaya_text'),
   ogTitle('ogTitle'),
   ogDescription('ogDescription'),
+  ogTagline('ogTagline'),
   ;
 
   const MessageKey(this.key);
@@ -1529,6 +1530,7 @@ const Map<String, Map<String, String>> _messages = {
     'lm_komsomolskaya_text': 'Náměstí, kde stojí vedle sebe tři velká nádraží, každé v jiném stylu. Vlaky odtud jezdí na sever, na východ i na Dálný východ.',
     'ogTitle': 'Metropole (GTT) – volná jízda po skutečných metropolích',
     'ogDescription': 'New York, Praha a Tokio v prohlížeči. Minihry z feedu, žádné násilí.',
+    'ogTagline': 'Volné ježdění po Praze, New Yorku a Tokiu. Na telefonu, v prohlížeči, zdarma.',
   },
   'en': {
     'appTitle': 'Metropole',
@@ -2288,6 +2290,7 @@ const Map<String, Map<String, String>> _messages = {
     'lm_komsomolskaya_text': 'A square where three grand railway stations stand side by side, each in its own style. Trains leave from here for the north, the east and the far east.',
     'ogTitle': 'Metropole (GTT) – free driving through real cities',
     'ogDescription': 'New York, Prague and Tokyo in your browser. Minigames from a feed, no violence.',
+    'ogTagline': 'Free driving through Prague, New York and Tokyo. On your phone, in the browser, for free.',
   },
 };
 

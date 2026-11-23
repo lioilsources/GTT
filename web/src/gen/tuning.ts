@@ -105,6 +105,8 @@ export class Tuning {
   readonly bench: TuningBench;
   /** Mobile web smoke test in CI (specs/bench.md "Kouřový test", Prompts/05 L-S6); web only. */
   readonly smoke: TuningSmoke;
+  /** Demo shot ?demo=roadster (specs/demo.md, Prompts/05 L-S9); web only, presentation. */
+  readonly demo: TuningDemo;
   readonly hud: TuningHud;
   /** Minigames (METROPOLE_PLAN 9, specs/minigames/). Rules read these through the generated Tuning. */
   readonly minigames: TuningMinigames;
@@ -203,6 +205,7 @@ export class Tuning {
     this.skids = new TuningSkids(r.sub('skids'));
     this.bench = new TuningBench(r.sub('bench'));
     this.smoke = new TuningSmoke(r.sub('smoke'));
+    this.demo = new TuningDemo(r.sub('demo'));
     this.hud = new TuningHud(r.sub('hud'));
     this.minigames = new TuningMinigames(r.sub('minigames'));
     this.route = new TuningRoute(r.sub('route'));
@@ -255,6 +258,7 @@ export class Tuning {
       skids: this.skids.toJson(),
       bench: this.bench.toJson(),
       smoke: this.smoke.toJson(),
+      demo: this.demo.toJson(),
       hud: this.hud.toJson(),
       minigames: this.minigames.toJson(),
       route: this.route.toJson(),
@@ -1434,6 +1438,55 @@ export class TuningSmoke {
       drive_s: this.driveS,
       min_drive_m: this.minDriveM,
       swipe_px: this.swipePx,
+    };
+  }
+}
+
+/** Demo shot ?demo=roadster (specs/demo.md, Prompts/05 L-S9); web only, presentation. */
+export class TuningDemo {
+  /** every random seed of the game in the demo */
+  seed: number;
+  /** fixed step per rendered frame */
+  fps: number;
+  durationS: number;
+  /** tram track next to the crossing */
+  trackSearchM: number;
+  /** the standing tram's tail this far past the crossing */
+  tramPastM: number;
+  queueCars: number;
+  /** front of the first queued car before the crossing */
+  queueStopM: number;
+  queueGapM: number;
+  /** hop when the queue's last car is this close ahead of the nose */
+  hopAtM: number;
+  /** link preview frame (car rising over the queue); 0 = mid-air of the hop */
+  ogAtS: number;
+
+  constructor(r: R) {
+    this.seed = r.i('seed');
+    this.fps = r.i('fps');
+    this.durationS = r.d('duration_s');
+    this.trackSearchM = r.d('track_search_m');
+    this.tramPastM = r.d('tram_past_m');
+    this.queueCars = r.i('queue_cars');
+    this.queueStopM = r.d('queue_stop_m');
+    this.queueGapM = r.d('queue_gap_m');
+    this.hopAtM = r.d('hop_at_m');
+    this.ogAtS = r.d('og_at_s');
+  }
+
+  toJson(): Record<string, unknown> {
+    return {
+      seed: this.seed,
+      fps: this.fps,
+      duration_s: this.durationS,
+      track_search_m: this.trackSearchM,
+      tram_past_m: this.tramPastM,
+      queue_cars: this.queueCars,
+      queue_stop_m: this.queueStopM,
+      queue_gap_m: this.queueGapM,
+      hop_at_m: this.hopAtM,
+      og_at_s: this.ogAtS,
     };
   }
 }

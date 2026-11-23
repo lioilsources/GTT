@@ -91,6 +91,7 @@ class Tuning {
         skids = TuningSkids._(r.sub('skids')),
         bench = TuningBench._(r.sub('bench')),
         smoke = TuningSmoke._(r.sub('smoke')),
+        demo = TuningDemo._(r.sub('demo')),
         hud = TuningHud._(r.sub('hud')),
         minigames = TuningMinigames._(r.sub('minigames')),
         route = TuningRoute._(r.sub('route')),
@@ -183,6 +184,9 @@ class Tuning {
 
   /// Mobile web smoke test in CI (specs/bench.md "Kouřový test", Prompts/05 L-S6); web only.
   final TuningSmoke smoke;
+
+  /// Demo shot ?demo=roadster (specs/demo.md, Prompts/05 L-S9); web only, presentation.
+  final TuningDemo demo;
 
   final TuningHud hud;
 
@@ -290,6 +294,7 @@ class Tuning {
         'skids': skids.toJson(),
         'bench': bench.toJson(),
         'smoke': smoke.toJson(),
+        'demo': demo.toJson(),
         'hud': hud.toJson(),
         'minigames': minigames.toJson(),
         'route': route.toJson(),
@@ -1458,6 +1463,61 @@ class TuningSmoke {
         'drive_s': driveS,
         'min_drive_m': minDriveM,
         'swipe_px': swipePx,
+      };
+}
+
+/// Demo shot ?demo=roadster (specs/demo.md, Prompts/05 L-S9); web only, presentation.
+class TuningDemo {
+  TuningDemo._(_R r)
+      : seed = r.i('seed'),
+        fps = r.i('fps'),
+        durationS = r.d('duration_s'),
+        trackSearchM = r.d('track_search_m'),
+        tramPastM = r.d('tram_past_m'),
+        queueCars = r.i('queue_cars'),
+        queueStopM = r.d('queue_stop_m'),
+        queueGapM = r.d('queue_gap_m'),
+        hopAtM = r.d('hop_at_m'),
+        ogAtS = r.d('og_at_s');
+
+  /// every random seed of the game in the demo
+  int seed;
+
+  /// fixed step per rendered frame
+  int fps;
+
+  double durationS;
+
+  /// tram track next to the crossing
+  double trackSearchM;
+
+  /// the standing tram's tail this far past the crossing
+  double tramPastM;
+
+  int queueCars;
+
+  /// front of the first queued car before the crossing
+  double queueStopM;
+
+  double queueGapM;
+
+  /// hop when the queue's last car is this close ahead of the nose
+  double hopAtM;
+
+  /// link preview frame (car rising over the queue); 0 = mid-air of the hop
+  double ogAtS;
+
+  Map<String, Object> toJson() => {
+        'seed': seed,
+        'fps': fps,
+        'duration_s': durationS,
+        'track_search_m': trackSearchM,
+        'tram_past_m': tramPastM,
+        'queue_cars': queueCars,
+        'queue_stop_m': queueStopM,
+        'queue_gap_m': queueGapM,
+        'hop_at_m': hopAtM,
+        'og_at_s': ogAtS,
       };
 }
 
