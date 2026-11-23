@@ -1,0 +1,11028 @@
+{
+ "module": "cihly",
+ "specVersion": 1,
+ "$comment": "M2-S9 dávka C: cihly (specs/minigames/cihly.md v1); zmenšené hřiště, tiky po skupinách.",
+ "cases": [
+  {
+   "name": "clear-wall-bonus-3star-l1",
+   "config": {
+    "level": 1,
+    "w": 2000,
+    "h": 2400,
+    "ballR": 40,
+    "paddleY": 300,
+    "paddleH": 40,
+    "paddleW": [
+     400,
+     350,
+     300,
+     260,
+     220
+    ],
+    "speed": [
+     40,
+     50,
+     60,
+     70,
+     80
+    ],
+    "maxVxPct": 80,
+    "serveTicks": 3,
+    "lives": 2,
+    "rows": 2,
+    "cols": 3,
+    "brickX0": 100,
+    "brickTop": 2200,
+    "brickW": 560,
+    "brickH": 160,
+    "brickGap": 40,
+    "rowPoints": [
+     30,
+     10
+    ],
+    "livesBonus": 50,
+    "starScores": [
+     200,
+     120,
+     60
+    ]
+   },
+   "seed": 1,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 1060
+     },
+     "state": {
+      "ball": {
+       "x": 1000,
+       "y": 380,
+       "vx": 0,
+       "vy": 0
+      },
+      "paddle": 1060,
+      "serve": 3,
+      "bricks": [
+       true,
+       true,
+       true,
+       true,
+       true,
+       true
+      ],
+      "score": 0,
+      "lives": 2,
+      "over": false,
+      "rng": 1
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 1035,
+       "y": 575,
+       "vx": -5,
+       "vy": 39
+      },
+      "paddle": 1060,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       true,
+       true,
+       true
+      ],
+      "score": 0,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 1095
+     },
+     "state": {
+      "ball": {
+       "x": 1035,
+       "y": 575,
+       "vx": -5,
+       "vy": 39
+      },
+      "paddle": 1095,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       true,
+       true,
+       true
+      ],
+      "score": 0,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 995,
+       "y": 887,
+       "vx": -5,
+       "vy": 39
+      },
+      "paddle": 1095,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       true,
+       true,
+       true
+      ],
+      "score": 0,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 1055
+     },
+     "state": {
+      "ball": {
+       "x": 995,
+       "y": 887,
+       "vx": -5,
+       "vy": 39
+      },
+      "paddle": 1055,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       true,
+       true,
+       true
+      ],
+      "score": 0,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 955,
+       "y": 1199,
+       "vx": -5,
+       "vy": 39
+      },
+      "paddle": 1055,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       true,
+       true,
+       true
+      ],
+      "score": 0,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 1015
+     },
+     "state": {
+      "ball": {
+       "x": 955,
+       "y": 1199,
+       "vx": -5,
+       "vy": 39
+      },
+      "paddle": 1015,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       true,
+       true,
+       true
+      ],
+      "score": 0,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 915,
+       "y": 1511,
+       "vx": -5,
+       "vy": 39
+      },
+      "paddle": 1015,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       true,
+       true,
+       true
+      ],
+      "score": 0,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 975
+     },
+     "state": {
+      "ball": {
+       "x": 915,
+       "y": 1511,
+       "vx": -5,
+       "vy": 39
+      },
+      "paddle": 975,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       true,
+       true,
+       true
+      ],
+      "score": 0,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 875,
+       "y": 1823,
+       "vx": -5,
+       "vy": -39
+      },
+      "paddle": 975,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       true,
+       false,
+       true
+      ],
+      "score": 10,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 935
+     },
+     "state": {
+      "ball": {
+       "x": 875,
+       "y": 1823,
+       "vx": -5,
+       "vy": -39
+      },
+      "paddle": 935,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       true,
+       false,
+       true
+      ],
+      "score": 10,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 835,
+       "y": 1511,
+       "vx": -5,
+       "vy": -39
+      },
+      "paddle": 935,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       true,
+       false,
+       true
+      ],
+      "score": 10,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 895
+     },
+     "state": {
+      "ball": {
+       "x": 835,
+       "y": 1511,
+       "vx": -5,
+       "vy": -39
+      },
+      "paddle": 895,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       true,
+       false,
+       true
+      ],
+      "score": 10,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 795,
+       "y": 1199,
+       "vx": -5,
+       "vy": -39
+      },
+      "paddle": 895,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       true,
+       false,
+       true
+      ],
+      "score": 10,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 855
+     },
+     "state": {
+      "ball": {
+       "x": 795,
+       "y": 1199,
+       "vx": -5,
+       "vy": -39
+      },
+      "paddle": 855,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       true,
+       false,
+       true
+      ],
+      "score": 10,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 755,
+       "y": 887,
+       "vx": -5,
+       "vy": -39
+      },
+      "paddle": 855,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       true,
+       false,
+       true
+      ],
+      "score": 10,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 815
+     },
+     "state": {
+      "ball": {
+       "x": 755,
+       "y": 887,
+       "vx": -5,
+       "vy": -39
+      },
+      "paddle": 815,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       true,
+       false,
+       true
+      ],
+      "score": 10,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 715,
+       "y": 575,
+       "vx": -5,
+       "vy": -39
+      },
+      "paddle": 815,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       true,
+       false,
+       true
+      ],
+      "score": 10,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 775
+     },
+     "state": {
+      "ball": {
+       "x": 715,
+       "y": 575,
+       "vx": -5,
+       "vy": -39
+      },
+      "paddle": 775,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       true,
+       false,
+       true
+      ],
+      "score": 10,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 671,
+       "y": 419,
+       "vx": -7,
+       "vy": 39
+      },
+      "paddle": 775,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       true,
+       false,
+       true
+      ],
+      "score": 10,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 731
+     },
+     "state": {
+      "ball": {
+       "x": 671,
+       "y": 419,
+       "vx": -7,
+       "vy": 39
+      },
+      "paddle": 731,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       true,
+       false,
+       true
+      ],
+      "score": 10,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 615,
+       "y": 731,
+       "vx": -7,
+       "vy": 39
+      },
+      "paddle": 731,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       true,
+       false,
+       true
+      ],
+      "score": 10,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 675
+     },
+     "state": {
+      "ball": {
+       "x": 615,
+       "y": 731,
+       "vx": -7,
+       "vy": 39
+      },
+      "paddle": 675,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       true,
+       false,
+       true
+      ],
+      "score": 10,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 559,
+       "y": 1043,
+       "vx": -7,
+       "vy": 39
+      },
+      "paddle": 675,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       true,
+       false,
+       true
+      ],
+      "score": 10,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 619
+     },
+     "state": {
+      "ball": {
+       "x": 559,
+       "y": 1043,
+       "vx": -7,
+       "vy": 39
+      },
+      "paddle": 619,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       true,
+       false,
+       true
+      ],
+      "score": 10,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 503,
+       "y": 1355,
+       "vx": -7,
+       "vy": 39
+      },
+      "paddle": 619,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       true,
+       false,
+       true
+      ],
+      "score": 10,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 563
+     },
+     "state": {
+      "ball": {
+       "x": 503,
+       "y": 1355,
+       "vx": -7,
+       "vy": 39
+      },
+      "paddle": 563,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       true,
+       false,
+       true
+      ],
+      "score": 10,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 447,
+       "y": 1667,
+       "vx": -7,
+       "vy": 39
+      },
+      "paddle": 563,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       true,
+       false,
+       true
+      ],
+      "score": 10,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 507
+     },
+     "state": {
+      "ball": {
+       "x": 447,
+       "y": 1667,
+       "vx": -7,
+       "vy": 39
+      },
+      "paddle": 507,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       true,
+       false,
+       true
+      ],
+      "score": 10,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 391,
+       "y": 1667,
+       "vx": -7,
+       "vy": -39
+      },
+      "paddle": 507,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       false,
+       false,
+       true
+      ],
+      "score": 20,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 451
+     },
+     "state": {
+      "ball": {
+       "x": 391,
+       "y": 1667,
+       "vx": -7,
+       "vy": -39
+      },
+      "paddle": 451,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       false,
+       false,
+       true
+      ],
+      "score": 20,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 335,
+       "y": 1355,
+       "vx": -7,
+       "vy": -39
+      },
+      "paddle": 451,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       false,
+       false,
+       true
+      ],
+      "score": 20,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 395
+     },
+     "state": {
+      "ball": {
+       "x": 335,
+       "y": 1355,
+       "vx": -7,
+       "vy": -39
+      },
+      "paddle": 400,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       false,
+       false,
+       true
+      ],
+      "score": 20,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 279,
+       "y": 1043,
+       "vx": -7,
+       "vy": -39
+      },
+      "paddle": 400,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       false,
+       false,
+       true
+      ],
+      "score": 20,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 339
+     },
+     "state": {
+      "ball": {
+       "x": 279,
+       "y": 1043,
+       "vx": -7,
+       "vy": -39
+      },
+      "paddle": 400,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       false,
+       false,
+       true
+      ],
+      "score": 20,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 223,
+       "y": 731,
+       "vx": -7,
+       "vy": -39
+      },
+      "paddle": 400,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       false,
+       false,
+       true
+      ],
+      "score": 20,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 283
+     },
+     "state": {
+      "ball": {
+       "x": 223,
+       "y": 731,
+       "vx": -7,
+       "vy": -39
+      },
+      "paddle": 400,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       false,
+       false,
+       true
+      ],
+      "score": 20,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 167,
+       "y": 419,
+       "vx": -7,
+       "vy": -39
+      },
+      "paddle": 400,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       false,
+       false,
+       true
+      ],
+      "score": 20,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 227
+     },
+     "state": {
+      "ball": {
+       "x": 167,
+       "y": 419,
+       "vx": -7,
+       "vy": -39
+      },
+      "paddle": 400,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       false,
+       false,
+       true
+      ],
+      "score": 20,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 39,
+       "y": 551,
+       "vx": 19,
+       "vy": 35
+      },
+      "paddle": 400,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       false,
+       false,
+       true
+      ],
+      "score": 20,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 99
+     },
+     "state": {
+      "ball": {
+       "x": 39,
+       "y": 551,
+       "vx": 19,
+       "vy": 35
+      },
+      "paddle": 400,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       false,
+       false,
+       true
+      ],
+      "score": 20,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 191,
+       "y": 831,
+       "vx": 19,
+       "vy": 35
+      },
+      "paddle": 400,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       false,
+       false,
+       true
+      ],
+      "score": 20,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 251
+     },
+     "state": {
+      "ball": {
+       "x": 191,
+       "y": 831,
+       "vx": 19,
+       "vy": 35
+      },
+      "paddle": 400,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       false,
+       false,
+       true
+      ],
+      "score": 20,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 343,
+       "y": 1111,
+       "vx": 19,
+       "vy": 35
+      },
+      "paddle": 400,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       false,
+       false,
+       true
+      ],
+      "score": 20,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 403
+     },
+     "state": {
+      "ball": {
+       "x": 343,
+       "y": 1111,
+       "vx": 19,
+       "vy": 35
+      },
+      "paddle": 403,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       false,
+       false,
+       true
+      ],
+      "score": 20,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 495,
+       "y": 1391,
+       "vx": 19,
+       "vy": 35
+      },
+      "paddle": 403,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       false,
+       false,
+       true
+      ],
+      "score": 20,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 555
+     },
+     "state": {
+      "ball": {
+       "x": 495,
+       "y": 1391,
+       "vx": 19,
+       "vy": 35
+      },
+      "paddle": 555,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       false,
+       false,
+       true
+      ],
+      "score": 20,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 647,
+       "y": 1671,
+       "vx": 19,
+       "vy": 35
+      },
+      "paddle": 555,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       false,
+       false,
+       true
+      ],
+      "score": 20,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 707
+     },
+     "state": {
+      "ball": {
+       "x": 647,
+       "y": 1671,
+       "vx": 19,
+       "vy": 35
+      },
+      "paddle": 707,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       false,
+       false,
+       true
+      ],
+      "score": 20,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 799,
+       "y": 1951,
+       "vx": 19,
+       "vy": 35
+      },
+      "paddle": 707,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       false,
+       false,
+       true
+      ],
+      "score": 20,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 859
+     },
+     "state": {
+      "ball": {
+       "x": 799,
+       "y": 1951,
+       "vx": 19,
+       "vy": 35
+      },
+      "paddle": 859,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       false,
+       false,
+       true
+      ],
+      "score": 20,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 951,
+       "y": 1811,
+       "vx": 19,
+       "vy": -35
+      },
+      "paddle": 859,
+      "serve": 0,
+      "bricks": [
+       true,
+       false,
+       true,
+       false,
+       false,
+       true
+      ],
+      "score": 50,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 1011
+     },
+     "state": {
+      "ball": {
+       "x": 951,
+       "y": 1811,
+       "vx": 19,
+       "vy": -35
+      },
+      "paddle": 1011,
+      "serve": 0,
+      "bricks": [
+       true,
+       false,
+       true,
+       false,
+       false,
+       true
+      ],
+      "score": 50,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 1103,
+       "y": 1531,
+       "vx": 19,
+       "vy": -35
+      },
+      "paddle": 1011,
+      "serve": 0,
+      "bricks": [
+       true,
+       false,
+       true,
+       false,
+       false,
+       true
+      ],
+      "score": 50,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 1163
+     },
+     "state": {
+      "ball": {
+       "x": 1103,
+       "y": 1531,
+       "vx": 19,
+       "vy": -35
+      },
+      "paddle": 1163,
+      "serve": 0,
+      "bricks": [
+       true,
+       false,
+       true,
+       false,
+       false,
+       true
+      ],
+      "score": 50,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 1255,
+       "y": 1251,
+       "vx": 19,
+       "vy": -35
+      },
+      "paddle": 1163,
+      "serve": 0,
+      "bricks": [
+       true,
+       false,
+       true,
+       false,
+       false,
+       true
+      ],
+      "score": 50,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 1315
+     },
+     "state": {
+      "ball": {
+       "x": 1255,
+       "y": 1251,
+       "vx": 19,
+       "vy": -35
+      },
+      "paddle": 1315,
+      "serve": 0,
+      "bricks": [
+       true,
+       false,
+       true,
+       false,
+       false,
+       true
+      ],
+      "score": 50,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 1407,
+       "y": 971,
+       "vx": 19,
+       "vy": -35
+      },
+      "paddle": 1315,
+      "serve": 0,
+      "bricks": [
+       true,
+       false,
+       true,
+       false,
+       false,
+       true
+      ],
+      "score": 50,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 1467
+     },
+     "state": {
+      "ball": {
+       "x": 1407,
+       "y": 971,
+       "vx": 19,
+       "vy": -35
+      },
+      "paddle": 1467,
+      "serve": 0,
+      "bricks": [
+       true,
+       false,
+       true,
+       false,
+       false,
+       true
+      ],
+      "score": 50,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 1559,
+       "y": 691,
+       "vx": 19,
+       "vy": -35
+      },
+      "paddle": 1467,
+      "serve": 0,
+      "bricks": [
+       true,
+       false,
+       true,
+       false,
+       false,
+       true
+      ],
+      "score": 50,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 1619
+     },
+     "state": {
+      "ball": {
+       "x": 1559,
+       "y": 691,
+       "vx": 19,
+       "vy": -35
+      },
+      "paddle": 1600,
+      "serve": 0,
+      "bricks": [
+       true,
+       false,
+       true,
+       false,
+       false,
+       true
+      ],
+      "score": 50,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 1711,
+       "y": 411,
+       "vx": 19,
+       "vy": -35
+      },
+      "paddle": 1600,
+      "serve": 0,
+      "bricks": [
+       true,
+       false,
+       true,
+       false,
+       false,
+       true
+      ],
+      "score": 50,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 1771
+     },
+     "state": {
+      "ball": {
+       "x": 1711,
+       "y": 411,
+       "vx": 19,
+       "vy": -35
+      },
+      "paddle": 1600,
+      "serve": 0,
+      "bricks": [
+       true,
+       false,
+       true,
+       false,
+       false,
+       true
+      ],
+      "score": 50,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 1800,
+       "y": 642,
+       "vx": 10,
+       "vy": 38
+      },
+      "paddle": 1600,
+      "serve": 0,
+      "bricks": [
+       true,
+       false,
+       true,
+       false,
+       false,
+       true
+      ],
+      "score": 50,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 1860
+     },
+     "state": {
+      "ball": {
+       "x": 1800,
+       "y": 642,
+       "vx": 10,
+       "vy": 38
+      },
+      "paddle": 1600,
+      "serve": 0,
+      "bricks": [
+       true,
+       false,
+       true,
+       false,
+       false,
+       true
+      ],
+      "score": 50,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 1880,
+       "y": 946,
+       "vx": 10,
+       "vy": 38
+      },
+      "paddle": 1600,
+      "serve": 0,
+      "bricks": [
+       true,
+       false,
+       true,
+       false,
+       false,
+       true
+      ],
+      "score": 50,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 1940
+     },
+     "state": {
+      "ball": {
+       "x": 1880,
+       "y": 946,
+       "vx": 10,
+       "vy": 38
+      },
+      "paddle": 1600,
+      "serve": 0,
+      "bricks": [
+       true,
+       false,
+       true,
+       false,
+       false,
+       true
+      ],
+      "score": 50,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 1960,
+       "y": 1250,
+       "vx": 10,
+       "vy": 38
+      },
+      "paddle": 1600,
+      "serve": 0,
+      "bricks": [
+       true,
+       false,
+       true,
+       false,
+       false,
+       true
+      ],
+      "score": 50,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 2020
+     },
+     "state": {
+      "ball": {
+       "x": 1960,
+       "y": 1250,
+       "vx": 10,
+       "vy": 38
+      },
+      "paddle": 1600,
+      "serve": 0,
+      "bricks": [
+       true,
+       false,
+       true,
+       false,
+       false,
+       true
+      ],
+      "score": 50,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 1900,
+       "y": 1554,
+       "vx": -10,
+       "vy": 38
+      },
+      "paddle": 1600,
+      "serve": 0,
+      "bricks": [
+       true,
+       false,
+       true,
+       false,
+       false,
+       true
+      ],
+      "score": 50,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 1960
+     },
+     "state": {
+      "ball": {
+       "x": 1900,
+       "y": 1554,
+       "vx": -10,
+       "vy": 38
+      },
+      "paddle": 1600,
+      "serve": 0,
+      "bricks": [
+       true,
+       false,
+       true,
+       false,
+       false,
+       true
+      ],
+      "score": 50,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 1820,
+       "y": 1782,
+       "vx": -10,
+       "vy": -38
+      },
+      "paddle": 1600,
+      "serve": 0,
+      "bricks": [
+       true,
+       false,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 60,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 1880
+     },
+     "state": {
+      "ball": {
+       "x": 1820,
+       "y": 1782,
+       "vx": -10,
+       "vy": -38
+      },
+      "paddle": 1600,
+      "serve": 0,
+      "bricks": [
+       true,
+       false,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 60,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 1740,
+       "y": 1478,
+       "vx": -10,
+       "vy": -38
+      },
+      "paddle": 1600,
+      "serve": 0,
+      "bricks": [
+       true,
+       false,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 60,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 1800
+     },
+     "state": {
+      "ball": {
+       "x": 1740,
+       "y": 1478,
+       "vx": -10,
+       "vy": -38
+      },
+      "paddle": 1600,
+      "serve": 0,
+      "bricks": [
+       true,
+       false,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 60,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 1660,
+       "y": 1174,
+       "vx": -10,
+       "vy": -38
+      },
+      "paddle": 1600,
+      "serve": 0,
+      "bricks": [
+       true,
+       false,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 60,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 1720
+     },
+     "state": {
+      "ball": {
+       "x": 1660,
+       "y": 1174,
+       "vx": -10,
+       "vy": -38
+      },
+      "paddle": 1600,
+      "serve": 0,
+      "bricks": [
+       true,
+       false,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 60,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 1580,
+       "y": 870,
+       "vx": -10,
+       "vy": -38
+      },
+      "paddle": 1600,
+      "serve": 0,
+      "bricks": [
+       true,
+       false,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 60,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 1640
+     },
+     "state": {
+      "ball": {
+       "x": 1580,
+       "y": 870,
+       "vx": -10,
+       "vy": -38
+      },
+      "paddle": 1600,
+      "serve": 0,
+      "bricks": [
+       true,
+       false,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 60,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 1500,
+       "y": 566,
+       "vx": -10,
+       "vy": -38
+      },
+      "paddle": 1600,
+      "serve": 0,
+      "bricks": [
+       true,
+       false,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 60,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 1560
+     },
+     "state": {
+      "ball": {
+       "x": 1500,
+       "y": 566,
+       "vx": -10,
+       "vy": -38
+      },
+      "paddle": 1560,
+      "serve": 0,
+      "bricks": [
+       true,
+       false,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 60,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 1426,
+       "y": 493,
+       "vx": -8,
+       "vy": 39
+      },
+      "paddle": 1560,
+      "serve": 0,
+      "bricks": [
+       true,
+       false,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 60,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 1486
+     },
+     "state": {
+      "ball": {
+       "x": 1426,
+       "y": 493,
+       "vx": -8,
+       "vy": 39
+      },
+      "paddle": 1486,
+      "serve": 0,
+      "bricks": [
+       true,
+       false,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 60,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 1362,
+       "y": 805,
+       "vx": -8,
+       "vy": 39
+      },
+      "paddle": 1486,
+      "serve": 0,
+      "bricks": [
+       true,
+       false,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 60,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 1422
+     },
+     "state": {
+      "ball": {
+       "x": 1362,
+       "y": 805,
+       "vx": -8,
+       "vy": 39
+      },
+      "paddle": 1422,
+      "serve": 0,
+      "bricks": [
+       true,
+       false,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 60,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 1298,
+       "y": 1117,
+       "vx": -8,
+       "vy": 39
+      },
+      "paddle": 1422,
+      "serve": 0,
+      "bricks": [
+       true,
+       false,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 60,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 1358
+     },
+     "state": {
+      "ball": {
+       "x": 1298,
+       "y": 1117,
+       "vx": -8,
+       "vy": 39
+      },
+      "paddle": 1358,
+      "serve": 0,
+      "bricks": [
+       true,
+       false,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 60,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 1234,
+       "y": 1429,
+       "vx": -8,
+       "vy": 39
+      },
+      "paddle": 1358,
+      "serve": 0,
+      "bricks": [
+       true,
+       false,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 60,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 1294
+     },
+     "state": {
+      "ball": {
+       "x": 1234,
+       "y": 1429,
+       "vx": -8,
+       "vy": 39
+      },
+      "paddle": 1294,
+      "serve": 0,
+      "bricks": [
+       true,
+       false,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 60,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 1170,
+       "y": 1741,
+       "vx": -8,
+       "vy": 39
+      },
+      "paddle": 1294,
+      "serve": 0,
+      "bricks": [
+       true,
+       false,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 60,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 1230
+     },
+     "state": {
+      "ball": {
+       "x": 1170,
+       "y": 1741,
+       "vx": -8,
+       "vy": 39
+      },
+      "paddle": 1230,
+      "serve": 0,
+      "bricks": [
+       true,
+       false,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 60,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 1106,
+       "y": 2053,
+       "vx": -8,
+       "vy": 39
+      },
+      "paddle": 1230,
+      "serve": 0,
+      "bricks": [
+       true,
+       false,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 60,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 1166
+     },
+     "state": {
+      "ball": {
+       "x": 1106,
+       "y": 2053,
+       "vx": -8,
+       "vy": 39
+      },
+      "paddle": 1166,
+      "serve": 0,
+      "bricks": [
+       true,
+       false,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 60,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 1042,
+       "y": 2365,
+       "vx": -8,
+       "vy": -39
+      },
+      "paddle": 1166,
+      "serve": 0,
+      "bricks": [
+       true,
+       false,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 60,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 1102
+     },
+     "state": {
+      "ball": {
+       "x": 1042,
+       "y": 2365,
+       "vx": -8,
+       "vy": -39
+      },
+      "paddle": 1102,
+      "serve": 0,
+      "bricks": [
+       true,
+       false,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 60,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 978,
+       "y": 2053,
+       "vx": -8,
+       "vy": -39
+      },
+      "paddle": 1102,
+      "serve": 0,
+      "bricks": [
+       true,
+       false,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 60,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 1038
+     },
+     "state": {
+      "ball": {
+       "x": 978,
+       "y": 2053,
+       "vx": -8,
+       "vy": -39
+      },
+      "paddle": 1038,
+      "serve": 0,
+      "bricks": [
+       true,
+       false,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 60,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 914,
+       "y": 1741,
+       "vx": -8,
+       "vy": -39
+      },
+      "paddle": 1038,
+      "serve": 0,
+      "bricks": [
+       true,
+       false,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 60,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 974
+     },
+     "state": {
+      "ball": {
+       "x": 914,
+       "y": 1741,
+       "vx": -8,
+       "vy": -39
+      },
+      "paddle": 974,
+      "serve": 0,
+      "bricks": [
+       true,
+       false,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 60,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 850,
+       "y": 1429,
+       "vx": -8,
+       "vy": -39
+      },
+      "paddle": 974,
+      "serve": 0,
+      "bricks": [
+       true,
+       false,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 60,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 910
+     },
+     "state": {
+      "ball": {
+       "x": 850,
+       "y": 1429,
+       "vx": -8,
+       "vy": -39
+      },
+      "paddle": 910,
+      "serve": 0,
+      "bricks": [
+       true,
+       false,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 60,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 786,
+       "y": 1117,
+       "vx": -8,
+       "vy": -39
+      },
+      "paddle": 910,
+      "serve": 0,
+      "bricks": [
+       true,
+       false,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 60,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 846
+     },
+     "state": {
+      "ball": {
+       "x": 786,
+       "y": 1117,
+       "vx": -8,
+       "vy": -39
+      },
+      "paddle": 846,
+      "serve": 0,
+      "bricks": [
+       true,
+       false,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 60,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 722,
+       "y": 805,
+       "vx": -8,
+       "vy": -39
+      },
+      "paddle": 846,
+      "serve": 0,
+      "bricks": [
+       true,
+       false,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 60,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 782
+     },
+     "state": {
+      "ball": {
+       "x": 722,
+       "y": 805,
+       "vx": -8,
+       "vy": -39
+      },
+      "paddle": 782,
+      "serve": 0,
+      "bricks": [
+       true,
+       false,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 60,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 658,
+       "y": 493,
+       "vx": -8,
+       "vy": -39
+      },
+      "paddle": 782,
+      "serve": 0,
+      "bricks": [
+       true,
+       false,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 60,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 718
+     },
+     "state": {
+      "ball": {
+       "x": 658,
+       "y": 493,
+       "vx": -8,
+       "vy": -39
+      },
+      "paddle": 718,
+      "serve": 0,
+      "bricks": [
+       true,
+       false,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 60,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 604,
+       "y": 571,
+       "vx": -6,
+       "vy": 39
+      },
+      "paddle": 718,
+      "serve": 0,
+      "bricks": [
+       true,
+       false,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 60,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 664
+     },
+     "state": {
+      "ball": {
+       "x": 604,
+       "y": 571,
+       "vx": -6,
+       "vy": 39
+      },
+      "paddle": 664,
+      "serve": 0,
+      "bricks": [
+       true,
+       false,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 60,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 556,
+       "y": 883,
+       "vx": -6,
+       "vy": 39
+      },
+      "paddle": 664,
+      "serve": 0,
+      "bricks": [
+       true,
+       false,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 60,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 616
+     },
+     "state": {
+      "ball": {
+       "x": 556,
+       "y": 883,
+       "vx": -6,
+       "vy": 39
+      },
+      "paddle": 616,
+      "serve": 0,
+      "bricks": [
+       true,
+       false,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 60,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 508,
+       "y": 1195,
+       "vx": -6,
+       "vy": 39
+      },
+      "paddle": 616,
+      "serve": 0,
+      "bricks": [
+       true,
+       false,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 60,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 568
+     },
+     "state": {
+      "ball": {
+       "x": 508,
+       "y": 1195,
+       "vx": -6,
+       "vy": 39
+      },
+      "paddle": 568,
+      "serve": 0,
+      "bricks": [
+       true,
+       false,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 60,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 460,
+       "y": 1507,
+       "vx": -6,
+       "vy": 39
+      },
+      "paddle": 568,
+      "serve": 0,
+      "bricks": [
+       true,
+       false,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 60,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 520
+     },
+     "state": {
+      "ball": {
+       "x": 460,
+       "y": 1507,
+       "vx": -6,
+       "vy": 39
+      },
+      "paddle": 520,
+      "serve": 0,
+      "bricks": [
+       true,
+       false,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 60,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 412,
+       "y": 1819,
+       "vx": -6,
+       "vy": 39
+      },
+      "paddle": 520,
+      "serve": 0,
+      "bricks": [
+       true,
+       false,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 60,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 472
+     },
+     "state": {
+      "ball": {
+       "x": 412,
+       "y": 1819,
+       "vx": -6,
+       "vy": 39
+      },
+      "paddle": 472,
+      "serve": 0,
+      "bricks": [
+       true,
+       false,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 60,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 364,
+       "y": 1897,
+       "vx": -6,
+       "vy": -39
+      },
+      "paddle": 472,
+      "serve": 0,
+      "bricks": [
+       false,
+       false,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 90,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 424
+     },
+     "state": {
+      "ball": {
+       "x": 364,
+       "y": 1897,
+       "vx": -6,
+       "vy": -39
+      },
+      "paddle": 424,
+      "serve": 0,
+      "bricks": [
+       false,
+       false,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 90,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 316,
+       "y": 1585,
+       "vx": -6,
+       "vy": -39
+      },
+      "paddle": 424,
+      "serve": 0,
+      "bricks": [
+       false,
+       false,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 90,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 376
+     },
+     "state": {
+      "ball": {
+       "x": 316,
+       "y": 1585,
+       "vx": -6,
+       "vy": -39
+      },
+      "paddle": 400,
+      "serve": 0,
+      "bricks": [
+       false,
+       false,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 90,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 268,
+       "y": 1273,
+       "vx": -6,
+       "vy": -39
+      },
+      "paddle": 400,
+      "serve": 0,
+      "bricks": [
+       false,
+       false,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 90,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 328
+     },
+     "state": {
+      "ball": {
+       "x": 268,
+       "y": 1273,
+       "vx": -6,
+       "vy": -39
+      },
+      "paddle": 400,
+      "serve": 0,
+      "bricks": [
+       false,
+       false,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 90,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 220,
+       "y": 961,
+       "vx": -6,
+       "vy": -39
+      },
+      "paddle": 400,
+      "serve": 0,
+      "bricks": [
+       false,
+       false,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 90,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 280
+     },
+     "state": {
+      "ball": {
+       "x": 220,
+       "y": 961,
+       "vx": -6,
+       "vy": -39
+      },
+      "paddle": 400,
+      "serve": 0,
+      "bricks": [
+       false,
+       false,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 90,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 172,
+       "y": 649,
+       "vx": -6,
+       "vy": -39
+      },
+      "paddle": 400,
+      "serve": 0,
+      "bricks": [
+       false,
+       false,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 90,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 232
+     },
+     "state": {
+      "ball": {
+       "x": 172,
+       "y": 649,
+       "vx": -6,
+       "vy": -39
+      },
+      "paddle": 400,
+      "serve": 0,
+      "bricks": [
+       false,
+       false,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 90,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 109,
+       "y": 410,
+       "vx": -21,
+       "vy": 34
+      },
+      "paddle": 400,
+      "serve": 0,
+      "bricks": [
+       false,
+       false,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 90,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 169
+     },
+     "state": {
+      "ball": {
+       "x": 109,
+       "y": 410,
+       "vx": -21,
+       "vy": 34
+      },
+      "paddle": 400,
+      "serve": 0,
+      "bricks": [
+       false,
+       false,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 90,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 109,
+       "y": 682,
+       "vx": 21,
+       "vy": 34
+      },
+      "paddle": 400,
+      "serve": 0,
+      "bricks": [
+       false,
+       false,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 90,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 169
+     },
+     "state": {
+      "ball": {
+       "x": 109,
+       "y": 682,
+       "vx": 21,
+       "vy": 34
+      },
+      "paddle": 400,
+      "serve": 0,
+      "bricks": [
+       false,
+       false,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 90,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 277,
+       "y": 954,
+       "vx": 21,
+       "vy": 34
+      },
+      "paddle": 400,
+      "serve": 0,
+      "bricks": [
+       false,
+       false,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 90,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 337
+     },
+     "state": {
+      "ball": {
+       "x": 277,
+       "y": 954,
+       "vx": 21,
+       "vy": 34
+      },
+      "paddle": 400,
+      "serve": 0,
+      "bricks": [
+       false,
+       false,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 90,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 445,
+       "y": 1226,
+       "vx": 21,
+       "vy": 34
+      },
+      "paddle": 400,
+      "serve": 0,
+      "bricks": [
+       false,
+       false,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 90,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 505
+     },
+     "state": {
+      "ball": {
+       "x": 445,
+       "y": 1226,
+       "vx": 21,
+       "vy": 34
+      },
+      "paddle": 505,
+      "serve": 0,
+      "bricks": [
+       false,
+       false,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 90,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 613,
+       "y": 1498,
+       "vx": 21,
+       "vy": 34
+      },
+      "paddle": 505,
+      "serve": 0,
+      "bricks": [
+       false,
+       false,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 90,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 673
+     },
+     "state": {
+      "ball": {
+       "x": 613,
+       "y": 1498,
+       "vx": 21,
+       "vy": 34
+      },
+      "paddle": 673,
+      "serve": 0,
+      "bricks": [
+       false,
+       false,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 90,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 781,
+       "y": 1770,
+       "vx": 21,
+       "vy": 34
+      },
+      "paddle": 673,
+      "serve": 0,
+      "bricks": [
+       false,
+       false,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 90,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 841
+     },
+     "state": {
+      "ball": {
+       "x": 781,
+       "y": 1770,
+       "vx": 21,
+       "vy": 34
+      },
+      "paddle": 841,
+      "serve": 0,
+      "bricks": [
+       false,
+       false,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 90,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 949,
+       "y": 2042,
+       "vx": 21,
+       "vy": 34
+      },
+      "paddle": 841,
+      "serve": 0,
+      "bricks": [
+       false,
+       false,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 90,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 1009
+     },
+     "state": {
+      "ball": {
+       "x": 949,
+       "y": 2042,
+       "vx": 21,
+       "vy": 34
+      },
+      "paddle": 1009,
+      "serve": 0,
+      "bricks": [
+       false,
+       false,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 90,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 1117,
+       "y": 2314,
+       "vx": 21,
+       "vy": 34
+      },
+      "paddle": 1009,
+      "serve": 0,
+      "bricks": [
+       false,
+       false,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 90,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 1177
+     },
+     "state": {
+      "ball": {
+       "x": 1117,
+       "y": 2314,
+       "vx": 21,
+       "vy": 34
+      },
+      "paddle": 1177,
+      "serve": 0,
+      "bricks": [
+       false,
+       false,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 90,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 1264,
+       "y": 2212,
+       "vx": -21,
+       "vy": -34
+      },
+      "paddle": 1177,
+      "serve": 0,
+      "bricks": [
+       false,
+       false,
+       false,
+       false,
+       false,
+       false
+      ],
+      "score": 220,
+      "lives": 2,
+      "over": true,
+      "rng": 270369
+     }
+    }
+   ],
+   "result": {
+    "winner": "player",
+    "stars": 3,
+    "score": 220,
+    "lives": 2,
+    "cleared": true
+   }
+  },
+  {
+   "name": "corner-brick-2star-l3",
+   "config": {
+    "level": 3,
+    "w": 2000,
+    "h": 2400,
+    "ballR": 40,
+    "paddleY": 300,
+    "paddleH": 40,
+    "paddleW": [
+     400,
+     350,
+     300,
+     260,
+     220
+    ],
+    "speed": [
+     40,
+     50,
+     60,
+     70,
+     80
+    ],
+    "maxVxPct": 80,
+    "serveTicks": 3,
+    "lives": 2,
+    "rows": 2,
+    "cols": 3,
+    "brickX0": 100,
+    "brickTop": 2200,
+    "brickW": 560,
+    "brickH": 160,
+    "brickGap": 40,
+    "rowPoints": [
+     30,
+     10
+    ],
+    "livesBonus": 50,
+    "starScores": [
+     200,
+     30,
+     10
+    ]
+   },
+   "seed": 89,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 1250
+     },
+     "state": {
+      "ball": {
+       "x": 1000,
+       "y": 380,
+       "vx": 0,
+       "vy": 0
+      },
+      "paddle": 1250,
+      "serve": 3,
+      "bricks": [
+       true,
+       true,
+       true,
+       true,
+       true,
+       true
+      ],
+      "score": 0,
+      "lives": 2,
+      "over": false,
+      "rng": 89
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 1230,
+       "y": 675,
+       "vx": -4,
+       "vy": 59
+      },
+      "paddle": 1250,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       true,
+       true,
+       true
+      ],
+      "score": 0,
+      "lives": 2,
+      "over": false,
+      "rng": 24062940
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 1480
+     },
+     "state": {
+      "ball": {
+       "x": 1230,
+       "y": 675,
+       "vx": -4,
+       "vy": 59
+      },
+      "paddle": 1480,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       true,
+       true,
+       true
+      ],
+      "score": 0,
+      "lives": 2,
+      "over": false,
+      "rng": 24062940
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 1198,
+       "y": 1147,
+       "vx": -4,
+       "vy": 59
+      },
+      "paddle": 1480,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       true,
+       true,
+       true
+      ],
+      "score": 0,
+      "lives": 2,
+      "over": false,
+      "rng": 24062940
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 1448
+     },
+     "state": {
+      "ball": {
+       "x": 1198,
+       "y": 1147,
+       "vx": -4,
+       "vy": 59
+      },
+      "paddle": 1448,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       true,
+       true,
+       true
+      ],
+      "score": 0,
+      "lives": 2,
+      "over": false,
+      "rng": 24062940
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 1166,
+       "y": 1619,
+       "vx": -4,
+       "vy": 59
+      },
+      "paddle": 1448,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       true,
+       true,
+       true
+      ],
+      "score": 0,
+      "lives": 2,
+      "over": false,
+      "rng": 24062940
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 1416
+     },
+     "state": {
+      "ball": {
+       "x": 1166,
+       "y": 1619,
+       "vx": -4,
+       "vy": 59
+      },
+      "paddle": 1416,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       true,
+       true,
+       true
+      ],
+      "score": 0,
+      "lives": 2,
+      "over": false,
+      "rng": 24062940
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 1134,
+       "y": 1619,
+       "vx": -4,
+       "vy": -59
+      },
+      "paddle": 1416,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       true,
+       false,
+       true
+      ],
+      "score": 10,
+      "lives": 2,
+      "over": false,
+      "rng": 24062940
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 1384
+     },
+     "state": {
+      "ball": {
+       "x": 1134,
+       "y": 1619,
+       "vx": -4,
+       "vy": -59
+      },
+      "paddle": 1384,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       true,
+       false,
+       true
+      ],
+      "score": 10,
+      "lives": 2,
+      "over": false,
+      "rng": 24062940
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 1102,
+       "y": 1147,
+       "vx": -4,
+       "vy": -59
+      },
+      "paddle": 1384,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       true,
+       false,
+       true
+      ],
+      "score": 10,
+      "lives": 2,
+      "over": false,
+      "rng": 24062940
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 1352
+     },
+     "state": {
+      "ball": {
+       "x": 1102,
+       "y": 1147,
+       "vx": -4,
+       "vy": -59
+      },
+      "paddle": 1352,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       true,
+       false,
+       true
+      ],
+      "score": 10,
+      "lives": 2,
+      "over": false,
+      "rng": 24062940
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 1070,
+       "y": 675,
+       "vx": -4,
+       "vy": -59
+      },
+      "paddle": 1352,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       true,
+       false,
+       true
+      ],
+      "score": 10,
+      "lives": 2,
+      "over": false,
+      "rng": 24062940
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 1320
+     },
+     "state": {
+      "ball": {
+       "x": 1070,
+       "y": 675,
+       "vx": -4,
+       "vy": -59
+      },
+      "paddle": 1320,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       true,
+       false,
+       true
+      ],
+      "score": 10,
+      "lives": 2,
+      "over": false,
+      "rng": 24062940
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 960,
+       "y": 403,
+       "vx": -43,
+       "vy": 41
+      },
+      "paddle": 1320,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       true,
+       false,
+       true
+      ],
+      "score": 10,
+      "lives": 2,
+      "over": false,
+      "rng": 24062940
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 1210
+     },
+     "state": {
+      "ball": {
+       "x": 960,
+       "y": 403,
+       "vx": -43,
+       "vy": 41
+      },
+      "paddle": 1210,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       true,
+       false,
+       true
+      ],
+      "score": 10,
+      "lives": 2,
+      "over": false,
+      "rng": 24062940
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 616,
+       "y": 731,
+       "vx": -43,
+       "vy": 41
+      },
+      "paddle": 1210,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       true,
+       false,
+       true
+      ],
+      "score": 10,
+      "lives": 2,
+      "over": false,
+      "rng": 24062940
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 866
+     },
+     "state": {
+      "ball": {
+       "x": 616,
+       "y": 731,
+       "vx": -43,
+       "vy": 41
+      },
+      "paddle": 866,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       true,
+       false,
+       true
+      ],
+      "score": 10,
+      "lives": 2,
+      "over": false,
+      "rng": 24062940
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 272,
+       "y": 1059,
+       "vx": -43,
+       "vy": 41
+      },
+      "paddle": 866,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       true,
+       false,
+       true
+      ],
+      "score": 10,
+      "lives": 2,
+      "over": false,
+      "rng": 24062940
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 522
+     },
+     "state": {
+      "ball": {
+       "x": 272,
+       "y": 1059,
+       "vx": -43,
+       "vy": 41
+      },
+      "paddle": 522,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       true,
+       false,
+       true
+      ],
+      "score": 10,
+      "lives": 2,
+      "over": false,
+      "rng": 24062940
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 100,
+       "y": 1387,
+       "vx": 43,
+       "vy": 41
+      },
+      "paddle": 522,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       true,
+       false,
+       true
+      ],
+      "score": 10,
+      "lives": 2,
+      "over": false,
+      "rng": 24062940
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 350
+     },
+     "state": {
+      "ball": {
+       "x": 100,
+       "y": 1387,
+       "vx": 43,
+       "vy": 41
+      },
+      "paddle": 350,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       true,
+       false,
+       true
+      ],
+      "score": 10,
+      "lives": 2,
+      "over": false,
+      "rng": 24062940
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 444,
+       "y": 1715,
+       "vx": 43,
+       "vy": 41
+      },
+      "paddle": 350,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       true,
+       false,
+       true
+      ],
+      "score": 10,
+      "lives": 2,
+      "over": false,
+      "rng": 24062940
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 694
+     },
+     "state": {
+      "ball": {
+       "x": 444,
+       "y": 1715,
+       "vx": 43,
+       "vy": 41
+      },
+      "paddle": 694,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       true,
+       false,
+       true
+      ],
+      "score": 10,
+      "lives": 2,
+      "over": false,
+      "rng": 24062940
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 788,
+       "y": 1633,
+       "vx": 43,
+       "vy": -41
+      },
+      "paddle": 694,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       false,
+       false,
+       true
+      ],
+      "score": 20,
+      "lives": 2,
+      "over": false,
+      "rng": 24062940
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 1038
+     },
+     "state": {
+      "ball": {
+       "x": 788,
+       "y": 1633,
+       "vx": 43,
+       "vy": -41
+      },
+      "paddle": 1038,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       false,
+       false,
+       true
+      ],
+      "score": 20,
+      "lives": 2,
+      "over": false,
+      "rng": 24062940
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 1132,
+       "y": 1305,
+       "vx": 43,
+       "vy": -41
+      },
+      "paddle": 1038,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       false,
+       false,
+       true
+      ],
+      "score": 20,
+      "lives": 2,
+      "over": false,
+      "rng": 24062940
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 1382
+     },
+     "state": {
+      "ball": {
+       "x": 1132,
+       "y": 1305,
+       "vx": 43,
+       "vy": -41
+      },
+      "paddle": 1382,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       false,
+       false,
+       true
+      ],
+      "score": 20,
+      "lives": 2,
+      "over": false,
+      "rng": 24062940
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 1476,
+       "y": 977,
+       "vx": 43,
+       "vy": -41
+      },
+      "paddle": 1382,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       false,
+       false,
+       true
+      ],
+      "score": 20,
+      "lives": 2,
+      "over": false,
+      "rng": 24062940
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 1726
+     },
+     "state": {
+      "ball": {
+       "x": 1476,
+       "y": 977,
+       "vx": 43,
+       "vy": -41
+      },
+      "paddle": 1700,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       false,
+       false,
+       true
+      ],
+      "score": 20,
+      "lives": 2,
+      "over": false,
+      "rng": 24062940
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 1820,
+       "y": 649,
+       "vx": 43,
+       "vy": -41
+      },
+      "paddle": 1700,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       false,
+       false,
+       true
+      ],
+      "score": 20,
+      "lives": 2,
+      "over": false,
+      "rng": 24062940
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 2070
+     },
+     "state": {
+      "ball": {
+       "x": 1820,
+       "y": 649,
+       "vx": 43,
+       "vy": -41
+      },
+      "paddle": 1700,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       false,
+       false,
+       true
+      ],
+      "score": 20,
+      "lives": 2,
+      "over": false,
+      "rng": 24062940
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 1889,
+       "y": 416,
+       "vx": 26,
+       "vy": 54
+      },
+      "paddle": 1700,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       false,
+       false,
+       true
+      ],
+      "score": 20,
+      "lives": 2,
+      "over": false,
+      "rng": 24062940
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 2139
+     },
+     "state": {
+      "ball": {
+       "x": 1889,
+       "y": 416,
+       "vx": 26,
+       "vy": 54
+      },
+      "paddle": 1700,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       false,
+       false,
+       true
+      ],
+      "score": 20,
+      "lives": 2,
+      "over": false,
+      "rng": 24062940
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 1837,
+       "y": 848,
+       "vx": -26,
+       "vy": 54
+      },
+      "paddle": 1700,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       false,
+       false,
+       true
+      ],
+      "score": 20,
+      "lives": 2,
+      "over": false,
+      "rng": 24062940
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 2087
+     },
+     "state": {
+      "ball": {
+       "x": 1837,
+       "y": 848,
+       "vx": -26,
+       "vy": 54
+      },
+      "paddle": 1700,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       false,
+       false,
+       true
+      ],
+      "score": 20,
+      "lives": 2,
+      "over": false,
+      "rng": 24062940
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 1629,
+       "y": 1280,
+       "vx": -26,
+       "vy": 54
+      },
+      "paddle": 1700,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       false,
+       false,
+       true
+      ],
+      "score": 20,
+      "lives": 2,
+      "over": false,
+      "rng": 24062940
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 1879
+     },
+     "state": {
+      "ball": {
+       "x": 1629,
+       "y": 1280,
+       "vx": -26,
+       "vy": 54
+      },
+      "paddle": 1700,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       false,
+       false,
+       true
+      ],
+      "score": 20,
+      "lives": 2,
+      "over": false,
+      "rng": 24062940
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 1421,
+       "y": 1712,
+       "vx": -26,
+       "vy": 54
+      },
+      "paddle": 1700,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       false,
+       false,
+       true
+      ],
+      "score": 20,
+      "lives": 2,
+      "over": false,
+      "rng": 24062940
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 1671
+     },
+     "state": {
+      "ball": {
+       "x": 1421,
+       "y": 1712,
+       "vx": -26,
+       "vy": 54
+      },
+      "paddle": 1671,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       false,
+       false,
+       true
+      ],
+      "score": 20,
+      "lives": 2,
+      "over": false,
+      "rng": 24062940
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 1213,
+       "y": 1496,
+       "vx": -26,
+       "vy": -54
+      },
+      "paddle": 1671,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 30,
+      "lives": 2,
+      "over": false,
+      "rng": 24062940
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 1463
+     },
+     "state": {
+      "ball": {
+       "x": 1213,
+       "y": 1496,
+       "vx": -26,
+       "vy": -54
+      },
+      "paddle": 1463,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 30,
+      "lives": 2,
+      "over": false,
+      "rng": 24062940
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 1005,
+       "y": 1064,
+       "vx": -26,
+       "vy": -54
+      },
+      "paddle": 1463,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 30,
+      "lives": 2,
+      "over": false,
+      "rng": 24062940
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 1255
+     },
+     "state": {
+      "ball": {
+       "x": 1005,
+       "y": 1064,
+       "vx": -26,
+       "vy": -54
+      },
+      "paddle": 1255,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 30,
+      "lives": 2,
+      "over": false,
+      "rng": 24062940
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 797,
+       "y": 632,
+       "vx": -26,
+       "vy": -54
+      },
+      "paddle": 1255,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 30,
+      "lives": 2,
+      "over": false,
+      "rng": 24062940
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 1047
+     },
+     "state": {
+      "ball": {
+       "x": 797,
+       "y": 632,
+       "vx": -26,
+       "vy": -54
+      },
+      "paddle": 1047,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 30,
+      "lives": 2,
+      "over": false,
+      "rng": 24062940
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 589,
+       "y": 200,
+       "vx": -26,
+       "vy": -54
+      },
+      "paddle": 1047,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 30,
+      "lives": 2,
+      "over": false,
+      "rng": 24062940
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 839
+     },
+     "state": {
+      "ball": {
+       "x": 589,
+       "y": 200,
+       "vx": -26,
+       "vy": -54
+      },
+      "paddle": 839,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 30,
+      "lives": 2,
+      "over": false,
+      "rng": 24062940
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 839,
+       "y": 380,
+       "vx": -28,
+       "vy": 53
+      },
+      "paddle": 839,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 30,
+      "lives": 1,
+      "over": false,
+      "rng": 1720705814
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 1089
+     },
+     "state": {
+      "ball": {
+       "x": 839,
+       "y": 380,
+       "vx": -28,
+       "vy": 53
+      },
+      "paddle": 1089,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 30,
+      "lives": 1,
+      "over": false,
+      "rng": 1720705814
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 615,
+       "y": 804,
+       "vx": -28,
+       "vy": 53
+      },
+      "paddle": 1089,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 30,
+      "lives": 1,
+      "over": false,
+      "rng": 1720705814
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 865
+     },
+     "state": {
+      "ball": {
+       "x": 615,
+       "y": 804,
+       "vx": -28,
+       "vy": 53
+      },
+      "paddle": 865,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 30,
+      "lives": 1,
+      "over": false,
+      "rng": 1720705814
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 391,
+       "y": 1228,
+       "vx": -28,
+       "vy": 53
+      },
+      "paddle": 865,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 30,
+      "lives": 1,
+      "over": false,
+      "rng": 1720705814
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 641
+     },
+     "state": {
+      "ball": {
+       "x": 391,
+       "y": 1228,
+       "vx": -28,
+       "vy": 53
+      },
+      "paddle": 641,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 30,
+      "lives": 1,
+      "over": false,
+      "rng": 1720705814
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 167,
+       "y": 1652,
+       "vx": -28,
+       "vy": 53
+      },
+      "paddle": 641,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 30,
+      "lives": 1,
+      "over": false,
+      "rng": 1720705814
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 417
+     },
+     "state": {
+      "ball": {
+       "x": 167,
+       "y": 1652,
+       "vx": -28,
+       "vy": 53
+      },
+      "paddle": 417,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 30,
+      "lives": 1,
+      "over": false,
+      "rng": 1720705814
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 55,
+       "y": 1970,
+       "vx": -28,
+       "vy": -53
+      },
+      "paddle": 417,
+      "serve": 0,
+      "bricks": [
+       false,
+       true,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 60,
+      "lives": 1,
+      "over": false,
+      "rng": 1720705814
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 305
+     },
+     "state": {
+      "ball": {
+       "x": 55,
+       "y": 1970,
+       "vx": -28,
+       "vy": -53
+      },
+      "paddle": 305,
+      "serve": 0,
+      "bricks": [
+       false,
+       true,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 60,
+      "lives": 1,
+      "over": false,
+      "rng": 1720705814
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 223,
+       "y": 1546,
+       "vx": 28,
+       "vy": -53
+      },
+      "paddle": 305,
+      "serve": 0,
+      "bricks": [
+       false,
+       true,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 60,
+      "lives": 1,
+      "over": false,
+      "rng": 1720705814
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 473
+     },
+     "state": {
+      "ball": {
+       "x": 223,
+       "y": 1546,
+       "vx": 28,
+       "vy": -53
+      },
+      "paddle": 473,
+      "serve": 0,
+      "bricks": [
+       false,
+       true,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 60,
+      "lives": 1,
+      "over": false,
+      "rng": 1720705814
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 447,
+       "y": 1122,
+       "vx": 28,
+       "vy": -53
+      },
+      "paddle": 473,
+      "serve": 0,
+      "bricks": [
+       false,
+       true,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 60,
+      "lives": 1,
+      "over": false,
+      "rng": 1720705814
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 697
+     },
+     "state": {
+      "ball": {
+       "x": 447,
+       "y": 1122,
+       "vx": 28,
+       "vy": -53
+      },
+      "paddle": 697,
+      "serve": 0,
+      "bricks": [
+       false,
+       true,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 60,
+      "lives": 1,
+      "over": false,
+      "rng": 1720705814
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 671,
+       "y": 698,
+       "vx": 28,
+       "vy": -53
+      },
+      "paddle": 697,
+      "serve": 0,
+      "bricks": [
+       false,
+       true,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 60,
+      "lives": 1,
+      "over": false,
+      "rng": 1720705814
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 921
+     },
+     "state": {
+      "ball": {
+       "x": 671,
+       "y": 698,
+       "vx": 28,
+       "vy": -53
+      },
+      "paddle": 921,
+      "serve": 0,
+      "bricks": [
+       false,
+       true,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 60,
+      "lives": 1,
+      "over": false,
+      "rng": 1720705814
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 859,
+       "y": 386,
+       "vx": -8,
+       "vy": 59
+      },
+      "paddle": 921,
+      "serve": 0,
+      "bricks": [
+       false,
+       true,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 60,
+      "lives": 1,
+      "over": false,
+      "rng": 1720705814
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 1109
+     },
+     "state": {
+      "ball": {
+       "x": 859,
+       "y": 386,
+       "vx": -8,
+       "vy": 59
+      },
+      "paddle": 1109,
+      "serve": 0,
+      "bricks": [
+       false,
+       true,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 60,
+      "lives": 1,
+      "over": false,
+      "rng": 1720705814
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 795,
+       "y": 858,
+       "vx": -8,
+       "vy": 59
+      },
+      "paddle": 1109,
+      "serve": 0,
+      "bricks": [
+       false,
+       true,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 60,
+      "lives": 1,
+      "over": false,
+      "rng": 1720705814
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 1045
+     },
+     "state": {
+      "ball": {
+       "x": 795,
+       "y": 858,
+       "vx": -8,
+       "vy": 59
+      },
+      "paddle": 1045,
+      "serve": 0,
+      "bricks": [
+       false,
+       true,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 60,
+      "lives": 1,
+      "over": false,
+      "rng": 1720705814
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 731,
+       "y": 1330,
+       "vx": -8,
+       "vy": 59
+      },
+      "paddle": 1045,
+      "serve": 0,
+      "bricks": [
+       false,
+       true,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 60,
+      "lives": 1,
+      "over": false,
+      "rng": 1720705814
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 981
+     },
+     "state": {
+      "ball": {
+       "x": 731,
+       "y": 1330,
+       "vx": -8,
+       "vy": 59
+      },
+      "paddle": 981,
+      "serve": 0,
+      "bricks": [
+       false,
+       true,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 60,
+      "lives": 1,
+      "over": false,
+      "rng": 1720705814
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 667,
+       "y": 1802,
+       "vx": -8,
+       "vy": 59
+      },
+      "paddle": 981,
+      "serve": 0,
+      "bricks": [
+       false,
+       true,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 60,
+      "lives": 1,
+      "over": false,
+      "rng": 1720705814
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 917
+     },
+     "state": {
+      "ball": {
+       "x": 667,
+       "y": 1802,
+       "vx": -8,
+       "vy": 59
+      },
+      "paddle": 917,
+      "serve": 0,
+      "bricks": [
+       false,
+       true,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 60,
+      "lives": 1,
+      "over": false,
+      "rng": 1720705814
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 603,
+       "y": 2274,
+       "vx": -8,
+       "vy": 59
+      },
+      "paddle": 917,
+      "serve": 0,
+      "bricks": [
+       false,
+       true,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 60,
+      "lives": 1,
+      "over": false,
+      "rng": 1720705814
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 853
+     },
+     "state": {
+      "ball": {
+       "x": 603,
+       "y": 2274,
+       "vx": -8,
+       "vy": 59
+      },
+      "paddle": 853,
+      "serve": 0,
+      "bricks": [
+       false,
+       true,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 60,
+      "lives": 1,
+      "over": false,
+      "rng": 1720705814
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 539,
+       "y": 2038,
+       "vx": -8,
+       "vy": -59
+      },
+      "paddle": 853,
+      "serve": 0,
+      "bricks": [
+       false,
+       true,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 60,
+      "lives": 1,
+      "over": false,
+      "rng": 1720705814
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 789
+     },
+     "state": {
+      "ball": {
+       "x": 539,
+       "y": 2038,
+       "vx": -8,
+       "vy": -59
+      },
+      "paddle": 789,
+      "serve": 0,
+      "bricks": [
+       false,
+       true,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 60,
+      "lives": 1,
+      "over": false,
+      "rng": 1720705814
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 475,
+       "y": 1566,
+       "vx": -8,
+       "vy": -59
+      },
+      "paddle": 789,
+      "serve": 0,
+      "bricks": [
+       false,
+       true,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 60,
+      "lives": 1,
+      "over": false,
+      "rng": 1720705814
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 725
+     },
+     "state": {
+      "ball": {
+       "x": 475,
+       "y": 1566,
+       "vx": -8,
+       "vy": -59
+      },
+      "paddle": 725,
+      "serve": 0,
+      "bricks": [
+       false,
+       true,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 60,
+      "lives": 1,
+      "over": false,
+      "rng": 1720705814
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 411,
+       "y": 1094,
+       "vx": -8,
+       "vy": -59
+      },
+      "paddle": 725,
+      "serve": 0,
+      "bricks": [
+       false,
+       true,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 60,
+      "lives": 1,
+      "over": false,
+      "rng": 1720705814
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 661
+     },
+     "state": {
+      "ball": {
+       "x": 411,
+       "y": 1094,
+       "vx": -8,
+       "vy": -59
+      },
+      "paddle": 661,
+      "serve": 0,
+      "bricks": [
+       false,
+       true,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 60,
+      "lives": 1,
+      "over": false,
+      "rng": 1720705814
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 347,
+       "y": 622,
+       "vx": -8,
+       "vy": -59
+      },
+      "paddle": 661,
+      "serve": 0,
+      "bricks": [
+       false,
+       true,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 60,
+      "lives": 1,
+      "over": false,
+      "rng": 1720705814
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 597
+     },
+     "state": {
+      "ball": {
+       "x": 347,
+       "y": 622,
+       "vx": -8,
+       "vy": -59
+      },
+      "paddle": 597,
+      "serve": 0,
+      "bricks": [
+       false,
+       true,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 60,
+      "lives": 1,
+      "over": false,
+      "rng": 1720705814
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 169,
+       "y": 441,
+       "vx": -46,
+       "vy": 38
+      },
+      "paddle": 597,
+      "serve": 0,
+      "bricks": [
+       false,
+       true,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 60,
+      "lives": 1,
+      "over": false,
+      "rng": 1720705814
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 419
+     },
+     "state": {
+      "ball": {
+       "x": 169,
+       "y": 441,
+       "vx": -46,
+       "vy": 38
+      },
+      "paddle": 419,
+      "serve": 0,
+      "bricks": [
+       false,
+       true,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 60,
+      "lives": 1,
+      "over": false,
+      "rng": 1720705814
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 261,
+       "y": 745,
+       "vx": 46,
+       "vy": 38
+      },
+      "paddle": 419,
+      "serve": 0,
+      "bricks": [
+       false,
+       true,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 60,
+      "lives": 1,
+      "over": false,
+      "rng": 1720705814
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 511
+     },
+     "state": {
+      "ball": {
+       "x": 261,
+       "y": 745,
+       "vx": 46,
+       "vy": 38
+      },
+      "paddle": 511,
+      "serve": 0,
+      "bricks": [
+       false,
+       true,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 60,
+      "lives": 1,
+      "over": false,
+      "rng": 1720705814
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 629,
+       "y": 1049,
+       "vx": 46,
+       "vy": 38
+      },
+      "paddle": 511,
+      "serve": 0,
+      "bricks": [
+       false,
+       true,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 60,
+      "lives": 1,
+      "over": false,
+      "rng": 1720705814
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 879
+     },
+     "state": {
+      "ball": {
+       "x": 629,
+       "y": 1049,
+       "vx": 46,
+       "vy": 38
+      },
+      "paddle": 879,
+      "serve": 0,
+      "bricks": [
+       false,
+       true,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 60,
+      "lives": 1,
+      "over": false,
+      "rng": 1720705814
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 997,
+       "y": 1353,
+       "vx": 46,
+       "vy": 38
+      },
+      "paddle": 879,
+      "serve": 0,
+      "bricks": [
+       false,
+       true,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 60,
+      "lives": 1,
+      "over": false,
+      "rng": 1720705814
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 1247
+     },
+     "state": {
+      "ball": {
+       "x": 997,
+       "y": 1353,
+       "vx": 46,
+       "vy": 38
+      },
+      "paddle": 1247,
+      "serve": 0,
+      "bricks": [
+       false,
+       true,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 60,
+      "lives": 1,
+      "over": false,
+      "rng": 1720705814
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 1365,
+       "y": 1657,
+       "vx": 46,
+       "vy": 38
+      },
+      "paddle": 1247,
+      "serve": 0,
+      "bricks": [
+       false,
+       true,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 60,
+      "lives": 1,
+      "over": false,
+      "rng": 1720705814
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 1615
+     },
+     "state": {
+      "ball": {
+       "x": 1365,
+       "y": 1657,
+       "vx": 46,
+       "vy": 38
+      },
+      "paddle": 1615,
+      "serve": 0,
+      "bricks": [
+       false,
+       true,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 60,
+      "lives": 1,
+      "over": false,
+      "rng": 1720705814
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 1733,
+       "y": 1961,
+       "vx": 46,
+       "vy": 38
+      },
+      "paddle": 1615,
+      "serve": 0,
+      "bricks": [
+       false,
+       true,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 60,
+      "lives": 1,
+      "over": false,
+      "rng": 1720705814
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 1983
+     },
+     "state": {
+      "ball": {
+       "x": 1733,
+       "y": 1961,
+       "vx": 46,
+       "vy": 38
+      },
+      "paddle": 1700,
+      "serve": 0,
+      "bricks": [
+       false,
+       true,
+       true,
+       false,
+       false,
+       false
+      ],
+      "score": 60,
+      "lives": 1,
+      "over": false,
+      "rng": 1720705814
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 1825,
+       "y": 1809,
+       "vx": -46,
+       "vy": -38
+      },
+      "paddle": 1700,
+      "serve": 0,
+      "bricks": [
+       false,
+       true,
+       false,
+       false,
+       false,
+       false
+      ],
+      "score": 90,
+      "lives": 1,
+      "over": false,
+      "rng": 1720705814
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 2075
+     },
+     "state": {
+      "ball": {
+       "x": 1825,
+       "y": 1809,
+       "vx": -46,
+       "vy": -38
+      },
+      "paddle": 1700,
+      "serve": 0,
+      "bricks": [
+       false,
+       true,
+       false,
+       false,
+       false,
+       false
+      ],
+      "score": 90,
+      "lives": 1,
+      "over": false,
+      "rng": 1720705814
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 1457,
+       "y": 1505,
+       "vx": -46,
+       "vy": -38
+      },
+      "paddle": 1700,
+      "serve": 0,
+      "bricks": [
+       false,
+       true,
+       false,
+       false,
+       false,
+       false
+      ],
+      "score": 90,
+      "lives": 1,
+      "over": false,
+      "rng": 1720705814
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 1707
+     },
+     "state": {
+      "ball": {
+       "x": 1457,
+       "y": 1505,
+       "vx": -46,
+       "vy": -38
+      },
+      "paddle": 1700,
+      "serve": 0,
+      "bricks": [
+       false,
+       true,
+       false,
+       false,
+       false,
+       false
+      ],
+      "score": 90,
+      "lives": 1,
+      "over": false,
+      "rng": 1720705814
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 1089,
+       "y": 1201,
+       "vx": -46,
+       "vy": -38
+      },
+      "paddle": 1700,
+      "serve": 0,
+      "bricks": [
+       false,
+       true,
+       false,
+       false,
+       false,
+       false
+      ],
+      "score": 90,
+      "lives": 1,
+      "over": false,
+      "rng": 1720705814
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 1339
+     },
+     "state": {
+      "ball": {
+       "x": 1089,
+       "y": 1201,
+       "vx": -46,
+       "vy": -38
+      },
+      "paddle": 1339,
+      "serve": 0,
+      "bricks": [
+       false,
+       true,
+       false,
+       false,
+       false,
+       false
+      ],
+      "score": 90,
+      "lives": 1,
+      "over": false,
+      "rng": 1720705814
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 721,
+       "y": 897,
+       "vx": -46,
+       "vy": -38
+      },
+      "paddle": 1339,
+      "serve": 0,
+      "bricks": [
+       false,
+       true,
+       false,
+       false,
+       false,
+       false
+      ],
+      "score": 90,
+      "lives": 1,
+      "over": false,
+      "rng": 1720705814
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 971
+     },
+     "state": {
+      "ball": {
+       "x": 721,
+       "y": 897,
+       "vx": -46,
+       "vy": -38
+      },
+      "paddle": 971,
+      "serve": 0,
+      "bricks": [
+       false,
+       true,
+       false,
+       false,
+       false,
+       false
+      ],
+      "score": 90,
+      "lives": 1,
+      "over": false,
+      "rng": 1720705814
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 353,
+       "y": 593,
+       "vx": -46,
+       "vy": -38
+      },
+      "paddle": 971,
+      "serve": 0,
+      "bricks": [
+       false,
+       true,
+       false,
+       false,
+       false,
+       false
+      ],
+      "score": 90,
+      "lives": 1,
+      "over": false,
+      "rng": 1720705814
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 603
+     },
+     "state": {
+      "ball": {
+       "x": 353,
+       "y": 593,
+       "vx": -46,
+       "vy": -38
+      },
+      "paddle": 603,
+      "serve": 0,
+      "bricks": [
+       false,
+       true,
+       false,
+       false,
+       false,
+       false
+      ],
+      "score": 90,
+      "lives": 1,
+      "over": false,
+      "rng": 1720705814
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 77,
+       "y": 289,
+       "vx": 46,
+       "vy": -38
+      },
+      "paddle": 603,
+      "serve": 0,
+      "bricks": [
+       false,
+       true,
+       false,
+       false,
+       false,
+       false
+      ],
+      "score": 90,
+      "lives": 1,
+      "over": false,
+      "rng": 1720705814
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 327
+     },
+     "state": {
+      "ball": {
+       "x": 77,
+       "y": 289,
+       "vx": 46,
+       "vy": -38
+      },
+      "paddle": 327,
+      "serve": 0,
+      "bricks": [
+       false,
+       true,
+       false,
+       false,
+       false,
+       false
+      ],
+      "score": 90,
+      "lives": 1,
+      "over": false,
+      "rng": 1720705814
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 445,
+       "y": -15,
+       "vx": 46,
+       "vy": -38
+      },
+      "paddle": 327,
+      "serve": 0,
+      "bricks": [
+       false,
+       true,
+       false,
+       false,
+       false,
+       false
+      ],
+      "score": 90,
+      "lives": 1,
+      "over": false,
+      "rng": 1720705814
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 695
+     },
+     "state": {
+      "ball": {
+       "x": 445,
+       "y": -15,
+       "vx": 46,
+       "vy": -38
+      },
+      "paddle": 695,
+      "serve": 0,
+      "bricks": [
+       false,
+       true,
+       false,
+       false,
+       false,
+       false
+      ],
+      "score": 90,
+      "lives": 1,
+      "over": false,
+      "rng": 1720705814
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 491,
+       "y": -53,
+       "vx": 46,
+       "vy": -38
+      },
+      "paddle": 695,
+      "serve": 0,
+      "bricks": [
+       false,
+       true,
+       false,
+       false,
+       false,
+       false
+      ],
+      "score": 90,
+      "lives": 0,
+      "over": true,
+      "rng": 1720705814
+     }
+    }
+   ],
+   "result": {
+    "winner": "player",
+    "stars": 2,
+    "score": 90,
+    "lives": 0,
+    "cleared": false
+   }
+  },
+  {
+   "name": "paddle-edge-1star-l5",
+   "config": {
+    "level": 5,
+    "w": 2000,
+    "h": 2400,
+    "ballR": 40,
+    "paddleY": 300,
+    "paddleH": 40,
+    "paddleW": [
+     400,
+     350,
+     300,
+     260,
+     220
+    ],
+    "speed": [
+     40,
+     50,
+     60,
+     70,
+     80
+    ],
+    "maxVxPct": 80,
+    "serveTicks": 3,
+    "lives": 2,
+    "rows": 2,
+    "cols": 3,
+    "brickX0": 100,
+    "brickTop": 2200,
+    "brickW": 560,
+    "brickH": 160,
+    "brickGap": 40,
+    "rowPoints": [
+     30,
+     10
+    ],
+    "livesBonus": 50,
+    "starScores": [
+     500,
+     300,
+     10
+    ]
+   },
+   "seed": 1,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 1060
+     },
+     "state": {
+      "ball": {
+       "x": 1000,
+       "y": 380,
+       "vx": 0,
+       "vy": 0
+      },
+      "paddle": 1060,
+      "serve": 3,
+      "bricks": [
+       true,
+       true,
+       true,
+       true,
+       true,
+       true
+      ],
+      "score": 0,
+      "lives": 2,
+      "over": false,
+      "rng": 1
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 1220,
+       "y": 745,
+       "vx": 32,
+       "vy": 73
+      },
+      "paddle": 1060,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       true,
+       true,
+       true
+      ],
+      "score": 0,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 1280
+     },
+     "state": {
+      "ball": {
+       "x": 1220,
+       "y": 745,
+       "vx": 32,
+       "vy": 73
+      },
+      "paddle": 1280,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       true,
+       true,
+       true
+      ],
+      "score": 0,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 1476,
+       "y": 1329,
+       "vx": 32,
+       "vy": 73
+      },
+      "paddle": 1280,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       true,
+       true,
+       true
+      ],
+      "score": 0,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 1536
+     },
+     "state": {
+      "ball": {
+       "x": 1476,
+       "y": 1329,
+       "vx": 32,
+       "vy": 73
+      },
+      "paddle": 1536,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       true,
+       true,
+       true
+      ],
+      "score": 0,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 1732,
+       "y": 1767,
+       "vx": 32,
+       "vy": -73
+      },
+      "paddle": 1536,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       true,
+       true,
+       false
+      ],
+      "score": 10,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 1792
+     },
+     "state": {
+      "ball": {
+       "x": 1732,
+       "y": 1767,
+       "vx": 32,
+       "vy": -73
+      },
+      "paddle": 1780,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       true,
+       true,
+       false
+      ],
+      "score": 10,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 1988,
+       "y": 1183,
+       "vx": -32,
+       "vy": -73
+      },
+      "paddle": 1780,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       true,
+       true,
+       false
+      ],
+      "score": 10,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 2048
+     },
+     "state": {
+      "ball": {
+       "x": 1988,
+       "y": 1183,
+       "vx": -32,
+       "vy": -73
+      },
+      "paddle": 1780,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       true,
+       true,
+       false
+      ],
+      "score": 10,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 1732,
+       "y": 599,
+       "vx": -32,
+       "vy": -73
+      },
+      "paddle": 1780,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       true,
+       true,
+       false
+      ],
+      "score": 10,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 1792
+     },
+     "state": {
+      "ball": {
+       "x": 1732,
+       "y": 599,
+       "vx": -32,
+       "vy": -73
+      },
+      "paddle": 1780,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       true,
+       true,
+       false
+      ],
+      "score": 10,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 1400,
+       "y": 551,
+       "vx": -51,
+       "vy": 61
+      },
+      "paddle": 1780,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       true,
+       true,
+       false
+      ],
+      "score": 10,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 1460
+     },
+     "state": {
+      "ball": {
+       "x": 1400,
+       "y": 551,
+       "vx": -51,
+       "vy": 61
+      },
+      "paddle": 1460,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       true,
+       true,
+       false
+      ],
+      "score": 10,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 992,
+       "y": 1039,
+       "vx": -51,
+       "vy": 61
+      },
+      "paddle": 1460,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       true,
+       true,
+       false
+      ],
+      "score": 10,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 1052
+     },
+     "state": {
+      "ball": {
+       "x": 992,
+       "y": 1039,
+       "vx": -51,
+       "vy": 61
+      },
+      "paddle": 1052,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       true,
+       true,
+       false
+      ],
+      "score": 10,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 584,
+       "y": 1527,
+       "vx": -51,
+       "vy": 61
+      },
+      "paddle": 1052,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       true,
+       true,
+       false
+      ],
+      "score": 10,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 644
+     },
+     "state": {
+      "ball": {
+       "x": 584,
+       "y": 1527,
+       "vx": -51,
+       "vy": 61
+      },
+      "paddle": 644,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       true,
+       true,
+       false
+      ],
+      "score": 10,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 176,
+       "y": 1649,
+       "vx": -51,
+       "vy": -61
+      },
+      "paddle": 644,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       false,
+       true,
+       false
+      ],
+      "score": 20,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 236
+     },
+     "state": {
+      "ball": {
+       "x": 176,
+       "y": 1649,
+       "vx": -51,
+       "vy": -61
+      },
+      "paddle": 236,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       false,
+       true,
+       false
+      ],
+      "score": 20,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 278,
+       "y": 1161,
+       "vx": 51,
+       "vy": -61
+      },
+      "paddle": 236,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       false,
+       true,
+       false
+      ],
+      "score": 20,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 338
+     },
+     "state": {
+      "ball": {
+       "x": 278,
+       "y": 1161,
+       "vx": 51,
+       "vy": -61
+      },
+      "paddle": 338,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       false,
+       true,
+       false
+      ],
+      "score": 20,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 686,
+       "y": 673,
+       "vx": 51,
+       "vy": -61
+      },
+      "paddle": 338,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       false,
+       true,
+       false
+      ],
+      "score": 20,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 746
+     },
+     "state": {
+      "ball": {
+       "x": 686,
+       "y": 673,
+       "vx": 51,
+       "vy": -61
+      },
+      "paddle": 746,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       false,
+       true,
+       false
+      ],
+      "score": 20,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 1109,
+       "y": 539,
+       "vx": 56,
+       "vy": 57
+      },
+      "paddle": 746,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       false,
+       true,
+       false
+      ],
+      "score": 20,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 1169
+     },
+     "state": {
+      "ball": {
+       "x": 1109,
+       "y": 539,
+       "vx": 56,
+       "vy": 57
+      },
+      "paddle": 1169,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       false,
+       true,
+       false
+      ],
+      "score": 20,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 1557,
+       "y": 995,
+       "vx": 56,
+       "vy": 57
+      },
+      "paddle": 1169,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       false,
+       true,
+       false
+      ],
+      "score": 20,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 1617
+     },
+     "state": {
+      "ball": {
+       "x": 1557,
+       "y": 995,
+       "vx": 56,
+       "vy": 57
+      },
+      "paddle": 1617,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       false,
+       true,
+       false
+      ],
+      "score": 20,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 2005,
+       "y": 1451,
+       "vx": -56,
+       "vy": 57
+      },
+      "paddle": 1617,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       false,
+       true,
+       false
+      ],
+      "score": 20,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 2065
+     },
+     "state": {
+      "ball": {
+       "x": 2005,
+       "y": 1451,
+       "vx": -56,
+       "vy": 57
+      },
+      "paddle": 1780,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       false,
+       true,
+       false
+      ],
+      "score": 20,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 1557,
+       "y": 1907,
+       "vx": -56,
+       "vy": 57
+      },
+      "paddle": 1780,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       false,
+       true,
+       false
+      ],
+      "score": 20,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 1617
+     },
+     "state": {
+      "ball": {
+       "x": 1557,
+       "y": 1907,
+       "vx": -56,
+       "vy": 57
+      },
+      "paddle": 1617,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       false,
+       true,
+       false
+      ],
+      "score": 20,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 1445,
+       "y": 1679,
+       "vx": 56,
+       "vy": -57
+      },
+      "paddle": 1617,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       false,
+       false,
+       false,
+       false
+      ],
+      "score": 60,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 1505
+     },
+     "state": {
+      "ball": {
+       "x": 1445,
+       "y": 1679,
+       "vx": 56,
+       "vy": -57
+      },
+      "paddle": 1505,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       false,
+       false,
+       false,
+       false
+      ],
+      "score": 60,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 1893,
+       "y": 1223,
+       "vx": 56,
+       "vy": -57
+      },
+      "paddle": 1505,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       false,
+       false,
+       false,
+       false
+      ],
+      "score": 60,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 1953
+     },
+     "state": {
+      "ball": {
+       "x": 1893,
+       "y": 1223,
+       "vx": 56,
+       "vy": -57
+      },
+      "paddle": 1780,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       false,
+       false,
+       false,
+       false
+      ],
+      "score": 60,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 1669,
+       "y": 767,
+       "vx": -56,
+       "vy": -57
+      },
+      "paddle": 1780,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       false,
+       false,
+       false,
+       false
+      ],
+      "score": 60,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 1729
+     },
+     "state": {
+      "ball": {
+       "x": 1669,
+       "y": 767,
+       "vx": -56,
+       "vy": -57
+      },
+      "paddle": 1729,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       false,
+       false,
+       false,
+       false
+      ],
+      "score": 60,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 1221,
+       "y": 311,
+       "vx": -56,
+       "vy": -57
+      },
+      "paddle": 1729,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       false,
+       false,
+       false,
+       false
+      ],
+      "score": 60,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 1281
+     },
+     "state": {
+      "ball": {
+       "x": 1221,
+       "y": 311,
+       "vx": -56,
+       "vy": -57
+      },
+      "paddle": 1281,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       false,
+       false,
+       false,
+       false
+      ],
+      "score": 60,
+      "lives": 2,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 1281,
+       "y": 380,
+       "vx": 0,
+       "vy": 0
+      },
+      "paddle": 1281,
+      "serve": 2,
+      "bricks": [
+       true,
+       true,
+       false,
+       false,
+       false,
+       false
+      ],
+      "score": 60,
+      "lives": 1,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 1341
+     },
+     "state": {
+      "ball": {
+       "x": 1281,
+       "y": 380,
+       "vx": 0,
+       "vy": 0
+      },
+      "paddle": 1341,
+      "serve": 2,
+      "bricks": [
+       true,
+       true,
+       false,
+       false,
+       false,
+       false
+      ],
+      "score": 60,
+      "lives": 1,
+      "over": false,
+      "rng": 270369
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 1179,
+       "y": 830,
+       "vx": -27,
+       "vy": 75
+      },
+      "paddle": 1341,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       false,
+       false,
+       false,
+       false
+      ],
+      "score": 60,
+      "lives": 1,
+      "over": false,
+      "rng": 67634689
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 1239
+     },
+     "state": {
+      "ball": {
+       "x": 1179,
+       "y": 830,
+       "vx": -27,
+       "vy": 75
+      },
+      "paddle": 1239,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       false,
+       false,
+       false,
+       false
+      ],
+      "score": 60,
+      "lives": 1,
+      "over": false,
+      "rng": 67634689
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 963,
+       "y": 1430,
+       "vx": -27,
+       "vy": 75
+      },
+      "paddle": 1239,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       false,
+       false,
+       false,
+       false
+      ],
+      "score": 60,
+      "lives": 1,
+      "over": false,
+      "rng": 67634689
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 1023
+     },
+     "state": {
+      "ball": {
+       "x": 963,
+       "y": 1430,
+       "vx": -27,
+       "vy": 75
+      },
+      "paddle": 1023,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       false,
+       false,
+       false,
+       false
+      ],
+      "score": 60,
+      "lives": 1,
+      "over": false,
+      "rng": 67634689
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 747,
+       "y": 2030,
+       "vx": -27,
+       "vy": -75
+      },
+      "paddle": 1023,
+      "serve": 0,
+      "bricks": [
+       true,
+       false,
+       false,
+       false,
+       false,
+       false
+      ],
+      "score": 90,
+      "lives": 1,
+      "over": false,
+      "rng": 67634689
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 807
+     },
+     "state": {
+      "ball": {
+       "x": 747,
+       "y": 2030,
+       "vx": -27,
+       "vy": -75
+      },
+      "paddle": 807,
+      "serve": 0,
+      "bricks": [
+       true,
+       false,
+       false,
+       false,
+       false,
+       false
+      ],
+      "score": 90,
+      "lives": 1,
+      "over": false,
+      "rng": 67634689
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 531,
+       "y": 1430,
+       "vx": -27,
+       "vy": -75
+      },
+      "paddle": 807,
+      "serve": 0,
+      "bricks": [
+       true,
+       false,
+       false,
+       false,
+       false,
+       false
+      ],
+      "score": 90,
+      "lives": 1,
+      "over": false,
+      "rng": 67634689
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 591
+     },
+     "state": {
+      "ball": {
+       "x": 531,
+       "y": 1430,
+       "vx": -27,
+       "vy": -75
+      },
+      "paddle": 591,
+      "serve": 0,
+      "bricks": [
+       true,
+       false,
+       false,
+       false,
+       false,
+       false
+      ],
+      "score": 90,
+      "lives": 1,
+      "over": false,
+      "rng": 67634689
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 315,
+       "y": 830,
+       "vx": -27,
+       "vy": -75
+      },
+      "paddle": 591,
+      "serve": 0,
+      "bricks": [
+       true,
+       false,
+       false,
+       false,
+       false,
+       false
+      ],
+      "score": 90,
+      "lives": 1,
+      "over": false,
+      "rng": 67634689
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 375
+     },
+     "state": {
+      "ball": {
+       "x": 315,
+       "y": 830,
+       "vx": -27,
+       "vy": -75
+      },
+      "paddle": 375,
+      "serve": 0,
+      "bricks": [
+       true,
+       false,
+       false,
+       false,
+       false,
+       false
+      ],
+      "score": 90,
+      "lives": 1,
+      "over": false,
+      "rng": 67634689
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 62,
+       "y": 353,
+       "vx": -64,
+       "vy": 48
+      },
+      "paddle": 375,
+      "serve": 0,
+      "bricks": [
+       true,
+       false,
+       false,
+       false,
+       false,
+       false
+      ],
+      "score": 90,
+      "lives": 1,
+      "over": false,
+      "rng": 67634689
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 122
+     },
+     "state": {
+      "ball": {
+       "x": 62,
+       "y": 353,
+       "vx": -64,
+       "vy": 48
+      },
+      "paddle": 220,
+      "serve": 0,
+      "bricks": [
+       true,
+       false,
+       false,
+       false,
+       false,
+       false
+      ],
+      "score": 90,
+      "lives": 1,
+      "over": false,
+      "rng": 67634689
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 446,
+       "y": 737,
+       "vx": 64,
+       "vy": 48
+      },
+      "paddle": 220,
+      "serve": 0,
+      "bricks": [
+       true,
+       false,
+       false,
+       false,
+       false,
+       false
+      ],
+      "score": 90,
+      "lives": 1,
+      "over": false,
+      "rng": 67634689
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 506
+     },
+     "state": {
+      "ball": {
+       "x": 446,
+       "y": 737,
+       "vx": 64,
+       "vy": 48
+      },
+      "paddle": 506,
+      "serve": 0,
+      "bricks": [
+       true,
+       false,
+       false,
+       false,
+       false,
+       false
+      ],
+      "score": 90,
+      "lives": 1,
+      "over": false,
+      "rng": 67634689
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 958,
+       "y": 1121,
+       "vx": 64,
+       "vy": 48
+      },
+      "paddle": 506,
+      "serve": 0,
+      "bricks": [
+       true,
+       false,
+       false,
+       false,
+       false,
+       false
+      ],
+      "score": 90,
+      "lives": 1,
+      "over": false,
+      "rng": 67634689
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 1018
+     },
+     "state": {
+      "ball": {
+       "x": 958,
+       "y": 1121,
+       "vx": 64,
+       "vy": 48
+      },
+      "paddle": 1018,
+      "serve": 0,
+      "bricks": [
+       true,
+       false,
+       false,
+       false,
+       false,
+       false
+      ],
+      "score": 90,
+      "lives": 1,
+      "over": false,
+      "rng": 67634689
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 1470,
+       "y": 1505,
+       "vx": 64,
+       "vy": 48
+      },
+      "paddle": 1018,
+      "serve": 0,
+      "bricks": [
+       true,
+       false,
+       false,
+       false,
+       false,
+       false
+      ],
+      "score": 90,
+      "lives": 1,
+      "over": false,
+      "rng": 67634689
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 1530
+     },
+     "state": {
+      "ball": {
+       "x": 1470,
+       "y": 1505,
+       "vx": 64,
+       "vy": 48
+      },
+      "paddle": 1530,
+      "serve": 0,
+      "bricks": [
+       true,
+       false,
+       false,
+       false,
+       false,
+       false
+      ],
+      "score": 90,
+      "lives": 1,
+      "over": false,
+      "rng": 67634689
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 1982,
+       "y": 1889,
+       "vx": -64,
+       "vy": 48
+      },
+      "paddle": 1530,
+      "serve": 0,
+      "bricks": [
+       true,
+       false,
+       false,
+       false,
+       false,
+       false
+      ],
+      "score": 90,
+      "lives": 1,
+      "over": false,
+      "rng": 67634689
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 2042
+     },
+     "state": {
+      "ball": {
+       "x": 1982,
+       "y": 1889,
+       "vx": -64,
+       "vy": 48
+      },
+      "paddle": 1780,
+      "serve": 0,
+      "bricks": [
+       true,
+       false,
+       false,
+       false,
+       false,
+       false
+      ],
+      "score": 90,
+      "lives": 1,
+      "over": false,
+      "rng": 67634689
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 1470,
+       "y": 2273,
+       "vx": -64,
+       "vy": 48
+      },
+      "paddle": 1780,
+      "serve": 0,
+      "bricks": [
+       true,
+       false,
+       false,
+       false,
+       false,
+       false
+      ],
+      "score": 90,
+      "lives": 1,
+      "over": false,
+      "rng": 67634689
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 1530
+     },
+     "state": {
+      "ball": {
+       "x": 1470,
+       "y": 2273,
+       "vx": -64,
+       "vy": 48
+      },
+      "paddle": 1530,
+      "serve": 0,
+      "bricks": [
+       true,
+       false,
+       false,
+       false,
+       false,
+       false
+      ],
+      "score": 90,
+      "lives": 1,
+      "over": false,
+      "rng": 67634689
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 958,
+       "y": 2081,
+       "vx": -64,
+       "vy": -48
+      },
+      "paddle": 1530,
+      "serve": 0,
+      "bricks": [
+       true,
+       false,
+       false,
+       false,
+       false,
+       false
+      ],
+      "score": 90,
+      "lives": 1,
+      "over": false,
+      "rng": 67634689
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 1018
+     },
+     "state": {
+      "ball": {
+       "x": 958,
+       "y": 2081,
+       "vx": -64,
+       "vy": -48
+      },
+      "paddle": 1018,
+      "serve": 0,
+      "bricks": [
+       true,
+       false,
+       false,
+       false,
+       false,
+       false
+      ],
+      "score": 90,
+      "lives": 1,
+      "over": false,
+      "rng": 67634689
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 446,
+       "y": 1697,
+       "vx": -64,
+       "vy": -48
+      },
+      "paddle": 1018,
+      "serve": 0,
+      "bricks": [
+       true,
+       false,
+       false,
+       false,
+       false,
+       false
+      ],
+      "score": 90,
+      "lives": 1,
+      "over": false,
+      "rng": 67634689
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 506
+     },
+     "state": {
+      "ball": {
+       "x": 446,
+       "y": 1697,
+       "vx": -64,
+       "vy": -48
+      },
+      "paddle": 506,
+      "serve": 0,
+      "bricks": [
+       true,
+       false,
+       false,
+       false,
+       false,
+       false
+      ],
+      "score": 90,
+      "lives": 1,
+      "over": false,
+      "rng": 67634689
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 62,
+       "y": 1313,
+       "vx": 64,
+       "vy": -48
+      },
+      "paddle": 506,
+      "serve": 0,
+      "bricks": [
+       true,
+       false,
+       false,
+       false,
+       false,
+       false
+      ],
+      "score": 90,
+      "lives": 1,
+      "over": false,
+      "rng": 67634689
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 122
+     },
+     "state": {
+      "ball": {
+       "x": 62,
+       "y": 1313,
+       "vx": 64,
+       "vy": -48
+      },
+      "paddle": 220,
+      "serve": 0,
+      "bricks": [
+       true,
+       false,
+       false,
+       false,
+       false,
+       false
+      ],
+      "score": 90,
+      "lives": 1,
+      "over": false,
+      "rng": 67634689
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 574,
+       "y": 929,
+       "vx": 64,
+       "vy": -48
+      },
+      "paddle": 220,
+      "serve": 0,
+      "bricks": [
+       true,
+       false,
+       false,
+       false,
+       false,
+       false
+      ],
+      "score": 90,
+      "lives": 1,
+      "over": false,
+      "rng": 67634689
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 634
+     },
+     "state": {
+      "ball": {
+       "x": 574,
+       "y": 929,
+       "vx": 64,
+       "vy": -48
+      },
+      "paddle": 634,
+      "serve": 0,
+      "bricks": [
+       true,
+       false,
+       false,
+       false,
+       false,
+       false
+      ],
+      "score": 90,
+      "lives": 1,
+      "over": false,
+      "rng": 67634689
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 1086,
+       "y": 545,
+       "vx": 64,
+       "vy": -48
+      },
+      "paddle": 634,
+      "serve": 0,
+      "bricks": [
+       true,
+       false,
+       false,
+       false,
+       false,
+       false
+      ],
+      "score": 90,
+      "lives": 1,
+      "over": false,
+      "rng": 67634689
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 1146
+     },
+     "state": {
+      "ball": {
+       "x": 1086,
+       "y": 545,
+       "vx": 64,
+       "vy": -48
+      },
+      "paddle": 1146,
+      "serve": 0,
+      "bricks": [
+       true,
+       false,
+       false,
+       false,
+       false,
+       false
+      ],
+      "score": 90,
+      "lives": 1,
+      "over": false,
+      "rng": 67634689
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 1570,
+       "y": 577,
+       "vx": 57,
+       "vy": 56
+      },
+      "paddle": 1146,
+      "serve": 0,
+      "bricks": [
+       true,
+       false,
+       false,
+       false,
+       false,
+       false
+      ],
+      "score": 90,
+      "lives": 1,
+      "over": false,
+      "rng": 67634689
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 1630
+     },
+     "state": {
+      "ball": {
+       "x": 1570,
+       "y": 577,
+       "vx": 57,
+       "vy": 56
+      },
+      "paddle": 1630,
+      "serve": 0,
+      "bricks": [
+       true,
+       false,
+       false,
+       false,
+       false,
+       false
+      ],
+      "score": 90,
+      "lives": 1,
+      "over": false,
+      "rng": 67634689
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 1912,
+       "y": 1025,
+       "vx": -57,
+       "vy": 56
+      },
+      "paddle": 1630,
+      "serve": 0,
+      "bricks": [
+       true,
+       false,
+       false,
+       false,
+       false,
+       false
+      ],
+      "score": 90,
+      "lives": 1,
+      "over": false,
+      "rng": 67634689
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 1972
+     },
+     "state": {
+      "ball": {
+       "x": 1912,
+       "y": 1025,
+       "vx": -57,
+       "vy": 56
+      },
+      "paddle": 1780,
+      "serve": 0,
+      "bricks": [
+       true,
+       false,
+       false,
+       false,
+       false,
+       false
+      ],
+      "score": 90,
+      "lives": 1,
+      "over": false,
+      "rng": 67634689
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 1456,
+       "y": 1473,
+       "vx": -57,
+       "vy": 56
+      },
+      "paddle": 1780,
+      "serve": 0,
+      "bricks": [
+       true,
+       false,
+       false,
+       false,
+       false,
+       false
+      ],
+      "score": 90,
+      "lives": 1,
+      "over": false,
+      "rng": 67634689
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 1516
+     },
+     "state": {
+      "ball": {
+       "x": 1456,
+       "y": 1473,
+       "vx": -57,
+       "vy": 56
+      },
+      "paddle": 1516,
+      "serve": 0,
+      "bricks": [
+       true,
+       false,
+       false,
+       false,
+       false,
+       false
+      ],
+      "score": 90,
+      "lives": 1,
+      "over": false,
+      "rng": 67634689
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 1000,
+       "y": 1921,
+       "vx": -57,
+       "vy": 56
+      },
+      "paddle": 1516,
+      "serve": 0,
+      "bricks": [
+       true,
+       false,
+       false,
+       false,
+       false,
+       false
+      ],
+      "score": 90,
+      "lives": 1,
+      "over": false,
+      "rng": 67634689
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 1060
+     },
+     "state": {
+      "ball": {
+       "x": 1000,
+       "y": 1921,
+       "vx": -57,
+       "vy": 56
+      },
+      "paddle": 1060,
+      "serve": 0,
+      "bricks": [
+       true,
+       false,
+       false,
+       false,
+       false,
+       false
+      ],
+      "score": 90,
+      "lives": 1,
+      "over": false,
+      "rng": 67634689
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 544,
+       "y": 2369,
+       "vx": -57,
+       "vy": -56
+      },
+      "paddle": 1060,
+      "serve": 0,
+      "bricks": [
+       true,
+       false,
+       false,
+       false,
+       false,
+       false
+      ],
+      "score": 90,
+      "lives": 1,
+      "over": false,
+      "rng": 67634689
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 604
+     },
+     "state": {
+      "ball": {
+       "x": 544,
+       "y": 2369,
+       "vx": -57,
+       "vy": -56
+      },
+      "paddle": 604,
+      "serve": 0,
+      "bricks": [
+       true,
+       false,
+       false,
+       false,
+       false,
+       false
+      ],
+      "score": 90,
+      "lives": 1,
+      "over": false,
+      "rng": 67634689
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 8
+     },
+     "state": {
+      "ball": {
+       "x": 373,
+       "y": 2201,
+       "vx": -57,
+       "vy": 56
+      },
+      "paddle": 604,
+      "serve": 0,
+      "bricks": [
+       false,
+       false,
+       false,
+       false,
+       false,
+       false
+      ],
+      "score": 170,
+      "lives": 1,
+      "over": true,
+      "rng": 67634689
+     }
+    }
+   ],
+   "result": {
+    "winner": "player",
+    "stars": 1,
+    "score": 170,
+    "lives": 1,
+    "cleared": true
+   }
+  },
+  {
+   "name": "lives-lost-game-over-0star-l2",
+   "config": {
+    "level": 2,
+    "w": 2000,
+    "h": 2400,
+    "ballR": 40,
+    "paddleY": 300,
+    "paddleH": 40,
+    "paddleW": [
+     400,
+     350,
+     300,
+     260,
+     220
+    ],
+    "speed": [
+     40,
+     50,
+     60,
+     70,
+     80
+    ],
+    "maxVxPct": 80,
+    "serveTicks": 3,
+    "lives": 2,
+    "rows": 2,
+    "cols": 3,
+    "brickX0": 100,
+    "brickTop": 2200,
+    "brickW": 560,
+    "brickH": 160,
+    "brickGap": 40,
+    "rowPoints": [
+     30,
+     10
+    ],
+    "livesBonus": 50,
+    "starScores": [
+     200,
+     120,
+     60
+    ]
+   },
+   "seed": 61,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": -500
+     },
+     "state": {
+      "ball": {
+       "x": 1000,
+       "y": 380,
+       "vx": 0,
+       "vy": 0
+      },
+      "paddle": 350,
+      "serve": 3,
+      "bricks": [
+       true,
+       true,
+       true,
+       true,
+       true,
+       true
+      ],
+      "score": 0,
+      "lives": 2,
+      "over": false,
+      "rng": 61
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 2
+     },
+     "state": {
+      "ball": {
+       "x": 350,
+       "y": 380,
+       "vx": 0,
+       "vy": 0
+      },
+      "paddle": 350,
+      "serve": 1,
+      "bricks": [
+       true,
+       true,
+       true,
+       true,
+       true,
+       true
+      ],
+      "score": 0,
+      "lives": 2,
+      "over": false,
+      "rng": 61
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 99999
+     },
+     "state": {
+      "ball": {
+       "x": 350,
+       "y": 380,
+       "vx": 0,
+       "vy": 0
+      },
+      "paddle": 1650,
+      "serve": 1,
+      "bricks": [
+       true,
+       true,
+       true,
+       true,
+       true,
+       true
+      ],
+      "score": 0,
+      "lives": 2,
+      "over": false,
+      "rng": 61
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 40
+     },
+     "state": {
+      "ball": {
+       "x": 714,
+       "y": 1627,
+       "vx": -24,
+       "vy": -43
+      },
+      "paddle": 1650,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       true,
+       false,
+       true
+      ],
+      "score": 10,
+      "lives": 2,
+      "over": false,
+      "rng": 15968254
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 99999
+     },
+     "state": {
+      "ball": {
+       "x": 714,
+       "y": 1627,
+       "vx": -24,
+       "vy": -43
+      },
+      "paddle": 1650,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       true,
+       false,
+       true
+      ],
+      "score": 10,
+      "lives": 2,
+      "over": false,
+      "rng": 15968254
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 40
+     },
+     "state": {
+      "ball": {
+       "x": 1650,
+       "y": 380,
+       "vx": 0,
+       "vy": 0
+      },
+      "paddle": 1650,
+      "serve": 2,
+      "bricks": [
+       true,
+       true,
+       true,
+       true,
+       false,
+       true
+      ],
+      "score": 10,
+      "lives": 1,
+      "over": false,
+      "rng": 15968254
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": -99999
+     },
+     "state": {
+      "ball": {
+       "x": 1650,
+       "y": 380,
+       "vx": 0,
+       "vy": 0
+      },
+      "paddle": 350,
+      "serve": 2,
+      "bricks": [
+       true,
+       true,
+       true,
+       true,
+       false,
+       true
+      ],
+      "score": 10,
+      "lives": 1,
+      "over": false,
+      "rng": 15968254
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 40
+     },
+     "state": {
+      "ball": {
+       "x": 844,
+       "y": 1820,
+       "vx": 13,
+       "vy": -48
+      },
+      "paddle": 350,
+      "serve": 0,
+      "bricks": [
+       true,
+       false,
+       true,
+       true,
+       false,
+       true
+      ],
+      "score": 40,
+      "lives": 1,
+      "over": false,
+      "rng": 4119323384
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 99999
+     },
+     "state": {
+      "ball": {
+       "x": 844,
+       "y": 1820,
+       "vx": 13,
+       "vy": -48
+      },
+      "paddle": 1650,
+      "serve": 0,
+      "bricks": [
+       true,
+       false,
+       true,
+       true,
+       false,
+       true
+      ],
+      "score": 40,
+      "lives": 1,
+      "over": false,
+      "rng": 4119323384
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 40
+     },
+     "state": {
+      "ball": {
+       "x": 1351,
+       "y": -52,
+       "vx": 13,
+       "vy": -48
+      },
+      "paddle": 1650,
+      "serve": 0,
+      "bricks": [
+       true,
+       false,
+       true,
+       true,
+       false,
+       true
+      ],
+      "score": 40,
+      "lives": 0,
+      "over": true,
+      "rng": 4119323384
+     }
+    }
+   ],
+   "result": {
+    "winner": "ai",
+    "stars": 0,
+    "score": 40,
+    "lives": 0,
+    "cleared": false
+   }
+  },
+  {
+   "name": "serve-timeout-l4",
+   "config": {
+    "level": 4,
+    "w": 10000,
+    "h": 16000,
+    "ballR": 120,
+    "paddleY": 1200,
+    "paddleH": 150,
+    "paddleW": [
+     1300,
+     1150,
+     1000,
+     900,
+     800
+    ],
+    "speed": [
+     70,
+     80,
+     90,
+     100,
+     110
+    ],
+    "maxVxPct": 80,
+    "serveTicks": 60,
+    "lives": 3,
+    "rows": 6,
+    "cols": 8,
+    "brickX0": 80,
+    "brickTop": 14500,
+    "brickW": 1150,
+    "brickH": 450,
+    "brickGap": 40,
+    "rowPoints": [
+     70,
+     70,
+     50,
+     50,
+     30,
+     10
+    ],
+    "livesBonus": 100,
+    "starScores": [
+     2400,
+     1600,
+     900
+    ]
+   },
+   "seed": 62,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 59
+     },
+     "state": {
+      "ball": {
+       "x": 5000,
+       "y": 1470,
+       "vx": 0,
+       "vy": 0
+      },
+      "paddle": 5000,
+      "serve": 1,
+      "bricks": [
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true
+      ],
+      "score": 0,
+      "lives": 3,
+      "over": false,
+      "rng": 62
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 1
+     },
+     "state": {
+      "ball": {
+       "x": 5000,
+       "y": 1470,
+       "vx": -37,
+       "vy": 92
+      },
+      "paddle": 5000,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true
+      ],
+      "score": 0,
+      "lives": 3,
+      "over": false,
+      "rng": 16762781
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 1
+     },
+     "state": {
+      "ball": {
+       "x": 4963,
+       "y": 1562,
+       "vx": -37,
+       "vy": 92
+      },
+      "paddle": 5000,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true
+      ],
+      "score": 0,
+      "lives": 3,
+      "over": false,
+      "rng": 16762781
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 4963
+     },
+     "state": {
+      "ball": {
+       "x": 4963,
+       "y": 1562,
+       "vx": -37,
+       "vy": 92
+      },
+      "paddle": 4963,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true
+      ],
+      "score": 0,
+      "lives": 3,
+      "over": false,
+      "rng": 16762781
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 60
+     },
+     "state": {
+      "ball": {
+       "x": 2743,
+       "y": 7082,
+       "vx": -37,
+       "vy": 92
+      },
+      "paddle": 4963,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true
+      ],
+      "score": 0,
+      "lives": 3,
+      "over": false,
+      "rng": 16762781
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 2743
+     },
+     "state": {
+      "ball": {
+       "x": 2743,
+       "y": 7082,
+       "vx": -37,
+       "vy": 92
+      },
+      "paddle": 2743,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true
+      ],
+      "score": 0,
+      "lives": 3,
+      "over": false,
+      "rng": 16762781
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 60
+     },
+     "state": {
+      "ball": {
+       "x": 523,
+       "y": 10394,
+       "vx": -37,
+       "vy": -92
+      },
+      "paddle": 2743,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       false,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true
+      ],
+      "score": 10,
+      "lives": 3,
+      "over": false,
+      "rng": 16762781
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "move",
+      "x": 523
+     },
+     "state": {
+      "ball": {
+       "x": 523,
+       "y": 10394,
+       "vx": -37,
+       "vy": -92
+      },
+      "paddle": 900,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       false,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true
+      ],
+      "score": 10,
+      "lives": 3,
+      "over": false,
+      "rng": 16762781
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "tick",
+      "n": 60
+     },
+     "state": {
+      "ball": {
+       "x": 1929,
+       "y": 4874,
+       "vx": 37,
+       "vy": -92
+      },
+      "paddle": 900,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       false,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true
+      ],
+      "score": 10,
+      "lives": 3,
+      "over": false,
+      "rng": 16762781
+     }
+    },
+    {
+     "action": {
+      "by": "timeout"
+     },
+     "state": {
+      "ball": {
+       "x": 1929,
+       "y": 4874,
+       "vx": 37,
+       "vy": -92
+      },
+      "paddle": 900,
+      "serve": 0,
+      "bricks": [
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       false,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true
+      ],
+      "score": 10,
+      "lives": 3,
+      "over": true,
+      "rng": 16762781
+     }
+    }
+   ],
+   "result": {
+    "winner": "ai",
+    "stars": 0,
+    "score": 10,
+    "lives": 3,
+    "cleared": false
+   }
+  }
+ ]
+}

@@ -156,6 +156,7 @@ export type MessageKey =
   | "feedDriveMin"
   | "feedReward"
   | "feedLiked"
+  | "feedLess"
   | "feedHint"
   | "feedCount"
   | "noRoute"
@@ -836,7 +837,8 @@ export const messages: Record<Locale, Record<MessageKey, string>> = {
     feedDriveMin: "{min} min jízdy",
     feedReward: "Odměna {cash}",
     feedLiked: "Líbí se",
-    feedHint: "Nahoru: další · vpravo: jedu · vlevo: míň · 2× klep: líbí",
+    feedLess: "Míň",
+    feedHint: "Nahoru: další · dolů: zpět · vpravo: jedu · vlevo: míň · 2× klep: líbí",
     feedCount: "{n} / {total}",
     noRoute: "Trasa nenalezena, jeď podle šipky",
     engine_cards: "Karty",
@@ -1514,7 +1516,8 @@ export const messages: Record<Locale, Record<MessageKey, string>> = {
     feedDriveMin: "{min} min drive",
     feedReward: "Reward {cash}",
     feedLiked: "Liked",
-    feedHint: "Up: next · right: go · left: less · double tap: like",
+    feedLess: "Less",
+    feedHint: "Up: next · down: back · right: go · left: less · double tap: like",
     feedCount: "{n} / {total}",
     noRoute: "No road route, follow the arrow",
     engine_cards: "Cards",
@@ -1944,7 +1947,7 @@ export const messages: Record<Locale, Record<MessageKey, string>> = {
     mg_cihly: "Bricks",
     mg_krtek: "Whack-a-mole",
     mg_hokej: "Air hockey",
-    kulecnikRules1: "Drag back from the white ball: the direction aims, the length sets the power.",
+    kulecnikRules1: "Drag from the white ball the way you want to shoot: the direction aims, the length sets the power.",
     kulecnikRules2: "Pot your group, solids or stripes, then the black eight.",
     kulecnikRules3: "Pot the eight too early, or with a foul, and you lose.",
     kulecnikSolids: "Solids",
@@ -1957,7 +1960,7 @@ export const messages: Record<Locale, Record<MessageKey, string>> = {
     bowlingFrame: "Frame {frame}/10",
     bowlingStrike: "Strike!",
     bowlingSpare: "Spare!",
-    minigolfRules1: "Drag back from the ball to aim; longer means harder.",
+    minigolfRules1: "Drag from the ball the way you want to putt; longer means harder.",
     minigolfRules2: "Sand slows the ball, water costs a stroke.",
     minigolfRules3: "Six holes. Finish close to par for stars.",
     minigolfHole: "Hole {hole}/6 · par {par}",

@@ -236,6 +236,26 @@ class _Home extends StatelessWidget {
                   onTap: phoneApps.containsKey(id) ? () => phone.launch(id) : null,
                 ),
               ),
+            if (phone.onToRoad case final toRoad?)
+              SizedBox(
+                width: box.maxWidth - 2 * Tokens.spaceSm,
+                child: Center(
+                  child: FilledButton.icon(
+                    key: const ValueKey('phoneToRoad'),
+                    style: FilledButton.styleFrom(
+                      backgroundColor: const Color(Tokens.colorPhoneApp),
+                      foregroundColor: const Color(Tokens.colorPhoneAppText),
+                    ),
+                    icon: const Icon(Icons.add_road),
+                    label: Text(phoneText(context, MessageKey.flowToRoad)),
+                    onPressed: () {
+                      // Close the phone first: the move then plays in the running game.
+                      phone.close();
+                      toRoad();
+                    },
+                  ),
+                ),
+              ),
           ],
         ),
       );

@@ -98,3 +98,15 @@ Pálka sleduje prst ve spodní třetině (posílá `move` při každém pohybu, 
 - Rychlost míčku se mění jen odrazem od pálky (velikost zůstává `sp` až na zaokrouhlení `isqrt`).
 - Míček zespodu pálky (`y < paddleY`) se neodrazí a propadne.
 - Při podání se míček hýbe s pálkou.
+
+## Upřesnění v1
+
+- `move` mění jen `paddle`; míček na pálce se přesune až v dalším tiku podání (krok 1).
+- Tik, ve kterém `serve` klesne na 0: míček se položí na pálku, vylosuje se `vx` (jedno volání
+  `rng`), `vy = isqrt(sp² − vx²)`; pohyb až v dalším tiku.
+- Stěny: osy nezávisle, x pak y; dno (`y < 0`) se neodráží.
+- Cihly: přeskočená cihla (`vx·dx + vy·dy ≥ 0`) hledání nezastaví, první zasažená ano.
+  Obrácení složky je `0 − v` (žádné −0).
+- Pálka se kontroluje s rychlostí po případném odrazu od cihly; dotyk zahrnuje i `d2 = 0`.
+- Ztráta i vyčištění se kontrolují v každém tiku letu; při ztrátě se životem navíc
+  `serve = serveTicks` a míček na pálce v klidu.

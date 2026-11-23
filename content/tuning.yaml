@@ -636,7 +636,14 @@ phone:
   height_pct: 88            # phone height, % of the screen
   edge_px: 28.0             # bottom-edge grab zone
   pull_px: 48.0             # swipe up this far to open
-  swipe_px: 60.0            # feed card swipe threshold
+  swipe_px: 60.0            # feed card sideways commit (accept / less)
+  feed_axis_lock_px: 10.0   # finger travel before the drag locks to vertical or horizontal (specs/phone.md v5)
+  feed_commit_pct: 25       # vertical: release past this % of the card height switches the card
+  feed_flick_px_s: 650.0    # or a release faster than this (px/s) in the drag direction
+  feed_velocity_ms: 100     # release velocity = travel over the last this many ms of the drag
+  feed_snap_ms: 240         # snap / spring-back / fly-off duration (ease-out cubic)
+  feed_rubber: 0.3          # drag factor where there is no page (first card down, feedDone)
+  feed_tilt_deg: 10.0       # sideways tilt at a full-width drag
   double_tap_ms: 300
   map_padding_px: 14.0
   map_spot_px: 5.0

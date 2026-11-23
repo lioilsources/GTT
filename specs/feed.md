@@ -1,6 +1,6 @@
 # Feed: výběr balíčku karet
 
-**version: 1** · P0 · vektory `vectors/feed.json` · plán: METROPOLE_PLAN 8 („Výběr karet“), M1 bod 7
+**version: 2** · P0 · vektory `vectors/feed.json` · plán: METROPOLE_PLAN 8 („Výběr karet“), M1 bod 7
 
 ## Účel
 
@@ -83,17 +83,23 @@ ve `spots.pb`.
 
 ### Akce
 
-`{"by": "player", "op": …}`; `legalActions` v pořadí `next`, `like` (jen když karta ještě není
-v `liked`), `less`, `accept`; po `over` žádné.
+`{"by": "player", "op": …}`; `legalActions` v pořadí `next`, `prev` (jen když `at > 0`), `like`
+(jen když karta ještě není v `liked`), `less`, `accept`; po `over` žádné.
 
 - `next` (tah nahoru) – `at + 1`; když `at` = délka balíčku, `over = true`.
+- `prev` (tah dolů, v2) – `at − 1`. Nelegální na první kartě (`at = 0`) a po `over` (obrazovka
+  „Běž si zajezdit“ je konečná, zpět z ní nevede). Nemění `prefs`, `liked`, `accepted` ani `over`.
+  Karta na novém `at` se ukáže znovu jako už viděná: srdíčko zůstává, když je v `liked` (`like`
+  na ní je dál nelegální). Stav si viděné karty nepočítá, takže `next` po `prev` nic nepřičítá
+  znovu – jen posune `at` (přes poslední kartu zase `over = true`). `less` a `accept` na vrácené
+  kartě platí jako na nové (`less` znovu sníží `prefs[engine]` až k `prefMin`).
 - `like` (dvojité klepnutí) – spot karty do `liked`, `prefs[engine] = min(prefMax, prefs[engine] + 1)`
   (chybějící klíč = 0); karta zůstává.
 - `less` (tah vlevo) – `prefs[engine] = max(prefMin, prefs[engine] − 1)`, pak jako `next`.
 - `accept` (tah vpravo nebo „Jedu“) – `accepted` = spot karty, `over = true`. Klient spustí
   navigaci ke spotu (`specs/phone.md`).
 
-Jiná akce (neznámé `op`, `like` podruhé, cokoli po `over`) je nelegální.
+Jiná akce (neznámé `op`, `like` podruhé, `prev` na první kartě, cokoli po `over`) je nelegální.
 
 ### result(state)
 
@@ -119,3 +125,10 @@ přenášejí z posledního stavu do dalšího configu.
 - Žádný kandidát → prázdný balíček, `over = true`, feed rovnou ukáže „Běž si zajezdit“.
 - Méně kandidátů než `deckSize` → balíček má všechny.
 - Kandidát bez místní hry nebo jízdní výzvy ve městě → povinná karta se vynechá.
+- Balíček o jedné kartě → `prev` není nikdy legální.
+
+## Verze
+
+- 2 – akce `prev` (zpět na předchozí kartu, `specs/phone.md` v5). Stav ani výběr balíčku se nemění,
+  vektory v1 platí beze změny stavů.
+- 1 – výběr balíčku, akce `next`, `like`, `less`, `accept`.

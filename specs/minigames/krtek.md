@@ -78,3 +78,10 @@ Mřížka 3 × 3 děr, krtek vyjede a zajede (animace jen podle `left`), klepnut
 - Krtek, kterému v tomto tiku vyprší `left`, už se trefit nedá (schová se v kroku 1).
 - Bomba, která sama zajede, nic nestojí.
 - Dva rychlé údery do jedné díry: druhý nic.
+
+## Upřesnění v1
+
+- Nový krtek dostane `left = upTicks` v kroku 2; poprvé se mu ubere v kroku 1 dalšího tiku.
+- Při spawnu s volnou dírou vždy dvě volání `rng`: díra, pak `roll`.
+- Konec (`tick ≥ gameTicks`) se kontroluje až po kroku 2 téhož tiku.
+- Úder do bomby nemění `hits`; `score = max(0, score − bombPenalty)`.

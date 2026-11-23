@@ -1,0 +1,3237 @@
+{
+ "module": "bowling",
+ "specVersion": 1,
+ "$comment": "M2-S9 dávka C: bowling (specs/minigames/bowling.md v1); hody hráče celé, rozptyl z rng stavu.",
+ "cases": [
+  {
+   "name": "strikes-3star-l1",
+   "config": {
+    "level": 1,
+    "laneW": 106600,
+    "headY": 1829000,
+    "pinDx": 15240,
+    "pinDy": 26396,
+    "ballR": 10900,
+    "ballM": 70,
+    "pinR": 6050,
+    "pinM": 15,
+    "minSpeed": 2000,
+    "maxSpeed": 3600,
+    "pinDec": 12,
+    "ePin": 700,
+    "eWall": 500,
+    "deckY0": 1799000,
+    "deckY1": 1950000,
+    "knock": 1500,
+    "maxSteps": 1500,
+    "scatter": [
+     600,
+     900,
+     1200,
+     1500,
+     1800
+    ],
+    "starScores": [
+     170,
+     130,
+     90
+    ]
+   },
+   "seed": 31,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "roll",
+      "x": 10900,
+      "aim": 43300,
+      "power": 70
+     },
+     "state": {
+      "frame": 2,
+      "roll": 1,
+      "standing": [
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true
+      ],
+      "rolls": [
+       10
+      ],
+      "score": 10,
+      "lastKnocked": 10,
+      "over": false,
+      "rng": 2089805404
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll",
+      "x": 10900,
+      "aim": 48300,
+      "power": 70
+     },
+     "state": {
+      "frame": 3,
+      "roll": 1,
+      "standing": [
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true
+      ],
+      "rolls": [
+       10,
+       10
+      ],
+      "score": 30,
+      "lastKnocked": 10,
+      "over": false,
+      "rng": 723192805
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll",
+      "x": 10900,
+      "aim": 50800,
+      "power": 35
+     },
+     "state": {
+      "frame": 4,
+      "roll": 1,
+      "standing": [
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true
+      ],
+      "rolls": [
+       10,
+       10,
+       10
+      ],
+      "score": 60,
+      "lastKnocked": 10,
+      "over": false,
+      "rng": 1317712284
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll",
+      "x": 10900,
+      "aim": 40800,
+      "power": 70
+     },
+     "state": {
+      "frame": 5,
+      "roll": 1,
+      "standing": [
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true
+      ],
+      "rolls": [
+       10,
+       10,
+       10,
+       10
+      ],
+      "score": 90,
+      "lastKnocked": 10,
+      "over": false,
+      "rng": 1006346291
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll",
+      "x": 10900,
+      "aim": 38300,
+      "power": 35
+     },
+     "state": {
+      "frame": 6,
+      "roll": 1,
+      "standing": [
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true
+      ],
+      "rolls": [
+       10,
+       10,
+       10,
+       10,
+       10
+      ],
+      "score": 120,
+      "lastKnocked": 10,
+      "over": false,
+      "rng": 3792831179
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll",
+      "x": 10900,
+      "aim": 43300,
+      "power": 35
+     },
+     "state": {
+      "frame": 7,
+      "roll": 1,
+      "standing": [
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true
+      ],
+      "rolls": [
+       10,
+       10,
+       10,
+       10,
+       10,
+       10
+      ],
+      "score": 150,
+      "lastKnocked": 10,
+      "over": false,
+      "rng": 536691738
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll",
+      "x": 10900,
+      "aim": 35800,
+      "power": 35
+     },
+     "state": {
+      "frame": 8,
+      "roll": 1,
+      "standing": [
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true
+      ],
+      "rolls": [
+       10,
+       10,
+       10,
+       10,
+       10,
+       10,
+       10
+      ],
+      "score": 180,
+      "lastKnocked": 10,
+      "over": false,
+      "rng": 1467662351
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll",
+      "x": 10900,
+      "aim": 3300,
+      "power": 35
+     },
+     "state": {
+      "frame": 9,
+      "roll": 1,
+      "standing": [
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true
+      ],
+      "rolls": [
+       10,
+       10,
+       10,
+       10,
+       10,
+       10,
+       10,
+       10
+      ],
+      "score": 210,
+      "lastKnocked": 10,
+      "over": false,
+      "rng": 1578238114
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll",
+      "x": 10900,
+      "aim": 55800,
+      "power": 70
+     },
+     "state": {
+      "frame": 10,
+      "roll": 1,
+      "standing": [
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true
+      ],
+      "rolls": [
+       10,
+       10,
+       10,
+       10,
+       10,
+       10,
+       10,
+       10,
+       10
+      ],
+      "score": 240,
+      "lastKnocked": 10,
+      "over": false,
+      "rng": 508454046
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll",
+      "x": 10900,
+      "aim": 8300,
+      "power": 35
+     },
+     "state": {
+      "frame": 10,
+      "roll": 2,
+      "standing": [
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true
+      ],
+      "rolls": [
+       10,
+       10,
+       10,
+       10,
+       10,
+       10,
+       10,
+       10,
+       10,
+       10
+      ],
+      "score": 270,
+      "lastKnocked": 10,
+      "over": false,
+      "rng": 3830743005
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll",
+      "x": 10900,
+      "aim": 53300,
+      "power": 70
+     },
+     "state": {
+      "frame": 10,
+      "roll": 3,
+      "standing": [
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true
+      ],
+      "rolls": [
+       10,
+       10,
+       10,
+       10,
+       10,
+       10,
+       10,
+       10,
+       10,
+       10,
+       10
+      ],
+      "score": 290,
+      "lastKnocked": 10,
+      "over": false,
+      "rng": 742528055
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll",
+      "x": 10900,
+      "aim": 53300,
+      "power": 35
+     },
+     "state": {
+      "frame": 10,
+      "roll": 3,
+      "standing": [
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true
+      ],
+      "rolls": [
+       10,
+       10,
+       10,
+       10,
+       10,
+       10,
+       10,
+       10,
+       10,
+       10,
+       10,
+       10
+      ],
+      "score": 300,
+      "lastKnocked": 10,
+      "over": true,
+      "rng": 1327567044
+     }
+    }
+   ],
+   "result": {
+    "winner": "player",
+    "stars": 3,
+    "score": 300,
+    "rolls": [
+     10,
+     10,
+     10,
+     10,
+     10,
+     10,
+     10,
+     10,
+     10,
+     10,
+     10,
+     10
+    ]
+   }
+  },
+  {
+   "name": "mixed-2star-l3",
+   "config": {
+    "level": 3,
+    "laneW": 106600,
+    "headY": 1829000,
+    "pinDx": 15240,
+    "pinDy": 26396,
+    "ballR": 10900,
+    "ballM": 70,
+    "pinR": 6050,
+    "pinM": 15,
+    "minSpeed": 2000,
+    "maxSpeed": 3600,
+    "pinDec": 12,
+    "ePin": 700,
+    "eWall": 500,
+    "deckY0": 1799000,
+    "deckY1": 1950000,
+    "knock": 1500,
+    "maxSteps": 1500,
+    "scatter": [
+     600,
+     900,
+     1200,
+     1500,
+     1800
+    ],
+    "starScores": [
+     170,
+     130,
+     90
+    ]
+   },
+   "seed": 32,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "roll",
+      "x": 10900,
+      "aim": 10800,
+      "power": 35
+     },
+     "state": {
+      "frame": 2,
+      "roll": 1,
+      "standing": [
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true
+      ],
+      "rolls": [
+       10
+      ],
+      "score": 10,
+      "lastKnocked": 10,
+      "over": false,
+      "rng": 2164820134
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll",
+      "x": 10900,
+      "aim": 10800,
+      "power": 100
+     },
+     "state": {
+      "frame": 2,
+      "roll": 2,
+      "standing": [
+       true,
+       false,
+       true,
+       false,
+       false,
+       false,
+       false,
+       false,
+       false,
+       true
+      ],
+      "rolls": [
+       10,
+       7
+      ],
+      "score": 24,
+      "lastKnocked": 7,
+      "over": false,
+      "rng": 873118396
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll",
+      "x": 10900,
+      "aim": 50800,
+      "power": 35
+     },
+     "state": {
+      "frame": 3,
+      "roll": 1,
+      "standing": [
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true
+      ],
+      "rolls": [
+       10,
+       7,
+       3
+      ],
+      "score": 30,
+      "lastKnocked": 3,
+      "over": false,
+      "rng": 1058741401
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll",
+      "x": 10900,
+      "aim": 45800,
+      "power": 70
+     },
+     "state": {
+      "frame": 3,
+      "roll": 2,
+      "standing": [
+       false,
+       false,
+       false,
+       false,
+       false,
+       false,
+       false,
+       false,
+       false,
+       true
+      ],
+      "rolls": [
+       10,
+       7,
+       3,
+       9
+      ],
+      "score": 48,
+      "lastKnocked": 9,
+      "over": false,
+      "rng": 269536975
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll",
+      "x": 10900,
+      "aim": 3300,
+      "power": 35
+     },
+     "state": {
+      "frame": 4,
+      "roll": 1,
+      "standing": [
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true
+      ],
+      "rolls": [
+       10,
+       7,
+       3,
+       9,
+       0
+      ],
+      "score": 48,
+      "lastKnocked": 0,
+      "over": false,
+      "rng": 498034921
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll",
+      "x": 10900,
+      "aim": 65800,
+      "power": 35
+     },
+     "state": {
+      "frame": 5,
+      "roll": 1,
+      "standing": [
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true
+      ],
+      "rolls": [
+       10,
+       7,
+       3,
+       9,
+       0,
+       10
+      ],
+      "score": 58,
+      "lastKnocked": 10,
+      "over": false,
+      "rng": 643883905
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll",
+      "x": 10900,
+      "aim": 15800,
+      "power": 70
+     },
+     "state": {
+      "frame": 5,
+      "roll": 2,
+      "standing": [
+       false,
+       true,
+       false,
+       false,
+       false,
+       false,
+       true,
+       false,
+       false,
+       false
+      ],
+      "rolls": [
+       10,
+       7,
+       3,
+       9,
+       0,
+       10,
+       8
+      ],
+      "score": 74,
+      "lastKnocked": 8,
+      "over": false,
+      "rng": 641354134
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll",
+      "x": 10900,
+      "aim": 3300,
+      "power": 35
+     },
+     "state": {
+      "frame": 6,
+      "roll": 1,
+      "standing": [
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true
+      ],
+      "rolls": [
+       10,
+       7,
+       3,
+       9,
+       0,
+       10,
+       8,
+       2
+      ],
+      "score": 78,
+      "lastKnocked": 2,
+      "over": false,
+      "rng": 1395957656
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll",
+      "x": 10900,
+      "aim": 23300,
+      "power": 100
+     },
+     "state": {
+      "frame": 6,
+      "roll": 2,
+      "standing": [
+       false,
+       true,
+       false,
+       false,
+       false,
+       false,
+       false,
+       false,
+       false,
+       false
+      ],
+      "rolls": [
+       10,
+       7,
+       3,
+       9,
+       0,
+       10,
+       8,
+       2,
+       9
+      ],
+      "score": 96,
+      "lastKnocked": 9,
+      "over": false,
+      "rng": 3712654670
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll",
+      "x": 10900,
+      "aim": 3300,
+      "power": 35
+     },
+     "state": {
+      "frame": 7,
+      "roll": 1,
+      "standing": [
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true
+      ],
+      "rolls": [
+       10,
+       7,
+       3,
+       9,
+       0,
+       10,
+       8,
+       2,
+       9,
+       0
+      ],
+      "score": 96,
+      "lastKnocked": 0,
+      "over": false,
+      "rng": 2118760706
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll",
+      "x": 10900,
+      "aim": 60800,
+      "power": 35
+     },
+     "state": {
+      "frame": 8,
+      "roll": 1,
+      "standing": [
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true
+      ],
+      "rolls": [
+       10,
+       7,
+       3,
+       9,
+       0,
+       10,
+       8,
+       2,
+       9,
+       0,
+       10
+      ],
+      "score": 106,
+      "lastKnocked": 10,
+      "over": false,
+      "rng": 246104808
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll",
+      "x": 10900,
+      "aim": 18300,
+      "power": 70
+     },
+     "state": {
+      "frame": 8,
+      "roll": 2,
+      "standing": [
+       true,
+       false,
+       true,
+       false,
+       true,
+       false,
+       false,
+       false,
+       false,
+       false
+      ],
+      "rolls": [
+       10,
+       7,
+       3,
+       9,
+       0,
+       10,
+       8,
+       2,
+       9,
+       0,
+       10,
+       7
+      ],
+      "score": 120,
+      "lastKnocked": 7,
+      "over": false,
+      "rng": 3095986640
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll",
+      "x": 10900,
+      "aim": 28300,
+      "power": 35
+     },
+     "state": {
+      "frame": 9,
+      "roll": 1,
+      "standing": [
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true
+      ],
+      "rolls": [
+       10,
+       7,
+       3,
+       9,
+       0,
+       10,
+       8,
+       2,
+       9,
+       0,
+       10,
+       7,
+       2
+      ],
+      "score": 124,
+      "lastKnocked": 2,
+      "over": false,
+      "rng": 4172887502
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll",
+      "x": 10900,
+      "aim": 15800,
+      "power": 100
+     },
+     "state": {
+      "frame": 9,
+      "roll": 2,
+      "standing": [
+       false,
+       false,
+       false,
+       false,
+       true,
+       false,
+       false,
+       false,
+       false,
+       true
+      ],
+      "rolls": [
+       10,
+       7,
+       3,
+       9,
+       0,
+       10,
+       8,
+       2,
+       9,
+       0,
+       10,
+       7,
+       2,
+       8
+      ],
+      "score": 132,
+      "lastKnocked": 8,
+      "over": false,
+      "rng": 2821994199
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll",
+      "x": 10900,
+      "aim": 25800,
+      "power": 35
+     },
+     "state": {
+      "frame": 10,
+      "roll": 1,
+      "standing": [
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true
+      ],
+      "rolls": [
+       10,
+       7,
+       3,
+       9,
+       0,
+       10,
+       8,
+       2,
+       9,
+       0,
+       10,
+       7,
+       2,
+       8,
+       2
+      ],
+      "score": 134,
+      "lastKnocked": 2,
+      "over": false,
+      "rng": 2648608577
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll",
+      "x": 10900,
+      "aim": 40800,
+      "power": 100
+     },
+     "state": {
+      "frame": 10,
+      "roll": 2,
+      "standing": [
+       false,
+       false,
+       false,
+       false,
+       false,
+       false,
+       false,
+       false,
+       false,
+       true
+      ],
+      "rolls": [
+       10,
+       7,
+       3,
+       9,
+       0,
+       10,
+       8,
+       2,
+       9,
+       0,
+       10,
+       7,
+       2,
+       8,
+       2,
+       9
+      ],
+      "score": 152,
+      "lastKnocked": 9,
+      "over": false,
+      "rng": 3929756744
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll",
+      "x": 10900,
+      "aim": 20800,
+      "power": 35
+     },
+     "state": {
+      "frame": 10,
+      "roll": 3,
+      "standing": [
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true
+      ],
+      "rolls": [
+       10,
+       7,
+       3,
+       9,
+       0,
+       10,
+       8,
+       2,
+       9,
+       0,
+       10,
+       7,
+       2,
+       8,
+       2,
+       9,
+       1
+      ],
+      "score": 153,
+      "lastKnocked": 1,
+      "over": false,
+      "rng": 48787818
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll",
+      "x": 10900,
+      "aim": 23300,
+      "power": 100
+     },
+     "state": {
+      "frame": 10,
+      "roll": 3,
+      "standing": [
+       false,
+       true,
+       false,
+       false,
+       false,
+       false,
+       false,
+       false,
+       true,
+       false
+      ],
+      "rolls": [
+       10,
+       7,
+       3,
+       9,
+       0,
+       10,
+       8,
+       2,
+       9,
+       0,
+       10,
+       7,
+       2,
+       8,
+       2,
+       9,
+       1,
+       8
+      ],
+      "score": 161,
+      "lastKnocked": 8,
+      "over": true,
+      "rng": 989235833
+     }
+    }
+   ],
+   "result": {
+    "winner": "player",
+    "stars": 2,
+    "score": 161,
+    "rolls": [
+     10,
+     7,
+     3,
+     9,
+     0,
+     10,
+     8,
+     2,
+     9,
+     0,
+     10,
+     7,
+     2,
+     8,
+     2,
+     9,
+     1,
+     8
+    ]
+   }
+  },
+  {
+   "name": "open-1star-l5",
+   "config": {
+    "level": 5,
+    "laneW": 106600,
+    "headY": 1829000,
+    "pinDx": 15240,
+    "pinDy": 26396,
+    "ballR": 10900,
+    "ballM": 70,
+    "pinR": 6050,
+    "pinM": 15,
+    "minSpeed": 2000,
+    "maxSpeed": 3600,
+    "pinDec": 12,
+    "ePin": 700,
+    "eWall": 500,
+    "deckY0": 1799000,
+    "deckY1": 1950000,
+    "knock": 1500,
+    "maxSteps": 1500,
+    "scatter": [
+     600,
+     900,
+     1200,
+     1500,
+     1800
+    ],
+    "starScores": [
+     170,
+     130,
+     90
+    ]
+   },
+   "seed": 33,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "roll",
+      "x": 10900,
+      "aim": 35800,
+      "power": 70
+     },
+     "state": {
+      "frame": 1,
+      "roll": 2,
+      "standing": [
+       true,
+       false,
+       true,
+       false,
+       true,
+       false,
+       false,
+       false,
+       false,
+       false
+      ],
+      "rolls": [
+       7
+      ],
+      "score": 7,
+      "lastKnocked": 7,
+      "over": false,
+      "rng": 2231406247
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll",
+      "x": 10900,
+      "aim": 35800,
+      "power": 100
+     },
+     "state": {
+      "frame": 2,
+      "roll": 1,
+      "standing": [
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true
+      ],
+      "rolls": [
+       7,
+       2
+      ],
+      "score": 9,
+      "lastKnocked": 2,
+      "over": false,
+      "rng": 643769331
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll",
+      "x": 10900,
+      "aim": 5800,
+      "power": 70
+     },
+     "state": {
+      "frame": 2,
+      "roll": 2,
+      "standing": [
+       true,
+       false,
+       true,
+       false,
+       false,
+       false,
+       false,
+       true,
+       false,
+       false
+      ],
+      "rolls": [
+       7,
+       2,
+       7
+      ],
+      "score": 16,
+      "lastKnocked": 7,
+      "over": false,
+      "rng": 326387529
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll",
+      "x": 10900,
+      "aim": 5800,
+      "power": 35
+     },
+     "state": {
+      "frame": 3,
+      "roll": 1,
+      "standing": [
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true
+      ],
+      "rolls": [
+       7,
+       2,
+       7,
+       2
+      ],
+      "score": 18,
+      "lastKnocked": 2,
+      "over": false,
+      "rng": 166318717
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll",
+      "x": 10900,
+      "aim": 3300,
+      "power": 70
+     },
+     "state": {
+      "frame": 3,
+      "roll": 2,
+      "standing": [
+       true,
+       false,
+       true,
+       false,
+       true,
+       false,
+       false,
+       false,
+       false,
+       false
+      ],
+      "rolls": [
+       7,
+       2,
+       7,
+       2,
+       7
+      ],
+      "score": 25,
+      "lastKnocked": 7,
+      "over": false,
+      "rng": 2961132445
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll",
+      "x": 10900,
+      "aim": 15800,
+      "power": 100
+     },
+     "state": {
+      "frame": 4,
+      "roll": 1,
+      "standing": [
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true
+      ],
+      "rolls": [
+       7,
+       2,
+       7,
+       2,
+       7,
+       2
+      ],
+      "score": 27,
+      "lastKnocked": 2,
+      "over": false,
+      "rng": 2138862774
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll",
+      "x": 10900,
+      "aim": 13300,
+      "power": 100
+     },
+     "state": {
+      "frame": 4,
+      "roll": 2,
+      "standing": [
+       false,
+       true,
+       false,
+       true,
+       false,
+       false,
+       true,
+       false,
+       false,
+       false
+      ],
+      "rolls": [
+       7,
+       2,
+       7,
+       2,
+       7,
+       2,
+       7
+      ],
+      "score": 34,
+      "lastKnocked": 7,
+      "over": false,
+      "rng": 584692024
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll",
+      "x": 10900,
+      "aim": 20800,
+      "power": 35
+     },
+     "state": {
+      "frame": 5,
+      "roll": 1,
+      "standing": [
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true
+      ],
+      "rolls": [
+       7,
+       2,
+       7,
+       2,
+       7,
+       2,
+       7,
+       2
+      ],
+      "score": 36,
+      "lastKnocked": 2,
+      "over": false,
+      "rng": 2599422505
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll",
+      "x": 10900,
+      "aim": 25800,
+      "power": 100
+     },
+     "state": {
+      "frame": 5,
+      "roll": 2,
+      "standing": [
+       false,
+       true,
+       false,
+       true,
+       false,
+       false,
+       true,
+       false,
+       false,
+       false
+      ],
+      "rolls": [
+       7,
+       2,
+       7,
+       2,
+       7,
+       2,
+       7,
+       2,
+       7
+      ],
+      "score": 43,
+      "lastKnocked": 7,
+      "over": false,
+      "rng": 458835526
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll",
+      "x": 10900,
+      "aim": 10800,
+      "power": 35
+     },
+     "state": {
+      "frame": 6,
+      "roll": 1,
+      "standing": [
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true
+      ],
+      "rolls": [
+       7,
+       2,
+       7,
+       2,
+       7,
+       2,
+       7,
+       2,
+       7,
+       2
+      ],
+      "score": 45,
+      "lastKnocked": 2,
+      "over": false,
+      "rng": 2166269723
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll",
+      "x": 10900,
+      "aim": 10800,
+      "power": 35
+     },
+     "state": {
+      "frame": 6,
+      "roll": 2,
+      "standing": [
+       true,
+       false,
+       true,
+       false,
+       false,
+       false,
+       false,
+       false,
+       true,
+       false
+      ],
+      "rolls": [
+       7,
+       2,
+       7,
+       2,
+       7,
+       2,
+       7,
+       2,
+       7,
+       2,
+       7
+      ],
+      "score": 52,
+      "lastKnocked": 7,
+      "over": false,
+      "rng": 3984109393
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll",
+      "x": 10900,
+      "aim": 30800,
+      "power": 35
+     },
+     "state": {
+      "frame": 7,
+      "roll": 1,
+      "standing": [
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true
+      ],
+      "rolls": [
+       7,
+       2,
+       7,
+       2,
+       7,
+       2,
+       7,
+       2,
+       7,
+       2,
+       7,
+       2
+      ],
+      "score": 54,
+      "lastKnocked": 2,
+      "over": false,
+      "rng": 1631200159
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll",
+      "x": 10900,
+      "aim": 23300,
+      "power": 35
+     },
+     "state": {
+      "frame": 7,
+      "roll": 2,
+      "standing": [
+       true,
+       false,
+       true,
+       false,
+       false,
+       false,
+       false,
+       false,
+       true,
+       false
+      ],
+      "rolls": [
+       7,
+       2,
+       7,
+       2,
+       7,
+       2,
+       7,
+       2,
+       7,
+       2,
+       7,
+       2,
+       7
+      ],
+      "score": 61,
+      "lastKnocked": 7,
+      "over": false,
+      "rng": 2779058151
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll",
+      "x": 10900,
+      "aim": 25800,
+      "power": 35
+     },
+     "state": {
+      "frame": 8,
+      "roll": 1,
+      "standing": [
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true
+      ],
+      "rolls": [
+       7,
+       2,
+       7,
+       2,
+       7,
+       2,
+       7,
+       2,
+       7,
+       2,
+       7,
+       2,
+       7,
+       2
+      ],
+      "score": 63,
+      "lastKnocked": 2,
+      "over": false,
+      "rng": 3151494195
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll",
+      "x": 10900,
+      "aim": 25800,
+      "power": 100
+     },
+     "state": {
+      "frame": 8,
+      "roll": 2,
+      "standing": [
+       false,
+       true,
+       false,
+       true,
+       false,
+       false,
+       true,
+       false,
+       false,
+       false
+      ],
+      "rolls": [
+       7,
+       2,
+       7,
+       2,
+       7,
+       2,
+       7,
+       2,
+       7,
+       2,
+       7,
+       2,
+       7,
+       2,
+       7
+      ],
+      "score": 70,
+      "lastKnocked": 7,
+      "over": false,
+      "rng": 954904191
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll",
+      "x": 10900,
+      "aim": 13300,
+      "power": 35
+     },
+     "state": {
+      "frame": 9,
+      "roll": 1,
+      "standing": [
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true
+      ],
+      "rolls": [
+       7,
+       2,
+       7,
+       2,
+       7,
+       2,
+       7,
+       2,
+       7,
+       2,
+       7,
+       2,
+       7,
+       2,
+       7,
+       2
+      ],
+      "score": 72,
+      "lastKnocked": 2,
+      "over": false,
+      "rng": 559119452
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll",
+      "x": 10900,
+      "aim": 10800,
+      "power": 35
+     },
+     "state": {
+      "frame": 9,
+      "roll": 2,
+      "standing": [
+       true,
+       false,
+       true,
+       false,
+       false,
+       false,
+       false,
+       false,
+       false,
+       false
+      ],
+      "rolls": [
+       7,
+       2,
+       7,
+       2,
+       7,
+       2,
+       7,
+       2,
+       7,
+       2,
+       7,
+       2,
+       7,
+       2,
+       7,
+       2,
+       8
+      ],
+      "score": 80,
+      "lastKnocked": 8,
+      "over": false,
+      "rng": 2933673026
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll",
+      "x": 10900,
+      "aim": 8300,
+      "power": 35
+     },
+     "state": {
+      "frame": 10,
+      "roll": 1,
+      "standing": [
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true
+      ],
+      "rolls": [
+       7,
+       2,
+       7,
+       2,
+       7,
+       2,
+       7,
+       2,
+       7,
+       2,
+       7,
+       2,
+       7,
+       2,
+       7,
+       2,
+       8,
+       1
+      ],
+      "score": 81,
+      "lastKnocked": 1,
+      "over": false,
+      "rng": 14008205
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll",
+      "x": 10900,
+      "aim": 50800,
+      "power": 35
+     },
+     "state": {
+      "frame": 10,
+      "roll": 2,
+      "standing": [
+       true,
+       false,
+       true,
+       false,
+       false,
+       false,
+       false,
+       false,
+       true,
+       false
+      ],
+      "rolls": [
+       7,
+       2,
+       7,
+       2,
+       7,
+       2,
+       7,
+       2,
+       7,
+       2,
+       7,
+       2,
+       7,
+       2,
+       7,
+       2,
+       8,
+       1,
+       7
+      ],
+      "score": 88,
+      "lastKnocked": 7,
+      "over": false,
+      "rng": 2705000598
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll",
+      "x": 10900,
+      "aim": 18300,
+      "power": 35
+     },
+     "state": {
+      "frame": 10,
+      "roll": 2,
+      "standing": [
+       false,
+       false,
+       false,
+       false,
+       false,
+       false,
+       false,
+       false,
+       true,
+       false
+      ],
+      "rolls": [
+       7,
+       2,
+       7,
+       2,
+       7,
+       2,
+       7,
+       2,
+       7,
+       2,
+       7,
+       2,
+       7,
+       2,
+       7,
+       2,
+       8,
+       1,
+       7,
+       2
+      ],
+      "score": 90,
+      "lastKnocked": 2,
+      "over": true,
+      "rng": 312404416
+     }
+    }
+   ],
+   "result": {
+    "winner": "player",
+    "stars": 1,
+    "score": 90,
+    "rolls": [
+     7,
+     2,
+     7,
+     2,
+     7,
+     2,
+     7,
+     2,
+     7,
+     2,
+     7,
+     2,
+     7,
+     2,
+     7,
+     2,
+     8,
+     1,
+     7,
+     2
+    ]
+   }
+  },
+  {
+   "name": "gutters-0star-l2",
+   "config": {
+    "level": 2,
+    "laneW": 106600,
+    "headY": 1829000,
+    "pinDx": 15240,
+    "pinDy": 26396,
+    "ballR": 10900,
+    "ballM": 70,
+    "pinR": 6050,
+    "pinM": 15,
+    "minSpeed": 2000,
+    "maxSpeed": 3600,
+    "pinDec": 12,
+    "ePin": 700,
+    "eWall": 500,
+    "deckY0": 1799000,
+    "deckY1": 1950000,
+    "knock": 1500,
+    "maxSteps": 1500,
+    "scatter": [
+     600,
+     900,
+     1200,
+     1500,
+     1800
+    ],
+    "starScores": [
+     170,
+     130,
+     90
+    ]
+   },
+   "seed": 34,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "roll",
+      "x": 10900,
+      "aim": -400000,
+      "power": 60
+     },
+     "state": {
+      "frame": 1,
+      "roll": 2,
+      "standing": [
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true
+      ],
+      "rolls": [
+       0
+      ],
+      "score": 0,
+      "lastKnocked": 0,
+      "over": false,
+      "rng": 2299004068
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll",
+      "x": 10900,
+      "aim": -400000,
+      "power": 60
+     },
+     "state": {
+      "frame": 2,
+      "roll": 1,
+      "standing": [
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true
+      ],
+      "rolls": [
+       0,
+       0
+      ],
+      "score": 0,
+      "lastKnocked": 0,
+      "over": false,
+      "rng": 1469187002
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll",
+      "x": 10900,
+      "aim": 8300,
+      "power": 100
+     },
+     "state": {
+      "frame": 2,
+      "roll": 2,
+      "standing": [
+       false,
+       true,
+       false,
+       true,
+       true,
+       false,
+       true,
+       true,
+       true,
+       true
+      ],
+      "rolls": [
+       0,
+       0,
+       3
+      ],
+      "score": 3,
+      "lastKnocked": 3,
+      "over": false,
+      "rng": 264990650
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll",
+      "x": 10900,
+      "aim": 80800,
+      "power": 35
+     },
+     "state": {
+      "frame": 3,
+      "roll": 1,
+      "standing": [
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true
+      ],
+      "rolls": [
+       0,
+       0,
+       3,
+       2
+      ],
+      "score": 5,
+      "lastKnocked": 2,
+      "over": false,
+      "rng": 1134538617
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll",
+      "x": 10900,
+      "aim": 3300,
+      "power": 35
+     },
+     "state": {
+      "frame": 3,
+      "roll": 2,
+      "standing": [
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true
+      ],
+      "rolls": [
+       0,
+       0,
+       3,
+       2,
+       0
+      ],
+      "score": 5,
+      "lastKnocked": 0,
+      "over": false,
+      "rng": 1328207826
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll",
+      "x": 10900,
+      "aim": 5800,
+      "power": 70
+     },
+     "state": {
+      "frame": 4,
+      "roll": 1,
+      "standing": [
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true
+      ],
+      "rolls": [
+       0,
+       0,
+       3,
+       2,
+       0,
+       5
+      ],
+      "score": 10,
+      "lastKnocked": 5,
+      "over": false,
+      "rng": 3641694652
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll",
+      "x": 10900,
+      "aim": 90800,
+      "power": 70
+     },
+     "state": {
+      "frame": 4,
+      "roll": 2,
+      "standing": [
+       true,
+       true,
+       true,
+       true,
+       true,
+       false,
+       true,
+       true,
+       false,
+       true
+      ],
+      "rolls": [
+       0,
+       0,
+       3,
+       2,
+       0,
+       5,
+       2
+      ],
+      "score": 12,
+      "lastKnocked": 2,
+      "over": false,
+      "rng": 2584348082
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll",
+      "x": 10900,
+      "aim": 93300,
+      "power": 35
+     },
+     "state": {
+      "frame": 5,
+      "roll": 1,
+      "standing": [
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true
+      ],
+      "rolls": [
+       0,
+       0,
+       3,
+       2,
+       0,
+       5,
+       2,
+       1
+      ],
+      "score": 13,
+      "lastKnocked": 1,
+      "over": false,
+      "rng": 3641242726
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll",
+      "x": 10900,
+      "aim": 3300,
+      "power": 35
+     },
+     "state": {
+      "frame": 5,
+      "roll": 2,
+      "standing": [
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true
+      ],
+      "rolls": [
+       0,
+       0,
+       3,
+       2,
+       0,
+       5,
+       2,
+       1,
+       0
+      ],
+      "score": 13,
+      "lastKnocked": 0,
+      "over": false,
+      "rng": 2384462001
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll",
+      "x": 10900,
+      "aim": 3300,
+      "power": 35
+     },
+     "state": {
+      "frame": 6,
+      "roll": 1,
+      "standing": [
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true
+      ],
+      "rolls": [
+       0,
+       0,
+       3,
+       2,
+       0,
+       5,
+       2,
+       1,
+       0,
+       0
+      ],
+      "score": 13,
+      "lastKnocked": 0,
+      "over": false,
+      "rng": 1314662553
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll",
+      "x": 10900,
+      "aim": 8300,
+      "power": 35
+     },
+     "state": {
+      "frame": 6,
+      "roll": 2,
+      "standing": [
+       true,
+       true,
+       true,
+       false,
+       true,
+       true,
+       false,
+       false,
+       false,
+       true
+      ],
+      "rolls": [
+       0,
+       0,
+       3,
+       2,
+       0,
+       5,
+       2,
+       1,
+       0,
+       0,
+       4
+      ],
+      "score": 17,
+      "lastKnocked": 4,
+      "over": false,
+      "rng": 2220070656
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll",
+      "x": 10900,
+      "aim": 3300,
+      "power": 35
+     },
+     "state": {
+      "frame": 7,
+      "roll": 1,
+      "standing": [
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true
+      ],
+      "rolls": [
+       0,
+       0,
+       3,
+       2,
+       0,
+       5,
+       2,
+       1,
+       0,
+       0,
+       4,
+       0
+      ],
+      "score": 17,
+      "lastKnocked": 0,
+      "over": false,
+      "rng": 1745296457
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll",
+      "x": 10900,
+      "aim": 98300,
+      "power": 35
+     },
+     "state": {
+      "frame": 7,
+      "roll": 2,
+      "standing": [
+       false,
+       false,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true
+      ],
+      "rolls": [
+       0,
+       0,
+       3,
+       2,
+       0,
+       5,
+       2,
+       1,
+       0,
+       0,
+       4,
+       0,
+       2
+      ],
+      "score": 19,
+      "lastKnocked": 2,
+      "over": false,
+      "rng": 3126123690
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll",
+      "x": 10900,
+      "aim": 98300,
+      "power": 100
+     },
+     "state": {
+      "frame": 8,
+      "roll": 1,
+      "standing": [
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true
+      ],
+      "rolls": [
+       0,
+       0,
+       3,
+       2,
+       0,
+       5,
+       2,
+       1,
+       0,
+       0,
+       4,
+       0,
+       2,
+       2
+      ],
+      "score": 21,
+      "lastKnocked": 2,
+      "over": false,
+      "rng": 863534562
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll",
+      "x": 10900,
+      "aim": 93300,
+      "power": 35
+     },
+     "state": {
+      "frame": 8,
+      "roll": 2,
+      "standing": [
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true
+      ],
+      "rolls": [
+       0,
+       0,
+       3,
+       2,
+       0,
+       5,
+       2,
+       1,
+       0,
+       0,
+       4,
+       0,
+       2,
+       2,
+       0
+      ],
+      "score": 21,
+      "lastKnocked": 0,
+      "over": false,
+      "rng": 1748015000
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll",
+      "x": 10900,
+      "aim": 98300,
+      "power": 35
+     },
+     "state": {
+      "frame": 9,
+      "roll": 1,
+      "standing": [
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true
+      ],
+      "rolls": [
+       0,
+       0,
+       3,
+       2,
+       0,
+       5,
+       2,
+       1,
+       0,
+       0,
+       4,
+       0,
+       2,
+       2,
+       0,
+       0
+      ],
+      "score": 21,
+      "lastKnocked": 0,
+      "over": false,
+      "rng": 2109263935
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll",
+      "x": 10900,
+      "aim": 18300,
+      "power": 70
+     },
+     "state": {
+      "frame": 9,
+      "roll": 2,
+      "standing": [
+       false,
+       false,
+       false,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true
+      ],
+      "rolls": [
+       0,
+       0,
+       3,
+       2,
+       0,
+       5,
+       2,
+       1,
+       0,
+       0,
+       4,
+       0,
+       2,
+       2,
+       0,
+       0,
+       3
+      ],
+      "score": 24,
+      "lastKnocked": 3,
+      "over": false,
+      "rng": 2345354769
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll",
+      "x": 10900,
+      "aim": 15800,
+      "power": 100
+     },
+     "state": {
+      "frame": 10,
+      "roll": 1,
+      "standing": [
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true
+      ],
+      "rolls": [
+       0,
+       0,
+       3,
+       2,
+       0,
+       5,
+       2,
+       1,
+       0,
+       0,
+       4,
+       0,
+       2,
+       2,
+       0,
+       0,
+       3,
+       3
+      ],
+      "score": 27,
+      "lastKnocked": 3,
+      "over": false,
+      "rng": 791311379
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll",
+      "x": 10900,
+      "aim": 98300,
+      "power": 100
+     },
+     "state": {
+      "frame": 10,
+      "roll": 2,
+      "standing": [
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true
+      ],
+      "rolls": [
+       0,
+       0,
+       3,
+       2,
+       0,
+       5,
+       2,
+       1,
+       0,
+       0,
+       4,
+       0,
+       2,
+       2,
+       0,
+       0,
+       3,
+       3,
+       0
+      ],
+      "score": 27,
+      "lastKnocked": 0,
+      "over": false,
+      "rng": 2788133843
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll",
+      "x": 94900,
+      "aim": 15800,
+      "power": 35
+     },
+     "state": {
+      "frame": 10,
+      "roll": 2,
+      "standing": [
+       false,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true
+      ],
+      "rolls": [
+       0,
+       0,
+       3,
+       2,
+       0,
+       5,
+       2,
+       1,
+       0,
+       0,
+       4,
+       0,
+       2,
+       2,
+       0,
+       0,
+       3,
+       3,
+       0,
+       1
+      ],
+      "score": 28,
+      "lastKnocked": 1,
+      "over": true,
+      "rng": 2228962842
+     }
+    }
+   ],
+   "result": {
+    "winner": "ai",
+    "stars": 0,
+    "score": 28,
+    "rolls": [
+     0,
+     0,
+     3,
+     2,
+     0,
+     5,
+     2,
+     1,
+     0,
+     0,
+     4,
+     0,
+     2,
+     2,
+     0,
+     0,
+     3,
+     3,
+     0,
+     1
+    ]
+   }
+  },
+  {
+   "name": "pin-wall-rebound-timeout-l4",
+   "config": {
+    "level": 4,
+    "laneW": 106600,
+    "headY": 1829000,
+    "pinDx": 15240,
+    "pinDy": 26396,
+    "ballR": 10900,
+    "ballM": 70,
+    "pinR": 6050,
+    "pinM": 15,
+    "minSpeed": 2000,
+    "maxSpeed": 3600,
+    "pinDec": 12,
+    "ePin": 700,
+    "eWall": 500,
+    "deckY0": 1799000,
+    "deckY1": 1950000,
+    "knock": 1500,
+    "maxSteps": 1500,
+    "scatter": [
+     600,
+     900,
+     1200,
+     1500,
+     1800
+    ],
+    "starScores": [
+     170,
+     130,
+     90
+    ]
+   },
+   "seed": 35,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "roll",
+      "x": 10900,
+      "aim": 5800,
+      "power": 35
+     },
+     "state": {
+      "frame": 1,
+      "roll": 2,
+      "standing": [
+       false,
+       false,
+       false,
+       false,
+       true,
+       true,
+       true,
+       false,
+       false,
+       true
+      ],
+      "rolls": [
+       6
+      ],
+      "score": 6,
+      "lastKnocked": 6,
+      "over": false,
+      "rng": 2365588133
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "roll",
+      "x": 10900,
+      "aim": 10800,
+      "power": 100
+     },
+     "state": {
+      "frame": 2,
+      "roll": 1,
+      "standing": [
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true
+      ],
+      "rolls": [
+       6,
+       4
+      ],
+      "score": 10,
+      "lastKnocked": 4,
+      "over": false,
+      "rng": 1170709237
+     }
+    },
+    {
+     "action": {
+      "by": "timeout"
+     },
+     "state": {
+      "frame": 2,
+      "roll": 1,
+      "standing": [
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true
+      ],
+      "rolls": [
+       6,
+       4
+      ],
+      "score": 10,
+      "lastKnocked": 4,
+      "over": true,
+      "rng": 1170709237
+     }
+    }
+   ],
+   "result": {
+    "winner": "ai",
+    "stars": 0,
+    "score": 10,
+    "rolls": [
+     6,
+     4
+    ]
+   }
+  }
+ ]
+}

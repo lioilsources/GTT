@@ -1273,3 +1273,16 @@ body {
 .kostky-table td.sum {
   font-weight: 700;
 }
+
+/* "Na silnici" after slow driving (specs/flow.md "Ručně"): above the context button. */
+#flow-road {
+  position: absolute;
+  left: 50%;
+  bottom: calc(env(safe-area-inset-bottom) + 150px);
+  transform: translateX(-50%);
+  padding: 0 var(--space-lg);
+  pointer-events: auto;
+}
+#flow-road[hidden] {
+  display: none;
+}

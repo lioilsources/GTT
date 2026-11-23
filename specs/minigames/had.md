@@ -76,3 +76,11 @@ Mřížka přes celou šířku, tah prstem = otočení (podle převládající o
 - Obrátka do protisměru se ignoruje, i když `next` už ukazuje jinam.
 - Hlava smí vjet na buňku, kterou v témž posunu opouští ocas.
 - Zaplněná mřížka = konec (hráč snědl všechno).
+
+## Upřesnění v1
+
+- `init` položí první jídlo hned (jedno volání `rng`).
+- Náraz (zeď i tělo): `dir = next` a `t = 0` už platí, tělo, jídlo a skóre beze změny.
+- Zaplnění: posun se dokončí (hlava vložena, skóre a případné zrychlení započteny), `over = true`
+  a `food` zůstane na snědené buňce; `rng` se nevolá.
+- `turn` se směrem `dir` nastaví `next = dir` (není to obrátka).

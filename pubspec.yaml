@@ -31,6 +31,18 @@ workspace:
   - packages/mg_srdce
   - packages/mg_kostky
   - packages/mg_prase
+  - packages/mg_drift
+  - packages/mg_sprint
+  - packages/mg_stickball
+  - packages/mg_doubledutch
+  - packages/mg_physics
+  - packages/mg_kulecnik
+  - packages/mg_bowling
+  - packages/mg_minigolf
+  - packages/mg_had
+  - packages/mg_cihly
+  - packages/mg_krtek
+  - packages/mg_hokej
   - packages/feed_hub
   - packages/meta_progress
   - packages/npc_dialogue

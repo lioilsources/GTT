@@ -89,12 +89,13 @@ class Zones {
     Body? body;
     final bollards = <double>[];
     if (c.barriers.isNotEmpty) {
-      final d = tuning.drive;
+      // Static contacts use flow.wall friction and restitution (specs/flow.md), not drive.building_*.
+      final w = tuning.flow.wall;
       body = world.createBody(BodyDef(type: BodyType.static));
       // Bollards stop the player's car only; traffic, parked cars and police ignore them.
       final def = ShapeDef(
         filter: Filter(categoryBits: catZone, maskBits: catCar),
-        material: SurfaceMaterial(friction: d.buildingFriction, restitution: d.buildingRestitution),
+        material: SurfaceMaterial(friction: w.friction, restitution: w.restitution),
       );
       for (final line in c.barriers) {
         // Separate segments: an open Box2D chain treats its first and last pieces as ghosts.

@@ -1,0 +1,2291 @@
+{
+ "module": "sprint",
+ "specVersion": 1,
+ "$comment": "specs/minigames/sprint.md; destination ids are placeholders in pack order, times written out as the world would send them; recorded by web (metro vectors record --client web --module sprint).",
+ "cases": [
+  {
+   "name": "3 stars at level 3: 3.1 km, 9 gates, under par",
+   "config": {
+    "dests": [
+     "times_square",
+     "empire_state",
+     "central_park",
+     "brooklyn_bridge",
+     "flatiron"
+    ],
+    "level": 3,
+    "parBaseMs": 5000,
+    "parDmPerS": [
+     90,
+     110,
+     130,
+     150,
+     170
+    ],
+    "hitPenaltyMs": 2000,
+    "starPct": [
+     100,
+     120,
+     145
+    ]
+   },
+   "seed": 11,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "pick",
+      "allow": []
+     },
+     "state": {
+      "rng": 2974059,
+      "phase": "ready",
+      "dest": "flatiron",
+      "distDm": 0,
+      "cps": 0,
+      "parMs": 0,
+      "goMs": 0,
+      "clockMs": 0,
+      "passed": 0,
+      "splits": [],
+      "hits": 0,
+      "finished": false,
+      "timeMs": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "go",
+      "atMs": 3000,
+      "distDm": 31115,
+      "cps": 9
+     },
+     "state": {
+      "rng": 2974059,
+      "phase": "run",
+      "dest": "flatiron",
+      "distDm": 31115,
+      "cps": 9,
+      "parMs": 244346,
+      "goMs": 3000,
+      "clockMs": 3000,
+      "passed": 0,
+      "splits": [],
+      "hits": 0,
+      "finished": false,
+      "timeMs": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "cp",
+      "atMs": 24991,
+      "index": 0
+     },
+     "state": {
+      "rng": 2974059,
+      "phase": "run",
+      "dest": "flatiron",
+      "distDm": 31115,
+      "cps": 9,
+      "parMs": 244346,
+      "goMs": 3000,
+      "clockMs": 24991,
+      "passed": 1,
+      "splits": [
+       21991
+      ],
+      "hits": 0,
+      "finished": false,
+      "timeMs": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "cp",
+      "atMs": 46982,
+      "index": 1
+     },
+     "state": {
+      "rng": 2974059,
+      "phase": "run",
+      "dest": "flatiron",
+      "distDm": 31115,
+      "cps": 9,
+      "parMs": 244346,
+      "goMs": 3000,
+      "clockMs": 46982,
+      "passed": 2,
+      "splits": [
+       21991,
+       43982
+      ],
+      "hits": 0,
+      "finished": false,
+      "timeMs": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "cp",
+      "atMs": 68973,
+      "index": 2
+     },
+     "state": {
+      "rng": 2974059,
+      "phase": "run",
+      "dest": "flatiron",
+      "distDm": 31115,
+      "cps": 9,
+      "parMs": 244346,
+      "goMs": 3000,
+      "clockMs": 68973,
+      "passed": 3,
+      "splits": [
+       21991,
+       43982,
+       65973
+      ],
+      "hits": 0,
+      "finished": false,
+      "timeMs": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "cp",
+      "atMs": 90964,
+      "index": 3
+     },
+     "state": {
+      "rng": 2974059,
+      "phase": "run",
+      "dest": "flatiron",
+      "distDm": 31115,
+      "cps": 9,
+      "parMs": 244346,
+      "goMs": 3000,
+      "clockMs": 90964,
+      "passed": 4,
+      "splits": [
+       21991,
+       43982,
+       65973,
+       87964
+      ],
+      "hits": 0,
+      "finished": false,
+      "timeMs": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "cp",
+      "atMs": 112955,
+      "index": 4
+     },
+     "state": {
+      "rng": 2974059,
+      "phase": "run",
+      "dest": "flatiron",
+      "distDm": 31115,
+      "cps": 9,
+      "parMs": 244346,
+      "goMs": 3000,
+      "clockMs": 112955,
+      "passed": 5,
+      "splits": [
+       21991,
+       43982,
+       65973,
+       87964,
+       109955
+      ],
+      "hits": 0,
+      "finished": false,
+      "timeMs": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "cp",
+      "atMs": 134946,
+      "index": 5
+     },
+     "state": {
+      "rng": 2974059,
+      "phase": "run",
+      "dest": "flatiron",
+      "distDm": 31115,
+      "cps": 9,
+      "parMs": 244346,
+      "goMs": 3000,
+      "clockMs": 134946,
+      "passed": 6,
+      "splits": [
+       21991,
+       43982,
+       65973,
+       87964,
+       109955,
+       131946
+      ],
+      "hits": 0,
+      "finished": false,
+      "timeMs": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "cp",
+      "atMs": 156937,
+      "index": 6
+     },
+     "state": {
+      "rng": 2974059,
+      "phase": "run",
+      "dest": "flatiron",
+      "distDm": 31115,
+      "cps": 9,
+      "parMs": 244346,
+      "goMs": 3000,
+      "clockMs": 156937,
+      "passed": 7,
+      "splits": [
+       21991,
+       43982,
+       65973,
+       87964,
+       109955,
+       131946,
+       153937
+      ],
+      "hits": 0,
+      "finished": false,
+      "timeMs": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "cp",
+      "atMs": 178928,
+      "index": 7
+     },
+     "state": {
+      "rng": 2974059,
+      "phase": "run",
+      "dest": "flatiron",
+      "distDm": 31115,
+      "cps": 9,
+      "parMs": 244346,
+      "goMs": 3000,
+      "clockMs": 178928,
+      "passed": 8,
+      "splits": [
+       21991,
+       43982,
+       65973,
+       87964,
+       109955,
+       131946,
+       153937,
+       175928
+      ],
+      "hits": 0,
+      "finished": false,
+      "timeMs": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "cp",
+      "atMs": 200919,
+      "index": 8
+     },
+     "state": {
+      "rng": 2974059,
+      "phase": "run",
+      "dest": "flatiron",
+      "distDm": 31115,
+      "cps": 9,
+      "parMs": 244346,
+      "goMs": 3000,
+      "clockMs": 200919,
+      "passed": 9,
+      "splits": [
+       21991,
+       43982,
+       65973,
+       87964,
+       109955,
+       131946,
+       153937,
+       175928,
+       197919
+      ],
+      "hits": 0,
+      "finished": false,
+      "timeMs": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "finish",
+      "atMs": 222911
+     },
+     "state": {
+      "rng": 2974059,
+      "phase": "over",
+      "dest": "flatiron",
+      "distDm": 31115,
+      "cps": 9,
+      "parMs": 244346,
+      "goMs": 3000,
+      "clockMs": 222911,
+      "passed": 9,
+      "splits": [
+       21991,
+       43982,
+       65973,
+       87964,
+       109955,
+       131946,
+       153937,
+       175928,
+       197919
+      ],
+      "hits": 0,
+      "finished": true,
+      "timeMs": 219911
+     }
+    }
+   ],
+   "result": {
+    "winner": "player",
+    "stars": 3,
+    "score": 2687,
+    "timeMs": 219911,
+    "parMs": 244346,
+    "dest": "flatiron",
+    "hits": 0
+   }
+  },
+  {
+   "name": "2 stars at level 1: between 100 % and 120 % of par, allowed subset",
+   "config": {
+    "dests": [
+     "times_square",
+     "empire_state",
+     "central_park",
+     "brooklyn_bridge",
+     "flatiron"
+    ],
+    "level": 1,
+    "parBaseMs": 5000,
+    "parDmPerS": [
+     90,
+     110,
+     130,
+     150,
+     170
+    ],
+    "hitPenaltyMs": 2000,
+    "starPct": [
+     100,
+     120,
+     145
+    ]
+   },
+   "seed": 12,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "pick",
+      "allow": [
+       "empire_state",
+       "flatiron"
+      ]
+     },
+     "state": {
+      "rng": 3244428,
+      "phase": "ready",
+      "dest": "empire_state",
+      "distDm": 0,
+      "cps": 0,
+      "parMs": 0,
+      "goMs": 0,
+      "clockMs": 0,
+      "passed": 0,
+      "splits": [],
+      "hits": 0,
+      "finished": false,
+      "timeMs": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "go",
+      "atMs": 3000,
+      "distDm": 18000,
+      "cps": 5
+     },
+     "state": {
+      "rng": 3244428,
+      "phase": "run",
+      "dest": "empire_state",
+      "distDm": 18000,
+      "cps": 5,
+      "parMs": 205000,
+      "goMs": 3000,
+      "clockMs": 3000,
+      "passed": 0,
+      "splits": [],
+      "hits": 0,
+      "finished": false,
+      "timeMs": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "cp",
+      "atMs": 42291,
+      "index": 0
+     },
+     "state": {
+      "rng": 3244428,
+      "phase": "run",
+      "dest": "empire_state",
+      "distDm": 18000,
+      "cps": 5,
+      "parMs": 205000,
+      "goMs": 3000,
+      "clockMs": 42291,
+      "passed": 1,
+      "splits": [
+       39291
+      ],
+      "hits": 0,
+      "finished": false,
+      "timeMs": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "cp",
+      "atMs": 81583,
+      "index": 1
+     },
+     "state": {
+      "rng": 3244428,
+      "phase": "run",
+      "dest": "empire_state",
+      "distDm": 18000,
+      "cps": 5,
+      "parMs": 205000,
+      "goMs": 3000,
+      "clockMs": 81583,
+      "passed": 2,
+      "splits": [
+       39291,
+       78583
+      ],
+      "hits": 0,
+      "finished": false,
+      "timeMs": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "cp",
+      "atMs": 120875,
+      "index": 2
+     },
+     "state": {
+      "rng": 3244428,
+      "phase": "run",
+      "dest": "empire_state",
+      "distDm": 18000,
+      "cps": 5,
+      "parMs": 205000,
+      "goMs": 3000,
+      "clockMs": 120875,
+      "passed": 3,
+      "splits": [
+       39291,
+       78583,
+       117875
+      ],
+      "hits": 0,
+      "finished": false,
+      "timeMs": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "cp",
+      "atMs": 160166,
+      "index": 3
+     },
+     "state": {
+      "rng": 3244428,
+      "phase": "run",
+      "dest": "empire_state",
+      "distDm": 18000,
+      "cps": 5,
+      "parMs": 205000,
+      "goMs": 3000,
+      "clockMs": 160166,
+      "passed": 4,
+      "splits": [
+       39291,
+       78583,
+       117875,
+       157166
+      ],
+      "hits": 0,
+      "finished": false,
+      "timeMs": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "cp",
+      "atMs": 199458,
+      "index": 4
+     },
+     "state": {
+      "rng": 3244428,
+      "phase": "run",
+      "dest": "empire_state",
+      "distDm": 18000,
+      "cps": 5,
+      "parMs": 205000,
+      "goMs": 3000,
+      "clockMs": 199458,
+      "passed": 5,
+      "splits": [
+       39291,
+       78583,
+       117875,
+       157166,
+       196458
+      ],
+      "hits": 0,
+      "finished": false,
+      "timeMs": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "finish",
+      "atMs": 238750
+     },
+     "state": {
+      "rng": 3244428,
+      "phase": "over",
+      "dest": "empire_state",
+      "distDm": 18000,
+      "cps": 5,
+      "parMs": 205000,
+      "goMs": 3000,
+      "clockMs": 238750,
+      "passed": 5,
+      "splits": [
+       39291,
+       78583,
+       117875,
+       157166,
+       196458
+      ],
+      "hits": 0,
+      "finished": true,
+      "timeMs": 235750
+     }
+    }
+   ],
+   "result": {
+    "winner": "player",
+    "stars": 2,
+    "score": 1742,
+    "timeMs": 235750,
+    "parMs": 205000,
+    "dest": "empire_state",
+    "hits": 0
+   }
+  },
+  {
+   "name": "1 star at level 5: between 120 % and 145 %, one crash",
+   "config": {
+    "dests": [
+     "times_square",
+     "empire_state",
+     "central_park",
+     "brooklyn_bridge",
+     "flatiron"
+    ],
+    "level": 5,
+    "parBaseMs": 5000,
+    "parDmPerS": [
+     90,
+     110,
+     130,
+     150,
+     170
+    ],
+    "hitPenaltyMs": 2000,
+    "starPct": [
+     100,
+     120,
+     145
+    ]
+   },
+   "seed": 13,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "pick",
+      "allow": []
+     },
+     "state": {
+      "rng": 3514797,
+      "phase": "ready",
+      "dest": "central_park",
+      "distDm": 0,
+      "cps": 0,
+      "parMs": 0,
+      "goMs": 0,
+      "clockMs": 0,
+      "passed": 0,
+      "splits": [],
+      "hits": 0,
+      "finished": false,
+      "timeMs": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "go",
+      "atMs": 3000,
+      "distDm": 24000,
+      "cps": 7
+     },
+     "state": {
+      "rng": 3514797,
+      "phase": "run",
+      "dest": "central_park",
+      "distDm": 24000,
+      "cps": 7,
+      "parMs": 146176,
+      "goMs": 3000,
+      "clockMs": 3000,
+      "passed": 0,
+      "splits": [],
+      "hits": 0,
+      "finished": false,
+      "timeMs": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "cp",
+      "atMs": 26753,
+      "index": 0
+     },
+     "state": {
+      "rng": 3514797,
+      "phase": "run",
+      "dest": "central_park",
+      "distDm": 24000,
+      "cps": 7,
+      "parMs": 146176,
+      "goMs": 3000,
+      "clockMs": 26753,
+      "passed": 1,
+      "splits": [
+       23753
+      ],
+      "hits": 0,
+      "finished": false,
+      "timeMs": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "hit",
+      "atMs": 43000
+     },
+     "state": {
+      "rng": 3514797,
+      "phase": "run",
+      "dest": "central_park",
+      "distDm": 24000,
+      "cps": 7,
+      "parMs": 146176,
+      "goMs": 3000,
+      "clockMs": 43000,
+      "passed": 1,
+      "splits": [
+       23753
+      ],
+      "hits": 1,
+      "finished": false,
+      "timeMs": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "cp",
+      "atMs": 50507,
+      "index": 1
+     },
+     "state": {
+      "rng": 3514797,
+      "phase": "run",
+      "dest": "central_park",
+      "distDm": 24000,
+      "cps": 7,
+      "parMs": 146176,
+      "goMs": 3000,
+      "clockMs": 50507,
+      "passed": 2,
+      "splits": [
+       23753,
+       47507
+      ],
+      "hits": 1,
+      "finished": false,
+      "timeMs": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "cp",
+      "atMs": 74260,
+      "index": 2
+     },
+     "state": {
+      "rng": 3514797,
+      "phase": "run",
+      "dest": "central_park",
+      "distDm": 24000,
+      "cps": 7,
+      "parMs": 146176,
+      "goMs": 3000,
+      "clockMs": 74260,
+      "passed": 3,
+      "splits": [
+       23753,
+       47507,
+       71260
+      ],
+      "hits": 1,
+      "finished": false,
+      "timeMs": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "cp",
+      "atMs": 98014,
+      "index": 3
+     },
+     "state": {
+      "rng": 3514797,
+      "phase": "run",
+      "dest": "central_park",
+      "distDm": 24000,
+      "cps": 7,
+      "parMs": 146176,
+      "goMs": 3000,
+      "clockMs": 98014,
+      "passed": 4,
+      "splits": [
+       23753,
+       47507,
+       71260,
+       95014
+      ],
+      "hits": 1,
+      "finished": false,
+      "timeMs": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "cp",
+      "atMs": 121767,
+      "index": 4
+     },
+     "state": {
+      "rng": 3514797,
+      "phase": "run",
+      "dest": "central_park",
+      "distDm": 24000,
+      "cps": 7,
+      "parMs": 146176,
+      "goMs": 3000,
+      "clockMs": 121767,
+      "passed": 5,
+      "splits": [
+       23753,
+       47507,
+       71260,
+       95014,
+       118767
+      ],
+      "hits": 1,
+      "finished": false,
+      "timeMs": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "cp",
+      "atMs": 145521,
+      "index": 5
+     },
+     "state": {
+      "rng": 3514797,
+      "phase": "run",
+      "dest": "central_park",
+      "distDm": 24000,
+      "cps": 7,
+      "parMs": 146176,
+      "goMs": 3000,
+      "clockMs": 145521,
+      "passed": 6,
+      "splits": [
+       23753,
+       47507,
+       71260,
+       95014,
+       118767,
+       142521
+      ],
+      "hits": 1,
+      "finished": false,
+      "timeMs": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "cp",
+      "atMs": 169274,
+      "index": 6
+     },
+     "state": {
+      "rng": 3514797,
+      "phase": "run",
+      "dest": "central_park",
+      "distDm": 24000,
+      "cps": 7,
+      "parMs": 146176,
+      "goMs": 3000,
+      "clockMs": 169274,
+      "passed": 7,
+      "splits": [
+       23753,
+       47507,
+       71260,
+       95014,
+       118767,
+       142521,
+       166274
+      ],
+      "hits": 1,
+      "finished": false,
+      "timeMs": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "finish",
+      "atMs": 193028
+     },
+     "state": {
+      "rng": 3514797,
+      "phase": "over",
+      "dest": "central_park",
+      "distDm": 24000,
+      "cps": 7,
+      "parMs": 146176,
+      "goMs": 3000,
+      "clockMs": 193028,
+      "passed": 7,
+      "splits": [
+       23753,
+       47507,
+       71260,
+       95014,
+       118767,
+       142521,
+       166274
+      ],
+      "hits": 1,
+      "finished": true,
+      "timeMs": 192028
+     }
+    }
+   ],
+   "result": {
+    "winner": "player",
+    "stars": 1,
+    "score": 1003,
+    "timeMs": 192028,
+    "parMs": 146176,
+    "dest": "central_park",
+    "hits": 1
+   }
+  },
+  {
+   "name": "0 stars above 145 % of par (level 2)",
+   "config": {
+    "dests": [
+     "times_square",
+     "empire_state",
+     "central_park",
+     "brooklyn_bridge",
+     "flatiron"
+    ],
+    "level": 2,
+    "parBaseMs": 5000,
+    "parDmPerS": [
+     90,
+     110,
+     130,
+     150,
+     170
+    ],
+    "hitPenaltyMs": 2000,
+    "starPct": [
+     100,
+     120,
+     145
+    ]
+   },
+   "seed": 14,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "pick",
+      "allow": []
+     },
+     "state": {
+      "rng": 3785166,
+      "phase": "ready",
+      "dest": "empire_state",
+      "distDm": 0,
+      "cps": 0,
+      "parMs": 0,
+      "goMs": 0,
+      "clockMs": 0,
+      "passed": 0,
+      "splits": [],
+      "hits": 0,
+      "finished": false,
+      "timeMs": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "go",
+      "atMs": 3000,
+      "distDm": 15000,
+      "cps": 4
+     },
+     "state": {
+      "rng": 3785166,
+      "phase": "run",
+      "dest": "empire_state",
+      "distDm": 15000,
+      "cps": 4,
+      "parMs": 141363,
+      "goMs": 3000,
+      "clockMs": 3000,
+      "passed": 0,
+      "splits": [],
+      "hits": 0,
+      "finished": false,
+      "timeMs": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "cp",
+      "atMs": 44277,
+      "index": 0
+     },
+     "state": {
+      "rng": 3785166,
+      "phase": "run",
+      "dest": "empire_state",
+      "distDm": 15000,
+      "cps": 4,
+      "parMs": 141363,
+      "goMs": 3000,
+      "clockMs": 44277,
+      "passed": 1,
+      "splits": [
+       41277
+      ],
+      "hits": 0,
+      "finished": false,
+      "timeMs": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "cp",
+      "atMs": 85555,
+      "index": 1
+     },
+     "state": {
+      "rng": 3785166,
+      "phase": "run",
+      "dest": "empire_state",
+      "distDm": 15000,
+      "cps": 4,
+      "parMs": 141363,
+      "goMs": 3000,
+      "clockMs": 85555,
+      "passed": 2,
+      "splits": [
+       41277,
+       82555
+      ],
+      "hits": 0,
+      "finished": false,
+      "timeMs": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "cp",
+      "atMs": 126833,
+      "index": 2
+     },
+     "state": {
+      "rng": 3785166,
+      "phase": "run",
+      "dest": "empire_state",
+      "distDm": 15000,
+      "cps": 4,
+      "parMs": 141363,
+      "goMs": 3000,
+      "clockMs": 126833,
+      "passed": 3,
+      "splits": [
+       41277,
+       82555,
+       123833
+      ],
+      "hits": 0,
+      "finished": false,
+      "timeMs": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "cp",
+      "atMs": 168111,
+      "index": 3
+     },
+     "state": {
+      "rng": 3785166,
+      "phase": "run",
+      "dest": "empire_state",
+      "distDm": 15000,
+      "cps": 4,
+      "parMs": 141363,
+      "goMs": 3000,
+      "clockMs": 168111,
+      "passed": 4,
+      "splits": [
+       41277,
+       82555,
+       123833,
+       165111
+      ],
+      "hits": 0,
+      "finished": false,
+      "timeMs": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "finish",
+      "atMs": 209389
+     },
+     "state": {
+      "rng": 3785166,
+      "phase": "over",
+      "dest": "empire_state",
+      "distDm": 15000,
+      "cps": 4,
+      "parMs": 141363,
+      "goMs": 3000,
+      "clockMs": 209389,
+      "passed": 4,
+      "splits": [
+       41277,
+       82555,
+       123833,
+       165111
+      ],
+      "hits": 0,
+      "finished": true,
+      "timeMs": 206389
+     }
+    }
+   ],
+   "result": {
+    "winner": "draw",
+    "stars": 0,
+    "score": 763,
+    "timeMs": 206389,
+    "parMs": 141363,
+    "dest": "empire_state",
+    "hits": 0
+   }
+  },
+  {
+   "name": "crashes add hit_penalty_ms and cost a star",
+   "config": {
+    "dests": [
+     "times_square",
+     "empire_state",
+     "central_park",
+     "brooklyn_bridge",
+     "flatiron"
+    ],
+    "level": 3,
+    "parBaseMs": 5000,
+    "parDmPerS": [
+     90,
+     110,
+     130,
+     150,
+     170
+    ],
+    "hitPenaltyMs": 2000,
+    "starPct": [
+     100,
+     120,
+     145
+    ]
+   },
+   "seed": 15,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "pick",
+      "allow": []
+     },
+     "state": {
+      "rng": 4055535,
+      "phase": "ready",
+      "dest": "times_square",
+      "distDm": 0,
+      "cps": 0,
+      "parMs": 0,
+      "goMs": 0,
+      "clockMs": 0,
+      "passed": 0,
+      "splits": [],
+      "hits": 0,
+      "finished": false,
+      "timeMs": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "go",
+      "atMs": 3000,
+      "distDm": 20000,
+      "cps": 6
+     },
+     "state": {
+      "rng": 4055535,
+      "phase": "run",
+      "dest": "times_square",
+      "distDm": 20000,
+      "cps": 6,
+      "parMs": 158846,
+      "goMs": 3000,
+      "clockMs": 3000,
+      "passed": 0,
+      "splits": [],
+      "hits": 0,
+      "finished": false,
+      "timeMs": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "hit",
+      "atMs": 8000
+     },
+     "state": {
+      "rng": 4055535,
+      "phase": "run",
+      "dest": "times_square",
+      "distDm": 20000,
+      "cps": 6,
+      "parMs": 158846,
+      "goMs": 3000,
+      "clockMs": 8000,
+      "passed": 0,
+      "splits": [],
+      "hits": 1,
+      "finished": false,
+      "timeMs": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "hit",
+      "atMs": 12000
+     },
+     "state": {
+      "rng": 4055535,
+      "phase": "run",
+      "dest": "times_square",
+      "distDm": 20000,
+      "cps": 6,
+      "parMs": 158846,
+      "goMs": 3000,
+      "clockMs": 12000,
+      "passed": 0,
+      "splits": [],
+      "hits": 2,
+      "finished": false,
+      "timeMs": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "cp",
+      "atMs": 25238,
+      "index": 0
+     },
+     "state": {
+      "rng": 4055535,
+      "phase": "run",
+      "dest": "times_square",
+      "distDm": 20000,
+      "cps": 6,
+      "parMs": 158846,
+      "goMs": 3000,
+      "clockMs": 25238,
+      "passed": 1,
+      "splits": [
+       22238
+      ],
+      "hits": 2,
+      "finished": false,
+      "timeMs": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "hit",
+      "atMs": 33000
+     },
+     "state": {
+      "rng": 4055535,
+      "phase": "run",
+      "dest": "times_square",
+      "distDm": 20000,
+      "cps": 6,
+      "parMs": 158846,
+      "goMs": 3000,
+      "clockMs": 33000,
+      "passed": 1,
+      "splits": [
+       22238
+      ],
+      "hits": 3,
+      "finished": false,
+      "timeMs": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "cp",
+      "atMs": 47476,
+      "index": 1
+     },
+     "state": {
+      "rng": 4055535,
+      "phase": "run",
+      "dest": "times_square",
+      "distDm": 20000,
+      "cps": 6,
+      "parMs": 158846,
+      "goMs": 3000,
+      "clockMs": 47476,
+      "passed": 2,
+      "splits": [
+       22238,
+       44476
+      ],
+      "hits": 3,
+      "finished": false,
+      "timeMs": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "cp",
+      "atMs": 69715,
+      "index": 2
+     },
+     "state": {
+      "rng": 4055535,
+      "phase": "run",
+      "dest": "times_square",
+      "distDm": 20000,
+      "cps": 6,
+      "parMs": 158846,
+      "goMs": 3000,
+      "clockMs": 69715,
+      "passed": 3,
+      "splits": [
+       22238,
+       44476,
+       66715
+      ],
+      "hits": 3,
+      "finished": false,
+      "timeMs": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "cp",
+      "atMs": 91953,
+      "index": 3
+     },
+     "state": {
+      "rng": 4055535,
+      "phase": "run",
+      "dest": "times_square",
+      "distDm": 20000,
+      "cps": 6,
+      "parMs": 158846,
+      "goMs": 3000,
+      "clockMs": 91953,
+      "passed": 4,
+      "splits": [
+       22238,
+       44476,
+       66715,
+       88953
+      ],
+      "hits": 3,
+      "finished": false,
+      "timeMs": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "cp",
+      "atMs": 114192,
+      "index": 4
+     },
+     "state": {
+      "rng": 4055535,
+      "phase": "run",
+      "dest": "times_square",
+      "distDm": 20000,
+      "cps": 6,
+      "parMs": 158846,
+      "goMs": 3000,
+      "clockMs": 114192,
+      "passed": 5,
+      "splits": [
+       22238,
+       44476,
+       66715,
+       88953,
+       111192
+      ],
+      "hits": 3,
+      "finished": false,
+      "timeMs": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "cp",
+      "atMs": 136430,
+      "index": 5
+     },
+     "state": {
+      "rng": 4055535,
+      "phase": "run",
+      "dest": "times_square",
+      "distDm": 20000,
+      "cps": 6,
+      "parMs": 158846,
+      "goMs": 3000,
+      "clockMs": 136430,
+      "passed": 6,
+      "splits": [
+       22238,
+       44476,
+       66715,
+       88953,
+       111192,
+       133430
+      ],
+      "hits": 3,
+      "finished": false,
+      "timeMs": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "finish",
+      "atMs": 158669
+     },
+     "state": {
+      "rng": 4055535,
+      "phase": "over",
+      "dest": "times_square",
+      "distDm": 20000,
+      "cps": 6,
+      "parMs": 158846,
+      "goMs": 3000,
+      "clockMs": 158669,
+      "passed": 6,
+      "splits": [
+       22238,
+       44476,
+       66715,
+       88953,
+       111192,
+       133430
+      ],
+      "hits": 3,
+      "finished": true,
+      "timeMs": 161669
+     }
+    }
+   ],
+   "result": {
+    "winner": "player",
+    "stars": 2,
+    "score": 1560,
+    "timeMs": 161669,
+    "parMs": 158846,
+    "dest": "times_square",
+    "hits": 3
+   }
+  },
+  {
+   "name": "score clamped at 0 far over par",
+   "config": {
+    "dests": [
+     "times_square",
+     "empire_state",
+     "central_park",
+     "brooklyn_bridge",
+     "flatiron"
+    ],
+    "level": 4,
+    "parBaseMs": 5000,
+    "parDmPerS": [
+     90,
+     110,
+     130,
+     150,
+     170
+    ],
+    "hitPenaltyMs": 2000,
+    "starPct": [
+     100,
+     120,
+     145
+    ]
+   },
+   "seed": 16,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "pick",
+      "allow": []
+     },
+     "state": {
+      "rng": 4325937,
+      "phase": "ready",
+      "dest": "central_park",
+      "distDm": 0,
+      "cps": 0,
+      "parMs": 0,
+      "goMs": 0,
+      "clockMs": 0,
+      "passed": 0,
+      "splits": [],
+      "hits": 0,
+      "finished": false,
+      "timeMs": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "go",
+      "atMs": 3000,
+      "distDm": 3000,
+      "cps": 0
+     },
+     "state": {
+      "rng": 4325937,
+      "phase": "run",
+      "dest": "central_park",
+      "distDm": 3000,
+      "cps": 0,
+      "parMs": 25000,
+      "goMs": 3000,
+      "clockMs": 3000,
+      "passed": 0,
+      "splits": [],
+      "hits": 0,
+      "finished": false,
+      "timeMs": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "finish",
+      "atMs": 65500
+     },
+     "state": {
+      "rng": 4325937,
+      "phase": "over",
+      "dest": "central_park",
+      "distDm": 3000,
+      "cps": 0,
+      "parMs": 25000,
+      "goMs": 3000,
+      "clockMs": 65500,
+      "passed": 0,
+      "splits": [],
+      "hits": 0,
+      "finished": true,
+      "timeMs": 62500
+     }
+    }
+   ],
+   "result": {
+    "winner": "draw",
+    "stars": 0,
+    "score": 0,
+    "timeMs": 62500,
+    "parMs": 25000,
+    "dest": "central_park",
+    "hits": 0
+   }
+  },
+  {
+   "name": "single allowed destination",
+   "config": {
+    "dests": [
+     "times_square",
+     "empire_state",
+     "central_park",
+     "brooklyn_bridge",
+     "flatiron"
+    ],
+    "level": 3,
+    "parBaseMs": 5000,
+    "parDmPerS": [
+     90,
+     110,
+     130,
+     150,
+     170
+    ],
+    "hitPenaltyMs": 2000,
+    "starPct": [
+     100,
+     120,
+     145
+    ]
+   },
+   "seed": 17,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "pick",
+      "allow": [
+       "brooklyn_bridge"
+      ]
+     },
+     "state": {
+      "rng": 4596240,
+      "phase": "ready",
+      "dest": "brooklyn_bridge",
+      "distDm": 0,
+      "cps": 0,
+      "parMs": 0,
+      "goMs": 0,
+      "clockMs": 0,
+      "passed": 0,
+      "splits": [],
+      "hits": 0,
+      "finished": false,
+      "timeMs": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "go",
+      "atMs": 3000,
+      "distDm": 9000,
+      "cps": 2
+     },
+     "state": {
+      "rng": 4596240,
+      "phase": "run",
+      "dest": "brooklyn_bridge",
+      "distDm": 9000,
+      "cps": 2,
+      "parMs": 74230,
+      "goMs": 3000,
+      "clockMs": 3000,
+      "passed": 0,
+      "splits": [],
+      "hits": 0,
+      "finished": false,
+      "timeMs": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "cp",
+      "atMs": 27743,
+      "index": 0
+     },
+     "state": {
+      "rng": 4596240,
+      "phase": "run",
+      "dest": "brooklyn_bridge",
+      "distDm": 9000,
+      "cps": 2,
+      "parMs": 74230,
+      "goMs": 3000,
+      "clockMs": 27743,
+      "passed": 1,
+      "splits": [
+       24743
+      ],
+      "hits": 0,
+      "finished": false,
+      "timeMs": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "cp",
+      "atMs": 52486,
+      "index": 1
+     },
+     "state": {
+      "rng": 4596240,
+      "phase": "run",
+      "dest": "brooklyn_bridge",
+      "distDm": 9000,
+      "cps": 2,
+      "parMs": 74230,
+      "goMs": 3000,
+      "clockMs": 52486,
+      "passed": 2,
+      "splits": [
+       24743,
+       49486
+      ],
+      "hits": 0,
+      "finished": false,
+      "timeMs": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "finish",
+      "atMs": 77230
+     },
+     "state": {
+      "rng": 4596240,
+      "phase": "over",
+      "dest": "brooklyn_bridge",
+      "distDm": 9000,
+      "cps": 2,
+      "parMs": 74230,
+      "goMs": 3000,
+      "clockMs": 77230,
+      "passed": 2,
+      "splits": [
+       24743,
+       49486
+      ],
+      "hits": 0,
+      "finished": true,
+      "timeMs": 74230
+     }
+    }
+   ],
+   "result": {
+    "winner": "player",
+    "stars": 3,
+    "score": 742,
+    "timeMs": 74230,
+    "parMs": 74230,
+    "dest": "brooklyn_bridge",
+    "hits": 0
+   }
+  },
+  {
+   "name": "cps = 0: short route, straight to the finish",
+   "config": {
+    "dests": [
+     "times_square",
+     "empire_state",
+     "central_park",
+     "brooklyn_bridge",
+     "flatiron"
+    ],
+    "level": 3,
+    "parBaseMs": 5000,
+    "parDmPerS": [
+     90,
+     110,
+     130,
+     150,
+     170
+    ],
+    "hitPenaltyMs": 2000,
+    "starPct": [
+     100,
+     120,
+     145
+    ]
+   },
+   "seed": 18,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "pick",
+      "allow": []
+     },
+     "state": {
+      "rng": 4866675,
+      "phase": "ready",
+      "dest": "times_square",
+      "distDm": 0,
+      "cps": 0,
+      "parMs": 0,
+      "goMs": 0,
+      "clockMs": 0,
+      "passed": 0,
+      "splits": [],
+      "hits": 0,
+      "finished": false,
+      "timeMs": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "go",
+      "atMs": 3010,
+      "distDm": 2500,
+      "cps": 0
+     },
+     "state": {
+      "rng": 4866675,
+      "phase": "run",
+      "dest": "times_square",
+      "distDm": 2500,
+      "cps": 0,
+      "parMs": 24230,
+      "goMs": 3010,
+      "clockMs": 3010,
+      "passed": 0,
+      "splits": [],
+      "hits": 0,
+      "finished": false,
+      "timeMs": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "finish",
+      "atMs": 30000
+     },
+     "state": {
+      "rng": 4866675,
+      "phase": "over",
+      "dest": "times_square",
+      "distDm": 2500,
+      "cps": 0,
+      "parMs": 24230,
+      "goMs": 3010,
+      "clockMs": 30000,
+      "passed": 0,
+      "splits": [],
+      "hits": 0,
+      "finished": true,
+      "timeMs": 26990
+     }
+    }
+   ],
+   "result": {
+    "winner": "player",
+    "stars": 2,
+    "score": 214,
+    "timeMs": 26990,
+    "parMs": 24230,
+    "dest": "times_square",
+    "hits": 0
+   }
+  },
+  {
+   "name": "empty pool: city without destinations is over without a destination",
+   "config": {
+    "dests": [],
+    "level": 3,
+    "parBaseMs": 5000,
+    "parDmPerS": [
+     90,
+     110,
+     130,
+     150,
+     170
+    ],
+    "hitPenaltyMs": 2000,
+    "starPct": [
+     100,
+     120,
+     145
+    ]
+   },
+   "seed": 19,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "pick",
+      "allow": []
+     },
+     "state": {
+      "rng": 19,
+      "phase": "over",
+      "dest": "",
+      "distDm": 0,
+      "cps": 0,
+      "parMs": 0,
+      "goMs": 0,
+      "clockMs": 0,
+      "passed": 0,
+      "splits": [],
+      "hits": 0,
+      "finished": false,
+      "timeMs": 0
+     }
+    }
+   ],
+   "result": {
+    "winner": "draw",
+    "stars": 0,
+    "score": 0,
+    "timeMs": 0,
+    "parMs": 0,
+    "dest": "",
+    "hits": 0
+   }
+  },
+  {
+   "name": "timeout in pick",
+   "config": {
+    "dests": [
+     "times_square",
+     "empire_state",
+     "central_park",
+     "brooklyn_bridge",
+     "flatiron"
+    ],
+    "level": 3,
+    "parBaseMs": 5000,
+    "parDmPerS": [
+     90,
+     110,
+     130,
+     150,
+     170
+    ],
+    "hitPenaltyMs": 2000,
+    "starPct": [
+     100,
+     120,
+     145
+    ]
+   },
+   "seed": 20,
+   "steps": [
+    {
+     "action": {
+      "by": "timeout"
+     },
+     "state": {
+      "rng": 20,
+      "phase": "over",
+      "dest": "",
+      "distDm": 0,
+      "cps": 0,
+      "parMs": 0,
+      "goMs": 0,
+      "clockMs": 0,
+      "passed": 0,
+      "splits": [],
+      "hits": 0,
+      "finished": false,
+      "timeMs": 0
+     }
+    }
+   ],
+   "result": {
+    "winner": "draw",
+    "stars": 0,
+    "score": 0,
+    "timeMs": 0,
+    "parMs": 0,
+    "dest": "",
+    "hits": 0
+   }
+  },
+  {
+   "name": "timeout in ready (countdown)",
+   "config": {
+    "dests": [
+     "times_square",
+     "empire_state",
+     "central_park",
+     "brooklyn_bridge",
+     "flatiron"
+    ],
+    "level": 3,
+    "parBaseMs": 5000,
+    "parDmPerS": [
+     90,
+     110,
+     130,
+     150,
+     170
+    ],
+    "hitPenaltyMs": 2000,
+    "starPct": [
+     100,
+     120,
+     145
+    ]
+   },
+   "seed": 21,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "pick",
+      "allow": []
+     },
+     "state": {
+      "rng": 5677716,
+      "phase": "ready",
+      "dest": "empire_state",
+      "distDm": 0,
+      "cps": 0,
+      "parMs": 0,
+      "goMs": 0,
+      "clockMs": 0,
+      "passed": 0,
+      "splits": [],
+      "hits": 0,
+      "finished": false,
+      "timeMs": 0
+     }
+    },
+    {
+     "action": {
+      "by": "timeout"
+     },
+     "state": {
+      "rng": 5677716,
+      "phase": "over",
+      "dest": "empire_state",
+      "distDm": 0,
+      "cps": 0,
+      "parMs": 0,
+      "goMs": 0,
+      "clockMs": 0,
+      "passed": 0,
+      "splits": [],
+      "hits": 0,
+      "finished": false,
+      "timeMs": 0
+     }
+    }
+   ],
+   "result": {
+    "winner": "draw",
+    "stars": 0,
+    "score": 0,
+    "timeMs": 0,
+    "parMs": 0,
+    "dest": "empire_state",
+    "hits": 0
+   }
+  },
+  {
+   "name": "timeout in run after two gates and a crash (give up / time cap)",
+   "config": {
+    "dests": [
+     "times_square",
+     "empire_state",
+     "central_park",
+     "brooklyn_bridge",
+     "flatiron"
+    ],
+    "level": 3,
+    "parBaseMs": 5000,
+    "parDmPerS": [
+     90,
+     110,
+     130,
+     150,
+     170
+    ],
+    "hitPenaltyMs": 2000,
+    "starPct": [
+     100,
+     120,
+     145
+    ]
+   },
+   "seed": 22,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "pick",
+      "allow": []
+     },
+     "state": {
+      "rng": 5948151,
+      "phase": "ready",
+      "dest": "empire_state",
+      "distDm": 0,
+      "cps": 0,
+      "parMs": 0,
+      "goMs": 0,
+      "clockMs": 0,
+      "passed": 0,
+      "splits": [],
+      "hits": 0,
+      "finished": false,
+      "timeMs": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "go",
+      "atMs": 3000,
+      "distDm": 26000,
+      "cps": 8
+     },
+     "state": {
+      "rng": 5948151,
+      "phase": "run",
+      "dest": "empire_state",
+      "distDm": 26000,
+      "cps": 8,
+      "parMs": 205000,
+      "goMs": 3000,
+      "clockMs": 3000,
+      "passed": 0,
+      "splits": [],
+      "hits": 0,
+      "finished": false,
+      "timeMs": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "cp",
+      "atMs": 40000,
+      "index": 0
+     },
+     "state": {
+      "rng": 5948151,
+      "phase": "run",
+      "dest": "empire_state",
+      "distDm": 26000,
+      "cps": 8,
+      "parMs": 205000,
+      "goMs": 3000,
+      "clockMs": 40000,
+      "passed": 1,
+      "splits": [
+       37000
+      ],
+      "hits": 0,
+      "finished": false,
+      "timeMs": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "hit",
+      "atMs": 52000
+     },
+     "state": {
+      "rng": 5948151,
+      "phase": "run",
+      "dest": "empire_state",
+      "distDm": 26000,
+      "cps": 8,
+      "parMs": 205000,
+      "goMs": 3000,
+      "clockMs": 52000,
+      "passed": 1,
+      "splits": [
+       37000
+      ],
+      "hits": 1,
+      "finished": false,
+      "timeMs": 0
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "cp",
+      "atMs": 81000,
+      "index": 1
+     },
+     "state": {
+      "rng": 5948151,
+      "phase": "run",
+      "dest": "empire_state",
+      "distDm": 26000,
+      "cps": 8,
+      "parMs": 205000,
+      "goMs": 3000,
+      "clockMs": 81000,
+      "passed": 2,
+      "splits": [
+       37000,
+       78000
+      ],
+      "hits": 1,
+      "finished": false,
+      "timeMs": 0
+     }
+    },
+    {
+     "action": {
+      "by": "timeout"
+     },
+     "state": {
+      "rng": 5948151,
+      "phase": "over",
+      "dest": "empire_state",
+      "distDm": 26000,
+      "cps": 8,
+      "parMs": 205000,
+      "goMs": 3000,
+      "clockMs": 81000,
+      "passed": 2,
+      "splits": [
+       37000,
+       78000
+      ],
+      "hits": 1,
+      "finished": false,
+      "timeMs": 0
+     }
+    }
+   ],
+   "result": {
+    "winner": "draw",
+    "stars": 0,
+    "score": 0,
+    "timeMs": 0,
+    "parMs": 205000,
+    "dest": "empire_state",
+    "hits": 1
+   }
+  }
+ ]
+}

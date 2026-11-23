@@ -109,6 +109,8 @@ class HudState {
     this.hopFull,
     this.hopCharges = 0,
     this.hopReady = false,
+    this.flowButton = false,
+    this.stuck10 = 0,
   });
 
   final String street;
@@ -131,6 +133,10 @@ class HudState {
   final int? hopFull;
   final int hopCharges;
   final bool hopReady;
+
+  /// The "Na silnici" button (specs/flow.md "Ručně") and the debug count `flowStuck10`.
+  final bool flowButton;
+  final int stuck10;
 }
 
 /// Context button next to a parked car or in the garage.
@@ -183,6 +189,8 @@ class MetropoleGame extends Game {
     _applySkin();
     _tramsPainter = city.trams.isEmpty ? null : TramsPainter(city.trams, tuning.trams);
     camera.snap(drive.car.x, drive.car.y, drive.car.heading, tuning);
+    // Every rescue move (specs/flow.md) puts the car elsewhere at once: the camera follows.
+    drive.onRescue = (_) => camera.snap(drive.car.x, drive.car.y, drive.car.heading, tuning);
     peds = PedestrianWorld(city, tuning);
     _pedBubbles = PedBubblePainter(
       tr(ui.PlatformDispatcher.instance.locale.languageCode, MessageKey.pedestrianBubble),
@@ -397,6 +405,10 @@ class MetropoleGame extends Game {
   /// The HUD "Hop" button (specs/hop.md).
   bool hop() => !worldPaused && drive.startHop();
 
+  /// "Na silnici" (specs/flow.md "Ručně"): the HUD button and the pause menu (the phone home screen,
+  /// which pauses the game itself). Free, counted as stuck; not during a rescue move.
+  bool toRoad() => drive.flow.animT == 0 && drive.toRoad();
+
   void respawn() {
     police.clearRoadblock(); // specs/roadblock.md: a respawn drops the roadblock
     drive.spawn(city.startX, city.startY, city.startHeading);
@@ -481,6 +493,8 @@ class MetropoleGame extends Game {
         hopFull: hopCharges(drive.spec),
         hopCharges: drive.hop.charges,
         hopReady: !pause && drive.hopReady,
+        flowButton: !pause && pilot == null && drive.flow.buttonShown && drive.flow.animT == 0,
+        stuck10: drive.flow.count10(drive.time),
         carAction: (carActionYield?.call() ?? false)
             ? null
             : switch (action) {
@@ -558,7 +572,7 @@ class MetropoleGame extends Game {
         }
         final tr = drive.traffic;
         if (tr != null) {
-          paintTraffic(c, tr, layer, night: night, shadow: shadow);
+          paintTraffic(c, tr, layer, night: night, tuning: tuning, shadow: shadow);
           paintPolice(
             c,
             tr,
@@ -566,6 +580,7 @@ class MetropoleGame extends Game {
             timeS: _policeClock,
             blinkS: tuning.police.lightBlinkS,
             night: night,
+            tuning: tuning,
             shadow: shadow,
           );
         }
@@ -574,7 +589,13 @@ class MetropoleGame extends Game {
         final pl = playerLook?.call();
         final look = pl == null ? null : lookPaint(pl, tuning.garage, night: night, layer: car.layer);
         if (lift == null) {
-          if (layer == car.layer) paintCar(c, car, night: night, shadow: shadow, look: look);
+          if (layer == car.layer) {
+            // Rescue move (specs/flow.md): the car fades in at its new place over the animation.
+            final anim = drive.flow.animT;
+            if (anim > 0) c.saveLayer(null, Paint()..color = Color.fromRGBO(0, 0, 0, 1 - anim / rescueAnimS));
+            paintCar(c, car, night: night, shadow: shadow, look: look);
+            if (anim > 0) c.restore();
+          }
         } else if (layer == 0) {
           paintHopShadow(c, car, lift, shadow: shadow);
         } else if (layer == 1) {

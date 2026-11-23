@@ -8,6 +8,7 @@ import type { Rgba } from '../render/palette';
 import { PoliceHud } from './hud';
 import { Police, type StolenSource } from './police';
 import { PoliceView } from './view';
+import type { CarSpriteView } from '../render/carSprites';
 
 export { Police } from './police';
 
@@ -20,6 +21,8 @@ export interface PoliceFeature {
   update(stepDt: number, dt: number): void;
   /** Patrol ground shadow colour (specs/style.md). */
   setShadow(c: Rgba): void;
+  /** Car sprites shared with the world (specs/art.md v2). */
+  setSprites(sp: CarSpriteView): void;
 }
 
 export function installPolice(o: {
@@ -44,5 +47,6 @@ export function installPolice(o: {
       hud?.update(dt);
     },
     setShadow: (c) => view?.setShadow(c),
+    setSprites: (sp) => view?.setSprites(sp),
   };
 }

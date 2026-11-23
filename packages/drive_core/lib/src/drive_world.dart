@@ -5,6 +5,7 @@ import 'package:world_engine/core.dart';
 
 import 'car.dart';
 import 'controls.dart';
+import 'flow.dart';
 import 'hop.dart';
 import 'props.dart';
 import 'traffic/traffic.dart';
@@ -68,8 +69,11 @@ class LayerTracker {
 /// Physics for M0: one car, building colliders, layers, knockable street furniture.
 /// Pure logic (no UI); the app draws from the public state.
 class DriveWorld {
-  DriveWorld({required this.city, required this.spec, required this.tuning}) {
+  DriveWorld({required this.city, required this.spec, required this.tuning}) : flow = FlowState(tuning.flow.rescue) {
     world = World(gravity: Vector2.zero());
+    // Static contacts of the player's car (buildings, bollards) with their normal, every step
+    // (specs/flow.md "Náraz do pevné překážky"); only the car shape has pre-solve events on.
+    world.preSolveCallback = _preSolve;
     zones = Zones(world, tuning);
     layers = LayerTracker(city.graph, tuning.layers);
     spawn(city.startX, city.startY, city.startHeading);
@@ -133,8 +137,52 @@ class DriveWorld {
 
   CarSpec get _bodySpec => bodySpec?.call(spec) ?? spec;
 
+  /// Wall response, trail and rescue (specs/flow.md, F-069).
+  final FlowState flow;
+
+  /// An open context menu that does not pause (specs/flow.md: no automatic rescue then); none in F:
+  /// every menu over the world pauses it, and a shown context button does not block.
+  bool Function() flowBlocked = () => false;
+
+  /// The GPS route still ahead (interleaved metres) or null; the road move faces along it.
+  List<double>? Function() routeAhead = () => null;
+
+  /// Called after every rescue move (automatic or manual) with its kind.
+  void Function(StuckKind kind)? onRescue;
+
+  /// Static contact in the previous step; a head-on bounce needs a new contact.
+  bool wallContact = false;
+
+  /// The head-on bounce (with the 1 m unstick) is armed; see [_wallStep].
+  bool _bounceArmed = true;
+  double _freeT = 0;
+
+  // Velocity before the step (the "v before contact" of specs/flow.md).
+  double _preVx = 0, _preVy = 0;
+
+  /// Normals (from the wall to the car) of this step's static contacts, filled by [_preSolve].
+  final List<double> _contactN = [];
+
+  bool _preSolve(Shape a, Shape b, Vector2 normal) {
+    final s = car.shape;
+    final mine = a == s;
+    if (!mine && b != s) return true;
+    final other = mine ? b : a;
+    if (other.filter.categoryBits & (catBuildings | catZone) == 0) return true;
+    // Box2D's normal points from A to B; n must point from the wall to the car.
+    _contactN.addAll(mine ? [-normal.x, -normal.y] : [normal.x, normal.y]);
+    return true;
+  }
+
   /// Called before every fixed step (the benchmark autopilot sets the input here).
   void Function(double step)? beforeStep;
+
+  /// Called when the car starts touching a building wall, with its speed along the contact normal
+  /// before the step (m/s); world minigames count crashes from it (specs/minigames/drift.md).
+  void Function(double intoMps)? onWall;
+
+  /// Called when a bridge or tunnel rail stops the car, with the speed into the rail (m/s).
+  void Function(double outMps)? onRail;
 
   TuningDrive get _d => tuning.drive;
 
@@ -148,6 +196,10 @@ class DriveWorld {
     layers.reset(x, y);
     car.setLayer(layers.layer);
     _zoneMask();
+    flow.reset();
+    wallContact = false;
+    _bounceArmed = true;
+    _freeT = 0;
   }
 
   /// Switches to another car: a new body with that car's parameters, at rest (specs/cars.md).
@@ -200,7 +252,9 @@ class DriveWorld {
     final body = world.createBody(BodyDef(type: BodyType.static));
     // Pushed parked cars and loose traffic cars stop at walls.
     final filter = Filter(categoryBits: catBuildings, maskBits: catCar | catParked | catTraffic);
-    final material = SurfaceMaterial(friction: _d.buildingFriction, restitution: _d.buildingRestitution);
+    // Static contacts use flow.wall friction and restitution (specs/flow.md), not drive.building_*.
+    final w = tuning.flow.wall;
+    final material = SurfaceMaterial(friction: w.friction, restitution: w.restitution);
     for (final b in c.buildings) {
       if (!b.collide) continue;
       var start = 0;
@@ -245,14 +299,24 @@ class DriveWorld {
     time += step;
     beforeStep?.call(step);
     final flying = hop.airborne;
-    if (flying) {
+    final frozen = flow.animT > 0;
+    if (frozen) {
+      // Rescue animation (specs/flow.md): the car stands where it was put.
+      _hold();
+    } else if (flying) {
       car.fly();
     } else {
       car.drive(input, step, cruise: tuning.speedMps.cruise, top: tuning.speedMps.topDefault);
     }
     traffic?.preStep(step, car);
     trams?.preStep(step, car);
+    final pv = car.velocity;
+    _preVx = pv.x;
+    _preVy = pv.y;
+    _contactN.clear();
     world.step(step, subStepCount: _d.substeps);
+    if (onWall != null) _walls(Vector2(_preVx, _preVy));
+    (double, double)? rail;
     if (flying) {
       // In the air the layer, the zone bit and the hit events stay out (specs/hop.md).
       car.body.angularVelocity = 0;
@@ -260,16 +324,135 @@ class DriveWorld {
       trams?.postStep(car, airborne: true);
       _props(step);
       if (hop.step(step)) _land();
+    } else {
+      layers.update(car.x, car.y);
+      car.setLayer(layers.layer);
+      _zoneMask();
+      traffic?.postStep(car);
+      trams?.postStep(car);
+      if (car.layer != 0) rail = _rails();
+      _props(step);
+      _skidMarks();
+    }
+    if (frozen) {
+      _hold();
+    } else {
+      _wallStep(step, rail);
+    }
+    _rescueStep(step);
+  }
+
+  void _hold() {
+    car.body
+      ..linearVelocity = Vector2.zero()
+      ..angularVelocity = 0;
+  }
+
+  /// Static contact response (specs/flow.md "Náraz do pevné překážky") after the physics step. The
+  /// contact normal is the one the pre-step velocity drives into most (smallest v·n). A slide
+  /// applies in every step of contact; the head-on bounce only on a new contact while armed: it
+  /// disarms itself until the car has been free of static contact for flow.rescue.stuck_time_s or
+  /// was rescued, so a car pushing into a wall comes to rest there (and is rescued) instead of
+  /// bouncing forever.
+  void _wallStep(double step, (double, double)? rail) {
+    final body = car.body;
+    final vx = _preVx, vy = _preVy;
+    var nx = 0.0, ny = 0.0, best = double.infinity;
+    for (var i = 0; i + 1 < _contactN.length; i += 2) {
+      final sx = _contactN[i], sy = _contactN[i + 1];
+      final vn = vx * sx + vy * sy;
+      if (vn < best) {
+        best = vn;
+        nx = sx;
+        ny = sy;
+      }
+    }
+    if (rail != null) {
+      final vn = vx * rail.$1 + vy * rail.$2;
+      if (vn < best) {
+        best = vn;
+        nx = rail.$1;
+        ny = rail.$2;
+      }
+    }
+    final contact = best != double.infinity;
+    final isNew = contact && !wallContact;
+    wallContact = contact;
+    if (!contact) {
+      _freeT += step;
+      if (_freeT >= tuning.flow.rescue.stuckTimeS) _bounceArmed = true;
       return;
     }
-    layers.update(car.x, car.y);
+    _freeT = 0;
+    final r = wallResponse(vx, vy, nx, ny, tuning.flow.wall);
+    if (r == null) return;
+    if (r.slide) {
+      body.linearVelocity = Vector2(r.vx, r.vy);
+      body.setTransform(body.position.clone(), Rot.fromAngle(easeHeading(body.angle, r.tx, r.ty, step)));
+      body.angularVelocity = body.angularVelocity * slideSpinKeep;
+    } else if (isNew && _bounceArmed) {
+      _bounceArmed = false;
+      final p = body.position;
+      body.setTransform(Vector2(p.x + nx * unstickM, p.y + ny * unstickM), body.rotation);
+      body
+        ..linearVelocity = Vector2(r.vx, r.vy)
+        ..angularVelocity = 0;
+    }
+  }
+
+  /// Trail and automatic rescue (specs/flow.md "Vyproštění"); the move itself is [_place].
+  void _rescueStep(double step) {
+    final plan = flow.step(
+      step,
+      time,
+      FlowCar(
+        x: car.x,
+        y: car.y,
+        heading: car.heading,
+        speed: car.speed,
+        braking: input.brake > 0 || input.handbrake,
+        airborne: car.airborne,
+      ),
+      flowBlocked(),
+    );
+    if (plan == null) return;
+    final p = plan.point;
+    if (p == null) {
+      _toRoadSpot();
+    } else {
+      _place(p.x, p.y, p.heading);
+    }
+    onRescue?.call(plan.kind);
+  }
+
+  /// "Na silnici" (button or pause menu, specs/flow.md): the road move, free, counted as stuck.
+  /// Returns false when the city has no kept ground road.
+  bool toRoad() {
+    flow.manual(time, car.x, car.y);
+    final ok = _toRoadSpot();
+    onRescue?.call(StuckKind.button);
+    return ok;
+  }
+
+  bool _toRoadSpot() {
+    final s = roadSpot(city.graph, car.x, car.y, routeAhead(), tuning.layers.searchM);
+    if (s == null) return false;
+    _place(s.x, s.y, s.heading);
+    return true;
+  }
+
+  /// The rescue move: the same body, at rest, on the ground at (x, y).
+  void _place(double x, double y, double heading) {
+    car.body.setTransform(Vector2(x, y), Rot.fromAngle(heading));
+    _hold();
+    car.wheelAngle = 0;
+    layers.reset(x, y);
     car.setLayer(layers.layer);
     _zoneMask();
-    traffic?.postStep(car);
-    trams?.postStep(car);
-    if (car.layer != 0) _rails();
-    _props(step);
-    _skidMarks();
+    _lastSkid = null;
+    wallContact = false;
+    _bounceArmed = true;
+    _freeT = 0;
   }
 
   /// Landing: the mask goes back by layer and zones; a car that lands inside a zone or right on its
@@ -284,22 +467,41 @@ class DriveWorld {
   /// Drops the bollards from the player's mask while its centre is inside a zone (specs/zones.md).
   /// The zone bit only matters on layer 0 (Car.maskBits), so other layers skip the test.
   void _zoneMask() => car.setInsideZone(
-      car.layer == 0 && zones.insideFor(car.x, car.y, car.boundingRadius, wasInside: car.zoneBits == 0));
+    car.layer == 0 && zones.insideFor(car.x, car.y, car.boundingRadius, wasInside: car.zoneBits == 0),
+  );
 
-  /// Keeps the car on bridge decks and in tunnels.
-  void _rails() {
+  /// Begin-contacts of the car with a building: the pre-step velocity along the contact normal.
+  void _walls(Vector2 v0) {
+    final body = car.body;
+    for (final e in world.contactEvents.begin) {
+      final a = e.shapeA.body == body, b = e.shapeB.body == body;
+      if (a == b) continue;
+      final other = a ? e.shapeB : e.shapeA;
+      if (other.filter.categoryBits != catBuildings) continue;
+      final n = e.normal;
+      final into = n.length2 > 0 ? (v0.x * n.x + v0.y * n.y).abs() : v0.length;
+      onWall?.call(into);
+    }
+  }
+
+  /// Keeps the car on bridge decks and in tunnels; returns the rail's normal (towards the road) when
+  /// the car moved into it, a static contact for [_wallStep] (specs/flow.md: bridge rails).
+  (double, double)? _rails() {
     final h = layers.hit;
-    if (h == null || h.dist == 0) return;
+    if (h == null || h.dist == 0) return null;
     final limit = math.max(0.0, h.edge.width / 2 - car.halfWidth * tuning.layers.railMargin);
-    if (h.dist <= limit) return;
+    if (h.dist <= limit) return null;
     final nx = (car.x - h.x) / h.dist, ny = (car.y - h.y) / h.dist;
     final v = car.velocity;
     final out = v.x * nx + v.y * ny;
     car.body.setTransform(Vector2(h.x + nx * limit, h.y + ny * limit), car.body.rotation);
     if (out > 0) {
+      onRail?.call(out);
       final k = out * tuning.layers.railBounce;
       car.body.linearVelocity = Vector2(v.x - nx * k, v.y - ny * k);
+      return (-nx, -ny);
     }
+    return null;
   }
 
   void _props(double step) {

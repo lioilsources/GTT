@@ -1,0 +1,11 @@
+{
+  "module": "flow",
+  "name": "wall_head_on",
+  "car": "sedan_regent",
+  "inputs": [{"t": 0, "throttle": 1, "steer": 0, "brake": 0}],
+  "expect": {
+    "rescue_after_contact_s": {"value": 2.433, "tol": 0.05},
+    "rescue_kind": {"value": 1, "tol": 0},
+    "rewind_m": {"value": 7.946, "tol": 0.05}
+  }
+}

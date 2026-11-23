@@ -134,22 +134,22 @@
   web: done
   checks: {flutter: pass, web: pass}
 - id: F-022
-  name: Feed deck selection (6 cards)
+  name: Feed deck selection (6 cards; v2 prev = back to the previous card)
   level: P0
-  spec: specs/feed.md@1
+  spec: specs/feed.md@2
   vectors: vectors/feed.json
   lead: web
-  flutter: done
+  flutter: todo
   web: done
-  checks: {flutter: pass, web: pass}
+  checks: {flutter: pending, web: pass}
 - id: F-023
-  name: Phone, Map and GPS navigation UI
+  name: Phone, Map and GPS navigation UI (v5 TikTok feed swipe)
   level: P2
-  spec: specs/phone.md@4
+  spec: specs/phone.md@5
   lead: web
-  flutter: done
+  flutter: todo
   web: done
-  checks: {flutter: pass, web: pass}
+  checks: {flutter: pending, web: pass}
 - id: F-016
   name: Traffic and two-phase traffic lights
   level: P1
@@ -336,8 +336,9 @@
   level: P2
   spec: specs/art.md@2
   lead: web
-  flutter: todo
-  web: todo
+  flutter: done
+  web: done
+  checks: {flutter: pass, web: pass}
 
 - id: F-041
   name: Photo spots and the Camera app (frame the view, Passport photo stamps)
@@ -509,8 +510,8 @@
   spec: specs/minigames/kulecnik.md@1
   vectors: vectors/kulecnik.json
   lead: web
-  flutter: todo
-  web: todo
+  flutter: done
+  web: done
 
 - id: F-059
   name: Bowling (M2-S9 batch C)
@@ -518,8 +519,8 @@
   spec: specs/minigames/bowling.md@1
   vectors: vectors/bowling.json
   lead: web
-  flutter: todo
-  web: todo
+  flutter: done
+  web: done
 
 - id: F-060
   name: Minigolf (M2-S9 batch C)
@@ -527,8 +528,8 @@
   spec: specs/minigames/minigolf.md@1
   vectors: vectors/minigolf.json
   lead: web
-  flutter: todo
-  web: todo
+  flutter: done
+  web: done
 
 - id: F-061
   name: Had (M2-S9 batch C)
@@ -536,8 +537,8 @@
   spec: specs/minigames/had.md@1
   vectors: vectors/had.json
   lead: web
-  flutter: todo
-  web: todo
+  flutter: done
+  web: done
 
 - id: F-062
   name: Cihly (M2-S9 batch C)
@@ -545,8 +546,8 @@
   spec: specs/minigames/cihly.md@1
   vectors: vectors/cihly.json
   lead: web
-  flutter: todo
-  web: todo
+  flutter: done
+  web: done
 
 - id: F-063
   name: Bouchni krtka (M2-S9 batch C)
@@ -554,17 +555,17 @@
   spec: specs/minigames/krtek.md@1
   vectors: vectors/krtek.json
   lead: web
-  flutter: todo
-  web: todo
+  flutter: done
+  web: done
 
 - id: F-064
   name: Vzdušný hokej (M2-S9 batch C)
   level: P0
-  spec: specs/minigames/hokej.md@1
+  spec: specs/minigames/hokej.md@2
   vectors: vectors/hokej.json
   lead: web
-  flutter: todo
-  web: todo
+  flutter: done
+  web: done
 
 - id: F-065
   name: Drift zóna (engine drive, world minigame, M2-S9 batch D)
@@ -573,7 +574,7 @@
   vectors: vectors/drift.json
   lead: web
   flutter: todo
-  web: todo
+  web: done
 
 - id: F-066
   name: Sprint A→B (engine drive, world minigame, M2-S9 batch D)
@@ -582,7 +583,7 @@
   vectors: vectors/sprint.json
   lead: web
   flutter: todo
-  web: todo
+  web: done
 
 - id: F-067
   name: Stickball (NYC local, engine sport)
@@ -591,7 +592,7 @@
   vectors: vectors/stickball.json
   lead: web
   flutter: todo
-  web: todo
+  web: done
 
 - id: F-068
   name: Double Dutch (NYC local, first engine rhythm)
@@ -600,16 +601,17 @@
   vectors: vectors/doubledutch.json
   lead: web
   flutter: todo
-  web: todo
+  web: done
 
 - id: F-069
   name: "Nárazy do zdí a vyproštění (M5-S1, FL1)"
   level: P1
-  spec: specs/flow.md@1
+  spec: specs/flow.md@2
   scenarios: scenarios/flow
   lead: web
-  flutter: todo
-  web: todo
+  flutter: done
+  web: done
+  checks: {flutter: pass, web: pass}
 
 - id: F-070
   name: "Svahy a skoky (M5-S6, T1)"
@@ -640,7 +642,7 @@
 - id: F-073
   name: "Les a měkké stromy (M5-S8, FL2)"
   level: P1
-  spec: specs/flow.md@1
+  spec: specs/flow.md@2
   scenarios: scenarios/flow
   lead: web
   flutter: todo

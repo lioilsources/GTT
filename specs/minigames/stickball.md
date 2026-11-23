@@ -127,3 +127,19 @@ Vrací `{by: "ai", op: "pitch", zone, lane, flightMs}`.
 - Chycený odpal nepohne běžci.
 - Meta zdarma s plnými metami = doběh.
 - Homerun s plnými metami = 4 doběhy.
+
+## Upřesnění v1
+
+- Stupeň `−1` (mimo `foulMs`) je vždy strike, bez úprav pásmem a zónou. Po úpravách může `g` klesnout
+  pod 0 → strike. Los `rng.nextInt(100)` jen při `g = 1` **po** úpravách.
+- `foul`, `ball` a `strike` bez konce pálkaře nemění `balls`/`strikes` jinak než podle pravidel
+  a nenulují je; nulování jen po odpalu, autu a metě zdarma. Meta zdarma při `balls = ballsWalk`
+  (rovnost).
+- `hits` počítá jen `single`, `double`, `homer` (chycený odpal ne). Chycený odpal je aut
+  (`outs += 1`), mety beze změny.
+- Nadhoz nastaví `last = ""`. `timeout` je legální i ve fázi `pitch` a mění jen `phase`.
+- `aiAction` mimo `pitch` je chyba.
+- UI (W): čas klepnutí = čas události na hodinách hry (pauza se nepočítá), `errMs = floor(…)`.
+  Klepnutí dřív než `dolet − 2 × foul_ms` se ignoruje; bez klepnutí `take`, jakmile hodiny
+  přejdou `dolet + foul_ms`. Pásmo podle výšky klepnutí (shora vysoko/středně/nízko, mimo pruhy
+  nejbližší).
