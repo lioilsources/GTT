@@ -9,7 +9,7 @@ import '@babylonjs/core/Meshes/thinInstanceMesh';
 
 import { tokens } from '../gen/tokens';
 import type { Tuning } from '../gen/tuning';
-import { Tris, Z } from '../render/geometry';
+import { baseHeight, Tris, Z } from '../render/geometry';
 import { rgba, type Rgba } from '../render/palette';
 import { setCount, setShadowColour } from '../render/shadow';
 import type { Traffic } from '../traffic/traffic';
@@ -164,7 +164,7 @@ export class PoliceView {
     if (sprite) sp.begin('police');
     for (const c of this.traffic.cars) {
       if (!c.police || c.layer < 0 !== inTunnel) continue;
-      const h = (c.layer > 0 ? lift * c.layer : 0) + Z.car;
+      const h = baseHeight(this.traffic.city.terrain, c.x, c.y, c.layer, lift, c.z) + Z.car;
       Matrix.RotationYToRef(-c.heading, this.m);
       this.m.setTranslationFromFloats(c.x, h, c.y);
       this.m.copyToArray(this.carM, 16 * n);

@@ -10,8 +10,14 @@ export class ControlInput {
   handbrake = false;
   /** Asks for top speed instead of cruise. */
   boost = false;
+  /**
+   * Engine off: no automatic throttle and no engine braking (scenario input "coast",
+   * specs/terrain.md "Scénáře"; the game itself never sets it).
+   */
+  coast = false;
 
   reset(): void {
+    this.coast = false;
     this.steer = 0;
     this.throttle = 0;
     this.brake = 0;

@@ -25,7 +25,12 @@ import { propKinds, type PropKind } from '../drive/props';
 import type { ChunkData } from '../world/chunk';
 import { chunkKey, type City } from '../world/model';
 import { cameraHeight, displayHeight, extrusionScale, fovX } from '../world/camera';
-import { bollardPoints, bollardTris, buildRoads, buildingTris, castShadowTris, groundTris, Tris, Z, type RoadChunk } from './geometry';
+import {
+  baseHeight, bollardPoints, bollardTris, buildRoads, buildingTris, castShadowTris, GROUND_ORDER, groundTris, Tris, VEHICLE_LIFT, Z, type RoadChunk,
+} from './geometry';
+import { drapedGroundTris, meshHeight, renderHeights, shadeFactor, terrainTris } from './terrainMesh';
+import { shadowScale, TERRAIN_SPEC } from '../drive/slope';
+import { TERRAIN_N } from '../world/chunk';
 import { cityInks, cityPalette, dayPalette, nightPalette, rgba, type Palette, type Rgba } from './palette';
 import {
   DEPTH_LAYER, DYNAMIC_LAYERS, RISOGRAPH_FRAGMENT, RISOGRAPH_UNIFORMS, WORLD_LAYER, cityFlag, mainCameraMask, risographOn, risographUniforms,
@@ -47,6 +52,14 @@ import { paintHex } from '../cars/shape';
 export class CameraRig {
   x = 0;
   y = 0;
+  /** z_ref (specs/terrain.md): the smoothed ground height under the car; 0 in a flat pack. */
+  z = 0;
+  /** Short zoom-out factor (edge, hard landing) and camera shake offset (m), set by WorldView. */
+  zoom = 1;
+  shakeX = 0;
+  shakeY = 0;
+  /** Ground height for overlay points (labels, icons); null = flat. */
+  zAt: ((x: number, y: number) => number) | null = null;
   /** World heading that points up on screen (radians, 0 = east, CCW). */
   heading = Math.PI / 2;
   viewWidth = 1;
@@ -71,11 +84,21 @@ export class CameraRig {
     this.viewWidth += (target - this.viewWidth) * (1 - Math.exp(-dt * t.camera.zoomFollowRate));
   }
 
-  /** World point → CSS pixels; the ground plane is what fovX frames (DUALSTACK 6.2). */
-  toScreen(wx: number, wy: number, w: number, h: number, t: Tuning): { x: number; y: number } {
-    const ppm = w / this.viewWidth;
+  /**
+   * World point → CSS pixels; the ground plane is what fovX frames (DUALSTACK 6.2). A point at
+   * height wz (default: the ground under it) is scaled about the camera by H / (H − (z − z_ref)).
+   */
+  toScreen(wx: number, wy: number, w: number, h: number, t: Tuning, wz?: number): { x: number; y: number } {
+    const ppm = w / (this.viewWidth * this.zoom);
     const a = Math.PI / 2 - this.heading;
-    const dx = wx - this.x, dy = wy - this.y;
+    let dx = wx - this.x - this.shakeX, dy = wy - this.y - this.shakeY;
+    const z = wz ?? this.zAt?.(wx, wy);
+    if (z !== undefined) {
+      const H = t.camera.topdown.heightM;
+      const k = H / (H - Math.min(Math.max(z - this.z, -2 * H), 0.8 * H));
+      dx *= k;
+      dy *= k;
+    }
     const rx = dx * Math.cos(a) - dy * Math.sin(a);
     const ry = dx * Math.sin(a) + dy * Math.cos(a);
     return { x: w * t.carAnchor.x + rx * ppm, y: h * t.carAnchor.y - ry * ppm };
@@ -88,7 +111,7 @@ export class CameraRig {
 
   /** Radius around the car (metres) that covers the whole screen. */
   visibleRadius(w: number, h: number, t: Tuning): number {
-    const vw = this.viewWidth, vh = (this.viewWidth * h) / w;
+    const vw = this.viewWidth * this.zoom, vh = (vw * h) / w;
     const dx = Math.max(t.carAnchor.x, 1 - t.carAnchor.x) * vw;
     const dy = Math.max(t.carAnchor.y, 1 - t.carAnchor.y) * vh;
     return Math.sqrt(dx * dx + dy * dy);
@@ -127,6 +150,8 @@ export interface RenderStats {
 }
 
 interface ChunkMeshes {
+  /** Terrain mesh (specs/terrain.md), null in a flat pack. */
+  terrain: Mesh | null;
   flat: Mesh | null;
   buildings: Mesh | null;
   /** Building cast shadows (style A, specs/style.md v2), day only. */
@@ -141,6 +166,8 @@ interface ChunkEntry {
 }
 
 interface RoadMeshes {
+  /** The ground roads carry the hillshade of a loaded terrain grid (relief only). */
+  shaded: boolean;
   ground: Mesh | null;
   bridge: Mesh | null;
   tunnel: Mesh | null;
@@ -161,6 +188,15 @@ export class WorldView {
 
   private readonly H: number;
   private readonly flatMat: StandardMaterial;
+  /** Terrain mesh: pushed back in depth so draped ground and roads always win (zOffset). */
+  private readonly terrainMat: StandardMaterial;
+  private readonly tunnelShadeMat: StandardMaterial;
+  /** Relief (specs/terrain.md): the pack has heights. */
+  private readonly relief: boolean;
+  private terrainVersion = -1;
+  private lastFrame = 0;
+  private lastCarX = 0;
+  private lastCarY = 0;
   /** Roads, sidewalks and alleys (with their markings): own material for the wet look (specs/weather.md). */
   private readonly roadMat: StandardMaterial;
   private wet = 1;
@@ -233,7 +269,8 @@ export class WorldView {
     const cam = (this.camera = new TargetCamera('camera', new Vector3(0, this.H, 0), scene));
     cam.fovMode = TargetCamera.FOVMODE_HORIZONTAL_FIXED;
     cam.minZ = this.H * 0.25;
-    cam.maxZ = this.H * 1.5;
+    // Relief: the projection clamp of client F reaches 2H below z_ref (specs/terrain.md).
+    cam.maxZ = this.H * 3;
     // World meshes live on WORLD_LAYER, outside Babylon's default camera mask: without the risograph
     // the main camera must see every layer (NYC, or any city loaded at night).
     cam.layerMask = mainCameraMask(false);
@@ -245,6 +282,16 @@ export class WorldView {
     this.palette = this.dayPalette;
 
     this.flatMat = this.unlit('flat');
+    this.relief = city.terrain.enabled;
+    this.terrainMat = this.unlit('terrain');
+    this.terrainMat.zOffset = 1;
+    this.terrainMat.zOffsetUnits = 4;
+    // Tunnel (specs/terrain.md: the roof is hidden from above): the shade darkens all of the world
+    // drawn so far, then rendering group 1 clears depth and draws the tunnel and the car.
+    this.tunnelShadeMat = this.unlit('tunnel-shade');
+    this.tunnelShadeMat.depthFunction = Constants.ALWAYS;
+    this.tunnelShadeMat.disableDepthWrite = true;
+    this.rig.zAt = this.relief ? (x, y) => city.terrain.terrainAt(x, y) ?? this.rig.z : null;
     this.roadMat = this.unlit('roads');
     this.buildingMat = this.unlit('buildings');
     // Cast shadows must not add up where they overlap (specs/style.md v2): all shadow triangles
@@ -260,7 +307,7 @@ export class WorldView {
     this.depthMat.disableColorWrite = true;
     this.roadGeo = buildRoads(city, tuning, this.palette);
 
-    this.tunnelShade = this.world(this.mesh('tunnel-shade', quadTris(4000, Z.tunnelShade, rgba(tokens.colorWorldTunnelShade)), this.flatMat, true, false), false);
+    this.tunnelShade = this.world(this.mesh('tunnel-shade', quadTris(4000, 0, rgba(tokens.colorWorldTunnelShade)), this.tunnelShadeMat, true, false), false);
     this.tunnelShade.setEnabled(false);
     this.carRoot = new TransformNode('car', scene);
     this.buildCar(drive.car);
@@ -427,18 +474,33 @@ export class WorldView {
   // ---------- chunks
 
   private chunkMeshes(c: ChunkData, key: number): ChunkMeshes {
+    const relief = this.relief && !!c.terrain;
     const flat = new Tris();
-    groundTris(c, this.palette, flat);
+    const ter = new Tris();
+    if (relief) {
+      const hs = renderHeights(c, this.city.chunkM, this.tuning.terrain.pipeline.underwaterM);
+      terrainTris(c, this.city.chunkM, this.palette.land, ter, hs);
+      drapedGroundTris(c, this.palette, this.city.chunkM, flat, GROUND_ORDER, hs);
+    } else {
+      groundTris(c, this.palette, flat);
+    }
     const b = new Tris();
-    buildingTris(c, this.palette, this.tuning, b);
+    buildingTris(c, this.palette, this.tuning, b, this.relief);
     const sh = new Tris();
-    if (cityFlag(this.tuning.style.castShadow, this.city.id, this.palette.night)) castShadowTris(c, this.palette, this.tuning, sh);
+    // Cast shadows lie on the terrain: its height (own grid as fallback at the chunk's edge).
+    const step = this.city.chunkM / (TERRAIN_N - 1);
+    const own = c.terrain;
+    const zAt = relief && own
+      ? (x: number, y: number): number => this.city.terrain.terrainAt(x, y) ?? meshHeight(own, (x - c.x * this.city.chunkM) / step, (y - c.y * this.city.chunkM) / step)
+      : null;
+    if (cityFlag(this.tuning.style.castShadow, this.city.id, this.palette.night)) castShadowTris(c, this.palette, this.tuning, sh, zAt);
     let shadows: Mesh | null = null;
     if (!sh.empty) {
       shadows = this.world(this.mesh(`shadows-${key}`, sh, this.shadowMat, true), false);
       shadows.alphaIndex = 0;
     }
     return {
+      terrain: ter.empty ? null : this.world(this.mesh(`terrain-${key}`, ter, this.terrainMat), false),
       flat: flat.empty ? null : this.world(this.mesh(`ground-${key}`, flat, this.flatMat), false),
       buildings: b.empty ? null : this.world(this.mesh(`buildings-${key}`, b, this.buildingMat), true),
       shadows,
@@ -463,6 +525,7 @@ export class WorldView {
   }
 
   private disposeChunk(m: ChunkMeshes): void {
+    m.terrain?.dispose();
     m.flat?.dispose();
     m.buildings?.dispose();
     m.shadows?.dispose();
@@ -483,13 +546,23 @@ export class WorldView {
     for (let cx = x0; cx <= x1; cx++) {
       for (let cy = y0; cy <= y1; cy++) {
         const k = chunkKey(cx, cy);
-        if (this.roads.has(k)) continue;
+        const have = this.roads.get(k);
+        // Relief: ground roads get the hillshade once the chunk's terrain grid is there.
+        if (have && (have.shaded || !this.relief || !this.city.terrain.hasGrid(cx, cy))) continue;
         const g = this.roadGeo.get(k);
+        if (have) {
+          have.ground?.dispose();
+          have.ground = this.roadGround(k, g);
+          have.shaded = true;
+          continue;
+        }
         const m: RoadMeshes = {
-          ground: g && !g.ground.empty ? this.world(this.mesh(`roads-${k}`, g.ground, this.roadMat), false) : null,
+          shaded: this.relief && this.city.terrain.hasGrid(cx, cy),
+          ground: this.roadGround(k, g),
           bridge: g && !g.bridge.empty ? this.world(this.mesh(`bridges-${k}`, g.bridge, this.roadMat), true) : null,
           tunnel: g && !g.tunnel.empty ? this.world(this.mesh(`tunnels-${k}`, g.tunnel, this.roadMat), false) : null,
         };
+        if (m.tunnel) m.tunnel.renderingGroupId = 1;
         m.tunnel?.setEnabled(this.inTunnel);
         this.roads.set(k, m);
       }
@@ -503,6 +576,23 @@ export class WorldView {
         this.roads.delete(k);
       }
     }
+  }
+
+  /** Ground roads of one chunk key; on relief their colours × the terrain's hillshade. */
+  private roadGround(k: number, g: RoadChunk | undefined): Mesh | null {
+    if (!g || g.ground.empty) return null;
+    const m = this.world(this.mesh(`roads-${k}`, g.ground, this.roadMat), false);
+    if (!this.relief) return m;
+    const pos = g.ground.pos, col = new Float32Array(g.ground.col);
+    const ter = this.city.terrain;
+    for (let i = 0, v = 0; i < pos.length; i += 3, v += 4) {
+      const f = shadeFactor(ter.shadeAt(pos[i]!, pos[i + 2]!));
+      col[v] = Math.min(1, col[v]! * f);
+      col[v + 1] = Math.min(1, col[v + 1]! * f);
+      col[v + 2] = Math.min(1, col[v + 2]! * f);
+    }
+    m.setVerticesData(VertexBuffer.ColorKind, col, false);
+    return m;
   }
 
   // ---------- car
@@ -618,8 +708,10 @@ export class WorldView {
     const sp = this.sprites;
     const lookOf = looks ? (p: ParkedCar): Look | null => looks.parked(p) : null;
     if (sp && lookOf) sp.requireDecals(f.parked.map((p) => [p.carId, lookOf(p)?.decal ?? 0] as [string, number]));
+    // Parked cars stand on the ground layer; on relief each mesh piece is moved to its car's height.
     const t = parkedTris(f.parked, f.specs, this.tuning.carScale, this.tuning.drive.axleOffset, Z.car, this.palette.shadow,
-      lookOf, glow, sp ? (p, look) => sp.has(p.carId, look?.decal ?? 0) : null);
+      lookOf, glow, sp ? (p, look) => sp.has(p.carId, look?.decal ?? 0) : null,
+      this.relief ? (p) => baseHeight(this.city.terrain, p.x, p.y, 0, 0) : null);
     this.parkedMesh = t.empty ? null : this.mesh('parked-cars', t, this.flatMat, true, false);
     if (!sp) return;
     // Parked sprites: straight wheels, no lights (specs/cars.md "bez světlometů").
@@ -630,7 +722,7 @@ export class WorldView {
       if (!s || !sp.has(p.carId, decal)) continue;
       const px = sp.size(p.carId)!;
       Matrix.RotationYToRef(-p.heading, m);
-      m.setTranslationFromFloats(p.x, Z.car, p.y);
+      m.setTranslationFromFloats(p.x, baseHeight(this.city.terrain, p.x, p.y, 0, 0) + Z.car, p.y);
       const hl = (s.length_m * scale) / 2, hw = (s.width_m * scale) / 2;
       sp.add('parked', {
         id: p.carId, decal, world: m, len: (px.h / 32) * scale, wid: (px.w / 32) * scale, hl, hw, axle: hl * this.tuning.drive.axleOffset,
@@ -652,7 +744,9 @@ export class WorldView {
   }
 
   private updateCar(car: Car): void {
-    const lift = car.layer > 0 ? this.tuning.layers.deckLiftM * car.layer : 0;
+    // Relief: the body at z (specs/terrain.md "Skok"); flat pack: bridges at deck_lift_m.
+    const j = this.drive.jump;
+    const lift = this.relief ? j.z + VEHICLE_LIFT : car.layer > 0 ? this.tuning.layers.deckLiftM * car.layer : 0;
     this.carRoot.position.set(car.x, lift + Z.car, car.y);
     // Babylon rotates about +Y clockwise seen from above; world headings are CCW.
     this.carRoot.rotation.y = -car.heading;
@@ -709,7 +803,16 @@ export class WorldView {
     const s = extrusionScale(arc, this.tuning);
     p.lift.position.y = displayHeight(s, this.H);
     p.lift.scaling.z = Math.abs(flip);
-    p.shadow.scaling.x = p.shadow.scaling.z = 1 / s;
+    // Terrain jump (specs/terrain.md): the shadow stays on the ground under the body, shrinks by
+    // 1 / (1 + gap / 4) and slides away from the sun with the gap.
+    const gap = this.relief ? this.drive.jump.gap : 0;
+    const k = shadowScale(gap);
+    p.shadow.scaling.x = p.shadow.scaling.z = k / s;
+    const sl = Math.hypot(this.palette.sunX, this.palette.sunY);
+    const ox = sl > 1e-6 ? (-this.palette.sunX / sl) * gap : 0, oy = sl > 1e-6 ? (-this.palette.sunY / sl) * gap : 0;
+    const hd = this.drive.car.heading, c = Math.cos(hd), sn = Math.sin(hd);
+    // Local frame of the car (Babylon x = forward, z = left as world y rotated by −heading).
+    p.shadow.position.set(ox * c + oy * sn, -gap, -ox * sn + oy * c);
     const upside = flip < 0;
     if (p.top.isEnabled(false) === upside) p.top.setEnabled(!upside);
     if (p.under.isEnabled(false) !== upside) p.under.setEnabled(upside);
@@ -757,10 +860,11 @@ export class WorldView {
         if (!list) byKind.set(p.kind, (list = []));
         const x = p.x + p.ox, y = p.y + p.oy;
         const s = p.radius;
-        Matrix.ComposeToRef(new Vector3(s, 1, s), rotY(-(p.angle + p.rot)), new Vector3(x, Z.props, y), m);
+        const zb = this.relief ? baseHeight(this.city.terrain, p.x, p.y, 0, 0) : 0;
+        Matrix.ComposeToRef(new Vector3(s, 1, s), rotY(-(p.angle + p.rot)), new Vector3(x, zb + Z.props, y), m);
         list.push(...m.m);
         if (p.kind === 'lamp' && !p.knocked) {
-          Matrix.ComposeToRef(new Vector3(s, 1, s), rotY(0), new Vector3(x, Z.props - 0.01, y), m);
+          Matrix.ComposeToRef(new Vector3(s, 1, s), rotY(0), new Vector3(x, zb + Z.props - 0.01, y), m);
           glow.push(...m.m);
         }
       }
@@ -801,6 +905,7 @@ export class WorldView {
           buf[o + 5] = h;
           buf[o + 10] = r;
           buf[o + 12] = p[i]!;
+          buf[o + 13] = this.relief ? baseHeight(this.city.terrain, p[i]!, p[i + 1]!, 0, 0) : 0;
           buf[o + 14] = p[i + 1]!;
           buf[o + 15] = 1;
         }
@@ -825,7 +930,8 @@ export class WorldView {
       const l = Math.sqrt(dx * dx + dy * dy);
       if (l < 1e-3 || l > 30) continue; // teleports
       const nx = (-dy / l) * hw, ny = (dx / l) * hw;
-      out.set([x0 + nx, Z.skids, y0 + ny, x1 + nx, Z.skids, y1 + ny, x1 - nx, Z.skids, y1 - ny, x0 - nx, Z.skids, y0 - ny], 12 * i);
+      const z = Z.skids + (this.relief ? (d.skidZ[i] ?? 0) + VEHICLE_LIFT - 0.1 : 0);
+      out.set([x0 + nx, z, y0 + ny, x1 + nx, z, y1 + ny, x1 - nx, z, y1 - ny, x0 - nx, z, y0 - ny], 12 * i);
     }
     this.skidMesh.updateVerticesData(VertexBuffer.PositionKind, out, false, false);
   }
@@ -835,10 +941,12 @@ export class WorldView {
   /** Off-axis projection: the car sits at car_anchor without moving the camera (DUALSTACK 6.2). */
   private updateCamera(): void {
     const cam = this.camera, rig = this.rig, t = this.tuning;
-    cam.position.set(rig.x, this.H, rig.y);
+    // Straight above the car at z_ref + H (specs/terrain.md), with the shake offset.
+    const cx = rig.x + rig.shakeX, cy = rig.y + rig.shakeY;
+    cam.position.set(cx, rig.z + this.H, cy);
     cam.upVector.set(Math.cos(rig.heading), 0, Math.sin(rig.heading));
-    cam.setTarget(new Vector3(rig.x, 0, rig.y));
-    cam.fov = fovX(rig.viewWidth, this.H);
+    cam.setTarget(new Vector3(cx, rig.z, cy));
+    cam.fov = fovX(rig.viewWidth * rig.zoom, this.H);
     cam.unfreezeProjectionMatrix();
     const base = cam.getProjectionMatrix(true);
     this.projArr.set(base.m);
@@ -850,23 +958,73 @@ export class WorldView {
       const top = this.topCamera;
       top.position.copyFrom(cam.position);
       top.upVector.copyFrom(cam.upVector);
-      top.setTarget(new Vector3(rig.x, 0, rig.y));
+      top.setTarget(new Vector3(cx, rig.z, cy));
       top.fov = cam.fov;
       top.freezeProjectionMatrix(this.proj);
+    }
+  }
+
+  /**
+   * Relief camera (specs/terrain.md): z_ref follows the ground under the car at rate 2/s; a short
+   * zoom-out (× 1.15 for 0.4 s) at the start of a jump and on a hard landing, which also shakes.
+   */
+  private updateRelief(): void {
+    const now = performance.now();
+    const dt = this.lastFrame > 0 ? Math.min((now - this.lastFrame) / 1000, 0.1) : 0;
+    this.lastFrame = now;
+    const rig = this.rig, d = this.drive;
+    if (!this.relief) return;
+    const g = d.jump.z - d.jump.gap;
+    // A teleport (respawn, rescue, metro) snaps z_ref instead of gliding.
+    const moved = Math.hypot(d.car.x - this.lastCarX, d.car.y - this.lastCarY) > 60;
+    this.lastCarX = d.car.x;
+    this.lastCarY = d.car.y;
+    rig.z = dt === 0 || moved ? g : rig.z + (g - rig.z) * (1 - Math.exp(-TERRAIN_SPEC.zRefRate * dt));
+    const pulse = (t0: number): number => {
+      const a = (d.time - t0) / TERRAIN_SPEC.zoomOutS;
+      return a >= 0 && a < 1 ? Math.sin(Math.PI * a) : 0;
+    };
+    rig.zoom = 1 + (TERRAIN_SPEC.zoomOut - 1) * Math.max(pulse(d.takeoffAt), pulse(d.hardLandingAt));
+    const sh = d.time - d.hardLandingAt;
+    if (sh >= 0 && sh < TERRAIN_SPEC.shakeS) {
+      const amp = 0.8 * (1 - sh / TERRAIN_SPEC.shakeS);
+      rig.shakeX = amp * Math.sin(now * 0.09);
+      rig.shakeY = amp * Math.cos(now * 0.11);
+    } else {
+      rig.shakeX = rig.shakeY = 0;
+    }
+  }
+
+  /** Snaps z_ref to the ground under the car (teleports). */
+  snapRelief(): void {
+    this.rig.z = this.drive.jump.z - this.drive.jump.gap;
+  }
+
+  /** In a tunnel, everything but the world layer draws in group 1 (after the depth clear). */
+  private tunnelGroups(tunnel: boolean): void {
+    for (const m of this.scene.meshes) {
+      if ((m.layerMask & WORLD_LAYER) !== 0 && (m.layerMask & ~(WORLD_LAYER | DEPTH_LAYER)) === 0) continue;
+      if (tunnel ? m.renderingGroupId === 0 : m.renderingGroupId === 1) m.renderingGroupId = tunnel ? 1 : 0;
     }
   }
 
   render(): void {
     const car = this.drive.car;
     const tunnel = car.layer < 0;
+    this.updateRelief();
     if (tunnel !== this.inTunnel) {
       this.inTunnel = tunnel;
       this.tunnelShade.setEnabled(tunnel);
       for (const r of this.roads.values()) r.tunnel?.setEnabled(tunnel);
       this.buildingMat.alpha = tunnel ? 90 / 255 : 1;
       this.updateTopMask();
+      if (!tunnel) this.tunnelGroups(false);
     }
-    if (tunnel) this.tunnelShade.position.set(this.rig.x, 0, this.rig.y);
+    if (tunnel) {
+      // Above everything around (sorted last among the alpha meshes), drawn with depth ALWAYS.
+      this.tunnelShade.position.set(this.rig.x, this.rig.z + this.H * 0.5, this.rig.y);
+      this.tunnelGroups(true);
+    }
     this.updateRoads();
     this.updateCamera();
     this.updateCar(car);
