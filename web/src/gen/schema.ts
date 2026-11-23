@@ -111,11 +111,13 @@ export interface SaveSettings {
   night: boolean;
 }
 
-/** content/bench/<city>.json: the autopilot route of the D1 measurement (specs/bench.md). Intersections are named by two streets; each leg follows only the listed streets. */
+/** content/bench/<city>.json: the autopilot route of the D1 measurement; content/bench/<city>-<id>.json: a further route, e.g. the Prague hills (specs/bench.md v2). Intersections are named by two streets; each leg follows only the listed streets. */
 export interface BenchRoute {
   id: string;
   city: string;
   description?: string;
+  /** bench v2: legs follow one-way streets only in their allowed direction (default false, the NYC benchmark ignores them). */
+  oneway?: boolean;
   start: Crossing;
   legs: BenchLeg[];
 }
