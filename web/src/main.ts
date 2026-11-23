@@ -33,6 +33,8 @@ import { installLoop } from './loop';
 import { opponentIndex } from './loop/logic';
 import { loadArt } from './art';
 import { installTaxi } from './minigames/taxi';
+import { installDrift } from './minigames/drift';
+import { installSprint } from './minigames/sprint';
 import { installTravel } from './travel';
 import { installFastTravel } from './travel/fastTravel';
 import { cityUrl, pickStartCity, readLastCity, writeLastCity } from './travel/cities';
@@ -299,6 +301,11 @@ async function main(): Promise<void> {
   // Taxi: a world minigame started by the loop at the taxi stand (specs/minigames/taxi.md).
   const taxi = installTaxi({ city, tuning, t, drive, fleet, phone, rig: view.rig, cars, hud: $('hud'), onCarChanged: () => view.carChanged() });
   loop.worldGames.taxi = taxi;
+  // Drift zone and Sprint A→B: world minigames in the player's own car (specs/minigames/drift.md, sprint.md).
+  const drift = installDrift({ city, tuning, t, drive, fleet, rig: view.rig, hud: $('hud') });
+  loop.worldGames.drift = drift;
+  const sprint = installSprint({ city, tuning, t, drive, fleet, phone, rig: view.rig, hud: $('hud'), onCarChanged: () => view.carChanged() });
+  loop.worldGames.sprint = sprint;
   // Travel app: switch cities from the phone (specs/cities.md).
   // Ringing phone booths (specs/booths.md): offer a minigame with a cash bonus.
   const booths = installBooths({
@@ -354,6 +361,8 @@ async function main(): Promise<void> {
       applyKeys(keys, input);
       // Too many beers (specs/shops.md "Piva"): input ignored, the car brakes to a stop.
       shops.brake();
+      // Sprint countdown: the car stands on the start line.
+      sprint.brake();
     }
     // Ticks with the game clock; the grip multiplier goes into this frame's drive step.
     weather.update(stepDt, dt);
@@ -361,6 +370,8 @@ async function main(): Promise<void> {
     police.update(stepDt, dt);
     phone.update(dt);
     taxi.update(stepDt);
+    drift.update(stepDt);
+    sprint.update(stepDt);
     booths.update(stepDt, dt);
     shops.update(stepDt, dt);
     const c = drive.car;
@@ -510,6 +521,8 @@ async function main(): Promise<void> {
     fastTravel.draw(ctx, size.w, size.h);
     phone.draw(ctx, size.w, size.h);
     taxi.draw(ctx, size.w, size.h);
+    drift.draw(ctx, size.w, size.h);
+    sprint.draw(ctx, size.w, size.h);
     drawPedBubbles(ctx, peds, rig, size, tuning, t('pedestrianBubble'));
     // Camera icons, crosshair, frame and flash above the world labels (specs/photo.md).
     photo.draw(ctx, size.w, size.h);
@@ -564,7 +577,7 @@ async function main(): Promise<void> {
 
   if (import.meta.env.DEV || params.has('debug')) {
     (window as unknown as Record<string, unknown>)['metro'] = {
-      engine, view, drive, fleet, city, tuning, frameTimes, pilot, bench, peds, phone, passport, loop, taxi, police: police.police, booths, fastTravel, photo, shops, weather, garage, carsHud,
+      engine, view, drive, fleet, city, tuning, frameTimes, pilot, bench, peds, phone, passport, loop, taxi, drift, sprint, police: police.police, booths, fastTravel, photo, shops, weather, garage, carsHud,
       timing: () => ({ firstFrameMs, loadMs }),
     };
   }

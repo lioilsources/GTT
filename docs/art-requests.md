@@ -206,3 +206,8 @@ vzorem). Do té doby klient kreslí ikonu a jméno.
   `content/cities/tokyo/landmarks.yaml`, bez nápisů (zbylé falešné znaky na štítech a lampionech přebarveny plochou
   barvou), `assets/cities/tokyo/` asphalt, sidewalk_tile, roof (procedurálně), `assets/styleboard/tokyo/`
   (2× křižovatka v pohledu 3/4 a 1× pohlednice, jen reference palety).
+- **Auta, dávka 1**, 23. 11. 2026: `assets/cars/<id>/{body,paint_mask,wheel,lights}.png` pro m0_coupe,
+  taxi_metro, hatch_pip, sedan_harbor, sedan_crown, van_courier, mini_pebble, pickup_hauler, muscle_brute,
+  traffic_sedan a police_patrol (bez masky), procedurálně (`tools/art/cars_proc.py`), plátna podle tabulky.
+  Lidovka: k hotovému body.png lak převeden na šedou, výřezy pro kola, doplněny maska, kolo a světla
+  (`tools/art/post_lidovka.py`).
