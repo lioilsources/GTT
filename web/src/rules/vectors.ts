@@ -28,6 +28,10 @@ import { HadRules } from '../minigames/had/rules';
 import { CihlyRules } from '../minigames/cihly/rules';
 import { KrtekRules } from '../minigames/krtek/rules';
 import { HokejRules } from '../minigames/hokej/rules';
+import { DriftRules } from '../minigames/drift/rules';
+import { SprintRules } from '../minigames/sprint/rules';
+import { StickballRules } from '../minigames/stickball/rules';
+import { DoubledutchRules } from '../minigames/doubledutch/rules';
 import { RouteRules } from '../drive/gps';
 import { FeedRules } from '../phone/feed';
 import { PassportRules } from '../passport/rules';
@@ -102,6 +106,10 @@ export const rulesModules: Record<string, () => AnyRules> = {
   cihly: () => new CihlyRules() as unknown as AnyRules,
   krtek: () => new KrtekRules() as unknown as AnyRules,
   hokej: () => new HokejRules() as unknown as AnyRules,
+  drift: () => new DriftRules() as unknown as AnyRules,
+  sprint: () => new SprintRules() as unknown as AnyRules,
+  stickball: () => new StickballRules() as unknown as AnyRules,
+  doubledutch: () => new DoubledutchRules() as unknown as AnyRules,
   passport: () => new PassportRules() as unknown as AnyRules,
   dialogue: () => new DialogueRules() as unknown as AnyRules,
   cars: () => new CarsRules() as unknown as AnyRules,

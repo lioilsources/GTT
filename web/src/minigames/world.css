@@ -1,0 +1,55 @@
+/* World minigame HUD (Drift zone, Sprint A→B: specs/minigames/drift.md, sprint.md); colours from design/tokens.json. */
+.world-mg-hud {
+  position: absolute;
+  top: calc(env(safe-area-inset-top) + 140px);
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  pointer-events: auto;
+}
+.world-mg-hud[hidden],
+.world-mg-flash[hidden] {
+  display: none;
+}
+.world-mg-hud .pill {
+  font-size: var(--font-hud);
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+#drift-hud .pill.chain {
+  color: var(--color-drift-chain);
+}
+#drift-hud .pill.low {
+  color: var(--color-drift-low);
+}
+.world-mg-flash {
+  position: fixed;
+  left: 50%;
+  top: 30%;
+  transform: translateX(-50%);
+  max-width: calc(100% - 32px);
+  white-space: normal;
+  text-align: center;
+  font-size: var(--font-hud);
+  font-weight: 800;
+  z-index: 25;
+}
+#drift-flash.bank {
+  color: var(--color-drift-bank);
+}
+#sprint-flash.bank {
+  color: var(--color-sprint-ahead);
+}
+#sprint-flash.low {
+  color: var(--color-sprint-behind);
+}
+.world-gallery {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  padding: var(--space-lg);
+  text-align: center;
+}
