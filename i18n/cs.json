@@ -690,5 +690,6 @@
   "testDriveEnd": "Ukončit zkušební jízdu",
   "testDriveOver": "Zkušební jízda skončila, sedíš zase ve svém autě",
   "testDriveNoTaxi": "Při zkušební jízdě taxi směnu nevezmeš",
-  "debugCash": "+{amount}"
+  "debugCash": "+{amount}",
+  "garageOpen": "Otevřít garáž"
 }
