@@ -10,6 +10,13 @@ import { TaxiRules } from '../minigames/taxi/rules';
 import { KulickyRules } from '../minigames/kulicky/rules';
 import { CaraRules } from '../minigames/cara/rules';
 import { NohejbalRules } from '../minigames/nohejbal/rules';
+import { PiskvorkyRules } from '../minigames/piskvorky/rules';
+import { CtyriRules } from '../minigames/ctyri/rules';
+import { MlynRules } from '../minigames/mlyn/rules';
+import { ReversiRules } from '../minigames/reversi/rules';
+import { LodeRules } from '../minigames/lode/rules';
+import { PosuvneRules } from '../minigames/posuvne/rules';
+import { KvizRules } from '../minigames/kviz/rules';
 import { RouteRules } from '../drive/gps';
 import { FeedRules } from '../phone/feed';
 import { PassportRules } from '../passport/rules';
@@ -66,6 +73,13 @@ export const rulesModules: Record<string, () => AnyRules> = {
   kulicky: () => new KulickyRules() as unknown as AnyRules,
   cara: () => new CaraRules() as unknown as AnyRules,
   nohejbal: () => new NohejbalRules() as unknown as AnyRules,
+  piskvorky: () => new PiskvorkyRules() as unknown as AnyRules,
+  ctyri: () => new CtyriRules() as unknown as AnyRules,
+  mlyn: () => new MlynRules() as unknown as AnyRules,
+  reversi: () => new ReversiRules() as unknown as AnyRules,
+  lode: () => new LodeRules() as unknown as AnyRules,
+  posuvne: () => new PosuvneRules() as unknown as AnyRules,
+  kviz: () => new KvizRules() as unknown as AnyRules,
   passport: () => new PassportRules() as unknown as AnyRules,
   dialogue: () => new DialogueRules() as unknown as AnyRules,
   cars: () => new CarsRules() as unknown as AnyRules,
