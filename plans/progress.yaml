@@ -211,17 +211,20 @@ items:
      evidence: "W hotovo: PR #218 (web/nature-n1), scénáře scenarios/flow/forest_200, tree_head_on ve W v toleranci (#219); F chybí: měkké stromy, les (grip/speed) v drive_core (F-073 flutter todo, L3 po vystřelení)"}
   - {id: M5-S9, milestone: M5, name: "T2 + N2 šikmý pohled ve W (F-074)", size: L, status: čeká na Ol1na,
      started: 2026-11-23T10:10, done: 2026-11-23T11:05, commit: 96cad26, evidence: "PR #250 (web/oblique-t2), #224: ?camera=chase nebo tlačítko ◎/◢; headless Metal 430×860 Praha Nerudova shora 47 draw / 81k tri, šikmo 60 / 111k, p50 16,7 ms, p95 16,9 ms, přepnutí max 18,6 ms; test/chase.test.ts; čeká na 60 fps na telefonech a Ol1nův pohled"}
-  - {id: M5-S10, milestone: M5, name: "T3 ladění kopců Prahy, minihry z reliéfu, nejprudší ulice", size: M, status: todo}
+  - {id: M5-S10, milestone: M5, name: "T3 ladění kopců Prahy, minihry z reliéfu, nejprudší ulice", size: M, status: "čeká na Ol1na",
+     started: 2026-11-23T10:44, done: 2026-11-23T11:27, commit: ea2e58b, evidence: "ladění kopců = L-S1 (docs/prague-hills.md, web/test/pragueHills.test.ts, panel Ladění s ?debug); minihry z reliéfu nejsou součástí (Prompts/05 L-S1)"}
   - {id: M5-S11, milestone: M5, name: "metro stuckmap a počítadlo zaseknutí", size: S, status: todo}
   - {id: M5-A1, milestone: M5, name: "citypack validate nyc, prague, tokyo s výškami a přírodou", size: S, status: todo}
   - {id: M5-A2, milestone: M5, name: "scénáře terénu, přírody a flow v toleranci v obou klientech", size: M, status: todo}
   - {id: M5-A3, milestone: M5, name: "60 fps s reliéfem a stromy na obou telefonech (šikmo ve W)", size: S, status: todo}
   - {id: M5-A4, milestone: M5, name: "nejvýš 1 zaseknutí za 10 minut jízdy (dogfooding Ol1n)", size: S, status: todo}
-  - {id: M5-A5, milestone: M5, name: "Ol1n potvrdí kopce Prahy (Petřín, Letná, Hradčany)", size: S, status: todo}
+  - {id: M5-A5, milestone: M5, name: "Ol1n potvrdí kopce Prahy (Petřín, Letná, Hradčany)", size: S, status: "čeká na Ol1na",
+     started: 2026-11-23T10:44, done: 2026-11-23T11:27, commit: ea2e58b, evidence: "docs/prague-hills.md: tři odkazy ?city=prague&route=<id> a co sledovat; potvrzuje Ol1n na telefonu"}
   - {id: M5-A6, milestone: M5, name: "slepý test: řeka a park ze snímku do 2 s", size: S, status: todo}
 
   # ---------- L – Vystřelení (Prompts/05, plans/L_LAUNCH.md)
-  - {id: L-S1, milestone: L, name: "T3 ladění kopců Prahy: trasy Petřín, Letná, Hradčany, docs/prague-hills.md", size: M, status: todo}
+  - {id: L-S1, milestone: L, name: "T3 ladění kopců Prahy: trasy Petřín, Letná, Hradčany, docs/prague-hills.md", size: M, status: "čeká na Ol1na",
+     started: 2026-11-23T10:44, done: 2026-11-23T11:27, commit: ea2e58b, evidence: "web/test/pragueHills.test.ts: autopilot projede hradcany, petrin, letna s 0 vyproštěními, 0 přeskoky a 0 pády do vody (PR #252, #260)"}
   - {id: L-S2, milestone: L, name: "README podle skutečnosti, status blok z metro progress, --check v CI", size: S, status: wip, started: 2026-11-23T10:39, evidence: "README: odkaz na Pages, parametry URL, R7/R10, Jak přidat město, licence; blok <!-- metro:status --> z metro progress, metro progress --check v shared.yml; obrázek čeká na og.png z L-S9"}
   - {id: L-S3, milestone: L, name: "počítadla skitů a miniher v metro progress + test", size: S, status: hotovo, started: 2026-11-23T10:36, done: 2026-11-23T10:45, evidence: "minihry z content/minigames/catalog.yaml (33), skity z content/npc/skits (50); TestCountContentMinigamesAndSkits v tools/metro/internal/progress"}
   - {id: L-S4, milestone: L, name: "tracker dorovnat: důkazy rozdělaných položek, progress.log, padající test", size: S, status: hotovo, started: 2026-11-23T10:43, done: 2026-11-23T11:08, evidence: "(a) důkazy M2-S9D/E a M5-S6…S8 doplnila session MacBook; (b) plans/progress.log doplněn z gitu do 10:41; (c) metro progress --tests počítá všechny balíčky s test/ a vypisuje padající testy: 1787 / 1787. Lokální pády app/test byly zastaralé AppLocalizations (flutter gen-l10n), ne chyba kódu"}

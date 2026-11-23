@@ -45,7 +45,8 @@ Všude:
   tvrdý dopad zatřese kamerou a ubere rychlost.
 - **Kamera shora** – kopec se při projetí „nafukuje“ k autu (perspektiva podle výšky), budovy
   na svahu stojí na terénu, ne ve vzduchu ani pod ním.
-- Šikmý pohled zatím na `main` není (F-074); až bude, stejné odkazy s `&camera=chase`.
+- **Šikmý pohled** (jen W, F-074): přidej k odkazu `&camera=chase` nebo přepni kulatým tlačítkem
+  v HUD; kopce jsou vidět z boku, budovy mezi kamerou a autem zprůhlední.
 
 Po trasách:
 - **Hradčany** – Nerudova a Úvoz jsou úzké, horní Nerudova a dolní Úvoz jednosměrně do kopce; sleduj, jestli auto do kopce
@@ -69,13 +70,14 @@ Posuvníky mění klíče `content/tuning.yaml` hned (klient je čte každý kro
 | `slope_physics.hard_landing` | od jaké rychlosti dopadu je dopad tvrdý (ztráta rychlosti, otřes) |
 | `speed_mps.cruise` | cestovní rychlost s automatickým plynem (do kopce a z kopce) |
 | `camera.topdown.height_m` | výška kamery = síla perspektivy kopců shora (nižší = výraznější reliéf) |
+| `camera.chase.distance_m`, `height_m`, `look_ahead_m`, `fov_deg` | šikmý pohled: vzdálenost a výška kamery za autem, kam míří, zorný úhel |
 | `camera.heading_follow_rate` | jak rychle se mapa natáčí za autem v serpentinách |
 | `view_width_m.slow`, `view_width_m.fast` | přiblížení podle rychlosti |
 
 Nejdou ladit za jízdy (jsou v balíčku, změna = `citypack build prague` a nový `packs.lock`):
 `terrain.exaggeration` (převýšení, dnes 2,0), `terrain.max_grade` (strop sklonu podle třídy
 silnice), `terrain.pipeline.shade_strength` (síla stínování) a `terrain.pipeline.sun`.
-Kamera šikmého pohledu `camera.chase.*` platí až s F-074. Ve F jsou stejné klíče svahů zatím
+Ve F jsou stejné klíče svahů zatím
 mimo ladicí panel (F-070 ve F po vystřelení, L3).
 
 ## Automatická kontrola
@@ -83,4 +85,16 @@ mimo ladicí panel (F-070 ve F po vystřelení, L3).
 `web/test/pragueHills.test.ts` pustí autopilota (`specs/bench.md`) po všech třech trasách na
 skutečném balíčku bez vykreslování a hlídá 0 vyproštění (`specs/flow.md`), 0 přeskoků autopilota
 a 0 pádů do vody; čísla vypíše s `HILLS_REPORT=<soubor> npx vitest run test/pragueHills.test.ts`.
+
+Výsledek 2026-11-23 (`main` s cruise-v2, bridge-hotfix a šikmým pohledem, `speed_mps.cruise` 25,0):
+
+| Trasa | Čas | Rychlost min / max | Nejprudší sklon pod autem (herní / skutečný) | Stoupání | Skoky | Vyproštění, přeskoky, voda |
+|---|---|---|---|---|---|---|
+| `hradcany` | 41,5 s | 10,0 / 25,0 m/s | 22,4 / 11,2 % | 58,5 m | 0 | 0, 0, 0 |
+| `letna` | 124,8 s | 9,9 / 25,2 m/s | 29,7 / 14,8 % | 22,9 m | 0 | 0, 0, 0 |
+| `petrin` | 127,9 s | 9,9 / 25,3 m/s | 35,1 / 17,6 % | 101,6 m | 1 | 0, 0, 0 |
+
+Minimum rychlosti je rychlost autopilota v zatáčkách (`bench.corner_speed_mps` 10), ne ztráta do
+kopce; tu je vidět při ruční jízdě. Zkušebně s `speed_mps.cruise` 14,0 (chystané přepnutí cruise v2):
+vše zelené, nejvýš 14,6 m/s i z kopce (držení rychlosti), žádný skok.
 Ověření kopců na telefonu (M5-A5) zůstává na Ol1novi.
