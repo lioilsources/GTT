@@ -14,6 +14,9 @@ import { Trams } from '../trams/trams';
 import { ZoneWorld } from './zones';
 import { JumpState, slopeAccel, TERRAIN_SPEC } from './slope';
 import { ridesEdge, type Terrain } from '../world/terrain';
+import { surfaceEffect, TreeContacts, WaterFall } from './nature';
+import { NatureMap, type SurfaceName } from '../world/nature';
+import { WaterClass } from '../gen/pb/citypack_pb';
 
 /**
  * Tracks which road edge the car is on, and with it the layer (−1 tunnel, 0, +1 bridge).
@@ -117,6 +120,18 @@ export class DriveWorld {
   routeAhead: () => ArrayLike<number> | null = () => null;
   /** Called after every rescue move (automatic or manual) with its kind. */
   onRescue: ((kind: StuckKind) => void) | null = null;
+  /** Water, green and trees of the loaded chunks (specs/nature.md); empty for a pack without nature. */
+  readonly nature: NatureMap;
+  /** Soft trees (specs/flow.md "Strom jako měkká překážka"). */
+  readonly trees = new TreeContacts();
+  /** Water fall and tow (specs/nature.md "Voda"). */
+  readonly water = new WaterFall();
+  /** Surface under the car in the last step (specs/nature.md "Jízda"). */
+  surface: SurfaceName = 'asphalt';
+  /** Called when the car drives into water (it sinks over nature.water_fall.sink_s). */
+  onWater: (() => void) | null = null;
+  /** Called after the sunk car was put on the nearest road node (graph node index): charge the tow. */
+  onSunk: ((node: number) => void) | null = null;
   /** Static contact in the previous step; a head-on bounce needs a new contact. */
   private wallContact = false;
   /** The head-on bounce (with the 1 m unstick) is armed; see wallStep. */
@@ -129,8 +144,8 @@ export class DriveWorld {
   readonly terrain: Terrain;
   /** Vertical state of the player's car: z, vz, airborne (specs/terrain.md "Skok"). */
   readonly jump = new JumpState();
-  /** The edge whose own surface the car rides (ramp, bridge, tunnel), null = terrain. */
-  surface: RoadEdge | null = null;
+  /** The edge whose own surface the car rides (ramp, bridge, tunnel), null = terrain (specs/terrain.md). */
+  rideEdge: RoadEdge | null = null;
   /** Gradient of the ground under the car in the last step (m/m, world x/y). */
   readonly grad = { x: 0, y: 0 };
   /** Game time of the last take-off and hard landing (camera hints), −∞ before any. */
@@ -151,6 +166,7 @@ export class DriveWorld {
     this.flow = new FlowState(tuning.flow.rescue);
     this.layers = new LayerTracker(city.graph, tuning.layers);
     this.terrain = city.terrain;
+    this.nature = new NatureMap(city.chunkM);
     this.car = this.makeCar(city.startX, city.startY, city.startHeading);
     this.layers.reset(this.car.x, this.car.y);
     this.car.setLayer(this.layers.layer);
@@ -174,6 +190,8 @@ export class DriveWorld {
     this.flow.reset();
     this.wallContact = false;
     this.bounceArmed = true;
+    this.trees.reset();
+    this.water.reset();
     // A new body starts on the ground; the tank stays (replaceCar fills it for a hop car).
     this.hop.air = 0;
     this.hop.t = 0;
@@ -189,12 +207,12 @@ export class DriveWorld {
 
   /** Ground height under the car on its surface (0 in a flat pack). */
   groundZ(): number {
-    return this.terrain.groundZ(this.car.x, this.car.y, this.surface);
+    return this.terrain.groundZ(this.car.x, this.car.y, this.rideEdge);
   }
 
   /** Teleport, rescue or a new body: z = g, vz = 0, on the ground (specs/terrain.md). */
   private groundReset(): void {
-    this.surface = this.pickSurface();
+    this.rideEdge = this.pickSurface();
     this.jump.reset(this.groundZ());
     this.terrainVersion = this.terrain.version;
   }
@@ -206,8 +224,8 @@ export class DriveWorld {
   private jumpStep(step: number): void {
     const sp = this.tuning.slopePhysics, j = this.jump;
     const surf = this.pickSurface();
-    if (surf !== this.surface || this.terrain.version !== this.terrainVersion) {
-      this.surface = surf;
+    if (surf !== this.rideEdge || this.terrain.version !== this.terrainVersion) {
+      this.rideEdge = surf;
       this.terrainVersion = this.terrain.version;
       j.rebase(this.groundZ());
     }
@@ -250,13 +268,13 @@ export class DriveWorld {
   /** The driven car can hop now (specs/hop.md canHop). */
   get canHop(): boolean {
     const c = this.car;
-    return canHop(this.spec, this.hop.charges, this.hop.air, c.layer, c.speed, this.tuning.hop);
+    return !this.water.sinking && canHop(this.spec, this.hop.charges, this.hop.air, c.layer, c.speed, this.tuning.hop);
   }
 
   /** "Skok": takes off when canHop allows it; false otherwise (the HUD shows why). */
   tryHop(): boolean {
     const c = this.car;
-    if (!this.hop.start(this.spec, c.layer, c.speed, this.tuning.hop)) return false;
+    if (this.water.sinking || !this.hop.start(this.spec, c.layer, c.speed, this.tuning.hop)) return false;
     c.setAirborne(true);
     this.setPlayerAirborne(true);
     return true;
@@ -304,6 +322,7 @@ export class DriveWorld {
     }
     this.colliders.set(key, body);
     this.zones.addChunk(c);
+    if (c.nature) this.nature.add(c.nature);
     this.props.set(key, generateProps(this.city.graph, c.x, c.y, this.tuning));
     this.propsVersion++;
   }
@@ -315,6 +334,7 @@ export class DriveWorld {
     this.colliders.delete(key);
     this.zones.removeChunk(c);
     this.terrain.removeChunk(c);
+    this.nature.remove(c.x, c.y);
     if (this.props.delete(key)) this.propsVersion++;
   }
 
@@ -334,7 +354,13 @@ export class DriveWorld {
     this.beforeStep?.(step);
     const air = this.hop.airborne;
     const frozen = this.flow.animT > 0;
-    if (frozen) {
+    const sinking = this.water.sinking;
+    if (sinking) {
+      // Sinking (specs/nature.md "Voda"): no control, the entry velocity runs out over sink_s.
+      const v = this.water.velocity(this.tuning.nature.waterFall.sinkS);
+      this.car.body.setLinearVelocity(v);
+      this.car.body.setAngularVelocity(0);
+    } else if (frozen) {
       // Rescue animation (specs/flow.md): the car stands where it was put.
       this.car.body.setLinearVelocity({ x: 0, y: 0 });
       this.car.body.setAngularVelocity(0);
@@ -347,7 +373,10 @@ export class DriveWorld {
       this.car.coast();
     } else {
       this.updateZoneMask();
-      this.slopeStep();
+      // Surface under the car (specs/nature.md "Jízda", specs/flow.md "Les"); asphalt off the ground layer.
+      const car = this.car;
+      this.surface = car.layer === 0 && !this.nature.empty ? this.nature.surfaceAt(car.x, car.y) : 'asphalt';
+      this.slopeStep(surfaceEffect(this.surface, this.tuning));
     }
     this.traffic?.preStep(step, this.car);
     this.trams?.preStep(step, this.car);
@@ -372,11 +401,16 @@ export class DriveWorld {
     this.traffic?.postStep(this.car);
     this.trams?.postStep(this.car);
     const rail = this.car.layer !== 0 ? this.rails() : null;
-    if (frozen) {
+    if (sinking) {
+      this.car.body.setAngularVelocity(0);
+      if (this.water.step(step, this.tuning.nature.waterFall.sinkS)) this.sunk();
+    } else if (frozen) {
       this.car.body.setLinearVelocity({ x: 0, y: 0 });
       this.car.body.setAngularVelocity(0);
     } else {
       this.wallStep(step, rail);
+      this.treeStep(step);
+      this.waterStep();
     }
     this.stepProps(step);
     this.skidMarks();
@@ -387,15 +421,17 @@ export class DriveWorld {
    * Tyres with the slope (specs/terrain.md "Svah", after drive step 5): grip × k and the force
    * m · a_svah at the centre of mass; below stop_speed without throttle the car holds.
    */
-  private slopeStep(): void {
+  private slopeStep(eff: { grip: number; speed: number }): void {
     const car = this.car, sp = this.tuning.slopePhysics;
     let k = 1;
     if (this.terrain.enabled) {
-      this.terrain.grad(car.x, car.y, this.surface, this.grad);
+      this.terrain.grad(car.x, car.y, this.rideEdge, this.grad);
       k = slopeAccel(this.grad.x, this.grad.y, sp, this.slopeA);
     }
-    car.gripScale = this.gripScale * k;
-    car.drive(this.input, 1 / this.tuning.drive.stepHz, this.tuning.speedMps.cruise, this.tuning.speedMps.topDefault);
+    car.gripScale = this.gripScale * eff.grip * k;
+    car.brakeScale = eff.grip;
+    car.powerScale = eff.speed;
+    car.drive(this.input, 1 / this.tuning.drive.stepHz, this.tuning.speedMps.cruise * eff.speed, this.tuning.speedMps.topDefault * eff.speed);
     if (!this.terrain.enabled) return;
     if (car.speed < this.tuning.drive.stopSpeedMps && car.accel === 0) return;
     const m = car.body.getMass();
@@ -463,13 +499,57 @@ export class DriveWorld {
     }
   }
 
+  /**
+   * Soft trees (specs/flow.md "Strom jako měkká překážka"): trunks are sensors on the ground layer;
+   * the start of an overlap slows the car (and fells a sapling), the overlap pushes it aside.
+   */
+  private treeStep(step: number): void {
+    const car = this.car;
+    if (car.layer !== 0 || car.airborne || this.nature.empty) {
+      this.trees.clear(step);
+      return;
+    }
+    const v = car.body.getLinearVelocity();
+    const r = this.trees.step(step, this.time, this.nature, { x: car.x, y: car.y, vx: v.x, vy: v.y, halfWidth: car.halfWidth }, this.tuning);
+    if (r === null) return;
+    car.body.setLinearVelocity({ x: r.vx, y: r.vy });
+    if (r.yaw !== 0) car.body.setTransform(car.body.getPosition(), car.body.getAngle() + r.yaw);
+  }
+
+  /**
+   * Water (specs/nature.md "Voda"): the car's centre on the ground layer in water (not `small`) and
+   * off the carriageway of its edge starts the sink. No wall at the bank: quays and piers can be left.
+   */
+  private waterStep(): void {
+    const car = this.car;
+    if (car.layer !== 0 || car.airborne || this.nature.empty) return;
+    const w = this.nature.waterAt(car.x, car.y);
+    if (w === null || w.cls === WaterClass.WATER_SMALL) return;
+    const h = this.layers.hit;
+    if (h !== null && h.edge.isGround && h.dist <= h.edge.width / 2) return;
+    const v = car.body.getLinearVelocity();
+    this.water.start(v.x, v.y);
+    this.trees.clear(0);
+    this.onWater?.();
+  }
+
+  /** The car has sunk: on the nearest kept ground node, facing along its edge, at rest; then the tow. */
+  private sunk(): void {
+    const car = this.car;
+    this.water.reset();
+    const s = roadSpot(this.city.graph, car.x, car.y, null, this.tuning.layers.searchM);
+    if (s !== null) this.place(s.x, s.y, s.heading);
+    this.flow.reset();
+    this.onSunk?.(s?.node ?? -1);
+  }
+
   /** Trail and automatic rescue (specs/flow.md "Vyproštění"); the move itself is place(). */
   private rescueStep(step: number): void {
     const car = this.car, inp = this.input;
     const plan = this.flow.step(step, this.time, {
       x: car.x, y: car.y, heading: car.heading, speed: car.speed,
       braking: inp.brake > 0 || inp.handbrake, airborne: car.airborne || this.jump.airborne,
-    }, this.flowBlocked());
+    }, this.flowBlocked() || this.water.sinking);
     if (plan === null) return;
     if (plan.kind === 'road') this.toRoadSpot();
     else this.place(plan.point.x, plan.point.y, plan.point.heading);

@@ -43,6 +43,9 @@ import { cityUrl, pickStartCity, readLastCity, writeLastCity } from './travel/ci
 import { HttpPackSource } from './world/citypack';
 import { City } from './world/model';
 import { ChunkStreamer } from './world/streaming';
+import { MapNatureSource } from './phone/mapNature';
+import { drawNatureLabels } from './render/natureLabels';
+import { treeHitSound } from './render/treeSound';
 
 const params = new URLSearchParams(location.search);
 const locale: Locale = navigator.language.startsWith('cs') ? 'cs' : 'en';
@@ -210,6 +213,7 @@ async function main(): Promise<void> {
   let firstFrameMs = 0;
   // In-game phone, feed, map and GPS navigation (specs/phone.md).
   const phone = installPhone({ city, drive, tuning, t, rig: view.rig, parent: document.body, buttons: $('buttons'), params,
+    mapNature: city.manifest.natureVersion > 0 ? new MapNatureSource(city, source) : null,
     discovered: () => new Set(passport.tracker.stamps.filter((s) => s.startsWith('landmark:')).map((s) => s.slice(9))) });
   const loadMs = performance.now() - tStart;
 
@@ -347,6 +351,17 @@ async function main(): Promise<void> {
     debug: import.meta.env.DEV || params.has('debug'),
     onMoved: () => view.rig.snap(drive.car.x, drive.car.y, drive.car.heading, tuning),
   });
+  // Water fall (specs/nature.md "Voda"): the sunk car is towed to the nearest road for a fee; a
+  // world minigame or taxi shift in progress ends as cancelled.
+  drive.onSunk = () => {
+    for (const g of [taxi, drift, sprint]) g.quit();
+    const paid = loop.book.tow();
+    void loop.save();
+    phone.toast(t('natureTow', { fee: paid.amount }));
+    view.carChanged();
+    view.rig.snap(drive.car.x, drive.car.y, drive.car.heading, tuning);
+  };
+  view.nature.onHit = (size) => treeHitSound(size);
   // Police fines take cash through the economy (specs/economy.md).
   police.police.onFined((e) => loop.fine(e.amount));
 
@@ -434,7 +449,9 @@ async function main(): Promise<void> {
     const edge = drive.layers.edge;
     const street = edge?.name ? edge.name : t('unnamedRoad');
     const tag = c.layer > 0 ? ` · ${t('bridgeTag')}` : c.layer < 0 ? ` · ${t('tunnelTag')}` : '';
-    const district = city.districtAt(c.x, c.y);
+    // Inside a named park the park replaces the district (specs/nature.md "Vykreslení shora").
+    const park = c.layer === 0 ? drive.nature.parkAt(c.x, c.y) : '';
+    const district = park || city.districtAt(c.x, c.y);
     streetEl.textContent = [street + tag, district].filter(Boolean).join('  ·  ');
     speedEl.textContent = city.imperial
       ? t('speedMph', { speed: Math.round(c.speed * 2.23694) })
@@ -524,6 +541,7 @@ async function main(): Promise<void> {
   function drawOverlay(): void {
     ctx.clearRect(0, 0, size.w, size.h);
     const c = drive.car, h = tuning.hud, rig = view.rig;
+    drawNatureLabels(ctx, drive.nature, rig, size, tuning);
     if (c.speed <= h.streetLabelsBelowMps) {
       const hits = city.graph
         .near(c.x, c.y, h.streetLabelRadiusM)
@@ -615,6 +633,13 @@ async function main(): Promise<void> {
     (window as unknown as Record<string, unknown>)['metro'] = {
       engine, view, drive, fleet, city, tuning, frameTimes, pilot, bench, peds, phone, passport, loop, taxi, drift, sprint, police: police.police, booths, fastTravel, photo, shops, weather, garage, carsHud, flow,
       timing: () => ({ firstFrameMs, loadMs }),
+      /** Debug teleport: puts the car at (x, y) heading h (radians) and snaps the camera. */
+      teleport: async (x: number, y: number, h = 0) => {
+        drive.spawn(x, y, h);
+        view.carChanged();
+        view.rig.snap(x, y, h, tuning);
+        await streamer.preload(x, y, h, 9);
+      },
     };
   }
 }

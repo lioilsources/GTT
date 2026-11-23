@@ -12,6 +12,10 @@
   width: var(--font-hud);
   height: var(--font-hud);
 }
+#weather-icon .weather-icon-art {
+  width: var(--font-hud);
+  height: var(--font-hud);
+}
 #weather-toast[hidden] {
   display: none;
 }

@@ -1,5 +1,6 @@
 import { GroundKind } from '../gen/pb/citypack_pb';
 import { decodeChunk } from './citypack';
+import { prepareNature, type NatureChunk } from './nature';
 
 /** Render- and physics-ready building mass, in world metres (port of world_engine chunk.dart). */
 export interface BuildingData {
@@ -45,13 +46,18 @@ export interface ChunkData {
   terrain?: Float32Array | null;
   /** Hillshade per terrain sample, 0–255 (128 = flat); absent in a flat pack. */
   shade?: Uint8Array | null;
+  /** Water, green, trees and labels (specs/nature.md); absent or null for a pack without nature. */
+  nature?: NatureChunk | null;
 }
 
 /** Samples per terrain row (33 for a 256 m chunk at 8 m). */
 export const TERRAIN_N = 33;
 
-/** Decodes and prepares one chunk. */
-export async function prepareChunk(gz: Uint8Array): Promise<ChunkData> {
+/**
+ * Decodes and prepares one chunk; [nature] (chunk size and Manifest.nature_version) also prepares
+ * its water, green and trees (specs/nature.md).
+ */
+export async function prepareChunk(gz: Uint8Array, nature?: { chunkM: number; version: number }): Promise<ChunkData> {
   const c = await decodeChunk(gz);
   const buildings: BuildingData[] = [];
   for (const b of c.buildings) {
@@ -108,7 +114,8 @@ export async function prepareChunk(gz: Uint8Array): Promise<ChunkData> {
     .filter((b) => b.points.length >= 4)
     .map((b) => Float32Array.from(b.points, (v) => v / 10));
   const shade = terrain !== null && c.shade.length === TERRAIN_N * TERRAIN_N ? Uint8Array.from(c.shade) : null;
-  return { x: c.x, y: c.y, buildings, ground, barriers, terrain, shade };
+  const nat = nature ? prepareNature(c, nature.chunkM, nature.version) : null;
+  return { x: c.x, y: c.y, buildings, ground, barriers, terrain, shade, nature: nat };
 }
 
 /** Chunk.terrain: 33 × 33 int16 LE decimetres → metres; null when absent or malformed. */

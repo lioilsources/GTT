@@ -167,7 +167,7 @@ async function runScenario(name: string, inputs: Scenario['inputs']): Promise<Re
         m[`v_at_${x < 0 ? 'm' : ''}${Math.abs(x)}_mps`] = round(d.car.speed);
       }
     }
-    if (process.env['TERRAIN_TRACE'] === name && i % 6 === 0) console.log(d.time.toFixed(2), d.car.x.toFixed(2), d.car.speed.toFixed(2), d.jump.z.toFixed(2), d.jump.gap.toFixed(2), d.car.layer, d.surface?.index ?? -1);
+    if (process.env['TERRAIN_TRACE'] === name && i % 6 === 0) console.log(d.time.toFixed(2), d.car.x.toFixed(2), d.car.speed.toFixed(2), d.jump.z.toFixed(2), d.jump.gap.toFixed(2), d.car.layer, d.rideEdge?.index ?? -1);
     if (name === 'downhill_coast' && d.car.x >= st.x + 200) {
       m['end_speed_mps'] = round(d.car.speed);
       m['time_s'] = round(d.time);

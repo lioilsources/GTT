@@ -3,6 +3,8 @@ import { TERRAIN_N, type ChunkData } from '../world/chunk';
 import { bilinear } from '../world/terrain';
 import { DRAPE_LIFT, Tris, Z } from './geometry';
 import { groundColor, type Palette, type Rgba } from './palette';
+import { greenColor, greenZ } from './natureGeometry';
+import type { NatureChunk } from '../world/nature';
 
 /**
  * Terrain of client W (specs/terrain.md "Vykreslení terénu"): one mesh per chunk from its
@@ -108,20 +110,75 @@ function clip(p: Poly, a: number, b: number, c: number): Poly {
 }
 
 /**
- * Ground polygons of a chunk on the terrain (Z.ground order kept): every triangle is cut by the
- * grid's cells and diagonals so each piece lies in one plane of the terrain mesh, lifted by
- * DRAPE_LIFT. Water with a level stays flat at that level. Colours × shade.
+ * One triangulated polygon on the terrain: every triangle is cut by the grid's cells and diagonals
+ * so each piece lies in one plane of the terrain mesh (grid heights `h`), `lift` above it, colour ×
+ * the hillshade.
+ */
+export function drapePolygon(
+  h: Float32Array, shade: Uint8Array | null | undefined, x0: number, y0: number, step: number,
+  xy: ArrayLike<number>, indices: ArrayLike<number>, col: Rgba, lift: number, out: Tris,
+): void {
+  const N = TERRAIN_N;
+  const shadeAt = (u: number, v: number): number => (shade ? bilinear(shade, u, v) : 128);
+  const emit = (p: Poly): void => {
+    const n = p.length >> 1;
+    if (n < 3) return;
+    let a2 = 0;
+    for (let q = 0; q < n; q++) {
+      const r = (q + 1) % n;
+      a2 += p[2 * q]! * p[2 * r + 1]! - p[2 * r]! * p[2 * q + 1]!;
+    }
+    if (a2 < 1e-7) return; // sliver on a cell edge
+    const base = out.vertexCount;
+    for (let q = 0; q < n; q++) {
+      const u = p[2 * q]!, v = p[2 * q + 1]!;
+      out.vertex(x0 + u * step, y0 + v * step, meshHeight(h, u, v) + lift, shaded(col, shadeAt(u, v)));
+    }
+    for (let q = 1; q + 1 < n; q++) out.tri(base, base + q, base + q + 1);
+  };
+  for (let t = 0; t + 2 < indices.length; t += 3) {
+    const tri: Poly = [];
+    for (let q = 0; q < 3; q++) {
+      const vi = indices[t + q]!;
+      tri.push((xy[2 * vi]! - x0) / step, (xy[2 * vi + 1]! - y0) / step);
+    }
+    // Keep the world winding: the source triangles are CCW.
+    const area = (tri[2]! - tri[0]!) * (tri[5]! - tri[1]!) - (tri[4]! - tri[0]!) * (tri[3]! - tri[1]!);
+    if (Math.abs(area) < 1e-9) continue;
+    if (area < 0) tri.push(...tri.splice(2, 2));
+    const umin = Math.min(tri[0]!, tri[2]!, tri[4]!), umax = Math.max(tri[0]!, tri[2]!, tri[4]!);
+    const vmin = Math.min(tri[1]!, tri[3]!, tri[5]!), vmax = Math.max(tri[1]!, tri[3]!, tri[5]!);
+    const i0 = Math.max(0, Math.floor(umin)), i1 = Math.min(N - 2, Math.floor(umax));
+    const j0 = Math.max(0, Math.floor(vmin)), j1 = Math.min(N - 2, Math.floor(vmax));
+    for (let j = j0; j <= j1; j++) {
+      for (let i = i0; i <= i1; i++) {
+        // Lower-right triangle of the cell: v ≥ j, u ≤ i + 1, (v − j) ≤ (u − i).
+        let p = clip(tri, 0, 1, -j);
+        p = clip(p, -1, 0, i + 1);
+        emit(clip(p, 1, -1, j - i));
+        // Upper-left: u ≥ i, v ≤ j + 1, (v − j) ≥ (u − i).
+        let q = clip(tri, 1, 0, -i);
+        q = clip(q, 0, -1, j + 1);
+        emit(clip(q, -1, 1, i - j));
+      }
+    }
+  }
+}
+
+/**
+ * Ground polygons of a chunk on the terrain (Z.ground order kept), DRAPE_LIFT above the mesh.
+ * Water with a level stays flat at that level. With nature (specs/nature.md) water and parks are
+ * the nature layers instead, as in groundTris.
  */
 export function drapedGroundTris(
   c: ChunkData, pal: Palette, chunkM: number, out: Tris, order: readonly GroundKind[], heights: Float32Array | null = null,
 ): void {
   const h = heights ?? c.terrain;
   if (!h) return;
-  const N = TERRAIN_N, step = chunkM / (N - 1);
+  const step = chunkM / (TERRAIN_N - 1);
   const x0 = c.x * chunkM, y0 = c.y * chunkM;
-  const sh = c.shade;
-  const shadeAt = (u: number, v: number): number => (sh ? bilinear(sh, u, v) : 128);
   order.forEach((kind, k) => {
+    if (c.nature && (kind === GroundKind.WATER || kind === GroundKind.PARK)) return;
     const col = groundColor(pal, kind);
     const lift = Z.ground[k]! + DRAPE_LIFT;
     for (const g of c.ground) {
@@ -133,49 +190,15 @@ export function drapedGroundTris(
         for (let i = 0; i + 2 < g.indices.length; i += 3) out.tri(base + g.indices[i]!, base + g.indices[i + 1]!, base + g.indices[i + 2]!);
         continue;
       }
-      const emit = (p: Poly): void => {
-        const n = p.length >> 1;
-        if (n < 3) return;
-        let a2 = 0;
-        for (let q = 0; q < n; q++) {
-          const r = (q + 1) % n;
-          a2 += p[2 * q]! * p[2 * r + 1]! - p[2 * r]! * p[2 * q + 1]!;
-        }
-        if (a2 < 1e-7) return; // sliver on a cell edge
-        const base = out.vertexCount;
-        for (let q = 0; q < n; q++) {
-          const u = p[2 * q]!, v = p[2 * q + 1]!;
-          out.vertex(x0 + u * step, y0 + v * step, meshHeight(h, u, v) + lift, shaded(col, shadeAt(u, v)));
-        }
-        for (let q = 1; q + 1 < n; q++) out.tri(base, base + q, base + q + 1);
-      };
-      for (let t = 0; t + 2 < g.indices.length; t += 3) {
-        const tri: Poly = [];
-        for (let q = 0; q < 3; q++) {
-          const vi = g.indices[t + q]!;
-          tri.push((g.xy[2 * vi]! - x0) / step, (g.xy[2 * vi + 1]! - y0) / step);
-        }
-        // Keep the world winding: the source triangles are CCW.
-        const area = (tri[2]! - tri[0]!) * (tri[5]! - tri[1]!) - (tri[4]! - tri[0]!) * (tri[3]! - tri[1]!);
-        if (Math.abs(area) < 1e-9) continue;
-        if (area < 0) tri.push(...tri.splice(2, 2));
-        const umin = Math.min(tri[0]!, tri[2]!, tri[4]!), umax = Math.max(tri[0]!, tri[2]!, tri[4]!);
-        const vmin = Math.min(tri[1]!, tri[3]!, tri[5]!), vmax = Math.max(tri[1]!, tri[3]!, tri[5]!);
-        const i0 = Math.max(0, Math.floor(umin)), i1 = Math.min(N - 2, Math.floor(umax));
-        const j0 = Math.max(0, Math.floor(vmin)), j1 = Math.min(N - 2, Math.floor(vmax));
-        for (let j = j0; j <= j1; j++) {
-          for (let i = i0; i <= i1; i++) {
-            // Lower-right triangle of the cell: v ≥ j, u ≤ i + 1, (v − j) ≤ (u − i).
-            let p = clip(tri, 0, 1, -j);
-            p = clip(p, -1, 0, i + 1);
-            emit(clip(p, 1, -1, j - i));
-            // Upper-left: u ≥ i, v ≤ j + 1, (v − j) ≥ (u − i).
-            let q = clip(tri, 1, 0, -i);
-            q = clip(q, 0, -1, j + 1);
-            emit(clip(q, -1, 1, i - j));
-          }
-        }
-      }
+      drapePolygon(h, c.shade, x0, y0, step, g.xy, g.indices, col, lift, out);
     }
   });
+}
+
+/** Green fills of a chunk with nature (specs/nature.md) on the terrain, in greenTris order and colours. */
+export function drapedGreenTris(c: ChunkData, n: NatureChunk, pal: Palette, chunkM: number, out: Tris, heights: Float32Array | null = null): void {
+  const h = heights ?? c.terrain;
+  if (!h) return;
+  const step = chunkM / (TERRAIN_N - 1);
+  for (const g of n.green) drapePolygon(h, c.shade, c.x * chunkM, c.y * chunkM, step, g.xy, g.idx, greenColor(g.cls, pal), DRAPE_LIFT + greenZ(g.cls), out);
 }

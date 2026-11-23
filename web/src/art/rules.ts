@@ -66,6 +66,14 @@ export class ArtIndex {
     return this.first(`souvenirs/${id}.png`);
   }
 
+  /**
+   * UI icon (specs/art.md v3 "Ikony UI"): `ui/<id>.png`, a white glyph on alpha tinted by today's
+   * colour, or null (today's glyph, emoji or shape).
+   */
+  uiIcon(id: string): string | null {
+    return this.first(`ui/${id}.png`);
+  }
+
   /** Landmark postcard: `postcards/<city>/<id>.png` or null (placeholder drawing). */
   postcard(city: string, id: string): string | null {
     return this.first(`postcards/${city}/${id}.png`);

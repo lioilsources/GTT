@@ -114,6 +114,11 @@
   font-size: 26px;
 }
 
+.phone-icon-art {
+  width: 30px;
+  height: 30px;
+}
+
 .phone-app:disabled {
   color: var(--color-ui-text-faint);
 }
