@@ -1,0 +1,26 @@
+name: mg_sprint
+description: Sprint A to B (world minigame, engine drive), specs/minigames/sprint.md. Pure Dart, no Flutter or dart:ui imports.
+version: 0.1.0
+publish_to: none
+resolution: workspace
+
+environment:
+  sdk: ^3.12.2
+  flutter: ">=3.44.0"
+
+dependencies:
+  drive_core:
+    path: ../drive_core
+  feed_hub:
+    path: ../feed_hub
+  rules_core:
+    path: ../rules_core
+  shared_gen:
+    path: ../shared_gen
+  world_engine:
+    path: ../world_engine
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0

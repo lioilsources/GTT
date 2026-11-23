@@ -28,6 +28,11 @@ import '../photo/photo_controller.dart';
 import '../photo/photo_layer.dart';
 import '../shops/shops_controller.dart';
 import '../shops/shops_layer.dart';
+import '../drift/drift_controller.dart';
+import '../drift/drift_hud.dart';
+import '../minigames/world_hud.dart';
+import '../sprint/sprint_controller.dart';
+import '../sprint/sprint_hud.dart';
 import '../taxi/taxi_controller.dart';
 import '../taxi/taxi_hud.dart';
 import '../travel/fast_travel.dart';
@@ -61,6 +66,8 @@ class _GameScreenState extends State<GameScreen> {
   LoopController? _loop;
   LoopController? _finesWired;
   TaxiController? _taxi;
+  DriftController? _drift;
+  SprintController? _sprint;
   BoothsController? _booths;
   FastTravelController? _fastTravel;
   PhotoController? _photo;
@@ -90,6 +97,9 @@ class _GameScreenState extends State<GameScreen> {
     _loop?.dispose();
     _taxi?.dispose();
     TaxiGame.startInCity = null;
+    _drift?.dispose();
+    _sprint?.dispose();
+    WorldCardGame.startInCity.clear();
     _phone?.dispose();
     super.dispose();
   }
@@ -140,6 +150,15 @@ class _GameScreenState extends State<GameScreen> {
   /// Gallery: teleport to the taxi stand and start the shift there.
   void _startTaxi(MetropoleGame game, LoopController loop) {
     final s = game.city.spots.items.where((s) => s.minigame == MinigameId.taxi.id).firstOrNull;
+    if (s == null) return;
+    game.drive.spawn(s.parkX / 10, s.parkY / 10, s.parkHeading.toDouble());
+    game.camera.snap(game.drive.car.x, game.drive.car.y, game.drive.car.heading, game.tuning);
+    loop.start(s.id);
+  }
+
+  /// Gallery: moves the car to the first spot of a world minigame and starts it there.
+  void _startAtSpot(MetropoleGame game, LoopController loop, MinigameId id) {
+    final s = game.city.spots.items.where((s) => s.minigame == id.id).firstOrNull;
     if (s == null) return;
     game.drive.spawn(s.parkX / 10, s.parkY / 10, s.parkHeading.toDouble());
     game.camera.snap(game.drive.car.x, game.drive.car.y, game.drive.car.heading, game.tuning);
@@ -219,6 +238,15 @@ class _GameScreenState extends State<GameScreen> {
           final taxi = _taxi ??= TaxiController(game, phone);
           loop.worldGames[MinigameId.taxi] = taxi;
           TaxiGame.startInCity = () => _startTaxi(game, loop);
+          // Drift zone and Sprint A→B: world minigames in the player's own car (specs/minigames/drift.md,
+          // sprint.md); the Gallery card moves the car to the spot and starts it.
+          final drift = _drift ??= DriftController(game);
+          loop.worldGames[MinigameId.drift] = drift;
+          final sprint = _sprint ??= SprintController(game, phone);
+          loop.worldGames[MinigameId.sprint] = sprint;
+          for (final id in [MinigameId.drift, MinigameId.sprint]) {
+            WorldCardGame.startInCity[id] = () => _startAtSpot(game, loop, id);
+          }
           // Ringing phone booths (specs/booths.md): offer a minigame with a cash bonus.
           final booths = _booths ??= BoothsController(game, phone, loop);
           // Fast travel by metro and taxi (specs/travel.md): stations unlock by passing, the move
@@ -280,6 +308,8 @@ class _GameScreenState extends State<GameScreen> {
               PoliceHud(police: game.police),
               NavHud(phone: phone),
               TaxiHud(taxi: taxi),
+              DriftHud(drift: drift),
+              SprintHud(sprint: sprint),
               PhoneLayer(phone: phone),
               LoopLayer(loop: loop),
               BoothsLayer(booths: booths),
