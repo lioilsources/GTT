@@ -10,6 +10,9 @@ import { Tuning } from '../src/gen/tuning';
 import { bandScore, buildCandidates, feedConfig, FeedRules, type FeedCandidate } from '../src/phone/feed';
 import { driveMinutes, edgeArrow, edgeLengthsDm, feedDistDm, formatDistance, navGoal, navPath, navStart, Navigator } from '../src/phone/nav';
 import { mapFit } from '../src/phone/mapView';
+import {
+  easeOutCubic, hintOpacity, lockAxis, releaseVelocity, sideRelease, stripOffset, tiltDeg, verticalRelease,
+} from '../src/phone/feedView';
 import { RoadGraph } from '../src/world/model';
 
 const root = join(__dirname, '..', '..');
@@ -60,11 +63,40 @@ describe('feed rules (specs/feed.md)', () => {
     expect(r.legalActions(s).map((a) => a.op)).toEqual(['next', 'less', 'accept']);
     expect(() => r.apply(s, { by: 'player', op: 'like' })).toThrow();
     s = r.apply(s, { by: 'player', op: 'next' });
+    expect(r.legalActions(s).map((a) => a.op)).toEqual(['next', 'prev', 'like', 'less', 'accept']);
     s = r.apply(s, { by: 'player', op: 'less' });
     expect(s.over).toBe(true);
+    expect(() => r.apply(s, { by: 'player', op: 'prev' })).toThrow();
     expect(s.accepted).toBe('');
     expect(r.legalActions(s)).toEqual([]);
     expect(r.result()).toBeNull();
+  });
+
+  it('prev goes back without re-counting (v2), illegal on the first card', () => {
+    const r = new FeedRules();
+    const s0 = r.init(cfg([cand('a', 'board', 9000), cand('b', 'dice', 9000), cand('c', 'flick', 9000)]), 2);
+    expect(r.legalActions(s0).map((a) => a.op)).not.toContain('prev');
+    expect(() => r.apply(s0, { by: 'player', op: 'prev' })).toThrow();
+    let s = r.apply(s0, { by: 'player', op: 'like' });
+    const liked = s.deck[0]!.spot;
+    s = r.apply(s, { by: 'player', op: 'less' });
+    const prefs = { ...s.prefs };
+    s = r.apply(s, { by: 'player', op: 'prev' });
+    expect(s.at).toBe(0);
+    expect(s.prefs).toEqual(prefs);
+    expect(s.liked).toEqual([liked]);
+    expect(r.legalActions(s).map((a) => a.op)).toEqual(['next', 'less', 'accept']);
+    s = r.apply(s, { by: 'player', op: 'next' });
+    expect(s.at).toBe(1);
+    expect(s.prefs).toEqual(prefs);
+    expect(s.over).toBe(false);
+  });
+
+  it('a one-card deck never allows prev', () => {
+    const r = new FeedRules();
+    const s = r.init(cfg([cand('a', 'board', 9000)]), 1);
+    expect(r.legalActions(s).map((a) => a.op)).toEqual(['next', 'like', 'less', 'accept']);
+    expect(r.apply(s, { by: 'player', op: 'next' }).over).toBe(true);
   });
 
   it('an empty city gives an empty, finished deck', () => {
@@ -199,5 +231,65 @@ describe('navigation (specs/phone.md "Navigace")', () => {
     const f = mapFit([0, 0, 100, 0, 100, 200, 0, 200], 120, 220, 10);
     expect(f.s).toBe(1);
     expect([0 * f.s + f.ox, -0 * f.s + f.oy]).toEqual([10, 210]);
+  });
+});
+
+describe('feed card gestures (specs/phone.md v5)', () => {
+  const ph = tuning.phone;
+  const H = 800;
+
+  it('locks the axis only after feed_axis_lock_px, by the larger component', () => {
+    const l = ph.feedAxisLockPx;
+    expect(lockAxis(l - 1, -(l - 1), l)).toBeNull();
+    expect(lockAxis(3, -l, l)).toBe('v');
+    expect(lockAxis(l, l, l)).toBe('v');
+    expect(lockAxis(-l - 1, l, l)).toBe('h');
+  });
+
+  it('measures release velocity over the last feed_velocity_ms', () => {
+    const w = ph.feedVelocityMs;
+    const s = [{ t: 0, p: 0 }, { t: 1000 - w - 1, p: -500 }, { t: 1000 - w, p: -100 }, { t: 1000, p: -200 }];
+    expect(releaseVelocity(s, w)).toBeCloseTo((-100 * 1000) / w);
+    expect(releaseVelocity([{ t: 5, p: 9 }], w)).toBe(0);
+    expect(releaseVelocity([], w)).toBe(0);
+  });
+
+  it('follows the finger 1:1 towards a page and rubber-bands otherwise', () => {
+    expect(stripOffset(-120, false, true, ph)).toBe(-120);
+    expect(stripOffset(120, true, true, ph)).toBe(120);
+    expect(stripOffset(120, false, true, ph)).toBeCloseTo(120 * ph.feedRubber);
+    expect(stripOffset(-120, false, false, ph)).toBeCloseTo(-120 * ph.feedRubber);
+  });
+
+  it('commits a vertical release by distance or flick, else springs back', () => {
+    const far = (H * ph.feedCommitPct) / 100 + 1;
+    const near = (H * ph.feedCommitPct) / 100 - 1;
+    expect(verticalRelease(-far, 0, H, true, true, ph)).toBe('next');
+    expect(verticalRelease(far, 0, H, true, true, ph)).toBe('prev');
+    expect(verticalRelease(-near, 0, H, true, true, ph)).toBeNull();
+    expect(verticalRelease(-near, -(ph.feedFlickPxS + 1), H, true, true, ph)).toBe('next');
+    expect(verticalRelease(-near, ph.feedFlickPxS + 1, H, true, true, ph)).toBeNull();
+    // first card: no page above; feedDone: no page either way
+    expect(verticalRelease(far, ph.feedFlickPxS + 1, H, false, true, ph)).toBeNull();
+    expect(verticalRelease(-far, 0, H, false, false, ph)).toBeNull();
+  });
+
+  it('flies a card sideways past swipe_px or on a flick, with tilt and hint', () => {
+    expect(sideRelease(ph.swipePx + 1, 0, ph)).toBe('accept');
+    expect(sideRelease(-ph.swipePx - 1, 0, ph)).toBe('less');
+    expect(sideRelease(ph.swipePx - 1, 0, ph)).toBeNull();
+    expect(sideRelease(-5, -(ph.feedFlickPxS + 1), ph)).toBe('less');
+    expect(sideRelease(5, -(ph.feedFlickPxS + 1), ph)).toBeNull();
+    expect(tiltDeg(400, 400, ph)).toBeCloseTo(ph.feedTiltDeg);
+    expect(tiltDeg(-200, 400, ph)).toBeCloseTo(-ph.feedTiltDeg / 2);
+    expect(hintOpacity(ph.swipePx / 2, ph)).toBeCloseTo(0.5);
+    expect(hintOpacity(-3 * ph.swipePx, ph)).toBe(1);
+  });
+
+  it('eases out without overshoot', () => {
+    expect(easeOutCubic(0)).toBe(0);
+    expect(easeOutCubic(1)).toBe(1);
+    for (let u = 0; u <= 1; u += 0.05) expect(easeOutCubic(u)).toBeLessThanOrEqual(1);
+    expect(easeOutCubic(0.5)).toBeGreaterThan(0.5);
   });
 });
