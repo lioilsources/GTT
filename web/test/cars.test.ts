@@ -281,6 +281,31 @@ describe.skipIf(!existsSync(pack))('parked cars and boarding in NYC', () => {
     expect(total).toBeGreaterThan(10);
   });
 
+  // Regression (PR #54–#56, Prompts/05 L-S13): the player used to drive through parked cars.
+  it('the player pushes a parked car it drives into and never passes through it', () => {
+    const d = new DriveWorld(city, specs.get(tuning.cars.startCar)!, tuning);
+    const fleet = new CarFleet(d, specs, tuning, { id: 'g', x: d.car.x, y: d.car.y, heading: d.car.heading });
+    for (const c of chunks) {
+      d.addChunk(c);
+      fleet.addChunk(c);
+    }
+    const target = fleet.parked[0]!;
+    const hx = Math.cos(target.heading), hy = Math.sin(target.heading);
+    const x0 = target.x, y0 = target.y;
+    d.spawn(target.x - hx * 10, target.y - hy * 10, target.heading);
+    let worst = -Infinity;
+    for (let i = 0; i < 3 * 60; i++) {
+      d.input.reset();
+      d.input.boost = true;
+      d.update(1 / 60);
+      fleet.update();
+      // Along the parked car's axis the player's centre stays behind its centre.
+      worst = Math.max(worst, (d.car.x - target.x) * hx + (d.car.y - target.y) * hy);
+    }
+    expect(worst).toBeLessThan(0);
+    expect(Math.hypot(target.x - x0, target.y - y0)).toBeGreaterThan(0.5);
+  });
+
   it('boards a parked car: new body with its parameters, old car stays parked, stolen event fires', () => {
     const d = new DriveWorld(city, specs.get(tuning.cars.startCar)!, tuning);
     const fleet = new CarFleet(d, specs, tuning, { id: 'g', x: d.car.x, y: d.car.y, heading: d.car.heading });
