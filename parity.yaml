@@ -564,7 +564,7 @@
   vectors: vectors/hokej.json
   lead: web
   flutter: todo
-  web: todo
+  web: done
 
 - id: F-065
   name: Drift zóna (engine drive, world minigame, M2-S9 batch D)
