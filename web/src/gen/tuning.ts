@@ -1368,6 +1368,12 @@ export class TuningMinigames {
   readonly strelnice: TuningMinigamesStrelnice;
   /** Taxi shift (specs/minigames/taxi.md): a world minigame in the taxi_metro car. */
   readonly taxi: TuningMinigamesTaxi;
+  /** M2-S9 batch D: world minigames on engine drive (specs/minigames/drift.md, sprint.md) */
+  readonly drift: TuningMinigamesDrift;
+  readonly sprint: TuningMinigamesSprint;
+  /** M2-S9 NYC local games (specs/minigames/stickball.md, doubledutch.md) */
+  readonly stickball: TuningMinigamesStickball;
+  readonly doubledutch: TuningMinigamesDoubledutch;
 
   constructor(r: R) {
     this.timeCapS = r.i('time_cap_s');
@@ -1400,6 +1406,10 @@ export class TuningMinigames {
     this.nohejbal = new TuningMinigamesNohejbal(r.sub('nohejbal'));
     this.strelnice = new TuningMinigamesStrelnice(r.sub('strelnice'));
     this.taxi = new TuningMinigamesTaxi(r.sub('taxi'));
+    this.drift = new TuningMinigamesDrift(r.sub('drift'));
+    this.sprint = new TuningMinigamesSprint(r.sub('sprint'));
+    this.stickball = new TuningMinigamesStickball(r.sub('stickball'));
+    this.doubledutch = new TuningMinigamesDoubledutch(r.sub('doubledutch'));
   }
 
   toJson(): Record<string, unknown> {
@@ -1434,6 +1444,10 @@ export class TuningMinigames {
       nohejbal: this.nohejbal.toJson(),
       strelnice: this.strelnice.toJson(),
       taxi: this.taxi.toJson(),
+      drift: this.drift.toJson(),
+      sprint: this.sprint.toJson(),
+      stickball: this.stickball.toJson(),
+      doubledutch: this.doubledutch.toJson(),
     };
   }
 }
@@ -2706,6 +2720,255 @@ export class TuningMinigamesTaxi {
       passenger_m: this.passengerM,
       passenger_px: this.passengerPx,
       curb_m: this.curbM,
+    };
+  }
+}
+
+/** M2-S9 batch D: world minigames on engine drive (specs/minigames/drift.md, sprint.md) */
+export class TuningMinigamesDrift {
+  /** |beta| counted from / capped at (mrad) */
+  minSlipMrad: number;
+  maxSlipMrad: number;
+  /** speed counted from / capped at (cm/s) */
+  minSpeedCms: number;
+  maxSpeedCms: number;
+  ptsDiv: number;
+  /** longest counted gap between samples */
+  maxDtMs: number;
+  /** a drift may drop out this long before the chain is banked */
+  graceMs: number;
+  /** +1 multiplier per this much drifting in one chain */
+  multStepMs: number;
+  maxMult: number;
+  /** 3, 2, 1 stars at difficulty 3 */
+  starScores: number[];
+  /** star thresholds x % by difficulty 1-5 */
+  levelPct: number[];
+  /** UI only */
+  sessionS: number;
+  /** zone radius around the spot's parking point */
+  zoneM: number;
+  /** UI only */
+  sampleHz: number;
+  /** UI only */
+  hitMinMps: number;
+  /** UI only */
+  lowS: number;
+
+  constructor(r: R) {
+    this.minSlipMrad = r.i('min_slip_mrad');
+    this.maxSlipMrad = r.i('max_slip_mrad');
+    this.minSpeedCms = r.i('min_speed_cms');
+    this.maxSpeedCms = r.i('max_speed_cms');
+    this.ptsDiv = r.i('pts_div');
+    this.maxDtMs = r.i('max_dt_ms');
+    this.graceMs = r.i('grace_ms');
+    this.multStepMs = r.i('mult_step_ms');
+    this.maxMult = r.i('max_mult');
+    this.starScores = r.il('star_scores');
+    this.levelPct = r.il('level_pct');
+    this.sessionS = r.i('session_s');
+    this.zoneM = r.d('zone_m');
+    this.sampleHz = r.i('sample_hz');
+    this.hitMinMps = r.d('hit_min_mps');
+    this.lowS = r.d('low_s');
+  }
+
+  toJson(): Record<string, unknown> {
+    return {
+      min_slip_mrad: this.minSlipMrad,
+      max_slip_mrad: this.maxSlipMrad,
+      min_speed_cms: this.minSpeedCms,
+      max_speed_cms: this.maxSpeedCms,
+      pts_div: this.ptsDiv,
+      max_dt_ms: this.maxDtMs,
+      grace_ms: this.graceMs,
+      mult_step_ms: this.multStepMs,
+      max_mult: this.maxMult,
+      star_scores: this.starScores,
+      level_pct: this.levelPct,
+      session_s: this.sessionS,
+      zone_m: this.zoneM,
+      sample_hz: this.sampleHz,
+      hit_min_mps: this.hitMinMps,
+      low_s: this.lowS,
+    };
+  }
+}
+
+export class TuningMinigamesSprint {
+  parBaseMs: number;
+  /** par average speed by difficulty 1-5 */
+  parDmPerS: number[];
+  hitPenaltyMs: number;
+  /** time in % of par for 3, 2, 1 stars */
+  starPct: number[];
+  destMinM: number;
+  destMaxM: number;
+  destSearchM: number;
+  cpEveryM: number;
+  cpRadiusM: number;
+  /** UI only */
+  countdownS: number;
+  /** UI only */
+  timeCapS: number;
+  /** UI only */
+  hitMinMps: number;
+
+  constructor(r: R) {
+    this.parBaseMs = r.i('par_base_ms');
+    this.parDmPerS = r.il('par_dm_per_s');
+    this.hitPenaltyMs = r.i('hit_penalty_ms');
+    this.starPct = r.il('star_pct');
+    this.destMinM = r.d('dest_min_m');
+    this.destMaxM = r.d('dest_max_m');
+    this.destSearchM = r.d('dest_search_m');
+    this.cpEveryM = r.d('cp_every_m');
+    this.cpRadiusM = r.d('cp_radius_m');
+    this.countdownS = r.i('countdown_s');
+    this.timeCapS = r.i('time_cap_s');
+    this.hitMinMps = r.d('hit_min_mps');
+  }
+
+  toJson(): Record<string, unknown> {
+    return {
+      par_base_ms: this.parBaseMs,
+      par_dm_per_s: this.parDmPerS,
+      hit_penalty_ms: this.hitPenaltyMs,
+      star_pct: this.starPct,
+      dest_min_m: this.destMinM,
+      dest_max_m: this.destMaxM,
+      dest_search_m: this.destSearchM,
+      cp_every_m: this.cpEveryM,
+      cp_radius_m: this.cpRadiusM,
+      countdown_s: this.countdownS,
+      time_cap_s: this.timeCapS,
+      hit_min_mps: this.hitMinMps,
+    };
+  }
+}
+
+/** M2-S9 NYC local games (specs/minigames/stickball.md, doubledutch.md) */
+export class TuningMinigamesStickball {
+  maxOuts: number;
+  strikesOut: number;
+  ballsWalk: number;
+  zonePct: number[];
+  /** ms */
+  flightMin: number[];
+  flightVar: number[];
+  perfectMs: number;
+  goodMs: number;
+  okMs: number;
+  foulMs: number;
+  catchPct: number[];
+  starRuns: number[];
+  timeCapS: number;
+
+  constructor(r: R) {
+    this.maxOuts = r.i('max_outs');
+    this.strikesOut = r.i('strikes_out');
+    this.ballsWalk = r.i('balls_walk');
+    this.zonePct = r.il('zone_pct');
+    this.flightMin = r.il('flight_min');
+    this.flightVar = r.il('flight_var');
+    this.perfectMs = r.i('perfect_ms');
+    this.goodMs = r.i('good_ms');
+    this.okMs = r.i('ok_ms');
+    this.foulMs = r.i('foul_ms');
+    this.catchPct = r.il('catch_pct');
+    this.starRuns = r.il('star_runs');
+    this.timeCapS = r.i('time_cap_s');
+  }
+
+  toJson(): Record<string, unknown> {
+    return {
+      max_outs: this.maxOuts,
+      strikes_out: this.strikesOut,
+      balls_walk: this.ballsWalk,
+      zone_pct: this.zonePct,
+      flight_min: this.flightMin,
+      flight_var: this.flightVar,
+      perfect_ms: this.perfectMs,
+      good_ms: this.goodMs,
+      ok_ms: this.okMs,
+      foul_ms: this.foulMs,
+      catch_pct: this.catchPct,
+      star_runs: this.starRuns,
+      time_cap_s: this.timeCapS,
+    };
+  }
+}
+
+export class TuningMinigamesDoubledutch {
+  beats: number;
+  introBeats: number;
+  startGapMs: number[];
+  minGapMs: number[];
+  speedupEvery: number;
+  speedupMs: number;
+  trickPct: number[];
+  perfectMs: number;
+  goodMs: number;
+  okMs: number;
+  maxTrips: number;
+  perfectPts: number;
+  goodPts: number;
+  okPts: number;
+  trickMult: number;
+  comboStep: number;
+  maxMult: number;
+  starPct: number[];
+  /** UI only */
+  leadInMs: number;
+  /** UI only */
+  timeCapS: number;
+
+  constructor(r: R) {
+    this.beats = r.i('beats');
+    this.introBeats = r.i('intro_beats');
+    this.startGapMs = r.il('start_gap_ms');
+    this.minGapMs = r.il('min_gap_ms');
+    this.speedupEvery = r.i('speedup_every');
+    this.speedupMs = r.i('speedup_ms');
+    this.trickPct = r.il('trick_pct');
+    this.perfectMs = r.i('perfect_ms');
+    this.goodMs = r.i('good_ms');
+    this.okMs = r.i('ok_ms');
+    this.maxTrips = r.i('max_trips');
+    this.perfectPts = r.i('perfect_pts');
+    this.goodPts = r.i('good_pts');
+    this.okPts = r.i('ok_pts');
+    this.trickMult = r.i('trick_mult');
+    this.comboStep = r.i('combo_step');
+    this.maxMult = r.i('max_mult');
+    this.starPct = r.il('star_pct');
+    this.leadInMs = r.i('lead_in_ms');
+    this.timeCapS = r.i('time_cap_s');
+  }
+
+  toJson(): Record<string, unknown> {
+    return {
+      beats: this.beats,
+      intro_beats: this.introBeats,
+      start_gap_ms: this.startGapMs,
+      min_gap_ms: this.minGapMs,
+      speedup_every: this.speedupEvery,
+      speedup_ms: this.speedupMs,
+      trick_pct: this.trickPct,
+      perfect_ms: this.perfectMs,
+      good_ms: this.goodMs,
+      ok_ms: this.okMs,
+      max_trips: this.maxTrips,
+      perfect_pts: this.perfectPts,
+      good_pts: this.goodPts,
+      ok_pts: this.okPts,
+      trick_mult: this.trickMult,
+      combo_step: this.comboStep,
+      max_mult: this.maxMult,
+      star_pct: this.starPct,
+      lead_in_ms: this.leadInMs,
+      time_cap_s: this.timeCapS,
     };
   }
 }

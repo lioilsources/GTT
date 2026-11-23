@@ -39,6 +39,11 @@ spots:
   - {id: canal_st_arcade, kind: cafe, name: Canal Street Arcade, lat: 40.71850, lon: -74.00100, minigame: cihly}
   - {id: central_park_midway, kind: park, name: Central Park Midway, lat: 40.76750, lon: -73.97100, minigame: krtek}
   - {id: essex_air_rink, kind: cafe, name: Essex Street Air Rink, lat: 40.71850, lon: -73.98800, minigame: hokej}
+  # M2-S9 batch D (drive, world minigames) and NYC local games; venues fictional (R10)
+  - {id: pier_76_lot, kind: pier, name: Pier 76 Lot, lat: 40.76080, lon: -74.00400, minigame: drift}
+  - {id: west_side_start, kind: plaza, name: West Side Start Line, lat: 40.74650, lon: -74.00750, minigame: sprint}
+  - {id: el_barrio_stickball, kind: plaza, name: East 104th Street Stickball Block, lat: 40.78990, lon: -73.94600, minigame: stickball}
+  - {id: williamsburg_ropes, kind: plaza, name: South Side Rope Block, lat: 40.71050, lon: -73.96150, minigame: doubledutch}
   # Player garage (specs/cars.md): one per city in M1; a multi-storey car park on W 44th St.
   - {id: midtown_garage, kind: garage, name: West 44th Street Garage, lat: 40.75990, lon: -73.99410}
   # Ringing phone booths (specs/booths.md): street corners, no minigame.
