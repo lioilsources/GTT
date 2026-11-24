@@ -47,6 +47,20 @@ void main() {
     expect(p.inks, isEmpty);
   });
 
+  test('moscow (style E) maps color.city.moscow: black roof edges, cast shadows, no inks', () {
+    final p = Palette.forCity('moscow');
+    expect(p.land, const Color(Tokens.colorCityMoscowLand));
+    expect(p.asphalt, const Color(Tokens.colorCityMoscowAsphalt));
+    expect(p.landmark, const Color(Tokens.colorCityMoscowLandmark));
+    expect(p.facades, [for (final c in Tokens.colorCityMoscowFacades) Color(c)]);
+    expect(p.shadow, const Color(Tokens.colorCityMoscowShadow));
+    expect(p.roof, const Color(Tokens.colorCityMoscowRoof));
+    expect(p.roofEdge, const Color(Tokens.colorCityMoscowRoofEdge));
+    expect(p.castShadow, const Color(Tokens.colorCityMoscowCastShadow));
+    expect(p.flatRoofs, isTrue);
+    expect(p.inks, isEmpty);
+  });
+
   test('unknown city falls back to color.world.day', () {
     final p = Palette.forCity('atlantis');
     expect(identical(p, Palette.day), isTrue);
@@ -94,11 +108,12 @@ void main() {
       expect(risographEnabled(style, 'nyc', night: false), isFalse);
     });
 
-    test('content: Prague on, NYC and Tokyo off', () {
+    test('content: Prague on, NYC, Tokyo and Moscow off', () {
       final s = Tuning.fromYaml(File('../../content/tuning.yaml').readAsStringSync()).style;
       expect(risographEnabled(s, 'prague', night: false), isTrue);
       expect(risographEnabled(s, 'nyc', night: false), isFalse);
       expect(risographEnabled(s, 'tokyo', night: false), isFalse);
+      expect(risographEnabled(s, 'moscow', night: false), isFalse);
     });
   });
 
