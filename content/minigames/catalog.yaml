@@ -41,3 +41,7 @@ minigames:
   # M2-S9 NYC local games (plans/M2_NYC.md bod 9, místní)
   - {id: stickball, engine: sport, target_min: 5, cities: [nyc], casino_like: false}
   - {id: doubledutch, engine: rhythm, target_min: 3, cities: [nyc], casino_like: false}
+  # M6 Moscow local games (plans/M6_MOSKVA.md bod 6)
+  - {id: sachy, engine: board, target_min: 6, cities: [moscow], casino_like: false}
+  - {id: gorodki, engine: flick, target_min: 5, cities: [moscow], casino_like: false}
+  - {id: durak, engine: cards, target_min: 6, cities: [moscow], casino_like: false}

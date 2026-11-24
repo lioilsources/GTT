@@ -152,6 +152,9 @@ enum MinigameId {
   sprint('sprint'),
   stickball('stickball'),
   doubledutch('doubledutch'),
+  sachy('sachy'),
+  gorodki('gorodki'),
+  durak('durak'),
   ;
 
   const MinigameId(this.id);
@@ -202,4 +205,7 @@ final Map<MinigameId, MinigameMeta> minigameCatalog = {
   MinigameId.sprint: MinigameMeta(id: 'sprint', engine: 'drive', targetLengthS: 180, cities: [], casinoLike: false),
   MinigameId.stickball: MinigameMeta(id: 'stickball', engine: 'sport', targetLengthS: 300, cities: ['nyc'], casinoLike: false),
   MinigameId.doubledutch: MinigameMeta(id: 'doubledutch', engine: 'rhythm', targetLengthS: 180, cities: ['nyc'], casinoLike: false),
+  MinigameId.sachy: MinigameMeta(id: 'sachy', engine: 'board', targetLengthS: 360, cities: ['moscow'], casinoLike: false),
+  MinigameId.gorodki: MinigameMeta(id: 'gorodki', engine: 'flick', targetLengthS: 300, cities: ['moscow'], casinoLike: false),
+  MinigameId.durak: MinigameMeta(id: 'durak', engine: 'cards', targetLengthS: 360, cities: ['moscow'], casinoLike: false),
 };

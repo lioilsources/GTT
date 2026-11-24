@@ -1520,7 +1520,10 @@ class TuningMinigames {
         drift = TuningMinigamesDrift._(r.sub('drift')),
         sprint = TuningMinigamesSprint._(r.sub('sprint')),
         stickball = TuningMinigamesStickball._(r.sub('stickball')),
-        doubledutch = TuningMinigamesDoubledutch._(r.sub('doubledutch'));
+        doubledutch = TuningMinigamesDoubledutch._(r.sub('doubledutch')),
+        sachy = TuningMinigamesSachy._(r.sub('sachy')),
+        gorodki = TuningMinigamesGorodki._(r.sub('gorodki')),
+        durak = TuningMinigamesDurak._(r.sub('durak'));
 
   /// hard cap for every minigame (9.2)
   int timeCapS;
@@ -1595,6 +1598,13 @@ class TuningMinigames {
 
   final TuningMinigamesDoubledutch doubledutch;
 
+  /// M6 Moscow local games (specs/minigames/sachy.md, gorodki.md, durak.md)
+  final TuningMinigamesSachy sachy;
+
+  final TuningMinigamesGorodki gorodki;
+
+  final TuningMinigamesDurak durak;
+
   Map<String, Object> toJson() => {
         'time_cap_s': timeCapS,
         'sirky': sirky.toJson(),
@@ -1630,6 +1640,9 @@ class TuningMinigames {
         'sprint': sprint.toJson(),
         'stickball': stickball.toJson(),
         'doubledutch': doubledutch.toJson(),
+        'sachy': sachy.toJson(),
+        'gorodki': gorodki.toJson(),
+        'durak': durak.toJson(),
       };
 }
 
@@ -3380,6 +3393,193 @@ class TuningMinigamesDoubledutch {
         'star_pct': starPct,
         'lead_in_ms': leadInMs,
         'time_cap_s': timeCapS,
+      };
+}
+
+/// M6 Moscow local games (specs/minigames/sachy.md, gorodki.md, durak.md)
+class TuningMinigamesSachy {
+  TuningMinigamesSachy._(_R r)
+      : aiDepth = r.il('ai_depth'),
+        aiErrorPct = r.il('ai_error_pct'),
+        quietLimit = r.i('quiet_limit'),
+        fastPlies = r.i('fast_plies'),
+        timeCapS = r.i('time_cap_s'),
+        aiThinkS = r.d('ai_think_s');
+
+  /// negamax plies per AI level 1..5
+  List<int> aiDepth;
+
+  List<int> aiErrorPct;
+
+  /// plies without a capture or a pawn move = draw
+  int quietLimit;
+
+  /// a win within this many plies = 3 stars
+  int fastPlies;
+
+  int timeCapS;
+
+  double aiThinkS;
+
+  Map<String, Object> toJson() => {
+        'ai_depth': aiDepth,
+        'ai_error_pct': aiErrorPct,
+        'quiet_limit': quietLimit,
+        'fast_plies': fastPlies,
+        'time_cap_s': timeCapS,
+        'ai_think_s': aiThinkS,
+      };
+}
+
+class TuningMinigamesGorodki {
+  TuningMinigamesGorodki._(_R r)
+      : gorodW = r.i('gorod_w'),
+        gorodY0 = r.i('gorod_y0'),
+        gorodY1 = r.i('gorod_y1'),
+        polukonY = r.i('polukon_y'),
+        batR = r.i('bat_r'),
+        batM = r.i('bat_m'),
+        batDec = r.i('bat_dec'),
+        pieceR = r.i('piece_r'),
+        pieceM = r.i('piece_m'),
+        pieceDec = r.i('piece_dec'),
+        minSpeed = r.i('min_speed'),
+        maxSpeed = r.i('max_speed'),
+        eBody = r.i('e_body'),
+        fieldPad = r.i('field_pad'),
+        maxSteps = r.i('max_steps'),
+        bats = r.il('bats'),
+        scatter = r.il('scatter'),
+        starFigs = r.il('star_figs'),
+        fig1 = r.il('fig1'),
+        fig2 = r.il('fig2'),
+        fig3 = r.il('fig3'),
+        fig4 = r.il('fig4'),
+        fig5 = r.il('fig5'),
+        stepsPerFrame = r.i('steps_per_frame'),
+        timeCapS = r.i('time_cap_s');
+
+  /// u = 0.01 mm; the square ("gorod") 2 x 2 m, x 0..gorod_w
+  int gorodW;
+
+  /// its front line, measured from the far throw line ("kon", y = 0)
+  int gorodY0;
+
+  int gorodY1;
+
+  /// half line: throws after the first piece of a figure is out
+  int polukonY;
+
+  /// the spinning bat as one disc
+  int batR;
+
+  int batM;
+
+  int batDec;
+
+  int pieceR;
+
+  int pieceM;
+
+  int pieceDec;
+
+  int minSpeed;
+
+  int maxSpeed;
+
+  int eBody;
+
+  /// a body this far outside the gorod leaves the field
+  int fieldPad;
+
+  int maxSteps;
+
+  /// throws for the whole game by difficulty 1-5
+  List<int> bats;
+
+  List<int> scatter;
+
+  /// figures cleared for 3, 2, 1 stars
+  List<int> starFigs;
+
+  /// five pieces [dx, dy] from the middle of the front line
+  /// cannon
+  List<int> fig1;
+
+  /// star
+  List<int> fig2;
+
+  /// well
+  List<int> fig3;
+
+  /// arrow
+  List<int> fig4;
+
+  /// crayfish
+  List<int> fig5;
+
+  /// UI only
+  int stepsPerFrame;
+
+  /// UI only
+  int timeCapS;
+
+  Map<String, Object> toJson() => {
+        'gorod_w': gorodW,
+        'gorod_y0': gorodY0,
+        'gorod_y1': gorodY1,
+        'polukon_y': polukonY,
+        'bat_r': batR,
+        'bat_m': batM,
+        'bat_dec': batDec,
+        'piece_r': pieceR,
+        'piece_m': pieceM,
+        'piece_dec': pieceDec,
+        'min_speed': minSpeed,
+        'max_speed': maxSpeed,
+        'e_body': eBody,
+        'field_pad': fieldPad,
+        'max_steps': maxSteps,
+        'bats': bats,
+        'scatter': scatter,
+        'star_figs': starFigs,
+        'fig1': fig1,
+        'fig2': fig2,
+        'fig3': fig3,
+        'fig4': fig4,
+        'fig5': fig5,
+        'steps_per_frame': stepsPerFrame,
+        'time_cap_s': timeCapS,
+      };
+}
+
+class TuningMinigamesDurak {
+  TuningMinigamesDurak._(_R r)
+      : hand = r.i('hand'),
+        opponents = r.il('opponents'),
+        aiErrorPct = r.il('ai_error_pct'),
+        timeCapS = r.i('time_cap_s'),
+        aiThinkS = r.d('ai_think_s');
+
+  int hand;
+
+  /// AI players by difficulty 1-5
+  List<int> opponents;
+
+  List<int> aiErrorPct;
+
+  /// UI only
+  int timeCapS;
+
+  /// UI only
+  double aiThinkS;
+
+  Map<String, Object> toJson() => {
+        'hand': hand,
+        'opponents': opponents,
+        'ai_error_pct': aiErrorPct,
+        'time_cap_s': timeCapS,
+        'ai_think_s': aiThinkS,
       };
 }
 
