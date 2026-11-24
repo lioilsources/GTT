@@ -203,6 +203,31 @@ textu a log (R10). Id = spot obchodu: `souvenir_times_sq` (sněžítko s mrakodr
 bez nápisu), `souvenir_dumbo` (malý model visutého mostu), `souvenir_soho` (taška s abstraktním
 vzorem). Do té doby klient kreslí ikonu a jméno.
 
+### 8. Portréty NPC po městech (dávka gtt-npc-cities)
+Dnes mají všech šest postav ve všech městech stejný portrét. Každé město dostane vlastní podobu
+stejných šesti postav (stejné `id`, archetyp, věk a povaha z `content/npc/characters.yaml`):
+etnikum, vizáž, účes a oblečení odpovídají lidem, které v té metropoli dnes běžně potkáš.
+Stávající portréty zůstávají pro New York (rozmanité město, ponechat).
+
+Soubory: `assets/npc/<city>/<id>.png` (= `_neutral`), `<id>_happy|_neutral|_annoyed.png` 1024×1024,
+`<id>_bust.png` 768×1280; rozměry, ořez, průhledné pozadí a styl jako v kap. 1, aby ladily s NYC.
+Města `prague`, `tokyo`, `moscow` → 6 postav × 5 souborů × 3 města = 90 obrázků.
+
+| id | archetyp | Praha | Tokio | Moskva |
+|---|---|---|---|---|
+| maya (24) | influencerka | středoevropská, streetwear, kavárna na Letné | japonská, módní vrstvení z Harajuku/Shibuye | ruská/slovanská, upravená, kabát a výrazné doplňky |
+| theo (27) | barista hipster | český hipster z Vinohrad, svetr, brýle | japonský barista, zástěra, minimalistický styl | moskevský barista, beanie, tetování bez symbolů |
+| ray (58) | taxikář filozof | starší Pražák, bunda, knír | japonský taxikář v uniformě a bílých rukavicích | starší Moskvan, kožená bunda, placatá čepice |
+| iris (29) | knihomolka | středoevropská, pletený svetr, plátěná taška | japonská, kardigan, úhledná, brýle | ruská/slovanská, dlouhý kabát, šála |
+| jules (31) | pouliční muzikant | buskr z Karlova mostu, kytara | japonský pouliční muzikant (Shinjuku), kytara | muzikant z Arbatu, kytara nebo harmonika |
+| dana (38) | manažerka ve spěchu | česká manažerka, sako, telefon | japonská office lady/manažerka, tmavý kostým | moskevská manažerka, elegantní kabát, telefon |
+
+Pravidla: dospělí, fiktivní (žádné skutečné osoby), důstojně a bez karikatury či stereotypů,
+současné oblečení (žádné kroje ani kostýmy), bez čitelného textu, log a značek (R10), bez
+politických a státních symbolů. Výrazy `_happy/_neutral/_annoyed` mají být stejná osoba.
+Klient: výběr portrétu podle města s návratem na `assets/npc/<id>*.png` přijde se změnou
+`specs/dialogue.md` po dodání (do té doby se obrázky jen uloží).
+
 ## Hotovo
 
 (sem připisovat dodané položky: cesta, datum, poznámka)
