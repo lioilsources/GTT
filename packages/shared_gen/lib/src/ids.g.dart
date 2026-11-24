@@ -29,6 +29,7 @@ enum CityId {
 /// Cars defined in content/cars/<id>.json.
 enum CarId {
   busCity('bus_city'),
+  busIskra('bus_iskra'),
   coupeNova('coupe_nova'),
   coupeStrada('coupe_strada'),
   hatchCity('hatch_city'),
@@ -57,6 +58,7 @@ enum CarId {
   sedanCrown('sedan_crown'),
   sedanHarbor('sedan_harbor'),
   sedanRegent('sedan_regent'),
+  sedanSokol('sedan_sokol'),
   specGrill('spec_grill'),
   specRickshaw('spec_rickshaw'),
   specTrike('spec_trike'),
@@ -65,6 +67,7 @@ enum CarId {
   superVento('super_vento'),
   taxiClassic('taxi_classic'),
   taxiMetro('taxi_metro'),
+  taxiSokol('taxi_sokol'),
   vanBox('van_box'),
   vanCourier('van_courier'),
   vanWander('van_wander'),

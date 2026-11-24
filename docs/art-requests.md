@@ -60,7 +60,7 @@ bez textu (název dodá hra z `i18n/`). Seznam = `hero: true` v `content/cities/
 
 (Pozor: na budovách nesmí být loga nájemců, např. reklamy na Times Square vymyslet fiktivní.)
 
-### 3. Auta shora – 43 aut + provoz a hlídka (jak je hra kreslí: `specs/art.md` v2 „Auta“)
+### 3. Auta shora – 46 aut + provoz a hlídka (jak je hra kreslí: `specs/art.md` v2 „Auta“)
 **Formát (závazný, jinak sprite nesedí na kolizi):**
 - Pohled **kolmo shora**, předek **nahoru**, bez perspektivy a bez vrženého stínu (stín kreslí kód).
 - Měřítko **32 px na metr skutečného auta** (rozměry z tabulky = `length_m × width_m` v
@@ -107,12 +107,12 @@ hotové (56 × 148), chybí k ní maska a kolo.
 | dávka | id | jméno (fiktivní) | třída | délka × šířka m | plátno px (š × v) | lak | města |
 |---|---|---|---|---|---|---|---|
 | **1** | m0_coupe | Varga Comet | kupé | 4,5 × 1,9 | 67 × 159 | comet_red | nyc |
-| **1** | taxi_metro | Halden Metro Cab | taxi | 5 × 1,9 | 67 × 176 | cab_yellow | nyc, tokyo |
-| **1** | hatch_pip | Lumo Pip | hatchback | 3,9 × 1,75 | 62 × 138 | pip_teal | nyc, prague, tokyo |
-| **1** | sedan_harbor | Halden Harbor | sedan | 4,8 × 1,85 | 66 × 169 | harbor_slate | nyc, tokyo |
-| **1** | sedan_crown | Amberline Crown 300 | sedan | 5,2 × 1,9 | 67 × 184 | crown_wine | nyc, tokyo |
-| **1** | van_courier | Halden Courier | dodávka | 5,4 × 2 | 71 × 191 | courier_white | nyc, tokyo |
-| **1** | mini_pebble | Ostra Pebble | mini | 3 × 1,6 | 57 × 106 | pebble_sky | nyc, tokyo |
+| **1** | taxi_metro | Halden Metro Cab | taxi | 5 × 1,9 | 67 × 176 | cab_yellow | nyc, tokyo, moscow |
+| **1** | hatch_pip | Lumo Pip | hatchback | 3,9 × 1,75 | 62 × 138 | pip_teal | nyc, prague, tokyo, moscow |
+| **1** | sedan_harbor | Halden Harbor | sedan | 4,8 × 1,85 | 66 × 169 | harbor_slate | nyc, tokyo, moscow |
+| **1** | sedan_crown | Amberline Crown 300 | sedan | 5,2 × 1,9 | 67 × 184 | crown_wine | nyc, tokyo, moscow |
+| **1** | van_courier | Halden Courier | dodávka | 5,4 × 2 | 71 × 191 | courier_white | nyc, tokyo, moscow |
+| **1** | mini_pebble | Ostra Pebble | mini | 3 × 1,6 | 57 × 106 | pebble_sky | nyc, tokyo, moscow |
 | **1** | pickup_hauler | Torvik Hauler | pick-up | 5,4 × 2 | 71 × 191 | hauler_green | nyc |
 | **1** | muscle_brute | Corvan Brute 70 | muscle | 4,9 × 1,95 | 69 × 173 | brute_orange | nyc |
 |  | bus_city | Halden Citybus 40 | autobus | 12 × 2,55 | 90 × 423 | citybus_blue | nyc |
@@ -128,9 +128,9 @@ hotové (56 × 148), chybí k ní maska a kolo.
 |  | limo_grand | Amberline Grand Stretch | limuzína | 8,2 × 2,05 | 73 × 289 | grand_white | nyc |
 |  | limo_stretch | Nordquist Regent Stretch | limuzína | 7,6 × 2 | 71 × 268 | stretch_black | nyc |
 |  | micro_cruiser | Hudsonia Cruiser | mikro | 1,8 × 0,6 | 22 × 64 | cruiser_cobalt | nyc |
-|  | micro_scoot | Zip E-Scoot | mikro | 1,15 × 0,55 | 20 × 41 | scoot_aqua | nyc, tokyo |
-|  | mini_bolt | Quillon Bolt E | mini | 3,4 × 1,7 | 60 × 120 | bolt_lime | nyc, tokyo |
-|  | mini_dot | Lumo Dot | mini | 2,7 × 1,55 | 55 × 96 | dot_pink | nyc, tokyo |
+|  | micro_scoot | Zip E-Scoot | mikro | 1,15 × 0,55 | 20 × 41 | scoot_aqua | nyc, tokyo, moscow |
+|  | mini_bolt | Quillon Bolt E | mini | 3,4 × 1,7 | 60 × 120 | bolt_lime | nyc, tokyo, moscow |
+|  | mini_dot | Lumo Dot | mini | 2,7 × 1,55 | 55 × 96 | dot_pink | nyc, tokyo, moscow |
 |  | muscle_bulldog | Rennet Bulldog 8 | muscle | 5,1 × 1,98 | 70 × 180 | bulldog_plum | nyc |
 |  | muscle_thunder | Corvan Thunder 69 | muscle | 5 × 1,95 | 69 × 176 | thunder_black | nyc |
 |  | off_bloc | Nordquist Bloc G | terénní | 4,8 × 1,98 | 70 × 169 | bloc_olive | nyc |
@@ -140,15 +140,27 @@ hotové (56 × 148), chybí k ní maska a kolo.
 |  | spec_grill | Rennet Grill Wagon | speciální | 7 × 2,3 | 81 × 247 | grill_tomato | nyc |
 |  | spec_rickshaw | Pedalo Rickshaw | speciální | 2,6 × 1,2 | 43 × 92 | rickshaw_rose | nyc |
 |  | spec_trike | Ostra Trike 3 | speciální | 3,2 × 1,5 | 53 × 113 | trike_violet | nyc |
-|  | super_arrow | Kestrel Arrow R | supersport | 4,5 × 1,95 | 69 × 159 | arrow_gold | nyc, tokyo |
+|  | super_arrow | Kestrel Arrow R | supersport | 4,5 × 1,95 | 69 × 159 | arrow_gold | nyc, tokyo, moscow |
 |  | super_lumen | Quillon Lumen EV | supersport | 4,7 × 1,98 | 70 × 166 | lumen_frost | nyc |
 |  | super_vento | Ostra Vento | supersport | 4,4 × 1,92 | 68 × 155 | vento_green | nyc |
 |  | taxi_classic | Corvan Metro Classic | taxi | 5,4 × 2 | 71 × 191 | classic_yellow | nyc |
-|  | van_box | Torvik Boxline | dodávka | 6,6 × 2,2 | 78 × 233 | box_bone | nyc, tokyo |
+|  | van_box | Torvik Boxline | dodávka | 6,6 × 2,2 | 78 × 233 | box_bone | nyc, tokyo, moscow |
 |  | van_wander | Bellmar Wanderbus | dodávka | 4,6 × 1,8 | 64 × 162 | wander_amber | nyc |
-|  | vega_roadster | Vega Roadster | supersport | 4 × 1,85 | 66 × 141 | vega_cherry | nyc, prague, tokyo |
+|  | vega_roadster | Vega Roadster | supersport | 4 × 1,85 | 66 × 141 | vega_cherry | nyc, prague, tokyo, moscow |
 |  | vet_skyliner | Amberline Skyliner 59 | veterán | 5,6 × 2 | 71 × 198 | skyliner_mint | nyc |
 |  | vet_tourer | Halden Tourer 1931 | veterán | 4,6 × 1,75 | 62 × 162 | tourer_black | nyc |
+
+**Moskva, dávka moscow-cars** (M6-S5, `plans/M6_MOSKVA.md` bod 5, styl E – konstruktivistický plakát):
+tři místní vozidla. Siluety fiktivní (R10, ne podoba skutečného sovětského modelu), formát a vrstvy
+stejné jako výše. Taxi: střešní cedule bez nápisu a šachovnicový pruh v `body.png` (jako ostatní
+taxi). Trolejbus: třída `bus` (kola +0,60 / −0,70 · L/2), na střeše dva sběrače ve směru jízdy
+uvnitř obrysu (nelakované, tmavé), dveře na pravém boku. Do té doby je hra kreslí procedurálně.
+
+| dávka | id | jméno (fiktivní) | třída | délka × šířka m | plátno px (š × v) | lak | města |
+|---|---|---|---|---|---|---|---|
+| moscow-cars | sedan_sokol | Sokol 21 | sedan | 4,8 × 1,8 | 64 × 169 | sokol_ochre | moscow |
+| moscow-cars | taxi_sokol | Sokol 21 Taksi | taxi | 4,8 × 1,8 | 64 × 169 | sokol_cream | moscow |
+| moscow-cars | bus_iskra | Iskra TB-9 | autobus (trolejbus) | 11,8 × 2,5 | 88 × 416 | iskra_red | moscow |
 
 Lak = klíč barvy v `design/tokens.json` → `color.carPaint` (hra ho dosadí; sprite ho nemaluje).
 

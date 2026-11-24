@@ -4153,7 +4153,7 @@ class TuningCarsParked {
   /// RoadClass: primary, secondary, tertiary, residential
   List<int> classes;
 
-  /// filtered by the city's tag; every car parks somewhere except the city bus and the Vega (hop tank, garage only; specs/cars.md)
+  /// filtered by the city's tag; every car parks somewhere except the buses (city bus, Moscow trolleybus) and the Vega (hop tank, garage only; specs/cars.md)
   List<String> models;
 
   double segmentMarginM;

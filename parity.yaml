@@ -681,3 +681,11 @@
   lead: web
   flutter: done
   web: done
+
+- id: F-079
+  name: "Místní vozidla Moskvy: Sokol 21, Sokol 21 Taksi, trolejbus Iskra TB-9 (M6-S5)"
+  level: P2
+  spec: specs/cars.md@2
+  lead: web
+  flutter: todo
+  web: todo

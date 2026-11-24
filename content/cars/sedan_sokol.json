@@ -1,0 +1,21 @@
+{
+  "id": "sedan_sokol",
+  "name": "Sokol 21",
+  "class": "sedan",
+  "length_m": 4.8,
+  "width_m": 1.8,
+  "mass": 1450,
+  "power": 6.4,
+  "brake": 13.0,
+  "grip_front": 20.5,
+  "grip_rear": 19.5,
+  "drift_bias": 0.44,
+  "steer_speed": 4.2,
+  "top_speed": 33.0,
+  "seats": 5,
+  "tags": ["moscow"],
+  "price": 6000,
+  "rarity": "common",
+  "tuning_slots": ["engine", "tyres", "brakes", "weight", "drift"],
+  "paint": "sokol_ochre"
+}
