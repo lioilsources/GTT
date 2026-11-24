@@ -679,5 +679,5 @@
   level: P2
   spec: specs/cities.md@2
   lead: web
-  flutter: todo
-  web: todo
+  flutter: done
+  web: done

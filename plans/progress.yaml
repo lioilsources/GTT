@@ -256,7 +256,7 @@ counters:
   stuck: {per_10min: null, target: 1, measured: null}   # specs/flow.md, M5-A4 (from stuck.log / overlay)
   # ---------- M6 – Moskva (plans/M6_MOSKVA.md), po L souběžně s M4
   - {id: M6-S1, milestone: M6, name: "balíček Moskva: oblast X1, 25 památek, spoty, terén a příroda, validate", size: L, status: wip, started: 2026-11-23T12:30}
-  - {id: M6-S2, milestone: M6, name: "Moskva v klientech: registrace, balíček, paleta (F-078)", size: M, status: todo}
+  - {id: M6-S2, milestone: M6, name: "Moskva v klientech: registrace, balíček, paleta (F-078)", size: M, status: "čeká na Ol1na", started: 2026-11-24T09:00, done: 2026-11-24T10:00, evidence: "W: PR #290 (testy výběru, balíčku, palety E, soak 4 měst; kód obecný), F: PR #284 balíček + PR #289 paleta E, soak CityId.moscow; parita F-078 obě done; chybí projet Moskvu na telefonu"}
   - {id: M6-S3, milestone: M6, name: "styl E – konstruktivistický plakát", size: M, status: todo}
   - {id: M6-S4, milestone: M6, name: "grafika Moskvy: style check, pohlednice, textury, suvenýry (L40S)", size: M, status: todo}
   - {id: M6-S5, milestone: M6, name: "místní vozidla Moskvy", size: M, status: todo}
