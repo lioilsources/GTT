@@ -32,6 +32,9 @@ import { DriftRules } from '../minigames/drift/rules';
 import { SprintRules } from '../minigames/sprint/rules';
 import { StickballRules } from '../minigames/stickball/rules';
 import { DoubledutchRules } from '../minigames/doubledutch/rules';
+import { SachyRules } from '../minigames/sachy/rules';
+import { GorodkiRules } from '../minigames/gorodki/rules';
+import { DurakRules } from '../minigames/durak/rules';
 import { RouteRules } from '../drive/gps';
 import { FeedRules } from '../phone/feed';
 import { PassportRules } from '../passport/rules';
@@ -110,6 +113,9 @@ export const rulesModules: Record<string, () => AnyRules> = {
   sprint: () => new SprintRules() as unknown as AnyRules,
   stickball: () => new StickballRules() as unknown as AnyRules,
   doubledutch: () => new DoubledutchRules() as unknown as AnyRules,
+  sachy: () => new SachyRules() as unknown as AnyRules,
+  gorodki: () => new GorodkiRules() as unknown as AnyRules,
+  durak: () => new DurakRules() as unknown as AnyRules,
   passport: () => new PassportRules() as unknown as AnyRules,
   dialogue: () => new DialogueRules() as unknown as AnyRules,
   cars: () => new CarsRules() as unknown as AnyRules,
