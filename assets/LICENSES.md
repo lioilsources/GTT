@@ -38,3 +38,10 @@ s omezující licencí (Illustrious-XL).
 |---|---|---|---|---|
 | `styleboard/tokyo/*.png` | Qwen-Image (fp8), ComfyUI | Apache 2.0 | vlastní dílo projektu GTT | kontrola stylu, seedy 11, 12 (`tools/art/make_tokyo1.py style`) |
 | `postcards/tokyo/*.png` | Qwen-Image (fp8), ComfyUI | Apache 2.0 | vlastní dílo projektu GTT | várky tokyo3 (seedy 221–223) a tokyo4 (seedy 231–233, `tools/art/make_tokyo1.py`), výběr a ploché přebarvení zbylých falešných nápisů na štítech, cedulkách a lampionech (`tools/art/post_tokyo.py`), ořez 1080×1350, 256 barev |
+
+## Moskva (styl E, konstruktivistický plakát)
+
+| Cesta | Model / nástroj | Licence modelu | Licence výstupu | Poznámka |
+|---|---|---|---|---|
+| `styleboard/moscow/*.png` | Qwen-Image (fp8), ComfyUI | Apache 2.0 | vlastní dílo projektu GTT | kontrola stylu E (konstruktivistický plakát), seedy 11, 12 (`tools/art/make_moscow1.py style`), 256 barev |
+| `postcards/moscow/*.png` | Qwen-Image (fp8), ComfyUI | Apache 2.0 | vlastní dílo projektu GTT | várka moscow1 (seedy 301–303) a oprava fix1 (pushkin_square seed 312, `tools/art/make_moscow1.py`), styl E, výběr, vyčištění popisků v okraji papíru a ploché přebarvení vlajek, nápisu a státního znaku (`tools/art/post_moscow.py`), ořez 1080×1350, 256 barev |

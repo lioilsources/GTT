@@ -65,8 +65,9 @@ P = {
  "house_on_embankment": "the massive grey constructivist House on the Embankment apartment block by the river",
  "bolshoy_kamenny": "the Bolshoy Kamenny Bridge, a long flat steel arch bridge over the Moskva river with the Kremlin "
                     "towers and golden domes behind",
- "pushkin_square": "Pushkin Square with a bronze statue of a poet on a tall pedestal, fountains and trees, plain "
-                   "building facades behind",
+ "pushkin_square": "Pushkin Square with a bronze statue of a young clean-shaven poet with curly hair and long "
+                   "sideburns, no beard, in a long cloak with his head slightly bowed, on a tall pedestal, fountains "
+                   "and trees, plain building facades behind",
  "komsomolskaya": "Komsomolskaya Square with three historic railway station buildings: one with a tall tented clock "
                   "tower that has plain marks only, one with a pointed spire, and one with a fairy-tale tower",
 }
@@ -96,6 +97,12 @@ elif mode == "postcards":
                 f"illustrated travel postcard of {v} in Moscow, vertical composition, full bleed illustration, the "
                 f"landmark is the main subject, dynamic diagonal composition. Style: {E}, {PAL}. {NOSIGN}.",
                 NEG if k in STARS else NEG_NOSTAR)
+elif mode == "fix1":  # oprava 1: Puškin bez plnovousu (v1 vypadal jako jiná historická postava)
+    for s in (311, 312, 313):
+        job(f"postcards/moscow/pushkin_square_s{s}", 1088, 1360, s,
+            f"illustrated travel postcard of {P['pushkin_square']} in Moscow, vertical composition, full bleed "
+            f"illustration, the landmark is the main subject, dynamic diagonal composition. Style: {E}, {PAL}. {NOSIGN}.",
+            NEG_NOSTAR + ", beard, bearded man")
 elif mode == "tex":
     TEX = ("a square close-up swatch of the material only, flat surface filling the entire image edge to edge, camera "
            f"pointing straight down, even neutral light, no shadows, no objects, no borders, no perspective. Style: {E_TOP}")
