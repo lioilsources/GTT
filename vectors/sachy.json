@@ -1,0 +1,3984 @@
+{
+ "module": "sachy",
+ "specVersion": 1,
+ "$comment": "specs/minigames/sachy.md; AI moves as {by: ai, level} decided by aiAction (negamax over the ai stream), player moves written out (chosen by a second negamax bot); recorded by web (metro vectors record --client web --module sachy).",
+ "cases": [
+  {
+   "name": "level 1 vs strong player: player mates fast",
+   "config": {
+    "aiDepth": [
+     1,
+     1,
+     2,
+     3,
+     4
+    ],
+    "aiErrorPct": [
+     40,
+     25,
+     12,
+     5,
+     0
+    ],
+    "quietLimit": 30,
+    "fastPlies": 40
+   },
+   "seed": 1,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "from": 15,
+      "to": 10
+     },
+     "state": {
+      "board": "rnbqkpppppP.....PPPPRNBQK",
+      "turn": "ai",
+      "plies": 1,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 1
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "board": "rnbqkp.pppp.....PPPPRNBQK",
+      "turn": "player",
+      "plies": 2,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 1
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "from": 16,
+      "to": 10
+     },
+     "state": {
+      "board": "rnbqkp.pppP......PPPRNBQK",
+      "turn": "ai",
+      "plies": 3,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 1
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "board": "r.bqkp.pppn......PPPRNBQK",
+      "turn": "player",
+      "plies": 4,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 1
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "from": 21,
+      "to": 10
+     },
+     "state": {
+      "board": "r.bqkp.pppN......PPPR.BQK",
+      "turn": "ai",
+      "plies": 5,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 1
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "board": "r..qkp.pppb......PPPR.BQK",
+      "turn": "player",
+      "plies": 6,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 1
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "from": 20,
+      "to": 10
+     },
+     "state": {
+      "board": "r..qkp.pppR......PPP..BQK",
+      "turn": "ai",
+      "plies": 7,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 1
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "board": "r..qkp..ppR.p....PPP..BQK",
+      "turn": "player",
+      "plies": 8,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 1
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "from": 18,
+      "to": 12
+     },
+     "state": {
+      "board": "r..qkp..ppR.P....P.P..BQK",
+      "turn": "ai",
+      "plies": 9,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 1
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "board": "r..qkp...pR.p....P.P..BQK",
+      "turn": "player",
+      "plies": 10,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 1
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "from": 10,
+      "to": 12
+     },
+     "state": {
+      "board": "r..qkp...p..R....P.P..BQK",
+      "turn": "ai",
+      "plies": 11,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 1
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "board": "r...kp...p..R....P.P..BqK",
+      "turn": "player",
+      "plies": 12,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 1
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "from": 24,
+      "to": 23
+     },
+     "state": {
+      "board": "r...kp...p..R....P.P..BK.",
+      "turn": "ai",
+      "plies": 13,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 1
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "board": "...rkp...p..R....P.P..BK.",
+      "turn": "player",
+      "plies": 14,
+      "quiet": 1,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 1
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "from": 22,
+      "to": 18
+     },
+     "state": {
+      "board": "...rkp...p..R....PBP...K.",
+      "turn": "ai",
+      "plies": 15,
+      "quiet": 2,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 1
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "board": "....kp...p..R....PrP...K.",
+      "turn": "player",
+      "plies": 16,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 1
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "from": 23,
+      "to": 18
+     },
+     "state": {
+      "board": "....kp...p..R....PKP.....",
+      "turn": "ai",
+      "plies": 17,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 1
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "board": "....k....pp.R....PKP.....",
+      "turn": "player",
+      "plies": 18,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 1
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "from": 12,
+      "to": 10
+     },
+     "state": {
+      "board": "....k....pR......PKP.....",
+      "turn": "ai",
+      "plies": 19,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 1
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "board": "........kpR......PKP.....",
+      "turn": "player",
+      "plies": 20,
+      "quiet": 1,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 1
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "from": 10,
+      "to": 5
+     },
+     "state": {
+      "board": ".....R..kp.......PKP.....",
+      "turn": "ai",
+      "plies": 21,
+      "quiet": 2,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 1
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "board": "..k..R...p.......PKP.....",
+      "turn": "player",
+      "plies": 22,
+      "quiet": 3,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 1
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "from": 5,
+      "to": 9
+     },
+     "state": {
+      "board": "..k......R.......PKP.....",
+      "turn": "ai",
+      "plies": 23,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 1
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "board": ".k.......R.......PKP.....",
+      "turn": "player",
+      "plies": 24,
+      "quiet": 1,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 1
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "from": 17,
+      "to": 12
+     },
+     "state": {
+      "board": ".k.......R..P.....KP.....",
+      "turn": "ai",
+      "plies": 25,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 1
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "board": "k........R..P.....KP.....",
+      "turn": "player",
+      "plies": 26,
+      "quiet": 1,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 1
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "from": 12,
+      "to": 7
+     },
+     "state": {
+      "board": "k......P.R........KP.....",
+      "turn": "ai",
+      "plies": 27,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 1
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "board": ".....k.P.R........KP.....",
+      "turn": "player",
+      "plies": 28,
+      "quiet": 1,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 1
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "from": 7,
+      "to": 2
+     },
+     "state": {
+      "board": "..Q..k...R........KP.....",
+      "turn": "ai",
+      "plies": 29,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 1
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "board": "..Q......R.k......KP.....",
+      "turn": "player",
+      "plies": 30,
+      "quiet": 1,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 1
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "from": 2,
+      "to": 0
+     },
+     "state": {
+      "board": "Q........R.k......KP.....",
+      "turn": "ai",
+      "plies": 31,
+      "quiet": 2,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 1
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "board": "Q........R......k.KP.....",
+      "turn": "player",
+      "plies": 32,
+      "quiet": 3,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 1
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "from": 9,
+      "to": 6
+     },
+     "state": {
+      "board": "Q.....R.........k.KP.....",
+      "turn": "ai",
+      "plies": 33,
+      "quiet": 4,
+      "over": true,
+      "winner": "player",
+      "byCount": false,
+      "rng": 1
+     }
+    }
+   ],
+   "result": {
+    "winner": "player",
+    "stars": 3,
+    "score": 150,
+    "byCount": false,
+    "player": 15,
+    "ai": 0,
+    "plies": 33
+   }
+  },
+  {
+   "name": "level 2 vs player bot 3",
+   "config": {
+    "aiDepth": [
+     1,
+     1,
+     2,
+     3,
+     4
+    ],
+    "aiErrorPct": [
+     40,
+     25,
+     12,
+     5,
+     0
+    ],
+    "quietLimit": 30,
+    "fastPlies": 40
+   },
+   "seed": 2,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "from": 15,
+      "to": 10
+     },
+     "state": {
+      "board": "rnbqkpppppP.....PPPPRNBQK",
+      "turn": "ai",
+      "plies": 1,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 2
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "board": "rnbqkp.pppp.....PPPPRNBQK",
+      "turn": "player",
+      "plies": 2,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 2
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "from": 19,
+      "to": 14
+     },
+     "state": {
+      "board": "rnbqkp.pppp...P.PPP.RNBQK",
+      "turn": "ai",
+      "plies": 3,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 2
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "board": "rnbqkp.ppp....PpPPP.RNBQK",
+      "turn": "player",
+      "plies": 4,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 2
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "from": 20,
+      "to": 15
+     },
+     "state": {
+      "board": "rnbqkp.ppp....PRPPP..NBQK",
+      "turn": "ai",
+      "plies": 5,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 2
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "board": "r.bqkp.pppn...PRPPP..NBQK",
+      "turn": "player",
+      "plies": 6,
+      "quiet": 1,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 2
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "from": 16,
+      "to": 10
+     },
+     "state": {
+      "board": "r.bqkp.pppP...PR.PP..NBQK",
+      "turn": "ai",
+      "plies": 7,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 2
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "board": "r.bqkp.p.pP...pR.PP..NBQK",
+      "turn": "player",
+      "plies": 8,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 2
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "from": 22,
+      "to": 16
+     },
+     "state": {
+      "board": "r.bqkp.p.pP...pRBPP..N.QK",
+      "turn": "ai",
+      "plies": 9,
+      "quiet": 1,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 2
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "board": "r.bqkp...pP.p.pRBPP..N.QK",
+      "turn": "player",
+      "plies": 10,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 2
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "from": 16,
+      "to": 12
+     },
+     "state": {
+      "board": "r.bqkp...pP.B.pR.PP..N.QK",
+      "turn": "ai",
+      "plies": 11,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 2
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "board": "r..qkp..bpP.B.pR.PP..N.QK",
+      "turn": "player",
+      "plies": 12,
+      "quiet": 1,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 2
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "from": 12,
+      "to": 0
+     },
+     "state": {
+      "board": "B..qkp..bpP...pR.PP..N.QK",
+      "turn": "ai",
+      "plies": 13,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 2
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "board": "B...kp..bpP...pq.PP..N.QK",
+      "turn": "player",
+      "plies": 14,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 2
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "from": 18,
+      "to": 14
+     },
+     "state": {
+      "board": "B...kp..bpP...Pq.P...N.QK",
+      "turn": "ai",
+      "plies": 15,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 2
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "board": "B...kp..bpP...P..P...q.QK",
+      "turn": "player",
+      "plies": 16,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 2
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "from": 23,
+      "to": 21
+     },
+     "state": {
+      "board": "B...kp..bpP...P..P...Q..K",
+      "turn": "ai",
+      "plies": 17,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 2
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "board": "B...kp...pP...b..P...Q..K",
+      "turn": "player",
+      "plies": 18,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 2
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "from": 17,
+      "to": 12
+     },
+     "state": {
+      "board": "B...kp...pP.P.b......Q..K",
+      "turn": "ai",
+      "plies": 19,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 2
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "board": "B..k.p...pP.P.b......Q..K",
+      "turn": "player",
+      "plies": 20,
+      "quiet": 1,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 2
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "from": 0,
+      "to": 6
+     },
+     "state": {
+      "board": "...k.pB..pP.P.b......Q..K",
+      "turn": "ai",
+      "plies": 21,
+      "quiet": 2,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 2
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "board": "....kpB..pP.P.b......Q..K",
+      "turn": "player",
+      "plies": 22,
+      "quiet": 3,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 2
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "from": 12,
+      "to": 7
+     },
+     "state": {
+      "board": "....kpBP.pP...b......Q..K",
+      "turn": "ai",
+      "plies": 23,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 2
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 2
+     },
+     "state": {
+      "board": ".....pBPkpP...b......Q..K",
+      "turn": "player",
+      "plies": 24,
+      "quiet": 1,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 2
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "from": 7,
+      "to": 2
+     },
+     "state": {
+      "board": "..Q..pB.kpP...b......Q..K",
+      "turn": "ai",
+      "plies": 25,
+      "quiet": 0,
+      "over": true,
+      "winner": "player",
+      "byCount": false,
+      "rng": 2
+     }
+    }
+   ],
+   "result": {
+    "winner": "player",
+    "stars": 3,
+    "score": 220,
+    "byCount": false,
+    "player": 22,
+    "ai": 5,
+    "plies": 25
+   }
+  },
+  {
+   "name": "level 3 vs player bot 3",
+   "config": {
+    "aiDepth": [
+     1,
+     1,
+     2,
+     3,
+     4
+    ],
+    "aiErrorPct": [
+     40,
+     25,
+     12,
+     5,
+     0
+    ],
+    "quietLimit": 30,
+    "fastPlies": 40
+   },
+   "seed": 3,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "from": 15,
+      "to": 10
+     },
+     "state": {
+      "board": "rnbqkpppppP.....PPPPRNBQK",
+      "turn": "ai",
+      "plies": 1,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 3
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "board": "rnbqkppp.pP..p..PPPPRNBQK",
+      "turn": "player",
+      "plies": 2,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 3
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "from": 17,
+      "to": 13
+     },
+     "state": {
+      "board": "rnbqkppp.pP..P..P.PPRNBQK",
+      "turn": "ai",
+      "plies": 3,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 3
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "board": "rnbqkp.p.pp..P..P.PPRNBQK",
+      "turn": "player",
+      "plies": 4,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 3
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "from": 16,
+      "to": 11
+     },
+     "state": {
+      "board": "rnbqkp.p.ppP.P....PPRNBQK",
+      "turn": "ai",
+      "plies": 5,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 3
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "board": "rnbqk..p.ppp.P....PPRNBQK",
+      "turn": "player",
+      "plies": 6,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 3
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "from": 13,
+      "to": 7
+     },
+     "state": {
+      "board": "rnbqk..P.ppp......PPRNBQK",
+      "turn": "ai",
+      "plies": 7,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 3
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "board": ".nbqkr.P.ppp......PPRNBQK",
+      "turn": "player",
+      "plies": 8,
+      "quiet": 1,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 3
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "from": 7,
+      "to": 1
+     },
+     "state": {
+      "board": ".Qbqkr...ppp......PPRNBQK",
+      "turn": "ai",
+      "plies": 9,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 3
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "board": ".Qbqk...rppp......PPRNBQK",
+      "turn": "player",
+      "plies": 10,
+      "quiet": 1,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 3
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "from": 19,
+      "to": 14
+     },
+     "state": {
+      "board": ".Qbqk...rppp..P...P.RNBQK",
+      "turn": "ai",
+      "plies": 11,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 3
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "board": ".Qbqk....ppp..P...r.RNBQK",
+      "turn": "player",
+      "plies": 12,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 3
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "from": 21,
+      "to": 18
+     },
+     "state": {
+      "board": ".Qbqk....ppp..P...N.R.BQK",
+      "turn": "ai",
+      "plies": 13,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 3
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "board": ".Qbqk....p.p..Pp..N.R.BQK",
+      "turn": "player",
+      "plies": 14,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 3
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "from": 22,
+      "to": 16
+     },
+     "state": {
+      "board": ".Qbqk....p.p..PpB.N.R..QK",
+      "turn": "ai",
+      "plies": 15,
+      "quiet": 1,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 3
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "board": ".Q.qk...bp.p..PpB.N.R..QK",
+      "turn": "player",
+      "plies": 16,
+      "quiet": 2,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 3
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "from": 14,
+      "to": 8
+     },
+     "state": {
+      "board": ".Q.qk...Pp.p...pB.N.R..QK",
+      "turn": "ai",
+      "plies": 17,
+      "quiet": 0,
+      "over": true,
+      "winner": "player",
+      "byCount": false,
+      "rng": 3
+     }
+    }
+   ],
+   "result": {
+    "winner": "player",
+    "stars": 3,
+    "score": 300,
+    "byCount": false,
+    "player": 30,
+    "ai": 12,
+    "plies": 17
+   }
+  },
+  {
+   "name": "level 4 vs weak player: AI wins",
+   "config": {
+    "aiDepth": [
+     1,
+     1,
+     2,
+     3,
+     4
+    ],
+    "aiErrorPct": [
+     40,
+     25,
+     12,
+     5,
+     0
+    ],
+    "quietLimit": 30,
+    "fastPlies": 40
+   },
+   "seed": 4,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "from": 16,
+      "to": 11
+     },
+     "state": {
+      "board": "rnbqkppppp.P...P.PPPRNBQK",
+      "turn": "ai",
+      "plies": 1,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 4
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "board": "rnbqk.pppp.p...P.PPPRNBQK",
+      "turn": "player",
+      "plies": 2,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 4
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "from": 19,
+      "to": 14
+     },
+     "state": {
+      "board": "rnbqk.pppp.p..PP.PP.RNBQK",
+      "turn": "ai",
+      "plies": 3,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 4
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "board": "rnbqk.pp.p.p..pP.PP.RNBQK",
+      "turn": "player",
+      "plies": 4,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 4
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "from": 15,
+      "to": 10
+     },
+     "state": {
+      "board": "rnbqk.pp.pPp..p..PP.RNBQK",
+      "turn": "ai",
+      "plies": 5,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 4
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "board": "rnbqk.pp.pPp.....Pp.RNBQK",
+      "turn": "player",
+      "plies": 6,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 4
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "from": 21,
+      "to": 18
+     },
+     "state": {
+      "board": "rnbqk.pp.pPp.....PN.R.BQK",
+      "turn": "ai",
+      "plies": 7,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 4
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "board": "rnbqk..p.ppp.....PN.R.BQK",
+      "turn": "player",
+      "plies": 8,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 4
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "from": 17,
+      "to": 11
+     },
+     "state": {
+      "board": "rnbqk..p.ppP......N.R.BQK",
+      "turn": "ai",
+      "plies": 9,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 4
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "board": "rnbqk....ppp......N.R.BQK",
+      "turn": "player",
+      "plies": 10,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 4
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "from": 18,
+      "to": 11
+     },
+     "state": {
+      "board": "rnbqk....ppN........R.BQK",
+      "turn": "ai",
+      "plies": 11,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 4
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "board": "rn.qk.b..ppN........R.BQK",
+      "turn": "player",
+      "plies": 12,
+      "quiet": 1,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 4
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "from": 11,
+      "to": 18
+     },
+     "state": {
+      "board": "rn.qk.b..pp.......N.R.BQK",
+      "turn": "ai",
+      "plies": 13,
+      "quiet": 2,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 4
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "board": "rn..k.b..pp.......q.R.BQK",
+      "turn": "player",
+      "plies": 14,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 4
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "from": 22,
+      "to": 18
+     },
+     "state": {
+      "board": "rn..k.b..pp.......B.R..QK",
+      "turn": "ai",
+      "plies": 15,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 4
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "board": "rn..k....pp.......b.R..QK",
+      "turn": "player",
+      "plies": 16,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 4
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "from": 24,
+      "to": 18
+     },
+     "state": {
+      "board": "rn..k....pp.......K.R..Q.",
+      "turn": "ai",
+      "plies": 17,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 4
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "board": "r...k...npp.......K.R..Q.",
+      "turn": "player",
+      "plies": 18,
+      "quiet": 1,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 4
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "from": 20,
+      "to": 10
+     },
+     "state": {
+      "board": "r...k...npR.......K....Q.",
+      "turn": "ai",
+      "plies": 19,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 4
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "board": "....k...npr.......K....Q.",
+      "turn": "player",
+      "plies": 20,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 4
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "from": 18,
+      "to": 22
+     },
+     "state": {
+      "board": "....k...npr...........KQ.",
+      "turn": "ai",
+      "plies": 21,
+      "quiet": 1,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 4
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "board": "....k...np..........r.KQ.",
+      "turn": "player",
+      "plies": 22,
+      "quiet": 2,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 4
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "from": 22,
+      "to": 18
+     },
+     "state": {
+      "board": "....k...np........K.r..Q.",
+      "turn": "ai",
+      "plies": 23,
+      "quiet": 3,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 4
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "board": "....k...np........K....r.",
+      "turn": "player",
+      "plies": 24,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 4
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "from": 18,
+      "to": 23
+     },
+     "state": {
+      "board": "....k...np.............K.",
+      "turn": "ai",
+      "plies": 25,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 4
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "board": "....k...n.....p........K.",
+      "turn": "player",
+      "plies": 26,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 4
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "from": 23,
+      "to": 22
+     },
+     "state": {
+      "board": "....k...n.....p.......K..",
+      "turn": "ai",
+      "plies": 27,
+      "quiet": 1,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 4
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "board": "....k...n..........p..K..",
+      "turn": "player",
+      "plies": 28,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 4
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "from": 22,
+      "to": 16
+     },
+     "state": {
+      "board": "....k...n.......K..p.....",
+      "turn": "ai",
+      "plies": 29,
+      "quiet": 1,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 4
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "board": "...k....n.......K..p.....",
+      "turn": "player",
+      "plies": 30,
+      "quiet": 2,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 4
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "from": 16,
+      "to": 10
+     },
+     "state": {
+      "board": "...k....n.K........p.....",
+      "turn": "ai",
+      "plies": 31,
+      "quiet": 3,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 4
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "board": "..k.....n.K........p.....",
+      "turn": "player",
+      "plies": 32,
+      "quiet": 4,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 4
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "from": 10,
+      "to": 5
+     },
+     "state": {
+      "board": "..k..K..n..........p.....",
+      "turn": "ai",
+      "plies": 33,
+      "quiet": 5,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 4
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "board": "..k..K..n...............q",
+      "turn": "player",
+      "plies": 34,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 4
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "from": 5,
+      "to": 10
+     },
+     "state": {
+      "board": "..k.....n.K.............q",
+      "turn": "ai",
+      "plies": 35,
+      "quiet": 1,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 4
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "board": "..k.....n.K.........q....",
+      "turn": "player",
+      "plies": 36,
+      "quiet": 2,
+      "over": true,
+      "winner": "ai",
+      "byCount": false,
+      "rng": 4
+     }
+    }
+   ],
+   "result": {
+    "winner": "ai",
+    "stars": 0,
+    "score": 0,
+    "byCount": false,
+    "player": 0,
+    "ai": 12,
+    "plies": 36
+   }
+  },
+  {
+   "name": "level 5 vs player bot 2",
+   "config": {
+    "aiDepth": [
+     1,
+     1,
+     2,
+     3,
+     4
+    ],
+    "aiErrorPct": [
+     40,
+     25,
+     12,
+     5,
+     0
+    ],
+    "quietLimit": 30,
+    "fastPlies": 40
+   },
+   "seed": 5,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "from": 15,
+      "to": 10
+     },
+     "state": {
+      "board": "rnbqkpppppP.....PPPPRNBQK",
+      "turn": "ai",
+      "plies": 1,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 5
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "board": "rnbqkp.pppPp....PPPPRNBQK",
+      "turn": "player",
+      "plies": 2,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 5
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "from": 17,
+      "to": 11
+     },
+     "state": {
+      "board": "rnbqkp.pppPP....P.PPRNBQK",
+      "turn": "ai",
+      "plies": 3,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 5
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "board": "rnbqkp..ppPp....P.PPRNBQK",
+      "turn": "player",
+      "plies": 4,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 5
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "from": 23,
+      "to": 11
+     },
+     "state": {
+      "board": "rnbqkp..ppPQ....P.PPRNB.K",
+      "turn": "ai",
+      "plies": 5,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 5
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "board": "rnb.kp..ppPq....P.PPRNB.K",
+      "turn": "player",
+      "plies": 6,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 5
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "from": 18,
+      "to": 13
+     },
+     "state": {
+      "board": "rnb.kp..ppPq.P..P..PRNB.K",
+      "turn": "ai",
+      "plies": 7,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 5
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "board": "rnb.kp..p.Pq.Pp.P..PRNB.K",
+      "turn": "player",
+      "plies": 8,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 5
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "from": 22,
+      "to": 18
+     },
+     "state": {
+      "board": "rnb.kp..p.Pq.Pp.P.BPRN..K",
+      "turn": "ai",
+      "plies": 9,
+      "quiet": 1,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 5
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "board": "rnb.kp..p.P..Pp.q.BPRN..K",
+      "turn": "player",
+      "plies": 10,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 5
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "from": 18,
+      "to": 0
+     },
+     "state": {
+      "board": "Bnb.kp..p.P..Pp.q..PRN..K",
+      "turn": "ai",
+      "plies": 11,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 5
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 5
+     },
+     "state": {
+      "board": "Bnb.kp..p.P..Pp....PRNq.K",
+      "turn": "player",
+      "plies": 12,
+      "quiet": 1,
+      "over": true,
+      "winner": "ai",
+      "byCount": false,
+      "rng": 5
+     }
+    }
+   ],
+   "result": {
+    "winner": "ai",
+    "stars": 0,
+    "score": 140,
+    "byCount": false,
+    "player": 14,
+    "ai": 18,
+    "plies": 12
+   }
+  },
+  {
+   "name": "level 3 timeout after 12 plies decides by material",
+   "config": {
+    "aiDepth": [
+     1,
+     1,
+     2,
+     3,
+     4
+    ],
+    "aiErrorPct": [
+     40,
+     25,
+     12,
+     5,
+     0
+    ],
+    "quietLimit": 30,
+    "fastPlies": 40
+   },
+   "seed": 6,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "from": 15,
+      "to": 10
+     },
+     "state": {
+      "board": "rnbqkpppppP.....PPPPRNBQK",
+      "turn": "ai",
+      "plies": 1,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 6
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "board": "rnbqkp.pppp.....PPPPRNBQK",
+      "turn": "player",
+      "plies": 2,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 6
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "from": 19,
+      "to": 14
+     },
+     "state": {
+      "board": "rnbqkp.pppp...P.PPP.RNBQK",
+      "turn": "ai",
+      "plies": 3,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 6
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "board": "rnbqkp.p.pp...p.PPP.RNBQK",
+      "turn": "player",
+      "plies": 4,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 6
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "from": 16,
+      "to": 10
+     },
+     "state": {
+      "board": "rnbqkp.p.pP...p..PP.RNBQK",
+      "turn": "ai",
+      "plies": 5,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 6
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "board": "rnbqkp.p.pP......Pp.RNBQK",
+      "turn": "player",
+      "plies": 6,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 6
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "from": 21,
+      "to": 18
+     },
+     "state": {
+      "board": "rnbqkp.p.pP......PN.R.BQK",
+      "turn": "ai",
+      "plies": 7,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 6
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "board": "rn.qkpbp.pP......PN.R.BQK",
+      "turn": "player",
+      "plies": 8,
+      "quiet": 1,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 6
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "from": 10,
+      "to": 6
+     },
+     "state": {
+      "board": "rn.qkpPp.p.......PN.R.BQK",
+      "turn": "ai",
+      "plies": 9,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 6
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "board": "rn..kpPp.p.......Pq.R.BQK",
+      "turn": "player",
+      "plies": 10,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 6
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "from": 22,
+      "to": 18
+     },
+     "state": {
+      "board": "rn..kpPp.p.......PB.R..QK",
+      "turn": "ai",
+      "plies": 11,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 6
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 3
+     },
+     "state": {
+      "board": "rn..k.Pp.pp......PB.R..QK",
+      "turn": "player",
+      "plies": 12,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 6
+     }
+    },
+    {
+     "action": {
+      "by": "timeout"
+     },
+     "state": {
+      "board": "rn..k.Pp.pp......PB.R..QK",
+      "turn": "player",
+      "plies": 12,
+      "quiet": 0,
+      "over": true,
+      "winner": "player",
+      "byCount": true,
+      "rng": 6
+     }
+    }
+   ],
+   "result": {
+    "winner": "player",
+    "stars": 1,
+    "score": 190,
+    "byCount": true,
+    "player": 19,
+    "ai": 11,
+    "plies": 12
+   }
+  },
+  {
+   "name": "level 1 vs random-ish player 1",
+   "config": {
+    "aiDepth": [
+     1,
+     1,
+     2,
+     3,
+     4
+    ],
+    "aiErrorPct": [
+     40,
+     25,
+     12,
+     5,
+     0
+    ],
+    "quietLimit": 30,
+    "fastPlies": 40
+   },
+   "seed": 7,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "from": 21,
+      "to": 10
+     },
+     "state": {
+      "board": "rnbqkpppppN....PPPPPR.BQK",
+      "turn": "ai",
+      "plies": 1,
+      "quiet": 1,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 7
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "board": "rnbqkp.pppp....PPPPPR.BQK",
+      "turn": "player",
+      "plies": 2,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 7
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "from": 16,
+      "to": 10
+     },
+     "state": {
+      "board": "rnbqkp.pppP....P.PPPR.BQK",
+      "turn": "ai",
+      "plies": 3,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 7
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "board": "r.bqkp.pppn....P.PPPR.BQK",
+      "turn": "player",
+      "plies": 4,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 7
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "from": 22,
+      "to": 10
+     },
+     "state": {
+      "board": "r.bqkp.pppB....P.PPPR..QK",
+      "turn": "ai",
+      "plies": 5,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 7
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "board": "r..qkp.pppb....P.PPPR..QK",
+      "turn": "player",
+      "plies": 6,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 7
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "from": 20,
+      "to": 22
+     },
+     "state": {
+      "board": "r..qkp.pppb....P.PPP..RQK",
+      "turn": "ai",
+      "plies": 7,
+      "quiet": 1,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 7
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "board": "r..qkp.ppp.....P.PPP..bQK",
+      "turn": "player",
+      "plies": 8,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 7
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "from": 15,
+      "to": 10
+     },
+     "state": {
+      "board": "r..qkp.pppP......PPP..bQK",
+      "turn": "ai",
+      "plies": 9,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 7
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "board": "r..qkp.pppb......PPP...QK",
+      "turn": "player",
+      "plies": 10,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 7
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "from": 17,
+      "to": 12
+     },
+     "state": {
+      "board": "r..qkp.pppb.P.....PP...QK",
+      "turn": "ai",
+      "plies": 11,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 7
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "board": "r..qkp.p.pb.p.....PP...QK",
+      "turn": "player",
+      "plies": 12,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 7
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "from": 23,
+      "to": 21
+     },
+     "state": {
+      "board": "r..qkp.p.pb.p.....PP.Q..K",
+      "turn": "ai",
+      "plies": 13,
+      "quiet": 1,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 7
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 1
+     },
+     "state": {
+      "board": "r...kp.p.pb.p.....qP.Q..K",
+      "turn": "player",
+      "plies": 14,
+      "quiet": 0,
+      "over": true,
+      "winner": "ai",
+      "byCount": false,
+      "rng": 7
+     }
+    }
+   ],
+   "result": {
+    "winner": "ai",
+    "stars": 0,
+    "score": 100,
+    "byCount": false,
+    "player": 10,
+    "ai": 21,
+    "plies": 14
+   }
+  },
+  {
+   "name": "level 4 vs player bot 4",
+   "config": {
+    "aiDepth": [
+     1,
+     1,
+     2,
+     3,
+     4
+    ],
+    "aiErrorPct": [
+     40,
+     25,
+     12,
+     5,
+     0
+    ],
+    "quietLimit": 30,
+    "fastPlies": 40
+   },
+   "seed": 8,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "from": 15,
+      "to": 10
+     },
+     "state": {
+      "board": "rnbqkpppppP.....PPPPRNBQK",
+      "turn": "ai",
+      "plies": 1,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 8
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "board": "rnbqkp.pppp.....PPPPRNBQK",
+      "turn": "player",
+      "plies": 2,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 8
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "from": 16,
+      "to": 10
+     },
+     "state": {
+      "board": "rnbqkp.pppP......PPPRNBQK",
+      "turn": "ai",
+      "plies": 3,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 8
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "board": "rnbqkp.pp.P...p..PPPRNBQK",
+      "turn": "player",
+      "plies": 4,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 8
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "from": 18,
+      "to": 14
+     },
+     "state": {
+      "board": "rnbqkp.pp.P...P..P.PRNBQK",
+      "turn": "ai",
+      "plies": 5,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 8
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "board": "rnbqkp.p..P...p..P.PRNBQK",
+      "turn": "player",
+      "plies": 6,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 8
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "from": 22,
+      "to": 16
+     },
+     "state": {
+      "board": "rnbqkp.p..P...p.BP.PRN.QK",
+      "turn": "ai",
+      "plies": 7,
+      "quiet": 1,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 8
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "board": "rnbqkp....P.p.p.BP.PRN.QK",
+      "turn": "player",
+      "plies": 8,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 8
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "from": 16,
+      "to": 12
+     },
+     "state": {
+      "board": "rnbqkp....P.B.p..P.PRN.QK",
+      "turn": "ai",
+      "plies": 9,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 8
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "board": "r.bqkp....P.n.p..P.PRN.QK",
+      "turn": "player",
+      "plies": 10,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 8
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "from": 21,
+      "to": 12
+     },
+     "state": {
+      "board": "r.bqkp....P.N.p..P.PR..QK",
+      "turn": "ai",
+      "plies": 11,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 8
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "board": "r.b.kp.q..P.N.p..P.PR..QK",
+      "turn": "player",
+      "plies": 12,
+      "quiet": 1,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 8
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "from": 12,
+      "to": 3
+     },
+     "state": {
+      "board": "r.bNkp.q..P...p..P.PR..QK",
+      "turn": "ai",
+      "plies": 13,
+      "quiet": 2,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 8
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "board": "r.bqkp....P...p..P.PR..QK",
+      "turn": "player",
+      "plies": 14,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 8
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "from": 23,
+      "to": 22
+     },
+     "state": {
+      "board": "r.bqkp....P...p..P.PR.Q.K",
+      "turn": "ai",
+      "plies": 15,
+      "quiet": 1,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 8
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "board": ".rbqkp....P...p..P.PR.Q.K",
+      "turn": "player",
+      "plies": 16,
+      "quiet": 2,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 8
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "from": 17,
+      "to": 12
+     },
+     "state": {
+      "board": ".rbqkp....P.P.p....PR.Q.K",
+      "turn": "ai",
+      "plies": 17,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 8
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "board": "r.bqkp....P.P.p....PR.Q.K",
+      "turn": "player",
+      "plies": 18,
+      "quiet": 1,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 8
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "from": 12,
+      "to": 7
+     },
+     "state": {
+      "board": "r.bqkp.P..P...p....PR.Q.K",
+      "turn": "ai",
+      "plies": 19,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 8
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "board": "r.b.kp.Pq.P...p....PR.Q.K",
+      "turn": "player",
+      "plies": 20,
+      "quiet": 1,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 8
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "from": 20,
+      "to": 15
+     },
+     "state": {
+      "board": "r.b.kp.Pq.P...pR...P..Q.K",
+      "turn": "ai",
+      "plies": 21,
+      "quiet": 2,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 8
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "board": "r.b..p.PqkP...pR...P..Q.K",
+      "turn": "player",
+      "plies": 22,
+      "quiet": 3,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 8
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "from": 15,
+      "to": 16
+     },
+     "state": {
+      "board": "r.b..p.PqkP...p.R..P..Q.K",
+      "turn": "ai",
+      "plies": 23,
+      "quiet": 4,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 8
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "board": "r.b.kp.Pq.P...p.R..P..Q.K",
+      "turn": "player",
+      "plies": 24,
+      "quiet": 5,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 8
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "from": 16,
+      "to": 1
+     },
+     "state": {
+      "board": "rRb.kp.Pq.P...p....P..Q.K",
+      "turn": "ai",
+      "plies": 25,
+      "quiet": 6,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 8
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "board": "rRb.kp.P..P...p...qP..Q.K",
+      "turn": "player",
+      "plies": 26,
+      "quiet": 7,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 8
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "from": 22,
+      "to": 18
+     },
+     "state": {
+      "board": "rRb.kp.P..P...p...QP....K",
+      "turn": "ai",
+      "plies": 27,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 8
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "board": "rRb.kp.P..P.......pP....K",
+      "turn": "player",
+      "plies": 28,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 8
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "from": 24,
+      "to": 18
+     },
+     "state": {
+      "board": "rRb.kp.P..P.......KP.....",
+      "turn": "ai",
+      "plies": 29,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 8
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "board": "rRb..p.Pk.P.......KP.....",
+      "turn": "player",
+      "plies": 30,
+      "quiet": 1,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 8
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "from": 1,
+      "to": 0
+     },
+     "state": {
+      "board": "R.b..p.Pk.P.......KP.....",
+      "turn": "ai",
+      "plies": 31,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 8
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "board": "R.b..p.k..P.......KP.....",
+      "turn": "player",
+      "plies": 32,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 8
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "from": 0,
+      "to": 5
+     },
+     "state": {
+      "board": "..b..R.k..P.......KP.....",
+      "turn": "ai",
+      "plies": 33,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 8
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "board": ".kb..R....P.......KP.....",
+      "turn": "player",
+      "plies": 34,
+      "quiet": 1,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 8
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "from": 5,
+      "to": 9
+     },
+     "state": {
+      "board": ".kb......RP.......KP.....",
+      "turn": "ai",
+      "plies": 35,
+      "quiet": 2,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 8
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "board": ".k.......Rb.......KP.....",
+      "turn": "player",
+      "plies": 36,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 8
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "from": 9,
+      "to": 4
+     },
+     "state": {
+      "board": ".k..R.....b.......KP.....",
+      "turn": "ai",
+      "plies": 37,
+      "quiet": 1,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 8
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "board": "....Rk....b.......KP.....",
+      "turn": "player",
+      "plies": 38,
+      "quiet": 2,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 8
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "from": 4,
+      "to": 9
+     },
+     "state": {
+      "board": ".....k...Rb.......KP.....",
+      "turn": "ai",
+      "plies": 39,
+      "quiet": 3,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 8
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "board": ".....kb..R........KP.....",
+      "turn": "player",
+      "plies": 40,
+      "quiet": 4,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 8
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "from": 18,
+      "to": 13
+     },
+     "state": {
+      "board": ".....kb..R...K.....P.....",
+      "turn": "ai",
+      "plies": 41,
+      "quiet": 5,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 8
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "board": "k.....b..R...K.....P.....",
+      "turn": "player",
+      "plies": 42,
+      "quiet": 6,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 8
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "from": 9,
+      "to": 4
+     },
+     "state": {
+      "board": "k...R.b......K.....P.....",
+      "turn": "ai",
+      "plies": 43,
+      "quiet": 7,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 8
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "board": "....Rkb......K.....P.....",
+      "turn": "player",
+      "plies": 44,
+      "quiet": 8,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 8
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "from": 4,
+      "to": 9
+     },
+     "state": {
+      "board": ".....kb..R...K.....P.....",
+      "turn": "ai",
+      "plies": 45,
+      "quiet": 9,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 8
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "board": "k.....b..R...K.....P.....",
+      "turn": "player",
+      "plies": 46,
+      "quiet": 10,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 8
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "from": 9,
+      "to": 4
+     },
+     "state": {
+      "board": "k...R.b......K.....P.....",
+      "turn": "ai",
+      "plies": 47,
+      "quiet": 11,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 8
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "board": "....Rkb......K.....P.....",
+      "turn": "player",
+      "plies": 48,
+      "quiet": 12,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 8
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "from": 4,
+      "to": 9
+     },
+     "state": {
+      "board": ".....kb..R...K.....P.....",
+      "turn": "ai",
+      "plies": 49,
+      "quiet": 13,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 8
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "board": "k.....b..R...K.....P.....",
+      "turn": "player",
+      "plies": 50,
+      "quiet": 14,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 8
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "from": 9,
+      "to": 4
+     },
+     "state": {
+      "board": "k...R.b......K.....P.....",
+      "turn": "ai",
+      "plies": 51,
+      "quiet": 15,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 8
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "board": "....Rkb......K.....P.....",
+      "turn": "player",
+      "plies": 52,
+      "quiet": 16,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 8
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "from": 4,
+      "to": 9
+     },
+     "state": {
+      "board": ".....kb..R...K.....P.....",
+      "turn": "ai",
+      "plies": 53,
+      "quiet": 17,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 8
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "board": "k.....b..R...K.....P.....",
+      "turn": "player",
+      "plies": 54,
+      "quiet": 18,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 8
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "from": 9,
+      "to": 4
+     },
+     "state": {
+      "board": "k...R.b......K.....P.....",
+      "turn": "ai",
+      "plies": 55,
+      "quiet": 19,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 8
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "board": "....Rkb......K.....P.....",
+      "turn": "player",
+      "plies": 56,
+      "quiet": 20,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 8
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "from": 4,
+      "to": 9
+     },
+     "state": {
+      "board": ".....kb..R...K.....P.....",
+      "turn": "ai",
+      "plies": 57,
+      "quiet": 21,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 8
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "board": "k.....b..R...K.....P.....",
+      "turn": "player",
+      "plies": 58,
+      "quiet": 22,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 8
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "from": 9,
+      "to": 4
+     },
+     "state": {
+      "board": "k...R.b......K.....P.....",
+      "turn": "ai",
+      "plies": 59,
+      "quiet": 23,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 8
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "board": "....Rkb......K.....P.....",
+      "turn": "player",
+      "plies": 60,
+      "quiet": 24,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 8
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "from": 4,
+      "to": 9
+     },
+     "state": {
+      "board": ".....kb..R...K.....P.....",
+      "turn": "ai",
+      "plies": 61,
+      "quiet": 25,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 8
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "board": "k.....b..R...K.....P.....",
+      "turn": "player",
+      "plies": 62,
+      "quiet": 26,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 8
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "from": 9,
+      "to": 4
+     },
+     "state": {
+      "board": "k...R.b......K.....P.....",
+      "turn": "ai",
+      "plies": 63,
+      "quiet": 27,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 8
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "board": "....Rkb......K.....P.....",
+      "turn": "player",
+      "plies": 64,
+      "quiet": 28,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 8
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "from": 19,
+      "to": 14
+     },
+     "state": {
+      "board": "....Rkb......KP..........",
+      "turn": "ai",
+      "plies": 65,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 8
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "board": "....R.b...k..KP..........",
+      "turn": "player",
+      "plies": 66,
+      "quiet": 1,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 8
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "from": 4,
+      "to": 1
+     },
+     "state": {
+      "board": ".R....b...k..KP..........",
+      "turn": "ai",
+      "plies": 67,
+      "quiet": 2,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 8
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "board": ".R....b....k.KP..........",
+      "turn": "player",
+      "plies": 68,
+      "quiet": 3,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 8
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "from": 14,
+      "to": 9
+     },
+     "state": {
+      "board": ".R....b..P.k.K...........",
+      "turn": "ai",
+      "plies": 69,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 8
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "board": ".R...kb..P...K...........",
+      "turn": "player",
+      "plies": 70,
+      "quiet": 1,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 8
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "from": 1,
+      "to": 3
+     },
+     "state": {
+      "board": "...R.kb..P...K...........",
+      "turn": "ai",
+      "plies": 71,
+      "quiet": 2,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 8
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "board": "...R.k...P..bK...........",
+      "turn": "player",
+      "plies": 72,
+      "quiet": 3,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 8
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "from": 13,
+      "to": 12
+     },
+     "state": {
+      "board": "...R.k...P..K............",
+      "turn": "ai",
+      "plies": 73,
+      "quiet": 0,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 8
+     }
+    },
+    {
+     "action": {
+      "by": "ai",
+      "level": 4
+     },
+     "state": {
+      "board": "...R.....Pk.K............",
+      "turn": "player",
+      "plies": 74,
+      "quiet": 1,
+      "over": false,
+      "winner": "",
+      "byCount": false,
+      "rng": 8
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "from": 3,
+      "to": 0
+     },
+     "state": {
+      "board": "R........Pk.K............",
+      "turn": "ai",
+      "plies": 75,
+      "quiet": 2,
+      "over": true,
+      "winner": "player",
+      "byCount": false,
+      "rng": 8
+     }
+    }
+   ],
+   "result": {
+    "winner": "player",
+    "stars": 2,
+    "score": 60,
+    "byCount": false,
+    "player": 6,
+    "ai": 0,
+    "plies": 75
+   }
+  }
+ ]
+}

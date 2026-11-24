@@ -103,3 +103,15 @@ maxSteps, bats, scatter, starFigs, figures}`, kde `figures` = `[fig1, …, fig5]
 - Hod mimo figuru nic nevybije, ale stojí pálku a nemění `polukon`.
 - Odražený špalík, který zůstane ve čtverci, stojí dál na nové poloze (i natlačený k okraji).
 - Poslední pálka, která rozbije pátou figuru, dá výsledek s bonusem 0 za pálky.
+
+## Upřesnění v1
+
+- Rozptyl: vždy dvě čísla z `rng` stavu na hod (`ex`, pak `ey`), i při `s = 0`; `rng` ve stavu po
+  hodu je stav generátoru po nich. Rychlost se počítá z rozptýleného bodu znovu přes `isqrt`.
+- Zachycení se kontroluje u všech těles včetně pálky; statiky nejsou, takže pálka i špalíky mimo
+  hřiště jen zmizí. Špalík, který už stál mimo hru (`up = false`), je v simulaci `on = false`.
+- Vybitý špalík si ve stavu nechá poslední polohu, kde stál (`px`, `py` se mu nemění).
+- Pořadí po hodu: `bats`, `throws`, `knocked`, `lastOut`, `polukon`; pak rozbití figury (nová figura
+  přepíše `px`, `py`, `up` a vynuluje `polukon`, po páté figuře konec i se zbylými pálkami); pak
+  `bats = 0` → konec.
+- `aiAction` jen pro testy; UI ho nevolá.

@@ -105,3 +105,16 @@ každé NPC ve hře → `"player"`, 1★; jinak `"ai"`, 0★. `score = stars × 
 - Při braní už nikdo nepřihazuje (zjednodušení podkidného).
 - Přihazující bez karet může jen `pass`; obránce, který vyšel, končí kolo bito.
 - Útočník, který kartu vynese jako poslední z ruky při prázdném `stock`, vyjde až na konci kola.
+
+## Upřesnění v1
+
+- Ruce jsou vždy vzestupně (po rozdání, braní i dobírání). `stock` se bere zepředu.
+- `limit` se nastaví z délky ruky obránce před první kartou kola; mimo kolo je 0.
+- `pass`: `thrower` = další přihazující po aktuálním v pořadí od útočníka (cyklicky); přihazující
+  se počítají v okamžiku akce (místa ve hře kromě obránce).
+- Konec kola: dobírá se v pořadí přihazující od útočníka, obránce poslední; vyšlí se zapisují jen
+  při prázdném `stock` a ve stejném pořadí; pak `table = []`, `passes = 0`, `limit = 0`.
+- AI: úroveň z parametru `aiAction` (oříznutá na 1–5); vždy los `ai.nextInt(100)`, při chybě druhý
+  los indexu do `legalActions`. Nejlevnější karta: nejnižší cena, při shodě nižší číslo karty.
+- `timeout` mění jen `over` a `byCount`. Výsledek v pořadí: `byCount`, hráč durak, hráč vyšel první,
+  nikdo durak, jinak 2★.
