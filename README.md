@@ -13,15 +13,15 @@ Zadání: [Prompts/](Prompts/) (00–05), postup: [plans/PROGRESS.md](plans/PROG
 <!-- metro:status -->
 | | |
 |---|---|
-| Města s balíčkem | 3 |
-| Minihry v katalogu | 33 (web 33, Flutter 29) |
-| Auta | 43 |
-| Památky | 87 |
+| Města s balíčkem | 4 |
+| Minihry v katalogu | 33 (web 33, Flutter 33) |
+| Auta | 46 |
+| Památky | 112 |
 | Skity NPC | 50 |
 | Testy | 1787 / 1787 prochází (2026-11-23T10:59) |
-| Funkce (`parity.yaml`) | 63 v obou klientech, 9 jen web, 0 jen Flutter, 4 rozpracováno |
+| Funkce (`parity.yaml`) | 70 v obou klientech, 5 jen web, 0 jen Flutter, 3 rozpracováno |
 
-_Stav k 2026-11-23, generuje `metro progress`._
+_Stav k 2026-11-24, generuje `metro progress`._
 <!-- /metro:status -->
 
 ## Parametry URL (web)
