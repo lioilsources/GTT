@@ -35,7 +35,11 @@ Cache nesleduje změny konfigurace: po úpravě `city.yaml`, `tuning.yaml` (ší
 
 `city.yaml`: `elevation_sources` (pořadí = priorita): `local` čte první `content/cities/<id>/dem/*.asc`
 (ESRI ASCII grid ve WGS84, postup v `dem/README.md`; adresář je mimo git), `terrain_tiles` stáhne
-AWS Terrain Tiles (Terrarium PNG, zoom `terrain.pipeline.dem_zoom`) do `run/citypack/<city>/tiles/`.
+AWS Terrain Tiles (Terrarium PNG, zoom `terrain.pipeline.dem_zoom`) do `run/citypack/<city>/tiles/`,
+`gsi_tiles` výškové dlaždice GSI DEM5A (Japonsko: 5 m z laseru, holý terén, zoom nejvýš 15, voda
+a moře bez dat se dopočítají z okolí) do `tiles_gsi/`. Hladina vody je dolní kvartil výšek po
+břehu; `water_level_m` (jméno → skutečné metry) ji přebije, kde to nesedí (Kōtō drží vnitřní
+řeky pod přílivem: Oyoko River 0 m).
 `elevation_is_bare_earth: false` = povrchový model: `clean` vyřízne budovy a vyhladí
 (`clean_sigma_m`, u hrubého zdroje `clean_sigma_coarse_m`). Kód dlaždic je port z
 MountainsSimulator/terrain-fetch (`internal/dem/`).
@@ -178,5 +182,17 @@ jen silnice), azbuka by se v klientech nevykreslila. Plochy kanálu bez jména b
 z nejbližší pojmenované čáry kanálu jako řeky (Obtokový kanál má jméno jen na ose).
 
 - `validate`: `terrain.pipeline.road_strip.max_m` 1,2 m (dvorní obslužné rampy u Novoslobodské
-  a na Taganke 1,04–1,18 m; Praha 0,87, NYC 0,42).
+  a na Taganke 1,04–1,18 m; Praha 0,87, NYC 0,42). Od Tokia 2,1 m (vlásenka ponechané spojky pod
+  Tanuki-zaka v Azabu 2,01 m).
+- `validate`: přistání mostu je i uzel, kde most navazuje na krátkou rampu z vrstvy 1 do 0 (výjezd
+  Shuto na Sendai-dori), nejen na pozemní hranu.
 - Borovická věž nemá v Overture budovu, je bod (`kind: plaza`).
+
+## Tokio: přírodní vrstvy a terén (přestavba po M5/N1)
+
+Balíček `5af7637300d7` vznikl před terénem a přírodou, takže neměl `lod/` (mapa v telefonu z nich
+kreslí vodu a zeleň) ani mřížku terénu. Terén z AWS Terrain Tiles tu nejde: v Japonsku nesou SRTM,
+povrchový model ~12 m nad ulicemi (Shōwa-dōri v Iriya 16 m místo 2 m), řeky pak ležely nad mosty.
+Tokio proto bere `gsi_tiles` (DEM5A, holý terén): z0 = −1 m, převýšení 2,0, 2 schody, nejprudší
+Ōsaka 16,3 % a Ushi-zaka 16,2 %. Plocha `natural=water` + `water=bay` bez jména u Harumi je moře
+(`specs/nature.md`), ne jezero.

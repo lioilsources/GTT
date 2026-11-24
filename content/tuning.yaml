@@ -984,7 +984,7 @@ terrain:
     road_gap_share: 0.01        # validate: share of road edge samples allowed over road_gap_max_m
     # validate: |terrain − road profile| on kept carriageways (the car rides the terrain there)
     # max_m 1.2: Moscow courtyard service ramps (Novoslobodskaya, Taganka) reach 1.18 m; Prague max 0.87, NYC 0.42
-    road_strip: {tol_m: 0.15, share: 0.005, max_m: 1.2}
+    road_strip: {tol_m: 0.15, share: 0.005, max_m: 2.1}
     # conform and validate: terrain within road width / 2 + margin_m never above the road + max_m
     trench: {margin_m: 2.0, max_m: 0.3, share: 0.005}
     # a ground edge joined to a structure and this far above the terrain this long is a bridge

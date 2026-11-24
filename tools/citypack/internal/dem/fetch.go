@@ -15,6 +15,11 @@ import (
 )
 
 // DefaultTileURL is the public AWS Terrain Tiles bucket (terrarium encoding).
+// GSITileURL: GSI elevation tiles DEM5A (5 m, laser, bare earth; zoom 15 at most).
+const GSITileURL = "https://cyberjapandata.gsi.go.jp/xyz/dem5a_png/{z}/{x}/{y}.png"
+
+var errNotFound = errors.New("HTTP 404")
+
 const DefaultTileURL = "https://s3.amazonaws.com/elevation-tiles-prod/terrarium/{z}/{x}/{y}.png"
 
 // fetcher downloads terrarium tiles, caching each one on disk forever. Tiles
@@ -23,11 +28,13 @@ const DefaultTileURL = "https://s3.amazonaws.com/elevation-tiles-prod/terrarium/
 type Fetcher = fetcher
 
 type fetcher struct {
-	urlTmpl  string
-	cacheDir string
-	workers  int
-	retries  int
-	client   *http.Client
+	urlTmpl string
+	// missingOK: a 404 is a tile without data, not an error.
+	missingOK bool
+	cacheDir  string
+	workers   int
+	retries   int
+	client    *http.Client
 
 	hits, misses atomic.Int64
 }
@@ -72,6 +79,13 @@ func (f *fetcher) get(z, x, y int) ([]byte, error) {
 		f.hits.Add(1)
 		return b, nil
 	}
+	// A tile the server does not have (GSI: open sea) is cached as an empty marker.
+	if f.missingOK {
+		if _, err := os.Stat(path + ".none"); err == nil {
+			f.hits.Add(1)
+			return nil, nil
+		}
+	}
 
 	var lastErr error
 	for attempt := 0; attempt <= f.retries; attempt++ {
@@ -80,6 +94,13 @@ func (f *fetcher) get(z, x, y int) ([]byte, error) {
 			time.Sleep(time.Duration(250<<attempt) * time.Millisecond)
 		}
 		b, err := f.download(z, x, y)
+		if errors.Is(err, errNotFound) && f.missingOK {
+			if err := os.MkdirAll(filepath.Dir(path), 0o755); err != nil {
+				return nil, err
+			}
+			f.misses.Add(1)
+			return nil, os.WriteFile(path+".none", nil, 0o644)
+		}
 		if err != nil {
 			lastErr = err
 			continue
@@ -108,6 +129,10 @@ func (f *fetcher) download(z, x, y int) ([]byte, error) {
 		return nil, err
 	}
 	defer resp.Body.Close()
+	if resp.StatusCode == http.StatusNotFound {
+		io.Copy(io.Discard, io.LimitReader(resp.Body, 4096))
+		return nil, errNotFound
+	}
 	if resp.StatusCode != http.StatusOK {
 		io.Copy(io.Discard, io.LimitReader(resp.Body, 4096))
 		return nil, fmt.Errorf("HTTP %d", resp.StatusCode)

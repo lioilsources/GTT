@@ -37,10 +37,11 @@ type City struct {
 	ElevationSources     []string `yaml:"elevation_sources"`
 	ElevationIsBareEarth *bool    `yaml:"elevation_is_bare_earth"`
 	// Nature (specs/nature.md).
-	TreeInventory    *TreeInventory    `yaml:"tree_inventory"`
-	WaterClassByName map[string]string `yaml:"water_class_by_name"`
-	Dir              string            `yaml:"-"`
-	AreaRing         [][2]float64      `yaml:"-"` // lon, lat
+	TreeInventory    *TreeInventory     `yaml:"tree_inventory"`
+	WaterClassByName map[string]string  `yaml:"water_class_by_name"`
+	WaterLevelM      map[string]float64 `yaml:"water_level_m"` // real water level by name, over the bank estimate (tidal rivers in a surface model)
+	Dir              string             `yaml:"-"`
+	AreaRing         [][2]float64       `yaml:"-"` // lon, lat
 }
 
 // TreeInventory is a city tree census read as CSV (specs/nature.md, trees step 1).

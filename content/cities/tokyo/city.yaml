@@ -15,3 +15,12 @@ start: {lat: 35.68100, lon: 139.76450, heading_deg: 270, street: Gyōkō-dōri} 
 default_height_m: 18
 max_chunk_kb: 512
 districts: districts.yaml
+# Terrain (specs/terrain.md): GSI elevation tiles DEM5A (5 m laser, bare earth). AWS Terrain Tiles
+# carry SRTM here, a surface model ~12 m above the streets (Showa-dori at Iriya 16 m instead of 2 m),
+# which lifted rivers over their bridges. Shitamachi lowland by the Sumida, Yamanote bluffs west.
+elevation_sources: [gsi_tiles]
+elevation_is_bare_earth: true
+# Kōtō's internal rivers are held below the tide (zero-metre zone); their banks put them ~1.5 m up,
+# under the low canal bridges: real levels in metres (specs/terrain.md).
+water_level_m:
+  Oyoko River: 0.0
