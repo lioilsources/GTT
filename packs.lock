@@ -19,8 +19,8 @@ packs:
         sha256: 7b81f0b9c56f7af444e25f47db5ff01b1090627139e7791ba46e36a2817513d2
         overture_release: 2026-11-18.0
     tokyo:
-        version: a961210cb6eb
-        tag: pack-tokyo-a961210cb6eb
-        asset: tokyo-a961210cb6eb.tar.gz
-        sha256: a961210cb6ebb80aa9cdda0ef038617b09964502de92c92722f2bc38fc92122b
+        version: db6c28d4d458
+        tag: pack-tokyo-db6c28d4d458
+        asset: tokyo-db6c28d4d458.tar.gz
+        sha256: db6c28d4d4582059177fb5869d3740f375c0b06ce6a82acf0b66987b16dff881
         overture_release: 2026-11-18.0

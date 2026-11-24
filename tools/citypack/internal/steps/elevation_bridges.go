@@ -120,6 +120,11 @@ func flagWaterBridges(g *pb.Graph, wi *waterIndex, minRunM float64) int {
 		if deg[ed.From] < 2 || deg[ed.To] < 2 {
 			continue
 		}
+		// A service lane over water (a driveway winding under Tokyo's Shuto along the Nihonbashi
+		// River) is no bridge to cross bank to bank: it stays ground.
+		if ed.Class == pb.RoadClass_SERVICE {
+			continue
+		}
 		pts := EdgePts(ed)
 		run, best := 0.0, 0.0
 		for k := 1; k < len(pts); k++ {

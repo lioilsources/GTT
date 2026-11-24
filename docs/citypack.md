@@ -195,4 +195,5 @@ kreslí vodu a zeleň) ani mřížku terénu. Terén z AWS Terrain Tiles tu nejd
 povrchový model ~12 m nad ulicemi (Shōwa-dōri v Iriya 16 m místo 2 m), řeky pak ležely nad mosty.
 Tokio proto bere `gsi_tiles` (DEM5A, holý terén): z0 = −1 m, převýšení 2,0, 2 schody, nejprudší
 Ōsaka 16,3 % a Ushi-zaka 16,2 %. Plocha `natural=water` + `water=bay` bez jména u Harumi je moře
-(`specs/nature.md`), ne jezero.
+(`specs/nature.md`), ne jezero. Obslužná ulička nad vodou se za most nepovažuje (`flagWaterBridges`:
+vlásenka pod Shuto u Nihonbashi-gawa nebyla most z břehu na břeh).
