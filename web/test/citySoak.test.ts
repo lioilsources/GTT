@@ -15,7 +15,7 @@ import { chunkPath, type PackSource } from '../src/world/citypack';
 import { prepareChunk, type ChunkData } from '../src/world/chunk';
 import { City } from '../src/world/model';
 
-// Soak M3-A3 (specs/cities.md "Testy"): switch through every CityId in order (NYC → Prague → Tokyo
+// Soak M3-A3 (specs/cities.md "Testy"): switch through every CityId in order (NYC → Prague → Tokyo → Moscow
 // → NYC …) 10 times without a crash,
 // each city keeps its own save, and the physics world returns to its baseline body count after
 // the city's chunks, parked cars, traffic and trams are torn down (no leaked bodies).
