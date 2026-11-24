@@ -1,0 +1,3848 @@
+{
+ "module": "gorodki",
+ "specVersion": 1,
+ "$comment": "specs/minigames/gorodki.md; throws written out (x, aim at a standing piece with spread, power); recorded by web (metro vectors record --client web --module gorodki).",
+ "cases": [
+  {
+   "name": "level 1: accurate thrower",
+   "config": {
+    "level": 1,
+    "gorodW": 200000,
+    "gorodY0": 1300000,
+    "gorodY1": 1500000,
+    "polukonY": 650000,
+    "batR": 16000,
+    "batM": 200,
+    "batDec": 3,
+    "pieceR": 5000,
+    "pieceM": 20,
+    "pieceDec": 40,
+    "minSpeed": 3000,
+    "maxSpeed": 5200,
+    "eBody": 600,
+    "fieldPad": 300000,
+    "maxSteps": 900,
+    "bats": [
+     24,
+     21,
+     18,
+     16,
+     14
+    ],
+    "scatter": [
+     600,
+     900,
+     1200,
+     1500,
+     1800
+    ],
+    "starFigs": [
+     5,
+     3,
+     1
+    ],
+    "figures": [
+     [
+      -15000,
+      20000,
+      15000,
+      20000,
+      0,
+      10000,
+      0,
+      30000,
+      0,
+      50000
+     ],
+     [
+      0,
+      15000,
+      -25000,
+      40000,
+      0,
+      40000,
+      25000,
+      40000,
+      0,
+      65000
+     ],
+     [
+      -20000,
+      20000,
+      20000,
+      20000,
+      0,
+      40000,
+      -20000,
+      60000,
+      20000,
+      60000
+     ],
+     [
+      0,
+      15000,
+      0,
+      35000,
+      0,
+      55000,
+      -18000,
+      70000,
+      18000,
+      70000
+     ],
+     [
+      -30000,
+      25000,
+      30000,
+      25000,
+      -12000,
+      40000,
+      12000,
+      40000,
+      0,
+      60000
+     ]
+    ]
+   },
+   "seed": 1,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "throw",
+      "x": 9310,
+      "aim": 98947,
+      "power": 57
+     },
+     "state": {
+      "fig": 1,
+      "px": [
+       34623,
+       199398,
+       143983,
+       58113,
+       100000
+      ],
+      "py": [
+       1361789,
+       1396992,
+       1402701,
+       1432428,
+       1350000
+      ],
+      "up": [
+       true,
+       true,
+       true,
+       true,
+       false
+      ],
+      "bats": 23,
+      "throws": 1,
+      "cleared": 0,
+      "knocked": 1,
+      "polukon": true,
+      "lastOut": 1,
+      "over": false,
+      "rng": 67634689
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "throw",
+      "x": 136108,
+      "aim": 144162,
+      "power": 99
+     },
+     "state": {
+      "fig": 1,
+      "px": [
+       34623,
+       199398,
+       143983,
+       58113,
+       100000
+      ],
+      "py": [
+       1361789,
+       1396992,
+       1402701,
+       1432428,
+       1350000
+      ],
+      "up": [
+       true,
+       true,
+       false,
+       true,
+       false
+      ],
+      "bats": 22,
+      "throws": 2,
+      "cleared": 0,
+      "knocked": 2,
+      "polukon": true,
+      "lastOut": 1,
+      "over": false,
+      "rng": 307599695
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "throw",
+      "x": 32431,
+      "aim": 60034,
+      "power": 21
+     },
+     "state": {
+      "fig": 1,
+      "px": [
+       34623,
+       199398,
+       143983,
+       58113,
+       100000
+      ],
+      "py": [
+       1361789,
+       1396992,
+       1402701,
+       1432428,
+       1350000
+      ],
+      "up": [
+       true,
+       true,
+       false,
+       false,
+       false
+      ],
+      "bats": 21,
+      "throws": 3,
+      "cleared": 0,
+      "knocked": 3,
+      "polukon": true,
+      "lastOut": 1,
+      "over": false,
+      "rng": 745495504
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "throw",
+      "x": 150928,
+      "aim": 197554,
+      "power": 31
+     },
+     "state": {
+      "fig": 1,
+      "px": [
+       34623,
+       199398,
+       143983,
+       58113,
+       100000
+      ],
+      "py": [
+       1361789,
+       1396992,
+       1402701,
+       1432428,
+       1350000
+      ],
+      "up": [
+       true,
+       false,
+       false,
+       false,
+       false
+      ],
+      "bats": 20,
+      "throws": 4,
+      "cleared": 0,
+      "knocked": 4,
+      "polukon": true,
+      "lastOut": 1,
+      "over": false,
+      "rng": 435756210
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "throw",
+      "x": 36107,
+      "aim": 35025,
+      "power": 67
+     },
+     "state": {
+      "fig": 2,
+      "px": [
+       100000,
+       75000,
+       100000,
+       125000,
+       100000
+      ],
+      "py": [
+       1315000,
+       1340000,
+       1340000,
+       1340000,
+       1365000
+      ],
+      "up": [
+       true,
+       true,
+       true,
+       true,
+       true
+      ],
+      "bats": 19,
+      "throws": 5,
+      "cleared": 1,
+      "knocked": 5,
+      "polukon": false,
+      "lastOut": 1,
+      "over": false,
+      "rng": 2916098932
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "throw",
+      "x": 103578,
+      "aim": 100675,
+      "power": 43
+     },
+     "state": {
+      "fig": 2,
+      "px": [
+       15974,
+       75000,
+       45173,
+       177887,
+       100000
+      ],
+      "py": [
+       1466790,
+       1340000,
+       1403565,
+       1387399,
+       1365000
+      ],
+      "up": [
+       true,
+       true,
+       true,
+       true,
+       false
+      ],
+      "bats": 18,
+      "throws": 6,
+      "cleared": 1,
+      "knocked": 6,
+      "polukon": true,
+      "lastOut": 1,
+      "over": false,
+      "rng": 1495045943
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "throw",
+      "x": 66638,
+      "aim": 74477,
+      "power": 65
+     },
+     "state": {
+      "fig": 2,
+      "px": [
+       15974,
+       75000,
+       45173,
+       177887,
+       100000
+      ],
+      "py": [
+       1466790,
+       1340000,
+       1403565,
+       1387399,
+       1365000
+      ],
+      "up": [
+       true,
+       false,
+       true,
+       true,
+       false
+      ],
+      "bats": 17,
+      "throws": 7,
+      "cleared": 1,
+      "knocked": 7,
+      "polukon": true,
+      "lastOut": 1,
+      "over": false,
+      "rng": 82049198
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "throw",
+      "x": 195335,
+      "aim": 17089,
+      "power": 49
+     },
+     "state": {
+      "fig": 2,
+      "px": [
+       15974,
+       75000,
+       45173,
+       177887,
+       100000
+      ],
+      "py": [
+       1466790,
+       1340000,
+       1403565,
+       1387399,
+       1365000
+      ],
+      "up": [
+       true,
+       false,
+       true,
+       true,
+       false
+      ],
+      "bats": 16,
+      "throws": 8,
+      "cleared": 1,
+      "knocked": 7,
+      "polukon": true,
+      "lastOut": 0,
+      "over": false,
+      "rng": 3385103793
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "throw",
+      "x": 187575,
+      "aim": 43760,
+      "power": 25
+     },
+     "state": {
+      "fig": 2,
+      "px": [
+       15974,
+       75000,
+       45173,
+       177887,
+       100000
+      ],
+      "py": [
+       1466790,
+       1340000,
+       1403565,
+       1387399,
+       1365000
+      ],
+      "up": [
+       true,
+       false,
+       true,
+       true,
+       false
+      ],
+      "bats": 15,
+      "throws": 9,
+      "cleared": 1,
+      "knocked": 7,
+      "polukon": true,
+      "lastOut": 0,
+      "over": false,
+      "rng": 3323190024
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "throw",
+      "x": 21548,
+      "aim": 45409,
+      "power": 48
+     },
+     "state": {
+      "fig": 2,
+      "px": [
+       15974,
+       75000,
+       45173,
+       177887,
+       100000
+      ],
+      "py": [
+       1466790,
+       1340000,
+       1403565,
+       1387399,
+       1365000
+      ],
+      "up": [
+       true,
+       false,
+       false,
+       true,
+       false
+      ],
+      "bats": 14,
+      "throws": 10,
+      "cleared": 1,
+      "knocked": 8,
+      "polukon": true,
+      "lastOut": 1,
+      "over": false,
+      "rng": 4283899417
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "throw",
+      "x": 42300,
+      "aim": 16661,
+      "power": 88
+     },
+     "state": {
+      "fig": 2,
+      "px": [
+       15974,
+       75000,
+       45173,
+       177887,
+       100000
+      ],
+      "py": [
+       1466790,
+       1340000,
+       1403565,
+       1387399,
+       1365000
+      ],
+      "up": [
+       false,
+       false,
+       false,
+       true,
+       false
+      ],
+      "bats": 13,
+      "throws": 11,
+      "cleared": 1,
+      "knocked": 9,
+      "polukon": true,
+      "lastOut": 1,
+      "over": false,
+      "rng": 3822316985
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "throw",
+      "x": 99833,
+      "aim": 176923,
+      "power": 45
+     },
+     "state": {
+      "fig": 3,
+      "px": [
+       80000,
+       120000,
+       100000,
+       80000,
+       120000
+      ],
+      "py": [
+       1320000,
+       1320000,
+       1340000,
+       1360000,
+       1360000
+      ],
+      "up": [
+       true,
+       true,
+       true,
+       true,
+       true
+      ],
+      "bats": 12,
+      "throws": 12,
+      "cleared": 2,
+      "knocked": 10,
+      "polukon": false,
+      "lastOut": 1,
+      "over": false,
+      "rng": 3652395599
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "throw",
+      "x": 135033,
+      "aim": 99483,
+      "power": 97
+     },
+     "state": {
+      "fig": 3,
+      "px": [
+       80000,
+       120000,
+       100000,
+       80000,
+       120000
+      ],
+      "py": [
+       1320000,
+       1320000,
+       1340000,
+       1360000,
+       1360000
+      ],
+      "up": [
+       false,
+       true,
+       false,
+       false,
+       false
+      ],
+      "bats": 11,
+      "throws": 13,
+      "cleared": 2,
+      "knocked": 14,
+      "polukon": true,
+      "lastOut": 4,
+      "over": false,
+      "rng": 1562130985
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "throw",
+      "x": 178841,
+      "aim": 119907,
+      "power": 93
+     },
+     "state": {
+      "fig": 4,
+      "px": [
+       100000,
+       100000,
+       100000,
+       82000,
+       118000
+      ],
+      "py": [
+       1315000,
+       1335000,
+       1355000,
+       1370000,
+       1370000
+      ],
+      "up": [
+       true,
+       true,
+       true,
+       true,
+       true
+      ],
+      "bats": 10,
+      "throws": 14,
+      "cleared": 3,
+      "knocked": 15,
+      "polukon": false,
+      "lastOut": 1,
+      "over": false,
+      "rng": 333695716
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "throw",
+      "x": 76137,
+      "aim": 83428,
+      "power": 46
+     },
+     "state": {
+      "fig": 4,
+      "px": [
+       121981,
+       115708,
+       100000,
+       82000,
+       118000
+      ],
+      "py": [
+       1322553,
+       1340389,
+       1355000,
+       1370000,
+       1370000
+      ],
+      "up": [
+       true,
+       true,
+       true,
+       false,
+       true
+      ],
+      "bats": 9,
+      "throws": 15,
+      "cleared": 3,
+      "knocked": 16,
+      "polukon": true,
+      "lastOut": 1,
+      "over": false,
+      "rng": 2771657022
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "throw",
+      "x": 83052,
+      "aim": 114498,
+      "power": 21
+     },
+     "state": {
+      "fig": 4,
+      "px": [
+       121981,
+       82142,
+       76196,
+       82000,
+       152038
+      ],
+      "py": [
+       1322553,
+       1394758,
+       1368282,
+       1370000,
+       1437673
+      ],
+      "up": [
+       false,
+       true,
+       true,
+       false,
+       true
+      ],
+      "bats": 8,
+      "throws": 16,
+      "cleared": 3,
+      "knocked": 17,
+      "polukon": true,
+      "lastOut": 1,
+      "over": false,
+      "rng": 3412600852
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "throw",
+      "x": 108535,
+      "aim": 81421,
+      "power": 41
+     },
+     "state": {
+      "fig": 4,
+      "px": [
+       121981,
+       157609,
+       76196,
+       82000,
+       152038
+      ],
+      "py": [
+       1322553,
+       1481288,
+       1368282,
+       1370000,
+       1437673
+      ],
+      "up": [
+       false,
+       true,
+       false,
+       false,
+       true
+      ],
+      "bats": 7,
+      "throws": 17,
+      "cleared": 3,
+      "knocked": 18,
+      "polukon": true,
+      "lastOut": 1,
+      "over": false,
+      "rng": 2889104680
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "throw",
+      "x": 51369,
+      "aim": 152687,
+      "power": 57
+     },
+     "state": {
+      "fig": 4,
+      "px": [
+       121981,
+       157609,
+       76196,
+       82000,
+       152038
+      ],
+      "py": [
+       1322553,
+       1481288,
+       1368282,
+       1370000,
+       1437673
+      ],
+      "up": [
+       false,
+       true,
+       false,
+       false,
+       true
+      ],
+      "bats": 6,
+      "throws": 18,
+      "cleared": 3,
+      "knocked": 18,
+      "polukon": true,
+      "lastOut": 0,
+      "over": false,
+      "rng": 975386100
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "throw",
+      "x": 100882,
+      "aim": 151421,
+      "power": 33
+     },
+     "state": {
+      "fig": 4,
+      "px": [
+       121981,
+       157609,
+       76196,
+       82000,
+       80278
+      ],
+      "py": [
+       1322553,
+       1481288,
+       1368282,
+       1370000,
+       1498250
+      ],
+      "up": [
+       false,
+       false,
+       false,
+       false,
+       true
+      ],
+      "bats": 5,
+      "throws": 19,
+      "cleared": 3,
+      "knocked": 19,
+      "polukon": true,
+      "lastOut": 1,
+      "over": false,
+      "rng": 1149571554
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "throw",
+      "x": 9812,
+      "aim": 82206,
+      "power": 32
+     },
+     "state": {
+      "fig": 4,
+      "px": [
+       121981,
+       157609,
+       76196,
+       82000,
+       80278
+      ],
+      "py": [
+       1322553,
+       1481288,
+       1368282,
+       1370000,
+       1498250
+      ],
+      "up": [
+       false,
+       false,
+       false,
+       false,
+       true
+      ],
+      "bats": 4,
+      "throws": 20,
+      "cleared": 3,
+      "knocked": 19,
+      "polukon": true,
+      "lastOut": 0,
+      "over": false,
+      "rng": 2037229063
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "throw",
+      "x": 86816,
+      "aim": 81147,
+      "power": 73
+     },
+     "state": {
+      "fig": 5,
+      "px": [
+       70000,
+       130000,
+       88000,
+       112000,
+       100000
+      ],
+      "py": [
+       1325000,
+       1325000,
+       1340000,
+       1340000,
+       1360000
+      ],
+      "up": [
+       true,
+       true,
+       true,
+       true,
+       true
+      ],
+      "bats": 3,
+      "throws": 21,
+      "cleared": 4,
+      "knocked": 20,
+      "polukon": false,
+      "lastOut": 1,
+      "over": false,
+      "rng": 3048316442
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "throw",
+      "x": 2212,
+      "aim": 87828,
+      "power": 82
+     },
+     "state": {
+      "fig": 5,
+      "px": [
+       70000,
+       130000,
+       88000,
+       112000,
+       100000
+      ],
+      "py": [
+       1325000,
+       1325000,
+       1340000,
+       1340000,
+       1360000
+      ],
+      "up": [
+       true,
+       true,
+       false,
+       false,
+       false
+      ],
+      "bats": 2,
+      "throws": 22,
+      "cleared": 4,
+      "knocked": 23,
+      "polukon": true,
+      "lastOut": 3,
+      "over": false,
+      "rng": 2384770599
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "throw",
+      "x": 1219,
+      "aim": 131181,
+      "power": 48
+     },
+     "state": {
+      "fig": 5,
+      "px": [
+       70000,
+       130000,
+       88000,
+       112000,
+       100000
+      ],
+      "py": [
+       1325000,
+       1325000,
+       1340000,
+       1340000,
+       1360000
+      ],
+      "up": [
+       true,
+       false,
+       false,
+       false,
+       false
+      ],
+      "bats": 1,
+      "throws": 23,
+      "cleared": 4,
+      "knocked": 24,
+      "polukon": true,
+      "lastOut": 1,
+      "over": false,
+      "rng": 3108354793
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "throw",
+      "x": 134216,
+      "aim": 68767,
+      "power": 38
+     },
+     "state": {
+      "fig": 5,
+      "px": [
+       70000,
+       130000,
+       88000,
+       112000,
+       100000
+      ],
+      "py": [
+       1325000,
+       1325000,
+       1340000,
+       1340000,
+       1360000
+      ],
+      "up": [
+       false,
+       false,
+       false,
+       false,
+       false
+      ],
+      "bats": 0,
+      "throws": 24,
+      "cleared": 5,
+      "knocked": 25,
+      "polukon": true,
+      "lastOut": 1,
+      "over": true,
+      "rng": 2371448660
+     }
+    }
+   ],
+   "result": {
+    "winner": "player",
+    "stars": 3,
+    "score": 500,
+    "cleared": 5,
+    "knocked": 25,
+    "throws": 24
+   }
+  },
+  {
+   "name": "level 3: medium spread",
+   "config": {
+    "level": 3,
+    "gorodW": 200000,
+    "gorodY0": 1300000,
+    "gorodY1": 1500000,
+    "polukonY": 650000,
+    "batR": 16000,
+    "batM": 200,
+    "batDec": 3,
+    "pieceR": 5000,
+    "pieceM": 20,
+    "pieceDec": 40,
+    "minSpeed": 3000,
+    "maxSpeed": 5200,
+    "eBody": 600,
+    "fieldPad": 300000,
+    "maxSteps": 900,
+    "bats": [
+     24,
+     21,
+     18,
+     16,
+     14
+    ],
+    "scatter": [
+     600,
+     900,
+     1200,
+     1500,
+     1800
+    ],
+    "starFigs": [
+     5,
+     3,
+     1
+    ],
+    "figures": [
+     [
+      -15000,
+      20000,
+      15000,
+      20000,
+      0,
+      10000,
+      0,
+      30000,
+      0,
+      50000
+     ],
+     [
+      0,
+      15000,
+      -25000,
+      40000,
+      0,
+      40000,
+      25000,
+      40000,
+      0,
+      65000
+     ],
+     [
+      -20000,
+      20000,
+      20000,
+      20000,
+      0,
+      40000,
+      -20000,
+      60000,
+      20000,
+      60000
+     ],
+     [
+      0,
+      15000,
+      0,
+      35000,
+      0,
+      55000,
+      -18000,
+      70000,
+      18000,
+      70000
+     ],
+     [
+      -30000,
+      25000,
+      30000,
+      25000,
+      -12000,
+      40000,
+      12000,
+      40000,
+      0,
+      60000
+     ]
+    ]
+   },
+   "seed": 2,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "throw",
+      "x": 90151,
+      "aim": 86988,
+      "power": 85
+     },
+     "state": {
+      "fig": 1,
+      "px": [
+       94178,
+       115000,
+       100000,
+       100000,
+       100000
+      ],
+      "py": [
+       1362888,
+       1320000,
+       1310000,
+       1330000,
+       1350000
+      ],
+      "up": [
+       true,
+       true,
+       true,
+       true,
+       false
+      ],
+      "bats": 17,
+      "throws": 1,
+      "cleared": 0,
+      "knocked": 1,
+      "polukon": true,
+      "lastOut": 1,
+      "over": false,
+      "rng": 134253570
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "throw",
+      "x": 162895,
+      "aim": 89719,
+      "power": 51
+     },
+     "state": {
+      "fig": 1,
+      "px": [
+       94178,
+       162436,
+       108626,
+       100000,
+       100000
+      ],
+      "py": [
+       1362888,
+       1348489,
+       1318769,
+       1330000,
+       1350000
+      ],
+      "up": [
+       true,
+       true,
+       true,
+       true,
+       false
+      ],
+      "bats": 16,
+      "throws": 2,
+      "cleared": 0,
+      "knocked": 1,
+      "polukon": true,
+      "lastOut": 0,
+      "over": false,
+      "rng": 1670953222
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "throw",
+      "x": 182102,
+      "aim": 102007,
+      "power": 46
+     },
+     "state": {
+      "fig": 1,
+      "px": [
+       155703,
+       162436,
+       108626,
+       100000,
+       100000
+      ],
+      "py": [
+       1469775,
+       1348489,
+       1318769,
+       1330000,
+       1350000
+      ],
+      "up": [
+       true,
+       true,
+       false,
+       false,
+       false
+      ],
+      "bats": 15,
+      "throws": 3,
+      "cleared": 0,
+      "knocked": 3,
+      "polukon": true,
+      "lastOut": 2,
+      "over": false,
+      "rng": 818967331
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "throw",
+      "x": 45437,
+      "aim": 162573,
+      "power": 30
+     },
+     "state": {
+      "fig": 1,
+      "px": [
+       155703,
+       162436,
+       108626,
+       100000,
+       100000
+      ],
+      "py": [
+       1469775,
+       1348489,
+       1318769,
+       1330000,
+       1350000
+      ],
+      "up": [
+       true,
+       true,
+       false,
+       false,
+       false
+      ],
+      "bats": 14,
+      "throws": 4,
+      "cleared": 0,
+      "knocked": 3,
+      "polukon": true,
+      "lastOut": 0,
+      "over": false,
+      "rng": 1401905590
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "throw",
+      "x": 66857,
+      "aim": 153480,
+      "power": 24
+     },
+     "state": {
+      "fig": 1,
+      "px": [
+       155703,
+       162436,
+       108626,
+       100000,
+       100000
+      ],
+      "py": [
+       1469775,
+       1348489,
+       1318769,
+       1330000,
+       1350000
+      ],
+      "up": [
+       true,
+       false,
+       false,
+       false,
+       false
+      ],
+      "bats": 13,
+      "throws": 5,
+      "cleared": 0,
+      "knocked": 4,
+      "polukon": true,
+      "lastOut": 1,
+      "over": false,
+      "rng": 1384496955
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "throw",
+      "x": 114543,
+      "aim": 155145,
+      "power": 100
+     },
+     "state": {
+      "fig": 2,
+      "px": [
+       100000,
+       75000,
+       100000,
+       125000,
+       100000
+      ],
+      "py": [
+       1315000,
+       1340000,
+       1340000,
+       1340000,
+       1365000
+      ],
+      "up": [
+       true,
+       true,
+       true,
+       true,
+       true
+      ],
+      "bats": 12,
+      "throws": 6,
+      "cleared": 1,
+      "knocked": 5,
+      "polukon": false,
+      "lastOut": 1,
+      "over": false,
+      "rng": 4285479485
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "throw",
+      "x": 94352,
+      "aim": 105251,
+      "power": 41
+     },
+     "state": {
+      "fig": 2,
+      "px": [
+       152530,
+       75000,
+       40612,
+       125000,
+       127380
+      ],
+      "py": [
+       1393430,
+       1340000,
+       1415984,
+       1340000,
+       1414811
+      ],
+      "up": [
+       true,
+       true,
+       true,
+       true,
+       true
+      ],
+      "bats": 11,
+      "throws": 7,
+      "cleared": 1,
+      "knocked": 5,
+      "polukon": false,
+      "lastOut": 0,
+      "over": false,
+      "rng": 3157281828
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "throw",
+      "x": 56949,
+      "aim": 120291,
+      "power": 23
+     },
+     "state": {
+      "fig": 2,
+      "px": [
+       152530,
+       75000,
+       40612,
+       88284,
+       127380
+      ],
+      "py": [
+       1393430,
+       1340000,
+       1415984,
+       1364672,
+       1414811
+      ],
+      "up": [
+       false,
+       true,
+       true,
+       true,
+       true
+      ],
+      "bats": 10,
+      "throws": 8,
+      "cleared": 1,
+      "knocked": 6,
+      "polukon": true,
+      "lastOut": 1,
+      "over": false,
+      "rng": 2319215614
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "throw",
+      "x": 153331,
+      "aim": 81517,
+      "power": 61
+     },
+     "state": {
+      "fig": 2,
+      "px": [
+       152530,
+       75000,
+       40612,
+       138791,
+       145397
+      ],
+      "py": [
+       1393430,
+       1340000,
+       1415984,
+       1408514,
+       1463465
+      ],
+      "up": [
+       false,
+       false,
+       true,
+       true,
+       true
+      ],
+      "bats": 9,
+      "throws": 9,
+      "cleared": 1,
+      "knocked": 7,
+      "polukon": true,
+      "lastOut": 1,
+      "over": false,
+      "rng": 1399496191
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "throw",
+      "x": 83127,
+      "aim": 36220,
+      "power": 58
+     },
+     "state": {
+      "fig": 2,
+      "px": [
+       152530,
+       75000,
+       40612,
+       138791,
+       145397
+      ],
+      "py": [
+       1393430,
+       1340000,
+       1415984,
+       1408514,
+       1463465
+      ],
+      "up": [
+       false,
+       false,
+       false,
+       true,
+       true
+      ],
+      "bats": 8,
+      "throws": 10,
+      "cleared": 1,
+      "knocked": 8,
+      "polukon": true,
+      "lastOut": 1,
+      "over": false,
+      "rng": 806719899
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "throw",
+      "x": 27513,
+      "aim": 139955,
+      "power": 32
+     },
+     "state": {
+      "fig": 2,
+      "px": [
+       152530,
+       75000,
+       40612,
+       138791,
+       145397
+      ],
+      "py": [
+       1393430,
+       1340000,
+       1415984,
+       1408514,
+       1463465
+      ],
+      "up": [
+       false,
+       false,
+       false,
+       true,
+       true
+      ],
+      "bats": 7,
+      "throws": 11,
+      "cleared": 1,
+      "knocked": 8,
+      "polukon": true,
+      "lastOut": 0,
+      "over": false,
+      "rng": 2331563496
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "throw",
+      "x": 148005,
+      "aim": 134232,
+      "power": 73
+     },
+     "state": {
+      "fig": 2,
+      "px": [
+       152530,
+       75000,
+       40612,
+       138791,
+       145397
+      ],
+      "py": [
+       1393430,
+       1340000,
+       1415984,
+       1408514,
+       1463465
+      ],
+      "up": [
+       false,
+       false,
+       false,
+       false,
+       true
+      ],
+      "bats": 6,
+      "throws": 12,
+      "cleared": 1,
+      "knocked": 9,
+      "polukon": true,
+      "lastOut": 1,
+      "over": false,
+      "rng": 3498974617
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "throw",
+      "x": 182212,
+      "aim": 151111,
+      "power": 30
+     },
+     "state": {
+      "fig": 3,
+      "px": [
+       80000,
+       120000,
+       100000,
+       80000,
+       120000
+      ],
+      "py": [
+       1320000,
+       1320000,
+       1340000,
+       1360000,
+       1360000
+      ],
+      "up": [
+       true,
+       true,
+       true,
+       true,
+       true
+      ],
+      "bats": 5,
+      "throws": 13,
+      "cleared": 2,
+      "knocked": 10,
+      "polukon": false,
+      "lastOut": 1,
+      "over": false,
+      "rng": 1122888036
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "throw",
+      "x": 48986,
+      "aim": 76583,
+      "power": 57
+     },
+     "state": {
+      "fig": 3,
+      "px": [
+       80000,
+       120000,
+       100000,
+       80000,
+       120000
+      ],
+      "py": [
+       1320000,
+       1320000,
+       1340000,
+       1360000,
+       1360000
+      ],
+      "up": [
+       false,
+       true,
+       true,
+       false,
+       true
+      ],
+      "bats": 4,
+      "throws": 14,
+      "cleared": 2,
+      "knocked": 12,
+      "polukon": true,
+      "lastOut": 2,
+      "over": false,
+      "rng": 2605468469
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "throw",
+      "x": 16486,
+      "aim": 93316,
+      "power": 87
+     },
+     "state": {
+      "fig": 3,
+      "px": [
+       80000,
+       120000,
+       100000,
+       80000,
+       120000
+      ],
+      "py": [
+       1320000,
+       1320000,
+       1340000,
+       1360000,
+       1360000
+      ],
+      "up": [
+       false,
+       true,
+       false,
+       false,
+       true
+      ],
+      "bats": 3,
+      "throws": 15,
+      "cleared": 2,
+      "knocked": 13,
+      "polukon": true,
+      "lastOut": 1,
+      "over": false,
+      "rng": 4126021849
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "throw",
+      "x": 68757,
+      "aim": 119885,
+      "power": 66
+     },
+     "state": {
+      "fig": 4,
+      "px": [
+       100000,
+       100000,
+       100000,
+       82000,
+       118000
+      ],
+      "py": [
+       1315000,
+       1335000,
+       1355000,
+       1370000,
+       1370000
+      ],
+      "up": [
+       true,
+       true,
+       true,
+       true,
+       true
+      ],
+      "bats": 2,
+      "throws": 16,
+      "cleared": 3,
+      "knocked": 15,
+      "polukon": false,
+      "lastOut": 2,
+      "over": false,
+      "rng": 2541978743
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "throw",
+      "x": 121681,
+      "aim": 76673,
+      "power": 61
+     },
+     "state": {
+      "fig": 4,
+      "px": [
+       100000,
+       100000,
+       100000,
+       82000,
+       118000
+      ],
+      "py": [
+       1315000,
+       1335000,
+       1355000,
+       1370000,
+       1370000
+      ],
+      "up": [
+       true,
+       true,
+       true,
+       true,
+       true
+      ],
+      "bats": 1,
+      "throws": 17,
+      "cleared": 3,
+      "knocked": 15,
+      "polukon": false,
+      "lastOut": 0,
+      "over": false,
+      "rng": 2300786555
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "throw",
+      "x": 159672,
+      "aim": 99121,
+      "power": 29
+     },
+     "state": {
+      "fig": 4,
+      "px": [
+       38713,
+       156453,
+       60846,
+       64855,
+       140343
+      ],
+      "py": [
+       1390331,
+       1373418,
+       1442696,
+       1376406,
+       1417970
+      ],
+      "up": [
+       true,
+       true,
+       true,
+       true,
+       true
+      ],
+      "bats": 0,
+      "throws": 18,
+      "cleared": 3,
+      "knocked": 15,
+      "polukon": false,
+      "lastOut": 0,
+      "over": true,
+      "rng": 366804586
+     }
+    }
+   ],
+   "result": {
+    "winner": "player",
+    "stars": 2,
+    "score": 300,
+    "cleared": 3,
+    "knocked": 15,
+    "throws": 18
+   }
+  },
+  {
+   "name": "level 5: wild thrower runs out of bats",
+   "config": {
+    "level": 5,
+    "gorodW": 200000,
+    "gorodY0": 1300000,
+    "gorodY1": 1500000,
+    "polukonY": 650000,
+    "batR": 16000,
+    "batM": 200,
+    "batDec": 3,
+    "pieceR": 5000,
+    "pieceM": 20,
+    "pieceDec": 40,
+    "minSpeed": 3000,
+    "maxSpeed": 5200,
+    "eBody": 600,
+    "fieldPad": 300000,
+    "maxSteps": 900,
+    "bats": [
+     24,
+     21,
+     18,
+     16,
+     14
+    ],
+    "scatter": [
+     600,
+     900,
+     1200,
+     1500,
+     1800
+    ],
+    "starFigs": [
+     5,
+     3,
+     1
+    ],
+    "figures": [
+     [
+      -15000,
+      20000,
+      15000,
+      20000,
+      0,
+      10000,
+      0,
+      30000,
+      0,
+      50000
+     ],
+     [
+      0,
+      15000,
+      -25000,
+      40000,
+      0,
+      40000,
+      25000,
+      40000,
+      0,
+      65000
+     ],
+     [
+      -20000,
+      20000,
+      20000,
+      20000,
+      0,
+      40000,
+      -20000,
+      60000,
+      20000,
+      60000
+     ],
+     [
+      0,
+      15000,
+      0,
+      35000,
+      0,
+      55000,
+      -18000,
+      70000,
+      18000,
+      70000
+     ],
+     [
+      -30000,
+      25000,
+      30000,
+      25000,
+      -12000,
+      40000,
+      12000,
+      40000,
+      0,
+      60000
+     ]
+    ]
+   },
+   "seed": 3,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "throw",
+      "x": 20843,
+      "aim": 102135,
+      "power": 64
+     },
+     "state": {
+      "fig": 1,
+      "px": [
+       85000,
+       133631,
+       100000,
+       29685,
+       100000
+      ],
+      "py": [
+       1320000,
+       1324033,
+       1310000,
+       1495155,
+       1350000
+      ],
+      "up": [
+       false,
+       true,
+       false,
+       true,
+       false
+      ],
+      "bats": 13,
+      "throws": 1,
+      "cleared": 0,
+      "knocked": 3,
+      "polukon": true,
+      "lastOut": 3,
+      "over": false,
+      "rng": 201886211
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "throw",
+      "x": 100291,
+      "aim": 17706,
+      "power": 28
+     },
+     "state": {
+      "fig": 1,
+      "px": [
+       85000,
+       133631,
+       100000,
+       29685,
+       100000
+      ],
+      "py": [
+       1320000,
+       1324033,
+       1310000,
+       1495155,
+       1350000
+      ],
+      "up": [
+       false,
+       true,
+       false,
+       true,
+       false
+      ],
+      "bats": 12,
+      "throws": 2,
+      "cleared": 0,
+      "knocked": 3,
+      "polukon": true,
+      "lastOut": 0,
+      "over": false,
+      "rng": 1909268553
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "throw",
+      "x": 188,
+      "aim": 14364,
+      "power": 60
+     },
+     "state": {
+      "fig": 1,
+      "px": [
+       85000,
+       133631,
+       100000,
+       29685,
+       100000
+      ],
+      "py": [
+       1320000,
+       1324033,
+       1310000,
+       1495155,
+       1350000
+      ],
+      "up": [
+       false,
+       true,
+       false,
+       false,
+       false
+      ],
+      "bats": 11,
+      "throws": 3,
+      "cleared": 0,
+      "knocked": 4,
+      "polukon": true,
+      "lastOut": 1,
+      "over": false,
+      "rng": 482289907
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "throw",
+      "x": 42531,
+      "aim": 159827,
+      "power": 22
+     },
+     "state": {
+      "fig": 1,
+      "px": [
+       85000,
+       133631,
+       100000,
+       29685,
+       100000
+      ],
+      "py": [
+       1320000,
+       1324033,
+       1310000,
+       1495155,
+       1350000
+      ],
+      "up": [
+       false,
+       true,
+       false,
+       false,
+       false
+      ],
+      "bats": 10,
+      "throws": 4,
+      "cleared": 0,
+      "knocked": 4,
+      "polukon": true,
+      "lastOut": 0,
+      "over": false,
+      "rng": 1249279236
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "throw",
+      "x": 45461,
+      "aim": 105490,
+      "power": 100
+     },
+     "state": {
+      "fig": 1,
+      "px": [
+       85000,
+       178726,
+       100000,
+       29685,
+       100000
+      ],
+      "py": [
+       1320000,
+       1331931,
+       1310000,
+       1495155,
+       1350000
+      ],
+      "up": [
+       false,
+       true,
+       false,
+       false,
+       false
+      ],
+      "bats": 9,
+      "throws": 5,
+      "cleared": 0,
+      "knocked": 4,
+      "polukon": true,
+      "lastOut": 0,
+      "over": false,
+      "rng": 4283800655
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "throw",
+      "x": 1869,
+      "aim": 176848,
+      "power": 68
+     },
+     "state": {
+      "fig": 1,
+      "px": [
+       85000,
+       178726,
+       100000,
+       29685,
+       100000
+      ],
+      "py": [
+       1320000,
+       1331931,
+       1310000,
+       1495155,
+       1350000
+      ],
+      "up": [
+       false,
+       true,
+       false,
+       false,
+       false
+      ],
+      "bats": 8,
+      "throws": 6,
+      "cleared": 0,
+      "knocked": 4,
+      "polukon": true,
+      "lastOut": 0,
+      "over": false,
+      "rng": 2792598794
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "throw",
+      "x": 51822,
+      "aim": 188044,
+      "power": 62
+     },
+     "state": {
+      "fig": 2,
+      "px": [
+       100000,
+       75000,
+       100000,
+       125000,
+       100000
+      ],
+      "py": [
+       1315000,
+       1340000,
+       1340000,
+       1340000,
+       1365000
+      ],
+      "up": [
+       true,
+       true,
+       true,
+       true,
+       true
+      ],
+      "bats": 7,
+      "throws": 7,
+      "cleared": 1,
+      "knocked": 5,
+      "polukon": false,
+      "lastOut": 1,
+      "over": false,
+      "rng": 3100882058
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "throw",
+      "x": 20509,
+      "aim": 85013,
+      "power": 98
+     },
+     "state": {
+      "fig": 2,
+      "px": [
+       100000,
+       75000,
+       100000,
+       125000,
+       14178
+      ],
+      "py": [
+       1315000,
+       1340000,
+       1340000,
+       1340000,
+       1470146
+      ],
+      "up": [
+       false,
+       true,
+       false,
+       false,
+       true
+      ],
+      "bats": 6,
+      "throws": 8,
+      "cleared": 1,
+      "knocked": 8,
+      "polukon": true,
+      "lastOut": 3,
+      "over": false,
+      "rng": 1140391503
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "throw",
+      "x": 66927,
+      "aim": 50091,
+      "power": 73
+     },
+     "state": {
+      "fig": 2,
+      "px": [
+       100000,
+       75000,
+       100000,
+       125000,
+       14178
+      ],
+      "py": [
+       1315000,
+       1340000,
+       1340000,
+       1340000,
+       1470146
+      ],
+      "up": [
+       false,
+       true,
+       false,
+       false,
+       true
+      ],
+      "bats": 5,
+      "throws": 9,
+      "cleared": 1,
+      "knocked": 8,
+      "polukon": true,
+      "lastOut": 0,
+      "over": false,
+      "rng": 2507753207
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "throw",
+      "x": 16955,
+      "aim": 81384,
+      "power": 25
+     },
+     "state": {
+      "fig": 2,
+      "px": [
+       100000,
+       75000,
+       100000,
+       125000,
+       14178
+      ],
+      "py": [
+       1315000,
+       1340000,
+       1340000,
+       1340000,
+       1470146
+      ],
+      "up": [
+       false,
+       true,
+       false,
+       false,
+       true
+      ],
+      "bats": 4,
+      "throws": 10,
+      "cleared": 1,
+      "knocked": 8,
+      "polukon": true,
+      "lastOut": 0,
+      "over": false,
+      "rng": 3477245826
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "throw",
+      "x": 61474,
+      "aim": 92385,
+      "power": 48
+     },
+     "state": {
+      "fig": 2,
+      "px": [
+       100000,
+       75000,
+       100000,
+       125000,
+       14178
+      ],
+      "py": [
+       1315000,
+       1340000,
+       1340000,
+       1340000,
+       1470146
+      ],
+      "up": [
+       false,
+       false,
+       false,
+       false,
+       true
+      ],
+      "bats": 3,
+      "throws": 11,
+      "cleared": 1,
+      "knocked": 9,
+      "polukon": true,
+      "lastOut": 1,
+      "over": false,
+      "rng": 1764440145
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "throw",
+      "x": 161433,
+      "aim": 3066,
+      "power": 66
+     },
+     "state": {
+      "fig": 2,
+      "px": [
+       100000,
+       75000,
+       100000,
+       125000,
+       14178
+      ],
+      "py": [
+       1315000,
+       1340000,
+       1340000,
+       1340000,
+       1470146
+      ],
+      "up": [
+       false,
+       false,
+       false,
+       false,
+       true
+      ],
+      "bats": 2,
+      "throws": 12,
+      "cleared": 1,
+      "knocked": 9,
+      "polukon": true,
+      "lastOut": 0,
+      "over": false,
+      "rng": 155008982
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "throw",
+      "x": 132316,
+      "aim": 33986,
+      "power": 35
+     },
+     "state": {
+      "fig": 3,
+      "px": [
+       80000,
+       120000,
+       100000,
+       80000,
+       120000
+      ],
+      "py": [
+       1320000,
+       1320000,
+       1340000,
+       1360000,
+       1360000
+      ],
+      "up": [
+       true,
+       true,
+       true,
+       true,
+       true
+      ],
+      "bats": 1,
+      "throws": 13,
+      "cleared": 2,
+      "knocked": 10,
+      "polukon": false,
+      "lastOut": 1,
+      "over": false,
+      "rng": 535941965
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "throw",
+      "x": 146702,
+      "aim": 121119,
+      "power": 79
+     },
+     "state": {
+      "fig": 3,
+      "px": [
+       79076,
+       68537,
+       86622,
+       80000,
+       98028
+      ],
+      "py": [
+       1317734,
+       1333438,
+       1375091,
+       1360000,
+       1367678
+      ],
+      "up": [
+       true,
+       true,
+       true,
+       true,
+       true
+      ],
+      "bats": 0,
+      "throws": 14,
+      "cleared": 2,
+      "knocked": 10,
+      "polukon": false,
+      "lastOut": 0,
+      "over": true,
+      "rng": 2293203409
+     }
+    }
+   ],
+   "result": {
+    "winner": "player",
+    "stars": 1,
+    "score": 200,
+    "cleared": 2,
+    "knocked": 10,
+    "throws": 14
+   }
+  },
+  {
+   "name": "level 2: accurate",
+   "config": {
+    "level": 2,
+    "gorodW": 200000,
+    "gorodY0": 1300000,
+    "gorodY1": 1500000,
+    "polukonY": 650000,
+    "batR": 16000,
+    "batM": 200,
+    "batDec": 3,
+    "pieceR": 5000,
+    "pieceM": 20,
+    "pieceDec": 40,
+    "minSpeed": 3000,
+    "maxSpeed": 5200,
+    "eBody": 600,
+    "fieldPad": 300000,
+    "maxSteps": 900,
+    "bats": [
+     24,
+     21,
+     18,
+     16,
+     14
+    ],
+    "scatter": [
+     600,
+     900,
+     1200,
+     1500,
+     1800
+    ],
+    "starFigs": [
+     5,
+     3,
+     1
+    ],
+    "figures": [
+     [
+      -15000,
+      20000,
+      15000,
+      20000,
+      0,
+      10000,
+      0,
+      30000,
+      0,
+      50000
+     ],
+     [
+      0,
+      15000,
+      -25000,
+      40000,
+      0,
+      40000,
+      25000,
+      40000,
+      0,
+      65000
+     ],
+     [
+      -20000,
+      20000,
+      20000,
+      20000,
+      0,
+      40000,
+      -20000,
+      60000,
+      20000,
+      60000
+     ],
+     [
+      0,
+      15000,
+      0,
+      35000,
+      0,
+      55000,
+      -18000,
+      70000,
+      18000,
+      70000
+     ],
+     [
+      -30000,
+      25000,
+      30000,
+      25000,
+      -12000,
+      40000,
+      12000,
+      40000,
+      0,
+      60000
+     ]
+    ]
+   },
+   "seed": 4,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "throw",
+      "x": 163033,
+      "aim": 86126,
+      "power": 44
+     },
+     "state": {
+      "fig": 1,
+      "px": [
+       85000,
+       115000,
+       100000,
+       100000,
+       171422
+      ],
+      "py": [
+       1320000,
+       1320000,
+       1310000,
+       1330000,
+       1402169
+      ],
+      "up": [
+       false,
+       true,
+       true,
+       true,
+       true
+      ],
+      "bats": 20,
+      "throws": 1,
+      "cleared": 0,
+      "knocked": 1,
+      "polukon": true,
+      "lastOut": 1,
+      "over": false,
+      "rng": 268507140
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "throw",
+      "x": 158042,
+      "aim": 112205,
+      "power": 58
+     },
+     "state": {
+      "fig": 1,
+      "px": [
+       85000,
+       115000,
+       100000,
+       7775,
+       171422
+      ],
+      "py": [
+       1320000,
+       1320000,
+       1310000,
+       1430346,
+       1402169
+      ],
+      "up": [
+       false,
+       false,
+       false,
+       true,
+       true
+      ],
+      "bats": 19,
+      "throws": 2,
+      "cleared": 0,
+      "knocked": 3,
+      "polukon": true,
+      "lastOut": 2,
+      "over": false,
+      "rng": 3341906444
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "throw",
+      "x": 10347,
+      "aim": 169410,
+      "power": 36
+     },
+     "state": {
+      "fig": 1,
+      "px": [
+       85000,
+       115000,
+       100000,
+       7775,
+       171422
+      ],
+      "py": [
+       1320000,
+       1320000,
+       1310000,
+       1430346,
+       1402169
+      ],
+      "up": [
+       false,
+       false,
+       false,
+       true,
+       true
+      ],
+      "bats": 18,
+      "throws": 3,
+      "cleared": 0,
+      "knocked": 3,
+      "polukon": true,
+      "lastOut": 0,
+      "over": false,
+      "rng": 1638950503
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "throw",
+      "x": 112998,
+      "aim": 7413,
+      "power": 77
+     },
+     "state": {
+      "fig": 1,
+      "px": [
+       85000,
+       115000,
+       100000,
+       7775,
+       171422
+      ],
+      "py": [
+       1320000,
+       1320000,
+       1310000,
+       1430346,
+       1402169
+      ],
+      "up": [
+       false,
+       false,
+       false,
+       true,
+       true
+      ],
+      "bats": 17,
+      "throws": 4,
+      "cleared": 0,
+      "knocked": 3,
+      "polukon": true,
+      "lastOut": 0,
+      "over": false,
+      "rng": 1697498707
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "throw",
+      "x": 58192,
+      "aim": 9768,
+      "power": 78
+     },
+     "state": {
+      "fig": 1,
+      "px": [
+       85000,
+       115000,
+       100000,
+       7775,
+       171422
+      ],
+      "py": [
+       1320000,
+       1320000,
+       1310000,
+       1430346,
+       1402169
+      ],
+      "up": [
+       false,
+       false,
+       false,
+       false,
+       true
+      ],
+      "bats": 16,
+      "throws": 5,
+      "cleared": 0,
+      "knocked": 4,
+      "polukon": true,
+      "lastOut": 1,
+      "over": false,
+      "rng": 3956981061
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "throw",
+      "x": 179440,
+      "aim": 172162,
+      "power": 38
+     },
+     "state": {
+      "fig": 2,
+      "px": [
+       100000,
+       75000,
+       100000,
+       125000,
+       100000
+      ],
+      "py": [
+       1315000,
+       1340000,
+       1340000,
+       1340000,
+       1365000
+      ],
+      "up": [
+       true,
+       true,
+       true,
+       true,
+       true
+      ],
+      "bats": 15,
+      "throws": 6,
+      "cleared": 1,
+      "knocked": 5,
+      "polukon": false,
+      "lastOut": 1,
+      "over": false,
+      "rng": 2199352046
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "throw",
+      "x": 179941,
+      "aim": 122069,
+      "power": 59
+     },
+     "state": {
+      "fig": 2,
+      "px": [
+       100000,
+       75000,
+       100000,
+       140905,
+       100000
+      ],
+      "py": [
+       1315000,
+       1340000,
+       1340000,
+       1345262,
+       1365000
+      ],
+      "up": [
+       false,
+       true,
+       false,
+       true,
+       false
+      ],
+      "bats": 14,
+      "throws": 7,
+      "cleared": 1,
+      "knocked": 8,
+      "polukon": true,
+      "lastOut": 3,
+      "over": false,
+      "rng": 844812660
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "throw",
+      "x": 14176,
+      "aim": 74329,
+      "power": 51
+     },
+     "state": {
+      "fig": 2,
+      "px": [
+       100000,
+       75000,
+       100000,
+       140905,
+       100000
+      ],
+      "py": [
+       1315000,
+       1340000,
+       1340000,
+       1345262,
+       1365000
+      ],
+      "up": [
+       false,
+       false,
+       false,
+       true,
+       false
+      ],
+      "bats": 13,
+      "throws": 8,
+      "cleared": 1,
+      "knocked": 9,
+      "polukon": true,
+      "lastOut": 1,
+      "over": false,
+      "rng": 2454672506
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "throw",
+      "x": 138919,
+      "aim": 138211,
+      "power": 32
+     },
+     "state": {
+      "fig": 3,
+      "px": [
+       80000,
+       120000,
+       100000,
+       80000,
+       120000
+      ],
+      "py": [
+       1320000,
+       1320000,
+       1340000,
+       1360000,
+       1360000
+      ],
+      "up": [
+       true,
+       true,
+       true,
+       true,
+       true
+      ],
+      "bats": 12,
+      "throws": 9,
+      "cleared": 2,
+      "knocked": 10,
+      "polukon": false,
+      "lastOut": 1,
+      "over": false,
+      "rng": 1886337069
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "throw",
+      "x": 120844,
+      "aim": 79139,
+      "power": 20
+     },
+     "state": {
+      "fig": 3,
+      "px": [
+       129844,
+       120000,
+       100000,
+       123114,
+       120000
+      ],
+      "py": [
+       1464892,
+       1320000,
+       1340000,
+       1425520,
+       1360000
+      ],
+      "up": [
+       true,
+       true,
+       true,
+       true,
+       true
+      ],
+      "bats": 11,
+      "throws": 10,
+      "cleared": 2,
+      "knocked": 10,
+      "polukon": false,
+      "lastOut": 0,
+      "over": false,
+      "rng": 2857461417
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "throw",
+      "x": 183327,
+      "aim": 121881,
+      "power": 91
+     },
+     "state": {
+      "fig": 3,
+      "px": [
+       129844,
+       120000,
+       100000,
+       123114,
+       120000
+      ],
+      "py": [
+       1464892,
+       1320000,
+       1340000,
+       1425520,
+       1360000
+      ],
+      "up": [
+       false,
+       false,
+       true,
+       false,
+       false
+      ],
+      "bats": 10,
+      "throws": 11,
+      "cleared": 2,
+      "knocked": 14,
+      "polukon": true,
+      "lastOut": 4,
+      "over": false,
+      "rng": 3819092001
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "throw",
+      "x": 30423,
+      "aim": 100032,
+      "power": 50
+     },
+     "state": {
+      "fig": 4,
+      "px": [
+       100000,
+       100000,
+       100000,
+       82000,
+       118000
+      ],
+      "py": [
+       1315000,
+       1335000,
+       1355000,
+       1370000,
+       1370000
+      ],
+      "up": [
+       true,
+       true,
+       true,
+       true,
+       true
+      ],
+      "bats": 9,
+      "throws": 12,
+      "cleared": 3,
+      "knocked": 15,
+      "polukon": false,
+      "lastOut": 1,
+      "over": false,
+      "rng": 3471715598
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "throw",
+      "x": 85568,
+      "aim": 84126,
+      "power": 56
+     },
+     "state": {
+      "fig": 4,
+      "px": [
+       100000,
+       100000,
+       100000,
+       82000,
+       118000
+      ],
+      "py": [
+       1315000,
+       1335000,
+       1355000,
+       1370000,
+       1370000
+      ],
+      "up": [
+       true,
+       true,
+       true,
+       false,
+       true
+      ],
+      "bats": 8,
+      "throws": 13,
+      "cleared": 3,
+      "knocked": 16,
+      "polukon": true,
+      "lastOut": 1,
+      "over": false,
+      "rng": 2642125320
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "throw",
+      "x": 161901,
+      "aim": 120924,
+      "power": 93
+     },
+     "state": {
+      "fig": 4,
+      "px": [
+       100000,
+       100000,
+       100000,
+       82000,
+       118000
+      ],
+      "py": [
+       1315000,
+       1335000,
+       1355000,
+       1370000,
+       1370000
+      ],
+      "up": [
+       true,
+       true,
+       true,
+       false,
+       false
+      ],
+      "bats": 7,
+      "throws": 14,
+      "cleared": 3,
+      "knocked": 17,
+      "polukon": true,
+      "lastOut": 1,
+      "over": false,
+      "rng": 306097030
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "throw",
+      "x": 58035,
+      "aim": 102279,
+      "power": 63
+     },
+     "state": {
+      "fig": 5,
+      "px": [
+       70000,
+       130000,
+       88000,
+       112000,
+       100000
+      ],
+      "py": [
+       1325000,
+       1325000,
+       1340000,
+       1340000,
+       1360000
+      ],
+      "up": [
+       true,
+       true,
+       true,
+       true,
+       true
+      ],
+      "bats": 6,
+      "throws": 15,
+      "cleared": 4,
+      "knocked": 20,
+      "polukon": false,
+      "lastOut": 3,
+      "over": false,
+      "rng": 786840390
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "throw",
+      "x": 54993,
+      "aim": 114898,
+      "power": 95
+     },
+     "state": {
+      "fig": 5,
+      "px": [
+       70000,
+       138516,
+       88000,
+       112000,
+       100000
+      ],
+      "py": [
+       1325000,
+       1325762,
+       1340000,
+       1340000,
+       1360000
+      ],
+      "up": [
+       true,
+       true,
+       true,
+       false,
+       false
+      ],
+      "bats": 5,
+      "throws": 16,
+      "cleared": 4,
+      "knocked": 22,
+      "polukon": true,
+      "lastOut": 2,
+      "over": false,
+      "rng": 3267611380
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "throw",
+      "x": 93512,
+      "aim": 67790,
+      "power": 92
+     },
+     "state": {
+      "fig": 5,
+      "px": [
+       70000,
+       138516,
+       120901,
+       112000,
+       100000
+      ],
+      "py": [
+       1325000,
+       1325762,
+       1351325,
+       1340000,
+       1360000
+      ],
+      "up": [
+       false,
+       true,
+       true,
+       false,
+       false
+      ],
+      "bats": 4,
+      "throws": 17,
+      "cleared": 4,
+      "knocked": 23,
+      "polukon": true,
+      "lastOut": 1,
+      "over": false,
+      "rng": 4029007650
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "throw",
+      "x": 54533,
+      "aim": 123785,
+      "power": 58
+     },
+     "state": {
+      "fig": 5,
+      "px": [
+       70000,
+       138516,
+       120901,
+       112000,
+       100000
+      ],
+      "py": [
+       1325000,
+       1325762,
+       1351325,
+       1340000,
+       1360000
+      ],
+      "up": [
+       false,
+       false,
+       false,
+       false,
+       false
+      ],
+      "bats": 3,
+      "throws": 18,
+      "cleared": 5,
+      "knocked": 25,
+      "polukon": true,
+      "lastOut": 2,
+      "over": true,
+      "rng": 3676964552
+     }
+    }
+   ],
+   "result": {
+    "winner": "player",
+    "stars": 3,
+    "score": 560,
+    "cleared": 5,
+    "knocked": 25,
+    "throws": 18
+   }
+  },
+  {
+   "name": "level 4: timeout after 5 throws",
+   "config": {
+    "level": 4,
+    "gorodW": 200000,
+    "gorodY0": 1300000,
+    "gorodY1": 1500000,
+    "polukonY": 650000,
+    "batR": 16000,
+    "batM": 200,
+    "batDec": 3,
+    "pieceR": 5000,
+    "pieceM": 20,
+    "pieceDec": 40,
+    "minSpeed": 3000,
+    "maxSpeed": 5200,
+    "eBody": 600,
+    "fieldPad": 300000,
+    "maxSteps": 900,
+    "bats": [
+     24,
+     21,
+     18,
+     16,
+     14
+    ],
+    "scatter": [
+     600,
+     900,
+     1200,
+     1500,
+     1800
+    ],
+    "starFigs": [
+     5,
+     3,
+     1
+    ],
+    "figures": [
+     [
+      -15000,
+      20000,
+      15000,
+      20000,
+      0,
+      10000,
+      0,
+      30000,
+      0,
+      50000
+     ],
+     [
+      0,
+      15000,
+      -25000,
+      40000,
+      0,
+      40000,
+      25000,
+      40000,
+      0,
+      65000
+     ],
+     [
+      -20000,
+      20000,
+      20000,
+      20000,
+      0,
+      40000,
+      -20000,
+      60000,
+      20000,
+      60000
+     ],
+     [
+      0,
+      15000,
+      0,
+      35000,
+      0,
+      55000,
+      -18000,
+      70000,
+      18000,
+      70000
+     ],
+     [
+      -30000,
+      25000,
+      30000,
+      25000,
+      -12000,
+      40000,
+      12000,
+      40000,
+      0,
+      60000
+     ]
+    ]
+   },
+   "seed": 5,
+   "steps": [
+    {
+     "action": {
+      "by": "player",
+      "op": "throw",
+      "x": 18201,
+      "aim": 87781,
+      "power": 45
+     },
+     "state": {
+      "fig": 1,
+      "px": [
+       85000,
+       126582,
+       188590,
+       44790,
+       146507
+      ],
+      "py": [
+       1320000,
+       1317154,
+       1411594,
+       1423279,
+       1485908
+      ],
+      "up": [
+       false,
+       true,
+       true,
+       true,
+       true
+      ],
+      "bats": 15,
+      "throws": 1,
+      "cleared": 0,
+      "knocked": 1,
+      "polukon": true,
+      "lastOut": 1,
+      "over": false,
+      "rng": 336141829
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "throw",
+      "x": 101033,
+      "aim": 183623,
+      "power": 69
+     },
+     "state": {
+      "fig": 1,
+      "px": [
+       85000,
+       126582,
+       188590,
+       44790,
+       146507
+      ],
+      "py": [
+       1320000,
+       1317154,
+       1411594,
+       1423279,
+       1485908
+      ],
+      "up": [
+       false,
+       true,
+       true,
+       true,
+       true
+      ],
+      "bats": 14,
+      "throws": 2,
+      "cleared": 0,
+      "knocked": 1,
+      "polukon": true,
+      "lastOut": 0,
+      "over": false,
+      "rng": 3580160835
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "throw",
+      "x": 148060,
+      "aim": 122989,
+      "power": 37
+     },
+     "state": {
+      "fig": 1,
+      "px": [
+       85000,
+       126582,
+       188590,
+       44790,
+       146507
+      ],
+      "py": [
+       1320000,
+       1317154,
+       1411594,
+       1423279,
+       1485908
+      ],
+      "up": [
+       false,
+       false,
+       true,
+       true,
+       false
+      ],
+      "bats": 13,
+      "throws": 3,
+      "cleared": 0,
+      "knocked": 3,
+      "polukon": true,
+      "lastOut": 2,
+      "over": false,
+      "rng": 1306475959
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "throw",
+      "x": 194670,
+      "aim": 46445,
+      "power": 80
+     },
+     "state": {
+      "fig": 1,
+      "px": [
+       85000,
+       126582,
+       188590,
+       44790,
+       146507
+      ],
+      "py": [
+       1320000,
+       1317154,
+       1411594,
+       1423279,
+       1485908
+      ],
+      "up": [
+       false,
+       false,
+       true,
+       true,
+       false
+      ],
+      "bats": 12,
+      "throws": 4,
+      "cleared": 0,
+      "knocked": 3,
+      "polukon": true,
+      "lastOut": 0,
+      "over": false,
+      "rng": 2094324449
+     }
+    },
+    {
+     "action": {
+      "by": "player",
+      "op": "throw",
+      "x": 25159,
+      "aim": 44527,
+      "power": 75
+     },
+     "state": {
+      "fig": 1,
+      "px": [
+       85000,
+       126582,
+       188590,
+       44790,
+       146507
+      ],
+      "py": [
+       1320000,
+       1317154,
+       1411594,
+       1423279,
+       1485908
+      ],
+      "up": [
+       false,
+       false,
+       true,
+       false,
+       false
+      ],
+      "bats": 11,
+      "throws": 5,
+      "cleared": 0,
+      "knocked": 4,
+      "polukon": true,
+      "lastOut": 1,
+      "over": false,
+      "rng": 1175100977
+     }
+    },
+    {
+     "action": {
+      "by": "timeout"
+     },
+     "state": {
+      "fig": 1,
+      "px": [
+       85000,
+       126582,
+       188590,
+       44790,
+       146507
+      ],
+      "py": [
+       1320000,
+       1317154,
+       1411594,
+       1423279,
+       1485908
+      ],
+      "up": [
+       false,
+       false,
+       true,
+       false,
+       false
+      ],
+      "bats": 11,
+      "throws": 5,
+      "cleared": 0,
+      "knocked": 4,
+      "polukon": true,
+      "lastOut": 1,
+      "over": true,
+      "rng": 1175100977
+     }
+    }
+   ],
+   "result": {
+    "winner": "ai",
+    "stars": 0,
+    "score": 40,
+    "cleared": 0,
+    "knocked": 4,
+    "throws": 5
+   }
+  }
+ ]
+}

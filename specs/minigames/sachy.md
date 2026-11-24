@@ -88,3 +88,14 @@ Uzel (strana `s` na tahu, zbývá `d`): nejdřív legální tahy; žádný → v
 - Tah, po kterém by vlastní král zůstal v šachu (i vázaný kámen), je nelegální.
 - Mat i pat se poznají hned po tahu; AI nikdy nedostane stav bez tahu.
 - Proměněná dáma se počítá jako dáma v materiálu i hodnocení.
+
+## Upřesnění v1
+
+- `legalActions`: kameny vzestupně podle `from`, cíle jednoho kamene vzestupně podle `to` (po
+  sběru ze všech směrů se třídí). Chybějící král se bere jako král v šachu (ve hře nenastane).
+- `quiet` po tahu: 0 při braní nebo tahu pěšcem (i proměně), jinak `quiet + 1`; v negamaxu stejně.
+- Kontrola konce po tahu v pořadí: strana na tahu bez legálního tahu (mat / pat), dva králové,
+  `quiet ≥ quietLimit`.
+- AI: úroveň oříznutá na 1–5, hloubka < 1 se bere jako 1; vždy los `ai.nextInt(100)`, při chybě
+  druhý los indexu. Kořen: hodnota syna `= −uzel(syn, depth − 1, α = −∞, β = −alfa kořene)`.
+- `timeout` mění jen `over`, `byCount` a `winner`; `plies` zůstane.

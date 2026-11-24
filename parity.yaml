@@ -697,7 +697,7 @@
   vectors: vectors/sachy.json
   lead: web
   flutter: todo
-  web: todo
+  web: done
 
 - id: F-081
   name: Gorodki (Moscow local, engine flick)
@@ -706,7 +706,7 @@
   vectors: vectors/gorodki.json
   lead: web
   flutter: todo
-  web: todo
+  web: done
 
 - id: F-082
   name: "Durak (Moscow local, engine cards, podkidnoy vs 1–3 NPC)"
@@ -715,4 +715,4 @@
   vectors: vectors/durak.json
   lead: web
   flutter: todo
-  web: todo
+  web: done
