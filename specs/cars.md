@@ -17,6 +17,11 @@ s hotovostí (M1-S11); pravidla na něj jsou připravená už teď.
 - M3 (Praha, `plans/M3_PRAHA.md` bod 6): `lidovka` (malý sedan „Lidka 105“), `kolobezka` a `kolo`
   (třída `micro`, `specs/zones.md`). `tags` = id měst, kde auto parkuje; `hatch_pip` parkuje
   v obou městech. Koupit jde každé auto v kterékoli garáži.
+- M6 (Moskva, `plans/M6_MOSKVA.md` bod 5, parita F-079): v Moskvě parkuje 12 obecných aut (`tags`
+  obsahuje `moscow`) a dvě místní: `sedan_sokol` (sedan „Sokol 21“) a `taxi_sokol` (taxi
+  „Sokol 21 Taksi“). `bus_iskra` (trolejbus „Iskra TB-9“, třída `bus`) je jako autobus jen kulisa
+  garáže: neparkuje, provoz ho nekreslí (provoz má vlastní tvar), koupit jde. Laky stylu E
+  (`sokol_ochre`, `sokol_cream`, `iskra_red`). Pravidla P0 se nemění (verze zůstává).
 - `vega_roadster` („Vega Roadster“, supersport) má kontejner vzduchu na skok přes kolonu
   (`hop`, `specs/hop.md`); garáž ho zdarma doplní.
 - M2 (`plans/M2_NYC.md` bod 8): New York má 40 aut (`tags` obsahuje `nyc`), napříč všemi třídami
@@ -25,7 +30,7 @@ s hotovostí (M1-S11); pravidla na něj jsou připravená už teď.
   tříkolka, rikša). Značky i modely jsou smyšlené (R10), ceny 5 000–60 000 (N5), mikro a rikša levněji.
   Mikro, rikša a vozidla bez slotů nejdou tunit (`specs/garage.md`), autobus a food truck mají jen
   motor, pneumatiky a brzdy.
-- Každé auto jde koupit v garáži; všechna kromě autobusu a Vegy (kontejner vzduchu) taky parkují ve
+- Každé auto jde koupit v garáži; všechna kromě autobusů (autobus, trolejbus) a Vegy (kontejner vzduchu) taky parkují ve
   městě (`cars.parked.models`). Provoz (`specs/traffic.md`) si kreslí vlastní paletu a katalog
   nepoužívá.
 - Kreslení podle třídy: `micro` se kreslí jako koloběžka (`length_m` < 1,5) nebo kolo shora

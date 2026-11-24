@@ -1,0 +1,21 @@
+{
+  "id": "bus_iskra",
+  "name": "Iskra TB-9",
+  "class": "bus",
+  "length_m": 11.8,
+  "width_m": 2.5,
+  "mass": 10500,
+  "power": 3.2,
+  "brake": 8.5,
+  "grip_front": 15.5,
+  "grip_rear": 15.0,
+  "drift_bias": 0.55,
+  "steer_speed": 2.2,
+  "top_speed": 22.0,
+  "seats": 38,
+  "tags": ["moscow"],
+  "price": 55000,
+  "rarity": "legendary",
+  "tuning_slots": ["engine", "tyres", "brakes"],
+  "paint": "iskra_red"
+}

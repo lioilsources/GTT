@@ -13,7 +13,7 @@ export const cityIdNames: Record<CityId, string> = {
 };
 
 /** Cars defined in content/cars/<id>.json. */
-export const carIdValues = ['bus_city', 'coupe_nova', 'coupe_strada', 'hatch_city', 'hatch_pip', 'hatch_rally', 'kolo', 'kolobezka', 'kombi_fjord', 'kombi_woody', 'lidovka', 'limo_grand', 'limo_stretch', 'm0_coupe', 'micro_cruiser', 'micro_scoot', 'mini_bolt', 'mini_dot', 'mini_pebble', 'muscle_brute', 'muscle_bulldog', 'muscle_thunder', 'off_bloc', 'off_ridge', 'pickup_hauler', 'pickup_mesa', 'sedan_crown', 'sedan_harbor', 'sedan_regent', 'spec_grill', 'spec_rickshaw', 'spec_trike', 'super_arrow', 'super_lumen', 'super_vento', 'taxi_classic', 'taxi_metro', 'van_box', 'van_courier', 'van_wander', 'vega_roadster', 'vet_skyliner', 'vet_tourer'] as const;
+export const carIdValues = ['bus_city', 'bus_iskra', 'coupe_nova', 'coupe_strada', 'hatch_city', 'hatch_pip', 'hatch_rally', 'kolo', 'kolobezka', 'kombi_fjord', 'kombi_woody', 'lidovka', 'limo_grand', 'limo_stretch', 'm0_coupe', 'micro_cruiser', 'micro_scoot', 'mini_bolt', 'mini_dot', 'mini_pebble', 'muscle_brute', 'muscle_bulldog', 'muscle_thunder', 'off_bloc', 'off_ridge', 'pickup_hauler', 'pickup_mesa', 'sedan_crown', 'sedan_harbor', 'sedan_regent', 'sedan_sokol', 'spec_grill', 'spec_rickshaw', 'spec_trike', 'super_arrow', 'super_lumen', 'super_vento', 'taxi_classic', 'taxi_metro', 'taxi_sokol', 'van_box', 'van_courier', 'van_wander', 'vega_roadster', 'vet_skyliner', 'vet_tourer'] as const;
 export type CarId = (typeof carIdValues)[number];
 
 /** Minigame engines (METROPOLE_PLAN 9.3). */
