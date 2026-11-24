@@ -33,6 +33,9 @@ import { drift } from './drift/game';
 import { sprint } from './sprint/game';
 import { stickball } from './stickball/game';
 import { doubledutch } from './doubledutch/game';
+import { sachy } from './sachy/game';
+import { gorodki } from './gorodki/game';
+import { durak } from './durak/game';
 
 /** Minigames this client implements; the Gallery greys out the rest. */
 export const minigames: Partial<Record<MinigameId, (env: MinigameEnv) => Minigame>> = {
@@ -69,4 +72,7 @@ export const minigames: Partial<Record<MinigameId, (env: MinigameEnv) => Minigam
   sprint,
   stickball,
   doubledutch,
+  sachy,
+  gorodki,
+  durak,
 };
