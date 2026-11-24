@@ -217,12 +217,41 @@ class Palette {
     castShadow: const Color(Tokens.colorCityTokyoCastShadow),
   );
 
+  static final _moscow = Palette._(
+    land: const Color(Tokens.colorCityMoscowLand),
+    water: const Color(Tokens.colorCityMoscowWater),
+    park: const Color(Tokens.colorCityMoscowPark),
+    plaza: const Color(Tokens.colorCityMoscowPlaza),
+    rail: const Color(Tokens.colorCityMoscowRail),
+    pedestrian: const Color(Tokens.colorCityMoscowPedestrian),
+    sidewalk: const Color(Tokens.colorCityMoscowSidewalk),
+    asphalt: const Color(Tokens.colorCityMoscowAsphalt),
+    alley: const Color(Tokens.colorCityMoscowAlley),
+    marking: const Color(Tokens.colorCityMoscowMarking),
+    centerLine: const Color(Tokens.colorCityMoscowCenterLine),
+    bridgeDeck: const Color(Tokens.colorCityMoscowBridgeDeck),
+    bridgeEdge: const Color(Tokens.colorCityMoscowBridgeEdge),
+    tunnel: const Color(Tokens.colorCityMoscowTunnel),
+    landmark: const Color(Tokens.colorCityMoscowLandmark),
+    facades: [for (final c in Tokens.colorCityMoscowFacades) Color(c)],
+    roofLight: Tokens.lightDayRoofLight,
+    sunX: Tokens.lightDaySunX,
+    sunY: Tokens.lightDaySunY,
+    ambient: Tokens.lightDayAmbient,
+    night: false,
+    shadow: const Color(Tokens.colorCityMoscowShadow),
+    roof: const Color(Tokens.colorCityMoscowRoof),
+    roofEdge: const Color(Tokens.colorCityMoscowRoofEdge),
+    castShadow: const Color(Tokens.colorCityMoscowCastShadow),
+  );
+
   /// Day palette of the city [cityId] (manifest id, specs/style.md): `color.city.<id>` with the
   /// shared `light.day`; a city without a skin gets [day]. Night stays [nightPalette] for all.
   static Palette forCity(String cityId) => switch (cityId) {
     'nyc' => _nyc,
     'prague' => _prague,
     'tokyo' => _tokyo,
+    'moscow' => _moscow,
     _ => day,
   };
 

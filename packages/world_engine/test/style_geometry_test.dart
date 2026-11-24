@@ -143,6 +143,7 @@ void main() {
       expect(castShadowOn(st, 'nyc', night: true), isFalse);
       expect(castShadowOn(st, 'prague', night: false), st.castShadow.prague);
       expect(castShadowOn(st, 'tokyo', night: false), st.castShadow.tokyo);
+      expect(castShadowOn(st, 'moscow', night: false), isTrue);
       expect(castShadowOn(st, 'atlantis', night: false), isFalse);
     });
   });
@@ -293,6 +294,7 @@ void main() {
       expect(crosswalksOn(st, 'nyc'), st.crosswalks.nyc);
       expect(crosswalksOn(st, 'prague'), st.crosswalks.prague);
       expect(crosswalksOn(st, 'tokyo'), st.crosswalks.tokyo);
+      expect(crosswalksOn(st, 'moscow'), isTrue);
       expect(crosswalksOn(st, 'atlantis'), isFalse);
     });
   });
