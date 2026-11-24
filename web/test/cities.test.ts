@@ -1,4 +1,4 @@
-import { readFileSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { parse } from 'yaml';
@@ -19,6 +19,7 @@ import {
   writeLastCity,
   type KeyValue,
 } from '../src/travel/cities';
+import { City } from '../src/world/model';
 
 const root = join(__dirname, '..', '..');
 const tuning = Tuning.fromJson(parse(readFileSync(join(root, 'content', 'tuning.yaml'), 'utf8')));
@@ -53,9 +54,20 @@ describe('start city (specs/cities.md "Výchozí město")', () => {
     expect(pickStartCity(null, null, cityIdValues)).toBe('nyc');
   });
 
-  it('every generated city is selectable by ?city (Tokyo since M4)', () => {
+  it('every generated city is selectable by ?city (Tokyo since M4, Moscow since M6)', () => {
     for (const id of cityIdValues) expect(pickStartCity(id, null, cityIdValues)).toBe(id);
     expect(cityIdValues as readonly string[]).toContain('tokyo');
+    expect(cityIdValues as readonly string[]).toContain('moscow');
+    expect(pickStartCity('moscow', 'tokyo', cityIdValues)).toBe('moscow');
+    expect(new URL(cityUrl('https://example.test/?city=nyc', 'moscow')).searchParams.get('city')).toBe('moscow');
+  });
+
+  it.skipIf(!existsSync(join(root, 'build', 'packs', 'moscow', 'manifest.pb')))('moscow pack: own cityId, right-hand traffic (manifest.driveSide)', async () => {
+    const dir = join(root, 'build', 'packs', 'moscow');
+    const city = await City.load({ read: async (p) => new Uint8Array(readFileSync(join(dir, p))) });
+    expect(city.manifest.cityId).toBe('moscow');
+    expect(city.manifest.driveSide).toBe('right');
+    expect(city.graphPb.nodes.length).toBeGreaterThan(0);
   });
 
   it('last city round trip through storage', () => {

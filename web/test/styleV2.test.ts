@@ -77,6 +77,25 @@ describe('style A flat vector (specs/style.md v2)', () => {
     expect(cityFlag(st.risograph, 'tokyo', false)).toBe(false);
   });
 
+  it('moscow (style E): own skin from color.city.moscow incl. roof, roofEdge and castShadow; shadows and zebras on, risograph off', () => {
+    const p = cityPalette('moscow');
+    expect(p).not.toBe(dayPalette);
+    expect(p).not.toBe(cityPalette('tokyo'));
+    expect(p.night).toBe(false);
+    expect(p.land).toEqual(rgba(tokens.colorCityMoscowLand));
+    expect(p.water).toEqual(rgba(tokens.colorCityMoscowWater));
+    expect(p.asphalt).toEqual(rgba(tokens.colorCityMoscowAsphalt));
+    expect(p.landmark).toEqual(rgba(tokens.colorCityMoscowLandmark));
+    expect(p.facades).toEqual(tokens.colorCityMoscowFacades.map((h) => rgba(h)));
+    expect(p.roof).toEqual(rgba(tokens.colorCityMoscowRoof));
+    expect(p.roofEdge).toEqual(rgba(tokens.colorCityMoscowRoofEdge));
+    expect(p.castShadow).toEqual(rgba(tokens.colorCityMoscowCastShadow));
+    expect(cityFlag(st.castShadow, 'moscow', false)).toBe(true);
+    expect(cityFlag(st.castShadow, 'moscow', true)).toBe(false);
+    expect(cityFlag(st.crosswalks, 'moscow', false)).toBe(true);
+    expect(cityFlag(st.risograph, 'moscow', false)).toBe(false);
+  });
+
   it('palette: nyc gets roof, roofEdge and castShadow; prague, the default and night do not', () => {
     const p = cityPalette('nyc');
     expect(p.roof).toEqual(rgba(tokens.colorCityNycRoof));
