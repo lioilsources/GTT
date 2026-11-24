@@ -246,14 +246,6 @@ items:
   - {id: L-D2, milestone: L, name: "boost ve schématech B a C, nápověda boostu (F-005, specs/controls.md v2)", size: S, status: "čeká na Ol1na", started: 2026-11-23T12:44,
      done: 2026-11-23T13:10, evidence: "PR #279 (spec v2, tuning controls.boost_hint_*), #280 (W), #281 (F); tlačítko Boost v B dole uprostřed, v C nad pedálem brzdy; toast boostHintA/B/C/Keys při první jízdě a po 25 s jízdy bez boostu, nejvýš 3×; testy web/test/boost.test.ts, packages/drive_core/test/boost_test.dart, app/test/boost_hint_store_test.dart; na Ol1novi: pocit z tlačítka a nápovědy na telefonu"}
   - {id: L-A1, milestone: L, name: "docs/launch.md, metro progress --check a kouřový test zelené na main, Pages nasazené", size: S, status: todo}
-
-# Content counters with targets. tests and fps are measured; the rest metro progress counts itself.
-counters:
-  tests: {total: 1787, passing: 1787, measured: 2026-11-23T10:59}   # metro progress --tests
-  fps:                                            # filled from phone measurements (D1-2, M0-A1)
-    pixel_8a: {app: null, web: null, measured: null}
-    iphone_12_mini: {app: null, web: null, measured: null}
-  stuck: {per_10min: null, target: 1, measured: null}   # specs/flow.md, M5-A4 (from stuck.log / overlay)
   # ---------- M6 – Moskva (plans/M6_MOSKVA.md), po L souběžně s M4
   - {id: M6-S1, milestone: M6, name: "balíček Moskva: oblast X1, 25 památek, spoty, terén a příroda, validate", size: L, status: wip, started: 2026-11-23T12:30}
   - {id: M6-S2, milestone: M6, name: "Moskva v klientech: registrace, balíček, paleta (F-078)", size: M, status: "čeká na Ol1na", started: 2026-11-24T09:00, done: 2026-11-24T10:00, evidence: "W: PR #290 (testy výběru, balíčku, palety E, soak 4 měst; kód obecný), F: PR #284 balíček + PR #289 paleta E, soak CityId.moscow; parita F-078 obě done; chybí projet Moskvu na telefonu"}
@@ -266,3 +258,11 @@ counters:
   - {id: M6-A2, milestone: M6, name: "60 fps v Moskvě na obou telefonech", size: S, status: todo}
   - {id: M6-A3, milestone: M6, name: "přepnutí čtyř měst 10× bez pádu", size: S, status: todo}
   - {id: M6-A4, milestone: M6, name: "matice parity pro rozsah M6 zelená", size: M, status: todo}
+
+# Content counters with targets. tests and fps are measured; the rest metro progress counts itself.
+counters:
+  tests: {total: 1787, passing: 1787, measured: 2026-11-23T10:59}   # metro progress --tests
+  fps:                                            # filled from phone measurements (D1-2, M0-A1)
+    pixel_8a: {app: null, web: null, measured: null}
+    iphone_12_mini: {app: null, web: null, measured: null}
+  stuck: {per_10min: null, target: 1, measured: null}   # specs/flow.md, M5-A4 (from stuck.log / overlay)
