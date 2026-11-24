@@ -1,5 +1,5 @@
 # Curated Moscow spots (same rules as nyc/spots.yaml). City-only catalog games (koulena, kulicky, cara,
-# nohejbal, stickball, doubledutch) are not used; kviz has no Moscow bank yet.
+# nohejbal, stickball, doubledutch) are not used; Moscow's own: sachy, gorodki, durak; kviz has no Moscow bank yet.
 # Commercial places keep a fictional name (R10); the point is a real location of that kind.
 spots:
   - {id: manege_square, kind: plaza, name: Manege Square, lat: 55.75580, lon: 37.61480}
@@ -9,7 +9,8 @@ spots:
   # Minigames (9.5): each on a fitting place
   - {id: kitay_gorod_cellar, kind: bar, name: Podval na Varvarke, lat: 55.75300, lon: 37.62950, minigame: sirky}
   - {id: myasnitskaya_bar, kind: bar, name: Bar Chistye Prudy, lat: 55.76450, lon: 37.63700, minigame: oko}
-  - {id: gogolevsky_chess, kind: park, name: Gogolevsky Boulevard Benches, lat: 55.74850, lon: 37.60150, minigame: dama}
+  - {id: gogolevsky_chess, kind: park, name: Gogolevsky Boulevard Chess Benches, lat: 55.74850, lon: 37.60150, minigame: sachy}
+  - {id: pokrovsky_draughts, kind: park, name: Pokrovsky Boulevard Benches, lat: 55.75800, lon: 37.64650, minigame: dama}
   - {id: chistye_prudy_mill, kind: park, name: Chistye Prudy Pavilion, lat: 55.76250, lon: 37.64000, minigame: mlyn}
   - {id: arbat_dice, kind: plaza, name: Arbat Gate Corner, lat: 55.75150, lon: 37.60050, minigame: desetitisic}
   - {id: pyatnitskaya_darts, kind: bar, name: Pyatnitsa Darts Club, lat: 55.74100, lon: 37.62800, minigame: sipky}
@@ -19,6 +20,8 @@ spots:
   - {id: taganka_billiards, kind: bar, name: Taganka Billiards, lat: 55.74050, lon: 37.65300, minigame: kulecnik}
   - {id: kursky_taxi, kind: stand, name: Kursky Station Taxi Rank, lat: 55.75700, lon: 37.65900, minigame: taxi}
   - {id: luzhnetskaya_drift, kind: pier, name: Frunzenskaya Embankment Lot, lat: 55.72950, lon: 37.59450, minigame: drift}
+  - {id: gorky_park_gorodki, kind: park, name: Gorky Park Gorodki Court, lat: 55.72900, lon: 37.60050, minigame: gorodki}
+  - {id: khokhlovsky_courtyard, kind: plaza, name: Khokhlovsky Lane Courtyard, lat: 55.75600, lon: 37.64200, minigame: durak}
   - {id: kremlin_embankment_start, kind: plaza, name: Kremlin Embankment, lat: 55.74880, lon: 37.61800, minigame: sprint}
   # Player garage (specs/cars.md)
   - {id: tsvetnoy_garage, kind: garage, name: Tsvetnoy Parking, lat: 55.77150, lon: 37.62000}

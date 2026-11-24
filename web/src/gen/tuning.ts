@@ -1502,6 +1502,10 @@ export class TuningMinigames {
   /** M2-S9 NYC local games (specs/minigames/stickball.md, doubledutch.md) */
   readonly stickball: TuningMinigamesStickball;
   readonly doubledutch: TuningMinigamesDoubledutch;
+  /** M6 Moscow local games (specs/minigames/sachy.md, gorodki.md, durak.md) */
+  readonly sachy: TuningMinigamesSachy;
+  readonly gorodki: TuningMinigamesGorodki;
+  readonly durak: TuningMinigamesDurak;
 
   constructor(r: R) {
     this.timeCapS = r.i('time_cap_s');
@@ -1538,6 +1542,9 @@ export class TuningMinigames {
     this.sprint = new TuningMinigamesSprint(r.sub('sprint'));
     this.stickball = new TuningMinigamesStickball(r.sub('stickball'));
     this.doubledutch = new TuningMinigamesDoubledutch(r.sub('doubledutch'));
+    this.sachy = new TuningMinigamesSachy(r.sub('sachy'));
+    this.gorodki = new TuningMinigamesGorodki(r.sub('gorodki'));
+    this.durak = new TuningMinigamesDurak(r.sub('durak'));
   }
 
   toJson(): Record<string, unknown> {
@@ -1576,6 +1583,9 @@ export class TuningMinigames {
       sprint: this.sprint.toJson(),
       stickball: this.stickball.toJson(),
       doubledutch: this.doubledutch.toJson(),
+      sachy: this.sachy.toJson(),
+      gorodki: this.gorodki.toJson(),
+      durak: this.durak.toJson(),
     };
   }
 }
@@ -3097,6 +3107,171 @@ export class TuningMinigamesDoubledutch {
       star_pct: this.starPct,
       lead_in_ms: this.leadInMs,
       time_cap_s: this.timeCapS,
+    };
+  }
+}
+
+/** M6 Moscow local games (specs/minigames/sachy.md, gorodki.md, durak.md) */
+export class TuningMinigamesSachy {
+  /** negamax plies per AI level 1..5 */
+  aiDepth: number[];
+  aiErrorPct: number[];
+  /** plies without a capture or a pawn move = draw */
+  quietLimit: number;
+  /** a win within this many plies = 3 stars */
+  fastPlies: number;
+  timeCapS: number;
+  aiThinkS: number;
+
+  constructor(r: R) {
+    this.aiDepth = r.il('ai_depth');
+    this.aiErrorPct = r.il('ai_error_pct');
+    this.quietLimit = r.i('quiet_limit');
+    this.fastPlies = r.i('fast_plies');
+    this.timeCapS = r.i('time_cap_s');
+    this.aiThinkS = r.d('ai_think_s');
+  }
+
+  toJson(): Record<string, unknown> {
+    return {
+      ai_depth: this.aiDepth,
+      ai_error_pct: this.aiErrorPct,
+      quiet_limit: this.quietLimit,
+      fast_plies: this.fastPlies,
+      time_cap_s: this.timeCapS,
+      ai_think_s: this.aiThinkS,
+    };
+  }
+}
+
+export class TuningMinigamesGorodki {
+  /** u = 0.01 mm; the square ("gorod") 2 x 2 m, x 0..gorod_w */
+  gorodW: number;
+  /** its front line, measured from the far throw line ("kon", y = 0) */
+  gorodY0: number;
+  gorodY1: number;
+  /** half line: throws after the first piece of a figure is out */
+  polukonY: number;
+  /** the spinning bat as one disc */
+  batR: number;
+  batM: number;
+  batDec: number;
+  pieceR: number;
+  pieceM: number;
+  pieceDec: number;
+  minSpeed: number;
+  maxSpeed: number;
+  eBody: number;
+  /** a body this far outside the gorod leaves the field */
+  fieldPad: number;
+  maxSteps: number;
+  /** throws for the whole game by difficulty 1-5 */
+  bats: number[];
+  scatter: number[];
+  /** figures cleared for 3, 2, 1 stars */
+  starFigs: number[];
+  /**
+   * five pieces [dx, dy] from the middle of the front line
+   * cannon
+   */
+  fig1: number[];
+  /** star */
+  fig2: number[];
+  /** well */
+  fig3: number[];
+  /** arrow */
+  fig4: number[];
+  /** crayfish */
+  fig5: number[];
+  /** UI only */
+  stepsPerFrame: number;
+  /** UI only */
+  timeCapS: number;
+
+  constructor(r: R) {
+    this.gorodW = r.i('gorod_w');
+    this.gorodY0 = r.i('gorod_y0');
+    this.gorodY1 = r.i('gorod_y1');
+    this.polukonY = r.i('polukon_y');
+    this.batR = r.i('bat_r');
+    this.batM = r.i('bat_m');
+    this.batDec = r.i('bat_dec');
+    this.pieceR = r.i('piece_r');
+    this.pieceM = r.i('piece_m');
+    this.pieceDec = r.i('piece_dec');
+    this.minSpeed = r.i('min_speed');
+    this.maxSpeed = r.i('max_speed');
+    this.eBody = r.i('e_body');
+    this.fieldPad = r.i('field_pad');
+    this.maxSteps = r.i('max_steps');
+    this.bats = r.il('bats');
+    this.scatter = r.il('scatter');
+    this.starFigs = r.il('star_figs');
+    this.fig1 = r.il('fig1');
+    this.fig2 = r.il('fig2');
+    this.fig3 = r.il('fig3');
+    this.fig4 = r.il('fig4');
+    this.fig5 = r.il('fig5');
+    this.stepsPerFrame = r.i('steps_per_frame');
+    this.timeCapS = r.i('time_cap_s');
+  }
+
+  toJson(): Record<string, unknown> {
+    return {
+      gorod_w: this.gorodW,
+      gorod_y0: this.gorodY0,
+      gorod_y1: this.gorodY1,
+      polukon_y: this.polukonY,
+      bat_r: this.batR,
+      bat_m: this.batM,
+      bat_dec: this.batDec,
+      piece_r: this.pieceR,
+      piece_m: this.pieceM,
+      piece_dec: this.pieceDec,
+      min_speed: this.minSpeed,
+      max_speed: this.maxSpeed,
+      e_body: this.eBody,
+      field_pad: this.fieldPad,
+      max_steps: this.maxSteps,
+      bats: this.bats,
+      scatter: this.scatter,
+      star_figs: this.starFigs,
+      fig1: this.fig1,
+      fig2: this.fig2,
+      fig3: this.fig3,
+      fig4: this.fig4,
+      fig5: this.fig5,
+      steps_per_frame: this.stepsPerFrame,
+      time_cap_s: this.timeCapS,
+    };
+  }
+}
+
+export class TuningMinigamesDurak {
+  hand: number;
+  /** AI players by difficulty 1-5 */
+  opponents: number[];
+  aiErrorPct: number[];
+  /** UI only */
+  timeCapS: number;
+  /** UI only */
+  aiThinkS: number;
+
+  constructor(r: R) {
+    this.hand = r.i('hand');
+    this.opponents = r.il('opponents');
+    this.aiErrorPct = r.il('ai_error_pct');
+    this.timeCapS = r.i('time_cap_s');
+    this.aiThinkS = r.d('ai_think_s');
+  }
+
+  toJson(): Record<string, unknown> {
+    return {
+      hand: this.hand,
+      opponents: this.opponents,
+      ai_error_pct: this.aiErrorPct,
+      time_cap_s: this.timeCapS,
+      ai_think_s: this.aiThinkS,
     };
   }
 }

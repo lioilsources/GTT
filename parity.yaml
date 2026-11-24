@@ -689,3 +689,30 @@
   lead: web
   flutter: done
   web: done
+
+- id: F-080
+  name: "Bulvárové šachy (Moscow local, engine board, Gardner 5×5)"
+  level: P0
+  spec: specs/minigames/sachy.md@1
+  vectors: vectors/sachy.json
+  lead: web
+  flutter: todo
+  web: todo
+
+- id: F-081
+  name: Gorodki (Moscow local, engine flick)
+  level: P0
+  spec: specs/minigames/gorodki.md@1
+  vectors: vectors/gorodki.json
+  lead: web
+  flutter: todo
+  web: todo
+
+- id: F-082
+  name: "Durak (Moscow local, engine cards, podkidnoy vs 1–3 NPC)"
+  level: P0
+  spec: specs/minigames/durak.md@1
+  vectors: vectors/durak.json
+  lead: web
+  flutter: todo
+  web: todo
