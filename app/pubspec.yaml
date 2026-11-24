@@ -76,6 +76,12 @@ dependencies:
     path: ../packages/mg_stickball
   mg_doubledutch:
     path: ../packages/mg_doubledutch
+  mg_sachy:
+    path: ../packages/mg_sachy
+  mg_gorodki:
+    path: ../packages/mg_gorodki
+  mg_durak:
+    path: ../packages/mg_durak
   mg_kulecnik:
     path: ../packages/mg_kulecnik
   mg_bowling:

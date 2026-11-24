@@ -6,6 +6,9 @@ import 'package:mg_ctyri/mg_ctyri.dart';
 import 'package:mg_dama/mg_dama.dart';
 import 'package:mg_desetitisic/mg_desetitisic.dart';
 import 'package:mg_doubledutch/mg_doubledutch.dart';
+import 'package:mg_durak/mg_durak.dart';
+import 'package:mg_gorodki/mg_gorodki.dart';
+import 'package:mg_sachy/mg_sachy.dart';
 import 'package:mg_had/mg_had.dart';
 import 'package:mg_hokej/mg_hokej.dart';
 import 'package:mg_kostky/mg_kostky.dart';
@@ -75,4 +78,8 @@ const Map<MinigameId, Minigame> minigames = {
   // NYC local games (specs/minigames/stickball.md, doubledutch.md).
   MinigameId.stickball: StickballGame(),
   MinigameId.doubledutch: DoubledutchGame(),
+  // Moscow local games (specs/minigames/sachy.md, gorodki.md, durak.md).
+  MinigameId.sachy: SachyGame(),
+  MinigameId.gorodki: GorodkiGame(),
+  MinigameId.durak: DurakGame(),
 };

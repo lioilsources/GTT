@@ -37,6 +37,9 @@ workspace:
   - packages/mg_sprint
   - packages/mg_stickball
   - packages/mg_doubledutch
+  - packages/mg_sachy
+  - packages/mg_gorodki
+  - packages/mg_durak
   - packages/mg_physics
   - packages/mg_kulecnik
   - packages/mg_bowling
