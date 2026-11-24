@@ -73,6 +73,10 @@ CARS = {
     "spec_trike":     dict(cls="trike", L=3.2, W=1.5, cab=(-0.35, 0.10), r=(0.30, 0.35)),
     "spec_rickshaw":  dict(cls="rickshaw", L=2.6, W=1.2, cab=(-0.90, 0.10), r=(0.25, 0.30)),
     "lidovka":        dict(cls="sedan", L=4.2, W=1.6, cab=(-0.42, 0.22), r=(0.22, 0.20), chrome=True),
+    # Moskva, dávka moscow-cars (fiktivní siluety, styl jako ostatní)
+    "sedan_sokol":    dict(cls="sedan", L=4.8, W=1.8, cab=(-0.40, 0.24), r=(0.48, 0.42), chrome=True),
+    "taxi_sokol":     dict(cls="taxi", L=4.8, W=1.8, cab=(-0.40, 0.24), r=(0.48, 0.42), chrome=True),
+    "bus_iskra":      dict(cls="bus", L=11.8, W=2.5, cab=(0.92, 1.0), r=(0.24, 0.18), trolley=True),
     "kolo":           dict(cls="micro", L=1.8, W=0.6),
     "micro_cruiser":  dict(cls="micro", L=1.8, W=0.6, cruiser=True),
     "kolobezka":      dict(cls="micro", L=1.2, W=0.55),
@@ -374,6 +378,16 @@ def draw_car(cid, spec):
         c.rect(-0.96, 0.96, -0.36, -0.20, col=(240, 240, 234, 255))
         for s in (1, -1):
             c.rect(0.74, 0.82, s * 0.30, s * 0.58, col=HEAD_OFF, rad=0.30)
+    if spec.get("trolley"):
+        # trolejbus: dva sběrače ve směru jízdy (nelakované, tmavé) uvnitř obrysu, základna před zadním světlíkem
+        c.rect(0.02, 0.14, -0.40, 0.40, col=(52, 54, 60, 255), rad=0.04)
+        for s in (1, -1):
+            c.rect(-0.90, 0.10, s * 0.27, s * 0.33, col=(30, 30, 34, 255))
+            c.rect(-0.94, -0.88, s * 0.24, s * 0.36, col=(78, 80, 88, 255), rad=0.02)
+        # dveře na pravém boku (v > 0)
+        for u in (0.66, 0.06, -0.54):
+            c.rect(u, u + 0.15, 0.91, 0.98, col=OUT)
+            c.rect(u + 0.07, u + 0.08, 0.91, 0.98, col=(70, 72, 80, 255))
     if spec.get("wood"):
         # dřevěné boční panely (ne lak)
         for s in (1, -1):

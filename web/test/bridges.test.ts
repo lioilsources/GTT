@@ -730,7 +730,9 @@ describe.skipIf(ALL.length === 0)('L-S11: onto a deck only from its ramp; under 
           if (Math.hypot(c.x - u.x, c.y - u.y) < 10) {
             under++;
             minSpeed = Math.min(minSpeed, c.speed);
-            if (c.layer !== 0 || d.rideEdge !== null) onDeck++;
+            // On a deck: its layer, or riding a structure (a ground road over water or a dip in the
+            // terrain is ridden on its own surface, specs/terrain.md, and is no deck).
+            if (c.layer !== 0 || (d.rideEdge !== null && isStructure(d.rideEdge))) onDeck++;
           }
         }
         d.beforeStep = null;
