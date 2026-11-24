@@ -7,6 +7,8 @@ není uvedeno jinak. Reprodukce: `tools/art/` (prompty, seedy, parametry workflo
 |---|---|---|---|---|
 | `npc/*.png` | Qwen-Image (fp8), text encoder Qwen2.5-VL 7B, ComfyUI | Apache 2.0 | vlastní dílo projektu GTT | várka 1, 22. 11. 2026, seedy 101–106 (jeden na postavu) |
 | `npc/*.png` (alfa) | BiRefNet-general přes ComfyUI-RMBG | MIT | vlastní dílo projektu GTT | odstranění pozadí, refine_foreground |
+| `npc/{prague,tokyo,moscow}/*.png` | Qwen-Image (fp8), ComfyUI | Apache 2.0 | vlastní dílo projektu GTT | dávka gtt-npc-cities, 24. 11. 2026, seedy 1101–1106 (Praha), 1201–1206 (Tokio), 1301–1306 (Moskva), jeden na postavu a město (`tools/art/make_npc_cities.py`), 256 barev |
+| `npc/{prague,tokyo,moscow}/*.png` (alfa) | BiRefNet-general přes ComfyUI-RMBG | MIT | vlastní dílo projektu GTT | odstranění pozadí, refine_foreground; `<id>.png` = kopie `_neutral` |
 | `postcards/nyc/*.png` | Qwen-Image (fp8), ComfyUI | Apache 2.0 | vlastní dílo projektu GTT | várka 1, seed 201 (carnegie_hall 203, federal_hall a met_museum 202), styl A, ořez 1080×1350, 256 barev |
 | `postcards/prague/*.png` | Qwen-Image (fp8), ComfyUI | Apache 2.0 | vlastní dílo projektu GTT | várka 1, seed 201, styl C, ořez 1080×1350, 256 barev |
 | `postcards/nyc/{guggenheim,msg}.png` | Qwen-Image (fp8), ComfyUI | Apache 2.0 | vlastní dílo projektu GTT | oprava 2, seed 214 (guggenheim) a 211 (msg), styl A, `tools/art/make_fix2.py` |
