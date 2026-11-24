@@ -252,7 +252,8 @@ items:
   - {id: M6-S3, milestone: M6, name: "styl E – konstruktivistický plakát", size: M, status: todo}
   - {id: M6-S4, milestone: M6, name: "grafika Moskvy: style check, pohlednice, textury, suvenýry (L40S)", size: M, status: todo}
   - {id: M6-S5, milestone: M6, name: "místní vozidla Moskvy", size: M, status: "čeká na Ol1na", started: 2026-11-24T05:20, done: 2026-11-24T07:00, evidence: "PR #292: Sokol 21, Sokol 21 Taksi, trolejbus Iskra TB-9 (fiktivní, tag moscow, laky stylu E), parked.models; klienti vybírají auta podle tagu z generovaného CarId bez změn kódu; parita F-079 obě done; sprity čekají na L40S (docs/art-requests.md, moscow-cars), do té doby procedurální kresba"}
-  - {id: M6-S6, milestone: M6, name: "místní minihry Moskvy", size: L, status: todo}
+  - {id: M6-S6, milestone: M6, name: "místní minihry Moskvy", size: L, status: "čeká na Ol1na", started: 2026-11-24T09:00, done: 2026-11-24T09:35,
+     evidence: "Bulvárové šachy (Gardner 5×5, negamax), Gorodki (celočíselná fyzika, 5 figur), Durak (podkidnoj, 1–3 NPC): specs v1 s Upřesněním, vektory (web lead: sachy 8, durak 8, gorodki 5 případů) projdou v obou klientech, Galerie, spoty Gogolův bulvár / Gorkého park / Chochlovský dvůr (PR #299, #300, #301, #302), parita F-080…F-082 obě done; chybí dohrát na telefonu a citypack publish moscow s novými spoty"}
   - {id: M6-S7, milestone: M6, name: "moskevské skity a pas", size: M, status: todo}
   - {id: M6-A1, milestone: M6, name: "citypack validate moscow projde", size: S, status: todo}
   - {id: M6-A2, milestone: M6, name: "60 fps v Moskvě na obou telefonech", size: S, status: todo}
