@@ -374,6 +374,9 @@ func Pack(e *Env) error {
 		if strings.HasPrefix(elev.Source, "terrain_tiles") {
 			man.Attribution = append(man.Attribution, dem.Attribution)
 		}
+		if strings.HasPrefix(elev.Source, "gsi_tiles") {
+			man.Attribution = append(man.Attribution, dem.AttributionGSI)
+		}
 		for _, k := range keys {
 			c := chunks[k]
 			c.Terrain, c.Shade = chunkTerrain(tg, k[0], k[1])

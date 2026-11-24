@@ -141,14 +141,15 @@ func (e *Env) validateTerrain(p *PackData, fail func(string, ...any)) {
 	ground := groundSegments(p, e.C.Tuning.SidewalkWidthM, t.at, tp.RoadGapMaxM)
 	plateau := tt.GridM * math.Sqrt2 // conform's plateau (elevation.go)
 	lowDeck, shortDeck, gap, gapN := 0, 0, 0, 0
-	// Landings: nodes where a bridge edge meets a ground edge.
+	// Landings: nodes where a bridge edge meets a ground edge, or a short ramp that touches down
+	// (a non-bridge edge from layer 1 to layer 0: the Shuto exit onto Sendai-dori).
 	isBridge := func(ed *pb.Edge) bool { return ed.Bridge && (ed.LayerFrom > 0 || ed.LayerTo > 0) }
 	nb, ng := make([]bool, len(g.Nodes)), make([]bool, len(g.Nodes))
 	for _, ed := range g.Edges {
 		for _, n := range []uint32{ed.From, ed.To} {
 			if isBridge(ed) {
 				nb[n] = true
-			} else if groundEdge(ed) {
+			} else if groundEdge(ed) || (!ed.Tunnel && !ed.Bridge && (ed.LayerFrom == 0 || ed.LayerTo == 0)) {
 				ng[n] = true
 			}
 		}

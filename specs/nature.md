@@ -16,7 +16,7 @@ jména. Čísla `content/tuning.yaml` → `nature`, barvy `design/tokens.json` �
 
 | Třída | Z čeho (Overture `base/water`) | Vzhled |
 |---|---|---|
-| `sea` | subtype `ocean`, class `bay`, `harbour`, `strait` | `color.water.sea`, dlouhá vlna |
+| `sea` | subtype `ocean`, class `bay`, `harbour`, `strait`; plocha s OSM `water=bay` | `color.water.sea`, dlouhá vlna |
 | `river` | subtype `river`; `stream` širší než 6 m | `color.water.river` |
 | `canal` | subtype `canal` | `color.water.river`, rovný břeh |
 | `lake` | subtype `lake`, `pond`, `reservoir` | `color.water.lake` |

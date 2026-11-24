@@ -114,6 +114,16 @@ func Elevation(e *Env) error {
 				return err
 			}
 			src = t
+		case "gsi_tiles":
+			minLon, minLat, maxLon, maxLat := e.C.City.BBox()
+			dLat := tp.DemMarginM / geo.EarthR * 180 / math.Pi
+			dLon := dLat / math.Cos(e.C.City.Origin.Lat*math.Pi/180)
+			b := dem.BBox{LatMin: minLat - 2*dLat, LonMin: minLon - 2*dLon, LatMax: maxLat + 2*dLat, LonMax: maxLon + 2*dLon}
+			t, err := dem.GSITiles(b, tp.DemZoom, e.W("tiles_gsi"))
+			if err != nil {
+				return err
+			}
+			src = t
 		default:
 			return fmt.Errorf("city.yaml: unknown elevation source %q", s)
 		}
@@ -197,6 +207,13 @@ func Elevation(e *Env) error {
 
 	// Water levels (real metres): sea at 0, others from their banks.
 	levels := waterLevels(water, ground, cm)
+	// city.yaml water_level_m: a known level wins over the banks (a tidal river below a surface
+	// model's bluffs: Tokyo's Kanda-gawa).
+	for i, w := range water {
+		if v, ok := e.C.City.WaterLevelM[w.Name]; ok && w.Name != "" {
+			levels[waterKey(w, i)] = v
+		}
+	}
 	wi := newWaterIndex(water, levels)
 
 	// z0: the lowest of sea level (if the city has sea) and the 1st percentile of node heights.

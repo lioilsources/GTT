@@ -26,10 +26,12 @@ type tileSampler struct {
 	g      *Grid
 	r      TileRange
 	ox, oy float64
+	name   string
+	lidar  bool
 }
 
-func (s *tileSampler) Name() string { return "terrain_tiles" }
-func (s *tileSampler) Lidar() bool  { return false }
+func (s *tileSampler) Name() string { return s.name }
+func (s *tileSampler) Lidar() bool  { return s.lidar }
 
 func (s *tileSampler) At(lon, lat float64) (float64, bool) {
 	// Pixel centres sit at integer + 0.5 in the global pixel grid.
@@ -38,7 +40,11 @@ func (s *tileSampler) At(lon, lat float64) (float64, bool) {
 	if x < -1 || y < -1 || x > float64(s.g.W) || y > float64(s.g.H) {
 		return 0, false
 	}
-	return s.g.Bilinear(x, y), true
+	z := s.g.Bilinear(x, y)
+	if math.IsNaN(z) {
+		return 0, false
+	}
+	return z, true
 }
 
 // TerrainTiles fetches (or reads from cacheDir) every terrarium tile covering b at zoom z and
@@ -55,7 +61,26 @@ func TerrainTiles(b BBox, z int, cacheDir string) (Sampler, error) {
 	if err != nil {
 		return nil, err
 	}
-	return &tileSampler{g: g, r: r, ox: float64(r.X0 * TileSize), oy: float64(r.Y0 * TileSize)}, nil
+	return &tileSampler{g: g, r: r, ox: float64(r.X0 * TileSize), oy: float64(r.Y0 * TileSize), name: "terrain_tiles"}, nil
+}
+
+// GSITiles reads the GSI elevation tiles DEM5A (Japan: 5 m laser, bare earth) at zoom z (≤ 15).
+// Water and tiles out at sea have no data (At reports !ok, the elevation step fills them).
+func GSITiles(b BBox, z int, cacheDir string) (Sampler, error) {
+	z = min(z, 15)
+	r := TilesFor(b, z)
+	f := NewFetcher(GSITileURL, cacheDir, 4, 4)
+	f.missingOK = true
+	tiles, err := f.GetRange(r, nil)
+	if err != nil {
+		return nil, err
+	}
+	slog.Info("dem: gsi tiles", "zoom", z, "tiles", len(tiles), "cached", f.hits.Load(), "downloaded", f.misses.Load())
+	g, err := mosaic(tiles, r, DecodeGSI)
+	if err != nil {
+		return nil, err
+	}
+	return &tileSampler{g: g, r: r, ox: float64(r.X0 * TileSize), oy: float64(r.Y0 * TileSize), name: "gsi_tiles", lidar: true}, nil
 }
 
 // ascSampler is an ESRI ASCII grid in WGS84 degrees (gdalwarp -t_srs EPSG:4326 -of AAIGrid).

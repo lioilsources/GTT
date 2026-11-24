@@ -216,3 +216,22 @@ func TestCropMatchesBBoxSize(t *testing.T) {
 		t.Errorf("crop is %dx%d, want the native %dx%d", c.W, c.H, wantW, wantH)
 	}
 }
+
+func TestDecodeGSI(t *testing.T) {
+	img := image.NewNRGBA(image.Rect(0, 0, 3, 1))
+	enc := func(x, v int) { img.Set(x, 0, color.NRGBA{uint8(v >> 16), uint8(v >> 8), uint8(v), 255}) }
+	enc(0, 1234)    // 12.34 m
+	enc(1, 1<<23)   // no data
+	enc(2, 1<<24-5) // −0.05 m
+	var buf bytes.Buffer
+	if err := png.Encode(&buf, img); err != nil {
+		t.Fatal(err)
+	}
+	g, err := DecodeGSI(buf.Bytes())
+	if err != nil {
+		t.Fatal(err)
+	}
+	if math.Abs(float64(g.Data[0])-12.34) > 1e-4 || !math.IsNaN(float64(g.Data[1])) || math.Abs(float64(g.Data[2])+0.05) > 1e-4 {
+		t.Fatalf("got %v", g.Data)
+	}
+}

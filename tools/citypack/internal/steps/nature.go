@@ -85,14 +85,15 @@ CREATE TABLE cells AS
 
 -- ── Water: classes (specs/nature.md), precedence lake > canal > river > sea, named over unnamed.
 CREATE TABLE wraw AS
-  SELECT subtype, class, %[39]s AS name, ST_MakeValid(%[7]s) AS g FROM read_parquet(%[8]s)
+  SELECT subtype, class, source_tags['water'] AS wtag, %[39]s AS name, ST_MakeValid(%[7]s) AS g FROM read_parquet(%[8]s)
   WHERE ST_GeometryType(geometry) IN ('POLYGON', 'MULTIPOLYGON') AND subtype NOT IN ('physical')
     AND class NOT IN ('swimming_pool')
     -- Underground water (tunnel, culvert: Rudolfova štola under Letná) is not on the map.
     AND coalesce(level, 0) >= 0 AND NOT list_contains(map_keys(source_tags), 'tunnel');
 DELETE FROM wraw WHERE NOT ST_Intersects(g, (SELECT g FROM env));
 CREATE TABLE wcls0 AS SELECT CASE
-    WHEN subtype = 'ocean' THEN %[9]d
+    -- A bay mapped as plain water (OSM water=bay: Tokyo's inner harbour off Harumi) is sea.
+    WHEN subtype = 'ocean' OR wtag = 'bay' THEN %[9]d
     WHEN subtype IN ('river', 'stream') THEN %[10]d
     WHEN subtype = 'canal' OR class = 'dock' THEN %[11]d
     ELSE %[12]d END AS cls, name, ST_Intersection(g, (SELECT g FROM env)) AS g FROM wraw;

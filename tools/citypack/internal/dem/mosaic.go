@@ -82,10 +82,51 @@ func DecodeTerrarium(b []byte) (*Grid, error) {
 
 // mosaic stitches fetched tiles into one grid covering the whole tile range.
 func Mosaic(tiles []Tile, r TileRange) (*Grid, error) {
+	return mosaic(tiles, r, DecodeTerrarium)
+}
+
+// DecodeGSI decodes a GSI elevation tile: x = 2^16 R + 2^8 G + B, height x × 0.01 m below 2^23,
+// (x − 2^24) × 0.01 m above, no data (NaN) at 2^23.
+func DecodeGSI(b []byte) (*Grid, error) {
+	img, err := png.Decode(bytes.NewReader(b))
+	if err != nil {
+		return nil, err
+	}
+	bounds := img.Bounds()
+	w, h := bounds.Dx(), bounds.Dy()
+	g := NewGrid(w, h)
+	for y := 0; y < h; y++ {
+		for x := 0; x < w; x++ {
+			r, gg, bb, _ := img.At(bounds.Min.X+x, bounds.Min.Y+y).RGBA()
+			v := int(r>>8)<<16 | int(gg>>8)<<8 | int(bb>>8)
+			switch {
+			case v == 1<<23:
+				g.Data[y*w+x] = float32(math.NaN())
+			case v < 1<<23:
+				g.Data[y*w+x] = float32(float64(v) * 0.01)
+			default:
+				g.Data[y*w+x] = float32(float64(v-1<<24) * 0.01)
+			}
+		}
+	}
+	return g, nil
+}
+
+// mosaic stitches decoded tiles; a tile without data (nil PNG) stays NaN.
+func mosaic(tiles []Tile, r TileRange, decode func([]byte) (*Grid, error)) (*Grid, error) {
 	cols, rows := r.X1-r.X0+1, r.Y1-r.Y0+1
 	out := NewGrid(cols*TileSize, rows*TileSize)
 	for _, t := range tiles {
-		g, err := DecodeTerrarium(t.PNG)
+		if t.PNG == nil {
+			ox, oy := (t.X-r.X0)*TileSize, (t.Y-r.Y0)*TileSize
+			for y := 0; y < TileSize; y++ {
+				for x := 0; x < TileSize; x++ {
+					out.Data[(oy+y)*out.W+ox+x] = float32(math.NaN())
+				}
+			}
+			continue
+		}
+		g, err := decode(t.PNG)
 		if err != nil {
 			return nil, fmt.Errorf("tile %d/%d/%d: %w", r.Z, t.X, t.Y, err)
 		}

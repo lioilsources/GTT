@@ -12,3 +12,6 @@ package dem
 
 // Attribution is the credit line for packs that use AWS Terrain Tiles.
 const Attribution = "Elevation: AWS Terrain Tiles (Mapzen) – USGS 3DEP, SRTM (NASA/USGS), GMTED2010, ETOPO1 (NOAA), EU-DEM (produced using Copernicus data and information funded by the European Union)"
+
+// AttributionGSI is the credit line for packs that use the GSI elevation tiles (Japan).
+const AttributionGSI = "Elevation: Geospatial Information Authority of Japan (GSI), elevation tiles DEM5A (出典：国土地理院)"
