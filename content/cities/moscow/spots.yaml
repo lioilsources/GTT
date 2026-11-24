@@ -20,8 +20,8 @@ spots:
   - {id: taganka_billiards, kind: bar, name: Taganka Billiards, lat: 55.74050, lon: 37.65300, minigame: kulecnik}
   - {id: kursky_taxi, kind: stand, name: Kursky Station Taxi Rank, lat: 55.75700, lon: 37.65900, minigame: taxi}
   - {id: luzhnetskaya_drift, kind: pier, name: Frunzenskaya Embankment Lot, lat: 55.72950, lon: 37.59450, minigame: drift}
-  - {id: gorky_park_gorodki, kind: park, name: Gorky Park Gorodki Court, lat: 55.72900, lon: 37.60050, minigame: gorodki}
-  - {id: khokhlovsky_courtyard, kind: plaza, name: Khokhlovsky Lane Courtyard, lat: 55.75600, lon: 37.64200, minigame: durak}
+  - {id: gorky_park_gorodki, kind: park, name: Gorky Park Gorodki Court, lat: 55.72980, lon: 37.60380, minigame: gorodki}
+  - {id: khokhlovsky_courtyard, kind: plaza, name: Khokhlovsky Lane Courtyard, lat: 55.75780, lon: 37.64080, minigame: durak}
   - {id: kremlin_embankment_start, kind: plaza, name: Kremlin Embankment, lat: 55.74880, lon: 37.61800, minigame: sprint}
   # Player garage (specs/cars.md)
   - {id: tsvetnoy_garage, kind: garage, name: Tsvetnoy Parking, lat: 55.77150, lon: 37.62000}

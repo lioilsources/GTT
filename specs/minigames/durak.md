@@ -87,8 +87,8 @@ Shoda ceny → nižší číslo karty.
 ## Výsledek a hvězdy
 
 `{winner, stars, score, byCount, place, durak}`: `place` = pořadí hráče ve `finished` od 1, nebo 0.
-Hráč je durak → `"ai"`, 0★. Nikdo není durak → `"draw"`, 1★. Hráč vyšel první → `"player"`, 3★;
-jinak vyšel → `"player"`, 2★. `timeout`: `byCount = true`; hráč vyšel, nebo má méně karet než
+Hráč je durak → `"ai"`, 0★; hráč vyšel první → `"player"`, 3★; nikdo není durak → `"draw"`, 1★;
+jinak (hráč vyšel) → `"player"`, 2★. `timeout`: `byCount = true`; hráč vyšel, nebo má méně karet než
 každé NPC ve hře → `"player"`, 1★; jinak `"ai"`, 0★. `score = stars × 100`.
 
 ## UI
@@ -98,7 +98,7 @@ každé NPC ve hře → `"player"`, 1★; jinak `"ai"`, 0★. `score = stars × 
   ťukací, ostatní ztlumené.
 - Tlačítka `durakTake` (obrana) a `durakPass` (přihazování), stav `durakAttack`, `durakDefend`,
   `durakThrow`.
-- Po konci kola stůl chvíli zůstane, NPC táhnou po `ai_think_s`.
+- NPC táhnou po `ai_think_s`, hráč na tahu má zvýrazněné místo.
 
 ## Hraniční případy
 
