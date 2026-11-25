@@ -43,8 +43,9 @@ v `npc/`.
 - **Aktuální město** = město, ve kterém hráč právě je (`specs/cities.md`; v Galerii a v seznamu
   skitů město startu). Po přepnutí města (aplikace Cestování, výběr města) se všechny portréty řídí
   novým městem; nic se neukládá, výběr se počítá při každém zobrazení.
-- Soubor města, který je v indexu, ale nejde načíst, se chová jako chybějící: použije se další
-  v pořadí.
+- Soubor, který je v indexu, ale nejde načíst: jako u ostatní grafiky se na tom místě ukáže
+  zástupná kresba. W ho navíc do konce relace vyřadí z indexu, takže příští zobrazení vezme další
+  soubor v pořadí (společný).
 - **F:** složky assetů nejsou rekurzivní: každá `npc/<city>/` má vlastní řádek v `app/pubspec.yaml`.
 
 ## Pohlednice (`specs/passport.md`)
