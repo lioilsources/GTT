@@ -9,7 +9,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:game_loop/game_loop.dart';
-import 'package:mg_api/mg_api.dart' show loadArtIndex;
+import 'package:mg_api/mg_api.dart' show ArtIndex, HostBust, artCity, artIndex, loadArtIndex;
 import 'package:metropole/game/metropole_game.dart';
 import 'package:metropole/game/pause.dart';
 import 'package:metropole/l10n/app_localizations.dart';
@@ -406,6 +406,41 @@ void main() {
       expect(w.shops.skit, isFalse);
       expect(find.byType(DialogueView), findsNothing);
       expect(w.shops.card.value, s);
+      w.shops.close();
+      stop(w);
+      await tester.binding.setSurfaceSize(null);
+    }, skip: !has || !npcFile.existsSync());
+
+    testWidgets('the host bust follows the city: npc/<city>/ first, the shared file in New York (specs/art.md v4)', (tester) async {
+      addTearDown(() {
+        artIndex = ArtIndex.empty;
+        artCity = null;
+      });
+      final w = (await tester.runAsync(() => start(withNpc: true)))!;
+      final s = w.shops.shops.firstWhere((s) => w.shops.hostId(s) != null);
+      final id = w.shops.hostId(s)!;
+      if (_png) {
+        await _loadFonts();
+        await tester.runAsync(() => loadArtIndex(rootBundle));
+      } else {
+        artIndex = ArtIndex(['npc/${id}_bust.png', 'npc/tokyo/${id}_bust.png']);
+      }
+      String shown() {
+        final img = tester.widget<Image>(find.descendant(of: find.byType(HostBust), matching: find.byType(Image)));
+        return ((img.image as ResizeImage).imageProvider as AssetImage).assetName;
+      }
+
+      artCity = 'tokyo';
+      final key = GlobalKey();
+      await pumpCard(tester, w, s, key);
+      expect(shown(), 'assets/shared/assets/npc/tokyo/${id}_bust.png');
+      if (_png) await _shot(tester, key, 'shops_card_tokyo.png');
+      // Back in New York (no npc/nyc/ folder): the shared bust.
+      artCity = 'nyc';
+      w.shops.notifyListeners();
+      await tester.pump();
+      expect(shown(), 'assets/shared/assets/npc/${id}_bust.png');
+      if (_png) await _shot(tester, key, 'shops_card_nyc.png');
       w.shops.close();
       stop(w);
       await tester.binding.setSurfaceSize(null);

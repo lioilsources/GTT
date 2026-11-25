@@ -560,8 +560,9 @@ class _Tag extends StatelessWidget {
   );
 }
 
-/// The host (specs/phone.md, specs/art.md): `npc/<id>_bust.png` anchored at the bottom, about
-/// [hostBustHeight] of the card tall; without the file a soft silhouette (head and shoulders).
+/// The host (specs/phone.md, specs/art.md): the bust `<id>_bust.png` of the current city (v4:
+/// `npc/<city>/` first, then the shared `npc/`) anchored at the bottom, about [hostBustHeight] of
+/// the card tall; without the file a soft silhouette (head and shoulders).
 class _HostPortrait extends StatelessWidget {
   const _HostPortrait({required this.id, required this.cardHeight});
   final String? id;

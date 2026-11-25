@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mg_api/mg_api.dart';
+import 'package:shared_gen/shared_gen.dart' show CityId;
 
 void main() {
   group('npcExpression (specs/art.md)', () {
@@ -58,6 +59,84 @@ void main() {
     });
   });
 
+  group('NPC portraits per city (specs/art.md v4)', () {
+    final idx = ArtIndex(const [
+      'npc/maya.png', 'npc/maya_happy.png', 'npc/maya_annoyed.png', 'npc/maya_bust.png', //
+      'npc/theo.png', 'npc/theo_happy.png', 'npc/theo_bust.png',
+      'npc/tokyo/maya.png', 'npc/tokyo/maya_happy.png', 'npc/tokyo/maya_bust.png',
+      'npc/prague/maya.png',
+    ]);
+    tearDown(() => artCity = null);
+
+    test('the city file wins: dialogue portrait, contacts / rival, feed and booth bust', () {
+      expect(idx.portrait('maya', 'happy', 'tokyo'), 'npc/tokyo/maya_happy.png');
+      expect(idx.avatar('maya', city: 'tokyo'), 'npc/tokyo/maya.png');
+      expect(idx.bust('maya', city: 'tokyo'), 'npc/tokyo/maya_bust.png');
+    });
+
+    test('falls back to the shared file, character by character and file by file', () {
+      expect(idx.portrait('theo', 'happy', 'tokyo'), 'npc/theo_happy.png');
+      expect(idx.avatar('theo', city: 'tokyo'), 'npc/theo.png');
+      expect(idx.bust('theo', city: 'tokyo'), 'npc/theo_bust.png');
+      expect(idx.avatar('maya', city: 'prague'), 'npc/prague/maya.png');
+      expect(idx.bust('maya', city: 'prague'), 'npc/maya_bust.png');
+      expect(idx.bust('ray', city: 'prague'), isNull);
+      expect(idx.portrait('ray', 'neutral', 'prague'), isNull);
+    });
+
+    test('the local look wins over the expression: city <id>.png before the shared expression', () {
+      expect(idx.portrait('maya', 'annoyed', 'tokyo'), 'npc/tokyo/maya.png');
+      expect(idx.portrait('maya', 'happy', 'prague'), 'npc/prague/maya.png');
+    });
+
+    test('New York (no npc/nyc/ folder) and no city keep the shared files', () {
+      for (final city in ['nyc', null]) {
+        artCity = city;
+        expect(idx.portrait('maya', 'happy'), 'npc/maya_happy.png');
+        expect(idx.portrait('maya', 'neutral'), 'npc/maya.png');
+        expect(idx.avatar('maya'), 'npc/maya.png');
+        expect(idx.bust('maya'), 'npc/maya_bust.png');
+      }
+    });
+
+    test('artCity is the default city: a city switch changes every lookup', () {
+      expect(idx.bust('maya'), 'npc/maya_bust.png');
+      artCity = 'tokyo';
+      expect(idx.bust('maya'), 'npc/tokyo/maya_bust.png');
+      expect(idx.avatar('maya'), 'npc/tokyo/maya.png');
+      expect(idx.portrait('maya', 'happy'), 'npc/tokyo/maya_happy.png');
+      artCity = 'prague';
+      expect(idx.avatar('maya'), 'npc/prague/maya.png');
+      expect(idx.bust('maya'), 'npc/maya_bust.png');
+      artCity = 'nyc';
+      expect(idx.avatar('maya'), 'npc/maya.png');
+    });
+
+    test('the art in the repo: Prague, Tokyo and Moscow have every character, New York the shared set', () {
+      final dir = Directory('../../assets/npc');
+      final list = [
+        for (final f in dir.listSync(recursive: true).whereType<File>())
+          if (f.path.endsWith('.png')) 'npc/${f.path.substring(dir.path.length + 1).replaceAll(r'\', '/')}',
+      ];
+      final repo = ArtIndex(list);
+      final ids = [
+        for (final p in list)
+          if (RegExp(r'^npc/[a-z]+_bust\.png$').hasMatch(p)) p.substring(4, p.length - '_bust.png'.length),
+      ];
+      expect(ids.length, greaterThanOrEqualTo(6));
+      for (final city in CityId.values) {
+        final at = city == CityId.nyc ? 'npc' : 'npc/${city.id}';
+        for (final id in ids) {
+          expect(repo.avatar(id, city: city.id), '$at/$id.png');
+          expect(repo.bust(id, city: city.id), '$at/${id}_bust.png');
+          for (final e in ['happy', 'neutral', 'annoyed']) {
+            expect(repo.portrait(id, e, city.id), '$at/${id}_$e.png');
+          }
+        }
+      }
+    });
+  });
+
   test('ArtCache keeps the 24 most recently used', () {
     final c = ArtCache(24);
     for (var i = 0; i < 30; i++) {
@@ -93,5 +172,29 @@ void main() {
     final p = img.image as ResizeImage;
     expect((p.imageProvider as AssetImage).assetName, 'assets/shared/assets/npc/maya_happy.png');
     artIndex = ArtIndex.empty;
+  });
+
+  testWidgets('NpcAvatar follows artCity (specs/art.md v4)', (tester) async {
+    addTearDown(() {
+      artIndex = ArtIndex.empty;
+      artCity = null;
+    });
+    artIndex = ArtIndex(const ['npc/maya_happy.png', 'npc/tokyo/maya_happy.png', 'npc/maya.png']);
+    String shown() =>
+        ((tester.widget<Image>(find.byType(Image)).image as ResizeImage).imageProvider as AssetImage).assetName;
+    Future<void> pump(String? expression) => tester.pumpWidget(
+      MaterialApp(
+        home: NpcAvatar(key: UniqueKey(), id: 'maya', initials: 'MA', index: 0, expression: expression),
+      ),
+    );
+    artCity = 'tokyo';
+    await pump('happy');
+    expect(shown(), 'assets/shared/assets/npc/tokyo/maya_happy.png');
+    // Contacts / rival in Tokyo: no npc/tokyo/maya.png here, so the shared portrait.
+    await pump(null);
+    expect(shown(), 'assets/shared/assets/npc/maya.png');
+    artCity = 'nyc';
+    await pump('happy');
+    expect(shown(), 'assets/shared/assets/npc/maya_happy.png');
   });
 }
