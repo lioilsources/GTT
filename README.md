@@ -19,7 +19,7 @@ Zadání: [Prompts/](Prompts/) (00–05), postup: [plans/PROGRESS.md](plans/PROG
 | Památky | 112 |
 | Skity NPC | 50 |
 | Testy | 1787 / 1787 prochází (2026-11-23T10:59) |
-| Funkce (`parity.yaml`) | 73 v obou klientech, 5 jen web, 0 jen Flutter, 5 rozpracováno |
+| Funkce (`parity.yaml`) | 74 v obou klientech, 5 jen web, 0 jen Flutter, 4 rozpracováno |
 
 _Stav k 2026-11-25, generuje `metro progress`._
 <!-- /metro:status -->
