@@ -19,6 +19,8 @@ není uvedeno jinak. Reprodukce: `tools/art/` (prompty, seedy, parametry workflo
 | `garage/{decals,wheels}/*.png` (8 polepů, 6 kol) | vlastní skript (`tools/art/garage_cosmetics.py`, PIL) | – | vlastní dílo projektu GTT | dávka garage1, procedurální vektor; polepy bílý motiv na alfě 512×1024, kola 128² se světlým diskem, tónovatelné |
 | `cars/{sedan_sokol,taxi_sokol,bus_iskra}/*.png` | vlastní skript (`tools/art/cars_proc.py`, PIL) | – | vlastní dílo projektu GTT | dávka moscow-cars, procedurální vektor kolmo shora, fiktivní siluety; trolejbus se sběrači uvnitř obrysu |
 | `peds/ped_<n>{,_mask}.png` (8 chodců) | vlastní skript (`tools/art/peds_proc.py`, PIL) | – | vlastní dílo projektu GTT | procedurální, shora 32 px/m, pás 3 snímků 24×24 (chůze A, B, uskočení), maska trička pro tónování |
+| `shops/*.png` (6 štítů podniků) | vlastní skript (`tools/art/props_proc.py`, PIL) | – | vlastní dílo projektu GTT | procedurální, kruhové emblémy 256² v barvách `color.shops`, bez textu a značek |
+| `props/{booth,booth_ring,metro_entrance,metro_line_*}.png` | vlastní skript (`tools/art/props_proc.py`, PIL) | – | vlastní dílo projektu GTT | procedurální shora 32 px/m; kolečka linek fiktivní (bez písmen a čísel, ne logo MTA) |
 | `souvenirs/*.png` | Qwen-Image (fp8), ComfyUI + BiRefNet-general | Apache 2.0 / MIT | vlastní dílo projektu GTT | suvenýry 1, seedy 601–604 (`tools/art/make_souv1.py`), výběr a ořez 512² (`tools/art/post_souv.py`) |
 
 Nepoužívat pro herní assety: modely s nekomerční licencí (např. FLUX.1-dev, RMBG-2.0) a modely
