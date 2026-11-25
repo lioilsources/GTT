@@ -142,6 +142,9 @@ flutter:
     - assets/shared/assets/npc/moscow/
     - assets/shared/assets/postcards/nyc/
     - assets/shared/assets/postcards/prague/
+    - assets/shared/assets/postcards/tokyo/
+    - assets/shared/assets/postcards/moscow/
+    - assets/shared/assets/souvenirs/
     - assets/shared/assets/garage/decals/
     - assets/shared/assets/garage/wheels/
     - assets/shared/assets/ui/
@@ -191,3 +194,6 @@ flutter:
     - assets/shared/assets/cars/vega_roadster/
     - assets/shared/assets/cars/vet_skyliner/
     - assets/shared/assets/cars/vet_tourer/
+    - assets/shared/assets/cars/sedan_sokol/
+    - assets/shared/assets/cars/taxi_sokol/
+    - assets/shared/assets/cars/bus_iskra/
