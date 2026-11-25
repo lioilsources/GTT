@@ -4,4 +4,18 @@
          to allow setting breakpoints, to provide hot reload, etc.
     -->
     <uses-permission android:name="android.permission.INTERNET"/>
+    <!-- `flutter run` needs an <activity> with MAIN + LAUNCHER to start the app (it does not look at
+         the icon aliases of the main manifest), so development builds get a second launcher entry
+         labelled "Metropole dev". Release builds have the aliases only (specs/appicon.md). -->
+    <application>
+        <activity
+            android:name=".MainActivity"
+            android:label="Metropole dev"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+    </application>
 </manifest>

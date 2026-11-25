@@ -141,6 +141,12 @@ flutter:
     - assets/shared/assets/garage/decals/
     - assets/shared/assets/garage/wheels/
     - assets/shared/assets/ui/
+    # App icon previews for the Settings picker (specs/appicon.md): the whole icons only.
+    - assets/shared/assets/ui/app_icon/day.png
+    - assets/shared/assets/ui/app_icon/night.png
+    - assets/shared/assets/ui/app_icon/sunset.png
+    - assets/shared/assets/ui/app_icon/teal.png
+    - assets/shared/assets/ui/app_icon/japan.png
     # Car sprites (specs/art.md v2 "Auta"): one line per car with art in assets/cars/.
     - assets/shared/assets/cars/bus_city/
     - assets/shared/assets/cars/coupe_nova/
