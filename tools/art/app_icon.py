@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
 """Ikona aplikace Metropole (dávka gtt-icon), procedurálně (PIL, bez modelu).
 
+Sada barevných módů se stejnou kompozicí (hráč si ve hře vybere, výchozí day).
 Motiv: hráčovo auto Varga Comet (m0_coupe, lak comet_red) shora na stylizované křižovatce, nad ní silueta
 panoramatu velkoměsta (fiktivní, bez skutečných budov a nápisů). 1024², plně neprůhledná.
 Vrstvy pro adaptivní ikonu Androidu: pozadí (*_bg, neprůhledné) a popředí (*_fg, auto se stínem na alfě,
 uvnitř bezpečné zóny 66/108). Ikona = pozadí + popředí.
-  python3 tools/art/app_icon.py --out DIR [varianta ...]      (DIR/<varianta>{,_fg,_bg}.png)
+  python3 tools/art/app_icon.py --out assets/ui/app_icon [mód ...]      (DIR/<mód>{,_fg,_bg}.png)
 """
 import argparse, json, math, os, random
 from PIL import Image, ImageDraw, ImageChops
@@ -24,17 +25,19 @@ def hx(h, a=255):
 
 
 VARIANTS = {
-    # sky, skyline, okna, země, asfalt, čára, zebra, úhel auta (°, 0 = předek nahoru, + = doleva)
-    "night":  dict(sky="#193B62", city="#0F2440", win="#F2BD2C", land="#2E465D", road="#3A3F4A", line="#F2BD2C",
-                   zebra="#E8E4DA", angle=-38, sun=None),
+    # barevné módy se stejnou kompozicí (auto rovně zespodu nahoru); day = výchozí
+    # sky, skyline, okna, země, asfalt, čára, zebra, slunce (barva, střed x, střed y nad horizontem, poloměr) v px 1024
     "day":    dict(sky="#F2BD2C", city="#193B62", win=None, land="#E9DCCB", road="#5E5860", line="#F5EBDA",
-                   zebra="#F5EBDA", angle=0, sun=None),
+                   zebra="#F5EBDA", sun=None),
+    "night":  dict(sky="#193B62", city="#0F2440", win="#F2BD2C", land="#2E465D", road="#3A3F4A", line="#F2BD2C",
+                   zebra="#E8E4DA", sun=None),
     "sunset": dict(sky="#F08A4B", city="#2A1E2E", win="#F2BD2C", land="#43384A", road="#2A2530", line="#F2BD2C",
-                   zebra="#F5EBDA", angle=-38, sun="#FFD166"),
+                   zebra="#F5EBDA", sun=("#FFD166", 0.70, 250, 120)),
     "teal":   dict(sky="#1E8C8A", city="#0E3D3C", win=None, land="#E9DCCB", road="#2E465D", line="#F2BD2C",
-                   zebra="#F5EBDA", angle=-90, sun=None),
-    "cream":  dict(sky="#F3E3CE", city="#1D1A1A", win=None, land="#F3E3CE", road="#1D1A1A", line="#F2BD2C",
-                   zebra="#F3E3CE", angle=-38, sun="#D7263D"),
+                   zebra="#F5EBDA", sun=None),
+    # japan: krémový papír, velké rumělkové slunce mimo střed za panoramatem (zapadající slunce, ne vlajka)
+    "japan":  dict(sky="#F3E6D0", city="#2B2A3A", win=None, land="#E9DCCB", road="#3A3A44", line="#F5EBDA",
+                   zebra="#F5EBDA", sun=("#E0452B", 0.66, 250, 175)),
 }
 HORIZON = 0.36  # podíl výšky: nebe nad, křižovatka pod
 CY = 0.56       # střed křižovatky a auta (blízko středu kvůli bezpečné zóně adaptivní ikony)
@@ -68,8 +71,9 @@ def background(v):
     d = ImageDraw.Draw(im)
     hy = int(N * SS * HORIZON)
     if v["sun"]:
-        r = 120 * SS
-        d.ellipse([N * SS * 0.70 - r, hy - 250 * SS - r, N * SS * 0.70 + r, hy - 250 * SS + r], fill=hx(v["sun"]))
+        col, sx, sy, r = v["sun"]
+        r *= SS
+        d.ellipse([N * SS * sx - r, hy - sy * SS - r, N * SS * sx + r, hy - sy * SS + r], fill=hx(col))
     skyline(d, rnd, hx(v["city"]), hx(v["win"]) if v["win"] else None, hy + 4 * SS)
     # země a křižovatka (shora): svislá a vodorovná silnice, střed křižovatky v (0,5, 0,70)
     d.rectangle([0, hy, N * SS, N * SS], fill=hx(v["land"]))
@@ -121,7 +125,7 @@ def car_sprite(px_m=92):
 
 
 def foreground(v, car):
-    rc = car.rotate(v["angle"], resample=Image.BICUBIC, expand=True)
+    rc = car  # auto vždy rovně zespodu nahoru (předek nahoru)
     fg = Image.new("RGBA", (N, N), (0, 0, 0, 0))
     cx, cy = N // 2, int(N * CY)
     # plochý tvrdý stín vpravo dole
