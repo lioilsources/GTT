@@ -4,7 +4,7 @@
 Mobilní hra na výšku: volné ježdění po skutečných metropolích + minihry z feedu. Dva klienti:
 F (Flutter, story) a W (TypeScript + Babylon.js, GitHub Pages) nad jednou sdílenou vrstvou.
 Zadání: `Prompts/00-METROPOLE_PLAN.md`, `Prompts/01-METROPOLE_DUALSTACK_PLAN.md`, dodatky
-`Prompts/02-METROPOLE_TERRAIN_PLAN.md`, `03-METROPOLE_NATURE_PLAN.md`, `04-METROPOLE_FLOW_PLAN.md`, `05-METROPOLE_LAUNCH_PLAN.md`
+`Prompts/02-METROPOLE_TERRAIN_PLAN.md`, `03-METROPOLE_NATURE_PLAN.md`, `04-METROPOLE_FLOW_PLAN.md`, `05-METROPOLE_LAUNCH_PLAN.md`, `06-METROPOLE_LANDMARKS3D_PLAN.md`
 (při rozporu platí novější: 00 < 01 < 02 < 03 < 04 < 05; pod-plány `plans/M5_TEREN_PRIRODA.md`,
 `plans/L_LAUNCH.md`);
 uzavřená rozhodnutí neotvírej. Stav: `docs/m0.md`, postup: `plans/PROGRESS.md`.
