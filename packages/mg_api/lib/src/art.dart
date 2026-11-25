@@ -3,8 +3,9 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:shared_gen/shared_gen.dart';
 
-// Generated art wiring (specs/art.md v1): what exists comes only from `assets/index.json` written
-// by `metro sync`; a file missing from the index does not exist (no probing at run time).
+// Generated art wiring (specs/art.md v4): what exists comes only from `assets/index.json` written
+// by `metro sync`; a file missing from the index does not exist (no probing at run time). NPC
+// portraits follow the current city ([artCity]).
 
 /// Portrait expression of a character with [vibe] (specs/art.md "Výraz podle vibe").
 String npcExpression(int vibe, {required int contactMinVibe, required int vibeStart}) {
@@ -41,15 +42,29 @@ class ArtIndex {
     return null;
   }
 
-  /// Dialogue portrait: `npc/<id>_<expression>.png`, then `npc/<id>.png`, else null (initials).
-  String? portrait(String id, [String? expression]) =>
-      _first([if (expression != null) 'npc/${id}_$expression.png', 'npc/$id.png']);
+  /// NPC files in lookup order (specs/art.md v4 "Portréty podle města"): each of [files] in the
+  /// folder of [city] (default: [artCity], the city the player is in) `npc/<city>/`, then each in
+  /// the shared `npc/`. The local look wins over the expression.
+  String? _npc(List<String> files, String? city) {
+    final c = city ?? artCity;
+    return _first([
+      if (c != null)
+        for (final f in files) 'npc/$c/$f',
+      for (final f in files) 'npc/$f',
+    ]);
+  }
 
-  /// Contacts and rival circle: `npc/<id>.png`, else null (initials).
-  String? avatar(String id) => portrait(id);
+  /// Dialogue portrait: `<id>_<expression>.png`, then `<id>.png`, in the city's folder and then in
+  /// the shared one ([_npc]), else null (initials).
+  String? portrait(String id, [String? expression, String? city]) =>
+      _npc([if (expression != null) '${id}_$expression.png', '$id.png'], city);
 
-  /// Feed card / booth offer host: `npc/<id>_bust.png`, else null (silhouette).
-  String? bust(String id) => _first(['npc/${id}_bust.png']);
+  /// Contacts and rival circle: `npc/<city>/<id>.png`, then `npc/<id>.png`, else null (initials).
+  String? avatar(String id, {String? city}) => portrait(id, null, city);
+
+  /// Feed card / booth offer host: `npc/<city>/<id>_bust.png`, then `npc/<id>_bust.png`, else null
+  /// (silhouette).
+  String? bust(String id, {String? city}) => _npc(['${id}_bust.png'], city);
 
   /// Landmark postcard: `postcards/<city>/<id>.png`, else null (placeholder drawing).
   String? postcard(String city, String id) => _first(['postcards/$city/$id.png']);
@@ -67,6 +82,10 @@ const artAssetRoot = 'assets/shared/assets/';
 
 /// The app-wide index; [ArtIndex.empty] until [loadArtIndex] ran (tests keep the placeholders).
 ArtIndex artIndex = ArtIndex.empty;
+
+/// The city whose NPC portraits are shown (specs/art.md v4 "Portréty podle města"): the id of the
+/// city the player is in, set by the game screen of that city. null = shared `npc/` files only.
+String? artCity;
 
 /// Loads `assets/shared/assets/index.json` once at start; a missing file = no art.
 Future<ArtIndex> loadArtIndex(AssetBundle bundle) async {
