@@ -790,5 +790,13 @@
   "durakOut": "venku",
   "durakAttack": "Vynes kartu",
   "durakDefend": "Přebij, nebo ber",
-  "durakThrow": "Přihoď, nebo bito"
+  "durakThrow": "Přihoď, nebo bito",
+  "appIconTitle": "Ikona aplikace",
+  "appIcon_day": "Den",
+  "appIcon_night": "Noc",
+  "appIcon_sunset": "Západ slunce",
+  "appIcon_teal": "Tyrkys",
+  "appIcon_japan": "Japonsko",
+  "appIconLater": "Ikona se změní, až hru opustíš",
+  "appIconTab": "Mění ikonu panelu prohlížeče. Nainstalovaná aplikace si nechá ikonu, se kterou se instalovala."
 }

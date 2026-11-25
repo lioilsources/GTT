@@ -35,7 +35,7 @@ import { installWeather } from './weather';
 import { installGarage } from './garage';
 import { installLoop } from './loop';
 import { opponentIndex } from './loop/logic';
-import { loadArt } from './art';
+import { loadArt, setArtCity } from './art';
 import { installTaxi } from './minigames/taxi';
 import { installDrift } from './minigames/drift';
 import { installSprint } from './minigames/sprint';
@@ -54,11 +54,16 @@ import { treeHitSound } from './render/treeSound';
 import { readCameraMode, TwoFingerTap, writeCameraMode, type CameraMode } from './render/chase';
 import { registerPhoneApp } from './phone';
 import { h } from './minigames/dom';
+import { AppIconChoice, appIconLinks, appIconSection } from './appicon';
+import './appicon/appicon.css';
 
 const params = new URLSearchParams(location.search);
 const locale: Locale = navigator.language.startsWith('cs') ? 'cs' : 'en';
 const t = (k: MessageKey, a?: Record<string, string | number>): string => tr(locale, k, a);
 const $ = <T extends HTMLElement>(id: string): T => document.getElementById(id) as T;
+
+// App icon (specs/appicon.md): the tab icon follows the remembered mode before anything loads; ?icon= for debug.
+const appIcon = new AppIconChoice(params.get('icon'), appIconLinks(document));
 
 // Start city (specs/cities.md "Výchozí město"): ?city → last city → first bundled city.
 const lastCity = readLastCity();
@@ -87,7 +92,9 @@ async function json<T>(path: string): Promise<T> {
 }
 
 async function main(): Promise<void> {
-  // Generated art index (specs/art.md): fetched once; missing = placeholders everywhere.
+  // Generated art index (specs/art.md): fetched once; missing = placeholders everywhere. NPC
+  // portraits follow the city of this page (v4): a city switch reloads the page with the new one.
+  setArtCity(cityId);
   const artReady = loadArt();
   // ?gallery / ?mg=<id>: minigames without the world (specs/minigames/README.md "Galerie").
   // ?skits: NPC dialogue debug list (specs/dialogue.md); the gallery also gets NPC opponents.
@@ -306,7 +313,8 @@ async function main(): Promise<void> {
       setCamera(m);
       modes.forEach((k, j) => (names[j]!.textContent = label(k)));
     } }, names[i]!));
-    host.append(h('div.taxi-app', {}, ...rows));
+    // App icon mode under the camera rows (specs/appicon.md "Výběr ve hře").
+    host.append(h('div.taxi-app', {}, ...rows), appIconSection(appIcon, t));
     return () => {};
   });
 
@@ -765,6 +773,7 @@ async function main(): Promise<void> {
       engine, view, drive, fleet, city, tuning, frameTimes, pilot, bench, peds, phone, passport, loop, taxi, drift, sprint, police: police.police, booths, fastTravel, photo, shops, weather, garage, carsHud, flow,
       timing: () => ({ firstFrameMs, loadMs }),
       setCamera,
+      appIcon,
       /** Debug teleport: puts the car at (x, y) heading h (radians) and snaps the camera. */
       teleport: async (x: number, y: number, h = 0) => {
         drive.spawn(x, y, h);

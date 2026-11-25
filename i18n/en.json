@@ -1373,5 +1373,13 @@
   "durakOut": "out",
   "durakAttack": "Lead a card",
   "durakDefend": "Beat it or take",
-  "durakThrow": "Add a card or done"
+  "durakThrow": "Add a card or done",
+  "appIconTitle": "App icon",
+  "appIcon_day": "Day",
+  "appIcon_night": "Night",
+  "appIcon_sunset": "Sunset",
+  "appIcon_teal": "Teal",
+  "appIcon_japan": "Japan",
+  "appIconLater": "The icon changes once you leave the game",
+  "appIconTab": "Changes the browser tab icon. An installed app keeps the icon it was installed with."
 }
