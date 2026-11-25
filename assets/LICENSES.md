@@ -23,6 +23,7 @@ není uvedeno jinak. Reprodukce: `tools/art/` (prompty, seedy, parametry workflo
 | `props/{booth,booth_ring,metro_entrance,metro_line_*}.png` | vlastní skript (`tools/art/props_proc.py`, PIL) | – | vlastní dílo projektu GTT | procedurální shora 32 px/m; kolečka linek fiktivní (bez písmen a čísel, ne logo MTA) |
 | `weather/{rain_drops,puddles,wet_sheen,fog}.png` | vlastní skript (`tools/art/weather_tex.py`, numpy) | – | vlastní dílo projektu GTT | procedurální, seedy 541–543; světlé na alfě (tónuje `color.weather`), dlaždice 512² bezešvé, mlha 1024² radiální |
 | `minigames/*.png` (10 ploch a rub karty) | vlastní skript (`tools/art/minigame_skins.py`, PIL + numpy) | – | vlastní dílo projektu GTT | procedurální plochý vektor 1080×1920 shora, 256 barev, bez textu a značek |
+| `photos/nyc/*.png` (20 fotomíst) | Qwen-Image (fp8), ComfyUI | Apache 2.0 | vlastní dílo projektu GTT | várka photos1 v2, seedy 611–613 (`tools/art/make_photos_nyc.py`, výběr v `tools/art/photos_nyc_pick.json`), styl A, automatické odstranění značek na taxících (`tools/art/post_photos_nyc.py`), ořez 1080×1350, 256 barev |
 | `souvenirs/*.png` | Qwen-Image (fp8), ComfyUI + BiRefNet-general | Apache 2.0 / MIT | vlastní dílo projektu GTT | suvenýry 1, seedy 601–604 (`tools/art/make_souv1.py`), výběr a ořez 512² (`tools/art/post_souv.py`) |
 
 Nepoužívat pro herní assety: modely s nekomerční licencí (např. FLUX.1-dev, RMBG-2.0) a modely
