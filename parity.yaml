@@ -722,8 +722,9 @@
   level: P2
   spec: specs/appicon.md@1
   lead: web
-  flutter: todo
-  web: todo
+  flutter: done
+  web: done
+  checks: {flutter: pass, web: pass}
 
 - id: F-084
   name: "NPC portraits per city (npc/<city>/ first, shared npc/ as fallback: dialogue, contacts and rival, feed and booth busts)"
