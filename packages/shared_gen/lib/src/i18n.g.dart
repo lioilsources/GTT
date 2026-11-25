@@ -795,6 +795,14 @@ enum MessageKey {
   durakAttack('durakAttack'),
   durakDefend('durakDefend'),
   durakThrow('durakThrow'),
+  appIconTitle('appIconTitle'),
+  appIconDay('appIcon_day'),
+  appIconNight('appIcon_night'),
+  appIconSunset('appIcon_sunset'),
+  appIconTeal('appIcon_teal'),
+  appIconJapan('appIcon_japan'),
+  appIconLater('appIconLater'),
+  appIconTab('appIconTab'),
   ;
 
   const MessageKey(this.key);
@@ -1595,6 +1603,14 @@ const Map<String, Map<String, String>> _messages = {
     'durakAttack': 'Vynes kartu',
     'durakDefend': 'Přebij, nebo ber',
     'durakThrow': 'Přihoď, nebo bito',
+    'appIconTitle': 'Ikona aplikace',
+    'appIcon_day': 'Den',
+    'appIcon_night': 'Noc',
+    'appIcon_sunset': 'Západ slunce',
+    'appIcon_teal': 'Tyrkys',
+    'appIcon_japan': 'Japonsko',
+    'appIconLater': 'Ikona se změní, až hru opustíš',
+    'appIconTab': 'Mění ikonu panelu prohlížeče. Nainstalovaná aplikace si nechá ikonu, se kterou se instalovala.',
   },
   'en': {
     'appTitle': 'Metropole',
@@ -2387,6 +2403,14 @@ const Map<String, Map<String, String>> _messages = {
     'durakAttack': 'Lead a card',
     'durakDefend': 'Beat it or take',
     'durakThrow': 'Add a card or done',
+    'appIconTitle': 'App icon',
+    'appIcon_day': 'Day',
+    'appIcon_night': 'Night',
+    'appIcon_sunset': 'Sunset',
+    'appIcon_teal': 'Teal',
+    'appIcon_japan': 'Japan',
+    'appIconLater': 'The icon changes once you leave the game',
+    'appIconTab': 'Changes the browser tab icon. An installed app keeps the icon it was installed with.',
   },
 };
 

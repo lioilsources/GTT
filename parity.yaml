@@ -716,3 +716,11 @@
   lead: web
   flutter: done
   web: done
+
+- id: F-083
+  name: "App icon and its colour mode picker (phone Settings, device-local choice)"
+  level: P2
+  spec: specs/appicon.md@1
+  lead: web
+  flutter: todo
+  web: todo

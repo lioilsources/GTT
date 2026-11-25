@@ -794,6 +794,14 @@ export type MessageKey =
   | "durakAttack"
   | "durakDefend"
   | "durakThrow"
+  | "appIconTitle"
+  | "appIcon_day"
+  | "appIcon_night"
+  | "appIcon_sunset"
+  | "appIcon_teal"
+  | "appIcon_japan"
+  | "appIconLater"
+  | "appIconTab"
 ;
 
 export const messages: Record<Locale, Record<MessageKey, string>> = {
@@ -1588,6 +1596,14 @@ export const messages: Record<Locale, Record<MessageKey, string>> = {
     durakAttack: "Vynes kartu",
     durakDefend: "Přebij, nebo ber",
     durakThrow: "Přihoď, nebo bito",
+    appIconTitle: "Ikona aplikace",
+    appIcon_day: "Den",
+    appIcon_night: "Noc",
+    appIcon_sunset: "Západ slunce",
+    appIcon_teal: "Tyrkys",
+    appIcon_japan: "Japonsko",
+    appIconLater: "Ikona se změní, až hru opustíš",
+    appIconTab: "Mění ikonu panelu prohlížeče. Nainstalovaná aplikace si nechá ikonu, se kterou se instalovala.",
   },
   "en": {
     appTitle: "Metropole",
@@ -2380,6 +2396,14 @@ export const messages: Record<Locale, Record<MessageKey, string>> = {
     durakAttack: "Lead a card",
     durakDefend: "Beat it or take",
     durakThrow: "Add a card or done",
+    appIconTitle: "App icon",
+    appIcon_day: "Day",
+    appIcon_night: "Night",
+    appIcon_sunset: "Sunset",
+    appIcon_teal: "Teal",
+    appIcon_japan: "Japan",
+    appIconLater: "The icon changes once you leave the game",
+    appIconTab: "Changes the browser tab icon. An installed app keeps the icon it was installed with.",
   },
 };
 
