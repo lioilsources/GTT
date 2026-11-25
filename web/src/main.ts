@@ -35,7 +35,7 @@ import { installWeather } from './weather';
 import { installGarage } from './garage';
 import { installLoop } from './loop';
 import { opponentIndex } from './loop/logic';
-import { loadArt } from './art';
+import { loadArt, setArtCity } from './art';
 import { installTaxi } from './minigames/taxi';
 import { installDrift } from './minigames/drift';
 import { installSprint } from './minigames/sprint';
@@ -87,7 +87,9 @@ async function json<T>(path: string): Promise<T> {
 }
 
 async function main(): Promise<void> {
-  // Generated art index (specs/art.md): fetched once; missing = placeholders everywhere.
+  // Generated art index (specs/art.md): fetched once; missing = placeholders everywhere. NPC
+  // portraits follow the city of this page (v4): a city switch reloads the page with the new one.
+  setArtCity(cityId);
   const artReady = loadArt();
   // ?gallery / ?mg=<id>: minigames without the world (specs/minigames/README.md "Galerie").
   // ?skits: NPC dialogue debug list (specs/dialogue.md); the gallery also gets NPC opponents.
