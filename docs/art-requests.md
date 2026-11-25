@@ -225,8 +225,8 @@ Města `prague`, `tokyo`, `moscow` → 6 postav × 5 souborů × 3 města = 90 o
 Pravidla: dospělí, fiktivní (žádné skutečné osoby), důstojně a bez karikatury či stereotypů,
 současné oblečení (žádné kroje ani kostýmy), bez čitelného textu, log a značek (R10), bez
 politických a státních symbolů. Výrazy `_happy/_neutral/_annoyed` mají být stejná osoba.
-Klient: výběr portrétu podle města s návratem na `assets/npc/<id>*.png` přijde se změnou
-`specs/dialogue.md` po dodání (do té doby se obrázky jen uloží).
+Klient: výběr portrétu podle města s návratem na `assets/npc/<id>*.png` popisuje `specs/art.md` v4
+(„Portréty podle města“, parita F-084).
 
 ## Hotovo
 
@@ -267,6 +267,8 @@ Klient: výběr portrétu podle města s návratem na `assets/npc/<id>*.png` př
 - **Kosmetika garáže (dávka garage1):** polepy `assets/garage/decals/<id>.png` 512×1024 (stripes, flames, checker, stars, lightning, waves, camo, halftone = volby 1–8), předek nahoru, bílý motiv na alfě, tvary navržené pro poměr auta ~2,6 a s roztažením 2,2–3,5 snesitelné; kola `assets/garage/wheels/<id>.png` 128² (sport, whitewall, five_spoke, mesh, turbine, offroad = volby 1–6), tmavá pneumatika a světlý disk. `tools/art/garage_cosmetics.py`. Rastr (halftone) je z kosočtverců, ne z kroužků.
 - **Moskva (styl E), 24. 11. 2026:** 25 pohlednic `assets/postcards/moscow/<id>.png` 1080×1350 (id z `content/cities/moscow/landmarks.yaml`), style board `assets/styleboard/moscow/`, textury `assets/cities/moscow/{asphalt,sidewalk,roof}.png` procedurálně. Bez textu, azbuky, vlajek a státních znaků (vlajky a znak na Ministerstvu zahraničí přebarveny); hvězdy jen na kremelských věžích. Puškin přegenerován bez plnovousu.
 - **Auta, dávka moscow-cars**, 24. 11. 2026: sedan_sokol, taxi_sokol (64×169) a trolejbus bus_iskra (88×416) procedurálně (`tools/art/cars_proc.py`). Taxi: šachovnice a cedule bez nápisu jako ostatní taxi. Trolejbus: sběrače ve směru jízdy uvnitř obrysu (tmavé, nelakované), troje dveře na pravém boku.
+- **Ikona aplikace (gtt-icon)**, 25. 11. 2026: `assets/ui/app_icon/<mód>.png` 1024² neprůhledné + `<mód>_fg.png` (auto a stín na alfě, v bezpečné zóně 66/108) a `<mód>_bg.png` pro adaptivní ikonu Androidu. Módy `sunset` (výchozí), `day`, `night`, `teal`, `japan`, stejná kompozice: Varga Comet shora rovně nahoru na křižovatce, za ním fiktivní panorama. `tools/art/app_icon.py`.
+- **Portréty NPC po městech (gtt-npc-cities)**, 24. 11. 2026: `assets/npc/{prague,tokyo,moscow}/<id>{,_happy,_neutral,_annoyed}.png` 1024² a `<id>_bust.png` 768×1280, 6 postav × 3 města = 90 souborů, styl a ořez jako várka 1, průhledné pozadí (BiRefNet), 256 barev. Popisy podob v `tools/art/make_npc_cities.py`.
 - **Chodci shora**, 25. 11. 2026: `assets/peds/ped_<1–8>.png` pás 3 snímků 24×24 px (chůze A, chůze B, uskočení; předek nahoru, 32 px/m, bez stínu) a `ped_<n>_mask.png` (bílá = tričko, tónuje se `color.pedestrians.shirts`). Jedna sada pro všechna města (shora ~20 px, rozdíly měst nejsou vidět). Variace: účesy, čepice, klobouk, batoh, taška přes rameno, odstíny pleti. `tools/art/peds_proc.py`.
 - **Obchody a bary**, 25. 11. 2026: `assets/shops/{cafe,bar,pizza,souvenir,hotdog,bodega}.png` 256², kruhový štít shora v barvě druhu (`color.shops`: food, bar, souvenir), bílý symbol, bez textu. `tools/art/props_proc.py`.
 - **Telefonní budka**, 25. 11. 2026: `assets/props/booth.png` a `booth_ring.png` 96×96 px (plátno 3 m, budka 2,4 m, 32 px/m), barvy `color.booth`; zvonící stav má rozsvícený maják a žlutou záři kolem.

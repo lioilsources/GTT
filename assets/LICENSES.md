@@ -7,6 +7,8 @@ není uvedeno jinak. Reprodukce: `tools/art/` (prompty, seedy, parametry workflo
 |---|---|---|---|---|
 | `npc/*.png` | Qwen-Image (fp8), text encoder Qwen2.5-VL 7B, ComfyUI | Apache 2.0 | vlastní dílo projektu GTT | várka 1, 22. 11. 2026, seedy 101–106 (jeden na postavu) |
 | `npc/*.png` (alfa) | BiRefNet-general přes ComfyUI-RMBG | MIT | vlastní dílo projektu GTT | odstranění pozadí, refine_foreground |
+| `npc/{prague,tokyo,moscow}/*.png` | Qwen-Image (fp8), ComfyUI | Apache 2.0 | vlastní dílo projektu GTT | dávka gtt-npc-cities, 24. 11. 2026, seedy 1101–1106 (Praha), 1201–1206 (Tokio), 1301–1306 (Moskva), jeden na postavu a město (`tools/art/make_npc_cities.py`), 256 barev |
+| `npc/{prague,tokyo,moscow}/*.png` (alfa) | BiRefNet-general přes ComfyUI-RMBG | MIT | vlastní dílo projektu GTT | odstranění pozadí, refine_foreground; `<id>.png` = kopie `_neutral` |
 | `postcards/nyc/*.png` | Qwen-Image (fp8), ComfyUI | Apache 2.0 | vlastní dílo projektu GTT | várka 1, seed 201 (carnegie_hall 203, federal_hall a met_museum 202), styl A, ořez 1080×1350, 256 barev |
 | `postcards/prague/*.png` | Qwen-Image (fp8), ComfyUI | Apache 2.0 | vlastní dílo projektu GTT | várka 1, seed 201, styl C, ořez 1080×1350, 256 barev |
 | `postcards/nyc/{guggenheim,msg}.png` | Qwen-Image (fp8), ComfyUI | Apache 2.0 | vlastní dílo projektu GTT | oprava 2, seed 214 (guggenheim) a 211 (msg), styl A, `tools/art/make_fix2.py` |
@@ -18,6 +20,7 @@ není uvedeno jinak. Reprodukce: `tools/art/` (prompty, seedy, parametry workflo
 | `ui/*.png` (15 ikon HUD a telefonu) | vlastní skript (`tools/art/ui_icons.py`, PIL) | – | vlastní dílo projektu GTT | dávka ui1, procedurální plochý vektor, bílý glyf na alfě 256², tónovatelný, bez textu a značek |
 | `garage/{decals,wheels}/*.png` (8 polepů, 6 kol) | vlastní skript (`tools/art/garage_cosmetics.py`, PIL) | – | vlastní dílo projektu GTT | dávka garage1, procedurální vektor; polepy bílý motiv na alfě 512×1024, kola 128² se světlým diskem, tónovatelné |
 | `cars/{sedan_sokol,taxi_sokol,bus_iskra}/*.png` | vlastní skript (`tools/art/cars_proc.py`, PIL) | – | vlastní dílo projektu GTT | dávka moscow-cars, procedurální vektor kolmo shora, fiktivní siluety; trolejbus se sběrači uvnitř obrysu |
+| `ui/app_icon/*.png` (ikona aplikace, 5 barevných módů + popředí/pozadí Androidu) | vlastní skript (`tools/art/app_icon.py`, PIL; auto z `tools/art/cars_proc.py`) | – | vlastní dílo projektu GTT | dávka gtt-icon, procedurální, 1024² neprůhledné, fiktivní panorama, bez textu a značek |
 | `peds/ped_<n>{,_mask}.png` (8 chodců) | vlastní skript (`tools/art/peds_proc.py`, PIL) | – | vlastní dílo projektu GTT | procedurální, shora 32 px/m, pás 3 snímků 24×24 (chůze A, B, uskočení), maska trička pro tónování |
 | `shops/*.png` (6 štítů podniků) | vlastní skript (`tools/art/props_proc.py`, PIL) | – | vlastní dílo projektu GTT | procedurální, kruhové emblémy 256² v barvách `color.shops`, bez textu a značek |
 | `props/{booth,booth_ring,metro_entrance,metro_line_*}.png` | vlastní skript (`tools/art/props_proc.py`, PIL) | – | vlastní dílo projektu GTT | procedurální shora 32 px/m; kolečka linek fiktivní (bez písmen a čísel, ne logo MTA) |

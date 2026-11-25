@@ -136,11 +136,24 @@ flutter:
     # Generated art (specs/art.md); asset dirs are not recursive, one line per folder.
     - assets/shared/assets/
     - assets/shared/assets/npc/
+    # NPC portraits per city (specs/art.md v4); New York uses the shared folder above.
+    - assets/shared/assets/npc/prague/
+    - assets/shared/assets/npc/tokyo/
+    - assets/shared/assets/npc/moscow/
     - assets/shared/assets/postcards/nyc/
     - assets/shared/assets/postcards/prague/
+    - assets/shared/assets/postcards/tokyo/
+    - assets/shared/assets/postcards/moscow/
+    - assets/shared/assets/souvenirs/
     - assets/shared/assets/garage/decals/
     - assets/shared/assets/garage/wheels/
     - assets/shared/assets/ui/
+    # App icon previews for the Settings picker (specs/appicon.md): the whole icons only.
+    - assets/shared/assets/ui/app_icon/day.png
+    - assets/shared/assets/ui/app_icon/night.png
+    - assets/shared/assets/ui/app_icon/sunset.png
+    - assets/shared/assets/ui/app_icon/teal.png
+    - assets/shared/assets/ui/app_icon/japan.png
     # Car sprites (specs/art.md v2 "Auta"): one line per car with art in assets/cars/.
     - assets/shared/assets/cars/bus_city/
     - assets/shared/assets/cars/coupe_nova/
@@ -187,3 +200,6 @@ flutter:
     - assets/shared/assets/cars/vega_roadster/
     - assets/shared/assets/cars/vet_skyliner/
     - assets/shared/assets/cars/vet_tourer/
+    - assets/shared/assets/cars/sedan_sokol/
+    - assets/shared/assets/cars/taxi_sokol/
+    - assets/shared/assets/cars/bus_iskra/

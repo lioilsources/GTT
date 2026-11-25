@@ -1,9 +1,11 @@
-import { readFileSync } from 'node:fs';
+import { readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { parse } from 'yaml';
-import { describe, expect, it } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 
-import { ART_CACHE_SIZE, ArtIndex, expressionFor, Lru } from '../src/art/rules';
+import { art, loadArt, setArt, setArtCity } from '../src/art';
+import { ART_CACHE_SIZE, ArtIndex, expressionFor, type Expression, Lru } from '../src/art/rules';
+import { cityIdValues } from '../src/gen/ids';
 import { Tuning } from '../src/gen/tuning';
 
 const root = join(__dirname, '..', '..');
@@ -79,6 +81,103 @@ describe('art index lookups', () => {
     expect(Array.isArray(list)).toBe(true);
     expect([...(list as string[])].sort()).toEqual(list);
     for (const p of list as string[]) expect(i.has(p)).toBe(true);
+  });
+});
+
+describe('NPC portraits per city (specs/art.md v4)', () => {
+  const files = [
+    'npc/maya.png', 'npc/maya_happy.png', 'npc/maya_annoyed.png', 'npc/maya_bust.png',
+    'npc/theo.png', 'npc/theo_happy.png', 'npc/theo_bust.png',
+    'npc/tokyo/maya.png', 'npc/tokyo/maya_happy.png', 'npc/tokyo/maya_bust.png',
+    'npc/prague/maya.png',
+  ];
+
+  it('the city file wins: dialogue portrait, contacts / rival, feed and booth bust', () => {
+    const i = new ArtIndex(files, 'tokyo');
+    expect(i.portrait('maya', 'happy')).toBe('npc/tokyo/maya_happy.png');
+    expect(i.avatar('maya')).toBe('npc/tokyo/maya.png');
+    expect(i.bust('maya')).toBe('npc/tokyo/maya_bust.png');
+  });
+
+  it('falls back to the shared file, character by character and file by file', () => {
+    const tokyo = new ArtIndex(files, 'tokyo');
+    expect(tokyo.portrait('theo', 'happy')).toBe('npc/theo_happy.png');
+    expect(tokyo.avatar('theo')).toBe('npc/theo.png');
+    expect(tokyo.bust('theo')).toBe('npc/theo_bust.png');
+    const prague = new ArtIndex(files, 'prague');
+    expect(prague.avatar('maya')).toBe('npc/prague/maya.png');
+    expect(prague.bust('maya')).toBe('npc/maya_bust.png');
+    expect(prague.bust('ray')).toBeNull();
+    expect(prague.portrait('ray', 'neutral')).toBeNull();
+  });
+
+  it('the local look wins over the expression: city <id>.png before the shared expression', () => {
+    const i = new ArtIndex(files, 'tokyo');
+    expect(i.portrait('maya', 'annoyed')).toBe('npc/tokyo/maya.png');
+    expect(new ArtIndex(files, 'prague').portrait('maya', 'happy')).toBe('npc/prague/maya.png');
+  });
+
+  it('New York (no npc/nyc/ folder) and no city keep the shared files', () => {
+    for (const city of ['nyc', null]) {
+      const i = new ArtIndex(files, city);
+      expect(i.portrait('maya', 'happy')).toBe('npc/maya_happy.png');
+      expect(i.portrait('maya', 'neutral')).toBe('npc/maya.png');
+      expect(i.avatar('maya')).toBe('npc/maya.png');
+      expect(i.bust('maya')).toBe('npc/maya_bust.png');
+    }
+  });
+
+  it('a city switch changes the lookups; a dropped city file falls back to the shared one', () => {
+    const i = new ArtIndex(files);
+    expect(i.bust('maya')).toBe('npc/maya_bust.png');
+    i.city = 'tokyo';
+    expect(i.bust('maya')).toBe('npc/tokyo/maya_bust.png');
+    i.drop('npc/tokyo/maya_bust.png');
+    expect(i.bust('maya')).toBe('npc/maya_bust.png');
+    i.city = 'nyc';
+    expect(i.avatar('maya')).toBe('npc/maya.png');
+  });
+
+  it('the art in the repo: Prague, Tokyo and Moscow have every character, New York the shared set', () => {
+    const dir = join(root, 'assets/npc');
+    const list = (readdirSync(dir, { recursive: true }) as string[])
+      .map((p) => `npc/${p.split('\\').join('/')}`)
+      .filter((p) => p.endsWith('.png'));
+    const chars = (parse(readFileSync(join(root, 'content/npc/characters.yaml'), 'utf8')) as { characters: { id: string }[] })
+      .characters.map((c) => c.id);
+    expect(chars.length).toBeGreaterThan(0);
+    const exprs: Expression[] = ['happy', 'neutral', 'annoyed'];
+    for (const city of cityIdValues) {
+      const i = new ArtIndex(list, city);
+      const dirOf = city === 'nyc' ? 'npc' : `npc/${city}`;
+      for (const id of chars) {
+        expect(i.avatar(id)).toBe(`${dirOf}/${id}.png`);
+        expect(i.bust(id)).toBe(`${dirOf}/${id}_bust.png`);
+        for (const e of exprs) expect(i.portrait(id, e)).toBe(`${dirOf}/${id}_${e}.png`);
+      }
+    }
+  });
+});
+
+describe('art city of the page (setArtCity)', () => {
+  afterEach(() => {
+    vi.unstubAllGlobals();
+    setArt(new ArtIndex());
+  });
+
+  it('survives loadArt: set before the index arrives, kept when it is missing', async () => {
+    setArt(new ArtIndex());
+    setArtCity('tokyo');
+    vi.stubGlobal('fetch', async () => ({ ok: true, json: async () => ['npc/maya_bust.png', 'npc/tokyo/maya_bust.png'] }));
+    await loadArt('base/');
+    expect(art().city).toBe('tokyo');
+    expect(art().bust('maya')).toBe('npc/tokyo/maya_bust.png');
+    setArtCity('nyc');
+    expect(art().bust('maya')).toBe('npc/maya_bust.png');
+    vi.stubGlobal('fetch', async () => { throw new Error('offline'); });
+    await loadArt('base/');
+    expect(art().city).toBe('nyc');
+    expect(art().bust('maya')).toBeNull();
   });
 });
 

@@ -716,3 +716,20 @@
   lead: web
   flutter: done
   web: done
+
+- id: F-083
+  name: "App icon and its colour mode picker (phone Settings, device-local choice)"
+  level: P2
+  spec: specs/appicon.md@1
+  lead: web
+  flutter: done
+  web: done
+  checks: {flutter: pass, web: pass}
+
+- id: F-084
+  name: "NPC portraits per city (npc/<city>/ first, shared npc/ as fallback: dialogue, contacts and rival, feed and booth busts)"
+  level: P2
+  spec: specs/art.md@4
+  lead: web
+  flutter: done
+  web: done

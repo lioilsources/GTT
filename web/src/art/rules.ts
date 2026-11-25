@@ -1,5 +1,6 @@
-// Generated art wiring (specs/art.md v1), pure part: expression by vibe, lookups in the asset
-// index written by `metro sync` (assets/index.json) and the LRU of decoded images. No DOM.
+// Generated art wiring (specs/art.md v4), pure part: expression by vibe, lookups in the asset
+// index written by `metro sync` (assets/index.json), NPC portraits per city and the LRU of decoded
+// images. No DOM.
 
 /** specs/art.md "Výkon a velikost": decoded images kept, least recently used dropped. */
 export const ART_CACHE_SIZE = 24;
@@ -20,8 +21,15 @@ export function expressionFor(vibe: number, t: { vibeStart: number; contactMinVi
 export class ArtIndex {
   private readonly files: Set<string>;
 
-  constructor(paths: Iterable<string> = []) {
+  /**
+   * The city the player is in (specs/art.md v4 "Portréty podle města"): NPC files are looked up
+   * in `npc/<city>/` first, then in the shared `npc/`. null = shared files only.
+   */
+  city: string | null;
+
+  constructor(paths: Iterable<string> = [], city: string | null = null) {
     this.files = new Set(paths);
+    this.city = city;
   }
 
   /** Forgets a path (an indexed file that failed to load): later lookups fall back past it. */
@@ -46,19 +54,35 @@ export class ArtIndex {
     return paths.find((p) => this.files.has(p)) ?? null;
   }
 
-  /** Dialogue portrait: `npc/<id>_<expr>.png`, then `npc/<id>.png`, then null (initials). */
+  /**
+   * NPC files in lookup order (specs/art.md v4): each of `files` in the current city's folder
+   * `npc/<city>/`, then each in the shared `npc/`. The local look wins over the expression.
+   */
+  private npc(...files: string[]): string | null {
+    const city = this.city;
+    const local = city ? files.map((f) => `npc/${city}/${f}`) : [];
+    return this.first(...local, ...files.map((f) => `npc/${f}`));
+  }
+
+  /**
+   * Dialogue portrait: `<id>_<expr>.png`, then `<id>.png`, in the city's folder and then in the
+   * shared one ({@link npc}), then null (initials).
+   */
   portrait(id: string, expr: Expression): string | null {
-    return this.first(`npc/${id}_${expr}.png`, `npc/${id}.png`);
+    return this.npc(`${id}_${expr}.png`, `${id}.png`);
   }
 
-  /** Contacts and the rival: `npc/<id>.png` or null (initials). */
+  /** Contacts and the rival: `npc/<city>/<id>.png`, then `npc/<id>.png`, or null (initials). */
   avatar(id: string): string | null {
-    return this.first(`npc/${id}.png`);
+    return this.npc(`${id}.png`);
   }
 
-  /** Feed card and booth offer host: `npc/<id>_bust.png` or null (silhouette). */
+  /**
+   * Feed card and booth offer host: `npc/<city>/<id>_bust.png`, then `npc/<id>_bust.png`, or null
+   * (silhouette).
+   */
   bust(id: string): string | null {
-    return this.first(`npc/${id}_bust.png`);
+    return this.npc(`${id}_bust.png`);
   }
 
   /** Souvenir on the Garage shelf (specs/shops.md): `souvenirs/<id>.png` or null (icon). */

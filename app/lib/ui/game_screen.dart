@@ -7,6 +7,7 @@ import 'package:flame/game.dart';
 import 'package:flutter/foundation.dart' show TargetPlatform, defaultTargetPlatform, kDebugMode;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:mg_api/mg_api.dart' show artCity;
 import 'package:npc_dialogue/npc_dialogue.dart';
 import 'package:shared_gen/shared_gen.dart';
 
@@ -87,6 +88,15 @@ class _GameScreenState extends State<GameScreen> {
   bool _hasBench = false;
   bool _leaving = false;
   bool _shown = false;
+
+  @override
+  void initState() {
+    super.initState();
+    // NPC portraits follow the city of this screen (specs/art.md v4 "Portréty podle města"); a
+    // city switch replaces the screen, so the new one takes over here. Not reset on dispose: the
+    // old screen is disposed after the new one started.
+    artCity = widget.city.id;
+  }
 
   @override
   void dispose() {
