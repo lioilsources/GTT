@@ -22,6 +22,7 @@ není uvedeno jinak. Reprodukce: `tools/art/` (prompty, seedy, parametry workflo
 | `shops/*.png` (6 štítů podniků) | vlastní skript (`tools/art/props_proc.py`, PIL) | – | vlastní dílo projektu GTT | procedurální, kruhové emblémy 256² v barvách `color.shops`, bez textu a značek |
 | `props/{booth,booth_ring,metro_entrance,metro_line_*}.png` | vlastní skript (`tools/art/props_proc.py`, PIL) | – | vlastní dílo projektu GTT | procedurální shora 32 px/m; kolečka linek fiktivní (bez písmen a čísel, ne logo MTA) |
 | `weather/{rain_drops,puddles,wet_sheen,fog}.png` | vlastní skript (`tools/art/weather_tex.py`, numpy) | – | vlastní dílo projektu GTT | procedurální, seedy 541–543; světlé na alfě (tónuje `color.weather`), dlaždice 512² bezešvé, mlha 1024² radiální |
+| `minigames/*.png` (10 ploch a rub karty) | vlastní skript (`tools/art/minigame_skins.py`, PIL + numpy) | – | vlastní dílo projektu GTT | procedurální plochý vektor 1080×1920 shora, 256 barev, bez textu a značek |
 | `souvenirs/*.png` | Qwen-Image (fp8), ComfyUI + BiRefNet-general | Apache 2.0 / MIT | vlastní dílo projektu GTT | suvenýry 1, seedy 601–604 (`tools/art/make_souv1.py`), výběr a ořez 512² (`tools/art/post_souv.py`) |
 
 Nepoužívat pro herní assety: modely s nekomerční licencí (např. FLUX.1-dev, RMBG-2.0) a modely
