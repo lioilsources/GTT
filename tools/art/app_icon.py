@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Ikona aplikace Metropole (dávka gtt-icon), procedurálně (PIL, bez modelu).
 
-Sada barevných módů se stejnou kompozicí (hráč si ve hře vybere, výchozí day).
+Sada barevných módů se stejnou kompozicí (hráč si ve hře vybere, výchozí sunset).
 Motiv: hráčovo auto Varga Comet (m0_coupe, lak comet_red) shora na stylizované křižovatce, nad ní silueta
 panoramatu velkoměsta (fiktivní, bez skutečných budov a nápisů). 1024², plně neprůhledná.
 Vrstvy pro adaptivní ikonu Androidu: pozadí (*_bg, neprůhledné) a popředí (*_fg, auto se stínem na alfě,
@@ -25,7 +25,7 @@ def hx(h, a=255):
 
 
 VARIANTS = {
-    # barevné módy se stejnou kompozicí (auto rovně zespodu nahoru); day = výchozí
+    # barevné módy se stejnou kompozicí (auto rovně zespodu nahoru); sunset = výchozí
     # sky, skyline, okna, země, asfalt, čára, zebra, slunce (barva, střed x, střed y nad horizontem, poloměr) v px 1024
     "day":    dict(sky="#F2BD2C", city="#193B62", win=None, land="#E9DCCB", road="#5E5860", line="#F5EBDA",
                    zebra="#F5EBDA", sun=None),
