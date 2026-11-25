@@ -41,12 +41,13 @@ def rain(out):
 def puddles(out):
     rng = np.random.default_rng(542)
     n = noise(rng, 6) * 0.65 + noise(rng, 18) * 0.35
-    body = np.asarray(Image.fromarray(((n > 0.62) * 255).astype(np.uint8)).filter(ImageFilter.ModeFilter(7))).astype(np.float32) / 255
+    body = (n > 0.62).astype(np.float32)
     im = Image.fromarray((body * 255).astype(np.uint8))
     tile = Image.new("L", (N * 3, N * 3))
     for i in range(3):
         for j in range(3):
             tile.paste(im, (i * N, j * N))
+    tile = tile.filter(ImageFilter.ModeFilter(7))  # bez drobných teček, filtrováno na dlaždici 3×3 = bezešvé
     soft = tile.filter(ImageFilter.GaussianBlur(2)).crop((N, N, 2 * N, 2 * N))
     edge = tile.filter(ImageFilter.FIND_EDGES).filter(ImageFilter.MaxFilter(3)).crop((N, N, 2 * N, 2 * N))
     a = np.asarray(soft).astype(np.float32) * 0.22 + np.asarray(edge).astype(np.float32) * 0.30
