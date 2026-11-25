@@ -1,4 +1,4 @@
-// Generated art wiring for client W (specs/art.md v1): loads assets/index.json once at start,
+// Generated art wiring for client W (specs/art.md v4): loads assets/index.json once at start,
 // builds <img> elements for indexed files (lazy, decoded images kept in an LRU of 24) and falls
 // back to the placeholder drawing when a file is not in the index or fails to load.
 import { ASSET_BASE_URL } from '../config';
@@ -15,14 +15,26 @@ export function art(): ArtIndex {
   return index;
 }
 
+/**
+ * The city whose NPC portraits are shown (specs/art.md v4 "Portréty podle města"): the city the
+ * player is in. Kept across `loadArt`, so it can be set before the index arrives.
+ */
+export function setArtCity(city: string | null): void {
+  index.city = city;
+}
+
 /** Fetches `assets/index.json`; a missing or broken file = no art (never throws). */
 export async function loadArt(base: string = ASSET_BASE_URL): Promise<ArtIndex> {
+  let next: ArtIndex;
   try {
     const res = await fetch(`${base}assets/index.json`, { cache: 'no-cache' });
-    index = res.ok ? ArtIndex.parse(await res.json()) : new ArtIndex();
+    next = res.ok ? ArtIndex.parse(await res.json()) : new ArtIndex();
   } catch {
-    index = new ArtIndex();
+    next = new ArtIndex();
   }
+  // The city may have been set (or changed) while the index was on its way.
+  next.city = index.city;
+  index = next;
   return index;
 }
 
