@@ -20,6 +20,7 @@ není uvedeno jinak. Reprodukce: `tools/art/` (prompty, seedy, parametry workflo
 | `ui/*.png` (15 ikon HUD a telefonu) | vlastní skript (`tools/art/ui_icons.py`, PIL) | – | vlastní dílo projektu GTT | dávka ui1, procedurální plochý vektor, bílý glyf na alfě 256², tónovatelný, bez textu a značek |
 | `garage/{decals,wheels}/*.png` (8 polepů, 6 kol) | vlastní skript (`tools/art/garage_cosmetics.py`, PIL) | – | vlastní dílo projektu GTT | dávka garage1, procedurální vektor; polepy bílý motiv na alfě 512×1024, kola 128² se světlým diskem, tónovatelné |
 | `cars/{sedan_sokol,taxi_sokol,bus_iskra}/*.png` | vlastní skript (`tools/art/cars_proc.py`, PIL) | – | vlastní dílo projektu GTT | dávka moscow-cars, procedurální vektor kolmo shora, fiktivní siluety; trolejbus se sběrači uvnitř obrysu |
+| `ui/app_icon/*.png` (ikona aplikace, 5 barevných módů + popředí/pozadí Androidu) | vlastní skript (`tools/art/app_icon.py`, PIL; auto z `tools/art/cars_proc.py`) | – | vlastní dílo projektu GTT | dávka gtt-icon, procedurální, 1024² neprůhledné, fiktivní panorama, bez textu a značek |
 | `souvenirs/*.png` | Qwen-Image (fp8), ComfyUI + BiRefNet-general | Apache 2.0 / MIT | vlastní dílo projektu GTT | suvenýry 1, seedy 601–604 (`tools/art/make_souv1.py`), výběr a ořez 512² (`tools/art/post_souv.py`) |
 
 Nepoužívat pro herní assety: modely s nekomerční licencí (např. FLUX.1-dev, RMBG-2.0) a modely
