@@ -724,3 +724,11 @@
   lead: web
   flutter: todo
   web: todo
+
+- id: F-084
+  name: "NPC portraits per city (npc/<city>/ first, shared npc/ as fallback: dialogue, contacts and rival, feed and booth busts)"
+  level: P2
+  spec: specs/art.md@4
+  lead: web
+  flutter: todo
+  web: todo

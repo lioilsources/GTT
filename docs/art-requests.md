@@ -225,8 +225,8 @@ Města `prague`, `tokyo`, `moscow` → 6 postav × 5 souborů × 3 města = 90 o
 Pravidla: dospělí, fiktivní (žádné skutečné osoby), důstojně a bez karikatury či stereotypů,
 současné oblečení (žádné kroje ani kostýmy), bez čitelného textu, log a značek (R10), bez
 politických a státních symbolů. Výrazy `_happy/_neutral/_annoyed` mají být stejná osoba.
-Klient: výběr portrétu podle města s návratem na `assets/npc/<id>*.png` přijde se změnou
-`specs/dialogue.md` po dodání (do té doby se obrázky jen uloží).
+Klient: výběr portrétu podle města s návratem na `assets/npc/<id>*.png` popisuje `specs/art.md` v4
+(„Portréty podle města“, parita F-084).
 
 ## Hotovo
 

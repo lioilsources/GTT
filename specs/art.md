@@ -1,6 +1,6 @@
 # Napojení grafiky (portréty, pohlednice)
 
-**version: 3** · P2 UI · `docs/art-requests.md` (objednávka a stav), `assets/LICENSES.md` · parita F-040
+**version: 4** · P2 UI · `docs/art-requests.md` (objednávka a stav), `assets/LICENSES.md` · parita F-040, F-084
 
 ## Účel
 Hotová grafika z ComfyUI nahradí zástupné kresby tam, kde existuje. Kde soubor chybí, kreslí klient
@@ -25,6 +25,28 @@ zkoušení cest za běhu). Chybějící `index.json` = žádná grafika.
   karty; jemný pohyb siluety zůstává. Bez souboru silueta (budka bez busty jen text, siluetu nemá). U budky busta nad textem
   nabídky.
 - **Kontakty a soupeř** (všude, kde je dnes kruh s iniciálami): `npc/<id>.png` v kruhu.
+
+### Portréty podle města (v4)
+Postavy jsou v každém městě nakreslené jako místní (`docs/art-requests.md` kap. 8): stejné názvy
+souborů ve složce města `npc/<city>/`, `city` = id města z `content/cities/` (`prague`, `tokyo`,
+`moscow`). New York vlastní složku nemá (`npc/nyc/` neexistuje) a dál používá společné soubory
+v `npc/`.
+- **Pořadí hledání** pro každé místo výše (dialog, karta feedu a nabídka budky, kontakty a soupeř),
+  vždy jen v `index.json`: nejdřív soubor aktuálního města `npc/<city>/<soubor>`, pak společný
+  `npc/<soubor>`, pak dnešní zástupná kresba (iniciály, silueta).
+  - Dialog: `npc/<city>/<id>_<výraz>.png` → `npc/<city>/<id>.png` → `npc/<id>_<výraz>.png` →
+    `npc/<id>.png` → iniciály. Místní podoba má přednost před výrazem: postava ve městě nestřídá
+    dvě různé tváře podle vibe.
+  - Kontakty a soupeř: `npc/<city>/<id>.png` → `npc/<id>.png` → iniciály.
+  - Karta feedu a nabídka budky: `npc/<city>/<id>_bust.png` → `npc/<id>_bust.png` → silueta
+    (budka jen text).
+- **Aktuální město** = město, ve kterém hráč právě je (`specs/cities.md`; v Galerii a v seznamu
+  skitů město startu). Po přepnutí města (aplikace Cestování, výběr města) se všechny portréty řídí
+  novým městem; nic se neukládá, výběr se počítá při každém zobrazení.
+- Soubor, který je v indexu, ale nejde načíst: jako u ostatní grafiky se na tom místě ukáže
+  zástupná kresba. W ho navíc do konce relace vyřadí z indexu, takže příští zobrazení vezme další
+  soubor v pořadí (společný).
+- **F:** složky assetů nejsou rekurzivní: každá `npc/<city>/` má vlastní řádek v `app/pubspec.yaml`.
 
 ## Pohlednice (`specs/passport.md`)
 - Památka `id` ve městě `city`: `postcards/<city>/<id>.png` (1080 × 1350, 4 : 5).
@@ -121,6 +143,8 @@ skutečné velikosti na obrazovce.
 
 ## Hraniční případy
 - Chybí jen některé výrazy: použije se `<id>.png` (= neutral), pak iniciály.
+- Město bez složky `npc/<city>/` (New York) nebo s neúplnou složkou: chybějící soubory se berou
+  ze společné `npc/`, postava po postavě a soubor po souboru.
 - Neznámé město nebo památka bez `hero: true`: žádná pohlednice, beze změny.
 - Auto s `body.png`, ale bez masky nebo kola: celé procedurálně (sprite se nepoužije).
 - Atlas se nevejde do 2048² (W): auta nad limit procedurálně, v pořadí `content/cars` id.
