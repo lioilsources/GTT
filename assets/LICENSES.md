@@ -21,6 +21,7 @@ není uvedeno jinak. Reprodukce: `tools/art/` (prompty, seedy, parametry workflo
 | `peds/ped_<n>{,_mask}.png` (8 chodců) | vlastní skript (`tools/art/peds_proc.py`, PIL) | – | vlastní dílo projektu GTT | procedurální, shora 32 px/m, pás 3 snímků 24×24 (chůze A, B, uskočení), maska trička pro tónování |
 | `shops/*.png` (6 štítů podniků) | vlastní skript (`tools/art/props_proc.py`, PIL) | – | vlastní dílo projektu GTT | procedurální, kruhové emblémy 256² v barvách `color.shops`, bez textu a značek |
 | `props/{booth,booth_ring,metro_entrance,metro_line_*}.png` | vlastní skript (`tools/art/props_proc.py`, PIL) | – | vlastní dílo projektu GTT | procedurální shora 32 px/m; kolečka linek fiktivní (bez písmen a čísel, ne logo MTA) |
+| `weather/{rain_drops,puddles,wet_sheen,fog}.png` | vlastní skript (`tools/art/weather_tex.py`, numpy) | – | vlastní dílo projektu GTT | procedurální, seedy 541–543; světlé na alfě (tónuje `color.weather`), dlaždice 512² bezešvé, mlha 1024² radiální |
 | `souvenirs/*.png` | Qwen-Image (fp8), ComfyUI + BiRefNet-general | Apache 2.0 / MIT | vlastní dílo projektu GTT | suvenýry 1, seedy 601–604 (`tools/art/make_souv1.py`), výběr a ořez 512² (`tools/art/post_souv.py`) |
 
 Nepoužívat pro herní assety: modely s nekomerční licencí (např. FLUX.1-dev, RMBG-2.0) a modely
