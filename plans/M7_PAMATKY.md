@@ -96,3 +96,15 @@ uličky Na Kampě / U Lužického semináře a Saská u Malostranských věží:
 trojúhelníků mostu, které by v pásu −0,3 … +4,5 m nad silnicí zakryly cestu nebo bojovaly
 o hloubku; `validate` to pak hlídá (0 vzorků). Model se vybírá od nejbližší části k bodu
 památky (staroměstská věž), takže síť mostu vzniká s chunkem věže.
+
+**Nasazení a čas snímku** (PR #332, balíček `f51c0132458b`, nasazený web, headless Chromium se
+SwiftShaderem, tedy CPU – jen poměr; dvě kola model zapnutý / vypnutý `tuning.models.enabled`,
+po 9 s):
+
+| Místo | model zapnutý p50 / p90 | vypnutý p50 / p90 | trojúhelníky scény |
+|---|---|---|---|
+| Hrad s mostem (Mostecká u Malostranského náměstí, Hrad + most + Mikuláš) | 80,8 / 88,9 a 83,5 / 88,7 ms | 80,8 / 91,3 a 85,4 / 98,8 ms | +5,5–8 tis., +4–6 draw callů |
+| Staroměstské náměstí (Týn, most) | 87,9 / 100 a 88,0 / 96,2 ms | 87,9 / 99,3 a 89,2 / 97,8 ms | +0,8–0,9 tis., +1–2 draw cally |
+
+Rozdíl je v šumu (SwiftShader drží snímek u stropu 100 ms, p99 je saturované). Na telefonech
+měří Ol1n (`plans/verify.yaml` M7-H1b).
