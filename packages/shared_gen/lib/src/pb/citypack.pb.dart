@@ -47,6 +47,7 @@ class Manifest extends $pb.GeneratedMessage {
     $core.Iterable<ChunkRef>? lods,
     $core.int? lodChunks,
     $core.int? lodGridM,
+    $core.int? modelsVersion,
   }) {
     final result = Manifest._();
     if (formatVersion != null) result.formatVersion = formatVersion;
@@ -73,6 +74,7 @@ class Manifest extends $pb.GeneratedMessage {
     if (lods != null) result.lods.addAll(lods);
     if (lodChunks != null) result.lodChunks = lodChunks;
     if (lodGridM != null) result.lodGridM = lodGridM;
+    if (modelsVersion != null) result.modelsVersion = modelsVersion;
     return result;
   }
 
@@ -123,6 +125,8 @@ class Manifest extends $pb.GeneratedMessage {
         subBuilder: ChunkRef.$_createMessage)
     ..aI(23, _omitFieldNames ? '' : 'lodChunks', fieldType: $pb.PbFieldType.OU3)
     ..aI(24, _omitFieldNames ? '' : 'lodGridM', fieldType: $pb.PbFieldType.OU3)
+    ..aI(25, _omitFieldNames ? '' : 'modelsVersion',
+        fieldType: $pb.PbFieldType.OU3)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -336,6 +340,16 @@ class Manifest extends $pb.GeneratedMessage {
   $core.bool hasLodGridM() => $_has(23);
   @$pb.TagNumber(24)
   void clearLodGridM() => $_clearField(24);
+
+  /// Landmark models (specs/models.md). 0 or missing = no models.pb: landmarks stay footprints.
+  @$pb.TagNumber(25)
+  $core.int get modelsVersion => $_getIZ(24);
+  @$pb.TagNumber(25)
+  set modelsVersion($core.int value) => $_setUnsignedInt32(24, value);
+  @$pb.TagNumber(25)
+  $core.bool hasModelsVersion() => $_has(24);
+  @$pb.TagNumber(25)
+  void clearModelsVersion() => $_clearField(25);
 }
 
 class Rect extends $pb.GeneratedMessage {
@@ -2487,6 +2501,462 @@ class TramStop extends $pb.GeneratedMessage {
   $core.bool hasSM() => $_has(1);
   @$pb.TagNumber(2)
   void clearSM() => $_clearField(2);
+}
+
+/// models.pb (specs/models.md): shapes of hero landmarks. Additive: a pack without it still works,
+/// collisions stay with the layer-0 footprints in the chunks. Heights are real metres (the client
+/// applies the building display height); z is never exaggerated inside a part.
+class Models extends $pb.GeneratedMessage {
+  factory Models({
+    $core.Iterable<Model>? models,
+  }) {
+    final result = Models._();
+    if (models != null) result.models.addAll(models);
+    return result;
+  }
+
+  Models._();
+
+  factory Models.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      Models()..mergeFromBuffer(data, registry);
+  factory Models.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      Models()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'Models',
+      package: const $pb.PackageName(_omitMessageNames ? '' : 'citypack'),
+      createEmptyInstance: Models.$_createMessage)
+    ..pPM<Model>(1, _omitFieldNames ? '' : 'models',
+        subBuilder: Model.$_createMessage)
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  Models clone() => deepCopy();
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  Models copyWith(void Function(Models) updates) =>
+      super.copyWith((message) => updates(message as Models)) as Models;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  @$core.Deprecated('Use Models() / Models.new instead')
+  static Models create() => Models._();
+  static $pb.GeneratedMessage $_createMessage() => Models._();
+  @$core.override
+  Models createEmptyInstance() => Models._();
+  @$core.pragma('dart2js:noInline')
+  static Models getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<Models>(Models.$_createMessage);
+  static Models? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $pb.PbList<Model> get models => $_getList(0);
+}
+
+class Model extends $pb.GeneratedMessage {
+  factory Model({
+    $core.String? landmarkId,
+    ModelSource? source,
+    $core.Iterable<ModelPart>? parts,
+    $core.Iterable<BuildingRef>? replaces,
+    $core.Iterable<PlanPoly>? roofPlan,
+    $core.int? tris,
+  }) {
+    final result = Model._();
+    if (landmarkId != null) result.landmarkId = landmarkId;
+    if (source != null) result.source = source;
+    if (parts != null) result.parts.addAll(parts);
+    if (replaces != null) result.replaces.addAll(replaces);
+    if (roofPlan != null) result.roofPlan.addAll(roofPlan);
+    if (tris != null) result.tris = tris;
+    return result;
+  }
+
+  Model._();
+
+  factory Model.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      Model()..mergeFromBuffer(data, registry);
+  factory Model.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      Model()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'Model',
+      package: const $pb.PackageName(_omitMessageNames ? '' : 'citypack'),
+      createEmptyInstance: Model.$_createMessage)
+    ..aOS(1, _omitFieldNames ? '' : 'landmarkId')
+    ..aE<ModelSource>(2, _omitFieldNames ? '' : 'source',
+        enumValues: ModelSource.values)
+    ..pPM<ModelPart>(3, _omitFieldNames ? '' : 'parts',
+        subBuilder: ModelPart.$_createMessage)
+    ..pPM<BuildingRef>(4, _omitFieldNames ? '' : 'replaces',
+        subBuilder: BuildingRef.$_createMessage)
+    ..pPM<PlanPoly>(5, _omitFieldNames ? '' : 'roofPlan',
+        subBuilder: PlanPoly.$_createMessage)
+    ..aI(6, _omitFieldNames ? '' : 'tris', fieldType: $pb.PbFieldType.OU3)
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  Model clone() => deepCopy();
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  Model copyWith(void Function(Model) updates) =>
+      super.copyWith((message) => updates(message as Model)) as Model;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  @$core.Deprecated('Use Model() / Model.new instead')
+  static Model create() => Model._();
+  static $pb.GeneratedMessage $_createMessage() => Model._();
+  @$core.override
+  Model createEmptyInstance() => Model._();
+  @$core.pragma('dart2js:noInline')
+  static Model getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<Model>(Model.$_createMessage);
+  static Model? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get landmarkId => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set landmarkId($core.String value) => $_setString(0, value);
+  @$pb.TagNumber(1)
+  $core.bool hasLandmarkId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearLandmarkId() => $_clearField(1);
+
+  @$pb.TagNumber(2)
+  ModelSource get source => $_getN(1);
+  @$pb.TagNumber(2)
+  set source(ModelSource value) => $_setField(2, value);
+  @$pb.TagNumber(2)
+  $core.bool hasSource() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearSource() => $_clearField(2);
+
+  @$pb.TagNumber(3)
+  $pb.PbList<ModelPart> get parts => $_getList(2);
+
+  @$pb.TagNumber(4)
+  $pb.PbList<BuildingRef> get replaces => $_getList(3);
+
+  @$pb.TagNumber(5)
+  $pb.PbList<PlanPoly> get roofPlan => $_getList(4);
+
+  @$pb.TagNumber(6)
+  $core.int get tris => $_getIZ(5);
+  @$pb.TagNumber(6)
+  set tris($core.int value) => $_setUnsignedInt32(5, value);
+  @$pb.TagNumber(6)
+  $core.bool hasTris() => $_has(5);
+  @$pb.TagNumber(6)
+  void clearTris() => $_clearField(6);
+}
+
+/// One source building standing on the terrain on its own (specs/models.md: parts).
+class ModelPart extends $pb.GeneratedMessage {
+  factory ModelPart({
+    $core.int? anchorX,
+    $core.int? anchorY,
+    $core.int? baseZDm,
+    $core.Iterable<$core.int>? positions,
+    $core.Iterable<$core.int>? triangles,
+    $core.List<$core.int>? roles,
+    $core.String? sourceId,
+    $core.Iterable<$core.int>? foot,
+  }) {
+    final result = ModelPart._();
+    if (anchorX != null) result.anchorX = anchorX;
+    if (anchorY != null) result.anchorY = anchorY;
+    if (baseZDm != null) result.baseZDm = baseZDm;
+    if (positions != null) result.positions.addAll(positions);
+    if (triangles != null) result.triangles.addAll(triangles);
+    if (roles != null) result.roles = roles;
+    if (sourceId != null) result.sourceId = sourceId;
+    if (foot != null) result.foot.addAll(foot);
+    return result;
+  }
+
+  ModelPart._();
+
+  factory ModelPart.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      ModelPart()..mergeFromBuffer(data, registry);
+  factory ModelPart.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      ModelPart()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'ModelPart',
+      package: const $pb.PackageName(_omitMessageNames ? '' : 'citypack'),
+      createEmptyInstance: ModelPart.$_createMessage)
+    ..aI(1, _omitFieldNames ? '' : 'anchorX', fieldType: $pb.PbFieldType.OS3)
+    ..aI(2, _omitFieldNames ? '' : 'anchorY', fieldType: $pb.PbFieldType.OS3)
+    ..aI(3, _omitFieldNames ? '' : 'baseZDm', fieldType: $pb.PbFieldType.OS3)
+    ..p<$core.int>(4, _omitFieldNames ? '' : 'positions', $pb.PbFieldType.KS3)
+    ..p<$core.int>(5, _omitFieldNames ? '' : 'triangles', $pb.PbFieldType.KU3)
+    ..a<$core.List<$core.int>>(
+        6, _omitFieldNames ? '' : 'roles', $pb.PbFieldType.OY)
+    ..aOS(7, _omitFieldNames ? '' : 'sourceId')
+    ..p<$core.int>(8, _omitFieldNames ? '' : 'foot', $pb.PbFieldType.KU3)
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  ModelPart clone() => deepCopy();
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  ModelPart copyWith(void Function(ModelPart) updates) =>
+      super.copyWith((message) => updates(message as ModelPart)) as ModelPart;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  @$core.Deprecated('Use ModelPart() / ModelPart.new instead')
+  static ModelPart create() => ModelPart._();
+  static $pb.GeneratedMessage $_createMessage() => ModelPart._();
+  @$core.override
+  ModelPart createEmptyInstance() => ModelPart._();
+  @$core.pragma('dart2js:noInline')
+  static ModelPart getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<ModelPart>(ModelPart.$_createMessage);
+  static ModelPart? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.int get anchorX => $_getIZ(0);
+  @$pb.TagNumber(1)
+  set anchorX($core.int value) => $_setSignedInt32(0, value);
+  @$pb.TagNumber(1)
+  $core.bool hasAnchorX() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearAnchorX() => $_clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.int get anchorY => $_getIZ(1);
+  @$pb.TagNumber(2)
+  set anchorY($core.int value) => $_setSignedInt32(1, value);
+  @$pb.TagNumber(2)
+  $core.bool hasAnchorY() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearAnchorY() => $_clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.int get baseZDm => $_getIZ(2);
+  @$pb.TagNumber(3)
+  set baseZDm($core.int value) => $_setSignedInt32(2, value);
+  @$pb.TagNumber(3)
+  $core.bool hasBaseZDm() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearBaseZDm() => $_clearField(3);
+
+  @$pb.TagNumber(4)
+  $pb.PbList<$core.int> get positions => $_getList(3);
+
+  @$pb.TagNumber(5)
+  $pb.PbList<$core.int> get triangles => $_getList(4);
+
+  @$pb.TagNumber(6)
+  $core.List<$core.int> get roles => $_getN(5);
+  @$pb.TagNumber(6)
+  set roles($core.List<$core.int> value) => $_setBytes(5, value);
+  @$pb.TagNumber(6)
+  $core.bool hasRoles() => $_has(5);
+  @$pb.TagNumber(6)
+  void clearRoles() => $_clearField(6);
+
+  @$pb.TagNumber(7)
+  $core.String get sourceId => $_getSZ(6);
+  @$pb.TagNumber(7)
+  set sourceId($core.String value) => $_setString(6, value);
+  @$pb.TagNumber(7)
+  $core.bool hasSourceId() => $_has(6);
+  @$pb.TagNumber(7)
+  void clearSourceId() => $_clearField(7);
+
+  @$pb.TagNumber(8)
+  $pb.PbList<$core.int> get foot => $_getList(7);
+}
+
+class BuildingRef extends $pb.GeneratedMessage {
+  factory BuildingRef({
+    $core.int? chunkX,
+    $core.int? chunkY,
+    $core.int? index,
+  }) {
+    final result = BuildingRef._();
+    if (chunkX != null) result.chunkX = chunkX;
+    if (chunkY != null) result.chunkY = chunkY;
+    if (index != null) result.index = index;
+    return result;
+  }
+
+  BuildingRef._();
+
+  factory BuildingRef.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      BuildingRef()..mergeFromBuffer(data, registry);
+  factory BuildingRef.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      BuildingRef()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'BuildingRef',
+      package: const $pb.PackageName(_omitMessageNames ? '' : 'citypack'),
+      createEmptyInstance: BuildingRef.$_createMessage)
+    ..aI(1, _omitFieldNames ? '' : 'chunkX', fieldType: $pb.PbFieldType.OS3)
+    ..aI(2, _omitFieldNames ? '' : 'chunkY', fieldType: $pb.PbFieldType.OS3)
+    ..aI(3, _omitFieldNames ? '' : 'index', fieldType: $pb.PbFieldType.OU3)
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  BuildingRef clone() => deepCopy();
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  BuildingRef copyWith(void Function(BuildingRef) updates) =>
+      super.copyWith((message) => updates(message as BuildingRef))
+          as BuildingRef;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  @$core.Deprecated('Use BuildingRef() / BuildingRef.new instead')
+  static BuildingRef create() => BuildingRef._();
+  static $pb.GeneratedMessage $_createMessage() => BuildingRef._();
+  @$core.override
+  BuildingRef createEmptyInstance() => BuildingRef._();
+  @$core.pragma('dart2js:noInline')
+  static BuildingRef getDefault() =>
+      _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<BuildingRef>(
+          BuildingRef.$_createMessage);
+  static BuildingRef? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.int get chunkX => $_getIZ(0);
+  @$pb.TagNumber(1)
+  set chunkX($core.int value) => $_setSignedInt32(0, value);
+  @$pb.TagNumber(1)
+  $core.bool hasChunkX() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearChunkX() => $_clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.int get chunkY => $_getIZ(1);
+  @$pb.TagNumber(2)
+  set chunkY($core.int value) => $_setSignedInt32(1, value);
+  @$pb.TagNumber(2)
+  $core.bool hasChunkY() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearChunkY() => $_clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.int get index => $_getIZ(2);
+  @$pb.TagNumber(3)
+  set index($core.int value) => $_setUnsignedInt32(2, value);
+  @$pb.TagNumber(3)
+  $core.bool hasIndex() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearIndex() => $_clearField(3);
+}
+
+/// A roof-plan polygon: rings like Building, pretriangulated, drawn as a prism from base_z to height_m.
+class PlanPoly extends $pb.GeneratedMessage {
+  factory PlanPoly({
+    $core.Iterable<$core.int>? points,
+    $core.Iterable<$core.int>? ringEnds,
+    $core.Iterable<$core.int>? triangles,
+    $core.double? heightM,
+    $core.int? shade,
+    $core.int? baseZDm,
+  }) {
+    final result = PlanPoly._();
+    if (points != null) result.points.addAll(points);
+    if (ringEnds != null) result.ringEnds.addAll(ringEnds);
+    if (triangles != null) result.triangles.addAll(triangles);
+    if (heightM != null) result.heightM = heightM;
+    if (shade != null) result.shade = shade;
+    if (baseZDm != null) result.baseZDm = baseZDm;
+    return result;
+  }
+
+  PlanPoly._();
+
+  factory PlanPoly.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      PlanPoly()..mergeFromBuffer(data, registry);
+  factory PlanPoly.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      PlanPoly()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'PlanPoly',
+      package: const $pb.PackageName(_omitMessageNames ? '' : 'citypack'),
+      createEmptyInstance: PlanPoly.$_createMessage)
+    ..p<$core.int>(1, _omitFieldNames ? '' : 'points', $pb.PbFieldType.KS3)
+    ..p<$core.int>(2, _omitFieldNames ? '' : 'ringEnds', $pb.PbFieldType.KU3)
+    ..p<$core.int>(3, _omitFieldNames ? '' : 'triangles', $pb.PbFieldType.KU3)
+    ..aD(4, _omitFieldNames ? '' : 'heightM', fieldType: $pb.PbFieldType.OF)
+    ..aI(5, _omitFieldNames ? '' : 'shade', fieldType: $pb.PbFieldType.OU3)
+    ..aI(6, _omitFieldNames ? '' : 'baseZDm', fieldType: $pb.PbFieldType.OS3)
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  PlanPoly clone() => deepCopy();
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  PlanPoly copyWith(void Function(PlanPoly) updates) =>
+      super.copyWith((message) => updates(message as PlanPoly)) as PlanPoly;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  @$core.Deprecated('Use PlanPoly() / PlanPoly.new instead')
+  static PlanPoly create() => PlanPoly._();
+  static $pb.GeneratedMessage $_createMessage() => PlanPoly._();
+  @$core.override
+  PlanPoly createEmptyInstance() => PlanPoly._();
+  @$core.pragma('dart2js:noInline')
+  static PlanPoly getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<PlanPoly>(PlanPoly.$_createMessage);
+  static PlanPoly? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $pb.PbList<$core.int> get points => $_getList(0);
+
+  @$pb.TagNumber(2)
+  $pb.PbList<$core.int> get ringEnds => $_getList(1);
+
+  @$pb.TagNumber(3)
+  $pb.PbList<$core.int> get triangles => $_getList(2);
+
+  @$pb.TagNumber(4)
+  $core.double get heightM => $_getN(3);
+  @$pb.TagNumber(4)
+  set heightM($core.double value) => $_setFloat(3, value);
+  @$pb.TagNumber(4)
+  $core.bool hasHeightM() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearHeightM() => $_clearField(4);
+
+  @$pb.TagNumber(5)
+  $core.int get shade => $_getIZ(4);
+  @$pb.TagNumber(5)
+  set shade($core.int value) => $_setUnsignedInt32(4, value);
+  @$pb.TagNumber(5)
+  $core.bool hasShade() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearShade() => $_clearField(5);
+
+  @$pb.TagNumber(6)
+  $core.int get baseZDm => $_getIZ(5);
+  @$pb.TagNumber(6)
+  set baseZDm($core.int value) => $_setSignedInt32(5, value);
+  @$pb.TagNumber(6)
+  $core.bool hasBaseZDm() => $_has(5);
+  @$pb.TagNumber(6)
+  void clearBaseZDm() => $_clearField(6);
 }
 
 const $core.bool _omitFieldNames =

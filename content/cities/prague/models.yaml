@@ -1,0 +1,22 @@
+# Landmark models (specs/models.md, Prompts/06-METROPOLE_LANDMARKS3D_PLAN.md).
+# Source: IPR Praha 3D model of buildings, CityGML, map sheet 1:5000 "Praha 7-1" (BD3_Prah_7-1.gml),
+# downloaded to run/citypack/prague/raw/models/ (never into git; docs/citypack.md).
+source: ipr_praha_3d
+files: [BD3_Prah_7-1.gml]
+models:
+  prague_castle:
+    # The castle grounds with St. Vitus Cathedral (plan K4): the landmark building plus the
+    # courtyards' palaces, St. George's Basilica, Golden Lane and the Black Tower.
+    select:
+      buffer_m: 2
+      area:
+        - [14.39830, 50.08993]
+        - [14.40300, 50.08993]
+        - [14.40500, 50.09110]
+        - [14.40480, 50.09225]
+        - [14.40000, 50.09265]
+        - [14.39830, 50.09200]
+    include: []
+    exclude: []
+    max_tris: 12000
+    roles: {}

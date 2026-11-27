@@ -26,6 +26,7 @@ Cache nesleduje změny konfigurace: po úpravě `city.yaml`, `tuning.yaml` (ší
 | `zones` | pěší segmenty a náměstí − koridory silnic → `zones_ground.jsonl`, `zones_barriers.jsonl` | Pěší zóny a sloupky (`specs/zones.md`): pásy `zones.street_width_m` kolem segmentů `pedestrian` a pěší náměstí, které protínají, bez koridorů silnic (+ `zones.gap_margin_m`). Hranice zóny bez hranice oblasti = zábrana (`Chunk.barriers`). |
 | `trams` | segmenty `rail`/`tram` → `trams.pb` | Koleje jako vlastní obousměrný graf (rozdělení v konektorech, ořez oblastí, největší komponenta, bez slepých vleček kratších než `trams.min_track_m`). Zastávky se generují po úsecích mezi výhybkami (`specs/trams.md`). Město bez tramvají má prázdný graf. |
 | `landmarks`, `spots` | YAML → `landmarks.pb`, `spots.pb` | Památka = nejbližší budova do 40 m od bodu (nebo `overture_id`). Spoty se přichytí na nejbližší ponechanou silnici. |
+| `models` | `models.yaml` + CityGML v `raw/models/` → `models.pb` | M7 (`specs/models.md`): budovy zdroje ve výběru památky, převod souřadnic polynomem proloženým PROJ, čištění, rozpočet trojúhelníků, části s patou na terénu, střešní plán, náhled `preview/models/<id>.png`. `pack` doplní `replaces` a atribuci, `validate` hlídá rozpočty a patu. Bez `models.yaml` krok nic nedělá. |
 | `pack` | → `app/assets/cities/<city>/` | `manifest.pb`, `graph.pb`, `chunks/{x}_{y}.pb`, `landmarks.pb`, `spots.pb`; vše gzip protobuf, souřadnice v decimetrech. Střechy a země předtriangulované (earcut). Deterministický: kanonické prstence, úplné řazení, bez času buildu – stejný vstup dá stejné bajty. |
 | `validate` | hotový balíček | Souvislý graf, mosty a tunely napojené na obou koncích, trasa ze startu ke každému spotu (po ponechaných silnicích, s jednosměrkami), žádná budova na ose silnice, žádné sloupky přes osu silnice, limit velikosti chunku, každá hero památka má budovu. S terénem navíc: výšky uzlů a konců hran souhlasí, žádná hrana (mimo `stairs`) nad `terrain.max_grade` (tolerance clampu se počítá na každý úsek profilu), int16 bez saturace, mosty nad vodou a silnicí aspoň `terrain.pipeline.bridge_min_clear_m` (pod plnou světlostí `terrain.bridge.clear_*` jen varování; u nájezdu mostu, blíž než `clear_road_m / bridge.max_grade` od místa, kde most dosedá, jen varování), okraj silnice na terénu do `road_gap_max_m` u aspoň 1 − `road_gap_share` vzorků (vzorek, kde je do úhlopříčky mřížky jiná silnice v jiné výšce, se nepočítá: conform dá bod mřížky nejbližší silnici). S přírodou: stromy mimo vozovku, budovy a vodu, limit stromů na chunk, velká voda má jméno. |
 | `lod` | `terrain.bin` + budovy + zeleň → `lod/{x}_{y}.pb` | Vzdálený prstenec: terén po `terrain.lod.grid_m`, budovy sloučené po blocích, les a park jako hmoty, voda jedním povrchem; dlaždice = `terrain.lod.chunks`² chunků. |
@@ -197,3 +198,24 @@ Tokio proto bere `gsi_tiles` (DEM5A, holý terén): z0 = −1 m, převýšení 2
 Ōsaka 16,3 % a Ushi-zaka 16,2 %. Plocha `natural=water` + `water=bay` bez jména u Harumi je moře
 (`specs/nature.md`), ne jezero. Obslužná ulička nad vodou se za most nepovažuje (`flagWaterBridges`:
 vlásenka pod Shuto u Nihonbashi-gawa nebyla most z břehu na břeh).
+
+## Modely památek (M7, `specs/models.md`, 2026-11-27)
+
+Zdroj Praha: **IPR Praha, 3D model budov** (CityGML 2.0, export CityGRID), licence **CC BY 4.0**,
+atribuce „data base © IPR Praha“ (v manifestu „3D model: data base © IPR Praha (CC BY 4.0)“).
+Licence: https://www.geoportalpraha.cz/en/data-and-services/open-data , popis dat:
+https://geoportalpraha.cz/en/data-and-services/articles-and-projects/3d-model/3d-model-budovy-mosty .
+Soubory po mapových listech 1 : 5000 jsou položky ArcGIS Online uživatele `opendatapraha`
+(`BD3_Prah_<list>` typu GML); Hrad pokrývá list **Praha 7-1** (`BD3_Prah_7-1.gml`, 172 MB):
+
+```
+mkdir -p run/citypack/prague/raw/models
+curl -L -o run/citypack/prague/raw/models/BD3_Prah_7-1.gml \
+  https://www.arcgis.com/sharing/rest/content/items/88dc83fcd48c4ac9aec3532c19395d72/data
+run/bin/citypack -force models prague && run/bin/citypack pack prague && run/bin/citypack validate prague
+```
+
+Surová data nejsou v gitu ani v CI (`run/` je ignorovaný); vydaný balíček nese hotový `models.pb`.
+Souřadnice zdroje S-JTSK / Křovák East North (EPSG:5514, v souboru `srsName="unknown"`), výšky Bpv.
+Převod do místních metrů: kvadratický polynom proložený PROJ (DuckDB `ST_Transform`) na mřížce 5 × 5
+přes obálku listu, reziduum 1 mm. Podrobnosti a čísla v `plans/M7_PAMATKY.md`.

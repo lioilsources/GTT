@@ -1099,3 +1099,24 @@ flow:
     button_after_s: 3.0
   gap_close_m: 7.0              # citypack: building gaps and alleys narrower than this
   stuck_limit_per_10min: 1      # acceptance P3
+
+# Landmark models (specs/models.md, Prompts/06-METROPOLE_LANDMARKS3D_PLAN.md); colours in
+# design/tokens.json color.model.
+models:
+  enabled: true
+  max_tris: 4000                # per landmark
+  max_tris_exception: 12000     # ceiling for a models.yaml max_tris (Prague Castle grounds)
+  city_max_tris: 120000
+  city_max_bytes: 1500000       # models.pb after gzip
+  min_detail_m: 1.5             # smaller parts and faces are dropped
+  max_detail_m: 4.0             # citypack raises min_detail up to this to meet the budget
+  detail_step_m: 0.5
+  near_m: 600.0                 # W chase view: model within this of the car, footprints beyond
+  hysteresis_m: 50.0            # switch back to footprints only beyond near_m + this
+  max_full: 3                   # W: models drawn at once, the nearest win
+  roof_plan_max_polys: 400
+  weld_m: 0.1                   # citypack: vertex weld
+  plan_simplify_m: 0.3          # citypack: roof plan simplification
+  replace_share: 0.6            # citypack: a pack building at least this covered is replaced
+  foot_tolerance_m: 2.0         # validate: part foot vs terrain at its anchor (real metres)
+  max_offset_m: 150.0           # validate: model centre vs landmark point

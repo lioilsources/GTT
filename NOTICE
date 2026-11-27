@@ -25,6 +25,10 @@ Data sources used by the city packs
   https://github.com/tilezen/joerd/blob/master/docs/attribution.md .
   New York: USGS 3DEP (public domain). Prague and Tokyo: EU-DEM (Copernicus),
   SRTM and other sources listed in the attribution document above.
+- IPR Praha (Prague Institute of Planning and Development), 3D model of buildings
+  (CityGML, map sheet Praha 7-1), CC BY 4.0, "data base (c) IPR Praha",
+  https://www.geoportalpraha.cz/en/data-and-services/open-data . Used for the
+  landmark model of Prague Castle (models.pb, specs/models.md).
 - NYC Parks, 2015 Street Tree Census, NYC Open Data (dataset uvpi-gqnh),
   NYC Open Data terms of use, https://opendata.cityofnewyork.us/overview/#termsofuse .
 

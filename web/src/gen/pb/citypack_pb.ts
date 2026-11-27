@@ -17,7 +17,7 @@ import type { Message } from "@bufbuild/protobuf";
  * Describes the file citypack.proto.
  */
 export const file_citypack: GenFile = /*@__PURE__*/
-  fileDesc("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cxgBIAMoCzIOLmNpdHlwYWNrLk5vZGUSIQoFZWRnZXMYAiADKAsyEi5jaXR5cGFjay5UcmFtRWRnZRIhCgVzdG9wcxgDIAMoCzISLmNpdHlwYWNrLlRyYW1TdG9wInoKCFRyYW1FZGdlEgwKBGZyb20YASABKA0SCgoCdG8YAiABKA0SDgoGcG9pbnRzGAMgAygREhIKCmxheWVyX2Zyb20YBCABKBESEAoIbGF5ZXJfdG8YBSABKBESDgoGYnJpZGdlGAYgASgIEg4KBnR1bm5lbBgHIAEoCCIlCghUcmFtU3RvcBIMCgRlZGdlGAEgASgNEgsKA3NfbRgCIAEoAip+CglSb2FkQ2xhc3MSEAoMUk9BRF9VTktOT1dOEAASDAoITU9UT1JXQVkQARIJCgVUUlVOSxACEgsKB1BSSU1BUlkQAxINCglTRUNPTkRBUlkQBBIMCghURVJUSUFSWRAFEg8KC1JFU0lERU5USUFMEAYSCwoHU0VSVklDRRAHKm4KCldhdGVyQ2xhc3MSDgoKV0FURVJfTk9ORRAAEg0KCVdBVEVSX1NFQRABEg8KC1dBVEVSX1JJVkVSEAISDwoLV0FURVJfQ0FOQUwQAxIOCgpXQVRFUl9MQUtFEAQSDwoLV0FURVJfU01BTEwQBSqHAQoKR3JlZW5DbGFzcxIOCgpHUkVFTl9OT05FEAASDgoKR1JFRU5fV09PRBABEhIKDkdSRUVOX1BBUktMQU5EEAISEAoMR1JFRU5fR0FSREVOEAMSEgoOR1JFRU5fQ0VNRVRFUlkQBBIPCgtHUkVFTl9HUkFTUxAFEg4KCkdSRUVOX1NBTkQQBippCgdTdXJmYWNlEhMKD1NVUkZBQ0VfQVNQSEFMVBAAEhEKDVNVUkZBQ0VfR1JBU1MQARIQCgxTVVJGQUNFX1NBTkQQAhIQCgxTVVJGQUNFX0RJUlQQAxISCg5TVVJGQUNFX0ZPUkVTVBAEKmQKCkdyb3VuZEtpbmQSEgoOR1JPVU5EX1VOS05PV04QABIICgRMQU5EEAESCQoFV0FURVIQAhIICgRQQVJLEAMSCAoEUkFJTBAEEgkKBVBMQVpBEAUSDgoKUEVERVNUUklBThAGKjgKB0xvZEtpbmQSDQoJTE9EX0JMT0NLEAASDAoITE9EX1dPT0QQARIQCgxMT0RfUEFSS0xBTkQQAkIWWhRjaXR5cGFjay9pbnRlcm5hbC9wYmIGcHJvdG8z");
+  fileDesc("Cg5jaXR5cGFjay5wcm90bxIIY2l0eXBhY2sixgQKCE1hbmlmZXN0EhYKDmZvcm1hdF92ZXJzaW9uGAEgASgNEg8KB2NpdHlfaWQYAiABKAkSDAoEbmFtZRgDIAEoCRISCgpvcmlnaW5fbGF0GAQgASgBEhIKCm9yaWdpbl9sb24YBSABKAESEgoKZHJpdmVfc2lkZRgGIAEoCRINCgV1bml0cxgHIAEoCRIYChBvdmVydHVyZV9yZWxlYXNlGAggASgJEg8KB2NodW5rX20YCSABKA0SHgoGYm91bmRzGAogASgLMg4uY2l0eXBhY2suUmVjdBIMCgRhcmVhGAsgAygREiIKBmNodW5rcxgMIAMoCzISLmNpdHlwYWNrLkNodW5rUmVmEh4KBXN0YXJ0GA0gASgLMg8uY2l0eXBhY2suU3Bhd24SJQoJZGlzdHJpY3RzGA4gAygLMhIuY2l0eXBhY2suRGlzdHJpY3QSEwoLYXR0cmlidXRpb24YDyADKAkSEAoIYnVpbHRfYXQYECABKAkSFwoPdGVycmFpbl92ZXJzaW9uGBEgASgNEgwKBHowX20YEiABKAISFAoMZXhhZ2dlcmF0aW9uGBMgASgCEhYKDnRlcnJhaW5fZ3JpZF9tGBQgASgNEhYKDm5hdHVyZV92ZXJzaW9uGBUgASgNEiAKBGxvZHMYFiADKAsyEi5jaXR5cGFjay5DaHVua1JlZhISCgpsb2RfY2h1bmtzGBcgASgNEhIKCmxvZF9ncmlkX20YGCABKA0SFgoObW9kZWxzX3ZlcnNpb24YGSABKA0iQgoEUmVjdBINCgVtaW5feBgBIAEoERINCgVtaW5feRgCIAEoERINCgVtYXhfeBgDIAEoERINCgVtYXhfeRgEIAEoESJCCghDaHVua1JlZhIJCgF4GAEgASgREgkKAXkYAiABKBESDQoFYnl0ZXMYAyABKA0SEQoJYnVpbGRpbmdzGAQgASgNIjIKBVNwYXduEgkKAXgYASABKBESCQoBeRgCIAEoERITCgtoZWFkaW5nX3JhZBgDIAEoAiImCghEaXN0cmljdBIMCgRuYW1lGAEgASgJEgwKBHJpbmcYAiADKBEiVAoFR3JhcGgSHQoFbm9kZXMYASADKAsyDi5jaXR5cGFjay5Ob2RlEh0KBWVkZ2VzGAIgAygLMg4uY2l0eXBhY2suRWRnZRINCgVuYW1lcxgDIAMoCSI6CgROb2RlEgkKAXgYASABKBESCQoBeRgCIAEoERIOCgZib3JkZXIYAyABKAgSDAoEel9kbRgEIAEoESKYAgoERWRnZRIMCgRmcm9tGAEgASgNEgoKAnRvGAIgASgNEg4KBnBvaW50cxgDIAMoERIiCgVjbGFzcxgEIAEoDjITLmNpdHlwYWNrLlJvYWRDbGFzcxIMCgRuYW1lGAUgASgNEg0KBWxhbmVzGAYgASgNEg4KBm9uZXdheRgHIAEoERISCgpsYXllcl9mcm9tGAggASgREhAKCGxheWVyX3RvGAkgASgREg4KBmJyaWRnZRgKIAEoCBIOCgZ0dW5uZWwYCyABKAgSDAoEa2VwdBgMIAEoCBIPCgd3aWR0aF9tGA0gASgCEgwKBHpfZG0YDiADKBESDgoGc3RhaXJzGA8gASgIEhIKCm1pY3JvX29ubHkYECABKAgi+AEKBUNodW5rEgkKAXgYASABKBESCQoBeRgCIAEoERIlCglidWlsZGluZ3MYAyADKAsyEi5jaXR5cGFjay5CdWlsZGluZxIeCgZncm91bmQYBCADKAsyDi5jaXR5cGFjay5NZXNoEiMKCGJhcnJpZXJzGAUgAygLMhEuY2l0eXBhY2suQmFycmllchIPCgd0ZXJyYWluGAYgASgMEg0KBXNoYWRlGAcgASgMEg0KBXRyZWVzGAggASgMEh0KBXNob3JlGAkgAygLMg4uY2l0eXBhY2suTWVzaBIfCgZsYWJlbHMYCiADKAsyDy5jaXR5cGFjay5MYWJlbCJDCgVMYWJlbBIMCgRuYW1lGAEgASgJEgwKBGF4aXMYAiADKBESDQoFd2F0ZXIYAyABKAgSDwoHYXJlYV9tMhgEIAEoDSIZCgdCYXJyaWVyEg4KBnBvaW50cxgBIAMoESKrAQoIQnVpbGRpbmcSDQoFcmluZ3MYASADKBESEQoJcmluZ19lbmRzGAIgAygNEgwKBHJvb2YYAyADKA0SEAoIaGVpZ2h0X20YBCABKAISFAoMbWluX2hlaWdodF9tGAUgASgCEhAKCGxhbmRtYXJrGAYgASgNEg8KB2NvbGxpZGUYByABKAgSEQoJd2FsbF9zZWVkGAggASgNEhEKCWJhc2Vfel9kbRgJIAEoESLjAQoETWVzaBIiCgRraW5kGAEgASgOMhQuY2l0eXBhY2suR3JvdW5kS2luZBIQCgh2ZXJ0aWNlcxgCIAMoERIPCgdpbmRpY2VzGAMgAygNEikKC3dhdGVyX2NsYXNzGAQgASgOMhQuY2l0eXBhY2suV2F0ZXJDbGFzcxIpCgtncmVlbl9jbGFzcxgFIAEoDjIULmNpdHlwYWNrLkdyZWVuQ2xhc3MSIgoHc3VyZmFjZRgGIAEoDjIRLmNpdHlwYWNrLlN1cmZhY2USDAoEbmFtZRgHIAEoCRIMCgR6X2RtGAggASgRIm4KA0xvZBIJCgF4GAEgASgREgkKAXkYAiABKBESDwoHdGVycmFpbhgDIAEoDBIhCgZtYXNzZXMYBCADKAsyES5jaXR5cGFjay5Mb2RNYXNzEh0KBXdhdGVyGAUgAygLMg4uY2l0eXBhY2suTWVzaCJ/CgdMb2RNYXNzEh8KBGtpbmQYASABKA4yES5jaXR5cGFjay5Mb2RLaW5kEg0KBXJpbmdzGAIgAygREhEKCXJpbmdfZW5kcxgDIAMoDRIMCgRyb29mGAQgAygNEhAKCGhlaWdodF9tGAUgASgCEhEKCWJhc2Vfel9kbRgGIAEoESIuCglMYW5kbWFya3MSIQoFaXRlbXMYASADKAsyEi5jaXR5cGFjay5MYW5kbWFyayJpCghMYW5kbWFyaxIKCgJpZBgBIAEoCRIMCgRuYW1lGAIgASgJEgkKAXgYAyABKBESCQoBeRgEIAEoERIQCghoZWlnaHRfbRgFIAEoAhIMCgRoZXJvGAYgASgIEg0KBWJsdXJiGAcgASgJIiYKBVNwb3RzEh0KBWl0ZW1zGAEgAygLMg4uY2l0eXBhY2suU3BvdCL1AQoEU3BvdBIKCgJpZBgBIAEoCRIMCgRraW5kGAIgASgJEgwKBG5hbWUYAyABKAkSCQoBeBgEIAEoERIJCgF5GAUgASgREgwKBGVkZ2UYBiABKA0SDgoGcGFya194GAcgASgREg4KBnBhcmtfeRgIIAEoERIUCgxwYXJrX2hlYWRpbmcYCSABKAISEAoIbWluaWdhbWUYCiABKAkSDgoGbG9va194GAsgASgREg4KBmxvb2tfeRgMIAEoERISCgpzdWJqZWN0X2RtGA0gASgNEhEKCWFyZWFfbmFtZRgOIAEoCRISCgphcmVhX3dhdGVyGA8gASgIInAKCVRyYW1HcmFwaBIdCgVub2RlcxgBIAMoCzIOLmNpdHlwYWNrLk5vZGUSIQoFZWRnZXMYAiADKAsyEi5jaXR5cGFjay5UcmFtRWRnZRIhCgVzdG9wcxgDIAMoCzISLmNpdHlwYWNrLlRyYW1TdG9wInoKCFRyYW1FZGdlEgwKBGZyb20YASABKA0SCgoCdG8YAiABKA0SDgoGcG9pbnRzGAMgAygREhIKCmxheWVyX2Zyb20YBCABKBESEAoIbGF5ZXJfdG8YBSABKBESDgoGYnJpZGdlGAYgASgIEg4KBnR1bm5lbBgHIAEoCCIlCghUcmFtU3RvcBIMCgRlZGdlGAEgASgNEgsKA3NfbRgCIAEoAiIpCgZNb2RlbHMSHwoGbW9kZWxzGAEgAygLMg8uY2l0eXBhY2suTW9kZWwixQEKBU1vZGVsEhMKC2xhbmRtYXJrX2lkGAEgASgJEiUKBnNvdXJjZRgCIAEoDjIVLmNpdHlwYWNrLk1vZGVsU291cmNlEiIKBXBhcnRzGAMgAygLMhMuY2l0eXBhY2suTW9kZWxQYXJ0EicKCHJlcGxhY2VzGAQgAygLMhUuY2l0eXBhY2suQnVpbGRpbmdSZWYSJQoJcm9vZl9wbGFuGAUgAygLMhIuY2l0eXBhY2suUGxhblBvbHkSDAoEdHJpcxgGIAEoDSKYAQoJTW9kZWxQYXJ0EhAKCGFuY2hvcl94GAEgASgREhAKCGFuY2hvcl95GAIgASgREhEKCWJhc2Vfel9kbRgDIAEoERIRCglwb3NpdGlvbnMYBCADKBESEQoJdHJpYW5nbGVzGAUgAygNEg0KBXJvbGVzGAYgASgMEhEKCXNvdXJjZV9pZBgHIAEoCRIMCgRmb290GAggAygNIj4KC0J1aWxkaW5nUmVmEg8KB2NodW5rX3gYASABKBESDwoHY2h1bmtfeRgCIAEoERINCgVpbmRleBgDIAEoDSJ0CghQbGFuUG9seRIOCgZwb2ludHMYASADKBESEQoJcmluZ19lbmRzGAIgAygNEhEKCXRyaWFuZ2xlcxgDIAMoDRIQCghoZWlnaHRfbRgEIAEoAhINCgVzaGFkZRgFIAEoDRIRCgliYXNlX3pfZG0YBiABKBEqfgoJUm9hZENsYXNzEhAKDFJPQURfVU5LTk9XThAAEgwKCE1PVE9SV0FZEAESCQoFVFJVTksQAhILCgdQUklNQVJZEAMSDQoJU0VDT05EQVJZEAQSDAoIVEVSVElBUlkQBRIPCgtSRVNJREVOVElBTBAGEgsKB1NFUlZJQ0UQBypuCgpXYXRlckNsYXNzEg4KCldBVEVSX05PTkUQABINCglXQVRFUl9TRUEQARIPCgtXQVRFUl9SSVZFUhACEg8KC1dBVEVSX0NBTkFMEAMSDgoKV0FURVJfTEFLRRAEEg8KC1dBVEVSX1NNQUxMEAUqhwEKCkdyZWVuQ2xhc3MSDgoKR1JFRU5fTk9ORRAAEg4KCkdSRUVOX1dPT0QQARISCg5HUkVFTl9QQVJLTEFORBACEhAKDEdSRUVOX0dBUkRFThADEhIKDkdSRUVOX0NFTUVURVJZEAQSDwoLR1JFRU5fR1JBU1MQBRIOCgpHUkVFTl9TQU5EEAYqaQoHU3VyZmFjZRITCg9TVVJGQUNFX0FTUEhBTFQQABIRCg1TVVJGQUNFX0dSQVNTEAESEAoMU1VSRkFDRV9TQU5EEAISEAoMU1VSRkFDRV9ESVJUEAMSEgoOU1VSRkFDRV9GT1JFU1QQBCpkCgpHcm91bmRLaW5kEhIKDkdST1VORF9VTktOT1dOEAASCAoETEFORBABEgkKBVdBVEVSEAISCAoEUEFSSxADEggKBFJBSUwQBBIJCgVQTEFaQRAFEg4KClBFREVTVFJJQU4QBio4CgdMb2RLaW5kEg0KCUxPRF9CTE9DSxAAEgwKCExPRF9XT09EEAESEAoMTE9EX1BBUktMQU5EEAIqswEKC01vZGVsU291cmNlEhgKFE1PREVMX1NPVVJDRV9VTktOT1dOEAASHQoZTU9ERUxfU09VUkNFX0lQUl9QUkFIQV8zRBABEhcKE01PREVMX1NPVVJDRV9OWUNfM0QQAhIYChRNT0RFTF9TT1VSQ0VfUExBVEVBVRADEh8KG01PREVMX1NPVVJDRV9PVkVSVFVSRV9QQVJUUxAEEhcKE01PREVMX1NPVVJDRV9NQU5VQUwQBSppCglNb2RlbFJvbGUSDQoJUk9MRV9XQUxMEAASDQoJUk9MRV9ST09GEAESDwoLUk9MRV9DT1BQRVIQAhIOCgpST0xFX1NUT05FEAMSDgoKUk9MRV9HTEFTUxAEEg0KCVJPTEVfR09MRBAFQhZaFGNpdHlwYWNrL2ludGVybmFsL3BiYgZwcm90bzM");
 
 /**
  * manifest.pb
@@ -168,6 +168,13 @@ export type Manifest = Message<"citypack.Manifest"> & {
    * @generated from field: uint32 lod_grid_m = 24;
    */
   lodGridM: number;
+
+  /**
+   * Landmark models (specs/models.md). 0 or missing = no models.pb: landmarks stay footprints.
+   *
+   * @generated from field: uint32 models_version = 25;
+   */
+  modelsVersion: number;
 };
 
 /**
@@ -1130,6 +1137,228 @@ export const TramStopSchema: GenMessage<TramStop> = /*@__PURE__*/
   messageDesc(file_citypack, 21);
 
 /**
+ * models.pb (specs/models.md): shapes of hero landmarks. Additive: a pack without it still works,
+ * collisions stay with the layer-0 footprints in the chunks. Heights are real metres (the client
+ * applies the building display height); z is never exaggerated inside a part.
+ *
+ * @generated from message citypack.Models
+ */
+export type Models = Message<"citypack.Models"> & {
+  /**
+   * @generated from field: repeated citypack.Model models = 1;
+   */
+  models: Model[];
+};
+
+/**
+ * Describes the message citypack.Models.
+ * Use `create(ModelsSchema)` to create a new message.
+ */
+export const ModelsSchema: GenMessage<Models> = /*@__PURE__*/
+  messageDesc(file_citypack, 22);
+
+/**
+ * @generated from message citypack.Model
+ */
+export type Model = Message<"citypack.Model"> & {
+  /**
+   * Landmarks.items[].id
+   *
+   * @generated from field: string landmark_id = 1;
+   */
+  landmarkId: string;
+
+  /**
+   * @generated from field: citypack.ModelSource source = 2;
+   */
+  source: ModelSource;
+
+  /**
+   * @generated from field: repeated citypack.ModelPart parts = 3;
+   */
+  parts: ModelPart[];
+
+  /**
+   * pack buildings hidden while the model is drawn (≥ 60 % covered)
+   *
+   * @generated from field: repeated citypack.BuildingRef replaces = 4;
+   */
+  replaces: BuildingRef[];
+
+  /**
+   * top-down roof plan
+   *
+   * @generated from field: repeated citypack.PlanPoly roof_plan = 5;
+   */
+  roofPlan: PlanPoly[];
+
+  /**
+   * triangles over all parts
+   *
+   * @generated from field: uint32 tris = 6;
+   */
+  tris: number;
+};
+
+/**
+ * Describes the message citypack.Model.
+ * Use `create(ModelSchema)` to create a new message.
+ */
+export const ModelSchema: GenMessage<Model> = /*@__PURE__*/
+  messageDesc(file_citypack, 23);
+
+/**
+ * One source building standing on the terrain on its own (specs/models.md: parts).
+ *
+ * @generated from message citypack.ModelPart
+ */
+export type ModelPart = Message<"citypack.ModelPart"> & {
+  /**
+   * dm, footprint centroid
+   *
+   * @generated from field: sint32 anchor_x = 1;
+   */
+  anchorX: number;
+
+  /**
+   * @generated from field: sint32 anchor_y = 2;
+   */
+  anchorY: number;
+
+  /**
+   * game height of the foot: lowest terrain under the footprint (as Building)
+   *
+   * @generated from field: sint32 base_z_dm = 3;
+   */
+  baseZDm: number;
+
+  /**
+   * x, y, z per vertex: dm from the anchor, z real dm above the foot
+   *
+   * @generated from field: repeated sint32 positions = 4;
+   */
+  positions: number[];
+
+  /**
+   * counter-clockwise seen from outside
+   *
+   * @generated from field: repeated uint32 triangles = 5;
+   */
+  triangles: number[];
+
+  /**
+   * one ModelRole per triangle
+   *
+   * @generated from field: bytes roles = 6;
+   */
+  roles: Uint8Array;
+
+  /**
+   * id of the source building (gml:id), for models.yaml overrides
+   *
+   * @generated from field: string source_id = 7;
+   */
+  sourceId: string;
+
+  /**
+   * vertices on the source ground (wall bottoms), for validate
+   *
+   * @generated from field: repeated uint32 foot = 8;
+   */
+  foot: number[];
+};
+
+/**
+ * Describes the message citypack.ModelPart.
+ * Use `create(ModelPartSchema)` to create a new message.
+ */
+export const ModelPartSchema: GenMessage<ModelPart> = /*@__PURE__*/
+  messageDesc(file_citypack, 24);
+
+/**
+ * @generated from message citypack.BuildingRef
+ */
+export type BuildingRef = Message<"citypack.BuildingRef"> & {
+  /**
+   * @generated from field: sint32 chunk_x = 1;
+   */
+  chunkX: number;
+
+  /**
+   * @generated from field: sint32 chunk_y = 2;
+   */
+  chunkY: number;
+
+  /**
+   * index into Chunk.buildings
+   *
+   * @generated from field: uint32 index = 3;
+   */
+  index: number;
+};
+
+/**
+ * Describes the message citypack.BuildingRef.
+ * Use `create(BuildingRefSchema)` to create a new message.
+ */
+export const BuildingRefSchema: GenMessage<BuildingRef> = /*@__PURE__*/
+  messageDesc(file_citypack, 25);
+
+/**
+ * A roof-plan polygon: rings like Building, pretriangulated, drawn as a prism from base_z to height_m.
+ *
+ * @generated from message citypack.PlanPoly
+ */
+export type PlanPoly = Message<"citypack.PlanPoly"> & {
+  /**
+   * dm, absolute
+   *
+   * @generated from field: repeated sint32 points = 1;
+   */
+  points: number[];
+
+  /**
+   * ring 0 outer (CCW), rest holes (CW)
+   *
+   * @generated from field: repeated uint32 ring_ends = 2;
+   */
+  ringEnds: number[];
+
+  /**
+   * @generated from field: repeated uint32 triangles = 3;
+   */
+  triangles: number[];
+
+  /**
+   * real metres above the part foot (highest roof point of the polygon)
+   *
+   * @generated from field: float height_m = 4;
+   */
+  heightM: number;
+
+  /**
+   * 0 dark … 3 light, by slope and aspect to the fixed light
+   *
+   * @generated from field: uint32 shade = 5;
+   */
+  shade: number;
+
+  /**
+   * the part's base_z_dm
+   *
+   * @generated from field: sint32 base_z_dm = 6;
+   */
+  baseZDm: number;
+};
+
+/**
+ * Describes the message citypack.PlanPoly.
+ * Use `create(PlanPolySchema)` to create a new message.
+ */
+export const PlanPolySchema: GenMessage<PlanPoly> = /*@__PURE__*/
+  messageDesc(file_citypack, 26);
+
+/**
  * @generated from enum citypack.RoadClass
  */
 export enum RoadClass {
@@ -1378,4 +1607,91 @@ export enum LodKind {
  */
 export const LodKindSchema: GenEnum<LodKind> = /*@__PURE__*/
   enumDesc(file_citypack, 5);
+
+/**
+ * @generated from enum citypack.ModelSource
+ */
+export enum ModelSource {
+  /**
+   * @generated from enum value: MODEL_SOURCE_UNKNOWN = 0;
+   */
+  UNKNOWN = 0,
+
+  /**
+   * "data base © IPR Praha", CC BY 4.0
+   *
+   * @generated from enum value: MODEL_SOURCE_IPR_PRAHA_3D = 1;
+   */
+  IPR_PRAHA_3D = 1,
+
+  /**
+   * @generated from enum value: MODEL_SOURCE_NYC_3D = 2;
+   */
+  NYC_3D = 2,
+
+  /**
+   * @generated from enum value: MODEL_SOURCE_PLATEAU = 3;
+   */
+  PLATEAU = 3,
+
+  /**
+   * @generated from enum value: MODEL_SOURCE_OVERTURE_PARTS = 4;
+   */
+  OVERTURE_PARTS = 4,
+
+  /**
+   * @generated from enum value: MODEL_SOURCE_MANUAL = 5;
+   */
+  MANUAL = 5,
+}
+
+/**
+ * Describes the enum citypack.ModelSource.
+ */
+export const ModelSourceSchema: GenEnum<ModelSource> = /*@__PURE__*/
+  enumDesc(file_citypack, 6);
+
+/**
+ * Surface role of a model triangle; colours from design/tokens.json color.model.<role>
+ * (wall = the city's `landmark` colour).
+ *
+ * @generated from enum citypack.ModelRole
+ */
+export enum ModelRole {
+  /**
+   * @generated from enum value: ROLE_WALL = 0;
+   */
+  ROLE_WALL = 0,
+
+  /**
+   * @generated from enum value: ROLE_ROOF = 1;
+   */
+  ROLE_ROOF = 1,
+
+  /**
+   * @generated from enum value: ROLE_COPPER = 2;
+   */
+  ROLE_COPPER = 2,
+
+  /**
+   * @generated from enum value: ROLE_STONE = 3;
+   */
+  ROLE_STONE = 3,
+
+  /**
+   * @generated from enum value: ROLE_GLASS = 4;
+   */
+  ROLE_GLASS = 4,
+
+  /**
+   * @generated from enum value: ROLE_GOLD = 5;
+   */
+  ROLE_GOLD = 5,
+}
+
+/**
+ * Describes the enum citypack.ModelRole.
+ */
+export const ModelRoleSchema: GenEnum<ModelRole> = /*@__PURE__*/
+  enumDesc(file_citypack, 7);
 

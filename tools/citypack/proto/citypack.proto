@@ -38,6 +38,8 @@ message Manifest {
   repeated ChunkRef lods = 22;     // lod/{x}_{y}.pb; x, y = floor(chunk x, y / lod_chunks)
   uint32 lod_chunks = 23;          // chunks per lod tile edge (4)
   uint32 lod_grid_m = 24;          // Lod.terrain step (32 → 33 × 33 per tile)
+  // Landmark models (specs/models.md). 0 or missing = no models.pb: landmarks stay footprints.
+  uint32 models_version = 25;
 }
 
 message Rect {
@@ -289,4 +291,68 @@ message TramEdge {
 message TramStop {
   uint32 edge = 1;
   float s_m = 2;  // distance from the edge's `from` end along its polyline
+}
+
+// models.pb (specs/models.md): shapes of hero landmarks. Additive: a pack without it still works,
+// collisions stay with the layer-0 footprints in the chunks. Heights are real metres (the client
+// applies the building display height); z is never exaggerated inside a part.
+message Models {
+  repeated Model models = 1;
+}
+
+enum ModelSource {
+  MODEL_SOURCE_UNKNOWN = 0;
+  MODEL_SOURCE_IPR_PRAHA_3D = 1;   // "data base © IPR Praha", CC BY 4.0
+  MODEL_SOURCE_NYC_3D = 2;
+  MODEL_SOURCE_PLATEAU = 3;
+  MODEL_SOURCE_OVERTURE_PARTS = 4;
+  MODEL_SOURCE_MANUAL = 5;
+}
+
+// Surface role of a model triangle; colours from design/tokens.json color.model.<role>
+// (wall = the city's `landmark` colour).
+enum ModelRole {
+  ROLE_WALL = 0;
+  ROLE_ROOF = 1;
+  ROLE_COPPER = 2;
+  ROLE_STONE = 3;
+  ROLE_GLASS = 4;
+  ROLE_GOLD = 5;
+}
+
+message Model {
+  string landmark_id = 1;          // Landmarks.items[].id
+  ModelSource source = 2;
+  repeated ModelPart parts = 3;
+  repeated BuildingRef replaces = 4;  // pack buildings hidden while the model is drawn (≥ 60 % covered)
+  repeated PlanPoly roof_plan = 5;    // top-down roof plan
+  uint32 tris = 6;                 // triangles over all parts
+}
+
+// One source building standing on the terrain on its own (specs/models.md: parts).
+message ModelPart {
+  sint32 anchor_x = 1;             // dm, footprint centroid
+  sint32 anchor_y = 2;
+  sint32 base_z_dm = 3;            // game height of the foot: lowest terrain under the footprint (as Building)
+  repeated sint32 positions = 4;   // x, y, z per vertex: dm from the anchor, z real dm above the foot
+  repeated uint32 triangles = 5;   // counter-clockwise seen from outside
+  bytes roles = 6;                 // one ModelRole per triangle
+  string source_id = 7;            // id of the source building (gml:id), for models.yaml overrides
+  repeated uint32 foot = 8;        // vertices on the source ground (wall bottoms), for validate
+}
+
+message BuildingRef {
+  sint32 chunk_x = 1;
+  sint32 chunk_y = 2;
+  uint32 index = 3;                // index into Chunk.buildings
+}
+
+// A roof-plan polygon: rings like Building, pretriangulated, drawn as a prism from base_z to height_m.
+message PlanPoly {
+  repeated sint32 points = 1;      // dm, absolute
+  repeated uint32 ring_ends = 2;   // ring 0 outer (CCW), rest holes (CW)
+  repeated uint32 triangles = 3;
+  float height_m = 4;              // real metres above the part foot (highest roof point of the polygon)
+  uint32 shade = 5;                // 0 dark … 3 light, by slope and aspect to the fixed light
+  sint32 base_z_dm = 6;            // the part's base_z_dm
 }
