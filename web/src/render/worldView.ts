@@ -35,7 +35,7 @@ import { cityInks, cityPalette, dayPalette, nightPalette, rgba, type Palette, ty
 import {
   DEPTH_LAYER, DYNAMIC_LAYERS, RISOGRAPH_FRAGMENT, RISOGRAPH_UNIFORMS, WORLD_LAYER, cityFlag, mainCameraMask, risographOn, risographUniforms,
 } from './risograph';
-import { facadeTexture } from './textures';
+import { facadeTexture, modelRoofTexture, modelStoneTexture } from './textures';
 import { CAR_PART_DZ, carGlowTris, carShadowTris, carTris, carUndersideTris, parkedTris, polyTris, wheelPrims, wheelRects } from '../cars/carTris';
 import { carShape } from '../cars/shape';
 import type { ParkedCar } from '../cars/parked';
@@ -54,7 +54,7 @@ import { FarRing, SKY_R } from './farRing';
 import { OccluderFadePlugin, type FadeState } from './occluderFade';
 import type { PackSource } from '../world/citypack';
 import { fullModels, modelDistance } from '../world/models';
-import { modelTris, planBuildings, planTris } from './modelGeometry';
+import { modelTris, newModelTris, planBuildings, planTris } from './modelGeometry';
 
 /** Rotating follow camera state (port of world_engine camera.dart). */
 export class CameraRig {
@@ -178,7 +178,8 @@ interface ChunkMeshes {
 
 /** Meshes of one landmark model (specs/models.md), built with its home chunk. */
 interface ModelMeshes {
-  full: Mesh | null;
+  /** The full model: window walls, stone walls, roofs (specs/models.md v2 "Fasáda"). */
+  full: Mesh[];
   plan: Mesh | null;
   /** Cast shadows of the roof-plan prisms (style A), null without. */
   shadows: Mesh | null;
@@ -232,6 +233,10 @@ export class WorldView {
   private readonly buildingMat: StandardMaterial;
   private readonly shadowMat: StandardMaterial;
   private readonly textures: { day: Texture; night: Texture };
+  /** Landmark model stone walls and roofs (specs/models.md v2 "Fasáda"); window walls use buildingMat. */
+  private readonly modelStoneMat: StandardMaterial;
+  private readonly modelRoofMat: StandardMaterial;
+  private readonly modelTextures: { stone: { day: Texture; night: Texture }; roof: { day: Texture; night: Texture } };
   private readonly chunks = new Map<number, ChunkEntry>();
   private roadGeo: Map<number, RoadChunk>;
   private readonly roads = new Map<number, RoadMeshes>();
@@ -357,12 +362,19 @@ export class WorldView {
     this.textures = { day: facadeTexture(scene, false), night: facadeTexture(scene, true) };
     this.buildingMat.diffuseTexture = this.textures.day;
     this.buildingMat.emissiveTexture = this.textures.day;
+    this.modelStoneMat = this.unlit('model-stone');
+    this.modelRoofMat = this.unlit('model-roofs');
+    this.modelTextures = {
+      stone: { day: modelStoneTexture(scene, false), night: modelStoneTexture(scene, true) },
+      roof: { day: modelRoofTexture(scene, false), night: modelRoofTexture(scene, true) },
+    };
+    this.applyModelTextures(false);
     this.depthMat = this.unlit('world-depth');
     this.depthMat.disableColorWrite = true;
     // Bridge decks: the road look, own material for the occluder fade of the chase view.
     this.bridgeMat = this.unlit('bridges');
     // Occluding buildings and decks fade in the chase view, also in the risograph's depth pass (the car shows through).
-    for (const m of [this.buildingMat, this.bridgeMat, this.depthMat]) new OccluderFadePlugin(m, this.fade);
+    for (const m of [this.buildingMat, this.modelStoneMat, this.modelRoofMat, this.bridgeMat, this.depthMat]) new OccluderFadePlugin(m, this.fade);
     this.roadGeo = buildRoads(city, tuning, this.palette);
 
     this.tunnelShade = this.world(this.mesh('tunnel-shade', quadTris(4000, 0, rgba(tokens.colorWorldTunnelShade)), this.tunnelShadeMat, true, false), false);
@@ -488,6 +500,12 @@ export class WorldView {
     this.topCamera.layerMask = this.inTunnel ? DYNAMIC_LAYERS : DYNAMIC_LAYERS | DEPTH_LAYER;
   }
 
+  private applyModelTextures(night: boolean): void {
+    const pick = (t: { day: Texture; night: Texture }): Texture => (night ? t.night : t.day);
+    this.modelStoneMat.diffuseTexture = this.modelStoneMat.emissiveTexture = pick(this.modelTextures.stone);
+    this.modelRoofMat.diffuseTexture = this.modelRoofMat.emissiveTexture = pick(this.modelTextures.roof);
+  }
+
   private unlit(name: string): StandardMaterial {
     // Colours are baked into vertices like client F; lighting off, emissive white = vertex × texture.
     const m = new StandardMaterial(name, this.scene);
@@ -506,7 +524,7 @@ export class WorldView {
     const vd = new VertexData();
     vd.positions = new Float32Array(t.pos);
     vd.colors = new Float32Array(t.col);
-    if (mat === this.buildingMat) vd.uvs = new Float32Array(t.uv);
+    if (mat === this.buildingMat || mat === this.modelStoneMat || mat === this.modelRoofMat) vd.uvs = new Float32Array(t.uv);
     vd.indices = t.vertexCount > 65535 ? new Uint32Array(t.idx) : new Uint16Array(t.idx);
     vd.applyToMesh(m, false);
     m.material = mat;
@@ -542,6 +560,7 @@ export class WorldView {
     const tex = night ? this.textures.night : this.textures.day;
     this.buildingMat.diffuseTexture = tex;
     this.buildingMat.emissiveTexture = tex;
+    this.applyModelTextures(night);
     for (const c of this.chunks.values()) this.disposeChunk(c.meshes);
     this.disposeModels(null);
     for (const [k, c] of this.chunks) {
@@ -643,7 +662,7 @@ export class WorldView {
     if (!this.tuning.models.enabled) return;
     this.city.models.forEach((m, i) => {
       if (m.homeChunk !== key || this.modelMeshes.has(i)) return;
-      const full = new Tris();
+      const full = newModelTris();
       modelTris(m, this.palette, this.city.id, this.tuning, full, this.relief);
       const plan = new Tris();
       planTris(m, this.palette, this.city.id, this.tuning, plan, this.relief);
@@ -662,11 +681,13 @@ export class WorldView {
         shadows.alphaIndex = 0;
       }
       const mm: ModelMeshes = {
-        full: full.empty ? null : this.world(this.mesh(`model-${i}`, full, this.buildingMat), true),
+        full: ([[full.walls, this.buildingMat], [full.stone, this.modelStoneMat], [full.roofs, this.modelRoofMat]] as const)
+          .filter(([t]) => !t.empty)
+          .map(([t, mat], j) => this.world(this.mesh(`model-${i}-${j}`, t, mat), true)),
         plan: plan.empty ? null : this.world(this.mesh(`model-plan-${i}`, plan, this.buildingMat), true),
         shadows,
       };
-      for (const x of [mm.full, mm.plan, mm.shadows]) x?.setEnabled(false);
+      for (const x of [...mm.full, mm.plan, mm.shadows]) x?.setEnabled(false);
       this.modelMeshes.set(i, mm);
     });
   }
@@ -674,7 +695,7 @@ export class WorldView {
   private disposeModels(key: number | null): void {
     for (const [i, mm] of this.modelMeshes) {
       if (key !== null && this.city.models[i]!.homeChunk !== key) continue;
-      for (const x of [mm.full, mm.plan, mm.shadows]) x?.dispose();
+      for (const x of [...mm.full, mm.plan, mm.shadows]) x?.dispose();
       this.modelMeshes.delete(i);
       this.modelsFull.delete(i);
     }
@@ -699,7 +720,7 @@ export class WorldView {
       const full = !!mm && this.chaseOn && this.modelsFull.has(i);
       const plan = !!mm && !this.chaseOn;
       if (mm) {
-        mm.full?.setEnabled(full);
+        for (const x of mm.full) x.setEnabled(full);
         mm.plan?.setEnabled(plan);
         mm.shadows?.setEnabled(full || plan);
       }
@@ -1356,7 +1377,7 @@ export class WorldView {
       this.inTunnel = tunnel;
       this.tunnelShade.setEnabled(tunnel);
       for (const r of this.roads.values()) r.tunnel?.setEnabled(tunnel);
-      this.buildingMat.alpha = tunnel ? 90 / 255 : 1;
+      for (const m of [this.buildingMat, this.modelStoneMat, this.modelRoofMat]) m.alpha = tunnel ? 90 / 255 : 1;
       this.updateTopMask();
       if (!tunnel) this.tunnelGroups(false);
     }
