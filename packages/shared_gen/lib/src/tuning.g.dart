@@ -6379,7 +6379,10 @@ class TuningModels {
         copperSlender = r.d('copper_slender'),
         facadeBayM = r.d('facade_bay_m'),
         facadeStoreyM = r.d('facade_storey_m'),
-        roofSeamM = r.d('roof_seam_m');
+        roofSeamM = r.d('roof_seam_m'),
+        bridgeEndM = r.d('bridge_end_m'),
+        bridgeClearM = r.d('bridge_clear_m'),
+        bridgeBelowM = r.d('bridge_below_m');
 
   bool enabled;
 
@@ -6443,6 +6446,15 @@ class TuningModels {
   /// W: roof texture, distance between seams (stripes down the slope)
   double roofSeamM;
 
+  /// citypack (v3): bridge deck this close to either end sits on the terrain
+  double bridgeEndM;
+
+  /// validate (v3): no bridge face from a road surface up to this (game m)
+  double bridgeClearM;
+
+  /// validate (v3): … nor this close below it (depth fight with the road)
+  double bridgeBelowM;
+
   Map<String, Object> toJson() => {
         'enabled': enabled,
         'max_tris': maxTris,
@@ -6466,5 +6478,8 @@ class TuningModels {
         'facade_bay_m': facadeBayM,
         'facade_storey_m': facadeStoreyM,
         'roof_seam_m': roofSeamM,
+        'bridge_end_m': bridgeEndM,
+        'bridge_clear_m': bridgeClearM,
+        'bridge_below_m': bridgeBelowM,
       };
 }

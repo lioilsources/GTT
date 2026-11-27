@@ -735,9 +735,9 @@
   web: done
 
 - id: F-085
-  name: "Modely památek: model v šikmém pohledu (jen W), střešní plán shora, v2 materiály podle povrchů CityGML a procedurální fasáda (M7, pilot Pražský hrad)"
+  name: "Modely památek: model v šikmém pohledu (jen W), střešní plán shora, v2 materiály podle povrchů CityGML a procedurální fasáda, v3 mosty a pilotní pětice Prahy (M7: Hrad, Karlův most s věžemi, Týn, sv. Mikuláš, Národní divadlo)"
   level: P2
-  spec: specs/models.md@2
+  spec: specs/models.md@3
   lead: web
   flutter: todo
   web: done

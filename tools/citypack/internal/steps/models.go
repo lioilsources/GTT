@@ -59,7 +59,8 @@ func (c copperRule) slenderPart(top, height, footprint float64, installation boo
 
 // surfaceRole is the role of a polygon (specs/models.md v2 "Role"). Walls: `wall`, then
 // models.yaml `walls` by building id, then by part id. Roofs: `roof`, then `roles` by building id,
-// then copper for marked towers (IPR usage) and slender tall parts, then `roles` by part id.
+// then copper for marked towers (IPR usage) and slender tall parts (v3: `towers` by building id
+// instead of copper), then `roles` by part id.
 func surfaceRole(kind citygml.Kind, mc config.ModelConfig, buildingID, partID string, tower, slender bool) pb.ModelRole {
 	over := mc.Walls
 	role := pb.ModelRole_ROLE_WALL
@@ -71,6 +72,9 @@ func surfaceRole(kind citygml.Kind, mc config.ModelConfig, buildingID, partID st
 	}
 	if kind == citygml.Roof && (tower || slender) {
 		role = pb.ModelRole_ROLE_COPPER
+		if r, ok := roleNames[mc.Towers[buildingID]]; ok && buildingID != "" {
+			role = r
+		}
 	}
 	if r, ok := roleNames[over[partID]]; ok && partID != "" && partID != buildingID {
 		role = r
@@ -127,6 +131,24 @@ func Models(e *Env) error {
 		return fmt.Errorf("models: no source files in %s (see docs/citypack.md, IPR Praha 3D model)", filepath.Join(e.Work, "raw", "models"))
 	}
 	picked := make([][]*srcBuilding, len(ids))
+	// v3 "Mosty": bridges come from their own shapefile; the selection box grows over them so
+	// `include` reaches buildings at the far end (the towers of a bridge).
+	for i, id := range ids {
+		bs, err := e.readBridges(mf.Models[id], src.srs)
+		if err != nil {
+			return fmt.Errorf("models %s: %w", id, err)
+		}
+		for _, b := range bs {
+			for _, p := range b.Polys {
+				for _, v := range p.Rings[0] {
+					s := sels[i]
+					s.minX, s.maxX = math.Min(s.minX, v.X), math.Max(s.maxX, v.X)
+					s.minY, s.maxY = math.Min(s.minY, v.Y), math.Max(s.maxY, v.Y)
+				}
+			}
+		}
+		picked[i] = append(picked[i], bs...)
+	}
 	for _, f := range files {
 		bs, err := e.readSource(f, src.srs, sels)
 		if err != nil {
@@ -173,6 +195,17 @@ func Models(e *Env) error {
 			detail = math.Min(mt.MaxDetailM, detail+mt.DetailStepM)
 		}
 		m.LandmarkId, m.Source = id, src.src
+		// v3: the part nearest to the landmark point goes first (clients build the mesh with the
+		// chunk of the first part's anchor; a bridge's far tower must not wait for its chunk).
+		for _, l := range e.C.Landmarks {
+			if l.ID == id {
+				lp := e.Proj.Forward(l.Lon, l.Lat)
+				d := func(p *pb.ModelPart) float64 {
+					return geo.Pt{X: float64(p.AnchorX) / 10, Y: float64(p.AnchorY) / 10}.Dist(lp)
+				}
+				sort.SliceStable(m.Parts, func(i, j int) bool { return d(m.Parts[i]) < d(m.Parts[j]) })
+			}
+		}
 		total += int(m.Tris)
 		res.Models = append(res.Models, m)
 		slog.Info("models: built", "id", id, "buildings", len(m.Parts), "tris", m.Tris, "plan_polys", len(m.RoofPlan),
@@ -188,6 +221,7 @@ func Models(e *Env) error {
 }
 
 type srcBuilding struct {
+	Bridge bool // v3: a bridge of the IPR "Mosty 3D" set (buildBridgePart)
 	ID     string
 	Groups []citygml.Group
 	Polys  []citygml.Poly // local metres, z real
@@ -369,9 +403,12 @@ func (e *Env) fitAffine(srs string, x1, y1, x2, y2 float64) (affine, error) {
 			vals = append(vals, fmt.Sprintf("(%d, %.3f, %.3f)", len(src)-1, p.X, p.Y))
 		}
 	}
+	// Through WGS84 (v3): a direct transform to the city's spherical projection has no datum and
+	// PROJ falls back to a ballpark one that skips the S-JTSK → WGS84 shift (~117 m in Prague);
+	// the pack projects WGS84 longitude and latitude (e.Proj), so the source must too.
 	rows, err := duck.Query("models affine", "", fmt.Sprintf(
-		"SELECT i, ST_X(g) AS x, ST_Y(g) AS y FROM (SELECT i, ST_Transform(ST_Point(x, y), %s, %s) AS g FROM (VALUES %s) t(i, x, y)) ORDER BY i",
-		duck.Quote(srs), duck.Quote(e.C.City.ProjString()), strings.Join(vals, ", ")))
+		"SELECT i, ST_X(g) AS x, ST_Y(g) AS y FROM (SELECT i, ST_Transform(ST_Point(x, y), %s, 'EPSG:4326') AS g FROM (VALUES %s) t(i, x, y)) ORDER BY i",
+		duck.Quote(srs), strings.Join(vals, ", ")))
 	if err != nil {
 		return affine{}, err
 	}
@@ -380,9 +417,9 @@ func (e *Env) fitAffine(srs string, x1, y1, x2, y2 float64) (affine, error) {
 	}
 	dst := make([]geo.Pt, len(rows))
 	for k, r := range rows {
-		x, _ := strconv.ParseFloat(r[1], 64)
-		y, _ := strconv.ParseFloat(r[2], 64)
-		dst[k] = geo.Pt{X: x, Y: y}
+		lon, _ := strconv.ParseFloat(r[1], 64)
+		lat, _ := strconv.ParseFloat(r[2], 64)
+		dst[k] = e.Proj.Forward(lon, lat)
 	}
 	return fitAffinePts(src, dst)
 }
@@ -467,7 +504,13 @@ func buildModel(bs []*srcBuilding, mc config.ModelConfig, detail float64, mt con
 	m := &pb.Model{}
 	var plans [][]planSrc
 	for _, b := range bs {
-		part, plan := buildPart(b, mc, copperRule{mt.CopperMinTopM, mt.CopperSlender}, detail, mt.WeldM, tg, exag)
+		var part *pb.ModelPart
+		var plan []planSrc
+		if b.Bridge {
+			part, plan = buildBridgePart(b, mc, detail, mt.WeldM, mt.BridgeEndM, tg)
+		} else {
+			part, plan = buildPart(b, mc, copperRule{mt.CopperMinTopM, mt.CopperSlender}, detail, mt.WeldM, tg, exag)
+		}
 		if part == nil {
 			continue
 		}

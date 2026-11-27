@@ -23,3 +23,42 @@ models:
     # roof; its towers keep copper (IPR "vyznacna vez na strese"). The palaces stay plaster.
     roles: {_70215: slate}
     walls: {_70215: stone}
+  # Pilot (plan K4, gate K1 approved). Every one of them lies in the same sheet "Praha 7-1".
+  tyn_church:
+    # Church of Our Lady before Týn (_79878): stone walls, slate roof, the spires lead/slate
+    # (`towers`: IPR marks them "vyznacna vez na strese", copper would be wrong here).
+    select: {buffer_m: 0}
+    include: [_79878]
+    exclude: []
+    roles: {_79878: slate}
+    walls: {_79878: stone}
+    towers: {_79878: slate}
+  st_nicholas:
+    # St. Nicholas (Malá Strana): the church (_76469) and its belfry (_77005, a separate building).
+    # Plaster walls, copper dome and roofs (green patina, as the belfry).
+    select: {buffer_m: 0}
+    include: [_76469, _77005]
+    exclude: []
+    roles: {_76469: copper, _77005: copper}
+  national_theatre:
+    # The National Theatre (_89947): plaster walls, dark slate roof (the real one is dark blue
+    # with gold stars; the slate token is the nearest colour without a new role).
+    select: {buffer_m: 0}
+    include: [_89947]
+    exclude: []
+    roles: {_89947: slate}
+    towers: {_89947: slate}
+  bridge_tower:
+    # Charles Bridge with the Old Town Bridge Tower (_81184) and the Lesser Town Bridge Towers
+    # (_78361, _78667). The bridge itself is IPR "Mosty 3D" (shapefile mosty_shp, ID_BUD 1000484),
+    # specs/models.md v3 "Mosty": only a picture, the pedestrian zone and the collisions stay.
+    select: {buffer_m: 0}
+    include: [_81184, _78361, _78667]
+    exclude: []
+    bridges: {file: mosty_shp/mosty.shp, ids: [1000484]}
+    # Exception (plans/M7_PAMATKY.md): the bridge alone is ~3,800 triangles because its walls are
+    # drawn from both sides (the source rings are not oriented), the three towers add ~500.
+    max_tris: 6000
+    roles: {_81184: slate, _78361: slate, _78667: slate, "bridge:1000484": stone}
+    walls: {_81184: stone, _78361: stone, _78667: stone, "bridge:1000484": stone}
+    towers: {_81184: slate, _78361: slate}
