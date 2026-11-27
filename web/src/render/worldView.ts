@@ -26,7 +26,7 @@ import type { ChunkData } from '../world/chunk';
 import { chunkKey, type City } from '../world/model';
 import { cameraHeight, displayHeight, extrusionScale, fovX } from '../world/camera';
 import {
-  baseHeight, bollardPoints, bollardTris, buildRoads, buildingTris, castShadowTris, GROUND_ORDER, groundTris, Tris, VEHICLE_LIFT, Z, type RoadChunk,
+  baseHeight, bollardPoints, bollardTris, buildingShadow, buildRoads, buildingTris, castShadowTris, DRAPE_LIFT, GROUND_ORDER, groundTris, shadowLength, Tris, VEHICLE_LIFT, Z, type RoadChunk,
 } from './geometry';
 import { drapedGreenTris, drapedGroundTris, meshHeight, renderHeights, shadeFactor, terrainTris } from './terrainMesh';
 import { shadowScale, TERRAIN_SPEC } from '../drive/slope';
@@ -53,6 +53,8 @@ import { CHASE_BODY_M, CHASE_NEAR_M, chaseFov, chasePose, FOG_END_M, FOG_START_M
 import { FarRing, SKY_R } from './farRing';
 import { OccluderFadePlugin, type FadeState } from './occluderFade';
 import type { PackSource } from '../world/citypack';
+import { fullModels, modelDistance } from '../world/models';
+import { modelTris, planBuildings, planTris } from './modelGeometry';
 
 /** Rotating follow camera state (port of world_engine camera.dart). */
 export class CameraRig {
@@ -169,6 +171,16 @@ interface ChunkMeshes {
   flat: Mesh | null;
   buildings: Mesh | null;
   /** Building cast shadows (style A, specs/style.md v2), day only. */
+  shadows: Mesh | null;
+  /** Buildings a landmark model replaces (specs/models.md), per model index: hidden while it is drawn. */
+  replaced: Map<number, { buildings: Mesh | null; shadows: Mesh | null }>;
+}
+
+/** Meshes of one landmark model (specs/models.md), built with its home chunk. */
+interface ModelMeshes {
+  full: Mesh | null;
+  plan: Mesh | null;
+  /** Cast shadows of the roof-plan prisms (style A), null without. */
   shadows: Mesh | null;
 }
 
@@ -289,6 +301,11 @@ export class WorldView {
   /** Far ring, sky and fog of the chase view; idle from above. */
   readonly ring: FarRing;
   private readonly fade: FadeState = { on: false, eye: [0, 0, 0], car: [0, 0, 0] };
+  /** Landmark models (specs/models.md): meshes per model index, and the ones drawn in full. */
+  private readonly modelMeshes = new Map<number, ModelMeshes>();
+  private modelsFull = new Set<number>();
+  /** A model is drawn (full or plan): its replaced buildings are hidden. */
+  private readonly modelActive: boolean[] = [];
   private pose: ChasePose | null = null;
   private readonly viewProj = Matrix.Identity();
 
@@ -526,9 +543,11 @@ export class WorldView {
     this.buildingMat.diffuseTexture = tex;
     this.buildingMat.emissiveTexture = tex;
     for (const c of this.chunks.values()) this.disposeChunk(c.meshes);
+    this.disposeModels(null);
     for (const [k, c] of this.chunks) {
       c.meshes = this.chunkMeshes(c.data, k);
       c.near = true;
+      this.buildModels(k);
     }
     for (const r of this.roads.values()) this.disposeRoads(r);
     this.roads.clear();
@@ -569,8 +588,17 @@ export class WorldView {
         bankTris(c.nature, this.city.chunkM, this.palette, flat);
       }
     }
+    // Buildings a landmark model replaces go to their own meshes (specs/models.md).
+    const replacedSets: [number, Set<number>][] = [];
+    if (this.tuning.models.enabled) {
+      this.city.models.forEach((m, i) => {
+        const set = m.replaces.get(key);
+        if (set && set.size > 0) replacedSets.push([i, set]);
+      });
+    }
+    const kept = replacedSets.length === 0 ? c : { ...c, buildings: c.buildings.filter((_, j) => !replacedSets.some(([, set]) => set.has(j))) };
     const b = new Tris();
-    buildingTris(c, this.palette, this.tuning, b, this.relief);
+    buildingTris(kept, this.palette, this.tuning, b, this.relief);
     const sh = new Tris();
     // Cast shadows lie on the terrain: its height (own grid as fallback at the chunk's edge).
     const step = this.city.chunkM / (TERRAIN_N - 1);
@@ -578,7 +606,22 @@ export class WorldView {
     const zAt = relief && own
       ? (x: number, y: number): number => this.city.terrain.terrainAt(x, y) ?? meshHeight(own, (x - c.x * this.city.chunkM) / step, (y - c.y * this.city.chunkM) / step)
       : null;
-    if (cityFlag(this.tuning.style.castShadow, this.city.id, this.palette.night)) castShadowTris(c, this.palette, this.tuning, sh, zAt);
+    const castShadows = cityFlag(this.tuning.style.castShadow, this.city.id, this.palette.night);
+    if (castShadows) castShadowTris(kept, this.palette, this.tuning, sh, zAt);
+    const replaced = new Map<number, { buildings: Mesh | null; shadows: Mesh | null }>();
+    for (const [i, set] of replacedSets) {
+      const part = { ...c, buildings: c.buildings.filter((_, j) => set.has(j)) };
+      const rb = new Tris();
+      buildingTris(part, this.palette, this.tuning, rb, this.relief);
+      const rs = new Tris();
+      if (castShadows) castShadowTris(part, this.palette, this.tuning, rs, zAt);
+      let rsm: Mesh | null = null;
+      if (!rs.empty) {
+        rsm = this.world(this.mesh(`replaced-shadows-${key}-${i}`, rs, this.shadowMat, true), false);
+        rsm.alphaIndex = 0;
+      }
+      replaced.set(i, { buildings: rb.empty ? null : this.world(this.mesh(`replaced-${key}-${i}`, rb, this.buildingMat), true), shadows: rsm });
+    }
     let shadows: Mesh | null = null;
     if (!sh.empty) {
       shadows = this.world(this.mesh(`shadows-${key}`, sh, this.shadowMat, true), false);
@@ -589,7 +632,86 @@ export class WorldView {
       flat: flat.empty ? null : this.world(this.mesh(`ground-${key}`, flat, this.flatMat), false),
       buildings: b.empty ? null : this.world(this.mesh(`buildings-${key}`, b, this.buildingMat), true),
       shadows,
+      replaced,
     };
+  }
+
+  // ---------- landmark models (specs/models.md)
+
+  /** Builds the meshes of the models whose home chunk is [key]. */
+  private buildModels(key: number): void {
+    if (!this.tuning.models.enabled) return;
+    this.city.models.forEach((m, i) => {
+      if (m.homeChunk !== key || this.modelMeshes.has(i)) return;
+      const full = new Tris();
+      modelTris(m, this.palette, this.city.id, this.tuning, full, this.relief);
+      const plan = new Tris();
+      planTris(m, this.palette, this.city.id, this.tuning, plan, this.relief);
+      const sh = new Tris();
+      const pal = this.palette;
+      const sl = Math.hypot(pal.sunX, pal.sunY);
+      if (pal.castShadow && sl > 1e-6 && cityFlag(this.tuning.style.castShadow, this.city.id, pal.night)) {
+        const zAt = this.relief ? (x: number, y: number): number => this.city.terrain.terrainAt(x, y) ?? 0 : null;
+        for (const b of planBuildings(m, this.relief)) {
+          buildingShadow(b, shadowLength(b.height, this.tuning), -pal.sunX / sl, -pal.sunY / sl, Z.castShadow + (zAt ? DRAPE_LIFT + 0.3 : 0), pal.castShadow, sh, zAt);
+        }
+      }
+      let shadows: Mesh | null = null;
+      if (!sh.empty) {
+        shadows = this.world(this.mesh(`model-shadows-${i}`, sh, this.shadowMat, true), false);
+        shadows.alphaIndex = 0;
+      }
+      const mm: ModelMeshes = {
+        full: full.empty ? null : this.world(this.mesh(`model-${i}`, full, this.buildingMat), true),
+        plan: plan.empty ? null : this.world(this.mesh(`model-plan-${i}`, plan, this.buildingMat), true),
+        shadows,
+      };
+      for (const x of [mm.full, mm.plan, mm.shadows]) x?.setEnabled(false);
+      this.modelMeshes.set(i, mm);
+    });
+  }
+
+  private disposeModels(key: number | null): void {
+    for (const [i, mm] of this.modelMeshes) {
+      if (key !== null && this.city.models[i]!.homeChunk !== key) continue;
+      for (const x of [mm.full, mm.plan, mm.shadows]) x?.dispose();
+      this.modelMeshes.delete(i);
+      this.modelsFull.delete(i);
+    }
+  }
+
+  /**
+   * Model or footprints (specs/models.md): in the chase view the nearest models within near_m (with
+   * hysteresis) in full, from above the roof plan; the replaced buildings hide while a model is drawn.
+   */
+  private updateModels(): void {
+    const models = this.city.models;
+    if (models.length === 0) return;
+    const t = this.tuning.models, car = this.drive.car;
+    if (this.chaseOn && t.enabled) {
+      const dists = models.map((m) => modelDistance(m, car.x, car.y));
+      this.modelsFull = fullModels(dists, this.modelsFull, t.nearM, t.hysteresisM, t.maxFull);
+    } else {
+      this.modelsFull.clear();
+    }
+    for (let i = 0; i < models.length; i++) {
+      const mm = this.modelMeshes.get(i);
+      const full = !!mm && this.chaseOn && this.modelsFull.has(i);
+      const plan = !!mm && !this.chaseOn;
+      if (mm) {
+        mm.full?.setEnabled(full);
+        mm.plan?.setEnabled(plan);
+        mm.shadows?.setEnabled(full || plan);
+      }
+      this.modelActive[i] = full || plan;
+    }
+    for (const e of this.chunks.values()) {
+      for (const [i, r] of e.meshes.replaced) {
+        const show = e.near && !this.modelActive[i];
+        r.buildings?.setEnabled(show);
+        r.shadows?.setEnabled(show);
+      }
+    }
   }
 
   addChunk(c: ChunkData): void {
@@ -597,6 +719,7 @@ export class WorldView {
     if (this.chunks.has(key)) return;
     const bollards = bollardPoints(c, this.tuning.zones.bollardSpacingM);
     this.chunks.set(key, { data: c, meshes: this.chunkMeshes(c, key), bollards, near: true });
+    this.buildModels(key);
     this.ring.setChunk(c.x, c.y, true);
     if (bollards.length > 0) this.bollardsDirty = true;
   }
@@ -606,6 +729,7 @@ export class WorldView {
     const e = this.chunks.get(key);
     if (!e) return;
     this.disposeChunk(e.meshes);
+    this.disposeModels(key);
     this.chunks.delete(key);
     this.ring.setChunk(c.x, c.y, false);
     if (e.bollards.length > 0) this.bollardsDirty = true;
@@ -616,6 +740,10 @@ export class WorldView {
     m.flat?.dispose();
     m.buildings?.dispose();
     m.shadows?.dispose();
+    for (const r of m.replaced.values()) {
+      r.buildings?.dispose();
+      r.shadows?.dispose();
+    }
   }
 
   private disposeRoads(r: RoadMeshes): void {
@@ -1242,6 +1370,7 @@ export class WorldView {
     this.updateCar(car);
     this.updateCamera();
     this.updateNear();
+    this.updateModels();
     this.updateRoads();
     this.updateProps();
     this.updateBollards();
