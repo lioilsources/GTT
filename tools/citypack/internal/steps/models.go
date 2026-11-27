@@ -802,6 +802,7 @@ func roofPlan(src []planSrc, baseZ int32, simplify float64, coarse int) []*pb.Pl
 		var tops []planSrc
 		var keys []key
 		var rings [][]key
+		var ringPoly []int
 		for _, s := range src {
 			if bucket(s.shade) != shade {
 				continue
@@ -815,24 +816,16 @@ func roofPlan(src []planSrc, baseZ int32, simplify float64, coarse int) []*pb.Pl
 				}
 				keys = append(keys, kr...)
 				rings = append(rings, kr)
+				ringPoly = append(ringPoly, len(tops)-1)
 			}
 		}
 		if len(tops) == 0 {
 			continue
 		}
 		// Split edges at vertices lying on them (T-junctions), so shared borders cancel.
-		edges := map[[2]key]int{}
-		add := func(a, b key) {
-			if a == b {
-				return
-			}
-			if edges[[2]key{b, a}] > 0 {
-				edges[[2]key{b, a}]--
-				return
-			}
-			edges[[2]key{a, b}]++
-		}
-		for _, kr := range rings {
+		polyEdges := make([][][2]key, len(tops))
+		for ri, kr := range rings {
+			pe := &polyEdges[ringPoly[ri]]
 			for i := range kr {
 				a, b := kr[i], kr[(i+1)%len(kr)]
 				var mids []key
@@ -855,10 +848,6 @@ func roofPlan(src []planSrc, baseZ int32, simplify float64, coarse int) []*pb.Pl
 						mids, ts = append(mids, k), append(ts, t)
 					}
 				}
-				if len(mids) == 0 {
-					add(a, b)
-					continue
-				}
 				ord := make([]int, len(mids))
 				for j := range ord {
 					ord[j] = j
@@ -867,115 +856,173 @@ func roofPlan(src []planSrc, baseZ int32, simplify float64, coarse int) []*pb.Pl
 				prev := a
 				for _, j := range ord {
 					if mids[j] != prev {
-						add(prev, mids[j])
+						*pe = append(*pe, [2]key{prev, mids[j]})
 						prev = mids[j]
 					}
 				}
-				add(prev, b)
-			}
-		}
-		next := map[key][]key{}
-		var starts []key
-		for e, c := range edges {
-			for ; c > 0; c-- {
-				next[e[0]] = append(next[e[0]], e[1])
-				starts = append(starts, e[0])
-			}
-		}
-		sort.Slice(starts, func(i, j int) bool {
-			if starts[i][0] != starts[j][0] {
-				return starts[i][0] < starts[j][0]
-			}
-			return starts[i][1] < starts[j][1]
-		})
-		for k := range next {
-			nk := next[k]
-			sort.Slice(nk, func(i, j int) bool {
-				if nk[i][0] != nk[j][0] {
-					return nk[i][0] < nk[j][0]
+				if prev != b {
+					*pe = append(*pe, [2]key{prev, b})
 				}
-				return nk[i][1] < nk[j][1]
+			}
+		}
+		// Only polygons sharing an edge merge (overlapping roofs at other heights stay apart).
+		parent := make([]int, len(tops))
+		for i := range parent {
+			parent[i] = i
+		}
+		find := func(x int) int {
+			for parent[x] != x {
+				parent[x] = parent[parent[x]]
+				x = parent[x]
+			}
+			return x
+		}
+		seenEdge := map[[2]key]int{}
+		for pi, pe := range polyEdges {
+			for _, e := range pe {
+				u := e
+				if u[1][0] < u[0][0] || (u[1][0] == u[0][0] && u[1][1] < u[0][1]) {
+					u = [2]key{u[1], u[0]}
+				}
+				if o, ok := seenEdge[u]; ok {
+					if ra, rb := find(o), find(pi); ra != rb {
+						parent[max(ra, rb)] = min(ra, rb)
+					}
+				} else {
+					seenEdge[u] = pi
+				}
+			}
+		}
+		var comps [][]int
+		compOf := map[int]int{}
+		for pi := range tops {
+			r := find(pi)
+			ci, ok := compOf[r]
+			if !ok {
+				ci = len(comps)
+				compOf[r] = ci
+				comps = append(comps, nil)
+			}
+			comps[ci] = append(comps[ci], pi)
+		}
+		allTops := tops
+		for _, comp := range comps {
+			edges := map[[2]key]int{}
+			var tops []planSrc
+			for _, pi := range comp {
+				tops = append(tops, allTops[pi])
+				for _, e := range polyEdges[pi] {
+					a, b := e[0], e[1]
+					if edges[[2]key{b, a}] > 0 {
+						edges[[2]key{b, a}]--
+						continue
+					}
+					edges[[2]key{a, b}]++
+				}
+			}
+			next := map[key][]key{}
+			var starts []key
+			for e, c := range edges {
+				for ; c > 0; c-- {
+					next[e[0]] = append(next[e[0]], e[1])
+					starts = append(starts, e[0])
+				}
+			}
+			sort.Slice(starts, func(i, j int) bool {
+				if starts[i][0] != starts[j][0] {
+					return starts[i][0] < starts[j][0]
+				}
+				return starts[i][1] < starts[j][1]
 			})
-		}
-		var outers, holes [][]geo.Pt
-		for _, s := range starts {
-			if len(next[s]) == 0 {
-				continue
+			for k := range next {
+				nk := next[k]
+				sort.Slice(nk, func(i, j int) bool {
+					if nk[i][0] != nk[j][0] {
+						return nk[i][0] < nk[j][0]
+					}
+					return nk[i][1] < nk[j][1]
+				})
 			}
-			var ring []geo.Pt
-			cur := s
-			for len(next[cur]) > 0 && len(ring) < 100000 {
-				ring = append(ring, geo.Pt{X: float64(cur[0]) / 10, Y: float64(cur[1]) / 10})
-				nx := next[cur][0]
-				next[cur] = next[cur][1:]
-				cur = nx
-				if cur == s {
-					break
+			var outers, holes [][]geo.Pt
+			for _, s := range starts {
+				if len(next[s]) == 0 {
+					continue
+				}
+				var ring []geo.Pt
+				cur := s
+				for len(next[cur]) > 0 && len(ring) < 100000 {
+					ring = append(ring, geo.Pt{X: float64(cur[0]) / 10, Y: float64(cur[1]) / 10})
+					nx := next[cur][0]
+					next[cur] = next[cur][1:]
+					cur = nx
+					if cur == s {
+						break
+					}
+				}
+				ring = simplifyRing(ring, simplify)
+				if len(ring) < 3 {
+					continue
+				}
+				a := geo.SignedArea(ring)
+				switch {
+				case a > 0.5:
+					outers = append(outers, ring)
+				case a < -0.5:
+					holes = append(holes, ring)
 				}
 			}
-			ring = simplifyRing(ring, simplify)
-			if len(ring) < 3 {
-				continue
+			owner := make([][][]geo.Pt, len(outers))
+			for _, h := range holes {
+				best, bestA := -1, math.Inf(1)
+				for i, o := range outers {
+					if a := geo.SignedArea(o); a < bestA && geo.PointInRing(h[0], o) {
+						best, bestA = i, a
+					}
+				}
+				if best >= 0 {
+					owner[best] = append(owner[best], h)
+				}
 			}
-			a := geo.SignedArea(ring)
-			switch {
-			case a > 0.5:
-				outers = append(outers, ring)
-			case a < -0.5:
-				holes = append(holes, ring)
-			}
-		}
-		owner := make([][][]geo.Pt, len(outers))
-		for _, h := range holes {
-			best, bestA := -1, math.Inf(1)
 			for i, o := range outers {
-				if a := geo.SignedArea(o); a < bestA && geo.PointInRing(h[0], o) {
-					best, bestA = i, a
+				rings := append([][]geo.Pt{o}, owner[i]...)
+				idx, err := geo.Triangulate(rings)
+				if err != nil || len(idx) == 0 {
+					continue
 				}
-			}
-			if best >= 0 {
-				owner[best] = append(owner[best], h)
-			}
-		}
-		for i, o := range outers {
-			rings := append([][]geo.Pt{o}, owner[i]...)
-			idx, err := geo.Triangulate(rings)
-			if err != nil || len(idx) == 0 {
-				continue
-			}
-			pp := &pb.PlanPoly{Shade: shade, BaseZDm: baseZ}
-			if coarse > 0 {
-				var area [4]float64
+				pp := &pb.PlanPoly{Shade: shade, BaseZDm: baseZ}
+				if coarse > 0 {
+					var area [4]float64
+					for _, t := range tops {
+						if geo.PointInRing(centroid(t.rings[0]), o) {
+							area[t.shade] += math.Abs(geo.SignedArea(t.rings[0]))
+						}
+					}
+					for k := range area {
+						if area[k] > area[pp.Shade] {
+							pp.Shade = uint32(k)
+						}
+					}
+				}
+				n := 0
+				for _, r := range rings {
+					for _, p := range r {
+						pp.Points = append(pp.Points, geo.DM(p.X), geo.DM(p.Y))
+					}
+					n += len(r)
+					pp.RingEnds = append(pp.RingEnds, uint32(n))
+				}
+				for _, k := range idx {
+					pp.Triangles = append(pp.Triangles, uint32(k))
+				}
+				top := 0.0
 				for _, t := range tops {
 					if geo.PointInRing(centroid(t.rings[0]), o) {
-						area[t.shade] += math.Abs(geo.SignedArea(t.rings[0]))
+						top = math.Max(top, t.top)
 					}
 				}
-				for k := range area {
-					if area[k] > area[pp.Shade] {
-						pp.Shade = uint32(k)
-					}
-				}
+				pp.HeightM = float32(math.Round(top*10) / 10)
+				out = append(out, pp)
 			}
-			n := 0
-			for _, r := range rings {
-				for _, p := range r {
-					pp.Points = append(pp.Points, geo.DM(p.X), geo.DM(p.Y))
-				}
-				n += len(r)
-				pp.RingEnds = append(pp.RingEnds, uint32(n))
-			}
-			for _, k := range idx {
-				pp.Triangles = append(pp.Triangles, uint32(k))
-			}
-			top := 0.0
-			for _, t := range tops {
-				if geo.PointInRing(centroid(t.rings[0]), o) {
-					top = math.Max(top, t.top)
-				}
-			}
-			pp.HeightM = float32(math.Round(top*10) / 10)
-			out = append(out, pp)
 		}
 	}
 	return out
@@ -1017,43 +1064,37 @@ func dp(pts []geo.Pt, tol float64) []geo.Pt {
 	return append(l[:len(l)-1], r...)
 }
 
-// modelReplaces lists the pack buildings a model covers at least `share` of (sampled on a 1 m grid).
-func modelReplaces(m *pb.Model, chunks map[[2]int]*pb.Chunk, share float64) []*pb.BuildingRef {
-	type poly struct {
-		rings          [][]geo.Pt
-		x1, y1, x2, y2 float64
-	}
-	var polys []poly
+// modelReplaces lists the pack buildings the model covers at least `share` of (its triangles
+// projected from above, sampled on a grid of ≤ 1 m), and every building of the landmark itself
+// (`landmark` 1-based, 0 = none).
+func modelReplaces(m *pb.Model, chunks map[[2]int]*pb.Chunk, share float64, landmark uint32) []*pb.BuildingRef {
+	const cell = 8.0
+	type tri struct{ a, b, c geo.Pt }
+	grid := map[[2]int][]tri{}
 	mx1, my1, mx2, my2 := math.Inf(1), math.Inf(1), math.Inf(-1), math.Inf(-1)
-	for _, pp := range m.RoofPlan {
-		p := poly{x1: math.Inf(1), y1: math.Inf(1), x2: math.Inf(-1), y2: math.Inf(-1)}
-		start := 0
-		for _, end := range pp.RingEnds {
-			var r []geo.Pt
-			for i := start; i < int(end); i++ {
-				q := geo.Pt{X: float64(pp.Points[2*i]) / 10, Y: float64(pp.Points[2*i+1]) / 10}
-				r = append(r, q)
-				p.x1, p.y1, p.x2, p.y2 = math.Min(p.x1, q.X), math.Min(p.y1, q.Y), math.Max(p.x2, q.X), math.Max(p.y2, q.Y)
-			}
-			p.rings = append(p.rings, r)
-			start = int(end)
+	for _, part := range m.Parts {
+		pt := func(i uint32) geo.Pt {
+			return geo.Pt{X: float64(part.AnchorX+part.Positions[3*i]) / 10, Y: float64(part.AnchorY+part.Positions[3*i+1]) / 10}
 		}
-		polys = append(polys, p)
-		mx1, my1, mx2, my2 = math.Min(mx1, p.x1), math.Min(my1, p.y1), math.Max(mx2, p.x2), math.Max(my2, p.y2)
-	}
-	covered := func(q geo.Pt) bool {
-		for _, p := range polys {
-			if q.X < p.x1 || q.X > p.x2 || q.Y < p.y1 || q.Y > p.y2 || !geo.PointInRing(q, p.rings[0]) {
-				continue
+		for k := 0; k+2 < len(part.Triangles); k += 3 {
+			t := tri{pt(part.Triangles[k]), pt(part.Triangles[k+1]), pt(part.Triangles[k+2])}
+			if math.Abs(t.b.Sub(t.a).Cross(t.c.Sub(t.a))) < 0.02 {
+				continue // a wall seen from above
 			}
-			hole := false
-			for _, h := range p.rings[1:] {
-				if geo.PointInRing(q, h) {
-					hole = true
-					break
+			x1, y1 := math.Min(t.a.X, math.Min(t.b.X, t.c.X)), math.Min(t.a.Y, math.Min(t.b.Y, t.c.Y))
+			x2, y2 := math.Max(t.a.X, math.Max(t.b.X, t.c.X)), math.Max(t.a.Y, math.Max(t.b.Y, t.c.Y))
+			mx1, my1, mx2, my2 = math.Min(mx1, x1), math.Min(my1, y1), math.Max(mx2, x2), math.Max(my2, y2)
+			for gx := int(math.Floor(x1 / cell)); gx <= int(math.Floor(x2/cell)); gx++ {
+				for gy := int(math.Floor(y1 / cell)); gy <= int(math.Floor(y2/cell)); gy++ {
+					grid[[2]int{gx, gy}] = append(grid[[2]int{gx, gy}], t)
 				}
 			}
-			if !hole {
+		}
+	}
+	covered := func(q geo.Pt) bool {
+		for _, t := range grid[[2]int{int(math.Floor(q.X / cell)), int(math.Floor(q.Y / cell))}] {
+			d1, d2, d3 := t.b.Sub(t.a).Cross(q.Sub(t.a)), t.c.Sub(t.b).Cross(q.Sub(t.b)), t.a.Sub(t.c).Cross(q.Sub(t.c))
+			if (d1 >= 0 && d2 >= 0 && d3 >= 0) || (d1 <= 0 && d2 <= 0 && d3 <= 0) {
 				return true
 			}
 		}
@@ -1081,6 +1122,10 @@ func modelReplaces(m *pb.Model, chunks map[[2]int]*pb.Chunk, share float64) []*p
 			for i := range ring {
 				ring[i] = geo.Pt{X: float64(b.Rings[2*i]) / 10, Y: float64(b.Rings[2*i+1]) / 10}
 				x1, y1, x2, y2 = math.Min(x1, ring[i].X), math.Min(y1, ring[i].Y), math.Max(x2, ring[i].X), math.Max(y2, ring[i].Y)
+			}
+			if landmark > 0 && b.Landmark == landmark {
+				out = append(out, &pb.BuildingRef{ChunkX: int32(k[0]), ChunkY: int32(k[1]), Index: uint32(bi)})
+				continue
 			}
 			if x2 < mx1 || x1 > mx2 || y2 < my1 || y1 > my2 {
 				continue

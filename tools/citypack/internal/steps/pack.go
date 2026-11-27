@@ -615,7 +615,13 @@ func (e *Env) packModels(chunks map[[2]int]*pb.Chunk, man *pb.Manifest) (int, er
 	}
 	seen := map[string]bool{}
 	for _, m := range ms.Models {
-		m.Replaces = modelReplaces(m, chunks, e.C.Tuning.Models.ReplaceShare)
+		lm := uint32(0)
+		for i, l := range e.C.Landmarks {
+			if l.ID == m.LandmarkId {
+				lm = uint32(i + 1)
+			}
+		}
+		m.Replaces = modelReplaces(m, chunks, e.C.Tuning.Models.ReplaceShare, lm)
 		if a := ModelAttribution(m.Source); a != "" && !seen[a] {
 			seen[a] = true
 			man.Attribution = append(man.Attribution, a)

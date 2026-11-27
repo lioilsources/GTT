@@ -17,8 +17,9 @@ uložení se nemění, auto dál naráží do půdorysů vrstvy 0 v chuncích. �
   `anchor_x/y` (dm, těžiště půdorysu), `base_z_dm` (herní výška paty), `positions` (x, y, z po
   vrcholech; x, y dm od kotvy, z dm nad patou), `triangles` (CCW zvenku), `roles` (bajt `ModelRole`
   na trojúhelník), `foot` (vrcholy na zemi zdroje), `source_id`.
-- `replaces[]` = budovy balíčku (`chunk_x`, `chunk_y`, `index` do `Chunk.buildings`), které model
-  zakrývá aspoň z `models.replace_share`.
+- `replaces[]` = budovy balíčku (`chunk_x`, `chunk_y`, `index` do `Chunk.buildings`), které
+  trojúhelníky modelu při pohledu shora zakrývají aspoň z `models.replace_share` (vzorky po ≤ 1 m),
+  a vždy všechny budovy samotné památky (`Building.landmark`).
 - `roof_plan[]` = `PlanPoly`: prstence jako `Building` (`points` dm absolutně, `ring_ends`, vnější
   CCW, díry CW), `triangles`, `height_m` (nejvyšší bod střechy nad patou), `shade` 0–3,
   `base_z_dm` části.
@@ -35,8 +36,9 @@ vrchol části o (`exaggeration` − 1) × výšku roviny proložené zemí zdro
 budov (`specs/terrain.md` „Jednotná zobrazená výška“).
 
 **Role a barvy.** `wall` = barva `landmark` palety města; ostatní `color.model.<day|night>.<role>`
-(`roof`, `copper`, `stone`, `glass`, `gold`), přepis `color.city.<id>.model<Role>`. Světlo jako u
-budov: `ambient + (1 − ambient) × max(0, n · slunce)`. Pipeline: střecha `roof`, stěna `wall`,
+(`roof`, `copper`, `stone`, `glass`, `gold`), přepis `color.city.<id>.model<Role>` (jen den).
+Světlo po trojúhelnících jako u budov: svislá plocha `ambient + (1 − ambient) × max(0, n · slunce)`,
+vodorovná `roofLight`, mezi nimi podle sklonu (váha |n_z|). Pipeline: střecha `roof`, stěna `wall`,
 střecha části „vyznacna vez na strese“ (IPR) `copper`, přepis `models.yaml` `roles` podle id budovy
 nebo části zdroje.
 
@@ -65,8 +67,8 @@ jako hranol od `base_z` do zobrazené výšky `height_m`, střecha v barvě `roo
    skupiny (část, instalace) menší než `min_detail_m` pryč.
 4. Rozpočet: nad `max_tris` (`models.yaml` výjimka do `max_tris_exception`) zvedá `min_detail_m`
    po `detail_step_m` do `max_detail_m`, pak chyba s počtem navíc.
-5. Střešní plán: střechy s normálou nahoru, sloučené po části a odstínu (sdílené hrany se zruší,
-   T-spoje se rozdělí), zjednodušené na `plan_simplify_m`; přes `roof_plan_max_polys` hrubší
+5. Střešní plán: střechy s normálou nahoru, sloučené po části a odstínu; slučují se jen polygony se
+   společnou hranou (ta se zruší, T-spoje se rozdělí), překryvy v jiné výšce zůstanou zvlášť; zjednodušené na `plan_simplify_m`; přes `roof_plan_max_polys` hrubší
    odstíny (páry, pak jeden), pak největší polygony.
 6. Výstup `models.pb`, náhled `preview/models/<id>.png` (plán shora, šikmo z jihozápadu).
 
