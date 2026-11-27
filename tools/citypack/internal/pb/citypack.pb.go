@@ -375,6 +375,124 @@ func (LodKind) EnumDescriptor() ([]byte, []int) {
 	return file_citypack_proto_rawDescGZIP(), []int{5}
 }
 
+type ModelSource int32
+
+const (
+	ModelSource_MODEL_SOURCE_UNKNOWN        ModelSource = 0
+	ModelSource_MODEL_SOURCE_IPR_PRAHA_3D   ModelSource = 1 // "data base © IPR Praha", CC BY 4.0
+	ModelSource_MODEL_SOURCE_NYC_3D         ModelSource = 2
+	ModelSource_MODEL_SOURCE_PLATEAU        ModelSource = 3
+	ModelSource_MODEL_SOURCE_OVERTURE_PARTS ModelSource = 4
+	ModelSource_MODEL_SOURCE_MANUAL         ModelSource = 5
+)
+
+// Enum value maps for ModelSource.
+var (
+	ModelSource_name = map[int32]string{
+		0: "MODEL_SOURCE_UNKNOWN",
+		1: "MODEL_SOURCE_IPR_PRAHA_3D",
+		2: "MODEL_SOURCE_NYC_3D",
+		3: "MODEL_SOURCE_PLATEAU",
+		4: "MODEL_SOURCE_OVERTURE_PARTS",
+		5: "MODEL_SOURCE_MANUAL",
+	}
+	ModelSource_value = map[string]int32{
+		"MODEL_SOURCE_UNKNOWN":        0,
+		"MODEL_SOURCE_IPR_PRAHA_3D":   1,
+		"MODEL_SOURCE_NYC_3D":         2,
+		"MODEL_SOURCE_PLATEAU":        3,
+		"MODEL_SOURCE_OVERTURE_PARTS": 4,
+		"MODEL_SOURCE_MANUAL":         5,
+	}
+)
+
+func (x ModelSource) Enum() *ModelSource {
+	p := new(ModelSource)
+	*p = x
+	return p
+}
+
+func (x ModelSource) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (ModelSource) Descriptor() protoreflect.EnumDescriptor {
+	return file_citypack_proto_enumTypes[6].Descriptor()
+}
+
+func (ModelSource) Type() protoreflect.EnumType {
+	return &file_citypack_proto_enumTypes[6]
+}
+
+func (x ModelSource) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use ModelSource.Descriptor instead.
+func (ModelSource) EnumDescriptor() ([]byte, []int) {
+	return file_citypack_proto_rawDescGZIP(), []int{6}
+}
+
+// Surface role of a model triangle; colours from design/tokens.json color.model.<role>
+// (wall = the city's `landmark` colour).
+type ModelRole int32
+
+const (
+	ModelRole_ROLE_WALL   ModelRole = 0
+	ModelRole_ROLE_ROOF   ModelRole = 1
+	ModelRole_ROLE_COPPER ModelRole = 2
+	ModelRole_ROLE_STONE  ModelRole = 3
+	ModelRole_ROLE_GLASS  ModelRole = 4
+	ModelRole_ROLE_GOLD   ModelRole = 5
+)
+
+// Enum value maps for ModelRole.
+var (
+	ModelRole_name = map[int32]string{
+		0: "ROLE_WALL",
+		1: "ROLE_ROOF",
+		2: "ROLE_COPPER",
+		3: "ROLE_STONE",
+		4: "ROLE_GLASS",
+		5: "ROLE_GOLD",
+	}
+	ModelRole_value = map[string]int32{
+		"ROLE_WALL":   0,
+		"ROLE_ROOF":   1,
+		"ROLE_COPPER": 2,
+		"ROLE_STONE":  3,
+		"ROLE_GLASS":  4,
+		"ROLE_GOLD":   5,
+	}
+)
+
+func (x ModelRole) Enum() *ModelRole {
+	p := new(ModelRole)
+	*p = x
+	return p
+}
+
+func (x ModelRole) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (ModelRole) Descriptor() protoreflect.EnumDescriptor {
+	return file_citypack_proto_enumTypes[7].Descriptor()
+}
+
+func (ModelRole) Type() protoreflect.EnumType {
+	return &file_citypack_proto_enumTypes[7]
+}
+
+func (x ModelRole) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use ModelRole.Descriptor instead.
+func (ModelRole) EnumDescriptor() ([]byte, []int) {
+	return file_citypack_proto_rawDescGZIP(), []int{7}
+}
+
 // manifest.pb
 type Manifest struct {
 	state           protoimpl.MessageState `protogen:"open.v1"`
@@ -404,6 +522,8 @@ type Manifest struct {
 	Lods          []*ChunkRef `protobuf:"bytes,22,rep,name=lods,proto3" json:"lods,omitempty"`                             // lod/{x}_{y}.pb; x, y = floor(chunk x, y / lod_chunks)
 	LodChunks     uint32      `protobuf:"varint,23,opt,name=lod_chunks,json=lodChunks,proto3" json:"lod_chunks,omitempty"` // chunks per lod tile edge (4)
 	LodGridM      uint32      `protobuf:"varint,24,opt,name=lod_grid_m,json=lodGridM,proto3" json:"lod_grid_m,omitempty"`  // Lod.terrain step (32 → 33 × 33 per tile)
+	// Landmark models (specs/models.md). 0 or missing = no models.pb: landmarks stay footprints.
+	ModelsVersion uint32 `protobuf:"varint,25,opt,name=models_version,json=modelsVersion,proto3" json:"models_version,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -602,6 +722,13 @@ func (x *Manifest) GetLodChunks() uint32 {
 func (x *Manifest) GetLodGridM() uint32 {
 	if x != nil {
 		return x.LodGridM
+	}
+	return 0
+}
+
+func (x *Manifest) GetModelsVersion() uint32 {
+	if x != nil {
+		return x.ModelsVersion
 	}
 	return 0
 }
@@ -2301,11 +2428,388 @@ func (x *TramStop) GetSM() float32 {
 	return 0
 }
 
+// models.pb (specs/models.md): shapes of hero landmarks. Additive: a pack without it still works,
+// collisions stay with the layer-0 footprints in the chunks. Heights are real metres (the client
+// applies the building display height); z is never exaggerated inside a part.
+type Models struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Models        []*Model               `protobuf:"bytes,1,rep,name=models,proto3" json:"models,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *Models) Reset() {
+	*x = Models{}
+	mi := &file_citypack_proto_msgTypes[22]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Models) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Models) ProtoMessage() {}
+
+func (x *Models) ProtoReflect() protoreflect.Message {
+	mi := &file_citypack_proto_msgTypes[22]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Models.ProtoReflect.Descriptor instead.
+func (*Models) Descriptor() ([]byte, []int) {
+	return file_citypack_proto_rawDescGZIP(), []int{22}
+}
+
+func (x *Models) GetModels() []*Model {
+	if x != nil {
+		return x.Models
+	}
+	return nil
+}
+
+type Model struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	LandmarkId    string                 `protobuf:"bytes,1,opt,name=landmark_id,json=landmarkId,proto3" json:"landmark_id,omitempty"` // Landmarks.items[].id
+	Source        ModelSource            `protobuf:"varint,2,opt,name=source,proto3,enum=citypack.ModelSource" json:"source,omitempty"`
+	Parts         []*ModelPart           `protobuf:"bytes,3,rep,name=parts,proto3" json:"parts,omitempty"`
+	Replaces      []*BuildingRef         `protobuf:"bytes,4,rep,name=replaces,proto3" json:"replaces,omitempty"`                 // pack buildings hidden while the model is drawn (≥ 60 % covered)
+	RoofPlan      []*PlanPoly            `protobuf:"bytes,5,rep,name=roof_plan,json=roofPlan,proto3" json:"roof_plan,omitempty"` // top-down roof plan
+	Tris          uint32                 `protobuf:"varint,6,opt,name=tris,proto3" json:"tris,omitempty"`                        // triangles over all parts
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *Model) Reset() {
+	*x = Model{}
+	mi := &file_citypack_proto_msgTypes[23]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Model) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Model) ProtoMessage() {}
+
+func (x *Model) ProtoReflect() protoreflect.Message {
+	mi := &file_citypack_proto_msgTypes[23]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Model.ProtoReflect.Descriptor instead.
+func (*Model) Descriptor() ([]byte, []int) {
+	return file_citypack_proto_rawDescGZIP(), []int{23}
+}
+
+func (x *Model) GetLandmarkId() string {
+	if x != nil {
+		return x.LandmarkId
+	}
+	return ""
+}
+
+func (x *Model) GetSource() ModelSource {
+	if x != nil {
+		return x.Source
+	}
+	return ModelSource_MODEL_SOURCE_UNKNOWN
+}
+
+func (x *Model) GetParts() []*ModelPart {
+	if x != nil {
+		return x.Parts
+	}
+	return nil
+}
+
+func (x *Model) GetReplaces() []*BuildingRef {
+	if x != nil {
+		return x.Replaces
+	}
+	return nil
+}
+
+func (x *Model) GetRoofPlan() []*PlanPoly {
+	if x != nil {
+		return x.RoofPlan
+	}
+	return nil
+}
+
+func (x *Model) GetTris() uint32 {
+	if x != nil {
+		return x.Tris
+	}
+	return 0
+}
+
+// One source building standing on the terrain on its own (specs/models.md: parts).
+type ModelPart struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	AnchorX       int32                  `protobuf:"zigzag32,1,opt,name=anchor_x,json=anchorX,proto3" json:"anchor_x,omitempty"` // dm, footprint centroid
+	AnchorY       int32                  `protobuf:"zigzag32,2,opt,name=anchor_y,json=anchorY,proto3" json:"anchor_y,omitempty"`
+	BaseZDm       int32                  `protobuf:"zigzag32,3,opt,name=base_z_dm,json=baseZDm,proto3" json:"base_z_dm,omitempty"` // game height of the foot: lowest terrain under the footprint (as Building)
+	Positions     []int32                `protobuf:"zigzag32,4,rep,packed,name=positions,proto3" json:"positions,omitempty"`       // x, y, z per vertex: dm from the anchor, z real dm above the foot
+	Triangles     []uint32               `protobuf:"varint,5,rep,packed,name=triangles,proto3" json:"triangles,omitempty"`         // counter-clockwise seen from outside
+	Roles         []byte                 `protobuf:"bytes,6,opt,name=roles,proto3" json:"roles,omitempty"`                         // one ModelRole per triangle
+	SourceId      string                 `protobuf:"bytes,7,opt,name=source_id,json=sourceId,proto3" json:"source_id,omitempty"`   // id of the source building (gml:id), for models.yaml overrides
+	Foot          []uint32               `protobuf:"varint,8,rep,packed,name=foot,proto3" json:"foot,omitempty"`                   // vertices on the source ground (wall bottoms), for validate
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ModelPart) Reset() {
+	*x = ModelPart{}
+	mi := &file_citypack_proto_msgTypes[24]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ModelPart) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ModelPart) ProtoMessage() {}
+
+func (x *ModelPart) ProtoReflect() protoreflect.Message {
+	mi := &file_citypack_proto_msgTypes[24]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ModelPart.ProtoReflect.Descriptor instead.
+func (*ModelPart) Descriptor() ([]byte, []int) {
+	return file_citypack_proto_rawDescGZIP(), []int{24}
+}
+
+func (x *ModelPart) GetAnchorX() int32 {
+	if x != nil {
+		return x.AnchorX
+	}
+	return 0
+}
+
+func (x *ModelPart) GetAnchorY() int32 {
+	if x != nil {
+		return x.AnchorY
+	}
+	return 0
+}
+
+func (x *ModelPart) GetBaseZDm() int32 {
+	if x != nil {
+		return x.BaseZDm
+	}
+	return 0
+}
+
+func (x *ModelPart) GetPositions() []int32 {
+	if x != nil {
+		return x.Positions
+	}
+	return nil
+}
+
+func (x *ModelPart) GetTriangles() []uint32 {
+	if x != nil {
+		return x.Triangles
+	}
+	return nil
+}
+
+func (x *ModelPart) GetRoles() []byte {
+	if x != nil {
+		return x.Roles
+	}
+	return nil
+}
+
+func (x *ModelPart) GetSourceId() string {
+	if x != nil {
+		return x.SourceId
+	}
+	return ""
+}
+
+func (x *ModelPart) GetFoot() []uint32 {
+	if x != nil {
+		return x.Foot
+	}
+	return nil
+}
+
+type BuildingRef struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	ChunkX        int32                  `protobuf:"zigzag32,1,opt,name=chunk_x,json=chunkX,proto3" json:"chunk_x,omitempty"`
+	ChunkY        int32                  `protobuf:"zigzag32,2,opt,name=chunk_y,json=chunkY,proto3" json:"chunk_y,omitempty"`
+	Index         uint32                 `protobuf:"varint,3,opt,name=index,proto3" json:"index,omitempty"` // index into Chunk.buildings
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *BuildingRef) Reset() {
+	*x = BuildingRef{}
+	mi := &file_citypack_proto_msgTypes[25]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *BuildingRef) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*BuildingRef) ProtoMessage() {}
+
+func (x *BuildingRef) ProtoReflect() protoreflect.Message {
+	mi := &file_citypack_proto_msgTypes[25]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use BuildingRef.ProtoReflect.Descriptor instead.
+func (*BuildingRef) Descriptor() ([]byte, []int) {
+	return file_citypack_proto_rawDescGZIP(), []int{25}
+}
+
+func (x *BuildingRef) GetChunkX() int32 {
+	if x != nil {
+		return x.ChunkX
+	}
+	return 0
+}
+
+func (x *BuildingRef) GetChunkY() int32 {
+	if x != nil {
+		return x.ChunkY
+	}
+	return 0
+}
+
+func (x *BuildingRef) GetIndex() uint32 {
+	if x != nil {
+		return x.Index
+	}
+	return 0
+}
+
+// A roof-plan polygon: rings like Building, pretriangulated, drawn as a prism from base_z to height_m.
+type PlanPoly struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Points        []int32                `protobuf:"zigzag32,1,rep,packed,name=points,proto3" json:"points,omitempty"`                   // dm, absolute
+	RingEnds      []uint32               `protobuf:"varint,2,rep,packed,name=ring_ends,json=ringEnds,proto3" json:"ring_ends,omitempty"` // ring 0 outer (CCW), rest holes (CW)
+	Triangles     []uint32               `protobuf:"varint,3,rep,packed,name=triangles,proto3" json:"triangles,omitempty"`
+	HeightM       float32                `protobuf:"fixed32,4,opt,name=height_m,json=heightM,proto3" json:"height_m,omitempty"`    // real metres above the part foot (highest roof point of the polygon)
+	Shade         uint32                 `protobuf:"varint,5,opt,name=shade,proto3" json:"shade,omitempty"`                        // 0 dark … 3 light, by slope and aspect to the fixed light
+	BaseZDm       int32                  `protobuf:"zigzag32,6,opt,name=base_z_dm,json=baseZDm,proto3" json:"base_z_dm,omitempty"` // the part's base_z_dm
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *PlanPoly) Reset() {
+	*x = PlanPoly{}
+	mi := &file_citypack_proto_msgTypes[26]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *PlanPoly) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*PlanPoly) ProtoMessage() {}
+
+func (x *PlanPoly) ProtoReflect() protoreflect.Message {
+	mi := &file_citypack_proto_msgTypes[26]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use PlanPoly.ProtoReflect.Descriptor instead.
+func (*PlanPoly) Descriptor() ([]byte, []int) {
+	return file_citypack_proto_rawDescGZIP(), []int{26}
+}
+
+func (x *PlanPoly) GetPoints() []int32 {
+	if x != nil {
+		return x.Points
+	}
+	return nil
+}
+
+func (x *PlanPoly) GetRingEnds() []uint32 {
+	if x != nil {
+		return x.RingEnds
+	}
+	return nil
+}
+
+func (x *PlanPoly) GetTriangles() []uint32 {
+	if x != nil {
+		return x.Triangles
+	}
+	return nil
+}
+
+func (x *PlanPoly) GetHeightM() float32 {
+	if x != nil {
+		return x.HeightM
+	}
+	return 0
+}
+
+func (x *PlanPoly) GetShade() uint32 {
+	if x != nil {
+		return x.Shade
+	}
+	return 0
+}
+
+func (x *PlanPoly) GetBaseZDm() int32 {
+	if x != nil {
+		return x.BaseZDm
+	}
+	return 0
+}
+
 var File_citypack_proto protoreflect.FileDescriptor
 
 const file_citypack_proto_rawDesc = "" +
 	"\n" +
-	"\x0ecitypack.proto\x12\bcitypack\"\xa5\x06\n" +
+	"\x0ecitypack.proto\x12\bcitypack\"\xcc\x06\n" +
 	"\bManifest\x12%\n" +
 	"\x0eformat_version\x18\x01 \x01(\rR\rformatVersion\x12\x17\n" +
 	"\acity_id\x18\x02 \x01(\tR\x06cityId\x12\x12\n" +
@@ -2336,7 +2840,8 @@ const file_citypack_proto_rawDesc = "" +
 	"\n" +
 	"lod_chunks\x18\x17 \x01(\rR\tlodChunks\x12\x1c\n" +
 	"\n" +
-	"lod_grid_m\x18\x18 \x01(\rR\blodGridM\"Z\n" +
+	"lod_grid_m\x18\x18 \x01(\rR\blodGridM\x12%\n" +
+	"\x0emodels_version\x18\x19 \x01(\rR\rmodelsVersion\"Z\n" +
 	"\x04Rect\x12\x13\n" +
 	"\x05min_x\x18\x01 \x01(\x11R\x04minX\x12\x13\n" +
 	"\x05min_y\x18\x02 \x01(\x11R\x04minY\x12\x13\n" +
@@ -2484,7 +2989,37 @@ const file_citypack_proto_rawDesc = "" +
 	"\x06tunnel\x18\a \x01(\bR\x06tunnel\"/\n" +
 	"\bTramStop\x12\x12\n" +
 	"\x04edge\x18\x01 \x01(\rR\x04edge\x12\x0f\n" +
-	"\x03s_m\x18\x02 \x01(\x02R\x02sM*~\n" +
+	"\x03s_m\x18\x02 \x01(\x02R\x02sM\"1\n" +
+	"\x06Models\x12'\n" +
+	"\x06models\x18\x01 \x03(\v2\x0f.citypack.ModelR\x06models\"\xfa\x01\n" +
+	"\x05Model\x12\x1f\n" +
+	"\vlandmark_id\x18\x01 \x01(\tR\n" +
+	"landmarkId\x12-\n" +
+	"\x06source\x18\x02 \x01(\x0e2\x15.citypack.ModelSourceR\x06source\x12)\n" +
+	"\x05parts\x18\x03 \x03(\v2\x13.citypack.ModelPartR\x05parts\x121\n" +
+	"\breplaces\x18\x04 \x03(\v2\x15.citypack.BuildingRefR\breplaces\x12/\n" +
+	"\troof_plan\x18\x05 \x03(\v2\x12.citypack.PlanPolyR\broofPlan\x12\x12\n" +
+	"\x04tris\x18\x06 \x01(\rR\x04tris\"\xe0\x01\n" +
+	"\tModelPart\x12\x19\n" +
+	"\banchor_x\x18\x01 \x01(\x11R\aanchorX\x12\x19\n" +
+	"\banchor_y\x18\x02 \x01(\x11R\aanchorY\x12\x1a\n" +
+	"\tbase_z_dm\x18\x03 \x01(\x11R\abaseZDm\x12\x1c\n" +
+	"\tpositions\x18\x04 \x03(\x11R\tpositions\x12\x1c\n" +
+	"\ttriangles\x18\x05 \x03(\rR\ttriangles\x12\x14\n" +
+	"\x05roles\x18\x06 \x01(\fR\x05roles\x12\x1b\n" +
+	"\tsource_id\x18\a \x01(\tR\bsourceId\x12\x12\n" +
+	"\x04foot\x18\b \x03(\rR\x04foot\"U\n" +
+	"\vBuildingRef\x12\x17\n" +
+	"\achunk_x\x18\x01 \x01(\x11R\x06chunkX\x12\x17\n" +
+	"\achunk_y\x18\x02 \x01(\x11R\x06chunkY\x12\x14\n" +
+	"\x05index\x18\x03 \x01(\rR\x05index\"\xaa\x01\n" +
+	"\bPlanPoly\x12\x16\n" +
+	"\x06points\x18\x01 \x03(\x11R\x06points\x12\x1b\n" +
+	"\tring_ends\x18\x02 \x03(\rR\bringEnds\x12\x1c\n" +
+	"\ttriangles\x18\x03 \x03(\rR\ttriangles\x12\x19\n" +
+	"\bheight_m\x18\x04 \x01(\x02R\aheightM\x12\x14\n" +
+	"\x05shade\x18\x05 \x01(\rR\x05shade\x12\x1a\n" +
+	"\tbase_z_dm\x18\x06 \x01(\x11R\abaseZDm*~\n" +
 	"\tRoadClass\x12\x10\n" +
 	"\fROAD_UNKNOWN\x10\x00\x12\f\n" +
 	"\bMOTORWAY\x10\x01\x12\t\n" +
@@ -2535,7 +3070,23 @@ const file_citypack_proto_rawDesc = "" +
 	"\aLodKind\x12\r\n" +
 	"\tLOD_BLOCK\x10\x00\x12\f\n" +
 	"\bLOD_WOOD\x10\x01\x12\x10\n" +
-	"\fLOD_PARKLAND\x10\x02B\x16Z\x14citypack/internal/pbb\x06proto3"
+	"\fLOD_PARKLAND\x10\x02*\xb3\x01\n" +
+	"\vModelSource\x12\x18\n" +
+	"\x14MODEL_SOURCE_UNKNOWN\x10\x00\x12\x1d\n" +
+	"\x19MODEL_SOURCE_IPR_PRAHA_3D\x10\x01\x12\x17\n" +
+	"\x13MODEL_SOURCE_NYC_3D\x10\x02\x12\x18\n" +
+	"\x14MODEL_SOURCE_PLATEAU\x10\x03\x12\x1f\n" +
+	"\x1bMODEL_SOURCE_OVERTURE_PARTS\x10\x04\x12\x17\n" +
+	"\x13MODEL_SOURCE_MANUAL\x10\x05*i\n" +
+	"\tModelRole\x12\r\n" +
+	"\tROLE_WALL\x10\x00\x12\r\n" +
+	"\tROLE_ROOF\x10\x01\x12\x0f\n" +
+	"\vROLE_COPPER\x10\x02\x12\x0e\n" +
+	"\n" +
+	"ROLE_STONE\x10\x03\x12\x0e\n" +
+	"\n" +
+	"ROLE_GLASS\x10\x04\x12\r\n" +
+	"\tROLE_GOLD\x10\x05B\x16Z\x14citypack/internal/pbb\x06proto3"
 
 var (
 	file_citypack_proto_rawDescOnce sync.Once
@@ -2549,69 +3100,81 @@ func file_citypack_proto_rawDescGZIP() []byte {
 	return file_citypack_proto_rawDescData
 }
 
-var file_citypack_proto_enumTypes = make([]protoimpl.EnumInfo, 6)
-var file_citypack_proto_msgTypes = make([]protoimpl.MessageInfo, 22)
+var file_citypack_proto_enumTypes = make([]protoimpl.EnumInfo, 8)
+var file_citypack_proto_msgTypes = make([]protoimpl.MessageInfo, 27)
 var file_citypack_proto_goTypes = []any{
-	(RoadClass)(0),    // 0: citypack.RoadClass
-	(WaterClass)(0),   // 1: citypack.WaterClass
-	(GreenClass)(0),   // 2: citypack.GreenClass
-	(Surface)(0),      // 3: citypack.Surface
-	(GroundKind)(0),   // 4: citypack.GroundKind
-	(LodKind)(0),      // 5: citypack.LodKind
-	(*Manifest)(nil),  // 6: citypack.Manifest
-	(*Rect)(nil),      // 7: citypack.Rect
-	(*ChunkRef)(nil),  // 8: citypack.ChunkRef
-	(*Spawn)(nil),     // 9: citypack.Spawn
-	(*District)(nil),  // 10: citypack.District
-	(*Graph)(nil),     // 11: citypack.Graph
-	(*Node)(nil),      // 12: citypack.Node
-	(*Edge)(nil),      // 13: citypack.Edge
-	(*Chunk)(nil),     // 14: citypack.Chunk
-	(*Label)(nil),     // 15: citypack.Label
-	(*Barrier)(nil),   // 16: citypack.Barrier
-	(*Building)(nil),  // 17: citypack.Building
-	(*Mesh)(nil),      // 18: citypack.Mesh
-	(*Lod)(nil),       // 19: citypack.Lod
-	(*LodMass)(nil),   // 20: citypack.LodMass
-	(*Landmarks)(nil), // 21: citypack.Landmarks
-	(*Landmark)(nil),  // 22: citypack.Landmark
-	(*Spots)(nil),     // 23: citypack.Spots
-	(*Spot)(nil),      // 24: citypack.Spot
-	(*TramGraph)(nil), // 25: citypack.TramGraph
-	(*TramEdge)(nil),  // 26: citypack.TramEdge
-	(*TramStop)(nil),  // 27: citypack.TramStop
+	(RoadClass)(0),      // 0: citypack.RoadClass
+	(WaterClass)(0),     // 1: citypack.WaterClass
+	(GreenClass)(0),     // 2: citypack.GreenClass
+	(Surface)(0),        // 3: citypack.Surface
+	(GroundKind)(0),     // 4: citypack.GroundKind
+	(LodKind)(0),        // 5: citypack.LodKind
+	(ModelSource)(0),    // 6: citypack.ModelSource
+	(ModelRole)(0),      // 7: citypack.ModelRole
+	(*Manifest)(nil),    // 8: citypack.Manifest
+	(*Rect)(nil),        // 9: citypack.Rect
+	(*ChunkRef)(nil),    // 10: citypack.ChunkRef
+	(*Spawn)(nil),       // 11: citypack.Spawn
+	(*District)(nil),    // 12: citypack.District
+	(*Graph)(nil),       // 13: citypack.Graph
+	(*Node)(nil),        // 14: citypack.Node
+	(*Edge)(nil),        // 15: citypack.Edge
+	(*Chunk)(nil),       // 16: citypack.Chunk
+	(*Label)(nil),       // 17: citypack.Label
+	(*Barrier)(nil),     // 18: citypack.Barrier
+	(*Building)(nil),    // 19: citypack.Building
+	(*Mesh)(nil),        // 20: citypack.Mesh
+	(*Lod)(nil),         // 21: citypack.Lod
+	(*LodMass)(nil),     // 22: citypack.LodMass
+	(*Landmarks)(nil),   // 23: citypack.Landmarks
+	(*Landmark)(nil),    // 24: citypack.Landmark
+	(*Spots)(nil),       // 25: citypack.Spots
+	(*Spot)(nil),        // 26: citypack.Spot
+	(*TramGraph)(nil),   // 27: citypack.TramGraph
+	(*TramEdge)(nil),    // 28: citypack.TramEdge
+	(*TramStop)(nil),    // 29: citypack.TramStop
+	(*Models)(nil),      // 30: citypack.Models
+	(*Model)(nil),       // 31: citypack.Model
+	(*ModelPart)(nil),   // 32: citypack.ModelPart
+	(*BuildingRef)(nil), // 33: citypack.BuildingRef
+	(*PlanPoly)(nil),    // 34: citypack.PlanPoly
 }
 var file_citypack_proto_depIdxs = []int32{
-	7,  // 0: citypack.Manifest.bounds:type_name -> citypack.Rect
-	8,  // 1: citypack.Manifest.chunks:type_name -> citypack.ChunkRef
-	9,  // 2: citypack.Manifest.start:type_name -> citypack.Spawn
-	10, // 3: citypack.Manifest.districts:type_name -> citypack.District
-	8,  // 4: citypack.Manifest.lods:type_name -> citypack.ChunkRef
-	12, // 5: citypack.Graph.nodes:type_name -> citypack.Node
-	13, // 6: citypack.Graph.edges:type_name -> citypack.Edge
+	9,  // 0: citypack.Manifest.bounds:type_name -> citypack.Rect
+	10, // 1: citypack.Manifest.chunks:type_name -> citypack.ChunkRef
+	11, // 2: citypack.Manifest.start:type_name -> citypack.Spawn
+	12, // 3: citypack.Manifest.districts:type_name -> citypack.District
+	10, // 4: citypack.Manifest.lods:type_name -> citypack.ChunkRef
+	14, // 5: citypack.Graph.nodes:type_name -> citypack.Node
+	15, // 6: citypack.Graph.edges:type_name -> citypack.Edge
 	0,  // 7: citypack.Edge.class:type_name -> citypack.RoadClass
-	17, // 8: citypack.Chunk.buildings:type_name -> citypack.Building
-	18, // 9: citypack.Chunk.ground:type_name -> citypack.Mesh
-	16, // 10: citypack.Chunk.barriers:type_name -> citypack.Barrier
-	18, // 11: citypack.Chunk.shore:type_name -> citypack.Mesh
-	15, // 12: citypack.Chunk.labels:type_name -> citypack.Label
+	19, // 8: citypack.Chunk.buildings:type_name -> citypack.Building
+	20, // 9: citypack.Chunk.ground:type_name -> citypack.Mesh
+	18, // 10: citypack.Chunk.barriers:type_name -> citypack.Barrier
+	20, // 11: citypack.Chunk.shore:type_name -> citypack.Mesh
+	17, // 12: citypack.Chunk.labels:type_name -> citypack.Label
 	4,  // 13: citypack.Mesh.kind:type_name -> citypack.GroundKind
 	1,  // 14: citypack.Mesh.water_class:type_name -> citypack.WaterClass
 	2,  // 15: citypack.Mesh.green_class:type_name -> citypack.GreenClass
 	3,  // 16: citypack.Mesh.surface:type_name -> citypack.Surface
-	20, // 17: citypack.Lod.masses:type_name -> citypack.LodMass
-	18, // 18: citypack.Lod.water:type_name -> citypack.Mesh
+	22, // 17: citypack.Lod.masses:type_name -> citypack.LodMass
+	20, // 18: citypack.Lod.water:type_name -> citypack.Mesh
 	5,  // 19: citypack.LodMass.kind:type_name -> citypack.LodKind
-	22, // 20: citypack.Landmarks.items:type_name -> citypack.Landmark
-	24, // 21: citypack.Spots.items:type_name -> citypack.Spot
-	12, // 22: citypack.TramGraph.nodes:type_name -> citypack.Node
-	26, // 23: citypack.TramGraph.edges:type_name -> citypack.TramEdge
-	27, // 24: citypack.TramGraph.stops:type_name -> citypack.TramStop
-	25, // [25:25] is the sub-list for method output_type
-	25, // [25:25] is the sub-list for method input_type
-	25, // [25:25] is the sub-list for extension type_name
-	25, // [25:25] is the sub-list for extension extendee
-	0,  // [0:25] is the sub-list for field type_name
+	24, // 20: citypack.Landmarks.items:type_name -> citypack.Landmark
+	26, // 21: citypack.Spots.items:type_name -> citypack.Spot
+	14, // 22: citypack.TramGraph.nodes:type_name -> citypack.Node
+	28, // 23: citypack.TramGraph.edges:type_name -> citypack.TramEdge
+	29, // 24: citypack.TramGraph.stops:type_name -> citypack.TramStop
+	31, // 25: citypack.Models.models:type_name -> citypack.Model
+	6,  // 26: citypack.Model.source:type_name -> citypack.ModelSource
+	32, // 27: citypack.Model.parts:type_name -> citypack.ModelPart
+	33, // 28: citypack.Model.replaces:type_name -> citypack.BuildingRef
+	34, // 29: citypack.Model.roof_plan:type_name -> citypack.PlanPoly
+	30, // [30:30] is the sub-list for method output_type
+	30, // [30:30] is the sub-list for method input_type
+	30, // [30:30] is the sub-list for extension type_name
+	30, // [30:30] is the sub-list for extension extendee
+	0,  // [0:30] is the sub-list for field type_name
 }
 
 func init() { file_citypack_proto_init() }
@@ -2624,8 +3187,8 @@ func file_citypack_proto_init() {
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_citypack_proto_rawDesc), len(file_citypack_proto_rawDesc)),
-			NumEnums:      6,
-			NumMessages:   22,
+			NumEnums:      8,
+			NumMessages:   27,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

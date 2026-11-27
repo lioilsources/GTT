@@ -6,7 +6,7 @@
 # reopened: list of {date, reason} when an item went back from hotovo/ověřeno (regression).
 # Dropped scope: M0 point 5 (Flutter web build) – replaced by D1, see docs/m0.md.
 
-milestones: [M0, D0, D1, D2, M1, D3, M3, M2, M4, M5, L, M6]
+milestones: [M0, D0, D1, D2, M1, D3, M3, M2, M4, M5, L, M6, M7]
 
 items:
   # ---------- M0 – Hračka (scope)
@@ -262,6 +262,15 @@ items:
   - {id: M6-A2, milestone: M6, name: "60 fps v Moskvě na obou telefonech", size: S, status: todo}
   - {id: M6-A3, milestone: M6, name: "přepnutí čtyř měst 10× bez pádu", size: S, status: todo}
   - {id: M6-A4, milestone: M6, name: "matice parity pro rozsah M6 zelená", size: M, status: todo}
+  # ---------- M7 – Památky ve 3D (plans/M7_PAMATKY.md, Prompts/06), pilot Pražský hrad
+  - {id: M7-H0, milestone: M7, name: "ověření dat: list IPR s Hradem, CRS, velikost, trojúhelníky, licence", size: S, status: hotovo, started: 2026-11-27T06:00, done: 2026-11-27T06:40,
+     evidence: "plans/M7_PAMATKY.md: list Praha 7-1 (BD3_Prah_7-1.gml, 172 MB, CityGML, S-JTSK EPSG:5514, Bpv), CC BY 4.0 data base © IPR Praha; Hrad 48 budov, 6 231 trojúhelníků po čištění; NOTICE, docs/citypack.md"}
+  - {id: M7-H1, milestone: M7, name: "pilot v datech: krok models, models.pb, validate, náhledy (Hrad)", size: L, status: wip, started: 2026-11-27T06:10}
+  - {id: M7-H2, milestone: M7, name: "šikmý pohled ve W: model ↔ půdorys, replaces, stíny, plán shora, bench", size: L, status: todo}
+  - {id: M7-H3, milestone: M7, name: "střešní plán shora ve F (po bráně L)", size: M, status: todo}
+  - {id: M7-H4, milestone: M7, name: "zbytek Prahy: 20 hero památek, rozhledna a vysílač ručně", size: L, status: todo}
+  - {id: M7-H5, milestone: M7, name: "New York a Tokio (kde H0 potvrdí licenci)", size: L, status: todo}
+  - {id: M7-H6, milestone: M7, name: "Moskva: části budov Overture, ruční Kreml a Vasil Blažený", size: L, status: todo}
 
 # Content counters with targets. tests and fps are measured; the rest metro progress counts itself.
 counters:

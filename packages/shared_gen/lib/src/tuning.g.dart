@@ -115,7 +115,8 @@ class Tuning {
         terrain = TuningTerrain._(r.sub('terrain')),
         slopePhysics = TuningSlopePhysics._(r.sub('slope_physics')),
         nature = TuningNature._(r.sub('nature')),
-        flow = TuningFlow._(r.sub('flow'));
+        flow = TuningFlow._(r.sub('flow')),
+        models = TuningModels._(r.sub('models'));
 
   factory Tuning.fromYaml(String src) {
     final y = loadYaml(src);
@@ -266,6 +267,10 @@ class Tuning {
   /// Smooth driving: soft trees, wall slide, rescue (specs/flow.md, Prompts/04-METROPOLE_FLOW_PLAN.md).
   final TuningFlow flow;
 
+  /// Landmark models (specs/models.md, Prompts/06-METROPOLE_LANDMARKS3D_PLAN.md); colours in
+  /// design/tokens.json color.model.
+  final TuningModels models;
+
   Map<String, Object> toJson() => {
         'car_scale': carScale,
         'lane_width_m': laneWidthM,
@@ -315,6 +320,7 @@ class Tuning {
         'slope_physics': slopePhysics.toJson(),
         'nature': nature.toJson(),
         'flow': flow.toJson(),
+        'models': models.toJson(),
       };
 
   /// Dotted YAML path → value, for diffs against the loaded file.
@@ -6345,5 +6351,95 @@ class TuningFlowRescue {
         'stuck_time_s': stuckTimeS,
         'rewind_m': rewindM,
         'button_after_s': buttonAfterS,
+      };
+}
+
+/// Landmark models (specs/models.md, Prompts/06-METROPOLE_LANDMARKS3D_PLAN.md); colours in
+/// design/tokens.json color.model.
+class TuningModels {
+  TuningModels._(_R r)
+      : enabled = r.b('enabled'),
+        maxTris = r.i('max_tris'),
+        maxTrisException = r.i('max_tris_exception'),
+        cityMaxTris = r.i('city_max_tris'),
+        cityMaxBytes = r.i('city_max_bytes'),
+        minDetailM = r.d('min_detail_m'),
+        maxDetailM = r.d('max_detail_m'),
+        detailStepM = r.d('detail_step_m'),
+        nearM = r.d('near_m'),
+        hysteresisM = r.d('hysteresis_m'),
+        maxFull = r.i('max_full'),
+        roofPlanMaxPolys = r.i('roof_plan_max_polys'),
+        weldM = r.d('weld_m'),
+        planSimplifyM = r.d('plan_simplify_m'),
+        replaceShare = r.d('replace_share'),
+        footToleranceM = r.d('foot_tolerance_m'),
+        maxOffsetM = r.d('max_offset_m');
+
+  bool enabled;
+
+  /// per landmark
+  int maxTris;
+
+  /// ceiling for a models.yaml max_tris (Prague Castle grounds)
+  int maxTrisException;
+
+  int cityMaxTris;
+
+  /// models.pb after gzip
+  int cityMaxBytes;
+
+  /// smaller parts and faces are dropped
+  double minDetailM;
+
+  /// citypack raises min_detail up to this to meet the budget
+  double maxDetailM;
+
+  double detailStepM;
+
+  /// W chase view: model within this of the car, footprints beyond
+  double nearM;
+
+  /// switch back to footprints only beyond near_m + this
+  double hysteresisM;
+
+  /// W: models drawn at once, the nearest win
+  int maxFull;
+
+  int roofPlanMaxPolys;
+
+  /// citypack: vertex weld
+  double weldM;
+
+  /// citypack: roof plan simplification
+  double planSimplifyM;
+
+  /// citypack: a pack building at least this covered is replaced
+  double replaceShare;
+
+  /// validate: part foot vs terrain at its anchor (real metres)
+  double footToleranceM;
+
+  /// validate: model centre vs landmark point
+  double maxOffsetM;
+
+  Map<String, Object> toJson() => {
+        'enabled': enabled,
+        'max_tris': maxTris,
+        'max_tris_exception': maxTrisException,
+        'city_max_tris': cityMaxTris,
+        'city_max_bytes': cityMaxBytes,
+        'min_detail_m': minDetailM,
+        'max_detail_m': maxDetailM,
+        'detail_step_m': detailStepM,
+        'near_m': nearM,
+        'hysteresis_m': hysteresisM,
+        'max_full': maxFull,
+        'roof_plan_max_polys': roofPlanMaxPolys,
+        'weld_m': weldM,
+        'plan_simplify_m': planSimplifyM,
+        'replace_share': replaceShare,
+        'foot_tolerance_m': footToleranceM,
+        'max_offset_m': maxOffsetM,
       };
 }

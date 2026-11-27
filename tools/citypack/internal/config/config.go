@@ -106,6 +106,47 @@ type Tuning struct {
 	Flow    struct {
 		GapCloseM float64 `yaml:"gap_close_m"`
 	} `yaml:"flow"`
+	Models ModelsTuning `yaml:"models"`
+}
+
+// ModelsTuning is tuning.yaml `models` (specs/models.md).
+type ModelsTuning struct {
+	Enabled          bool    `yaml:"enabled"`
+	MaxTris          int     `yaml:"max_tris"`
+	MaxTrisException int     `yaml:"max_tris_exception"`
+	CityMaxTris      int     `yaml:"city_max_tris"`
+	CityMaxBytes     int     `yaml:"city_max_bytes"`
+	MinDetailM       float64 `yaml:"min_detail_m"`
+	MaxDetailM       float64 `yaml:"max_detail_m"`
+	DetailStepM      float64 `yaml:"detail_step_m"`
+	NearM            float64 `yaml:"near_m"`
+	HysteresisM      float64 `yaml:"hysteresis_m"`
+	MaxFull          int     `yaml:"max_full"`
+	RoofPlanMaxPolys int     `yaml:"roof_plan_max_polys"`
+	WeldM            float64 `yaml:"weld_m"`
+	PlanSimplifyM    float64 `yaml:"plan_simplify_m"`
+	ReplaceShare     float64 `yaml:"replace_share"`
+	FootTolM         float64 `yaml:"foot_tolerance_m"`
+	MaxOffsetM       float64 `yaml:"max_offset_m"`
+}
+
+// ModelsFile is content/cities/<id>/models.yaml (specs/models.md, METROPOLE_LANDMARKS3D_PLAN 4.3).
+type ModelsFile struct {
+	Source string                 `yaml:"source"` // ipr_praha_3d | nyc_3d | plateau | overture_parts | manual
+	Files  []string               `yaml:"files"`  // source files in run/citypack/<id>/raw/models/
+	Models map[string]ModelConfig `yaml:"models"`
+}
+
+type ModelConfig struct {
+	Select struct {
+		BufferM float64      `yaml:"buffer_m"`
+		Area    [][2]float64 `yaml:"area"` // lon, lat ring: the landmark's grounds beyond its own building
+	} `yaml:"select"`
+	Include []string          `yaml:"include"`
+	Exclude []string          `yaml:"exclude"`
+	MaxTris int               `yaml:"max_tris"`
+	Roles   map[string]string `yaml:"roles"` // source building id → role of its roofs
+	Manual  string            `yaml:"manual"`
 }
 
 // TerrainTuning is tuning.yaml `terrain` (specs/terrain.md).
@@ -262,6 +303,13 @@ func (t *Tuning) check() error {
 		"nature.pipeline.wood_cover_ha": np.WoodCoverHa, "nature.pipeline.street_tree_snap_m": np.StreetTreeSnapM,
 		"nature.pipeline.tree_min_spacing_m": np.TreeMinSpacingM, "nature.pipeline.tree_row_step_m": np.TreeRowStepM, "nature.pipeline.deck_tree_margin_m": np.DeckTreeMarginM,
 		"flow.gap_close_m": t.Flow.GapCloseM,
+		"models.max_tris":  float64(t.Models.MaxTris), "models.max_tris_exception": float64(t.Models.MaxTrisException),
+		"models.city_max_tris": float64(t.Models.CityMaxTris), "models.city_max_bytes": float64(t.Models.CityMaxBytes),
+		"models.min_detail_m": t.Models.MinDetailM, "models.max_detail_m": t.Models.MaxDetailM, "models.detail_step_m": t.Models.DetailStepM,
+		"models.near_m": t.Models.NearM, "models.hysteresis_m": t.Models.HysteresisM, "models.max_full": float64(t.Models.MaxFull),
+		"models.roof_plan_max_polys": float64(t.Models.RoofPlanMaxPolys), "models.weld_m": t.Models.WeldM,
+		"models.plan_simplify_m": t.Models.PlanSimplifyM, "models.replace_share": t.Models.ReplaceShare,
+		"models.foot_tolerance_m": t.Models.FootTolM, "models.max_offset_m": t.Models.MaxOffsetM,
 	} {
 		if v <= 0 {
 			return fmt.Errorf("tuning.yaml: %s missing or not positive", name)
@@ -325,6 +373,7 @@ type Content struct {
 	Tuning    Tuning
 	Landmarks []Landmark
 	Spots     []Spot
+	Models    *ModelsFile // nil without models.yaml
 }
 
 func Load(contentDir, cityID string) (*Content, error) {
@@ -366,6 +415,12 @@ func Load(contentDir, cityID string) (*Content, error) {
 		return nil, err
 	}
 	c.Spots = sp.Spots
+	if p := filepath.Join(dir, "models.yaml"); fileExists(p) {
+		c.Models = &ModelsFile{}
+		if err := readYAML(p, c.Models); err != nil {
+			return nil, err
+		}
+	}
 	ring, err := readAreaRing(filepath.Join(dir, c.City.Area))
 	if err != nil {
 		return nil, err
@@ -384,6 +439,8 @@ func readYAML(path string, v any) error {
 	}
 	return nil
 }
+
+func fileExists(p string) bool { _, err := os.Stat(p); return err == nil }
 
 func readYAMLBytes(b []byte, v any) error { return yaml.Unmarshal(b, v) }
 

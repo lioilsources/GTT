@@ -125,6 +125,44 @@ final $typed_data.Uint8List lodKindDescriptor = $convert.base64Decode(
     'CgdMb2RLaW5kEg0KCUxPRF9CTE9DSxAAEgwKCExPRF9XT09EEAESEAoMTE9EX1BBUktMQU5EEA'
     'I=');
 
+@$core.Deprecated('Use modelSourceDescriptor instead')
+const ModelSource$json = {
+  '1': 'ModelSource',
+  '2': [
+    {'1': 'MODEL_SOURCE_UNKNOWN', '2': 0},
+    {'1': 'MODEL_SOURCE_IPR_PRAHA_3D', '2': 1},
+    {'1': 'MODEL_SOURCE_NYC_3D', '2': 2},
+    {'1': 'MODEL_SOURCE_PLATEAU', '2': 3},
+    {'1': 'MODEL_SOURCE_OVERTURE_PARTS', '2': 4},
+    {'1': 'MODEL_SOURCE_MANUAL', '2': 5},
+  ],
+};
+
+/// Descriptor for `ModelSource`. Decode as a `google.protobuf.EnumDescriptorProto`.
+final $typed_data.Uint8List modelSourceDescriptor = $convert.base64Decode(
+    'CgtNb2RlbFNvdXJjZRIYChRNT0RFTF9TT1VSQ0VfVU5LTk9XThAAEh0KGU1PREVMX1NPVVJDRV'
+    '9JUFJfUFJBSEFfM0QQARIXChNNT0RFTF9TT1VSQ0VfTllDXzNEEAISGAoUTU9ERUxfU09VUkNF'
+    'X1BMQVRFQVUQAxIfChtNT0RFTF9TT1VSQ0VfT1ZFUlRVUkVfUEFSVFMQBBIXChNNT0RFTF9TT1'
+    'VSQ0VfTUFOVUFMEAU=');
+
+@$core.Deprecated('Use modelRoleDescriptor instead')
+const ModelRole$json = {
+  '1': 'ModelRole',
+  '2': [
+    {'1': 'ROLE_WALL', '2': 0},
+    {'1': 'ROLE_ROOF', '2': 1},
+    {'1': 'ROLE_COPPER', '2': 2},
+    {'1': 'ROLE_STONE', '2': 3},
+    {'1': 'ROLE_GLASS', '2': 4},
+    {'1': 'ROLE_GOLD', '2': 5},
+  ],
+};
+
+/// Descriptor for `ModelRole`. Decode as a `google.protobuf.EnumDescriptorProto`.
+final $typed_data.Uint8List modelRoleDescriptor = $convert.base64Decode(
+    'CglNb2RlbFJvbGUSDQoJUk9MRV9XQUxMEAASDQoJUk9MRV9ST09GEAESDwoLUk9MRV9DT1BQRV'
+    'IQAhIOCgpST0xFX1NUT05FEAMSDgoKUk9MRV9HTEFTUxAEEg0KCVJPTEVfR09MRBAF');
+
 @$core.Deprecated('Use manifestDescriptor instead')
 const Manifest$json = {
   '1': 'Manifest',
@@ -188,6 +226,7 @@ const Manifest$json = {
     },
     {'1': 'lod_chunks', '3': 23, '4': 1, '5': 13, '10': 'lodChunks'},
     {'1': 'lod_grid_m', '3': 24, '4': 1, '5': 13, '10': 'lodGridM'},
+    {'1': 'models_version', '3': 25, '4': 1, '5': 13, '10': 'modelsVersion'},
   ],
 };
 
@@ -207,7 +246,8 @@ final $typed_data.Uint8List manifestDescriptor = $convert.base64Decode(
     'EoAlIMZXhhZ2dlcmF0aW9uEiQKDnRlcnJhaW5fZ3JpZF9tGBQgASgNUgx0ZXJyYWluR3JpZE0S'
     'JQoObmF0dXJlX3ZlcnNpb24YFSABKA1SDW5hdHVyZVZlcnNpb24SJgoEbG9kcxgWIAMoCzISLm'
     'NpdHlwYWNrLkNodW5rUmVmUgRsb2RzEh0KCmxvZF9jaHVua3MYFyABKA1SCWxvZENodW5rcxIc'
-    'Cgpsb2RfZ3JpZF9tGBggASgNUghsb2RHcmlkTQ==');
+    'Cgpsb2RfZ3JpZF9tGBggASgNUghsb2RHcmlkTRIlCg5tb2RlbHNfdmVyc2lvbhgZIAEoDVINbW'
+    '9kZWxzVmVyc2lvbg==');
 
 @$core.Deprecated('Use rectDescriptor instead')
 const Rect$json = {
@@ -739,3 +779,129 @@ const TramStop$json = {
 /// Descriptor for `TramStop`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List tramStopDescriptor = $convert.base64Decode(
     'CghUcmFtU3RvcBISCgRlZGdlGAEgASgNUgRlZGdlEg8KA3NfbRgCIAEoAlICc00=');
+
+@$core.Deprecated('Use modelsDescriptor instead')
+const Models$json = {
+  '1': 'Models',
+  '2': [
+    {
+      '1': 'models',
+      '3': 1,
+      '4': 3,
+      '5': 11,
+      '6': '.citypack.Model',
+      '10': 'models'
+    },
+  ],
+};
+
+/// Descriptor for `Models`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List modelsDescriptor = $convert.base64Decode(
+    'CgZNb2RlbHMSJwoGbW9kZWxzGAEgAygLMg8uY2l0eXBhY2suTW9kZWxSBm1vZGVscw==');
+
+@$core.Deprecated('Use modelDescriptor instead')
+const Model$json = {
+  '1': 'Model',
+  '2': [
+    {'1': 'landmark_id', '3': 1, '4': 1, '5': 9, '10': 'landmarkId'},
+    {
+      '1': 'source',
+      '3': 2,
+      '4': 1,
+      '5': 14,
+      '6': '.citypack.ModelSource',
+      '10': 'source'
+    },
+    {
+      '1': 'parts',
+      '3': 3,
+      '4': 3,
+      '5': 11,
+      '6': '.citypack.ModelPart',
+      '10': 'parts'
+    },
+    {
+      '1': 'replaces',
+      '3': 4,
+      '4': 3,
+      '5': 11,
+      '6': '.citypack.BuildingRef',
+      '10': 'replaces'
+    },
+    {
+      '1': 'roof_plan',
+      '3': 5,
+      '4': 3,
+      '5': 11,
+      '6': '.citypack.PlanPoly',
+      '10': 'roofPlan'
+    },
+    {'1': 'tris', '3': 6, '4': 1, '5': 13, '10': 'tris'},
+  ],
+};
+
+/// Descriptor for `Model`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List modelDescriptor = $convert.base64Decode(
+    'CgVNb2RlbBIfCgtsYW5kbWFya19pZBgBIAEoCVIKbGFuZG1hcmtJZBItCgZzb3VyY2UYAiABKA'
+    '4yFS5jaXR5cGFjay5Nb2RlbFNvdXJjZVIGc291cmNlEikKBXBhcnRzGAMgAygLMhMuY2l0eXBh'
+    'Y2suTW9kZWxQYXJ0UgVwYXJ0cxIxCghyZXBsYWNlcxgEIAMoCzIVLmNpdHlwYWNrLkJ1aWxkaW'
+    '5nUmVmUghyZXBsYWNlcxIvCglyb29mX3BsYW4YBSADKAsyEi5jaXR5cGFjay5QbGFuUG9seVII'
+    'cm9vZlBsYW4SEgoEdHJpcxgGIAEoDVIEdHJpcw==');
+
+@$core.Deprecated('Use modelPartDescriptor instead')
+const ModelPart$json = {
+  '1': 'ModelPart',
+  '2': [
+    {'1': 'anchor_x', '3': 1, '4': 1, '5': 17, '10': 'anchorX'},
+    {'1': 'anchor_y', '3': 2, '4': 1, '5': 17, '10': 'anchorY'},
+    {'1': 'base_z_dm', '3': 3, '4': 1, '5': 17, '10': 'baseZDm'},
+    {'1': 'positions', '3': 4, '4': 3, '5': 17, '10': 'positions'},
+    {'1': 'triangles', '3': 5, '4': 3, '5': 13, '10': 'triangles'},
+    {'1': 'roles', '3': 6, '4': 1, '5': 12, '10': 'roles'},
+    {'1': 'source_id', '3': 7, '4': 1, '5': 9, '10': 'sourceId'},
+    {'1': 'foot', '3': 8, '4': 3, '5': 13, '10': 'foot'},
+  ],
+};
+
+/// Descriptor for `ModelPart`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List modelPartDescriptor = $convert.base64Decode(
+    'CglNb2RlbFBhcnQSGQoIYW5jaG9yX3gYASABKBFSB2FuY2hvclgSGQoIYW5jaG9yX3kYAiABKB'
+    'FSB2FuY2hvclkSGgoJYmFzZV96X2RtGAMgASgRUgdiYXNlWkRtEhwKCXBvc2l0aW9ucxgEIAMo'
+    'EVIJcG9zaXRpb25zEhwKCXRyaWFuZ2xlcxgFIAMoDVIJdHJpYW5nbGVzEhQKBXJvbGVzGAYgAS'
+    'gMUgVyb2xlcxIbCglzb3VyY2VfaWQYByABKAlSCHNvdXJjZUlkEhIKBGZvb3QYCCADKA1SBGZv'
+    'b3Q=');
+
+@$core.Deprecated('Use buildingRefDescriptor instead')
+const BuildingRef$json = {
+  '1': 'BuildingRef',
+  '2': [
+    {'1': 'chunk_x', '3': 1, '4': 1, '5': 17, '10': 'chunkX'},
+    {'1': 'chunk_y', '3': 2, '4': 1, '5': 17, '10': 'chunkY'},
+    {'1': 'index', '3': 3, '4': 1, '5': 13, '10': 'index'},
+  ],
+};
+
+/// Descriptor for `BuildingRef`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List buildingRefDescriptor = $convert.base64Decode(
+    'CgtCdWlsZGluZ1JlZhIXCgdjaHVua194GAEgASgRUgZjaHVua1gSFwoHY2h1bmtfeRgCIAEoEV'
+    'IGY2h1bmtZEhQKBWluZGV4GAMgASgNUgVpbmRleA==');
+
+@$core.Deprecated('Use planPolyDescriptor instead')
+const PlanPoly$json = {
+  '1': 'PlanPoly',
+  '2': [
+    {'1': 'points', '3': 1, '4': 3, '5': 17, '10': 'points'},
+    {'1': 'ring_ends', '3': 2, '4': 3, '5': 13, '10': 'ringEnds'},
+    {'1': 'triangles', '3': 3, '4': 3, '5': 13, '10': 'triangles'},
+    {'1': 'height_m', '3': 4, '4': 1, '5': 2, '10': 'heightM'},
+    {'1': 'shade', '3': 5, '4': 1, '5': 13, '10': 'shade'},
+    {'1': 'base_z_dm', '3': 6, '4': 1, '5': 17, '10': 'baseZDm'},
+  ],
+};
+
+/// Descriptor for `PlanPoly`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List planPolyDescriptor = $convert.base64Decode(
+    'CghQbGFuUG9seRIWCgZwb2ludHMYASADKBFSBnBvaW50cxIbCglyaW5nX2VuZHMYAiADKA1SCH'
+    'JpbmdFbmRzEhwKCXRyaWFuZ2xlcxgDIAMoDVIJdHJpYW5nbGVzEhkKCGhlaWdodF9tGAQgASgC'
+    'UgdoZWlnaHRNEhQKBXNoYWRlGAUgASgNUgVzaGFkZRIaCgliYXNlX3pfZG0YBiABKBFSB2Jhc2'
+    'VaRG0=');

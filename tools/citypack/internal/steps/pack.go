@@ -422,6 +422,11 @@ func Pack(e *Env) error {
 	if man.Districts, err = e.loadDistricts(); err != nil {
 		return err
 	}
+	n, err := e.packModels(chunks, man)
+	if err != nil {
+		return err
+	}
+	totalBytes += n
 	for _, f := range []struct {
 		name string
 		msg  proto.Message
@@ -593,4 +598,30 @@ func ReadPB(path string, m proto.Message) error {
 		return err
 	}
 	return proto.Unmarshal(buf.Bytes(), m)
+}
+
+// packModels resolves `replaces` against the final chunk layout and writes models.pb
+// (specs/models.md); without models it removes a stale file. Returns the gzip size.
+func (e *Env) packModels(chunks map[[2]int]*pb.Chunk, man *pb.Manifest) (int, error) {
+	out := filepath.Join(e.Out, "models.pb")
+	b, err := os.ReadFile(e.W("models.pb"))
+	if err != nil || e.C.Models == nil || !e.C.Tuning.Models.Enabled {
+		_ = os.Remove(out)
+		return 0, nil
+	}
+	ms := &pb.Models{}
+	if err := proto.Unmarshal(b, ms); err != nil {
+		return 0, fmt.Errorf("models.pb: %w", err)
+	}
+	seen := map[string]bool{}
+	for _, m := range ms.Models {
+		m.Replaces = modelReplaces(m, chunks, e.C.Tuning.Models.ReplaceShare)
+		if a := ModelAttribution(m.Source); a != "" && !seen[a] {
+			seen[a] = true
+			man.Attribution = append(man.Attribution, a)
+		}
+		slog.Info("pack: model", "id", m.LandmarkId, "tris", m.Tris, "replaces", len(m.Replaces))
+	}
+	man.ModelsVersion = ModelsVersion
+	return writePBSize(out, ms)
 }

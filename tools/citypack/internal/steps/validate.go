@@ -195,6 +195,7 @@ func Validate(e *Env) error {
 	// M5: terrain, nature, flow (specs/terrain.md, specs/nature.md, specs/flow.md).
 	e.validateTerrain(p, fail)
 	e.validateNature(p, fail)
+	e.validateModels(p, fail)
 	if len(errs) > 0 {
 		return errors.Join(errs...)
 	}

@@ -196,5 +196,69 @@ class LodKind extends $pb.ProtobufEnum {
   const LodKind._(super.value, super.name);
 }
 
+class ModelSource extends $pb.ProtobufEnum {
+  static const ModelSource MODEL_SOURCE_UNKNOWN =
+      ModelSource._(0, _omitEnumNames ? '' : 'MODEL_SOURCE_UNKNOWN');
+  static const ModelSource MODEL_SOURCE_IPR_PRAHA_3D =
+      ModelSource._(1, _omitEnumNames ? '' : 'MODEL_SOURCE_IPR_PRAHA_3D');
+  static const ModelSource MODEL_SOURCE_NYC_3D =
+      ModelSource._(2, _omitEnumNames ? '' : 'MODEL_SOURCE_NYC_3D');
+  static const ModelSource MODEL_SOURCE_PLATEAU =
+      ModelSource._(3, _omitEnumNames ? '' : 'MODEL_SOURCE_PLATEAU');
+  static const ModelSource MODEL_SOURCE_OVERTURE_PARTS =
+      ModelSource._(4, _omitEnumNames ? '' : 'MODEL_SOURCE_OVERTURE_PARTS');
+  static const ModelSource MODEL_SOURCE_MANUAL =
+      ModelSource._(5, _omitEnumNames ? '' : 'MODEL_SOURCE_MANUAL');
+
+  static const $core.List<ModelSource> values = <ModelSource>[
+    MODEL_SOURCE_UNKNOWN,
+    MODEL_SOURCE_IPR_PRAHA_3D,
+    MODEL_SOURCE_NYC_3D,
+    MODEL_SOURCE_PLATEAU,
+    MODEL_SOURCE_OVERTURE_PARTS,
+    MODEL_SOURCE_MANUAL,
+  ];
+
+  static final $core.List<ModelSource?> _byValue =
+      $pb.ProtobufEnum.$_initByValueList(values, 5);
+  static ModelSource? valueOf($core.int value) =>
+      value < 0 || value >= _byValue.length ? null : _byValue[value];
+
+  const ModelSource._(super.value, super.name);
+}
+
+/// Surface role of a model triangle; colours from design/tokens.json color.model.<role>
+/// (wall = the city's `landmark` colour).
+class ModelRole extends $pb.ProtobufEnum {
+  static const ModelRole ROLE_WALL =
+      ModelRole._(0, _omitEnumNames ? '' : 'ROLE_WALL');
+  static const ModelRole ROLE_ROOF =
+      ModelRole._(1, _omitEnumNames ? '' : 'ROLE_ROOF');
+  static const ModelRole ROLE_COPPER =
+      ModelRole._(2, _omitEnumNames ? '' : 'ROLE_COPPER');
+  static const ModelRole ROLE_STONE =
+      ModelRole._(3, _omitEnumNames ? '' : 'ROLE_STONE');
+  static const ModelRole ROLE_GLASS =
+      ModelRole._(4, _omitEnumNames ? '' : 'ROLE_GLASS');
+  static const ModelRole ROLE_GOLD =
+      ModelRole._(5, _omitEnumNames ? '' : 'ROLE_GOLD');
+
+  static const $core.List<ModelRole> values = <ModelRole>[
+    ROLE_WALL,
+    ROLE_ROOF,
+    ROLE_COPPER,
+    ROLE_STONE,
+    ROLE_GLASS,
+    ROLE_GOLD,
+  ];
+
+  static final $core.List<ModelRole?> _byValue =
+      $pb.ProtobufEnum.$_initByValueList(values, 5);
+  static ModelRole? valueOf($core.int value) =>
+      value < 0 || value >= _byValue.length ? null : _byValue[value];
+
+  const ModelRole._(super.value, super.name);
+}
+
 const $core.bool _omitEnumNames =
     $core.bool.fromEnvironment('protobuf.omit_enum_names');

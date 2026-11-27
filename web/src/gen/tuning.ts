@@ -178,6 +178,11 @@ export class Tuning {
   readonly nature: TuningNature;
   /** Smooth driving: soft trees, wall slide, rescue (specs/flow.md, Prompts/04-METROPOLE_FLOW_PLAN.md). */
   readonly flow: TuningFlow;
+  /**
+   * Landmark models (specs/models.md, Prompts/06-METROPOLE_LANDMARKS3D_PLAN.md); colours in
+   * design/tokens.json color.model.
+   */
+  readonly models: TuningModels;
 
   private constructor(r: R) {
     this.carScale = r.d('car_scale');
@@ -228,6 +233,7 @@ export class Tuning {
     this.slopePhysics = new TuningSlopePhysics(r.sub('slope_physics'));
     this.nature = new TuningNature(r.sub('nature'));
     this.flow = new TuningFlow(r.sub('flow'));
+    this.models = new TuningModels(r.sub('models'));
   }
 
   toJson(): Record<string, unknown> {
@@ -280,6 +286,7 @@ export class Tuning {
       slope_physics: this.slopePhysics.toJson(),
       nature: this.nature.toJson(),
       flow: this.flow.toJson(),
+      models: this.models.toJson(),
     };
   }
 
@@ -5967,6 +5974,85 @@ export class TuningFlowRescue {
       stuck_time_s: this.stuckTimeS,
       rewind_m: this.rewindM,
       button_after_s: this.buttonAfterS,
+    };
+  }
+}
+
+/**
+ * Landmark models (specs/models.md, Prompts/06-METROPOLE_LANDMARKS3D_PLAN.md); colours in
+ * design/tokens.json color.model.
+ */
+export class TuningModels {
+  enabled: boolean;
+  /** per landmark */
+  maxTris: number;
+  /** ceiling for a models.yaml max_tris (Prague Castle grounds) */
+  maxTrisException: number;
+  cityMaxTris: number;
+  /** models.pb after gzip */
+  cityMaxBytes: number;
+  /** smaller parts and faces are dropped */
+  minDetailM: number;
+  /** citypack raises min_detail up to this to meet the budget */
+  maxDetailM: number;
+  detailStepM: number;
+  /** W chase view: model within this of the car, footprints beyond */
+  nearM: number;
+  /** switch back to footprints only beyond near_m + this */
+  hysteresisM: number;
+  /** W: models drawn at once, the nearest win */
+  maxFull: number;
+  roofPlanMaxPolys: number;
+  /** citypack: vertex weld */
+  weldM: number;
+  /** citypack: roof plan simplification */
+  planSimplifyM: number;
+  /** citypack: a pack building at least this covered is replaced */
+  replaceShare: number;
+  /** validate: part foot vs terrain at its anchor (real metres) */
+  footToleranceM: number;
+  /** validate: model centre vs landmark point */
+  maxOffsetM: number;
+
+  constructor(r: R) {
+    this.enabled = r.b('enabled');
+    this.maxTris = r.i('max_tris');
+    this.maxTrisException = r.i('max_tris_exception');
+    this.cityMaxTris = r.i('city_max_tris');
+    this.cityMaxBytes = r.i('city_max_bytes');
+    this.minDetailM = r.d('min_detail_m');
+    this.maxDetailM = r.d('max_detail_m');
+    this.detailStepM = r.d('detail_step_m');
+    this.nearM = r.d('near_m');
+    this.hysteresisM = r.d('hysteresis_m');
+    this.maxFull = r.i('max_full');
+    this.roofPlanMaxPolys = r.i('roof_plan_max_polys');
+    this.weldM = r.d('weld_m');
+    this.planSimplifyM = r.d('plan_simplify_m');
+    this.replaceShare = r.d('replace_share');
+    this.footToleranceM = r.d('foot_tolerance_m');
+    this.maxOffsetM = r.d('max_offset_m');
+  }
+
+  toJson(): Record<string, unknown> {
+    return {
+      enabled: this.enabled,
+      max_tris: this.maxTris,
+      max_tris_exception: this.maxTrisException,
+      city_max_tris: this.cityMaxTris,
+      city_max_bytes: this.cityMaxBytes,
+      min_detail_m: this.minDetailM,
+      max_detail_m: this.maxDetailM,
+      detail_step_m: this.detailStepM,
+      near_m: this.nearM,
+      hysteresis_m: this.hysteresisM,
+      max_full: this.maxFull,
+      roof_plan_max_polys: this.roofPlanMaxPolys,
+      weld_m: this.weldM,
+      plan_simplify_m: this.planSimplifyM,
+      replace_share: this.replaceShare,
+      foot_tolerance_m: this.footToleranceM,
+      max_offset_m: this.maxOffsetM,
     };
   }
 }
