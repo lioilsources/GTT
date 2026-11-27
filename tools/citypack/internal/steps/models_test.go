@@ -123,15 +123,22 @@ func TestBuildPartSlopeShear(t *testing.T) {
 		}
 	}
 	part, _ := buildPart(b, config.ModelConfig{}, 1.5, 0.1, flatTerrain(0), 2)
-	maxFoot := int32(0)
+	// The roof keeps the doubled slope: 10 m high plus 2 m at the far side.
+	maxZ := int32(0)
+	for i := 2; i < len(part.Positions); i += 3 {
+		maxZ = max(maxZ, part.Positions[i])
+	}
+	if maxZ != 120 {
+		t.Fatalf("roof top %d dm, want 120 (10 m + 1 m source slope × 2)", maxZ)
+	}
+	// The foot sits on the flat terrain in the median and its vertices follow it: nothing hovers.
+	if part.BaseZDm != 0 {
+		t.Fatalf("base %d, want 0", part.BaseZDm)
+	}
 	for _, i := range part.Foot {
-		maxFoot = max(maxFoot, part.Positions[3*i+2])
-	}
-	if maxFoot != 20 {
-		t.Fatalf("highest foot %d dm, want 20 (1 m source × 2)", maxFoot)
-	}
-	if part.BaseZDm != -20 {
-		t.Fatalf("base %d, want -20: no foot vertex above the flat terrain", part.BaseZDm)
+		if z := part.Positions[3*i+2]; z != 0 {
+			t.Fatalf("foot vertex %d at %d dm, want on the terrain (0)", i, z)
+		}
 	}
 }
 

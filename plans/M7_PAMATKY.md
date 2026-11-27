@@ -17,7 +17,7 @@ Defaulty kap. 11: bez textur (K2), F až po vystřelení (K3, K6).
 | Jak je Hrad a katedrála | Katedrála je jedna budova `_70215` (pata 256,4–257,3 m Bpv, nejvyšší bod 90,3 m nad patou), věže a fiály jako části „vyznacna vez na strese“, střechy podrobně, stěny svisle od terénu. Areál Hradu = desítky samostatných budov (palác `_70087` s 1 498 trojúhelníky, západní křídlo `_70263`, Zlatá ulička, Černá věž …), každá s vlastní patou ve svahu. |
 | Trojúhelníky Hradu | Výběr `content/cities/prague/models.yaml` (oblast areálu + budova památky + 2 m): 48 budov zdroje. Surově 6 702 trojúhelníků, po čištění (svaření 0,1 m, bez podlah, bez skupin pod 1,5 m) **6 231** – pod výjimkou 12 000 z kap. 8, nad výchozími 4 000 (proto `max_tris: 12000` v `models.yaml`). |
 | `models.pb` Prahy | 56,8 kB po gzipu (limit 1,5 MB). Střešní plán 296 polygonů (limit 400), `replaces` 28 budov Overture. |
-| Pata vs terén | Terén Prahy je zatím AWS Terrain Tiles (EU-DEM ~25 m, povrchový model) se silnicemi zarovnanými `conform`. Proti zemi zdroje (laser IPR) se na hraně hradního ostrohu rozchází o metry: pod katedrálou zdroj 256,4–257,3 m, DEM 248–253 m. Pata se proto staví jako u budov (žádný vrchol země nevisí, reliéf části převýšený jako terén); 12 z 48 částí je v mediánu zahrabaných víc než 2 m (nejvíc 10,1 m, jižní svah). `validate` to hlásí jako varování; zmizí s DMR 5G (M5-S4). |
+| Pata vs terén | Terén Prahy je zatím AWS Terrain Tiles (EU-DEM ~25 m, povrchový model) se silnicemi zarovnanými `conform`. Proti zemi zdroje (laser IPR) se na hraně hradního ostrohu rozchází o metry: pod katedrálou zdroj 256,4–257,3 m, DEM 248–253 m, na Hradčanském náměstí naopak výš. První verze stavěla patu na nejnižší terén pod půdorysem (jako budovy): 12 z 48 částí bylo zahrabaných víc než 2 m (nejvíc 10,1 m) a katedrála ve hře „seděla v jámě“. Teď pata = medián (terén − země zdroje) a spodní vrcholy stěn sjedou po terénu dolů: žádná stěna nevisí, `validate` bez varování. Přesnost zlepší DMR 5G (M5-S4). |
 | Karlův most | Mimo rozsah tohoto kola (mosty jsou v IPR samostatná sada „Mosty 3D“ za celou Prahu). |
 
 Licence ostatních měst (kap. 4.1): v tomto kole neověřováno – New York **nejasné**, Tokio (PLATEAU,
@@ -34,5 +34,12 @@ Balíček bez `models.pb` dál funguje (klienti ho berou jako volitelný).
 
 ## H2 – šikmý pohled ve W
 
-Viz `specs/models.md` (přepínání `near_m` s hysterezí, `replaces`, stíny ze střešního plánu, plán
-shora). Snímky a čas snímku v PR webu.
+W PR #325 (`web/src/world/models.ts`, `web/src/render/modelGeometry.ts`, `worldView`), viz
+`specs/models.md`: model do `near_m` 600 m s hysterezí 50 m, `replaces` (57 budov Overture včetně
+~40 částí katedrály) ve vlastních sítích, stíny z hranolů střešního plánu, plán shora.
+
+Čas snímku (headless Chromium se SwiftShaderem, tedy CPU – jen poměr): Hradčanské náměstí, šikmý
+pohled, p50 77 ms s modelem proti 70,7 ms bez (+9 %, limit +10 %), +10,7 tis. trojúhelníků
+(model 6,2 tis. + stíny plánu, minus skryté budovy), +2 draw cally. Na telefonech měří Ol1n
+(`plans/verify.yaml` M7-H2). Scéna `prague-landmarks` v `bench` zatím není: `web/test/pragueHills.test.ts`
+pevně hlídá seznam pražských tras, přidá se se změnou testu ve W.

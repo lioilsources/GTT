@@ -568,11 +568,14 @@ func buildPart(b *srcBuilding, mc config.ModelConfig, detail, weld float64, tg *
 	}
 	if tg != nil {
 		if planeOK {
-			lo := math.Inf(1)
-			for _, g := range gv {
-				lo = math.Min(lo, tg.At(geo.Pt{X: g.X, Y: g.Y})-zrel(g))
+			// The foot sits on the terrain in the median; foot vertices then follow the terrain
+			// down (below) so no wall hovers, uphill they stay buried.
+			ds := make([]float64, len(gv))
+			for i, g := range gv {
+				ds[i] = tg.At(geo.Pt{X: g.X, Y: g.Y}) - zrel(g)
 			}
-			part.BaseZDm = geo.DM(lo)
+			slices.Sort(ds)
+			part.BaseZDm = geo.DM(ds[len(ds)/2])
 		} else {
 			part.BaseZDm = baseZ(tg, fp)
 		}
@@ -682,6 +685,12 @@ func buildPart(b *srcBuilding, mc config.ModelConfig, detail, weld float64, tg *
 		}
 	}
 	slices.Sort(part.Foot)
+	if tg != nil && planeOK {
+		for _, i := range part.Foot {
+			p := geo.Pt{X: float64(ax+part.Positions[3*i]) / 10, Y: float64(ay+part.Positions[3*i+1]) / 10}
+			part.Positions[3*i+2] = min(part.Positions[3*i+2], geo.DM(tg.At(p))-part.BaseZDm)
+		}
+	}
 	return part, plan
 }
 
