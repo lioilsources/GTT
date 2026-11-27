@@ -1,6 +1,6 @@
 # Citypack – formát balíčku města
 
-**version: 5** · P0 · schéma `tools/citypack/proto/citypack.proto` (`format_version` 1)
+**version: 6** · P0 · schéma `tools/citypack/proto/citypack.proto` (`format_version` 1)
 
 ## Účel
 Jeden balíček města, který čtou oba klienti. Staví ho `citypack` (Go), čte F (`world_engine`) i W.
@@ -33,6 +33,8 @@ R = 6 371 008,8 m), v souborech decimetry `sint32`. Ploché seznamy `x0, y0, x1,
 - Modely památek (v5): `models.pb` a `Manifest.models_version` (`specs/models.md`). Balíček bez
   nich se kreslí jako v4, klient bez podpory soubor ignoruje; kolize se nemění.
   `Manifest.attribution` nese zdroj modelů.
+- Povrchy modelů (v6): `ModelPart.surfaces` (třída plochy CityGML na trojúhelník), role
+  `ROLE_SLATE`, `Manifest.models_version` 2 (`specs/models.md` v2). Starší klient pole ignoruje.
 
 ## Hraniční případy
 - Uzel s `border` = silnice opouští oblast, kreslí se uzavírka.

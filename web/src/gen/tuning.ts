@@ -6013,6 +6013,16 @@ export class TuningModels {
   footToleranceM: number;
   /** validate: model centre vs landmark point */
   maxOffsetM: number;
+  /** citypack: a part whose top is this high above the foot … */
+  copperMinTopM: number;
+  /** … and whose footprint is at most this × its height has copper roofs */
+  copperSlender: number;
+  /** W: stone wall texture, one bay (buttress + lancet window) across */
+  facadeBayM: number;
+  /** W: stone wall texture, one tier of lancet windows up */
+  facadeStoreyM: number;
+  /** W: roof texture, distance between seams (stripes down the slope) */
+  roofSeamM: number;
 
   constructor(r: R) {
     this.enabled = r.b('enabled');
@@ -6032,6 +6042,11 @@ export class TuningModels {
     this.replaceShare = r.d('replace_share');
     this.footToleranceM = r.d('foot_tolerance_m');
     this.maxOffsetM = r.d('max_offset_m');
+    this.copperMinTopM = r.d('copper_min_top_m');
+    this.copperSlender = r.d('copper_slender');
+    this.facadeBayM = r.d('facade_bay_m');
+    this.facadeStoreyM = r.d('facade_storey_m');
+    this.roofSeamM = r.d('roof_seam_m');
   }
 
   toJson(): Record<string, unknown> {
@@ -6053,6 +6068,11 @@ export class TuningModels {
       replace_share: this.replaceShare,
       foot_tolerance_m: this.footToleranceM,
       max_offset_m: this.maxOffsetM,
+      copper_min_top_m: this.copperMinTopM,
+      copper_slender: this.copperSlender,
+      facade_bay_m: this.facadeBayM,
+      facade_storey_m: this.facadeStoreyM,
+      roof_seam_m: this.roofSeamM,
     };
   }
 }

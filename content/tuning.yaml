@@ -1120,3 +1120,8 @@ models:
   replace_share: 0.6            # citypack: a pack building at least this covered is replaced
   foot_tolerance_m: 2.0         # validate: part foot vs terrain at its anchor (real metres)
   max_offset_m: 150.0           # validate: model centre vs landmark point
+  copper_min_top_m: 30.0        # citypack: a part whose top is this high above the foot …
+  copper_slender: 0.4           # … and whose footprint is at most this × its height has copper roofs
+  facade_bay_m: 5.0             # W: stone wall texture, one bay (buttress + lancet window) across
+  facade_storey_m: 14.0         # W: stone wall texture, one tier of lancet windows up
+  roof_seam_m: 0.9              # W: roof texture, distance between seams (stripes down the slope)

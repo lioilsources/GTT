@@ -2668,6 +2668,7 @@ class ModelPart extends $pb.GeneratedMessage {
     $core.List<$core.int>? roles,
     $core.String? sourceId,
     $core.Iterable<$core.int>? foot,
+    $core.List<$core.int>? surfaces,
   }) {
     final result = ModelPart._();
     if (anchorX != null) result.anchorX = anchorX;
@@ -2678,6 +2679,7 @@ class ModelPart extends $pb.GeneratedMessage {
     if (roles != null) result.roles = roles;
     if (sourceId != null) result.sourceId = sourceId;
     if (foot != null) result.foot.addAll(foot);
+    if (surfaces != null) result.surfaces = surfaces;
     return result;
   }
 
@@ -2703,6 +2705,8 @@ class ModelPart extends $pb.GeneratedMessage {
         6, _omitFieldNames ? '' : 'roles', $pb.PbFieldType.OY)
     ..aOS(7, _omitFieldNames ? '' : 'sourceId')
     ..p<$core.int>(8, _omitFieldNames ? '' : 'foot', $pb.PbFieldType.KU3)
+    ..a<$core.List<$core.int>>(
+        9, _omitFieldNames ? '' : 'surfaces', $pb.PbFieldType.OY)
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -2778,6 +2782,15 @@ class ModelPart extends $pb.GeneratedMessage {
 
   @$pb.TagNumber(8)
   $pb.PbList<$core.int> get foot => $_getList(7);
+
+  @$pb.TagNumber(9)
+  $core.List<$core.int> get surfaces => $_getN(8);
+  @$pb.TagNumber(9)
+  set surfaces($core.List<$core.int> value) => $_setBytes(8, value);
+  @$pb.TagNumber(9)
+  $core.bool hasSurfaces() => $_has(8);
+  @$pb.TagNumber(9)
+  void clearSurfaces() => $_clearField(9);
 }
 
 class BuildingRef extends $pb.GeneratedMessage {

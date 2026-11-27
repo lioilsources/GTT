@@ -43,3 +43,15 @@ pohled, p50 77 ms s modelem proti 70,7 ms bez (+9 %, limit +10 %), +10,7 tis. tr
 (model 6,2 tis. + stíny plánu, minus skryté budovy), +2 draw cally. Na telefonech měří Ol1n
 (`plans/verify.yaml` M7-H2). Scéna `prague-landmarks` v `bench` zatím není: `web/test/pragueHills.test.ts`
 pevně hlídá seznam pražských tras, přidá se se změnou testu ve W.
+
+## H2b – materiály a fasáda (specs/models.md v2)
+
+Podnět Ol1n: „katedrále chybí správná textura“ – v1 kreslila všechny stěny barvou `landmark` (zelená).
+Pipeline už čte `WallSurface` / `RoofSurface` (`GroundSurface` jen pro patu) a teď třídu ukládá do
+`ModelPart.surfaces`; role: omítka `wall`, katedrála `_70215` kámen `stone` a břidlice `slate`
+(`models.yaml` `walls` / `roles`), měď na věžích IPR a na štíhlých vysokých částech
+(`models.copper_min_top_m` 30 m, `copper_slender` 0,4: v areálu jen věže katedrály a dvě ploché
+střechy hlavní věže). Barvy `color.model.*`, `color.modelFacade.*`. W: procedurální fasáda (lomená
+okna a opěráky na kameni, okenní textura budov na omítce, pruhy po spádnici na střechách), tři sítě
+na model. Fotorealistický mesh IPR (CC BY, OBJ + JPG po listech, list Hradu 1,25 GB) zatím ne:
+objem, souvislá síť bez budov a značky na fotkách (R10).

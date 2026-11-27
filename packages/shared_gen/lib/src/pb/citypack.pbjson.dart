@@ -155,13 +155,28 @@ const ModelRole$json = {
     {'1': 'ROLE_STONE', '2': 3},
     {'1': 'ROLE_GLASS', '2': 4},
     {'1': 'ROLE_GOLD', '2': 5},
+    {'1': 'ROLE_SLATE', '2': 6},
   ],
 };
 
 /// Descriptor for `ModelRole`. Decode as a `google.protobuf.EnumDescriptorProto`.
 final $typed_data.Uint8List modelRoleDescriptor = $convert.base64Decode(
     'CglNb2RlbFJvbGUSDQoJUk9MRV9XQUxMEAASDQoJUk9MRV9ST09GEAESDwoLUk9MRV9DT1BQRV'
-    'IQAhIOCgpST0xFX1NUT05FEAMSDgoKUk9MRV9HTEFTUxAEEg0KCVJPTEVfR09MRBAF');
+    'IQAhIOCgpST0xFX1NUT05FEAMSDgoKUk9MRV9HTEFTUxAEEg0KCVJPTEVfR09MRBAFEg4KClJP'
+    'TEVfU0xBVEUQBg==');
+
+@$core.Deprecated('Use modelSurfaceDescriptor instead')
+const ModelSurface$json = {
+  '1': 'ModelSurface',
+  '2': [
+    {'1': 'SURFACE_WALL', '2': 0},
+    {'1': 'SURFACE_ROOF', '2': 1},
+  ],
+};
+
+/// Descriptor for `ModelSurface`. Decode as a `google.protobuf.EnumDescriptorProto`.
+final $typed_data.Uint8List modelSurfaceDescriptor = $convert.base64Decode(
+    'CgxNb2RlbFN1cmZhY2USEAoMU1VSRkFDRV9XQUxMEAASEAoMU1VSRkFDRV9ST09GEAE=');
 
 @$core.Deprecated('Use manifestDescriptor instead')
 const Manifest$json = {
@@ -860,6 +875,7 @@ const ModelPart$json = {
     {'1': 'roles', '3': 6, '4': 1, '5': 12, '10': 'roles'},
     {'1': 'source_id', '3': 7, '4': 1, '5': 9, '10': 'sourceId'},
     {'1': 'foot', '3': 8, '4': 3, '5': 13, '10': 'foot'},
+    {'1': 'surfaces', '3': 9, '4': 1, '5': 12, '10': 'surfaces'},
   ],
 };
 
@@ -869,7 +885,7 @@ final $typed_data.Uint8List modelPartDescriptor = $convert.base64Decode(
     'FSB2FuY2hvclkSGgoJYmFzZV96X2RtGAMgASgRUgdiYXNlWkRtEhwKCXBvc2l0aW9ucxgEIAMo'
     'EVIJcG9zaXRpb25zEhwKCXRyaWFuZ2xlcxgFIAMoDVIJdHJpYW5nbGVzEhQKBXJvbGVzGAYgAS'
     'gMUgVyb2xlcxIbCglzb3VyY2VfaWQYByABKAlSCHNvdXJjZUlkEhIKBGZvb3QYCCADKA1SBGZv'
-    'b3Q=');
+    'b3QSGgoIc3VyZmFjZXMYCSABKAxSCHN1cmZhY2Vz');
 
 @$core.Deprecated('Use buildingRefDescriptor instead')
 const BuildingRef$json = {
