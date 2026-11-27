@@ -186,14 +186,16 @@ func TestFitAffine(t *testing.T) {
 }
 
 func TestModelReplaces(t *testing.T) {
-	plan := &pb.PlanPoly{Points: []int32{0, 0, 200, 0, 200, 200, 0, 200}, RingEnds: []uint32{4}, Triangles: []uint32{0, 1, 2, 0, 2, 3}}
-	m := &pb.Model{RoofPlan: []*pb.PlanPoly{plan}}
-	b := func(x0, x1 int32) *pb.Building {
-		return &pb.Building{Rings: []int32{x0, 0, x1, 0, x1, 100, x0, 100}, RingEnds: []uint32{4}}
+	// A 20 × 20 m roof (two triangles) plus a wall that projects to a line.
+	part := &pb.ModelPart{Positions: []int32{0, 0, 100, 200, 0, 100, 200, 200, 100, 0, 200, 100, 0, 0, 0},
+		Triangles: []uint32{0, 1, 2, 0, 2, 3, 0, 4, 1}}
+	m := &pb.Model{Parts: []*pb.ModelPart{part}}
+	b := func(x0, x1 int32, lm uint32) *pb.Building {
+		return &pb.Building{Rings: []int32{x0, 0, x1, 0, x1, 100, x0, 100}, RingEnds: []uint32{4}, Landmark: lm}
 	}
-	chunks := map[[2]int]*pb.Chunk{{0, 0}: {Buildings: []*pb.Building{b(0, 100), b(150, 250), b(300, 400)}}}
-	got := modelReplaces(m, chunks, 0.6)
-	if len(got) != 1 || got[0].Index != 0 {
-		t.Fatalf("replaces %+v, want only building 0 (the second is 50 %% covered)", got)
+	chunks := map[[2]int]*pb.Chunk{{0, 0}: {Buildings: []*pb.Building{b(0, 100, 0), b(150, 250, 0), b(300, 400, 0), b(500, 600, 7)}}}
+	got := modelReplaces(m, chunks, 0.6, 7)
+	if len(got) != 2 || got[0].Index != 0 || got[1].Index != 3 {
+		t.Fatalf("replaces %+v, want buildings 0 and 3 (the second is 50 %% covered, the last is the landmark)", got)
 	}
 }

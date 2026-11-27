@@ -29,7 +29,7 @@ func (r Road) strip() float64 {
 // One grid diagonal: every corner of every cell the strip touches carries the road height, so
 // bilinear sampling anywhere on the strip reads the road profile. Then a blend to the terrain.
 type ConformParams struct {
-	SupportM    float64
+	SupportM float64
 	// MarginM widens the support past the corridor (sidewalks) edge: terrain within road width
 	// / 2 + MarginM reads the road height, so a street never sits in a trench (trench.margin_m).
 	MarginM     float64
