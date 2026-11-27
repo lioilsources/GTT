@@ -29,11 +29,13 @@ uložení se nemění, auto dál naráží do půdorysů vrstvy 0 v chuncích. �
 ## Pravidla
 **Pata.** Terén je převýšený (`Manifest.exaggeration`), zdroj ne. Pipeline proto zvedne každý
 vrchol části o (`exaggeration` − 1) × výšku roviny proložené zemí zdroje nad patou: reliéf pod
-částí je převýšený jako terén, výšky nad zemí zůstávají skutečné. `base_z_dm` = nejmenší
-(terén − pata) přes vrcholy země, takže žádný vrchol země nevisí. Bez terénu `base_z_dm` = 0.
+částí je převýšený jako terén, výšky nad zemí zůstávají skutečné. `base_z_dm` = medián
+(terén − pata) přes vrcholy země zdroje; vrcholy `foot`, pod kterými je terén níž, se pak sníží
+až na terén (z může být záporné), takže žádná stěna nevisí a do svahu se zahrabe jen horní strana.
+Bez terénu `base_z_dm` = 0 a pata zůstane rovná.
 
 **Výška vrcholu (oba klienti):** `z = base_z + displayHeight(extrusionScale(z_v))` jako u střech
-budov (`specs/terrain.md` „Jednotná zobrazená výška“).
+budov, pro `z_v ≤ 0` přímo `base_z + z_v` (`specs/terrain.md` „Jednotná zobrazená výška“).
 
 **Role a barvy.** `wall` = barva `landmark` palety města; ostatní `color.model.<day|night>.<role>`
 (`roof`, `copper`, `stone`, `glass`, `gold`), přepis `color.city.<id>.model<Role>` (jen den).
@@ -47,7 +49,8 @@ střešního plánu; zpátky na půdorysy až za `near_m + hysteresis_m` (bez pr
 `models.max_full` modelů, vyhrají nejbližší. Při kresleném modelu se budovy z `replaces` nekreslí
 (kolize zůstávají) a nevrhají stín; stín vrhají polygony střešního plánu jako hranoly do `height_m`
 (stejný postup jako budovy, `specs/style.md` „Vržené stíny“). Síť se staví, když je načtený chunk
-s kotvou první části, a uvolní se s ním. Model se nezprůhledňuje (`occluderFade` jen budovy).
+s kotvou první části, a uvolní se s ním. Model má materiál budov: zprůhledňuje se mezi kamerou a
+autem a jde do hloubkového průchodu risografu jako ony.
 
 **Pohled shora (W; F po bráně L).** Místo budov z `replaces` se kreslí střešní plán: každý polygon
 jako hranol od `base_z` do zobrazené výšky `height_m`, střecha v barvě `roof` × odstín
@@ -74,7 +77,7 @@ jako hranol od `base_z` do zobrazené výšky `height_m`, střecha v barvě `roo
 
 **Validate:** rozpočty (památka, město, `city_max_bytes` po gzipu), `roof_plan_max_polys`, indexy a
 role v rozsahu, žádný vrchol `foot` nad terénem víc než `foot_tolerance_m` (skutečné metry);
-zahrabání (medián) nad toleranci je jen varování (hrubý DEM proti zemi zdroje), těžiště modelu do
+zahrabání (medián) nad toleranci je jen varování, těžiště modelu do
 `max_offset_m` od bodu památky, atribuce zdroje v manifestu, `replaces` ukazují na budovy.
 
 ## Hraniční případy
