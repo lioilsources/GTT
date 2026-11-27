@@ -23,10 +23,22 @@ export interface ModelTris {
   walls: Tris;
   stone: Tris;
   roofs: Tris;
+  /** Photo texture trial (world/photoTrial.ts): triangles of the baked parts, atlas UVs. */
+  photo: Tris;
 }
 
 export function newModelTris(): ModelTris {
-  return { walls: new Tris(), stone: new Tris(), roofs: new Tris() };
+  return { walls: new Tris(), stone: new Tris(), roofs: new Tris(), photo: new Tris() };
+}
+
+/**
+ * Vertex colour of photo triangles (trial): the photo already carries the daylight, so white by
+ * day; at night the stone role's night / day ratio per channel (no new colour).
+ */
+export function photoTint(pal: Palette): Rgba {
+  if (!pal.night) return [1, 1, 1, 1];
+  const d = rgba(tokens.colorModelDayStone), n = rgba(tokens.colorModelNightStone);
+  return [n[0] / Math.max(1e-3, d[0]), n[1] / Math.max(1e-3, d[1]), n[2] / Math.max(1e-3, d[2]), 1];
 }
 
 /** A v1 pack has no surfaces: roofs are the roof-like roles. */
@@ -77,14 +89,16 @@ function lit(c: Rgba, k: number): Rgba {
  * flat shaded per triangle: walls ambient + (1 − ambient) × max(0, n · sun) as buildings, roofs
  * roofLight, in between by the slope. Triangles go to the mesh of their texture (v2 "Fasáda").
  */
-export function modelTris(m: ModelData, pal: Palette, cityId: string, tuning: Tuning, out: ModelTris, relief = true): void {
+export function modelTris(m: ModelData, pal: Palette, cityId: string, tuning: Tuning, out: ModelTris, relief = true, photo?: Map<number, Float32Array>): void {
   const H = cameraHeight(tuning);
   const cols = roleColors(pal, cityId);
+  const tint = photoTint(pal);
   // Foot vertices may lie below the foot (they follow the terrain down, specs/models.md "Pata").
   const disp = (z: number): number => (z <= 0 ? z : displayHeight(extrusionScale(z, tuning), H));
-  for (const p of m.parts) {
+  m.parts.forEach((p, pi) => {
     const base = relief ? p.baseZ : 0;
     const P = p.pos;
+    const puv = photo?.get(pi);
     for (let k = 0; k + 2 < p.tris.length; k += 3) {
       const a = 3 * p.tris[k]!, b = 3 * p.tris[k + 1]!, c = 3 * p.tris[k + 2]!;
       const ax = P[a]!, ay = P[a + 1]!, az = base + disp(P[a + 2]!);
@@ -94,12 +108,20 @@ export function modelTris(m: ModelData, pal: Palette, cityId: string, tuning: Tu
       const nx = uy * vz - uz * vy, ny = uz * vx - ux * vz, nz = ux * vy - uy * vx;
       const nl = Math.hypot(nx, ny, nz);
       if (nl < 1e-9) continue;
+      const ti = k / 3;
+      if (puv && 6 * ti + 5 < puv.length) {
+        const o = out.photo, q = 6 * ti;
+        const i0 = o.vertex(ax, ay, az, tint, puv[q]!, puv[q + 1]!);
+        const i1 = o.vertex(bx, by, bz, tint, puv[q + 2]!, puv[q + 3]!);
+        const i2 = o.vertex(cx, cy, cz, tint, puv[q + 4]!, puv[q + 5]!);
+        o.tri(i0, i1, i2);
+        continue;
+      }
       // Lit like buildings: walls by the palette sun, roofs by roofLight, blended by the slope.
       const nh = Math.hypot(nx, ny);
       const wall = pal.ambient + (1 - pal.ambient) * (nh > 1e-9 ? Math.max(0, (nx * pal.sunX + ny * pal.sunY) / nh) : 0);
       const t = Math.abs(nz) / nl;
       const light = (1 - t) * wall + t * pal.roofLight;
-      const ti = k / 3;
       const role = ti < p.roles.length ? p.roles[ti]! : ModelRole.ROLE_WALL;
       const col = lit(cols[role] ?? cols[ModelRole.ROLE_WALL]!, light);
       const kind = isRoof(p, ti) ? 'roofs' : role === ModelRole.ROLE_STONE ? 'stone' : 'walls';
@@ -112,7 +134,7 @@ export function modelTris(m: ModelData, pal: Palette, cityId: string, tuning: Tu
       const i2 = o.vertex(cx, cy, cz, col, u2, v2);
       o.tri(i0, i1, i2);
     }
-  }
+  });
 }
 
 /** Roof colour of a plan polygon: roof × (0.7 + 0.1 × shade) (specs/models.md "Pohled shora"). */
