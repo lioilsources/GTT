@@ -1,16 +1,54 @@
-import { ModelRole } from '../gen/pb/citypack_pb';
+import { ModelRole, ModelSurface } from '../gen/pb/citypack_pb';
 import { tokens } from '../gen/tokens';
 import type { Tuning } from '../gen/tuning';
 import type { BuildingData } from '../world/chunk';
-import type { ModelData } from '../world/models';
+import type { ModelData, ModelPartData } from '../world/models';
 import { cameraHeight, displayHeight, extrusionScale } from '../world/camera';
 import { TEX_SIZE, Tris } from './geometry';
 import { cityTokenPrefix, rgba, type Palette, type Rgba } from './palette';
 
 /** Texture coordinate of a plain texel of the facade texture (as building roofs). */
 const PLAIN_UV = 2 / TEX_SIZE;
+/** Window texture of buildings: texture units per metre (as geometry.ts walls). */
+const U_PER_M = 16 / TEX_SIZE;
+const V_PER_M = 20 / TEX_SIZE;
+/** The roof texture holds four seams across (textures.ts modelRoofTexture). */
+const ROOF_SEAMS_PER_TILE = 4;
 
-/** Role colours (specs/models.md): wall = the city's landmark colour, the rest color.model.<day|night>. */
+/**
+ * The full model split by texture (specs/models.md v2 "Fasáda"): plaster and other walls with the
+ * window texture of buildings, stone walls with the lancet bay texture, roofs with the seam texture.
+ */
+export interface ModelTris {
+  walls: Tris;
+  stone: Tris;
+  roofs: Tris;
+}
+
+export function newModelTris(): ModelTris {
+  return { walls: new Tris(), stone: new Tris(), roofs: new Tris() };
+}
+
+/** A v1 pack has no surfaces: roofs are the roof-like roles. */
+function isRoof(p: ModelPartData, t: number): boolean {
+  if (t < p.surfaces.length) return p.surfaces[t] === ModelSurface.SURFACE_ROOF;
+  const r = t < p.roles.length ? p.roles[t]! : ModelRole.ROLE_WALL;
+  return r === ModelRole.ROLE_ROOF || r === ModelRole.ROLE_COPPER || r === ModelRole.ROLE_GOLD || r === ModelRole.ROLE_SLATE;
+}
+
+/**
+ * Texture coordinates of a model vertex (specs/models.md v2 "Fasáda"): (tx, ty) is the horizontal
+ * tangent of the face, (−n_y, n_x)/|n_xy|, or (1, 0) on a flat face; [h] the height above the foot.
+ */
+export function modelUV(kind: 'walls' | 'stone' | 'roofs', x: number, y: number, h: number, tx: number, ty: number, tuning: Tuning): [number, number] {
+  const s = x * tx + y * ty;
+  const t = tuning.models;
+  if (kind === 'roofs') return [s / (ROOF_SEAMS_PER_TILE * t.roofSeamM), 0.5];
+  if (kind === 'stone') return [s / t.facadeBayM, h / t.facadeStoreyM];
+  return [s * U_PER_M, h * V_PER_M];
+}
+
+/** Role colours (specs/models.md v2): color.model.<day|night>.<role>, by day the city's override. */
 export function roleColors(pal: Palette, cityId: string): Rgba[] {
   const tk = tokens as unknown as Record<string, unknown>;
   const pre = cityTokenPrefix(cityId) + 'Model';
@@ -20,12 +58,13 @@ export function roleColors(pal: Palette, cityId: string): Rgba[] {
     return rgba(pal.night ? night : day);
   };
   const out: Rgba[] = [];
-  out[ModelRole.ROLE_WALL] = pal.landmark;
+  out[ModelRole.ROLE_WALL] = pick('Wall', tokens.colorModelDayWall, tokens.colorModelNightWall);
   out[ModelRole.ROLE_ROOF] = pick('Roof', tokens.colorModelDayRoof, tokens.colorModelNightRoof);
   out[ModelRole.ROLE_COPPER] = pick('Copper', tokens.colorModelDayCopper, tokens.colorModelNightCopper);
   out[ModelRole.ROLE_STONE] = pick('Stone', tokens.colorModelDayStone, tokens.colorModelNightStone);
   out[ModelRole.ROLE_GLASS] = pick('Glass', tokens.colorModelDayGlass, tokens.colorModelNightGlass);
   out[ModelRole.ROLE_GOLD] = pick('Gold', tokens.colorModelDayGold, tokens.colorModelNightGold);
+  out[ModelRole.ROLE_SLATE] = pick('Slate', tokens.colorModelDaySlate, tokens.colorModelNightSlate);
   return out;
 }
 
@@ -36,9 +75,9 @@ function lit(c: Rgba, k: number): Rgba {
 /**
  * The full model (specs/models.md "Šikmý pohled"): vertices at z = base_z + displayHeight(z_v),
  * flat shaded per triangle: walls ambient + (1 − ambient) × max(0, n · sun) as buildings, roofs
- * roofLight, in between by the slope.
+ * roofLight, in between by the slope. Triangles go to the mesh of their texture (v2 "Fasáda").
  */
-export function modelTris(m: ModelData, pal: Palette, cityId: string, tuning: Tuning, out: Tris, relief = true): void {
+export function modelTris(m: ModelData, pal: Palette, cityId: string, tuning: Tuning, out: ModelTris, relief = true): void {
   const H = cameraHeight(tuning);
   const cols = roleColors(pal, cityId);
   // Foot vertices may lie below the foot (they follow the terrain down, specs/models.md "Pata").
@@ -60,11 +99,18 @@ export function modelTris(m: ModelData, pal: Palette, cityId: string, tuning: Tu
       const wall = pal.ambient + (1 - pal.ambient) * (nh > 1e-9 ? Math.max(0, (nx * pal.sunX + ny * pal.sunY) / nh) : 0);
       const t = Math.abs(nz) / nl;
       const light = (1 - t) * wall + t * pal.roofLight;
-      const col = lit(cols[k / 3 < p.roles.length ? p.roles[k / 3]! : 0] ?? pal.landmark, light);
-      const i0 = out.vertex(ax, ay, az, col, PLAIN_UV, PLAIN_UV);
-      const i1 = out.vertex(bx, by, bz, col, PLAIN_UV, PLAIN_UV);
-      const i2 = out.vertex(cx, cy, cz, col, PLAIN_UV, PLAIN_UV);
-      out.tri(i0, i1, i2);
+      const ti = k / 3;
+      const role = ti < p.roles.length ? p.roles[ti]! : ModelRole.ROLE_WALL;
+      const col = lit(cols[role] ?? cols[ModelRole.ROLE_WALL]!, light);
+      const kind = isRoof(p, ti) ? 'roofs' : role === ModelRole.ROLE_STONE ? 'stone' : 'walls';
+      const tx = nh > 1e-6 * nl ? -ny / nh : 1, ty = nh > 1e-6 * nl ? nx / nh : 0;
+      const o = out[kind];
+      const uv = (x: number, y: number, z: number): [number, number] => modelUV(kind, x, y, z - base, tx, ty, tuning);
+      const [u0, v0] = uv(ax, ay, az), [u1, v1] = uv(bx, by, bz), [u2, v2] = uv(cx, cy, cz);
+      const i0 = o.vertex(ax, ay, az, col, u0, v0);
+      const i1 = o.vertex(bx, by, bz, col, u1, v1);
+      const i2 = o.vertex(cx, cy, cz, col, u2, v2);
+      o.tri(i0, i1, i2);
     }
   }
 }

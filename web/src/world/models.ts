@@ -15,6 +15,8 @@ export interface ModelPartData {
   pos: Float32Array;
   tris: Uint32Array;
   roles: Uint8Array;
+  /** CityGML surface class per triangle (ModelSurface, v2); empty for a v1 pack. */
+  surfaces: Uint8Array;
 }
 
 /** A roof-plan polygon (PlanPoly) in world metres. */
@@ -53,7 +55,7 @@ export function prepareModels(m: Models, chunkM: number): ModelData[] {
         pos[i + 1] = ay + p.positions[i + 1]! / 10;
         pos[i + 2] = p.positions[i + 2]! / 10;
       }
-      return { ax, ay, baseZ: p.baseZDm / 10, pos, tris: Uint32Array.from(p.triangles), roles: Uint8Array.from(p.roles) };
+      return { ax, ay, baseZ: p.baseZDm / 10, pos, tris: Uint32Array.from(p.triangles), roles: Uint8Array.from(p.roles), surfaces: Uint8Array.from(p.surfaces) };
     });
     let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
     const plan = md.roofPlan.map((pp): PlanPolyData => {
