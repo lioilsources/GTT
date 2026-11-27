@@ -309,15 +309,22 @@ enum ModelSource {
   MODEL_SOURCE_MANUAL = 5;
 }
 
-// Surface role of a model triangle; colours from design/tokens.json color.model.<role>
-// (wall = the city's `landmark` colour).
+// Material role of a model triangle; colours from design/tokens.json color.model.<role>
+// (v2: wall = plaster colour `wall`, v1 drew it in the city's `landmark` colour).
 enum ModelRole {
-  ROLE_WALL = 0;
-  ROLE_ROOF = 1;
-  ROLE_COPPER = 2;
-  ROLE_STONE = 3;
+  ROLE_WALL = 0;                   // plaster wall
+  ROLE_ROOF = 1;                   // tiled roof
+  ROLE_COPPER = 2;                 // copper patina: tower roofs, slender tall parts
+  ROLE_STONE = 3;                  // dressed stone (dark sandstone)
   ROLE_GLASS = 4;
   ROLE_GOLD = 5;
+  ROLE_SLATE = 6;                  // v2: slate or lead roof
+}
+
+// v2: CityGML boundary surface class of a model triangle (GroundSurface is never drawn).
+enum ModelSurface {
+  SURFACE_WALL = 0;                // WallSurface
+  SURFACE_ROOF = 1;                // RoofSurface
 }
 
 message Model {
@@ -339,6 +346,7 @@ message ModelPart {
   bytes roles = 6;                 // one ModelRole per triangle
   string source_id = 7;            // id of the source building (gml:id), for models.yaml overrides
   repeated uint32 foot = 8;        // vertices on the source ground (wall bottoms), for validate
+  bytes surfaces = 9;              // v2: one ModelSurface per triangle (empty in v1: walls = vertical)
 }
 
 message BuildingRef {

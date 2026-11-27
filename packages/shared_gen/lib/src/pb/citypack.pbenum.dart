@@ -227,8 +227,8 @@ class ModelSource extends $pb.ProtobufEnum {
   const ModelSource._(super.value, super.name);
 }
 
-/// Surface role of a model triangle; colours from design/tokens.json color.model.<role>
-/// (wall = the city's `landmark` colour).
+/// Material role of a model triangle; colours from design/tokens.json color.model.<role>
+/// (v2: wall = plaster colour `wall`, v1 drew it in the city's `landmark` colour).
 class ModelRole extends $pb.ProtobufEnum {
   static const ModelRole ROLE_WALL =
       ModelRole._(0, _omitEnumNames ? '' : 'ROLE_WALL');
@@ -242,6 +242,8 @@ class ModelRole extends $pb.ProtobufEnum {
       ModelRole._(4, _omitEnumNames ? '' : 'ROLE_GLASS');
   static const ModelRole ROLE_GOLD =
       ModelRole._(5, _omitEnumNames ? '' : 'ROLE_GOLD');
+  static const ModelRole ROLE_SLATE =
+      ModelRole._(6, _omitEnumNames ? '' : 'ROLE_SLATE');
 
   static const $core.List<ModelRole> values = <ModelRole>[
     ROLE_WALL,
@@ -250,14 +252,35 @@ class ModelRole extends $pb.ProtobufEnum {
     ROLE_STONE,
     ROLE_GLASS,
     ROLE_GOLD,
+    ROLE_SLATE,
   ];
 
   static final $core.List<ModelRole?> _byValue =
-      $pb.ProtobufEnum.$_initByValueList(values, 5);
+      $pb.ProtobufEnum.$_initByValueList(values, 6);
   static ModelRole? valueOf($core.int value) =>
       value < 0 || value >= _byValue.length ? null : _byValue[value];
 
   const ModelRole._(super.value, super.name);
+}
+
+/// v2: CityGML boundary surface class of a model triangle (GroundSurface is never drawn).
+class ModelSurface extends $pb.ProtobufEnum {
+  static const ModelSurface SURFACE_WALL =
+      ModelSurface._(0, _omitEnumNames ? '' : 'SURFACE_WALL');
+  static const ModelSurface SURFACE_ROOF =
+      ModelSurface._(1, _omitEnumNames ? '' : 'SURFACE_ROOF');
+
+  static const $core.List<ModelSurface> values = <ModelSurface>[
+    SURFACE_WALL,
+    SURFACE_ROOF,
+  ];
+
+  static final $core.List<ModelSurface?> _byValue =
+      $pb.ProtobufEnum.$_initByValueList(values, 1);
+  static ModelSurface? valueOf($core.int value) =>
+      value < 0 || value >= _byValue.length ? null : _byValue[value];
+
+  const ModelSurface._(super.value, super.name);
 }
 
 const $core.bool _omitEnumNames =

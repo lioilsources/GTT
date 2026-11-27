@@ -6374,7 +6374,12 @@ class TuningModels {
         planSimplifyM = r.d('plan_simplify_m'),
         replaceShare = r.d('replace_share'),
         footToleranceM = r.d('foot_tolerance_m'),
-        maxOffsetM = r.d('max_offset_m');
+        maxOffsetM = r.d('max_offset_m'),
+        copperMinTopM = r.d('copper_min_top_m'),
+        copperSlender = r.d('copper_slender'),
+        facadeBayM = r.d('facade_bay_m'),
+        facadeStoreyM = r.d('facade_storey_m'),
+        roofSeamM = r.d('roof_seam_m');
 
   bool enabled;
 
@@ -6423,6 +6428,21 @@ class TuningModels {
   /// validate: model centre vs landmark point
   double maxOffsetM;
 
+  /// citypack: a part whose top is this high above the foot …
+  double copperMinTopM;
+
+  /// … and whose footprint is at most this × its height has copper roofs
+  double copperSlender;
+
+  /// W: stone wall texture, one bay (buttress + lancet window) across
+  double facadeBayM;
+
+  /// W: stone wall texture, one tier of lancet windows up
+  double facadeStoreyM;
+
+  /// W: roof texture, distance between seams (stripes down the slope)
+  double roofSeamM;
+
   Map<String, Object> toJson() => {
         'enabled': enabled,
         'max_tris': maxTris,
@@ -6441,5 +6461,10 @@ class TuningModels {
         'replace_share': replaceShare,
         'foot_tolerance_m': footToleranceM,
         'max_offset_m': maxOffsetM,
+        'copper_min_top_m': copperMinTopM,
+        'copper_slender': copperSlender,
+        'facade_bay_m': facadeBayM,
+        'facade_storey_m': facadeStoreyM,
+        'roof_seam_m': roofSeamM,
       };
 }

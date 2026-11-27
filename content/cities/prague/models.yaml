@@ -19,4 +19,7 @@ models:
     include: []
     exclude: []
     max_tris: 12000
-    roles: {}
+    # specs/models.md v2 "Role": St. Vitus Cathedral (_70215) has dark sandstone walls and a slate
+    # roof; its towers keep copper (IPR "vyznacna vez na strese"). The palaces stay plaster.
+    roles: {_70215: slate}
+    walls: {_70215: stone}

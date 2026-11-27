@@ -128,6 +128,8 @@ type ModelsTuning struct {
 	ReplaceShare     float64 `yaml:"replace_share"`
 	FootTolM         float64 `yaml:"foot_tolerance_m"`
 	MaxOffsetM       float64 `yaml:"max_offset_m"`
+	CopperMinTopM    float64 `yaml:"copper_min_top_m"` // v2: slender tall parts get copper roofs
+	CopperSlender    float64 `yaml:"copper_slender"`
 }
 
 // ModelsFile is content/cities/<id>/models.yaml (specs/models.md, METROPOLE_LANDMARKS3D_PLAN 4.3).
@@ -145,7 +147,8 @@ type ModelConfig struct {
 	Include []string          `yaml:"include"`
 	Exclude []string          `yaml:"exclude"`
 	MaxTris int               `yaml:"max_tris"`
-	Roles   map[string]string `yaml:"roles"` // source building id → role of its roofs
+	Roles   map[string]string `yaml:"roles"` // source building or part id → role of its roofs
+	Walls   map[string]string `yaml:"walls"` // v2: source building or part id → role of its walls
 	Manual  string            `yaml:"manual"`
 }
 
@@ -310,6 +313,7 @@ func (t *Tuning) check() error {
 		"models.roof_plan_max_polys": float64(t.Models.RoofPlanMaxPolys), "models.weld_m": t.Models.WeldM,
 		"models.plan_simplify_m": t.Models.PlanSimplifyM, "models.replace_share": t.Models.ReplaceShare,
 		"models.foot_tolerance_m": t.Models.FootTolM, "models.max_offset_m": t.Models.MaxOffsetM,
+		"models.copper_min_top_m": t.Models.CopperMinTopM, "models.copper_slender": t.Models.CopperSlender,
 	} {
 		if v <= 0 {
 			return fmt.Errorf("tuning.yaml: %s missing or not positive", name)

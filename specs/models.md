@@ -1,6 +1,6 @@
 # Modely památek
 
-**version: 1** · P2 (vzhled), data v citypacku · plán `Prompts/06-METROPOLE_LANDMARKS3D_PLAN.md` ·
+**version: 2** · P2 (vzhled), data v citypacku · plán `Prompts/06-METROPOLE_LANDMARKS3D_PLAN.md` ·
 pod-plán `plans/M7_PAMATKY.md` · parita F-085 · bez vektorů
 
 ## Účel
@@ -16,7 +16,9 @@ uložení se nemění, auto dál naráží do půdorysů vrstvy 0 v chuncích. �
 - `parts[]` = budovy zdroje, každá stojí na terénu sama (`ModelPart`):
   `anchor_x/y` (dm, těžiště půdorysu), `base_z_dm` (herní výška paty), `positions` (x, y, z po
   vrcholech; x, y dm od kotvy, z dm nad patou), `triangles` (CCW zvenku), `roles` (bajt `ModelRole`
-  na trojúhelník), `foot` (vrcholy na zemi zdroje), `source_id`.
+  na trojúhelník: materiál), `surfaces` (v2, bajt `ModelSurface` na trojúhelník: třída plochy
+  CityGML `WallSurface` → `SURFACE_WALL`, `RoofSurface` → `SURFACE_ROOF`; `GroundSurface` se nekreslí
+  a do sítě nejde), `foot` (vrcholy na zemi zdroje), `source_id`.
 - `replaces[]` = budovy balíčku (`chunk_x`, `chunk_y`, `index` do `Chunk.buildings`), které
   trojúhelníky modelu při pohledu shora zakrývají aspoň z `models.replace_share` (vzorky po ≤ 1 m),
   a vždy všechny budovy samotné památky (`Building.landmark`).
@@ -24,7 +26,8 @@ uložení se nemění, auto dál naráží do půdorysů vrstvy 0 v chuncích. �
   CCW, díry CW), `triangles`, `height_m` (nejvyšší bod střechy nad patou), `shade` 0–3,
   `base_z_dm` části.
 - `tris` = součet trojúhelníků.
-`Manifest.models_version` = 1; 0 nebo chybějící soubor = žádné modely.
+`Manifest.models_version` = 2 (v1 bez `surfaces` a bez role `slate`); 0 nebo chybějící soubor =
+žádné modely. Klient v1 čte balíček v2 dál (nové pole ignoruje, neznámou roli kreslí jako stěnu).
 
 ## Pravidla
 **Pata.** Terén je převýšený (`Manifest.exaggeration`), zdroj ne. Pipeline proto zvedne každý
@@ -37,12 +40,35 @@ Bez terénu `base_z_dm` = 0 a pata zůstane rovná.
 **Výška vrcholu (oba klienti):** `z = base_z + displayHeight(extrusionScale(z_v))` jako u střech
 budov, pro `z_v ≤ 0` přímo `base_z + z_v` (`specs/terrain.md` „Jednotná zobrazená výška“).
 
-**Role a barvy.** `wall` = barva `landmark` palety města; ostatní `color.model.<day|night>.<role>`
-(`roof`, `copper`, `stone`, `glass`, `gold`), přepis `color.city.<id>.model<Role>` (jen den).
+**Role a barvy (v2).** Každá role má barvu `color.model.<day|night>.<role>` (`wall` omítka,
+`roof` taška, `copper` měděná patina, `stone` tmavý pískovec, `glass`, `gold`, `slate` břidlice
+nebo olovo), přepis `color.city.<id>.model<Role>` (jen den). V1 kreslila `wall` barvou `landmark`
+palety města, celý model pak byl zelený.
 Světlo po trojúhelnících jako u budov: svislá plocha `ambient + (1 − ambient) × max(0, n · slunce)`,
-vodorovná `roofLight`, mezi nimi podle sklonu (váha |n_z|). Pipeline: střecha `roof`, stěna `wall`,
-střecha části „vyznacna vez na strese“ (IPR) `copper`, přepis `models.yaml` `roles` podle id budovy
-nebo části zdroje.
+vodorovná `roofLight`, mezi nimi podle sklonu (váha |n_z|).
+
+**Role v pipeline (v2), po pořadí, pozdější vyhrává.** Stěna (`WallSurface`): `wall` → `models.yaml`
+`walls` podle id budovy zdroje → `walls` podle id části. Střecha (`RoofSurface`): `roof` →
+`roles` podle id budovy → `copper`, je-li část věž („vyznacna vez na strese“, IPR) nebo štíhlá
+a vysoká → `roles` podle id části (jen id různé od budovy). Štíhlá a vysoká část: ne instalace
+(`BuildingInstallation`), vrchol aspoň `models.copper_min_top_m` nad patou budovy a delší strana
+obálky půdorysu části nejvýš `models.copper_slender` × výška části (vrchol − nejnižší bod části).
+Stěny věží zůstávají stěnami své budovy (kámen katedrály), měď dostanou jen střechy a špice.
+
+**Fasáda (W, v2).** Bez fotografií, procedurálně v enginu (dynamická textura, kreslí se násobením
+barvy vrcholu, bílá = beze změny, barvy `color.modelFacade.<day|night>`):
+- Stěny `stone`: pole `models.facade_bay_m` široké, `models.facade_storey_m` vysoké; na levém
+  okraji pole opěrák (`buttress`), uprostřed lomené (gotické) okno (`window`, kružba `tracery`,
+  v noci část oken `lit`), dole římsa (`course`). Souřadnice: u = (x, y) · t / bay, t vodorovná
+  tečna stěny (−n_y, n_x)/|n_xy|, v = (z − base_z) / storey (zobrazená výška).
+- Stěny ostatních rolí: okenní textura budov (`specs/style.md`), u = (x, y) · t, v = z − base_z
+  v metrech jako zdi budov.
+- Střechy (každá role): svislé pruhy po spádnici (plechové nebo tašková drážka, `seam`) po
+  `models.roof_seam_m`; u = (x, y) · t / (4 × roof_seam_m), pro vodorovnou střechu u = x / (4 ×
+  roof_seam_m).
+Tři sítě na model (okenní stěny, kamenné stěny, střechy), všechny s materiálem budov (průhlednost
+před autem, hloubkový průchod risografu, tunel). Rozpočet: čas snímku p99 v šikmém pohledu na Hrad
+nejvýš +10 % proti pohledu bez modelu.
 
 **Šikmý pohled (W).** Model se kreslí, když je auto blíž než `models.near_m` k nejbližšímu bodu
 střešního plánu; zpátky na půdorysy až za `near_m + hysteresis_m` (bez probliknutí). Naráz nejvýš
@@ -54,7 +80,7 @@ autem a jde do hloubkového průchodu risografu jako ony.
 
 **Pohled shora (W; F po bráně L).** Místo budov z `replaces` se kreslí střešní plán: každý polygon
 jako hranol od `base_z` do zobrazené výšky `height_m`, střecha v barvě `roof` × odstín
-`0,7 + 0,1 × shade`, stěny `landmark`. Pořadí podle `height_m` (2D klient).
+`0,7 + 0,1 × shade`, stěny `landmark` (beze změny ve v2). Pořadí podle `height_m` (2D klient).
 
 **Odstín** (`shade`): normála střechy `n` proti pevnému světlu (azimut 315°, výška 45°),
 `d = n · l`: `d < 0,25` → 0, `< 0,55` → 1, `< 0,85` → 2, jinak 3.
@@ -87,5 +113,7 @@ zahrabání (medián) nad toleranci je jen varování, těžiště modelu do
 - Teleport: přepnutí model ↔ půdorys proběhne v dalším snímku podle nové polohy.
 
 ## Scénář
-Žádné vektory (P2). Ruční kontrola (`plans/verify.yaml`): u Hradu v šikmém pohledu je model,
+Žádné vektory (P2, vzhled bez pravidel; vektory `vectors/` jsou jen P0). Pravidla rolí a
+štíhlosti hlídají tabulkové testy `tools/citypack` (`TestSurfaceRole`), UV a barvy testy W
+(`web/test/models.test.ts`). Ruční kontrola (`plans/verify.yaml`): u Hradu v šikmém pohledu je model,
 1 km od něj půdorys, přepnutí bez probliknutí; shora střešní plán.

@@ -433,17 +433,18 @@ func (ModelSource) EnumDescriptor() ([]byte, []int) {
 	return file_citypack_proto_rawDescGZIP(), []int{6}
 }
 
-// Surface role of a model triangle; colours from design/tokens.json color.model.<role>
-// (wall = the city's `landmark` colour).
+// Material role of a model triangle; colours from design/tokens.json color.model.<role>
+// (v2: wall = plaster colour `wall`, v1 drew it in the city's `landmark` colour).
 type ModelRole int32
 
 const (
-	ModelRole_ROLE_WALL   ModelRole = 0
-	ModelRole_ROLE_ROOF   ModelRole = 1
-	ModelRole_ROLE_COPPER ModelRole = 2
-	ModelRole_ROLE_STONE  ModelRole = 3
+	ModelRole_ROLE_WALL   ModelRole = 0 // plaster wall
+	ModelRole_ROLE_ROOF   ModelRole = 1 // tiled roof
+	ModelRole_ROLE_COPPER ModelRole = 2 // copper patina: tower roofs, slender tall parts
+	ModelRole_ROLE_STONE  ModelRole = 3 // dressed stone (dark sandstone)
 	ModelRole_ROLE_GLASS  ModelRole = 4
 	ModelRole_ROLE_GOLD   ModelRole = 5
+	ModelRole_ROLE_SLATE  ModelRole = 6 // v2: slate or lead roof
 )
 
 // Enum value maps for ModelRole.
@@ -455,6 +456,7 @@ var (
 		3: "ROLE_STONE",
 		4: "ROLE_GLASS",
 		5: "ROLE_GOLD",
+		6: "ROLE_SLATE",
 	}
 	ModelRole_value = map[string]int32{
 		"ROLE_WALL":   0,
@@ -463,6 +465,7 @@ var (
 		"ROLE_STONE":  3,
 		"ROLE_GLASS":  4,
 		"ROLE_GOLD":   5,
+		"ROLE_SLATE":  6,
 	}
 )
 
@@ -491,6 +494,53 @@ func (x ModelRole) Number() protoreflect.EnumNumber {
 // Deprecated: Use ModelRole.Descriptor instead.
 func (ModelRole) EnumDescriptor() ([]byte, []int) {
 	return file_citypack_proto_rawDescGZIP(), []int{7}
+}
+
+// v2: CityGML boundary surface class of a model triangle (GroundSurface is never drawn).
+type ModelSurface int32
+
+const (
+	ModelSurface_SURFACE_WALL ModelSurface = 0 // WallSurface
+	ModelSurface_SURFACE_ROOF ModelSurface = 1 // RoofSurface
+)
+
+// Enum value maps for ModelSurface.
+var (
+	ModelSurface_name = map[int32]string{
+		0: "SURFACE_WALL",
+		1: "SURFACE_ROOF",
+	}
+	ModelSurface_value = map[string]int32{
+		"SURFACE_WALL": 0,
+		"SURFACE_ROOF": 1,
+	}
+)
+
+func (x ModelSurface) Enum() *ModelSurface {
+	p := new(ModelSurface)
+	*p = x
+	return p
+}
+
+func (x ModelSurface) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (ModelSurface) Descriptor() protoreflect.EnumDescriptor {
+	return file_citypack_proto_enumTypes[8].Descriptor()
+}
+
+func (ModelSurface) Type() protoreflect.EnumType {
+	return &file_citypack_proto_enumTypes[8]
+}
+
+func (x ModelSurface) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use ModelSurface.Descriptor instead.
+func (ModelSurface) EnumDescriptor() ([]byte, []int) {
+	return file_citypack_proto_rawDescGZIP(), []int{8}
 }
 
 // manifest.pb
@@ -2570,6 +2620,7 @@ type ModelPart struct {
 	Roles         []byte                 `protobuf:"bytes,6,opt,name=roles,proto3" json:"roles,omitempty"`                         // one ModelRole per triangle
 	SourceId      string                 `protobuf:"bytes,7,opt,name=source_id,json=sourceId,proto3" json:"source_id,omitempty"`   // id of the source building (gml:id), for models.yaml overrides
 	Foot          []uint32               `protobuf:"varint,8,rep,packed,name=foot,proto3" json:"foot,omitempty"`                   // vertices on the source ground (wall bottoms), for validate
+	Surfaces      []byte                 `protobuf:"bytes,9,opt,name=surfaces,proto3" json:"surfaces,omitempty"`                   // v2: one ModelSurface per triangle (empty in v1: walls = vertical)
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -2656,6 +2707,13 @@ func (x *ModelPart) GetSourceId() string {
 func (x *ModelPart) GetFoot() []uint32 {
 	if x != nil {
 		return x.Foot
+	}
+	return nil
+}
+
+func (x *ModelPart) GetSurfaces() []byte {
+	if x != nil {
+		return x.Surfaces
 	}
 	return nil
 }
@@ -2999,7 +3057,7 @@ const file_citypack_proto_rawDesc = "" +
 	"\x05parts\x18\x03 \x03(\v2\x13.citypack.ModelPartR\x05parts\x121\n" +
 	"\breplaces\x18\x04 \x03(\v2\x15.citypack.BuildingRefR\breplaces\x12/\n" +
 	"\troof_plan\x18\x05 \x03(\v2\x12.citypack.PlanPolyR\broofPlan\x12\x12\n" +
-	"\x04tris\x18\x06 \x01(\rR\x04tris\"\xe0\x01\n" +
+	"\x04tris\x18\x06 \x01(\rR\x04tris\"\xfc\x01\n" +
 	"\tModelPart\x12\x19\n" +
 	"\banchor_x\x18\x01 \x01(\x11R\aanchorX\x12\x19\n" +
 	"\banchor_y\x18\x02 \x01(\x11R\aanchorY\x12\x1a\n" +
@@ -3008,7 +3066,8 @@ const file_citypack_proto_rawDesc = "" +
 	"\ttriangles\x18\x05 \x03(\rR\ttriangles\x12\x14\n" +
 	"\x05roles\x18\x06 \x01(\fR\x05roles\x12\x1b\n" +
 	"\tsource_id\x18\a \x01(\tR\bsourceId\x12\x12\n" +
-	"\x04foot\x18\b \x03(\rR\x04foot\"U\n" +
+	"\x04foot\x18\b \x03(\rR\x04foot\x12\x1a\n" +
+	"\bsurfaces\x18\t \x01(\fR\bsurfaces\"U\n" +
 	"\vBuildingRef\x12\x17\n" +
 	"\achunk_x\x18\x01 \x01(\x11R\x06chunkX\x12\x17\n" +
 	"\achunk_y\x18\x02 \x01(\x11R\x06chunkY\x12\x14\n" +
@@ -3077,7 +3136,7 @@ const file_citypack_proto_rawDesc = "" +
 	"\x13MODEL_SOURCE_NYC_3D\x10\x02\x12\x18\n" +
 	"\x14MODEL_SOURCE_PLATEAU\x10\x03\x12\x1f\n" +
 	"\x1bMODEL_SOURCE_OVERTURE_PARTS\x10\x04\x12\x17\n" +
-	"\x13MODEL_SOURCE_MANUAL\x10\x05*i\n" +
+	"\x13MODEL_SOURCE_MANUAL\x10\x05*y\n" +
 	"\tModelRole\x12\r\n" +
 	"\tROLE_WALL\x10\x00\x12\r\n" +
 	"\tROLE_ROOF\x10\x01\x12\x0f\n" +
@@ -3086,7 +3145,12 @@ const file_citypack_proto_rawDesc = "" +
 	"ROLE_STONE\x10\x03\x12\x0e\n" +
 	"\n" +
 	"ROLE_GLASS\x10\x04\x12\r\n" +
-	"\tROLE_GOLD\x10\x05B\x16Z\x14citypack/internal/pbb\x06proto3"
+	"\tROLE_GOLD\x10\x05\x12\x0e\n" +
+	"\n" +
+	"ROLE_SLATE\x10\x06*2\n" +
+	"\fModelSurface\x12\x10\n" +
+	"\fSURFACE_WALL\x10\x00\x12\x10\n" +
+	"\fSURFACE_ROOF\x10\x01B\x16Z\x14citypack/internal/pbb\x06proto3"
 
 var (
 	file_citypack_proto_rawDescOnce sync.Once
@@ -3100,7 +3164,7 @@ func file_citypack_proto_rawDescGZIP() []byte {
 	return file_citypack_proto_rawDescData
 }
 
-var file_citypack_proto_enumTypes = make([]protoimpl.EnumInfo, 8)
+var file_citypack_proto_enumTypes = make([]protoimpl.EnumInfo, 9)
 var file_citypack_proto_msgTypes = make([]protoimpl.MessageInfo, 27)
 var file_citypack_proto_goTypes = []any{
 	(RoadClass)(0),      // 0: citypack.RoadClass
@@ -3111,65 +3175,66 @@ var file_citypack_proto_goTypes = []any{
 	(LodKind)(0),        // 5: citypack.LodKind
 	(ModelSource)(0),    // 6: citypack.ModelSource
 	(ModelRole)(0),      // 7: citypack.ModelRole
-	(*Manifest)(nil),    // 8: citypack.Manifest
-	(*Rect)(nil),        // 9: citypack.Rect
-	(*ChunkRef)(nil),    // 10: citypack.ChunkRef
-	(*Spawn)(nil),       // 11: citypack.Spawn
-	(*District)(nil),    // 12: citypack.District
-	(*Graph)(nil),       // 13: citypack.Graph
-	(*Node)(nil),        // 14: citypack.Node
-	(*Edge)(nil),        // 15: citypack.Edge
-	(*Chunk)(nil),       // 16: citypack.Chunk
-	(*Label)(nil),       // 17: citypack.Label
-	(*Barrier)(nil),     // 18: citypack.Barrier
-	(*Building)(nil),    // 19: citypack.Building
-	(*Mesh)(nil),        // 20: citypack.Mesh
-	(*Lod)(nil),         // 21: citypack.Lod
-	(*LodMass)(nil),     // 22: citypack.LodMass
-	(*Landmarks)(nil),   // 23: citypack.Landmarks
-	(*Landmark)(nil),    // 24: citypack.Landmark
-	(*Spots)(nil),       // 25: citypack.Spots
-	(*Spot)(nil),        // 26: citypack.Spot
-	(*TramGraph)(nil),   // 27: citypack.TramGraph
-	(*TramEdge)(nil),    // 28: citypack.TramEdge
-	(*TramStop)(nil),    // 29: citypack.TramStop
-	(*Models)(nil),      // 30: citypack.Models
-	(*Model)(nil),       // 31: citypack.Model
-	(*ModelPart)(nil),   // 32: citypack.ModelPart
-	(*BuildingRef)(nil), // 33: citypack.BuildingRef
-	(*PlanPoly)(nil),    // 34: citypack.PlanPoly
+	(ModelSurface)(0),   // 8: citypack.ModelSurface
+	(*Manifest)(nil),    // 9: citypack.Manifest
+	(*Rect)(nil),        // 10: citypack.Rect
+	(*ChunkRef)(nil),    // 11: citypack.ChunkRef
+	(*Spawn)(nil),       // 12: citypack.Spawn
+	(*District)(nil),    // 13: citypack.District
+	(*Graph)(nil),       // 14: citypack.Graph
+	(*Node)(nil),        // 15: citypack.Node
+	(*Edge)(nil),        // 16: citypack.Edge
+	(*Chunk)(nil),       // 17: citypack.Chunk
+	(*Label)(nil),       // 18: citypack.Label
+	(*Barrier)(nil),     // 19: citypack.Barrier
+	(*Building)(nil),    // 20: citypack.Building
+	(*Mesh)(nil),        // 21: citypack.Mesh
+	(*Lod)(nil),         // 22: citypack.Lod
+	(*LodMass)(nil),     // 23: citypack.LodMass
+	(*Landmarks)(nil),   // 24: citypack.Landmarks
+	(*Landmark)(nil),    // 25: citypack.Landmark
+	(*Spots)(nil),       // 26: citypack.Spots
+	(*Spot)(nil),        // 27: citypack.Spot
+	(*TramGraph)(nil),   // 28: citypack.TramGraph
+	(*TramEdge)(nil),    // 29: citypack.TramEdge
+	(*TramStop)(nil),    // 30: citypack.TramStop
+	(*Models)(nil),      // 31: citypack.Models
+	(*Model)(nil),       // 32: citypack.Model
+	(*ModelPart)(nil),   // 33: citypack.ModelPart
+	(*BuildingRef)(nil), // 34: citypack.BuildingRef
+	(*PlanPoly)(nil),    // 35: citypack.PlanPoly
 }
 var file_citypack_proto_depIdxs = []int32{
-	9,  // 0: citypack.Manifest.bounds:type_name -> citypack.Rect
-	10, // 1: citypack.Manifest.chunks:type_name -> citypack.ChunkRef
-	11, // 2: citypack.Manifest.start:type_name -> citypack.Spawn
-	12, // 3: citypack.Manifest.districts:type_name -> citypack.District
-	10, // 4: citypack.Manifest.lods:type_name -> citypack.ChunkRef
-	14, // 5: citypack.Graph.nodes:type_name -> citypack.Node
-	15, // 6: citypack.Graph.edges:type_name -> citypack.Edge
+	10, // 0: citypack.Manifest.bounds:type_name -> citypack.Rect
+	11, // 1: citypack.Manifest.chunks:type_name -> citypack.ChunkRef
+	12, // 2: citypack.Manifest.start:type_name -> citypack.Spawn
+	13, // 3: citypack.Manifest.districts:type_name -> citypack.District
+	11, // 4: citypack.Manifest.lods:type_name -> citypack.ChunkRef
+	15, // 5: citypack.Graph.nodes:type_name -> citypack.Node
+	16, // 6: citypack.Graph.edges:type_name -> citypack.Edge
 	0,  // 7: citypack.Edge.class:type_name -> citypack.RoadClass
-	19, // 8: citypack.Chunk.buildings:type_name -> citypack.Building
-	20, // 9: citypack.Chunk.ground:type_name -> citypack.Mesh
-	18, // 10: citypack.Chunk.barriers:type_name -> citypack.Barrier
-	20, // 11: citypack.Chunk.shore:type_name -> citypack.Mesh
-	17, // 12: citypack.Chunk.labels:type_name -> citypack.Label
+	20, // 8: citypack.Chunk.buildings:type_name -> citypack.Building
+	21, // 9: citypack.Chunk.ground:type_name -> citypack.Mesh
+	19, // 10: citypack.Chunk.barriers:type_name -> citypack.Barrier
+	21, // 11: citypack.Chunk.shore:type_name -> citypack.Mesh
+	18, // 12: citypack.Chunk.labels:type_name -> citypack.Label
 	4,  // 13: citypack.Mesh.kind:type_name -> citypack.GroundKind
 	1,  // 14: citypack.Mesh.water_class:type_name -> citypack.WaterClass
 	2,  // 15: citypack.Mesh.green_class:type_name -> citypack.GreenClass
 	3,  // 16: citypack.Mesh.surface:type_name -> citypack.Surface
-	22, // 17: citypack.Lod.masses:type_name -> citypack.LodMass
-	20, // 18: citypack.Lod.water:type_name -> citypack.Mesh
+	23, // 17: citypack.Lod.masses:type_name -> citypack.LodMass
+	21, // 18: citypack.Lod.water:type_name -> citypack.Mesh
 	5,  // 19: citypack.LodMass.kind:type_name -> citypack.LodKind
-	24, // 20: citypack.Landmarks.items:type_name -> citypack.Landmark
-	26, // 21: citypack.Spots.items:type_name -> citypack.Spot
-	14, // 22: citypack.TramGraph.nodes:type_name -> citypack.Node
-	28, // 23: citypack.TramGraph.edges:type_name -> citypack.TramEdge
-	29, // 24: citypack.TramGraph.stops:type_name -> citypack.TramStop
-	31, // 25: citypack.Models.models:type_name -> citypack.Model
+	25, // 20: citypack.Landmarks.items:type_name -> citypack.Landmark
+	27, // 21: citypack.Spots.items:type_name -> citypack.Spot
+	15, // 22: citypack.TramGraph.nodes:type_name -> citypack.Node
+	29, // 23: citypack.TramGraph.edges:type_name -> citypack.TramEdge
+	30, // 24: citypack.TramGraph.stops:type_name -> citypack.TramStop
+	32, // 25: citypack.Models.models:type_name -> citypack.Model
 	6,  // 26: citypack.Model.source:type_name -> citypack.ModelSource
-	32, // 27: citypack.Model.parts:type_name -> citypack.ModelPart
-	33, // 28: citypack.Model.replaces:type_name -> citypack.BuildingRef
-	34, // 29: citypack.Model.roof_plan:type_name -> citypack.PlanPoly
+	33, // 27: citypack.Model.parts:type_name -> citypack.ModelPart
+	34, // 28: citypack.Model.replaces:type_name -> citypack.BuildingRef
+	35, // 29: citypack.Model.roof_plan:type_name -> citypack.PlanPoly
 	30, // [30:30] is the sub-list for method output_type
 	30, // [30:30] is the sub-list for method input_type
 	30, // [30:30] is the sub-list for extension type_name
@@ -3187,7 +3252,7 @@ func file_citypack_proto_init() {
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_citypack_proto_rawDesc), len(file_citypack_proto_rawDesc)),
-			NumEnums:      8,
+			NumEnums:      9,
 			NumMessages:   27,
 			NumExtensions: 0,
 			NumServices:   0,

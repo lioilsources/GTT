@@ -19,7 +19,7 @@ import (
 )
 
 // ModelsVersion is Manifest.models_version (specs/models.md).
-const ModelsVersion = 1
+const ModelsVersion = 2
 
 // modelSources maps models.yaml `source` to the enum and the attribution line (plan H9).
 var modelSources = map[string]struct {
@@ -45,6 +45,37 @@ const towerUsage = "vyznacna vez na strese" // IPR: a marked tower on the roof â
 var roleNames = map[string]pb.ModelRole{
 	"wall": pb.ModelRole_ROLE_WALL, "roof": pb.ModelRole_ROLE_ROOF, "copper": pb.ModelRole_ROLE_COPPER,
 	"stone": pb.ModelRole_ROLE_STONE, "glass": pb.ModelRole_ROLE_GLASS, "gold": pb.ModelRole_ROLE_GOLD,
+	"slate": pb.ModelRole_ROLE_SLATE,
+}
+
+// copperRule is tuning `models.copper_*` (specs/models.md v2 "Role"): a part (not an installation)
+// whose top is at least minTop above the foot and whose footprint (larger side of its box) is at
+// most slender Ã— its own height has copper roofs. Zero values switch the rule off.
+type copperRule struct{ minTop, slender float64 }
+
+func (c copperRule) slenderPart(top, height, footprint float64, installation bool) bool {
+	return !installation && c.minTop > 0 && top >= c.minTop && footprint <= c.slender*height
+}
+
+// surfaceRole is the role of a polygon (specs/models.md v2 "Role"). Walls: `wall`, then
+// models.yaml `walls` by building id, then by part id. Roofs: `roof`, then `roles` by building id,
+// then copper for marked towers (IPR usage) and slender tall parts, then `roles` by part id.
+func surfaceRole(kind citygml.Kind, mc config.ModelConfig, buildingID, partID string, tower, slender bool) pb.ModelRole {
+	over := mc.Walls
+	role := pb.ModelRole_ROLE_WALL
+	if kind == citygml.Roof {
+		over, role = mc.Roles, pb.ModelRole_ROLE_ROOF
+	}
+	if r, ok := roleNames[over[buildingID]]; ok && buildingID != "" {
+		role = r
+	}
+	if kind == citygml.Roof && (tower || slender) {
+		role = pb.ModelRole_ROLE_COPPER
+	}
+	if r, ok := roleNames[over[partID]]; ok && partID != "" && partID != buildingID {
+		role = r
+	}
+	return role
 }
 
 // Models builds models.pb from content/cities/<id>/models.yaml (specs/models.md, plan ch. 6).
@@ -436,7 +467,7 @@ func buildModel(bs []*srcBuilding, mc config.ModelConfig, detail float64, mt con
 	m := &pb.Model{}
 	var plans [][]planSrc
 	for _, b := range bs {
-		part, plan := buildPart(b, mc, detail, mt.WeldM, tg, exag)
+		part, plan := buildPart(b, mc, copperRule{mt.CopperMinTopM, mt.CopperSlender}, detail, mt.WeldM, tg, exag)
 		if part == nil {
 			continue
 		}
@@ -500,7 +531,7 @@ func roofShade(n v3) uint32 {
 	return 3
 }
 
-func buildPart(b *srcBuilding, mc config.ModelConfig, detail, weld float64, tg *TerrainGrid, exag float64) (*pb.ModelPart, []planSrc) {
+func buildPart(b *srcBuilding, mc config.ModelConfig, cu copperRule, detail, weld float64, tg *TerrainGrid, exag float64) (*pb.ModelPart, []planSrc) {
 	// Groups smaller than the detail go (chimneys, dormers, small installations).
 	type box struct{ x1, y1, z1, x2, y2, z2 float64 }
 	boxes := make([]box, len(b.Groups))
@@ -606,18 +637,12 @@ func buildPart(b *srcBuilding, mc config.ModelConfig, detail, weld float64, tg *
 		if real <= 0.05 {
 			continue // floor level or below: never seen
 		}
-		role := pb.ModelRole_ROLE_WALL
+		g, gb := b.Groups[p.Group], boxes[p.Group]
+		slender := cu.slenderPart(gb.z2-foot, gb.z2-gb.z1, math.Max(gb.x2-gb.x1, gb.y2-gb.y1), g.Installation)
+		role := surfaceRole(p.Kind, mc, b.ID, g.ID, g.Usage == towerUsage, slender)
+		surface := pb.ModelSurface_SURFACE_WALL
 		if p.Kind == citygml.Roof {
-			role = pb.ModelRole_ROLE_ROOF
-			g := b.Groups[p.Group]
-			if g.Usage == towerUsage {
-				role = pb.ModelRole_ROLE_COPPER
-			}
-			for _, key := range []string{b.ID, g.ID} {
-				if r, ok := roleNames[mc.Roles[key]]; ok && key != "" {
-					role = r
-				}
-			}
+			surface = pb.ModelSurface_SURFACE_ROOF
 		}
 		// Welded, cleaned rings.
 		var rings [][]uint32
@@ -661,6 +686,7 @@ func buildPart(b *srcBuilding, mc config.ModelConfig, detail, weld float64, tg *
 			}
 			part.Triangles = append(part.Triangles, a, bb, c)
 			part.Roles = append(part.Roles, byte(role))
+			part.Surfaces = append(part.Surfaces, byte(surface))
 		}
 		if p.Kind == citygml.Roof && n.z/n.norm() > 0.02 {
 			ps := planSrc{shade: roofShade(n), top: top}

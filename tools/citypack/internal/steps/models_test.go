@@ -46,7 +46,7 @@ func flatTerrain(z float64) *TerrainGrid {
 }
 
 func TestBuildPartBox(t *testing.T) {
-	part, plan := buildPart(box("_b", 0, 0, 10, 20, 250, false), config.ModelConfig{}, 1.5, 0.1, flatTerrain(30), 2)
+	part, plan := buildPart(box("_b", 0, 0, 10, 20, 250, false), config.ModelConfig{}, copperRule{}, 1.5, 0.1, flatTerrain(30), 2)
 	if part == nil {
 		t.Fatal("no part")
 	}
@@ -88,26 +88,105 @@ func TestBuildPartBox(t *testing.T) {
 		t.Fatalf("plan %+v", plan)
 	}
 	// The detail filter drops the whole part when it is smaller.
-	if p, _ := buildPart(box("_s", 0, 0, 1, 1, 0, false), config.ModelConfig{}, 1.5, 0.1, nil, 2); p != nil {
+	if p, _ := buildPart(box("_s", 0, 0, 1, 1, 0, false), config.ModelConfig{}, copperRule{}, 1.5, 0.1, nil, 2); p != nil {
 		t.Fatal("small part kept")
 	}
 }
 
 func TestBuildPartRoles(t *testing.T) {
-	part, _ := buildPart(box("_t", 0, 0, 4, 30, 0, true), config.ModelConfig{}, 1.5, 0.1, nil, 1)
+	part, _ := buildPart(box("_t", 0, 0, 4, 30, 0, true), config.ModelConfig{}, copperRule{}, 1.5, 0.1, nil, 1)
 	if pb.ModelRole(part.Roles[len(part.Roles)-1]) != pb.ModelRole_ROLE_COPPER && pb.ModelRole(part.Roles[0]) != pb.ModelRole_ROLE_COPPER {
 		t.Fatal("tower roof is not copper")
 	}
-	mc := config.ModelConfig{Roles: map[string]string{"_t": "gold"}}
-	part, _ = buildPart(box("_t", 0, 0, 4, 30, 0, true), mc, 1.5, 0.1, nil, 1)
-	gold := 0
-	for _, r := range part.Roles {
-		if pb.ModelRole(r) == pb.ModelRole_ROLE_GOLD {
-			gold++
+	// v2: a part id in `roles` beats the tower rule.
+	b := box("_t", 0, 0, 4, 30, 0, true)
+	b.Groups[0].ID = "_t_part"
+	mc := config.ModelConfig{Roles: map[string]string{"_t_part": "gold"}, Walls: map[string]string{"_t": "stone"}}
+	part, _ = buildPart(b, mc, copperRule{}, 1.5, 0.1, nil, 1)
+	count := func(r pb.ModelRole) int {
+		n := 0
+		for _, x := range part.Roles {
+			if pb.ModelRole(x) == r {
+				n++
+			}
+		}
+		return n
+	}
+	if count(pb.ModelRole_ROLE_GOLD) != 2 || count(pb.ModelRole_ROLE_STONE) != 8 {
+		t.Fatalf("gold roof %d (want 2), stone walls %d (want 8)", count(pb.ModelRole_ROLE_GOLD), count(pb.ModelRole_ROLE_STONE))
+	}
+	// Surfaces keep the CityGML class, one per triangle.
+	if len(part.Surfaces) != len(part.Roles) {
+		t.Fatalf("surfaces %d, roles %d", len(part.Surfaces), len(part.Roles))
+	}
+	roofs := 0
+	for _, s := range part.Surfaces {
+		if pb.ModelSurface(s) == pb.ModelSurface_SURFACE_ROOF {
+			roofs++
 		}
 	}
-	if gold != 2 {
-		t.Fatalf("gold roof triangles %d, want 2", gold)
+	if roofs != 2 {
+		t.Fatalf("roof surfaces %d, want 2", roofs)
+	}
+	// Slender tall part without the IPR mark: copper roof by shape (4 m wide, 30 m high).
+	cu := copperRule{minTop: 25, slender: 0.4}
+	part, _ = buildPart(box("_u", 0, 0, 4, 30, 0, false), config.ModelConfig{}, cu, 1.5, 0.1, nil, 1)
+	if count(pb.ModelRole_ROLE_COPPER) != 2 || count(pb.ModelRole_ROLE_WALL) != 8 {
+		t.Fatalf("slender part: copper %d (want 2), wall %d (want 8)", count(pb.ModelRole_ROLE_COPPER), count(pb.ModelRole_ROLE_WALL))
+	}
+	// A wide block of the same height keeps its roof.
+	part, _ = buildPart(box("_w", 0, 0, 20, 30, 0, false), config.ModelConfig{}, cu, 1.5, 0.1, nil, 1)
+	if count(pb.ModelRole_ROLE_COPPER) != 0 {
+		t.Fatal("wide block got copper")
+	}
+}
+
+func TestSurfaceRole(t *testing.T) {
+	mc := config.ModelConfig{
+		Roles: map[string]string{"_c": "slate", "_spire": "gold"},
+		Walls: map[string]string{"_c": "stone", "_glass": "glass", "_x": "nonsense"},
+	}
+	for _, c := range []struct {
+		name           string
+		kind           citygml.Kind
+		bld, part      string
+		tower, slender bool
+		want           pb.ModelRole
+	}{
+		{"plain wall", citygml.Wall, "_a", "_a", false, false, pb.ModelRole_ROLE_WALL},
+		{"plain roof", citygml.Roof, "_a", "_a", false, false, pb.ModelRole_ROLE_ROOF},
+		{"tower roof", citygml.Roof, "_a", "", true, false, pb.ModelRole_ROLE_COPPER},
+		{"slender roof", citygml.Roof, "_a", "", false, true, pb.ModelRole_ROLE_COPPER},
+		{"tower wall stays wall", citygml.Wall, "_a", "", true, true, pb.ModelRole_ROLE_WALL},
+		{"building roof override", citygml.Roof, "_c", "_c", false, false, pb.ModelRole_ROLE_SLATE},
+		{"building wall override", citygml.Wall, "_c", "", true, false, pb.ModelRole_ROLE_STONE},
+		{"tower beats building roof override", citygml.Roof, "_c", "", true, false, pb.ModelRole_ROLE_COPPER},
+		{"part roof override beats tower", citygml.Roof, "_c", "_spire", true, false, pb.ModelRole_ROLE_GOLD},
+		{"part wall override", citygml.Wall, "_c", "_glass", false, false, pb.ModelRole_ROLE_GLASS},
+		{"unknown role name ignored", citygml.Wall, "_x", "_x", false, false, pb.ModelRole_ROLE_WALL},
+	} {
+		if got := surfaceRole(c.kind, mc, c.bld, c.part, c.tower, c.slender); got != c.want {
+			t.Errorf("%s: %v, want %v", c.name, got, c.want)
+		}
+	}
+	cu := copperRule{minTop: 30, slender: 0.4}
+	for _, c := range []struct {
+		top, h, fp float64
+		inst       bool
+		want       bool
+	}{
+		{90, 89, 18, false, true},   // the cathedral's main tower
+		{40, 40, 5, false, true},    // a turret
+		{52, 52, 105, false, false}, // the nave
+		{29, 29, 5, false, false},   // too low
+		{45, 11, 2, true, false},    // a chimney (installation)
+	} {
+		if got := cu.slenderPart(c.top, c.h, c.fp, c.inst); got != c.want {
+			t.Errorf("slender(%v): %v, want %v", c, got, c.want)
+		}
+	}
+	if (copperRule{}).slenderPart(90, 90, 1, false) {
+		t.Error("zero rule must be off")
 	}
 }
 
@@ -122,7 +201,7 @@ func TestBuildPartSlopeShear(t *testing.T) {
 			}
 		}
 	}
-	part, _ := buildPart(b, config.ModelConfig{}, 1.5, 0.1, flatTerrain(0), 2)
+	part, _ := buildPart(b, config.ModelConfig{}, copperRule{}, 1.5, 0.1, flatTerrain(0), 2)
 	// The roof keeps the doubled slope: 10 m high plus 2 m at the far side.
 	maxZ := int32(0)
 	for i := 2; i < len(part.Positions); i += 3 {

@@ -92,8 +92,18 @@ func (e *Env) validateModels(p *PackData, fail func(string, ...any)) {
 				}
 			}
 			for _, r := range part.Roles {
-				if r > byte(pb.ModelRole_ROLE_GOLD) {
+				if r > byte(pb.ModelRole_ROLE_SLATE) {
 					fail("model %s part %d: unknown role %d", m.LandmarkId, pi, r)
+					break
+				}
+			}
+			// v2: one surface class per triangle (specs/models.md).
+			if len(part.Surfaces) != nt {
+				fail("model %s part %d: %d surfaces for %d triangles", m.LandmarkId, pi, len(part.Surfaces), nt)
+			}
+			for _, s := range part.Surfaces {
+				if s > byte(pb.ModelSurface_SURFACE_ROOF) {
+					fail("model %s part %d: unknown surface %d", m.LandmarkId, pi, s)
 					break
 				}
 			}
