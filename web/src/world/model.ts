@@ -1,6 +1,7 @@
 import type { Graph, Landmarks, Manifest, Spots, TramGraph } from '../gen/pb/citypack_pb';
 import { RoadClass } from '../gen/pb/citypack_pb';
 import { decodeGraph, decodeLandmarks, decodeManifest, decodeSpots, decodeTrams, type PackSource } from './citypack';
+import { loadModels, type ModelData } from './models';
 import { Terrain } from './terrain';
 
 /** A drivable road edge in world metres (port of world_engine model.dart). */
@@ -408,6 +409,8 @@ export class City {
     readonly graphPb: Graph,
     /** Tram tracks and stops (specs/trams.md); empty for a city without trams or an old pack. */
     readonly trams: TrackGraph,
+    /** Landmark models (specs/models.md, models.pb); empty without them. */
+    readonly models: ModelData[] = [],
   ) {
     this.chunkKeys = new Set(manifest.chunks.map((c) => chunkKey(c.x, c.y)));
     this.terrain = new Terrain(manifest, graph);
@@ -453,6 +456,7 @@ export class City {
     const manifest = await decodeManifest(m!);
     if (manifest.formatVersion !== 1) throw new Error(`citypack format ${manifest.formatVersion} is not supported`);
     const graph = await decodeGraph(g!);
+    const models = await loadModels(src, manifest.modelsVersion, manifest.chunkM);
     return new City(
       manifest,
       RoadGraph.fromPb(graph),
@@ -462,6 +466,7 @@ export class City {
       ringM(manifest.area),
       graph,
       trams,
+      models,
     );
   }
 }
