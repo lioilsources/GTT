@@ -55,3 +55,44 @@ střechy hlavní věže). Barvy `color.model.*`, `color.modelFacade.*`. W: proce
 okna a opěráky na kameni, okenní textura budov na omítce, pruhy po spádnici na střechách), tři sítě
 na model. Fotorealistický mesh IPR (CC BY, OBJ + JPG po listech, list Hradu 1,25 GB) zatím ne:
 objem, souvislá síť bez budov a značky na fotkách (R10).
+
+## H1b – pilotní pětice (specs/models.md v3, brána K1 schválena)
+
+Ol1n schválil K1 nad snímky Hradu: pokračuje se zbytkem pilotu (kap. 11 K4). Staroměstská radnice
+v pilotu není (K4: Hrad, Karlův most s věží, Týn, sv. Mikuláš, Národní divadlo), přijde s H4.
+
+**Data.** Všechny čtyři nové památky leží ve stejném listu **Praha 7-1** jako Hrad, jiné listy
+CityGML nejsou potřeba. Karlův most v 3D modelu budov není: IPR ho vede v sadě „Mosty 3D“
+(`mosty_shp`, ArcGIS položka `622e66a29f3d459a8dbc57939954db8c`, 1,7 MB zip, polygonZ v S-JTSK,
+21 406 ploch za celou Prahu, `ID_BUD`; Karlův most = `1000484`, 854 ploch, 466 m). Stažené do
+`run/citypack/prague/raw/models/mosty_shp/`, ne do gitu. CityGRID nedává plochám mostu orientaci
+ani třídu (střecha/stěna), proto v3 kreslí svislé plochy mostu z obou stran.
+
+| Památka | Zdroj | Materiály | Trojúhelníky |
+|---|---|---|---|
+| `tyn_church` | `_79878` | kámen, břidlicová střecha i špice (`towers`, IPR je značí jako věže → jinak měď) | 584 |
+| `st_nicholas` | `_76469` kostel, `_77005` zvonice | omítka, měděná kopule a střechy | 368 |
+| `national_theatre` | `_89947` | omítka, tmavá střecha `slate` (modrozlatá by chtěla novou roli; barva `color.model.*.slate` stačí) | 419 |
+| `bridge_tower` | most `bridge:1000484` + věže `_81184`, `_78361`, `_78667` | kámen, břidlicové střechy věží; most textura spár (`SURFACE_ROOF`) | 4 239 (most 3 767 po ořezu) |
+| `prague_castle` | beze změny výběru | – | 6 106 (85 budov, viz níže) |
+
+Celkem **11 716 trojúhelníků** (limit města 120 000), `models.pb` **85,8 kB** po gzipu (limit 1,5 MB).
+**Výjimka:** `bridge_tower` `max_tris: 6000` (výchozí 4 000): svislé plochy mostu jsou dvakrát
+(neorientované prstence), most sám ~3 800, tři věže ~500. Pod stropem výjimek 12 000.
+
+**Oprava souřadnic (v3).** Převod S-JTSK šel přímo do sférické projekce města; PROJ k ní nemá
+datum a vzal „ballpark“ převod bez posunu S-JTSK → WGS84. Všechny modely tak ležely **~117 m na
+severovýchod** (Týn: model v (199, 120) místo (121, 33)), včetně publikovaného Hradu (v2 vybíral
+48 budov z posunuté oblasti, teď 85 budov skutečného areálu, 6 106 trojúhelníků, `replaces` 96).
+V3 převádí přes EPSG:4326 a projekci balíčku jako Overture; věž mostu sedí na bodu památky
+(< 4 m), Mikuláš < 1 m.
+
+**Most v balíčku.** Karlův most je ve hře pěší zóna nad vodou (sloupky zóny, žádná hrana grafu,
+auto na něm „potopí“ a odtáhne se) a tak zůstává: model je jen obraz, kolize ani graf se nemění.
+Výška: skutečná, bez zobrazovací škály; mostovka na obou koncích na terénu (medián v pásu
+`bridge_end_m` 15 m). Převýšené břehy se liší o 23,5 m (Malá Strana 39,2 m, Staré Město 15,7 m
+herní výšky), proto lineární smyk mezi konci (~5 % podél mostu). Pod mostem jsou na Kampě
+uličky Na Kampě / U Lužického semináře a Saská u Malostranských věží: `pack` zahodí 46
+trojúhelníků mostu, které by v pásu −0,3 … +4,5 m nad silnicí zakryly cestu nebo bojovaly
+o hloubku; `validate` to pak hlídá (0 vzorků). Model se vybírá od nejbližší části k bodu
+památky (staroměstská věž), takže síť mostu vzniká s chunkem věže.

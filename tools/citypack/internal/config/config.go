@@ -130,6 +130,9 @@ type ModelsTuning struct {
 	MaxOffsetM       float64 `yaml:"max_offset_m"`
 	CopperMinTopM    float64 `yaml:"copper_min_top_m"` // v2: slender tall parts get copper roofs
 	CopperSlender    float64 `yaml:"copper_slender"`
+	BridgeEndM       float64 `yaml:"bridge_end_m"`   // v3: deck this close to either end sits on the terrain
+	BridgeClearM     float64 `yaml:"bridge_clear_m"` // v3 validate: no bridge face from a road up to this
+	BridgeBelowM     float64 `yaml:"bridge_below_m"` // v3 validate: … nor this close below it (depth fight)
 }
 
 // ModelsFile is content/cities/<id>/models.yaml (specs/models.md, METROPOLE_LANDMARKS3D_PLAN 4.3).
@@ -149,6 +152,11 @@ type ModelConfig struct {
 	MaxTris int               `yaml:"max_tris"`
 	Roles   map[string]string `yaml:"roles"` // source building or part id → role of its roofs
 	Walls   map[string]string `yaml:"walls"` // v2: source building or part id → role of its walls
+	Towers  map[string]string `yaml:"towers"` // v3: source building id → role of its tower roofs (instead of copper)
+	Bridges struct {
+		File string  `yaml:"file"` // v3: IPR "Mosty 3D" shapefile (polygonZ) in raw/models/
+		IDs  []int64 `yaml:"ids"`  // ID_BUD of the bridges in the model
+	} `yaml:"bridges"`
 	Manual  string            `yaml:"manual"`
 }
 
@@ -314,6 +322,7 @@ func (t *Tuning) check() error {
 		"models.plan_simplify_m": t.Models.PlanSimplifyM, "models.replace_share": t.Models.ReplaceShare,
 		"models.foot_tolerance_m": t.Models.FootTolM, "models.max_offset_m": t.Models.MaxOffsetM,
 		"models.copper_min_top_m": t.Models.CopperMinTopM, "models.copper_slender": t.Models.CopperSlender,
+		"models.bridge_end_m": t.Models.BridgeEndM, "models.bridge_clear_m": t.Models.BridgeClearM, "models.bridge_below_m": t.Models.BridgeBelowM,
 	} {
 		if v <= 0 {
 			return fmt.Errorf("tuning.yaml: %s missing or not positive", name)

@@ -422,7 +422,7 @@ func Pack(e *Env) error {
 	if man.Districts, err = e.loadDistricts(); err != nil {
 		return err
 	}
-	n, err := e.packModels(chunks, man)
+	n, err := e.packModels(chunks, man, g)
 	if err != nil {
 		return err
 	}
@@ -602,7 +602,7 @@ func ReadPB(path string, m proto.Message) error {
 
 // packModels resolves `replaces` against the final chunk layout and writes models.pb
 // (specs/models.md); without models it removes a stale file. Returns the gzip size.
-func (e *Env) packModels(chunks map[[2]int]*pb.Chunk, man *pb.Manifest) (int, error) {
+func (e *Env) packModels(chunks map[[2]int]*pb.Chunk, man *pb.Manifest, g *pb.Graph) (int, error) {
 	out := filepath.Join(e.Out, "models.pb")
 	b, err := os.ReadFile(e.W("models.pb"))
 	if err != nil || e.C.Models == nil || !e.C.Tuning.Models.Enabled {
@@ -621,7 +621,18 @@ func (e *Env) packModels(chunks map[[2]int]*pb.Chunk, man *pb.Manifest) (int, er
 				lm = uint32(i + 1)
 			}
 		}
-		m.Replaces = modelReplaces(m, chunks, e.C.Tuning.Models.ReplaceShare, lm)
+		// v3 "Mosty": the final road graph wins over a bridge model (ends, arches over lanes).
+		mt := e.C.Tuning.Models
+		for _, part := range m.Parts {
+			if !isBridgePart(part) {
+				continue
+			}
+			if n := clipBridgeRoads(part, g, mt.BridgeClearM, mt.BridgeBelowM); n > 0 {
+				m.Tris -= uint32(n)
+				slog.Info("pack: bridge clipped by roads", "id", m.LandmarkId, "part", part.SourceId, "tris_dropped", n)
+			}
+		}
+		m.Replaces = modelReplaces(m, chunks, mt.ReplaceShare, lm)
 		if a := ModelAttribution(m.Source); a != "" && !seen[a] {
 			seen[a] = true
 			man.Attribution = append(man.Attribution, a)

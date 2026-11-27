@@ -77,6 +77,10 @@ func (e *Env) validateModels(p *PackData, fail func(string, ...any)) {
 		}
 		tris, deep, maxBuried := 0, 0, 0.0
 		var cx, cy, cw float64
+		nearest := math.Inf(1) // v3: a model with a bridge is measured by its nearest part
+		hasBridge := false
+		l := p.Landmarks.Items[lm]
+		lp := geo.Pt{X: float64(l.X) / 10, Y: float64(l.Y) / 10}
 		for pi, part := range m.Parts {
 			nv := uint32(len(part.Positions) / 3)
 			nt := len(part.Triangles) / 3
@@ -108,6 +112,16 @@ func (e *Env) validateModels(p *PackData, fail func(string, ...any)) {
 				}
 			}
 			anchor := geo.Pt{X: float64(part.AnchorX) / 10, Y: float64(part.AnchorY) / 10}
+			nearest = math.Min(nearest, anchor.Dist(lp))
+			if isBridgePart(part) {
+				// v3 "Mosty": the bridge must not cover a road nor fight it in depth.
+				hasBridge = true
+				if h := bridgeRoadClash(part, p.Graph, mt.BridgeClearM, mt.BridgeBelowM, nil); h.n > 0 {
+					fail("model %s part %s: %d road samples under a face from %.1f m below to %.1f m above the road (worst %.2f m at %.0f, %.0f, %q)",
+						m.LandmarkId, part.SourceId, h.n, mt.BridgeBelowM, mt.BridgeClearM, h.dz, h.at.X, h.at.Y, h.road)
+				}
+				continue
+			}
 			w := float64(nt)
 			cx, cy, cw = cx+anchor.X*w, cy+anchor.Y*w, cw+w
 			if pt != nil {
@@ -141,10 +155,13 @@ func (e *Env) validateModels(p *PackData, fail func(string, ...any)) {
 				break
 			}
 		}
-		l := p.Landmarks.Items[lm]
-		if cw > 0 {
+		if hasBridge {
+			if nearest > mt.MaxOffsetM {
+				fail("model %s: nearest part %.0f m from the landmark point (> %.0f)", m.LandmarkId, nearest, mt.MaxOffsetM)
+			}
+		} else if cw > 0 {
 			c := geo.Pt{X: cx / cw, Y: cy / cw}
-			if d := c.Dist(geo.Pt{X: float64(l.X) / 10, Y: float64(l.Y) / 10}); d > mt.MaxOffsetM {
+			if d := c.Dist(lp); d > mt.MaxOffsetM {
 				fail("model %s: centre %.0f m from the landmark point (> %.0f)", m.LandmarkId, d, mt.MaxOffsetM)
 			}
 		}

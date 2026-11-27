@@ -6023,6 +6023,12 @@ export class TuningModels {
   facadeStoreyM: number;
   /** W: roof texture, distance between seams (stripes down the slope) */
   roofSeamM: number;
+  /** citypack (v3): bridge deck this close to either end sits on the terrain */
+  bridgeEndM: number;
+  /** validate (v3): no bridge face from a road surface up to this (game m) */
+  bridgeClearM: number;
+  /** validate (v3): … nor this close below it (depth fight with the road) */
+  bridgeBelowM: number;
 
   constructor(r: R) {
     this.enabled = r.b('enabled');
@@ -6047,6 +6053,9 @@ export class TuningModels {
     this.facadeBayM = r.d('facade_bay_m');
     this.facadeStoreyM = r.d('facade_storey_m');
     this.roofSeamM = r.d('roof_seam_m');
+    this.bridgeEndM = r.d('bridge_end_m');
+    this.bridgeClearM = r.d('bridge_clear_m');
+    this.bridgeBelowM = r.d('bridge_below_m');
   }
 
   toJson(): Record<string, unknown> {
@@ -6073,6 +6082,9 @@ export class TuningModels {
       facade_bay_m: this.facadeBayM,
       facade_storey_m: this.facadeStoreyM,
       roof_seam_m: this.roofSeamM,
+      bridge_end_m: this.bridgeEndM,
+      bridge_clear_m: this.bridgeClearM,
+      bridge_below_m: this.bridgeBelowM,
     };
   }
 }

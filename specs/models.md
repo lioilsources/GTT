@@ -1,6 +1,6 @@
 # Modely památek
 
-**version: 2** · P2 (vzhled), data v citypacku · plán `Prompts/06-METROPOLE_LANDMARKS3D_PLAN.md` ·
+**version: 3** · P2 (vzhled), data v citypacku · plán `Prompts/06-METROPOLE_LANDMARKS3D_PLAN.md` ·
 pod-plán `plans/M7_PAMATKY.md` · parita F-085 · bez vektorů
 
 ## Účel
@@ -28,6 +28,9 @@ uložení se nemění, auto dál naráží do půdorysů vrstvy 0 v chuncích. �
 - `tris` = součet trojúhelníků.
 `Manifest.models_version` = 2 (v1 bez `surfaces` a bez role `slate`); 0 nebo chybějící soubor =
 žádné modely. Klient v1 čte balíček v2 dál (nové pole ignoruje, neznámou roli kreslí jako stěnu).
+V3 formát nemění (`models_version` zůstává 2): mění pipeline (mosty, převod souřadnic, `towers`,
+pořadí částí) a validate. Části jsou seřazené podle vzdálenosti kotvy od bodu památky (první je
+nejblíž; klient staví sítě s chunkem první části). Část mostu má `source_id` = `bridge:<ID_BUD>`.
 
 ## Pravidla
 **Pata.** Terén je převýšený (`Manifest.exaggeration`), zdroj ne. Pipeline proto zvedne každý
@@ -50,7 +53,8 @@ vodorovná `roofLight`, mezi nimi podle sklonu (váha |n_z|).
 **Role v pipeline (v2), po pořadí, pozdější vyhrává.** Stěna (`WallSurface`): `wall` → `models.yaml`
 `walls` podle id budovy zdroje → `walls` podle id části. Střecha (`RoofSurface`): `roof` →
 `roles` podle id budovy → `copper`, je-li část věž („vyznacna vez na strese“, IPR) nebo štíhlá
-a vysoká → `roles` podle id části (jen id různé od budovy). Štíhlá a vysoká část: ne instalace
+a vysoká, a místo mědi `towers` podle id budovy (v3: břidlicové špice Týna, mostecké věže; části
+IPR nemají `gml:id`) → `roles` podle id části (jen id různé od budovy). Štíhlá a vysoká část: ne instalace
 (`BuildingInstallation`), vrchol aspoň `models.copper_min_top_m` nad patou budovy a delší strana
 obálky půdorysu části nejvýš `models.copper_slender` × výška části (vrchol − nejnižší bod části).
 Stěny věží zůstávají stěnami své budovy (kámen katedrály), měď dostanou jen střechy a špice.
@@ -91,7 +95,9 @@ jako hranol od `base_z` do zobrazené výšky `height_m`, střecha v barvě `roo
 2. Čtení CityGML (Building, BuildingPart, BuildingInstallation; Roof/Wall/GroundSurface; LOD2 i
    LOD3; solidy jsou odkazy a přeskočí se). Souřadnice zdroje → místní metry kvadratickým
    polynomem proloženým PROJ (DuckDB `ST_Transform`) na mřížce 5 × 5 přes obálku souboru
-   (reziduum nad 5 cm = chyba).
+   (reziduum nad 5 cm = chyba). V3: zdroj → EPSG:4326 a pak projekce balíčku (`origin`) jako
+   u Overture. V2 převáděla přímo do sférické projekce města: PROJ bez datumu vynechal posun
+   S-JTSK → WGS84 a modely Prahy ležely ~117 m na severovýchod (Hrad v balíčku do v3).
 3. Čištění: bez podlah a plochy na úrovni paty, svaření na `weld_m`, bez kolineárních vrcholů,
    skupiny (část, instalace) menší než `min_detail_m` pryč.
 4. Rozpočet: nad `max_tris` (`models.yaml` výjimka do `max_tris_exception`) zvedá `min_detail_m`
@@ -101,10 +107,31 @@ jako hranol od `base_z` do zobrazené výšky `height_m`, střecha v barvě `roo
    odstíny (páry, pak jeden), pak největší polygony.
 6. Výstup `models.pb`, náhled `preview/models/<id>.png` (plán shora, šikmo z jihozápadu).
 
+## Mosty (v3)
+Most je dopravní stavba, ale model je jen obraz: graf, zóny, kolize a hladina se nemění (Karlův
+most zůstává pěší zónou, auto na něj nesmí). Zdroj IPR „Mosty 3D“ (`mosty_shp`, polygonZ v
+S-JTSK, jeden řádek na plochu, `ID_BUD` na most; CC BY 4.0 jako 3D model budov, stejná
+atribuce), `models.yaml` `bridges: {file, ids}` u památky; věže mostu jsou budovy CityGML
+(`include`). Pipeline:
+- Plochy bez spolehlivé orientace: vodorovné (|n_z| > 0,9) otočené nahoru a jednou, ostatní
+  z obou stran (dva trojúhelníky). Plochy menší než `min_detail_m` ve všech rozměrech pryč.
+- Výšky skutečné, bez zobrazovací škály: z = 0 je vrchol mostu, vše ostatní z < 0. Mostovka na
+  každém konci (vodorovné plochy do `models.bridge_end_m` od konce podél hlavní osy, nejvýš 2 m
+  pod nejvyšší z nich) sedí v mediánu na terénu; mezi konci se posun mění lineárně (smyk, protože
+  převýšené břehy se liší). `base_z` = vyšší konec.
+- Všechny plochy mostu mají `SURFACE_ROOF` (textura spár, ne okna) a role `walls` / `roles` podle
+  `bridge:<ID_BUD>`. Střešní plán z vodorovných ploch.
+- `pack`: trojúhelník mostu, pod kterým je vzorek silnice (osa a oba okraje po 1 m, každá hrana
+  grafu mimo tunely) v rozsahu od `models.bridge_below_m` pod povrchem silnice do
+  `models.bridge_clear_m` nad ním, se zahodí: silnice vyhraje (konec mostovky na ulici, pata
+  oblouku nad úzkou uličkou).
+
 **Validate:** rozpočty (památka, město, `city_max_bytes` po gzipu), `roof_plan_max_polys`, indexy a
 role v rozsahu, žádný vrchol `foot` nad terénem víc než `foot_tolerance_m` (skutečné metry);
 zahrabání (medián) nad toleranci je jen varování, těžiště modelu do
-`max_offset_m` od bodu památky, atribuce zdroje v manifestu, `replaces` ukazují na budovy.
+`max_offset_m` od bodu památky (v3: model s mostem nejbližší kotvou části, most je delší),
+atribuce zdroje v manifestu, `replaces` ukazují na budovy. V3: žádný trojúhelník mostu nad
+silnicí v rozsahu `bridge_below_m` … `bridge_clear_m` (zakrytí, boj o hloubku).
 
 ## Hraniční případy
 - Balíček bez `models.pb` nebo `models.enabled: false`: kreslí se půdorysy jako dosud.
@@ -114,6 +141,7 @@ zahrabání (medián) nad toleranci je jen varování, těžiště modelu do
 
 ## Scénář
 Žádné vektory (P2, vzhled bez pravidel; vektory `vectors/` jsou jen P0). Pravidla rolí a
-štíhlosti hlídají tabulkové testy `tools/citypack` (`TestSurfaceRole`), UV a barvy testy W
+štíhlosti hlídají tabulkové testy `tools/citypack` (`TestSurfaceRole`, v3 `TestSurfaceRoleTowers`,
+mosty `TestBuildBridgePart`, `TestClipBridgeRoads`), UV a barvy testy W
 (`web/test/models.test.ts`). Ruční kontrola (`plans/verify.yaml`): u Hradu v šikmém pohledu je model,
 1 km od něj půdorys, přepnutí bez probliknutí; shora střešní plán.

@@ -1125,3 +1125,6 @@ models:
   facade_bay_m: 5.0             # W: stone wall texture, one bay (buttress + lancet window) across
   facade_storey_m: 14.0         # W: stone wall texture, one tier of lancet windows up
   roof_seam_m: 0.9              # W: roof texture, distance between seams (stripes down the slope)
+  bridge_end_m: 15.0            # citypack (v3): bridge deck this close to either end sits on the terrain
+  bridge_clear_m: 4.5           # validate (v3): no bridge face from a road surface up to this (game m)
+  bridge_below_m: 0.3           # validate (v3): … nor this close below it (depth fight with the road)
