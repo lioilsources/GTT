@@ -17,6 +17,9 @@ const double texPxPerMetreV = 20;
 const double roofTexU = 2;
 const double roofTexV = 2;
 
+/// Brightness of a roof-plan polygon's roof (specs/models.md "Pohled shora"): 0.7 + 0.1 × shade.
+double planRoofLight(int shade) => 0.7 + 0.1 * shade;
+
 /// Fills one vertex buffer with walls and roofs of many buildings in painter order and
 /// flushes it with a single drawVertices call (split only past the 16-bit index limit).
 class BuildingBatcher {
@@ -93,7 +96,10 @@ class BuildingBatcher {
     }
 
     final base = b.landmark > 0 ? pal.landmark : pal.facades[b.seed % pal.facades.length];
-    final jitter = 0.94 + ((b.seed >> 8) & 0xff) / 255 * 0.12;
+    // A landmark roof plan (specs/models.md "Pohled shora"): plain landmark walls without windows
+    // or jitter, the roof in color.model roof × (0.7 + 0.1 × shade).
+    final plan = b.planShade >= 0;
+    final jitter = plan ? 1.0 : 0.94 + ((b.seed >> 8) & 0xff) / 255 * 0.12;
     final uOff = ((b.seed >> 16) & 0xff).toDouble();
     final vBot = b.minHeight * texPxPerMetreV, vTop = b.height * texPxPerMetreV;
     final pos = _pos, tex = _tex, col = _col, idx = _idx;
@@ -112,7 +118,8 @@ class BuildingBatcher {
         if (nx * (vpX - (ax + bx) / 2) + ny * (vpY - (ay + by) / 2) <= 0) continue;
         final light = pal.ambient + (1 - pal.ambient) * math.max(0.0, nx * pal.sunX + ny * pal.sunY);
         final c = _shade(base, light * jitter, alpha);
-        final u0 = uOff + b.wallU[i] * texPxPerMetreU, u1 = u0 + len * texPxPerMetreU;
+        final u0 = plan ? roofTexU : uOff + b.wallU[i] * texPxPerMetreU;
+        final u1 = plan ? roofTexU : u0 + len * texPxPerMetreU;
         pos[2 * nv] = _bot[2 * i];
         pos[2 * nv + 1] = _bot[2 * i + 1];
         pos[2 * nv + 2] = _bot[2 * j];
@@ -121,14 +128,15 @@ class BuildingBatcher {
         pos[2 * nv + 5] = _top[2 * j + 1];
         pos[2 * nv + 6] = _top[2 * i];
         pos[2 * nv + 7] = _top[2 * i + 1];
+        final v0 = plan ? roofTexV : vBot, v1 = plan ? roofTexV : vTop;
         tex[2 * nv] = u0;
-        tex[2 * nv + 1] = vBot;
+        tex[2 * nv + 1] = v0;
         tex[2 * nv + 2] = u1;
-        tex[2 * nv + 3] = vBot;
+        tex[2 * nv + 3] = v0;
         tex[2 * nv + 4] = u1;
-        tex[2 * nv + 5] = vTop;
+        tex[2 * nv + 5] = v1;
         tex[2 * nv + 6] = u0;
-        tex[2 * nv + 7] = vTop;
+        tex[2 * nv + 7] = v1;
         col[nv] = c;
         col[nv + 1] = c;
         col[nv + 2] = c;
@@ -146,7 +154,11 @@ class BuildingBatcher {
     }
 
     final flat = pal.flatRoofs && b.landmark == 0;
-    final roofC = flat ? _shade(pal.roof!, jitter, alpha) : _shade(base, pal.roofLight * jitter, alpha);
+    final roofC = plan
+        ? _shade(pal.modelRoof, planRoofLight(b.planShade), alpha)
+        : flat
+        ? _shade(pal.roof!, jitter, alpha)
+        : _shade(base, pal.roofLight * jitter, alpha);
     final rb = nv;
     for (var i = 0; i < n; i++) {
       pos[2 * nv] = _top[2 * i];

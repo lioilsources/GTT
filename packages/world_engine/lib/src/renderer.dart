@@ -7,6 +7,7 @@ import 'camera.dart';
 import 'chunk.dart';
 import 'extrusion.dart';
 import 'model.dart';
+import 'models.dart';
 import 'palette.dart';
 import 'package:shared_gen/citypack_pb.dart';
 import 'roads.dart';
@@ -152,12 +153,25 @@ class WorldRenderer {
     _dist.clear();
     for (final c in chunks) {
       for (final b in c.data.buildings) {
+        if (!c.shows(b)) continue;
         final dx = b.cx - vx, dy = b.cy - vy;
         final d = math.sqrt(dx * dx + dy * dy);
         if (d - b.radius > r) continue;
         _visible.add(b);
         // Stacked parts draw after what they stand on.
         _dist[b] = d - b.minHeight * 0.3;
+      }
+    }
+    // Landmark roof plans (specs/models.md "Pohled shora") instead of the buildings they replace:
+    // one unit at the plan's centre, its polygons by height_m (sorted in prepareModels).
+    for (final m in _models) {
+      final dx = m.cx - vx, dy = m.cy - vy;
+      final d = math.sqrt(dx * dx + dy * dy);
+      if (d - m.radius > r) continue;
+      for (var k = 0; k < m.plan.length; k++) {
+        final b = m.plan[k];
+        _visible.add(b);
+        _dist[b] = d - k * 1e-4;
       }
     }
     _visible.sort((a, b) => _dist[b]!.compareTo(_dist[a]!));
@@ -208,7 +222,44 @@ class WorldRenderer {
         canvas.drawVertices(v, ui.BlendMode.dst, _shadowFill);
       }
     }
+    // Roof plans cast the shadows of the buildings they hide (prisms up to height_m).
+    final shadowKey = (dx, dy, st.shadowRatio, st.shadowMaxM);
+    for (final m in _models) {
+      final ex = m.cx - vx, ey = m.cy - vy;
+      final far = reach + m.radius;
+      if (ex * ex + ey * ey > far * far) continue;
+      final meshes = _planShadows(m, shadowKey);
+      if (meshes.isEmpty) continue;
+      if (!open) {
+        canvas.saveLayer(null, _shadowLayer..color = ui.Color.fromARGB((color.a * 255).round(), 0, 0, 0));
+        _shadowFill.color = color.withValues(alpha: 1);
+        open = true;
+      }
+      for (final v in meshes) {
+        canvas.drawVertices(v, ui.BlendMode.dst, _shadowFill);
+      }
+    }
     if (open) canvas.restore();
+  }
+
+  /// Landmark models drawn as roof plans; none with `models.enabled` off.
+  List<ModelData> get _models => tuning.models.enabled ? city.models : const [];
+
+  final _planShadowCache = <ModelData, ((double, double, double, double), List<ui.Vertices>)>{};
+
+  List<ui.Vertices> _planShadows(ModelData m, (double, double, double, double) key) {
+    final hit = _planShadowCache[m];
+    if (hit != null && hit.$1 == key) return hit.$2;
+    for (final v in hit?.$2 ?? const <ui.Vertices>[]) {
+      v.dispose();
+    }
+    final (dx, dy, ratio, maxM) = key;
+    final out = [
+      for (final t in buildShadowMeshes(m.plan, dirX: dx, dirY: dy, ratio: ratio, maxM: maxM))
+        ui.Vertices.raw(ui.VertexMode.triangles, t.xy, indices: t.indices),
+    ];
+    _planShadowCache[m] = (key, out);
+    return out;
   }
 
   void _roadPasses(ui.Canvas canvas, List<int> keys, List<RoadPass> passes) {

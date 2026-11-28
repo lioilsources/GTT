@@ -16,6 +16,7 @@ pb.Graph decodeGraph(Uint8List gz) => pb.Graph.fromBuffer(gunzip(gz));
 pb.Landmarks decodeLandmarks(Uint8List gz) => pb.Landmarks.fromBuffer(gunzip(gz));
 pb.Spots decodeSpots(Uint8List gz) => pb.Spots.fromBuffer(gunzip(gz));
 pb.TramGraph decodeTrams(Uint8List gz) => pb.TramGraph.fromBuffer(gunzip(gz));
+pb.Models decodeModels(Uint8List gz) => pb.Models.fromBuffer(gunzip(gz));
 pb.Chunk decodeChunk(Uint8List gz) => pb.Chunk.fromBuffer(gunzip(gz));
 
 String chunkPath(int x, int y) => 'chunks/${x}_$y.pb';
