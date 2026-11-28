@@ -22,7 +22,7 @@ Defaulty kap. 11: bez textur (K2), F až po vystřelení (K3, K6).
 
 Licence ostatních měst (kap. 4.1): v tomto kole neověřováno – New York **nejasné**, Tokio (PLATEAU,
 PDL 1.0) **lze podle plánu, neověřeno v datech**, Moskva **nelze** (úřední model není, záloha Overture).
-Doloží H0 pro H5/H6. Tokio ověřené v H5 (níže): **lze**.
+Doloží H0 pro H5/H6. Tokio ověřené v H5 (níže): **lze**, New York ověřený v H5 (níže): **lze**.
 
 ## H1 – pilot v datech
 
@@ -305,3 +305,61 @@ SwiftShaderem, tedy CPU – jen poměr; výchozí kamera hry, dvě kola model za
 
 U nádraží p50 v šumu (−3 až +9 %), u Skytree mezi koly kolísá víc než mezi stavy (SwiftShader drží
 strop 100 ms). Na telefonech měří Ol1n (`plans/verify.yaml` M7-H5).
+
+## H5 – New York, první dávka z NYC OTI 3-D Building Model (specs/models.md v6, 2026-11-28)
+
+**Zdroj a licence.** NYC Office of Technology and Innovation (OTI, dřív DoITT), „3-D Building
+Model“, NYC Open Data `tnru-abg2`, zveřejněno 2016-04-18, letecké snímkování 2014. CityGML **1.0**
+LOD2 (Ground/Wall/RoofSurface), 20 dodacích oblastí v jednom zipu (916 MB); stažená jen oblast
+**DA12** (44 MB komprimovaně, 614 MB XML) přes HTTP range podle centrálního adresáře zipu
+(`docs/citypack.md`). Licence: NYC Administrative Code **§ 23-502(d)** – data „without any
+registration requirement, license requirement or restrictions on their use“, město smí žádat
+uvedení **zdroje, verze a úprav** (proto řádek v manifestu a `NOTICE`); FAQ NYC Open Data „There
+are no restrictions on the use of Open Data“; dataset sám licenci neuvádí, dodatečné podmínky OTI
+nejsou. Redistribuce ve hře (i komerční) **lze**. Ostatní kandidáti: verze TUM (LOD1/LOD2
+převod téhož) nepřináší nic navíc a práva zůstávají u města; OSM/Overture výšky už balíček má
+(hranoly), Google 3D Tiles vyloučené.
+
+**Souřadnice (v6).** NAD83 / New York Long Island **ftUS** (EPSG:2263), výšky NAVD88 v
+**amerických stopách**. x, y převádí PROJ přes EPSG:4326 (jako IPR od v3, polynom 5 × 5 přes
+obálku DA12 7 × 8 km, reziduum 1 mm); z × 1200/3937 (bez toho by ESB měl ~1 450 m). NAVD88 se bere
+jen relativně (pata = medián terén − země zdroje). Posun jako v Praze (117 m) nevznikl.
+**Poloha** proti vlastním půdorysům Overture (rastr 0,5 m, `lmpb/fit_own.py`): sv. Patrik 0 m
+(IoU 0,97), ESB 0,5 m (IoU 0,94), 30 Rockefeller Plaza 1,1 m (IoU 0,94), Chrysler 1,4 m (IoU 0,90),
+One WTC 3 m (IoU 0,94, Overture kreslí věž o 3 m západněji), Flatiron 4,5 m (Overture má jen horní
+část 465 m², model celý klín 1 018 m²; srovnání nespolehlivé), Grand Central model leží celý uvnitř
+půdorysu Overture (pokrytí 1,00, IoU 0,66): Overture počítá k budově i viadukt Park Avenue kolem ní.
+
+**Pipeline (v6, formát beze změny).** Zdroj `nyc_3d` (EPSG:2263, LOD2, z ve stopách → m).
+`models.yaml` `drop` (prstence lon, lat): polygon zdroje s průměrem vrcholů uvnitř vypadne –
+budova NYC je jeden objekt na BIN bez částí, `exclude` nestačí. Použito u One WTC: pod týmž BIN je
+10m objekt 35 × 58 m východně od věže (staveniště 2014, dnes náměstí u Perelmanova centra), 15
+ploch pryč, stěna věže zůstává.
+
+| Památka | Zdroj (BIN) | Materiály (`color.city.nyc.model*`) | Trojúhelníky |
+|---|---|---|---|
+| `empire_state` | 1015862: věž se setbacky, stožár, anténa (444 m nad nejnižší zemí), pětipatrová základna | indianský vápenec (`wall`), tmavé střechy | 1 748 |
+| `chrysler` | 1036156: bílý cihlový dřík, stupňovitá koruna se špicí | `wall`; nerezová koruna a všechny střechy `glass` (stříbrná) | 1 602 |
+| `grand_central` | 1035381: budova terminálu (průčelí do 42. ulice, střecha haly, křídla) | vápenec a žula (`wall`), tmavé střechy | 1 054 |
+| `rockefeller` | 1076262: 30 Rockefeller Plaza, deska se setbacky a nízká křídla k 6th Avenue | vápenec, tmavé střechy | 798 |
+| `st_patricks` | 1081150: katedrála se dvěma věžemi a Lady Chapel | bílý mramor (`stone`: lomená okna, opěráky), břidlice | 629 |
+| `flatiron` | 1016278: 175 Fifth Avenue, trojúhelníkový blok | krémová glazovaná terakota (`gold`), tmavé střechy | 1 078 |
+| `one_wtc` | 1088469: věž se čtvercovou základnou a špicí (bez objektu ze staveniště) | sklo (`glass`), tmavé střechy | 1 661 |
+
+Celkem **7 modelů, 8 570 trojúhelníků** (limit města 120 000), `models.pb` **61,8 kB** po gzipu
+(limit 1,5 MB), žádná výjimka z `max_tris`. Věže jsou jedna budova zdroje a splňují pravidlo
+štíhlosti (měď), proto `towers` s rolí střechy. Validate: pata bez zahrabání a visení, `replaces`
+7–42 budov (Chrysler 42 = jeho vlastní části Overture). R10: LOD2 nemá textury ani nápisy.
+
+**Co nejde.** *Brooklyn Bridge:* v datech není (budovy, ne mosty; v DA19 u brooklynského pilíře jen
+dva nízké objekty), v balíčku je náměstí s výškou mostovky – model nevzniká. *Socha Svobody:*
+v datech je (DA19, BIN 1000002: podstavec s hvězdicí Fort Wood), ale leží mimo oblast balíčku
+a není v `landmarks.yaml` (Liberty Island, lon −74,045, hranice oblasti −74,0225). *Viadukt Park
+Avenue* kolem Grand Central není budova; po skrytí půdorysu Overture je tam volno.
+
+**Balíček.** `pack-nyc-4db656f34300` (5,0 MB tar.gz). Proti předchozímu `a1d309f83523` (2026-11-23)
+přestavěný současnou pipeline: kromě `models.pb` a manifestu se liší chunky (budov 28 605 místo
+30 897, plocha půdorysů stejná +0,07 %, tj. sloučené sousední kusy; zóny, břeh, popisky beze
+změny). Krok `buildings` na NYC padal (GEOS TopologyException v FL0: uzávěr minus sjednocení mimo
+mřížku 1 cm); sjednocení se teď také zaokrouhlí na 1 cm (`buildings.go`). Na Tokiu je oprava
+neutrální (79 507 hmot místo 79 504, uzavřené mezery 20 773 místo 20 763).

@@ -38,6 +38,13 @@ Data sources used by the city packs
   （https://www.geospatial.jp/ckan/dataset/plateau-tokyo23ku）を加工して作成
   (Source: MLIT PLATEAU website; created by processing the 3D city model of
   Tokyo's 23 wards.)
+- NYC Office of Technology and Innovation (OTI, formerly DoITT), 3-D Building Model
+  (NYC Open Data dataset tnru-abg2, CityGML LOD2 from the 2014 aerial survey, made public
+  2016-04-18, delivery area DA12), https://data.cityofnewyork.us/d/tnru-abg2 . NYC Open Data
+  is available without restrictions on use (NYC Administrative Code § 23-502(d)). Modified:
+  seven landmark buildings selected, simplified (weld, small faces dropped, a construction-era
+  annex of One World Trade Center removed), heights converted from US survey feet, recoloured
+  by surface; used for the landmark models of New York (models.pb, specs/models.md).
 - NYC Parks, 2015 Street Tree Census, NYC Open Data (dataset uvpi-gqnh),
   NYC Open Data terms of use, https://opendata.cityofnewyork.us/overview/#termsofuse .
 

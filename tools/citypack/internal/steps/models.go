@@ -30,12 +30,24 @@ var modelSources = map[string]struct {
 	// JGD2011 + T.P. height); projected straight with the pack projection, no PROJ fit.
 	latLon bool
 	lod    int // citygml.ReadLOD: the LOD kept per building (0 = the highest)
+	// v6: zScale converts source heights to metres (0 = already metres). NYC: US survey feet.
+	zScale float64
 }{
-	"ipr_praha_3d": {pb.ModelSource_MODEL_SOURCE_IPR_PRAHA_3D, "3D model: data base © IPR Praha (CC BY 4.0)", "EPSG:5514", false, -1},
+	"ipr_praha_3d": {pb.ModelSource_MODEL_SOURCE_IPR_PRAHA_3D, "3D model: data base © IPR Praha (CC BY 4.0)", "EPSG:5514", false, -1, 0},
 	// PDL 1.0 (CC BY 4.0 compatible); edited data must say so (docs/citypack.md, NOTICE).
 	"plateau": {pb.ModelSource_MODEL_SOURCE_PLATEAU,
-		"3D model: Source: MLIT Project PLATEAU (https://www.mlit.go.jp/plateau/open-data/), processed (PDL 1.0)", "EPSG:6697", true, 2},
+		"3D model: Source: MLIT Project PLATEAU (https://www.mlit.go.jp/plateau/open-data/), processed (PDL 1.0)", "EPSG:6697", true, 2, 0},
+	// v6: NYC OTI (DoITT) 3-D Building Massing Model, CityGML LOD2 per delivery area, NAD83 /
+	// New York Long Island ftUS (EPSG:2263), heights NAVD88 in US survey feet. NYC Open Data has
+	// no use restrictions (Admin. Code § 23-502(d)); a republisher names source, version and
+	// modifications, so the line does too (docs/citypack.md, NOTICE).
+	"nyc_3d": {pb.ModelSource_MODEL_SOURCE_NYC_3D,
+		"3D model: NYC 3-D Building Massing Model, NYC OTI (NYC Open Data tnru-abg2, 2014 survey, published 2016-04-18), simplified and recoloured",
+		"EPSG:2263", false, 2, usFootM},
 }
+
+// usFootM is one US survey foot in metres (1200/3937).
+const usFootM = 1200.0 / 3937.0
 
 // ModelAttribution is the manifest line of a model source.
 func ModelAttribution(s pb.ModelSource) string {
@@ -158,7 +170,7 @@ func Models(e *Env) error {
 		picked[i] = append(picked[i], bs...)
 	}
 	for _, f := range files {
-		bs, err := e.readSource(f, src.srs, src.latLon, src.lod, sels)
+		bs, err := e.readSource(f, src.srs, src.latLon, src.lod, src.zScale, sels)
 		if err != nil {
 			return err
 		}
@@ -188,6 +200,9 @@ func Models(e *Env) error {
 		}
 		if len(picked[i]) == 0 {
 			return fmt.Errorf("models %s: no source buildings selected", id)
+		}
+		if len(mc.Drop) > 0 {
+			picked[i] = e.dropPolys(id, picked[i], mc.Drop)
 		}
 		for k := range mc.Parts {
 			lp := e.Proj.Forward(mc.Parts[k].At[0], mc.Parts[k].At[1])
@@ -230,6 +245,48 @@ func Models(e *Env) error {
 		return fmt.Errorf("models: %d triangles over models.city_max_tris %d", total, mt.CityMaxTris)
 	}
 	return writePB(out, res, false)
+}
+
+// dropPolys removes the source polygons whose vertex mean lies inside a models.yaml `drop` ring
+// (v6; a wall shared with the kept building lies on the ring's edge and stays). The
+// buildings are copied: another model may hold the same source building.
+func (e *Env) dropPolys(id string, bs []*srcBuilding, drop [][][2]float64) []*srcBuilding {
+	rings := make([][]geo.Pt, len(drop))
+	for k, r := range drop {
+		for _, ll := range r {
+			rings[k] = append(rings[k], e.Proj.Forward(ll[0], ll[1]))
+		}
+	}
+	out := make([]*srcBuilding, 0, len(bs))
+	n := 0
+	for _, b := range bs {
+		c := *b
+		c.Polys = make([]citygml.Poly, 0, len(b.Polys))
+		for _, p := range b.Polys {
+			if polyInside(p, rings) {
+				n++
+				continue
+			}
+			c.Polys = append(c.Polys, p)
+		}
+		out = append(out, &c)
+	}
+	slog.Info("models: dropped polygons", "id", id, "polys", n)
+	return out
+}
+
+func polyInside(p citygml.Poly, rings [][]geo.Pt) bool {
+	var c geo.Pt
+	for _, v := range p.Rings[0] {
+		c.X, c.Y = c.X+v.X, c.Y+v.Y
+	}
+	c.X, c.Y = c.X/float64(len(p.Rings[0])), c.Y/float64(len(p.Rings[0]))
+	for _, r := range rings {
+		if len(r) >= 3 && geo.PointInRing(c, r) {
+			return true
+		}
+	}
+	return false
 }
 
 type srcBuilding struct {
@@ -329,7 +386,10 @@ func distToRing(p geo.Pt, r []geo.Pt) float64 {
 }
 
 // readSource streams one source file and keeps the buildings near any selection.
-func (e *Env) readSource(path, srs string, latLon bool, lod int, sels []*modelSelection) ([]*srcBuilding, error) {
+func (e *Env) readSource(path, srs string, latLon bool, lod int, zScale float64, sels []*modelSelection) ([]*srcBuilding, error) {
+	if zScale == 0 {
+		zScale = 1
+	}
 	var af affine
 	toLocal := func(p geo.Pt) geo.Pt { return e.Proj.Forward(p.Y, p.X) } // v5: latitude, longitude
 	if !latLon {
@@ -369,7 +429,7 @@ func (e *Env) readSource(path, srs string, latLon bool, lod int, sels []*modelSe
 	var out []*srcBuilding
 	tf := func(v citygml.V3) citygml.V3 {
 		p := toLocal(geo.Pt{X: v.X, Y: v.Y})
-		return citygml.V3{X: p.X, Y: p.Y, Z: v.Z}
+		return citygml.V3{X: p.X, Y: p.Y, Z: v.Z * zScale}
 	}
 	err = citygml.ReadLOD(f, lod, tf, near, func(b *citygml.Building) error {
 		sb := &srcBuilding{ID: b.ID, Groups: b.Groups, Polys: b.Polys}

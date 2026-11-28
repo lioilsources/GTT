@@ -1,6 +1,6 @@
 # Modely památek
 
-**version: 5** · P2 (vzhled), data v citypacku · plán `Prompts/06-METROPOLE_LANDMARKS3D_PLAN.md` ·
+**version: 6** · P2 (vzhled), data v citypacku · plán `Prompts/06-METROPOLE_LANDMARKS3D_PLAN.md` ·
 pod-plán `plans/M7_PAMATKY.md` · parita F-085 · bez vektorů
 
 ## Účel
@@ -31,7 +31,8 @@ uložení se nemění, auto dál naráží do půdorysů vrstvy 0 v chuncích. �
 V3 formát nemění (`models_version` zůstává 2): mění pipeline (mosty, převod souřadnic, `towers`,
 pořadí částí) a validate. V4 také ne (`models_version` 2): přidává jen `parts` v `models.yaml`.
 V5 také ne (`models_version` 2): zdroj PLATEAU (Tokio), výběr LOD, `max_offset_m` a výběr jen
-podle `include` (viz „Pipeline“). Části jsou seřazené podle vzdálenosti kotvy od bodu památky (první je
+podle `include` (viz „Pipeline“). V6 také ne (`models_version` 2): zdroj `nyc_3d` (New York, výšky
+ve stopách) a `drop` v `models.yaml` (viz „Pipeline“). Části jsou seřazené podle vzdálenosti kotvy od bodu památky (první je
 nejblíž; klient staví sítě s chunkem první části). Část mostu má `source_id` = `bridge:<ID_BUD>`.
 
 ## Pravidla
@@ -52,7 +53,10 @@ budov, pro `z_v ≤ 0` přímo `base_z + z_v` (`specs/terrain.md` „Jednotná z
 `roof` taška, `copper` měděná patina, `stone` tmavý pískovec, `glass`, `gold`, `slate` břidlice
 nebo olovo), přepis `color.city.<id>.model<Role>` (jen den). V5 první přepisy: Tokio `modelWall`
 cihla (nádraží), `modelCopper` rumělka (Sensō-ji), `modelGold` mezinárodní oranžová (Tokijská věž),
-`modelGlass` bílá ocel (Skytree); `roof` se nepřepisuje (barva střešního plánu obou klientů). V4: `wall` teplá světlá omítka
+`modelGlass` bílá ocel (Skytree); v6 New York `modelWall` indianský vápenec (Empire State, 30 Rockefeller
+Plaza, Grand Central), `modelStone` bílý mramor (sv. Patrik), `modelGold` krémová glazovaná terakota
+(175 Fifth Avenue), `modelGlass` stříbřitě modré sklo a nerez (One World Trade Center, koruna
+Chrysleru); `roof` se nepřepisuje (barva střešního plánu obou klientů). V4: `wall` teplá světlá omítka
 (#EBD6B0) a `copper` sytější patina (#5FA083), aby omítka nebyla bílá a kopule z ní vystoupila. V1 kreslila `wall` barvou `landmark`
 palety města, celý model pak byl zelený.
 Světlo po trojúhelnících jako u budov: svislá plocha `ambient + (1 − ambient) × max(0, n · slunce)`,
@@ -123,6 +127,15 @@ jako hranol od `base_z` do zobrazené výšky `height_m`, střecha v barvě `roo
    určuje jednu (`plateau` LOD2, není-li, nejvyšší; IPR beze změny všechny, má jen LOD3).
    `OuterCeilingSurface` (podhledy střech a bran) se čte jako střecha (`SURFACE_ROOF`; míří dolů,
    do střešního plánu nejde).
+   V6 New York (`source: nyc_3d`): NYC OTI (dřív DoITT) 3-D Building Model, CityGML 1.0 LOD2 po
+   dodacích oblastech, NAD83 / New York Long Island **ftUS** (EPSG:2263), výšky NAVD88 v **amerických
+   stopách**. x, y převádí PROJ jako u IPR (přes EPSG:4326, polynom, jednotka je v definici EPSG:2263);
+   z se násobí 1200/3937 (US survey foot → m), jinak by modely byly 3,28× vyšší. Výška NAVD88 se
+   bere jen relativně (pata), datum nevadí. Jedna budova na BIN, bez částí (`BuildingPart`).
+   V6 `drop` (`models.yaml`, prstence lon, lat): polygon zdroje, jehož průměr vrcholů leží v prstenci,
+   vypadne (před čištěním). Budova NYC je jeden objekt bez částí, takže `exclude` nestačí: One World
+   Trade Center nese pod týmž BIN 10m stavební objekt ze snímkování 2014. Zeď sdílená s ponechanou
+   budovou leží na okraji prstence (průměr vrcholů mimo) a zůstává.
 3. Čištění: bez podlah a plochy na úrovni paty, svaření na `weld_m`, bez kolineárních vrcholů,
    skupiny (část, instalace) menší než `min_detail_m` pryč.
 4. Rozpočet: nad `max_tris` (`models.yaml` výjimka do `max_tris_exception`) zvedá `min_detail_m`
@@ -170,5 +183,5 @@ silnicí v rozsahu `bridge_below_m` … `bridge_clear_m` (zakrytí, boj o hloubk
 Žádné vektory (P2, vzhled bez pravidel; vektory `vectors/` jsou jen P0). Pravidla rolí a
 štíhlosti hlídají tabulkové testy `tools/citypack` (`TestSurfaceRole`, v3 `TestSurfaceRoleTowers`,
 mosty `TestBuildBridgePart`, `TestClipBridgeRoads`, v4 `TestBuildPartPartRoles`, `TestBuildPartFloatingGround`), UV a barvy testy W
-(`web/test/models.test.ts`). V5: čtečka `TestReadLOD` (výběr LOD, podhled jako střecha). Ruční kontrola (`plans/verify.yaml`): u Hradu v šikmém pohledu je model,
+(`web/test/models.test.ts`). V5: čtečka `TestReadLOD` (výběr LOD, podhled jako střecha). V6: `TestDropPolys`, `TestUSFoot`. Ruční kontrola (`plans/verify.yaml`): u Hradu v šikmém pohledu je model,
 1 km od něj půdorys, přepnutí bez probliknutí; shora střešní plán.

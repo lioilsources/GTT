@@ -26,7 +26,7 @@ Cache nesleduje změny konfigurace: po úpravě `city.yaml`, `tuning.yaml` (ší
 | `zones` | pěší segmenty a náměstí − koridory silnic → `zones_ground.jsonl`, `zones_barriers.jsonl` | Pěší zóny a sloupky (`specs/zones.md`): pásy `zones.street_width_m` kolem segmentů `pedestrian` a pěší náměstí, které protínají, bez koridorů silnic (+ `zones.gap_margin_m`). Hranice zóny bez hranice oblasti = zábrana (`Chunk.barriers`). |
 | `trams` | segmenty `rail`/`tram` → `trams.pb` | Koleje jako vlastní obousměrný graf (rozdělení v konektorech, ořez oblastí, největší komponenta, bez slepých vleček kratších než `trams.min_track_m`). Zastávky se generují po úsecích mezi výhybkami (`specs/trams.md`). Město bez tramvají má prázdný graf. |
 | `landmarks`, `spots` | YAML → `landmarks.pb`, `spots.pb` | Památka = nejbližší budova do 40 m od bodu (nebo `overture_id`). Spoty se přichytí na nejbližší ponechanou silnici. |
-| `models` | `models.yaml` + CityGML v `raw/models/` → `models.pb` | M7 (`specs/models.md`): budovy zdroje ve výběru památky, převod souřadnic polynomem proloženým PROJ, čištění, rozpočet trojúhelníků, části s patou na terénu, střešní plán, náhled `preview/models/<id>.png`. `pack` doplní `replaces` a atribuci, `validate` hlídá rozpočty a patu. Mosty (v3) z IPR „Mosty 3D“ (`raw/models/mosty_shp/`, `models.yaml` `bridges`); `pack` ořízne most o silnice pod ním. Tokio (v5) z PLATEAU, souřadnice JGD2011 zeměpisné bez PROJ, jen LOD2. Bez `models.yaml` krok nic nedělá. |
+| `models` | `models.yaml` + CityGML v `raw/models/` → `models.pb` | M7 (`specs/models.md`): budovy zdroje ve výběru památky, převod souřadnic polynomem proloženým PROJ, čištění, rozpočet trojúhelníků, části s patou na terénu, střešní plán, náhled `preview/models/<id>.png`. `pack` doplní `replaces` a atribuci, `validate` hlídá rozpočty a patu. Mosty (v3) z IPR „Mosty 3D“ (`raw/models/mosty_shp/`, `models.yaml` `bridges`); `pack` ořízne most o silnice pod ním. Tokio (v5) z PLATEAU, souřadnice JGD2011 zeměpisné bez PROJ, jen LOD2. New York (v6) z NYC OTI 3-D Building Model, EPSG:2263, výšky ze stop na metry, `drop`. Bez `models.yaml` krok nic nedělá. |
 | `pack` | → `app/assets/cities/<city>/` | `manifest.pb`, `graph.pb`, `chunks/{x}_{y}.pb`, `landmarks.pb`, `spots.pb`; vše gzip protobuf, souřadnice v decimetrech. Střechy a země předtriangulované (earcut). Deterministický: kanonické prstence, úplné řazení, bez času buildu – stejný vstup dá stejné bajty. |
 | `validate` | hotový balíček | Souvislý graf, mosty a tunely napojené na obou koncích, trasa ze startu ke každému spotu (po ponechaných silnicích, s jednosměrkami), žádná budova na ose silnice, žádné sloupky přes osu silnice, limit velikosti chunku, každá hero památka má budovu. S terénem navíc: výšky uzlů a konců hran souhlasí, žádná hrana (mimo `stairs`) nad `terrain.max_grade` (tolerance clampu se počítá na každý úsek profilu), int16 bez saturace, mosty nad vodou a silnicí aspoň `terrain.pipeline.bridge_min_clear_m` (pod plnou světlostí `terrain.bridge.clear_*` jen varování; u nájezdu mostu, blíž než `clear_road_m / bridge.max_grade` od místa, kde most dosedá, jen varování), okraj silnice na terénu do `road_gap_max_m` u aspoň 1 − `road_gap_share` vzorků (vzorek, kde je do úhlopříčky mřížky jiná silnice v jiné výšce, se nepočítá: conform dá bod mřížky nejbližší silnici). S přírodou: stromy mimo vozovku, budovy a vodu, limit stromů na chunk, velká voda má jméno. |
 | `lod` | `terrain.bin` + budovy + zeleň → `lod/{x}_{y}.pb` | Vzdálený prstenec: terén po `terrain.lod.grid_m`, budovy sloučené po blocích, les a park jako hmoty, voda jedním povrchem; dlaždice = `terrain.lod.chunks`² chunků. |
@@ -280,3 +280,57 @@ střešní plán proti vlastním půdorysům Overture, posun 0–0,7 m (Skytree 
 **Formát PLATEAU:** budovy mají LOD0 (půdorys), LOD1 (hranol), LOD2 (`bldg:boundedBy` s plochami)
 a několik i LOD3/LOD4; čtečka (v5) bere jen LOD2. Instalace (`lod2Geometry`) nemají plochy
 `Roof/Wall/Ground` a vypadnou. Podhledy střech a bran (`OuterCeilingSurface`) se čtou jako střecha.
+
+### New York – NYC OTI 3-D Building Model (H5, 2026-11-28)
+
+Zdroj: **NYC Office of Technology and Innovation (OTI, dřív DoITT), „3-D Building Model“**, NYC
+Open Data `tnru-abg2` (https://data.cityofnewyork.us/d/tnru-abg2), zveřejněno 2016-04-18,
+letecké snímkování 2014, CityGML **1.0** LOD2 (Ground/Wall/RoofSurface pod `lod2MultiSurface`),
+jedna budova na BIN (atributy `BIN`, `DOITT_ID`, `SOURCE_ID`), bez `BuildingPart` a bez textur.
+Ke stažení tři zipy na `s-media.nyc.gov/agencies/oti/` (CityGML 916 MB, multipatch 257 MB, DGN);
+uvnitř 20 dodacích oblastí `DA<n>_3D_Buildings_Merged.gml` a jejich obálky `DeliveryArea.shp`.
+
+**Licence:** NYC Open Data jsou podle NYC Administrative Code **§ 23-502(d)** dostupná „without any
+registration requirement, license requirement or restrictions on their use“; město smí od
+přeposílatele (i aplikace) žádat uvedení **zdroje, verze a popisu úprav** – proto je má řádek
+v manifestu i `NOTICE`. FAQ NYC Open Data: „There are no restrictions on the use of Open Data.“
+Odpovědnost za data město odmítá (§ 23-504). Dataset sám licenci neuvádí (`license: null`),
+dodatečné podmínky agentury (OTI) jsme nenašli. Loga a jména města (NYC je ochranná známka)
+hra nepoužívá (R10). **Lze.**
+
+V manifestu: „3D model: NYC 3-D Building Massing Model, NYC OTI (NYC Open Data tnru-abg2, 2014
+survey, published 2016-04-18), simplified and recoloured“.
+
+**Soubory** (`run/citypack/nyc/raw/models/`): stahuje se jen potřebná oblast, ne celý zip. Zip
+podporuje HTTP range; centrální adresář je na konci (28 položek), položka se stáhne podle offsetu
+a rozbalí (deflate). Všech sedm památek první dávky leží v **DA12** (Manhattan zhruba pod 59. ulicí
+a dolní Manhattan; 44 MB komprimovaně, `DA12_3D_Buildings_Merged.gml` 614 061 971 B):
+
+```
+d=run/citypack/nyc/raw/models; mkdir -p $d; u=https://s-media.nyc.gov/agencies/oti/DA_WISE_GML.zip
+# DA12: lokální hlavička na offsetu 86275704, komprimovaně 43973699 B (z centrálního adresáře)
+python3 - "$u" 86275704 43973699 $d/DA12_3D_Buildings_Merged.gml <<'PY'
+import sys,struct,zlib,subprocess
+u,off,cs,out=sys.argv[1],int(sys.argv[2]),int(sys.argv[3]),sys.argv[4]
+h=subprocess.run(['curl','-s','-r',f'{off}-{off+29}',u],capture_output=True).stdout
+s=off+30+sum(struct.unpack('<HH',h[26:30]))
+p=subprocess.Popen(['curl','-s','-r',f'{s}-{s+cs-1}',u],stdout=subprocess.PIPE); d=zlib.decompressobj(-15)
+with open(out,'wb') as f:
+    for c in iter(lambda:p.stdout.read(1<<20),b''): f.write(d.decompress(c))
+    f.write(d.flush())
+PY
+run/bin/citypack -force models nyc && run/bin/citypack pack nyc && run/bin/citypack validate nyc
+```
+
+**Souřadnice:** NAD83 / New York Long Island **ftUS** (EPSG:2263, `srsName="EPSG:2263"` v souboru),
+výšky NAVD88 v **amerických stopách**. x, y převádí PROJ přes EPSG:4326 do projekce balíčku
+(polynom na mřížce 5 × 5 přes obálku DA12, 7 × 8 km, reziduum 1 mm); z se násobí 1200/3937
+(`nyc_3d` v `models.go`, v6). Bez převodu výšek by věže byly 3,28× vyšší (ESB ~1 450 m). Datum
+NAVD88 nevadí, výška se bere jen relativně (pata = medián terén − země zdroje). Pražskou chybu
+117 m (PROJ bez datumu) převod přes EPSG:4326 nemá: poloha 0–1,4 m proti Overture (One WTC 3 m).
+
+**Co v datech je a není:** budovy ano (anténa ESB, špice One WTC a Chrysleru, věže sv. Patrika),
+mosty ne (Brooklyn Bridge v DA19 chybí, jen dva nízké objekty u brooklynského pilíře), socha
+Svobody ano (DA19, BIN 1000002, podstavec s hvězdicí Fort Wood), ale leží mimo oblast balíčku.
+Snímkování 2014: novější stavby chybí a staveniště jsou ve stavu 2014 (u One WTC 10m objekt pod
+týmž BIN, `drop`).
