@@ -26,8 +26,15 @@ var modelSources = map[string]struct {
 	src  pb.ModelSource
 	attr string
 	srs  string // CRS of the source coordinates (DuckDB / PROJ name)
+	// v5: latLon = geographic source, x = latitude, y = longitude in degrees (PLATEAU EPSG:6697,
+	// JGD2011 + T.P. height); projected straight with the pack projection, no PROJ fit.
+	latLon bool
+	lod    int // citygml.ReadLOD: the LOD kept per building (0 = the highest)
 }{
-	"ipr_praha_3d": {pb.ModelSource_MODEL_SOURCE_IPR_PRAHA_3D, "3D model: data base © IPR Praha (CC BY 4.0)", "EPSG:5514"},
+	"ipr_praha_3d": {pb.ModelSource_MODEL_SOURCE_IPR_PRAHA_3D, "3D model: data base © IPR Praha (CC BY 4.0)", "EPSG:5514", false, -1},
+	// PDL 1.0 (CC BY 4.0 compatible); edited data must say so (docs/citypack.md, NOTICE).
+	"plateau": {pb.ModelSource_MODEL_SOURCE_PLATEAU,
+		"3D model: Source: MLIT Project PLATEAU (https://www.mlit.go.jp/plateau/open-data/), processed (PDL 1.0)", "EPSG:6697", true, 2},
 }
 
 // ModelAttribution is the manifest line of a model source.
@@ -151,7 +158,7 @@ func Models(e *Env) error {
 		picked[i] = append(picked[i], bs...)
 	}
 	for _, f := range files {
-		bs, err := e.readSource(f, src.srs, sels)
+		bs, err := e.readSource(f, src.srs, src.latLon, src.lod, sels)
 		if err != nil {
 			return err
 		}
@@ -273,7 +280,17 @@ func (e *Env) selection(id string, mc config.ModelConfig, masses []MassRow) (*mo
 		grow(p, 0)
 	}
 	if len(s.lm) == 0 && len(s.area) == 0 {
-		return nil, fmt.Errorf("models %s: the landmark has no building and models.yaml no select.area", id)
+		if len(mc.Include) == 0 {
+			return nil, fmt.Errorf("models %s: the landmark has no building and models.yaml neither select.area nor include", id)
+		}
+		// v5: a plaza landmark (Kaminarimon) picks its source buildings by id only; read the
+		// source as far as validate lets the model reach.
+		l := e.C.Landmarks[idx-1]
+		r := e.C.Tuning.Models.MaxOffsetM
+		if mc.MaxOffsetM > 0 {
+			r = min(mc.MaxOffsetM, e.C.Tuning.Models.NearM)
+		}
+		grow(e.Proj.Forward(l.Lon, l.Lat), r)
 	}
 	for _, x := range mc.Include {
 		s.include[x] = true
@@ -312,25 +329,29 @@ func distToRing(p geo.Pt, r []geo.Pt) float64 {
 }
 
 // readSource streams one source file and keeps the buildings near any selection.
-func (e *Env) readSource(path, srs string, sels []*modelSelection) ([]*srcBuilding, error) {
-	f, err := os.Open(path)
-	if err != nil {
-		return nil, err
-	}
-	x1, y1, x2, y2, err := citygml.Envelope(f)
-	f.Close()
-	if err != nil {
-		return nil, fmt.Errorf("%s: %w", filepath.Base(path), err)
-	}
-	af, err := e.fitAffine(srs, x1, y1, x2, y2)
-	if err != nil {
-		return nil, err
+func (e *Env) readSource(path, srs string, latLon bool, lod int, sels []*modelSelection) ([]*srcBuilding, error) {
+	var af affine
+	toLocal := func(p geo.Pt) geo.Pt { return e.Proj.Forward(p.Y, p.X) } // v5: latitude, longitude
+	if !latLon {
+		f, err := os.Open(path)
+		if err != nil {
+			return nil, err
+		}
+		x1, y1, x2, y2, err := citygml.Envelope(f)
+		f.Close()
+		if err != nil {
+			return nil, fmt.Errorf("%s: %w", filepath.Base(path), err)
+		}
+		if af, err = e.fitAffine(srs, x1, y1, x2, y2); err != nil {
+			return nil, err
+		}
+		toLocal = af.apply
 	}
 	near := func(minX, minY, maxX, maxY float64) bool {
-		a := af.apply(geo.Pt{X: minX, Y: minY})
-		b := af.apply(geo.Pt{X: maxX, Y: maxY})
-		c := af.apply(geo.Pt{X: minX, Y: maxY})
-		d := af.apply(geo.Pt{X: maxX, Y: minY})
+		a := toLocal(geo.Pt{X: minX, Y: minY})
+		b := toLocal(geo.Pt{X: maxX, Y: maxY})
+		c := toLocal(geo.Pt{X: minX, Y: maxY})
+		d := toLocal(geo.Pt{X: maxX, Y: minY})
 		lx, hx := math.Min(math.Min(a.X, b.X), math.Min(c.X, d.X)), math.Max(math.Max(a.X, b.X), math.Max(c.X, d.X))
 		ly, hy := math.Min(math.Min(a.Y, b.Y), math.Min(c.Y, d.Y)), math.Max(math.Max(a.Y, b.Y), math.Max(c.Y, d.Y))
 		for _, s := range sels {
@@ -340,17 +361,17 @@ func (e *Env) readSource(path, srs string, sels []*modelSelection) ([]*srcBuildi
 		}
 		return false
 	}
-	f, err = os.Open(path)
+	f, err := os.Open(path)
 	if err != nil {
 		return nil, err
 	}
 	defer f.Close()
 	var out []*srcBuilding
 	tf := func(v citygml.V3) citygml.V3 {
-		p := af.apply(geo.Pt{X: v.X, Y: v.Y})
+		p := toLocal(geo.Pt{X: v.X, Y: v.Y})
 		return citygml.V3{X: p.X, Y: p.Y, Z: v.Z}
 	}
-	err = citygml.Read(f, tf, near, func(b *citygml.Building) error {
+	err = citygml.ReadLOD(f, lod, tf, near, func(b *citygml.Building) error {
 		sb := &srcBuilding{ID: b.ID, Groups: b.Groups, Polys: b.Polys}
 		var sx, sy float64
 		n := 0

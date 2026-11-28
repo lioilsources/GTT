@@ -56,10 +56,15 @@ func (e *Env) validateModels(p *PackData, fail func(string, ...any)) {
 	total := 0
 	for _, m := range ms.Models {
 		total += int(m.Tris)
-		budget := mt.MaxTris
+		budget, maxOff := mt.MaxTris, mt.MaxOffsetM
 		if e.C.Models != nil {
 			if mc, ok := e.C.Models.Models[m.LandmarkId]; ok && mc.MaxTris > 0 {
 				budget = min(mc.MaxTris, mt.MaxTrisException)
+			}
+			// v5: a temple compound spread along its axis (Sensō-ji: gate to main hall 330 m)
+			// may widen the offset, never beyond near_m (the model must show at its landmark).
+			if mc, ok := e.C.Models.Models[m.LandmarkId]; ok && mc.MaxOffsetM > 0 {
+				maxOff = min(mc.MaxOffsetM, mt.NearM)
 			}
 		}
 		lm := -1
@@ -156,13 +161,13 @@ func (e *Env) validateModels(p *PackData, fail func(string, ...any)) {
 			}
 		}
 		if hasBridge {
-			if nearest > mt.MaxOffsetM {
-				fail("model %s: nearest part %.0f m from the landmark point (> %.0f)", m.LandmarkId, nearest, mt.MaxOffsetM)
+			if nearest > maxOff {
+				fail("model %s: nearest part %.0f m from the landmark point (> %.0f)", m.LandmarkId, nearest, maxOff)
 			}
 		} else if cw > 0 {
 			c := geo.Pt{X: cx / cw, Y: cy / cw}
-			if d := c.Dist(lp); d > mt.MaxOffsetM {
-				fail("model %s: centre %.0f m from the landmark point (> %.0f)", m.LandmarkId, d, mt.MaxOffsetM)
+			if d := c.Dist(lp); d > maxOff {
+				fail("model %s: centre %.0f m from the landmark point (> %.0f)", m.LandmarkId, d, maxOff)
 			}
 		}
 		for _, r := range m.Replaces {

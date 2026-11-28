@@ -58,3 +58,34 @@ func TestRead(t *testing.T) {
 		t.Fatalf("roof %+v", r)
 	}
 }
+
+// v5: PLATEAU carries LOD2 for every building and LOD3 (with openings) for a few; one is kept.
+const multiLOD = `<CityModel xmlns="http://www.opengis.net/citygml/2.0" xmlns:gml="http://www.opengis.net/gml" xmlns:bldg="http://www.opengis.net/citygml/building/2.0">
+ <cityObjectMember><bldg:Building gml:id="b">
+  <bldg:lod0FootPrint><gml:MultiSurface><gml:surfaceMember><gml:Polygon><gml:exterior><gml:LinearRing><gml:posList>0 0 0 1 0 0 1 1 0 0 0 0</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon></gml:surfaceMember></gml:MultiSurface></bldg:lod0FootPrint>
+  <bldg:boundedBy><bldg:RoofSurface><bldg:lod2MultiSurface><gml:MultiSurface><gml:surfaceMember><gml:Polygon><gml:exterior><gml:LinearRing><gml:posList>0 0 5 1 0 5 1 1 5 0 0 5</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon></gml:surfaceMember></gml:MultiSurface></bldg:lod2MultiSurface></bldg:RoofSurface></bldg:boundedBy>
+  <bldg:boundedBy><bldg:RoofSurface><bldg:lod3MultiSurface><gml:MultiSurface><gml:surfaceMember><gml:Polygon><gml:exterior><gml:LinearRing><gml:posList>0 0 6 1 0 6 1 1 6 0 0 6</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon></gml:surfaceMember></gml:MultiSurface></bldg:lod3MultiSurface></bldg:RoofSurface></bldg:boundedBy>
+  <bldg:boundedBy><bldg:OuterCeilingSurface><bldg:lod2MultiSurface><gml:MultiSurface><gml:surfaceMember><gml:Polygon><gml:exterior><gml:LinearRing><gml:posList>0 0 4 0 1 4 1 1 4 0 0 4</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon></gml:surfaceMember></gml:MultiSurface></bldg:lod2MultiSurface></bldg:OuterCeilingSurface></bldg:boundedBy>
+  <bldg:boundedBy><bldg:WallSurface><bldg:lod3MultiSurface><gml:MultiSurface><gml:surfaceMember><gml:Polygon><gml:exterior><gml:LinearRing><gml:posList>0 0 0 1 0 0 1 0 6 0 0 0</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon></gml:surfaceMember></gml:MultiSurface></bldg:lod3MultiSurface></bldg:WallSurface></bldg:boundedBy>
+ </bldg:Building></cityObjectMember>
+</CityModel>`
+
+func TestReadLOD(t *testing.T) {
+	for _, c := range []struct{ lod, polys, want int }{{-1, 4, -1}, {0, 2, 3}, {2, 2, 2}, {1, 2, 3}} {
+		var got *Building
+		if err := ReadLOD(strings.NewReader(multiLOD), c.lod, nil, nil, func(b *Building) error { got = b; return nil }); err != nil {
+			t.Fatal(err)
+		}
+		if got == nil || len(got.Polys) != c.polys {
+			t.Fatalf("lod %d: %+v", c.lod, got)
+		}
+		for _, p := range got.Polys {
+			if p.Kind == Ground || p.Kind == Wall && p.LOD == 2 {
+				t.Fatalf("lod %d: kind %v at LOD %d", c.lod, p.Kind, p.LOD) // the ceiling reads as a roof
+			}
+			if c.want >= 0 && p.LOD != c.want {
+				t.Fatalf("lod %d: polygon at LOD %d, want %d", c.lod, p.LOD, c.want)
+			}
+		}
+	}
+}

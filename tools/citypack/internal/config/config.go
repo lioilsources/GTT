@@ -149,13 +149,15 @@ type ModelConfig struct {
 		BufferM float64      `yaml:"buffer_m"`
 		Area    [][2]float64 `yaml:"area"` // lon, lat ring: the landmark's grounds beyond its own building
 	} `yaml:"select"`
-	Include []string          `yaml:"include"`
-	Exclude []string          `yaml:"exclude"`
-	MaxTris int               `yaml:"max_tris"`
-	Roles   map[string]string `yaml:"roles"`  // source building or part id → role of its roofs
-	Walls   map[string]string `yaml:"walls"`  // v2: source building or part id → role of its walls
-	Towers  map[string]string `yaml:"towers"` // v3: source building id → role of its tower roofs (instead of copper)
-	Bridges struct {
+	Include []string `yaml:"include"`
+	Exclude []string `yaml:"exclude"`
+	MaxTris int      `yaml:"max_tris"`
+	// v5: validate's model centre vs landmark point instead of models.max_offset_m (capped at near_m)
+	MaxOffsetM float64           `yaml:"max_offset_m"`
+	Roles      map[string]string `yaml:"roles"`  // source building or part id → role of its roofs
+	Walls      map[string]string `yaml:"walls"`  // v2: source building or part id → role of its walls
+	Towers     map[string]string `yaml:"towers"` // v3: source building id → role of its tower roofs (instead of copper)
+	Bridges    struct {
 		File string  `yaml:"file"` // v3: IPR "Mosty 3D" shapefile (polygonZ) in raw/models/
 		IDs  []int64 `yaml:"ids"`  // ID_BUD of the bridges in the model
 	} `yaml:"bridges"`

@@ -26,9 +26,18 @@ Data sources used by the city packs
   New York: USGS 3DEP (public domain). Prague and Tokyo: EU-DEM (Copernicus),
   SRTM and other sources listed in the attribution document above.
 - IPR Praha (Prague Institute of Planning and Development), 3D model of buildings
-  (CityGML, map sheet Praha 7-1), CC BY 4.0, "data base (c) IPR Praha",
+  (CityGML, map sheets Praha 6-1, 6-2, 7-1, 7-2; Mosty 3D), CC BY 4.0, "data base (c) IPR Praha",
   https://www.geoportalpraha.cz/en/data-and-services/open-data . Used for the
-  landmark model of Prague Castle (models.pb, specs/models.md).
+  landmark models of Prague (models.pb, specs/models.md).
+- MLIT Project PLATEAU, 3D City Model of Tokyo's 23 wards (CityGML, FY2025,
+  copyright of the wards of Tokyo), Public Data License 1.0 (PDL 1.0, compatible
+  with CC BY 4.0), https://www.mlit.go.jp/plateau/site-policy/ . Used, processed,
+  for the landmark models of Tokyo (models.pb, specs/models.md). Attribution:
+  出典：国土交通省 PLATEAUウェブサイト（https://www.mlit.go.jp/plateau/open-data/）
+  「3D都市モデル（Project PLATEAU）東京都23区」（国土交通省）
+  （https://www.geospatial.jp/ckan/dataset/plateau-tokyo23ku）を加工して作成
+  (Source: MLIT PLATEAU website; created by processing the 3D city model of
+  Tokyo's 23 wards.)
 - NYC Parks, 2015 Street Tree Census, NYC Open Data (dataset uvpi-gqnh),
   NYC Open Data terms of use, https://opendata.cityofnewyork.us/overview/#termsofuse .
 

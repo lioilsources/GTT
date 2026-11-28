@@ -1,8 +1,10 @@
-// Package citygml streams buildings out of a CityGML 2.0 file (IPR Praha 3D model, specs/models.md).
+// Package citygml streams buildings out of a CityGML 2.0 file (IPR Praha 3D model, MLIT PLATEAU,
+// specs/models.md).
 //
 // Only boundary surfaces are read (RoofSurface, WallSurface, GroundSurface under a Building, its
 // BuildingParts and BuildingInstallations, at any LOD); solids reference the same polygons by
-// xlink and are skipped.
+// xlink and are skipped. A building may carry the same shell at several LODs (PLATEAU: LOD2 for
+// all, LOD3 for a few): ReadLOD keeps one of them (specs/models.md v5).
 package citygml
 
 import (
@@ -29,6 +31,7 @@ const (
 type Poly struct {
 	Kind  Kind
 	Group int // index into Building.Groups: the innermost Building, BuildingPart or BuildingInstallation
+	LOD   int // of the enclosing lodNMultiSurface (0 = none seen)
 	Rings [][]V3
 }
 
@@ -79,8 +82,16 @@ func Envelope(r io.Reader) (minX, minY, maxX, maxY float64, err error) {
 
 // Read calls fn for every top-level building. tf maps source coordinates (x, y, z) to the
 // output; keep sees the building's source bounding box first and may skip it cheaply.
+// Every LOD is kept (ReadLOD with lod 0 picks the highest one per building).
 func Read(r io.Reader, tf func(V3) V3, keep func(minX, minY, maxX, maxY float64) bool, fn func(*Building) error) error {
+	return ReadLOD(r, -1, tf, keep, fn)
+}
+
+// ReadLOD is Read keeping one LOD per building: lod if the building has polygons at it, else its
+// highest. lod 0 = always the highest, lod < 0 = all of them.
+func ReadLOD(r io.Reader, lod int, tf func(V3) V3, keep func(minX, minY, maxX, maxY float64) bool, fn func(*Building) error) error {
 	d := newDecoder(r)
+	var lodStack []int
 	var (
 		b       *Building
 		stack   []string
@@ -105,6 +116,9 @@ func Read(r io.Reader, tf func(V3) V3, keep func(minX, minY, maxX, maxY float64)
 		case xml.StartElement:
 			n := t.Name.Local
 			stack = append(stack, n)
+			if l, ok := lodOf(n); ok {
+				lodStack = append(lodStack, l)
+			}
 			switch n {
 			case "Building":
 				if b == nil {
@@ -119,7 +133,9 @@ func Read(r io.Reader, tf func(V3) V3, keep func(minX, minY, maxX, maxY float64)
 			case "usage":
 				usageOn = true
 				usage.Reset()
-			case "RoofSurface":
+			case "RoofSurface", "OuterCeilingSurface":
+				// v5: PLATEAU files the underside of eaves and gate roofs as OuterCeilingSurface;
+				// it is drawn like a roof (it faces down, so it never joins the roof plan).
 				kind = int(Roof)
 			case "WallSurface":
 				kind = int(Wall)
@@ -128,6 +144,9 @@ func Read(r io.Reader, tf func(V3) V3, keep func(minX, minY, maxX, maxY float64)
 			case "Polygon":
 				if b != nil && kind >= 0 && len(groups) > 0 {
 					poly = &Poly{Kind: Kind(kind), Group: groups[len(groups)-1]}
+					if len(lodStack) > 0 {
+						poly.LOD = lodStack[len(lodStack)-1]
+					}
 				}
 			case "posList", "pos":
 				if poly != nil {
@@ -145,6 +164,9 @@ func Read(r io.Reader, tf func(V3) V3, keep func(minX, minY, maxX, maxY float64)
 			n := t.Name.Local
 			if len(stack) > 0 {
 				stack = stack[:len(stack)-1]
+			}
+			if _, ok := lodOf(n); ok && len(lodStack) > 0 {
+				lodStack = lodStack[:len(lodStack)-1]
 			}
 			switch n {
 			case "usage":
@@ -185,7 +207,7 @@ func Read(r io.Reader, tf func(V3) V3, keep func(minX, minY, maxX, maxY float64)
 					b.Polys = append(b.Polys, *poly)
 				}
 				poly = nil
-			case "RoofSurface", "WallSurface", "GroundSurface":
+			case "RoofSurface", "OuterCeilingSurface", "WallSurface", "GroundSurface":
 				kind = -1
 			case "BuildingPart", "BuildingInstallation":
 				if len(groups) > 0 {
@@ -196,6 +218,7 @@ func Read(r io.Reader, tf func(V3) V3, keep func(minX, minY, maxX, maxY float64)
 					groups = groups[:len(groups)-1]
 				}
 				if len(groups) == 0 && b != nil {
+					pickLOD(b, lod)
 					if err := finish(b, tf, keep, fn); err != nil {
 						return err
 					}
@@ -232,6 +255,36 @@ func finish(b *Building, tf func(V3) V3, keep func(minX, minY, maxX, maxY float6
 		}
 	}
 	return fn(b)
+}
+
+// lodOf reads the LOD of a geometry property element (lod2MultiSurface, lod3Solid, …).
+func lodOf(local string) (int, bool) {
+	if len(local) > 4 && strings.HasPrefix(local, "lod") && local[3] >= '0' && local[3] <= '4' {
+		return int(local[3] - '0'), true
+	}
+	return 0, false
+}
+
+// pickLOD drops the polygons of the other LODs (lod < 0: keep all).
+func pickLOD(b *Building, lod int) {
+	if lod < 0 || len(b.Polys) == 0 {
+		return
+	}
+	top, has := 0, false
+	for _, p := range b.Polys {
+		top = max(top, p.LOD)
+		has = has || (lod > 0 && p.LOD == lod)
+	}
+	if !has {
+		lod = top
+	}
+	out := b.Polys[:0]
+	for _, p := range b.Polys {
+		if p.LOD == lod {
+			out = append(out, p)
+		}
+	}
+	b.Polys = out
 }
 
 func attr(t xml.StartElement, local string) string {

@@ -26,7 +26,7 @@ Cache nesleduje změny konfigurace: po úpravě `city.yaml`, `tuning.yaml` (ší
 | `zones` | pěší segmenty a náměstí − koridory silnic → `zones_ground.jsonl`, `zones_barriers.jsonl` | Pěší zóny a sloupky (`specs/zones.md`): pásy `zones.street_width_m` kolem segmentů `pedestrian` a pěší náměstí, které protínají, bez koridorů silnic (+ `zones.gap_margin_m`). Hranice zóny bez hranice oblasti = zábrana (`Chunk.barriers`). |
 | `trams` | segmenty `rail`/`tram` → `trams.pb` | Koleje jako vlastní obousměrný graf (rozdělení v konektorech, ořez oblastí, největší komponenta, bez slepých vleček kratších než `trams.min_track_m`). Zastávky se generují po úsecích mezi výhybkami (`specs/trams.md`). Město bez tramvají má prázdný graf. |
 | `landmarks`, `spots` | YAML → `landmarks.pb`, `spots.pb` | Památka = nejbližší budova do 40 m od bodu (nebo `overture_id`). Spoty se přichytí na nejbližší ponechanou silnici. |
-| `models` | `models.yaml` + CityGML v `raw/models/` → `models.pb` | M7 (`specs/models.md`): budovy zdroje ve výběru památky, převod souřadnic polynomem proloženým PROJ, čištění, rozpočet trojúhelníků, části s patou na terénu, střešní plán, náhled `preview/models/<id>.png`. `pack` doplní `replaces` a atribuci, `validate` hlídá rozpočty a patu. Mosty (v3) z IPR „Mosty 3D“ (`raw/models/mosty_shp/`, `models.yaml` `bridges`); `pack` ořízne most o silnice pod ním. Bez `models.yaml` krok nic nedělá. |
+| `models` | `models.yaml` + CityGML v `raw/models/` → `models.pb` | M7 (`specs/models.md`): budovy zdroje ve výběru památky, převod souřadnic polynomem proloženým PROJ, čištění, rozpočet trojúhelníků, části s patou na terénu, střešní plán, náhled `preview/models/<id>.png`. `pack` doplní `replaces` a atribuci, `validate` hlídá rozpočty a patu. Mosty (v3) z IPR „Mosty 3D“ (`raw/models/mosty_shp/`, `models.yaml` `bridges`); `pack` ořízne most o silnice pod ním. Tokio (v5) z PLATEAU, souřadnice JGD2011 zeměpisné bez PROJ, jen LOD2. Bez `models.yaml` krok nic nedělá. |
 | `pack` | → `app/assets/cities/<city>/` | `manifest.pb`, `graph.pb`, `chunks/{x}_{y}.pb`, `landmarks.pb`, `spots.pb`; vše gzip protobuf, souřadnice v decimetrech. Střechy a země předtriangulované (earcut). Deterministický: kanonické prstence, úplné řazení, bez času buildu – stejný vstup dá stejné bajty. |
 | `validate` | hotový balíček | Souvislý graf, mosty a tunely napojené na obou koncích, trasa ze startu ke každému spotu (po ponechaných silnicích, s jednosměrkami), žádná budova na ose silnice, žádné sloupky přes osu silnice, limit velikosti chunku, každá hero památka má budovu. S terénem navíc: výšky uzlů a konců hran souhlasí, žádná hrana (mimo `stairs`) nad `terrain.max_grade` (tolerance clampu se počítá na každý úsek profilu), int16 bez saturace, mosty nad vodou a silnicí aspoň `terrain.pipeline.bridge_min_clear_m` (pod plnou světlostí `terrain.bridge.clear_*` jen varování; u nájezdu mostu, blíž než `clear_road_m / bridge.max_grade` od místa, kde most dosedá, jen varování), okraj silnice na terénu do `road_gap_max_m` u aspoň 1 − `road_gap_share` vzorků (vzorek, kde je do úhlopříčky mřížky jiná silnice v jiné výšce, se nepočítá: conform dá bod mřížky nejbližší silnici). S přírodou: stromy mimo vozovku, budovy a vodu, limit stromů na chunk, velká voda má jméno. |
 | `lod` | `terrain.bin` + budovy + zeleň → `lod/{x}_{y}.pb` | Vzdálený prstenec: terén po `terrain.lod.grid_m`, budovy sloučené po blocích, les a park jako hmoty, voda jedním povrchem; dlaždice = `terrain.lod.chunks`² chunků. |
@@ -225,3 +225,58 @@ Surová data nejsou v gitu ani v CI (`run/` je ignorovaný); vydaný balíček n
 Souřadnice zdroje S-JTSK / Křovák East North (EPSG:5514, v souboru `srsName="unknown"`), výšky Bpv.
 Převod do místních metrů: kvadratický polynom proložený PROJ (DuckDB `ST_Transform`) na mřížce 5 × 5
 přes obálku listu, reziduum 1 mm. Podrobnosti a čísla v `plans/M7_PAMATKY.md`.
+
+### Tokio – MLIT Project PLATEAU (H5, 2026-11-28)
+
+Zdroj: **3D都市モデル（Project PLATEAU）東京都23区**, data FY2025 (spec 5.0), CityGML 2.0 + i-UR,
+po městských obvodech a po **3. stupni sítě (1 km)**, jeden soubor budov na mesh
+`udx/bldg/<mesh>_bldg_6697_op.gml`. Stahuje se jen potřebný mesh, ne zip celého obvodu
+(0,4–2,5 GB): katalog `https://api.plateauview.mlit.go.jp/datacatalog/citygml/m:<mesh>` vrátí URL
+souboru pro každý obvod, který mesh zasahuje (Taitō a Sumida mají pro týž mesh různé soubory).
+
+**Licence:** podmínky webu PLATEAU (https://www.mlit.go.jp/plateau/site-policy/, kap. 3): obsah lze
+užít podle **公共データ利用規約（第1.0版）(PDL 1.0)**, https://www.digital.go.jp/resources/open_data/public_data_license_v1.0 ;
+pravidla jsou výslovně **kompatibilní s CC BY 4.0** (PDL 1.0 §1.7.3). Autorská práva k 3D modelům
+měst drží jednotlivé obce (zde obvody Tokia). Povinné: uvést zdroj a u upravených dat uvést, že
+jsou upravená, a nevydávat je za dílo MLIT. Mimo licenci jsou loga a symboly (LOD2 žádné nemá,
+R10). Web PLATEAU upozorňuje, že užití výsledků veřejného zeměměření může omezovat zákon
+o zeměměřictví (測量法, příručka https://www.mlit.go.jp/plateau/libraries/handbooks/); hra modely jen
+zobrazuje jako obraz, příručku jsme nečetli (**neověřeno**). Text atribuce:
+
+```
+出典：国土交通省 PLATEAUウェブサイト（https://www.mlit.go.jp/plateau/open-data/）
+「3D都市モデル（Project PLATEAU）東京都23区」（国土交通省）（https://www.geospatial.jp/ckan/dataset/plateau-tokyo23ku）を加工して作成
+```
+
+V manifestu (hra nemá písmo CJK) anglicky: „3D model: Source: MLIT Project PLATEAU
+(https://www.mlit.go.jp/plateau/open-data/), processed (PDL 1.0)“.
+
+**Soubory** (`run/citypack/tokyo/raw/models/`, jméno `<kód obvodu>_<mesh>_bldg_6697_op.gml`):
+
+| Soubor | Památka | Velikost | sha256 |
+|---|---|---|---|
+| `13103_53393599` (Minato) | Tokijská věž | 110 MB | `95059a52aee0e34c…` |
+| `13107_53394654` (Sumida) | Tokyo Skytree | 60 MB | `ca0d97fb6178ca0e…` |
+| `13106_53394653` (Taitō) | Sensō-ji (Kaminarimon, Hōzōmon, hlavní síň, pagoda) | 143 MB | `57e8a933ccf054d5…` |
+| `13101_53394611` (Chiyoda) | nádraží Tokio (Marunouchi) | 166 MB | `3448bec01ea01591…` |
+| `13101_53394519` (Chiyoda) | Národní sněmovna – budova **v datech není**, soubor se nepoužívá (není v `files`) | 11 MB | `69d22f506861b245…` |
+
+```
+d=run/citypack/tokyo/raw/models; mkdir -p $d; a=https://assets.cms.plateau.reearth.io/assets
+curl -L -o $d/13103_53393599_bldg_6697_op.gml $a/ea/d75459-6d62-4a1f-8081-317603bd5f8d/13103_minato-ku_pref_2025_citygml_1_op/udx/bldg/53393599_bldg_6697_op.gml
+curl -L -o $d/13107_53394654_bldg_6697_op.gml $a/af/d16ede-837d-458a-af51-16771bbb96d8/13107_sumida-ku_pref_2025_citygml_1_op/udx/bldg/53394654_bldg_6697_op.gml
+curl -L -o $d/13106_53394653_bldg_6697_op.gml $a/80/45b2b1-5a88-40ab-9877-70b540b8707e/13106_taito-ku_city_2025_citygml_1_op/udx/bldg/53394653_bldg_6697_op.gml
+curl -L -o $d/13101_53394611_bldg_6697_op.gml $a/5d/dc07c5-ace7-465a-9c99-53f6d78f6164/13101_chiyoda-ku_pref_2025_citygml_1_op/udx/bldg/53394611_bldg_6697_op.gml
+run/bin/citypack -force models tokyo && run/bin/citypack pack tokyo && run/bin/citypack validate tokyo
+```
+
+**Souřadnice:** EPSG:6697 = JGD2011 zeměpisná šířka, délka (v tomto pořadí) a výška T.P. (střední
+hladina Tokijského zálivu). JGD2011 se od WGS84 liší o centimetry (obojí ITRF), proto se vrcholy
+promítají přímo projekcí balíčku jako Overture (`models.go`, v5 `latLon`), bez PROJ. Výšky T.P.
+se používají jen relativně (pata = medián terén − země zdroje), datum nevadí. Kontrola polohy:
+střešní plán proti vlastním půdorysům Overture, posun 0–0,7 m (Skytree 3 m, Overture kryje jen
+čtvrtinu komplexu), viz `plans/M7_PAMATKY.md`.
+
+**Formát PLATEAU:** budovy mají LOD0 (půdorys), LOD1 (hranol), LOD2 (`bldg:boundedBy` s plochami)
+a několik i LOD3/LOD4; čtečka (v5) bere jen LOD2. Instalace (`lod2Geometry`) nemají plochy
+`Roof/Wall/Ground` a vypadnou. Podhledy střech a bran (`OuterCeilingSurface`) se čtou jako střecha.

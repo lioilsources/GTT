@@ -22,7 +22,7 @@ Defaulty kap. 11: bez textur (K2), F až po vystřelení (K3, K6).
 
 Licence ostatních měst (kap. 4.1): v tomto kole neověřováno – New York **nejasné**, Tokio (PLATEAU,
 PDL 1.0) **lze podle plánu, neověřeno v datech**, Moskva **nelze** (úřední model není, záloha Overture).
-Doloží H0 pro H5/H6.
+Doloží H0 pro H5/H6. Tokio ověřené v H5 (níže): **lze**.
 
 ## H1 – pilot v datech
 
@@ -228,3 +228,64 @@ Klementinum 0 m (IoU 0,78), Vítkov 0,7 m (Overture pokrývá jen půlku), Hlavn
 **Snímky** před / po z nasazeného webu (šikmý pohled, auto stojí): nádraží z Vrchlického sadů
 (790, −660), synagoga z Pařížské (−200, 370), Klementinum z Křižovnické u Mánesova mostu
 (−425, 150), Vítkov z Husitské (2050, 10). Balíček `pack-prague-8a8b3c940ff0` (3,6 MB tar.gz).
+
+## H5 – Tokio, první dávka z PLATEAU (specs/models.md v5, 2026-11-28)
+
+**Zdroj a licence.** MLIT Project PLATEAU, 3D model měst Tokio 23 obvodů, data FY2025 (spec 5.0),
+CityGML 2.0 + i-UR, soubory budov po 3. stupni sítě (1 km), stažené jen čtyři potřebné meshe
+(110 + 60 + 143 + 166 MB) přes katalog `api.plateauview.mlit.go.jp/datacatalog/citygml/m:<mesh>`
+do `run/citypack/tokyo/raw/models/` (`docs/citypack.md`). Licence **PDL 1.0** (podmínky webu
+PLATEAU kap. 3), výslovně kompatibilní s **CC BY 4.0** (PDL §1.7.3); práva drží obvody. Atribuce
+„出典：国土交通省 PLATEAUウェブサイト（https://www.mlit.go.jp/plateau/open-data/）“ a u upravených dat
+„…を加工して作成“; v `NOTICE`, `docs/citypack.md`, v manifestu anglicky (hra nemá písmo CJK).
+**Lze.**
+
+**Souřadnice (v5).** EPSG:6697: JGD2011 **šířka, délka** a výška T.P. JGD2011 ≈ WGS84 (centimetry),
+vrcholy se promítají rovnou projekcí balíčku jako Overture, bez PROJ (pražskou chybu 117 m tím nelze
+zopakovat). Výška T.P. se bere jen relativně (pata = medián terén − země zdroje).
+**Poloha** proti vlastním půdorysům Overture (rastr 0,5 m, `lmpb/fit_own.py`): Kaminarimon 0 m
+(IoU 0,91), nádraží 0 m (IoU 0,88), Tokijská věž 0,7 m (Overture kreslí širší půdorys, IoU 0,50),
+Skytree 3 m (Overture kryje jen čtvrtinu komplexu, IoU 0,23).
+
+**Pipeline (v5, formát beze změny).** Čtečka bere jen LOD2 (PLATEAU má u každé budovy LOD0–2,
+u několika i LOD3/4; IPR dál vše, má jen LOD3), `OuterCeilingSurface` (podhledy bran) jako střecha,
+památka bez budovy (Kaminarimon je náměstí) vybírá jen přes `include`, `models.yaml` `max_offset_m`
+(nejvýš `near_m`) pro areál podél osy.
+
+| Památka | Zdroj PLATEAU | Materiály (Tokio, `color.city.tokyo.model*`) | Trojúhelníky |
+|---|---|---|---|
+| `tokyo_tower` | `bldg_7aff4a51…` (Minato 53393599) | celá v mezinárodní oranžové (`gold`) | 426 |
+| `skytree` | `bldg_58ab8c46…` (Sumida 53394654) | bílá ocel (`glass`), tmavé střechy | 2 043 |
+| `kaminarimon` | brána `bldg_aeed40a6…`, Hōzōmon `bldg_8760bd58…`, hlavní síň `bldg_89e579d5…`, pagoda `bldg_b9141e64…` (Taitō 53394653) | rumělkové zdi (`copper`), tmavé taškové střechy (`slate`) | 274 |
+| `tokyo_station` | `bldg_6af58cef…` (Chiyoda 53394611): budova Marunouchi | cihla (`wall`), tmavé břidlicové střechy a kopule | 784 |
+
+Celkem **4 modely, 3 527 trojúhelníků** (limit města 120 000), `models.pb` **29,1 kB** po gzipu
+(limit 1,5 MB), žádná výjimka z `max_tris`. Balíček `pack-tokyo-e9d119a89a37` (8,1 MB tar.gz);
+proti předchozímu `db6c28d4d458` se liší jen `models.pb` a manifest.
+
+**Jak jsou modelované.** *Tokijská věž:* žádná příhradová konstrukce – čtyři nohy na zemi (33
+ploch `GroundSurface`), nad nimi **plný uzavřený zužující se plášť** (ve 25–50 m 72 m široký,
+v 75–150 m 38 m, horní plošina 15 m, anténa) s oběma vyhlídkovými plošinami; budova Foot Town
+pod věží je součástí téže budovy PLATEAU. Pruhy oranžová/bílá nejdou (role na trojúhelník, ne
+pruh), celá věž je oranžová. *Skytree:* PLATEAU vede věž s podnožím (nákupní křídla a East Tower,
+397 × 136 m) jako **jednu budovu**; jsou stavebně spojené, model je nechává (bílá ocel, sklo).
+*Sensō-ji:* LOD2 je hrubé – hlavní síň krabice s valbou (34 trojúhelníků), pagoda zužující se hranol
+s jehlanovou střechou bez pater a špice (52 m), Hōzōmon a brána s podhledy. Model nese id
+`kaminarimon` („Kaminarimon (Sensō-ji)“), brána je nejblíž bodu a jde první; nákupní ulice
+Nakamise mezi nimi zůstává z Overture. *Nádraží:* jen budova Marunouchi (cihlová, 314 m),
+nástupiště a strana Yaesu jsou jiné budovy PLATEAU; nástupištní střecha v půdorysu Overture
+(`bldg_2b101e06…`) je v `exclude`. Kopule jsou v LOD2 osmiboké bubny s jehlanovou střechou.
+
+**Co nejde.** *Národní sněmovna (`national_diet`):* budova v PLATEAU **není** (mesh 53394519 má
+v okruhu 270 m od bodu jen strážní budky; vládní objekt vynechaný), soubor stažený, nepoužitý.
+*Tokijská metropolitní vláda (Shinjuku), svatyně Meiji (Shibuya), Rainbow Bridge:* leží **mimo
+oblast balíčku** (lon 139,725–139,815, lat 35,65–35,722), nejsou v `landmarks.yaml` a nové body
+by neměly terén ani chunky; Rainbow Bridge je navíc silniční most (graf, vrstvy), model by byl jen
+obraz nad vozovkou. Nové body památek nepřibyly.
+
+**R10.** LOD2 nemá textury ani nápisy; barvy jsou jen role.
+
+**Snímky** (šikmý pohled, auto stojí, `scratchpad/shots/tkshoot.sh`): kamera hry vysoké věže nepobere,
+proto jednotně před i po `camera.chase` výška 10–60 m, vzdálenost 40–90 m, FOV 55–60°; Tokijská
+věž ze Sakurada-dōri (−2160, −2490), Skytree z Asakusa-dōri (3692, 3061), Kaminarimon z Namiki-dōri
+(2625, 3255), nádraží z Gyōkō-dōri (−319, 58).

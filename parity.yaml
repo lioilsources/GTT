@@ -735,9 +735,9 @@
   web: done
 
 - id: F-085
-  name: "Modely památek: model v šikmém pohledu (jen W), střešní plán shora, v2 materiály podle povrchů CityGML a procedurální fasáda, v3 mosty a pilotní pětice Prahy (M7: Hrad, Karlův most s věžemi, Týn, sv. Mikuláš, Národní divadlo), v4 druhá dávka (radnice, Obecní dům s Prašnou bránou, Rudolfinum, Národní muzeum, Tančící dům, Žižkovská věž, Petřínská rozhledna, Vyšehrad), třetí dávka (Hlavní nádraží, Staronová synagoga, Klementinum, Vítkov), části bez id a podhledy"
+  name: "Modely památek: model v šikmém pohledu (jen W), střešní plán shora, v2 materiály podle povrchů CityGML a procedurální fasáda, v3 mosty a pilotní pětice Prahy (M7: Hrad, Karlův most s věžemi, Týn, sv. Mikuláš, Národní divadlo), v4 druhá dávka (radnice, Obecní dům s Prašnou bránou, Rudolfinum, Národní muzeum, Tančící dům, Žižkovská věž, Petřínská rozhledna, Vyšehrad), třetí dávka (Hlavní nádraží, Staronová synagoga, Klementinum, Vítkov), části bez id a podhledy, v5 Tokio z PLATEAU (Tokijská věž, Skytree, Kaminarimon se Sensō-ji, nádraží Tokio) s barvami města"
   level: P2
-  spec: specs/models.md@4
+  spec: specs/models.md@5
   lead: web
   flutter: done
   web: done
