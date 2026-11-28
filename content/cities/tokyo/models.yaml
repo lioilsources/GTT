@@ -1,0 +1,69 @@
+# Landmark models (specs/models.md v5, plans/M7_PAMATKY.md "H5 – Tokio").
+# Source: MLIT Project PLATEAU, Tokyo 23 wards, CityGML 2.0 + i-UR, FY2025 data (spec 5.0), building
+# files per 3rd-level mesh (1 km), EPSG:6697 (JGD2011 latitude, longitude + T.P. height), LOD2 kept
+# (a few buildings carry LOD3 too). PDL 1.0 (CC BY 4.0 compatible), edited: NOTICE, docs/citypack.md.
+# Files are downloaded to run/citypack/tokyo/raw/models/ (never into git), named
+# <ward code>_<mesh>_bldg_6697_op.gml (the same mesh is published per ward).
+#
+# Colours (design/tokens.json): the roles keep their names, Tokyo recolours four of them by day
+# with color.city.tokyo.model<Role> (specs/models.md "Role a barvy"): wall = red brick (Tokyo
+# Station), copper = vermilion lacquer (Sensō-ji), gold = international orange (Tokyo Tower),
+# glass = "Skytree white" steel. Dark roofs (kawara tiles, station slate) are `slate`; `roof`
+# stays unchanged (the roof plan colour of both clients).
+# No signs or logos are in LOD2 (R10).
+source: plateau
+files:
+  - 13103_53393599_bldg_6697_op.gml   # Minato: Tokyo Tower
+  - 13107_53394654_bldg_6697_op.gml   # Sumida: Tokyo Skytree
+  - 13106_53394653_bldg_6697_op.gml   # Taitō: Sensō-ji (Kaminarimon, Hōzōmon, main hall, pagoda)
+  - 13101_53394611_bldg_6697_op.gml   # Chiyoda: Tokyo Station (Marunouchi building)
+models:
+  tokyo_tower:
+    # One PLATEAU building: four legs on the ground, then a closed tapering shell (no lattice in
+    # LOD2) with both observation decks and the antenna, plus the Foot Town block under it.
+    select: {buffer_m: 0}
+    include: [bldg_7aff4a51-be8b-405b-abe4-ac489697cbc8]
+    exclude: []
+    roles: {bldg_7aff4a51-be8b-405b-abe4-ac489697cbc8: gold}
+    walls: {bldg_7aff4a51-be8b-405b-abe4-ac489697cbc8: gold}
+    towers: {bldg_7aff4a51-be8b-405b-abe4-ac489697cbc8: gold}
+  skytree:
+    # PLATEAU files the tower with its base complex (Tokyo Skytree Town: the shopping wings and the
+    # East Tower) as one building; they are joined, so the model keeps them.
+    select: {buffer_m: 0}
+    include: [bldg_58ab8c46-8369-49c4-86cf-6912bbc4efe1]
+    exclude: []
+    roles: {bldg_58ab8c46-8369-49c4-86cf-6912bbc4efe1: slate}
+    walls: {bldg_58ab8c46-8369-49c4-86cf-6912bbc4efe1: glass}
+    towers: {bldg_58ab8c46-8369-49c4-86cf-6912bbc4efe1: slate}
+  kaminarimon:
+    # The landmark is "Kaminarimon (Sensō-ji)": the gate, Hōzōmon, the main hall and the five-storey
+    # pagoda along the temple axis (not the Nakamise shops between them). Gate to main hall is
+    # 400 m, hence max_offset_m (v5). Vermilion walls, dark tiled roofs.
+    select: {buffer_m: 0}
+    include:
+      - bldg_aeed40a6-9d73-4c2f-80bf-f31f7c6e3fe6   # Kaminarimon
+      - bldg_8760bd58-39ef-476c-997c-773ba8e3018a   # Hōzōmon
+      - bldg_89e579d5-6c3b-41ec-b0f4-8050d8f6e4ed   # main hall (Hondō)
+      - bldg_b9141e64-a2c8-4da1-97a6-e427459a44dc   # five-storey pagoda
+    exclude: []
+    max_offset_m: 400
+    roles:
+      bldg_aeed40a6-9d73-4c2f-80bf-f31f7c6e3fe6: slate
+      bldg_8760bd58-39ef-476c-997c-773ba8e3018a: slate
+      bldg_89e579d5-6c3b-41ec-b0f4-8050d8f6e4ed: slate
+      bldg_b9141e64-a2c8-4da1-97a6-e427459a44dc: slate
+    walls:
+      bldg_aeed40a6-9d73-4c2f-80bf-f31f7c6e3fe6: copper
+      bldg_8760bd58-39ef-476c-997c-773ba8e3018a: copper
+      bldg_89e579d5-6c3b-41ec-b0f4-8050d8f6e4ed: copper
+      bldg_b9141e64-a2c8-4da1-97a6-e427459a44dc: copper
+    towers: {bldg_b9141e64-a2c8-4da1-97a6-e427459a44dc: slate}
+  tokyo_station:
+    # The Marunouchi station building (red brick, restored 2012) only; the platforms and the
+    # Yaesu side are separate PLATEAU buildings and stay out. Brick walls, dark slate roofs.
+    select: {buffer_m: 0}
+    include: [bldg_6af58cef-669e-4aca-bc01-355e870d1ad5]
+    exclude: [bldg_2b101e06-9f9c-488b-b833-26e3ece73683]   # platform roof east of it (inside the Overture footprint)
+    roles: {bldg_6af58cef-669e-4aca-bc01-355e870d1ad5: slate}
+    towers: {bldg_6af58cef-669e-4aca-bc01-355e870d1ad5: slate}

@@ -1,6 +1,6 @@
 # Modely památek
 
-**version: 4** · P2 (vzhled), data v citypacku · plán `Prompts/06-METROPOLE_LANDMARKS3D_PLAN.md` ·
+**version: 5** · P2 (vzhled), data v citypacku · plán `Prompts/06-METROPOLE_LANDMARKS3D_PLAN.md` ·
 pod-plán `plans/M7_PAMATKY.md` · parita F-085 · bez vektorů
 
 ## Účel
@@ -29,7 +29,9 @@ uložení se nemění, auto dál naráží do půdorysů vrstvy 0 v chuncích. �
 `Manifest.models_version` = 2 (v1 bez `surfaces` a bez role `slate`); 0 nebo chybějící soubor =
 žádné modely. Klient v1 čte balíček v2 dál (nové pole ignoruje, neznámou roli kreslí jako stěnu).
 V3 formát nemění (`models_version` zůstává 2): mění pipeline (mosty, převod souřadnic, `towers`,
-pořadí částí) a validate. V4 také ne (`models_version` 2): přidává jen `parts` v `models.yaml`. Části jsou seřazené podle vzdálenosti kotvy od bodu památky (první je
+pořadí částí) a validate. V4 také ne (`models_version` 2): přidává jen `parts` v `models.yaml`.
+V5 také ne (`models_version` 2): zdroj PLATEAU (Tokio), výběr LOD, `max_offset_m` a výběr jen
+podle `include` (viz „Pipeline“). Části jsou seřazené podle vzdálenosti kotvy od bodu památky (první je
 nejblíž; klient staví sítě s chunkem první části). Část mostu má `source_id` = `bridge:<ID_BUD>`.
 
 ## Pravidla
@@ -48,7 +50,9 @@ budov, pro `z_v ≤ 0` přímo `base_z + z_v` (`specs/terrain.md` „Jednotná z
 
 **Role a barvy (v2).** Každá role má barvu `color.model.<day|night>.<role>` (`wall` omítka,
 `roof` taška, `copper` měděná patina, `stone` tmavý pískovec, `glass`, `gold`, `slate` břidlice
-nebo olovo), přepis `color.city.<id>.model<Role>` (jen den). V4: `wall` teplá světlá omítka
+nebo olovo), přepis `color.city.<id>.model<Role>` (jen den). V5 první přepisy: Tokio `modelWall`
+cihla (nádraží), `modelCopper` rumělka (Sensō-ji), `modelGold` mezinárodní oranžová (Tokijská věž),
+`modelGlass` bílá ocel (Skytree); `roof` se nepřepisuje (barva střešního plánu obou klientů). V4: `wall` teplá světlá omítka
 (#EBD6B0) a `copper` sytější patina (#5FA083), aby omítka nebyla bílá a kopule z ní vystoupila. V1 kreslila `wall` barvou `landmark`
 palety města, celý model pak byl zelený.
 Světlo po trojúhelnících jako u budov: svislá plocha `ambient + (1 − ambient) × max(0, n · slunce)`,
@@ -104,13 +108,21 @@ jako hranol od `base_z` do zobrazené výšky `height_m`, střecha v barvě `roo
 
 ## Pipeline (`citypack models`, po `landmarks`, `pack` doplní `replaces`)
 1. Výběr: budovy zdroje, jejichž těžiště země leží v `select.area` (lon, lat) nebo v půdorysu
-   budovy památky / do `select.buffer_m` od něj; `include`, `exclude` podle `gml:id`.
+   budovy památky / do `select.buffer_m` od něj; `include`, `exclude` podle `gml:id`. V5: památka
+   bez budovy a bez `select.area` (náměstí, Kaminarimon) smí vybírat jen přes `include`; zdroj se
+   čte do `max_offset_m` od bodu památky.
 2. Čtení CityGML (Building, BuildingPart, BuildingInstallation; Roof/Wall/GroundSurface; LOD2 i
    LOD3; solidy jsou odkazy a přeskočí se). Souřadnice zdroje → místní metry kvadratickým
    polynomem proloženým PROJ (DuckDB `ST_Transform`) na mřížce 5 × 5 přes obálku souboru
    (reziduum nad 5 cm = chyba). V3: zdroj → EPSG:4326 a pak projekce balíčku (`origin`) jako
    u Overture. V2 převáděla přímo do sférické projekce města: PROJ bez datumu vynechal posun
    S-JTSK → WGS84 a modely Prahy ležely ~117 m na severovýchod (Hrad v balíčku do v3).
+   V5 PLATEAU (`source: plateau`): EPSG:6697, JGD2011 zeměpisná **šířka, délka** (v tomto pořadí)
+   a výška T.P.; JGD2011 ≈ WGS84 (centimetry), vrcholy se promítají přímo projekcí balíčku, bez
+   PROJ a polynomu. Budova nese plochy ve více LOD (PLATEAU: LOD2 všude, LOD3 u několika): zdroj
+   určuje jednu (`plateau` LOD2, není-li, nejvyšší; IPR beze změny všechny, má jen LOD3).
+   `OuterCeilingSurface` (podhledy střech a bran) se čte jako střecha (`SURFACE_ROOF`; míří dolů,
+   do střešního plánu nejde).
 3. Čištění: bez podlah a plochy na úrovni paty, svaření na `weld_m`, bez kolineárních vrcholů,
    skupiny (část, instalace) menší než `min_detail_m` pryč.
 4. Rozpočet: nad `max_tris` (`models.yaml` výjimka do `max_tris_exception`) zvedá `min_detail_m`
@@ -142,7 +154,9 @@ atribuce), `models.yaml` `bridges: {file, ids}` u památky; věže mostu jsou bu
 **Validate:** rozpočty (památka, město, `city_max_bytes` po gzipu), `roof_plan_max_polys`, indexy a
 role v rozsahu, žádný vrchol `foot` nad terénem víc než `foot_tolerance_m` (skutečné metry);
 zahrabání (medián) nad toleranci je jen varování, těžiště modelu do
-`max_offset_m` od bodu památky (v3: model s mostem nejbližší kotvou části, most je delší),
+`max_offset_m` od bodu památky (v3: model s mostem nejbližší kotvou části, most je delší; v5
+`models.yaml` `max_offset_m` u památky, nejvýš `near_m`: chrámový areál podél osy, Sensō-ji od
+brány k hlavní síni 400 m),
 atribuce zdroje v manifestu, `replaces` ukazují na budovy. V3: žádný trojúhelník mostu nad
 silnicí v rozsahu `bridge_below_m` … `bridge_clear_m` (zakrytí, boj o hloubku).
 
@@ -156,5 +170,5 @@ silnicí v rozsahu `bridge_below_m` … `bridge_clear_m` (zakrytí, boj o hloubk
 Žádné vektory (P2, vzhled bez pravidel; vektory `vectors/` jsou jen P0). Pravidla rolí a
 štíhlosti hlídají tabulkové testy `tools/citypack` (`TestSurfaceRole`, v3 `TestSurfaceRoleTowers`,
 mosty `TestBuildBridgePart`, `TestClipBridgeRoads`, v4 `TestBuildPartPartRoles`, `TestBuildPartFloatingGround`), UV a barvy testy W
-(`web/test/models.test.ts`). Ruční kontrola (`plans/verify.yaml`): u Hradu v šikmém pohledu je model,
+(`web/test/models.test.ts`). V5: čtečka `TestReadLOD` (výběr LOD, podhled jako střecha). Ruční kontrola (`plans/verify.yaml`): u Hradu v šikmém pohledu je model,
 1 km od něj půdorys, přepnutí bez probliknutí; shora střešní plán.
