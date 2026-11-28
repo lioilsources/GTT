@@ -22,6 +22,7 @@ class Palette {
     required this.tunnel,
     required this.facades,
     required this.landmark,
+    required this.modelRoof,
     required this.roofLight,
     required this.sunX,
     required this.sunY,
@@ -37,6 +38,10 @@ class Palette {
   final Color land, water, park, plaza, rail, pedestrian, sidewalk, asphalt, alley, marking, centerLine;
   final Color bridgeDeck, bridgeEdge, tunnel, landmark;
   final List<Color> facades;
+
+  /// Landmark roof plans (specs/models.md "Pohled shora"): `color.model.<day|night>.roof`, times
+  /// 0.7 + 0.1 × shade. No city has a `color.city.<id>.modelRoof` override yet; one would go here.
+  final Color modelRoof;
 
   /// Roof brightness relative to the facade.
   final double roofLight;
@@ -88,6 +93,7 @@ class Palette {
       tunnel: tunnel,
       facades: facades,
       landmark: landmark,
+      modelRoof: modelRoof,
       roofLight: roofLight,
       sunX: sunX,
       sunY: sunY,
@@ -126,6 +132,7 @@ class Palette {
     bridgeEdge: const Color(Tokens.colorWorldDayBridgeEdge),
     tunnel: const Color(Tokens.colorWorldDayTunnel),
     landmark: const Color(Tokens.colorWorldDayLandmark),
+    modelRoof: const Color(Tokens.colorModelDayRoof),
     facades: [for (final c in Tokens.colorWorldDayFacades) Color(c)],
     roofLight: Tokens.lightDayRoofLight,
     sunX: Tokens.lightDaySunX,
@@ -151,6 +158,7 @@ class Palette {
     bridgeEdge: const Color(Tokens.colorCityNycBridgeEdge),
     tunnel: const Color(Tokens.colorCityNycTunnel),
     landmark: const Color(Tokens.colorCityNycLandmark),
+    modelRoof: const Color(Tokens.colorModelDayRoof),
     facades: [for (final c in Tokens.colorCityNycFacades) Color(c)],
     roofLight: Tokens.lightDayRoofLight,
     sunX: Tokens.lightDaySunX,
@@ -179,6 +187,7 @@ class Palette {
     bridgeEdge: const Color(Tokens.colorCityPragueBridgeEdge),
     tunnel: const Color(Tokens.colorCityPragueTunnel),
     landmark: const Color(Tokens.colorCityPragueLandmark),
+    modelRoof: const Color(Tokens.colorModelDayRoof),
     facades: [for (final c in Tokens.colorCityPragueFacades) Color(c)],
     roofLight: Tokens.lightDayRoofLight,
     sunX: Tokens.lightDaySunX,
@@ -205,6 +214,7 @@ class Palette {
     bridgeEdge: const Color(Tokens.colorCityTokyoBridgeEdge),
     tunnel: const Color(Tokens.colorCityTokyoTunnel),
     landmark: const Color(Tokens.colorCityTokyoLandmark),
+    modelRoof: const Color(Tokens.colorModelDayRoof),
     facades: [for (final c in Tokens.colorCityTokyoFacades) Color(c)],
     roofLight: Tokens.lightDayRoofLight,
     sunX: Tokens.lightDaySunX,
@@ -233,6 +243,7 @@ class Palette {
     bridgeEdge: const Color(Tokens.colorCityMoscowBridgeEdge),
     tunnel: const Color(Tokens.colorCityMoscowTunnel),
     landmark: const Color(Tokens.colorCityMoscowLandmark),
+    modelRoof: const Color(Tokens.colorModelDayRoof),
     facades: [for (final c in Tokens.colorCityMoscowFacades) Color(c)],
     roofLight: Tokens.lightDayRoofLight,
     sunX: Tokens.lightDaySunX,
@@ -271,6 +282,7 @@ class Palette {
     bridgeEdge: const Color(Tokens.colorWorldNightBridgeEdge),
     tunnel: const Color(Tokens.colorWorldNightTunnel),
     landmark: const Color(Tokens.colorWorldNightLandmark),
+    modelRoof: const Color(Tokens.colorModelNightRoof),
     facades: [for (final c in Tokens.colorWorldNightFacades) Color(c)],
     roofLight: Tokens.lightNightRoofLight,
     sunX: Tokens.lightNightSunX,

@@ -19,6 +19,8 @@ class BuildingData {
     required this.cy,
     required this.radius,
     required this.wallU,
+    this.index = -1,
+    this.planShade = -1,
   });
 
   /// Interleaved footprint vertices of all rings.
@@ -38,6 +40,13 @@ class BuildingData {
 
   /// Cumulative wall length at each vertex (texture u), per ring.
   final Float32List wallU;
+
+  /// Index into `Chunk.buildings` of the source pack (what `Model.replaces` points at); −1 for
+  /// buildings that do not come from a chunk.
+  final int index;
+
+  /// A landmark roof-plan polygon (specs/models.md "Pohled shora"): its `shade` 0–3; −1 = a building.
+  final int planShade;
 
   int get vertexCount => xy.length ~/ 2;
 
@@ -69,7 +78,8 @@ class ChunkData {
 ChunkData prepareChunk(Uint8List gz) {
   final c = decodeChunk(gz);
   final buildings = <BuildingData>[];
-  for (final b in c.buildings) {
+  for (var bi = 0; bi < c.buildings.length; bi++) {
+    final b = c.buildings[bi];
     final n = b.rings.length ~/ 2;
     if (n < 3 || n > 65535) continue;
     final xy = Float32List(b.rings.length);
@@ -115,6 +125,7 @@ ChunkData prepareChunk(Uint8List gz) {
       cy: cy,
       radius: math.sqrt(r2),
       wallU: wallU,
+      index: bi,
     ));
   }
   final byKind = <GroundKind, ({List<double> xy, List<int> idx})>{};

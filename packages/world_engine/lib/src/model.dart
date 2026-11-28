@@ -2,6 +2,7 @@ import 'dart:math' as math;
 import 'dart:typed_data';
 
 import 'citypack.dart';
+import 'models.dart';
 import 'tracks.dart';
 import 'package:shared_gen/citypack_pb.dart' as pb;
 
@@ -250,6 +251,17 @@ Float32List _ringM(List<int> dm) {
   return out;
 }
 
+/// The models of a pack (specs/models.md): none when the manifest has `models_version` 0, the file
+/// is missing or it does not decode; the pack still works with its footprints.
+List<ModelData> loadModels(int modelsVersion, Uint8List? gz) {
+  if (modelsVersion < 1 || gz == null) return const [];
+  try {
+    return prepareModels(decodeModels(gz));
+  } catch (_) {
+    return const [];
+  }
+}
+
 /// The static, always-loaded part of a citypack.
 class City {
   City._(
@@ -261,6 +273,7 @@ class City {
     this.area,
     this.graphPb,
     this.trams,
+    this.models,
   );
 
   final pb.Manifest manifest;
@@ -275,6 +288,14 @@ class City {
 
   /// Tram tracks and stops (`trams.pb`, specs/trams.md); empty without trams or in an old pack.
   final TrackGraph trams;
+
+  /// Landmark models (`models.pb`, specs/models.md): the roof plans F draws from above; empty
+  /// without the file, with `Manifest.models_version` 0 or when it fails to decode.
+  final List<ModelData> models;
+
+  /// Buildings the models replace, chunk key → indices into `Chunk.buildings` (hidden in the
+  /// picture only, collisions keep them).
+  late final Map<int, Set<int>> replaced = replacedBuildings(models);
   late final Set<int> chunkKeys = {for (final c in manifest.chunks) chunkKey(c.x, c.y)};
 
   String get id => manifest.cityId;
@@ -304,6 +325,8 @@ class City {
       src.read('spots.pb'),
       // Optional since citypack v3: an older pack has no trams.pb, which means no tracks.
       src.read('trams.pb').then<Uint8List?>((b) => b, onError: (Object _) => null),
+      // Optional (specs/models.md): read only when the manifest announces it, see [loadModels].
+      Future.sync(() => src.read('models.pb')).then<Uint8List?>((b) => b, onError: (Object _) => null),
     ]);
     final m = decodeManifest(files[0]!);
     if (m.formatVersion != 1) {
@@ -319,6 +342,7 @@ class City {
       _ringM(m.area),
       graph,
       files[4] == null ? TrackGraph.empty() : TrackGraph.fromPb(decodeTrams(files[4]!)),
+      loadModels(m.modelsVersion, files[5]),
     );
   }
 }
