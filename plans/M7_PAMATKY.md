@@ -285,7 +285,23 @@ obraz nad vozovkou. Nové body památek nepřibyly.
 
 **R10.** LOD2 nemá textury ani nápisy; barvy jsou jen role.
 
-**Snímky** (šikmý pohled, auto stojí, `scratchpad/shots/tkshoot.sh`): kamera hry vysoké věže nepobere,
-proto jednotně před i po `camera.chase` výška 10–60 m, vzdálenost 40–90 m, FOV 55–60°; Tokijská
-věž ze Sakurada-dōri (−2160, −2490), Skytree z Asakusa-dōri (3692, 3061), Kaminarimon z Namiki-dōri
-(2625, 3255), nádraží z Gyōkō-dōri (−319, 58).
+**Snímky** (šikmý pohled, auto stojí, `scratchpad/shots/tkshoot.sh`, `tkpair.sh`): kamera hry vysoké
+věže nepobere, proto jednotně před i po `camera.chase` výška 10–60 m, vzdálenost 40–90 m, FOV
+55–60°; Tokijská věž ze Sakurada-dōri (−2160, −2490; kamera 25 m), Skytree z Asakusa-dōri
+(3692, 3061), Kaminarimon z Namiki-dōri (2625, 3255), nádraží z Gyōkō-dōri (−319, 58). Kaminarimon
+a nádraží: „před“ z webu před vydáním, „po“ z nasazeného webu. Tokijská věž a Skytree: snímky před
+vydáním měly jiný směr kamery (auto se po teleportu natáčí), proto pár z jedné stránky nasazeného
+webu s modelem a pak s `tuning.models.enabled = false` – to je stav před vydáním (balíček se liší
+jen `models.pb`). Před: červená krabice Overture (věž), lomená tyčová značka (Skytree), šedý blok
+(brána), šedé bloky (nádraží); po: modely na místě, sousední domy beze změny.
+
+**Nasazení a čas snímku** (PR #339, balíček `e9d119a89a37`, nasazený web, headless Chromium se
+SwiftShaderem, tedy CPU – jen poměr; výchozí kamera hry, dvě kola model zapnutý / vypnutý, po 9 s):
+
+| Místo | model zapnutý p50 / p90 | vypnutý p50 / p90 | trojúhelníky scény |
+|---|---|---|---|
+| Asakusa-dōri ke Skytree (3692, 3061) | 64,1 / 75,3 a 85,7 / 100 ms | 100 / 100 (17 snímků, zásek) a 59,7 / 70,0 ms | +2,6 tis., +1 draw call |
+| Gyōkō-dōri k nádraží (−319, 58) | 64,6 / 76,6 a 73,3 / 92,6 ms | 66,5 / 73,9 a 67,0 / 76,0 ms | +1,5 tis., ±1 draw call |
+
+U nádraží p50 v šumu (−3 až +9 %), u Skytree mezi koly kolísá víc než mezi stavy (SwiftShader drží
+strop 100 ms). Na telefonech měří Ol1n (`plans/verify.yaml` M7-H5).
