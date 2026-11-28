@@ -1,0 +1,81 @@
+# Landmark models (specs/models.md v6, plans/M7_PAMATKY.md "H5 – New York").
+# Source: NYC Office of Technology and Innovation (OTI, formerly DoITT), "3-D Building Model"
+# (NYC Open Data tnru-abg2, public 2016-04-18, 2014 aerial survey), CityGML 1.0 LOD2 per delivery
+# area (DA), NAD83 / New York Long Island ftUS (EPSG:2263), heights NAVD88 in US survey feet
+# (source nyc_3d converts them to metres). One building per BIN, no BuildingParts, no textures.
+# NYC Open Data: no restrictions on use (NYC Admin. Code § 23-502(d)); the manifest line names
+# source, version and the modifications (NOTICE, docs/citypack.md).
+# The file is one entry of https://s-media.nyc.gov/agencies/oti/DA_WISE_GML.zip (916 MB), fetched
+# by HTTP range into run/citypack/nyc/raw/models/ (never into git), docs/citypack.md.
+#
+# Colours (design/tokens.json, color.city.nyc.model<Role>, day only): wall = Indiana limestone
+# (Empire State, 30 Rockefeller Plaza, Grand Central), stone = white marble with the lancet-window
+# facade (St. Patrick's), gold = cream glazed terracotta (175 Fifth Avenue), glass = silver-blue
+# glass and stainless steel (One World Trade Center, the Chrysler crown). Flat roofs are `slate`.
+# The towers are one source building each and pass the slender rule (copper), hence `towers`.
+# No signs or logos are in the data (R10).
+source: nyc_3d
+files:
+  - DA12_3D_Buildings_Merged.gml   # Manhattan below ~59th St: all landmarks of this batch
+models:
+  empire_state:
+    # BIN 1015862: the tower with its setbacks, the mooring mast and the antenna (444 m above the
+    # lowest ground point), the five-storey base over the whole block.
+    select: {buffer_m: 0}
+    include: [gml_3KRIUGY6STPLF365ORLR3PIJGYUD5FM57NAB]
+    exclude: []
+    roles: {gml_3KRIUGY6STPLF365ORLR3PIJGYUD5FM57NAB: slate}
+    towers: {gml_3KRIUGY6STPLF365ORLR3PIJGYUD5FM57NAB: slate}
+  chrysler:
+    # BIN 1036156: white brick shaft, the stepped stainless-steel crown and spire (glass role on
+    # every roof: the setbacks below the crown are small).
+    select: {buffer_m: 0}
+    include: [gml_OVPJDFIA7DW4XN1JMGIA5GP8EDX6ZM7GIIXD]
+    exclude: []
+    roles: {gml_OVPJDFIA7DW4XN1JMGIA5GP8EDX6ZM7GIIXD: glass}
+    towers: {gml_OVPJDFIA7DW4XN1JMGIA5GP8EDX6ZM7GIIXD: glass}
+  grand_central:
+    # BIN 1035381: the terminal building (42nd Street front, the concourse roof, the Vanderbilt
+    # and Lexington wings); granite and limestone, dark roofs.
+    select: {buffer_m: 0}
+    include: [gml_0OU2U4XSWG6KHGGGEZE8V0WMWGCQ69H1IPKK]
+    exclude: []
+    roles: {gml_0OU2U4XSWG6KHGGGEZE8V0WMWGCQ69H1IPKK: slate}
+  rockefeller:
+    # BIN 1076262: 30 Rockefeller Plaza, the slab with its setbacks and the low wings to Sixth
+    # Avenue; Indiana limestone, dark roofs.
+    select: {buffer_m: 0}
+    include: [gml_D8CMRPOVLNUD5I68M3JUQ2RJ8ZF7MSMPPCFZ]
+    exclude: []
+    roles: {gml_D8CMRPOVLNUD5I68M3JUQ2RJ8ZF7MSMPPCFZ: slate}
+    towers: {gml_D8CMRPOVLNUD5I68M3JUQ2RJ8ZF7MSMPPCFZ: slate}
+  st_patricks:
+    # BIN 1081150: the cathedral with both spires and the Lady Chapel; white marble (stone role:
+    # lancet windows and buttresses), slate roofs.
+    select: {buffer_m: 0}
+    include: [gml_514TW0B1SVI2HZSBSWORN7RL925U35CVNS04]
+    exclude: []
+    walls: {gml_514TW0B1SVI2HZSBSWORN7RL925U35CVNS04: stone}
+    roles: {gml_514TW0B1SVI2HZSBSWORN7RL925U35CVNS04: slate}
+    towers: {gml_514TW0B1SVI2HZSBSWORN7RL925U35CVNS04: slate}
+  flatiron:
+    # BIN 1016278: 175 Fifth Avenue, the triangular block; cream glazed terracotta over limestone.
+    select: {buffer_m: 0}
+    include: [gml_MGQUIM1LPWELR0PCTUQ44KJ3FEQN115OCTZJ]
+    exclude: []
+    walls: {gml_MGQUIM1LPWELR0PCTUQ44KJ3FEQN115OCTZJ: gold}
+    roles: {gml_MGQUIM1LPWELR0PCTUQ44KJ3FEQN115OCTZJ: slate}
+    towers: {gml_MGQUIM1LPWELR0PCTUQ44KJ3FEQN115OCTZJ: slate}
+  one_wtc:
+    # BIN 1088469: the tower with its square base and the spire; glass curtain wall. The 2014 survey
+    # files a 10 m construction-era block east of the tower (35 × 58 m, today the plaza by the
+    # Perelman centre) under the same BIN: `drop` (v6) removes it, the ring's west edge runs 0.6 m
+    # east of the tower's south-east face.
+    select: {buffer_m: 0}
+    include: [gml_JYH0SMXYHPV4HEBUVLYC9X1030L37X47FB0O]
+    exclude: []
+    drop:
+      - [[-74.0126325, 40.7130897], [-74.0129958, 40.7126023], [-74.0130207, 40.7124584], [-74.0124746, 40.7124584], [-74.0124746, 40.7131239]]
+    walls: {gml_JYH0SMXYHPV4HEBUVLYC9X1030L37X47FB0O: glass}
+    roles: {gml_JYH0SMXYHPV4HEBUVLYC9X1030L37X47FB0O: slate}
+    towers: {gml_JYH0SMXYHPV4HEBUVLYC9X1030L37X47FB0O: slate}

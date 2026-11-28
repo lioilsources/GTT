@@ -7,10 +7,10 @@ packs:
         sha256: 5e385ba662e443ef46d50acbd53e8ad8c94f3087d60c35240d81236ee87c62c6
         overture_release: 2026-11-18.0
     nyc:
-        version: a1d309f83523
-        tag: pack-nyc-a1d309f83523
-        asset: nyc-a1d309f83523.tar.gz
-        sha256: a1d309f83523360802c46a70d23dc5ab6d5430dfdbcd10c696914f95205529d9
+        version: 4db656f34300
+        tag: pack-nyc-4db656f34300
+        asset: nyc-4db656f34300.tar.gz
+        sha256: 4db656f343000856290c5a02385a4b8b7ecc463f9bad8a4f07c55fc22c2e65df
         overture_release: 2026-11-18.0
     prague:
         version: 8a8b3c940ff0

@@ -165,6 +165,9 @@ type ModelConfig struct {
 	// v4: role overrides of one part of a source building (IPR parts have no gml:id): the part
 	// whose footprint box is the smallest one containing `at` (lon, lat).
 	Parts []PartRole `yaml:"parts"`
+	// v6: lon, lat rings; a source polygon whose vertex mean lies inside one is dropped (NYC buildings are
+	// one object per BIN without parts: a stale annex of the 2014 survey goes this way).
+	Drop [][][2]float64 `yaml:"drop"`
 }
 
 // PartRole is one models.yaml `parts` entry (specs/models.md v4). XY is `at` in local metres,

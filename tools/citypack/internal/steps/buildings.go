@@ -156,11 +156,12 @@ CREATE TABLE all_rows AS
   UNION ALL SELECT id, g, h * k, mh * k, lm, true FROM parts;
 -- FL0 (specs/flow.md): close gaps narrower than flow.gap_close_m between two or more ground masses (buffer
 -- +gap/2, union, buffer −gap/2), never into a road corridor; each gap joins its biggest neighbour.
--- Inputs snap to a 1 cm grid so the overlays stay noded (GEOS TopologyException otherwise).
+-- Inputs and their union snap to a 1 cm grid so the overlays stay noded (GEOS TopologyException
+-- otherwise; New York M7: the closing minus the off-grid union failed).
 CREATE TABLE r0 AS SELECT row_number() OVER (ORDER BY id, part, mh, h) AS rid, id, ST_MakeValid(ST_ReducePrecision(g, 0.01)) AS g, h, mh, lm, part FROM all_rows;
 CREATE TABLE roads AS SELECT ST_ReducePrecision(ST_Buffer(ST_GeomFromText(wkt), hw::DOUBLE, 4), 0.01) AS g FROM read_csv(%[12]s, header=true, quote='"');
 CREATE TABLE gr AS SELECT rid, g, ST_ClusterDBSCAN(g, %[13]f, 2) OVER () AS cl FROM r0 WHERE mh < 0.5 AND NOT ST_IsEmpty(g);
-CREATE TABLE cu AS SELECT cl, ST_Union_Agg(g) AS u FROM gr WHERE cl IS NOT NULL GROUP BY cl;
+CREATE TABLE cu AS SELECT cl, ST_ReducePrecision(ST_Union_Agg(g), 0.01) AS u FROM gr WHERE cl IS NOT NULL GROUP BY cl;
 CREATE TABLE gaps0 AS
   SELECT cl, ST_Difference(ST_Buffer(ST_Buffer(u, %[14]f, 2, 'CAP_SQUARE', 'JOIN_MITRE', 5.0), -%[14]f, 2, 'CAP_SQUARE', 'JOIN_MITRE', 5.0), u) AS g FROM cu;
 CREATE TABLE gaps1 AS SELECT row_number() OVER () AS gid, cl, d.geom AS g FROM (SELECT cl, unnest(ST_Dump(g)) AS d FROM gaps0)

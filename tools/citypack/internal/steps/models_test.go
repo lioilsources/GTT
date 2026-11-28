@@ -321,3 +321,30 @@ func TestBuildPartFloatingGround(t *testing.T) {
 		t.Fatalf("anchor (%d, %d) base %d dm, want (50, 50) and 300 (the pod is not the foot)", part.AnchorX, part.AnchorY, part.BaseZDm)
 	}
 }
+
+// v6: a `drop` ring removes the polygons whose vertex mean lies inside it; a wall on the ring's
+// edge stays, the source building shared with another model is not touched.
+func TestDropPolys(t *testing.T) {
+	e := &Env{Proj: geo.NewProjection(40.758, -73.9855)}
+	tower := box("t", 0, 0, 10, 100, 0, false)
+	annex := box("t", 10, 0, 10, 8, 0, false) // same id: one source object (NYC, one BIN)
+	b := &srcBuilding{ID: "t", Groups: tower.Groups, C: tower.C, Polys: append(append([]citygml.Poly(nil), tower.Polys...), annex.Polys...)}
+	lon := func(x float64) float64 { lo, _ := e.Proj.Inverse(geo.Pt{X: x}); return lo }
+	lat := func(y float64) float64 { _, la := e.Proj.Inverse(geo.Pt{Y: y}); return la }
+	ring := [][2]float64{{lon(10.5), lat(-5)}, {lon(30), lat(-5)}, {lon(30), lat(15)}, {lon(10.5), lat(15)}}
+	out := e.dropPolys("x", []*srcBuilding{b}, [][][2]float64{ring})
+	if got, want := len(out[0].Polys), len(tower.Polys)+1; got != want {
+		// the annex keeps only its west wall (x = 10, on the tower's east face)
+		t.Fatalf("polys = %d, want %d", got, want)
+	}
+	if len(b.Polys) != len(tower.Polys)+len(annex.Polys) {
+		t.Fatalf("source building changed: %d polys", len(b.Polys))
+	}
+}
+
+// v6: NYC heights are US survey feet; usFootM is exact.
+func TestUSFoot(t *testing.T) {
+	if math.Abs(usFootM*3937-1200) > 1e-9 || modelSources["nyc_3d"].zScale != usFootM || modelSources["nyc_3d"].srs != "EPSG:2263" {
+		t.Fatalf("nyc_3d source: %+v", modelSources["nyc_3d"])
+	}
+}
