@@ -17,9 +17,9 @@ landmarks:
   - {id: zizkov_tower, name: Žižkovský vysílač, lat: 50.08100, lon: 14.45100, height_m: 216, hero: true}
   - {id: vysehrad, name: Bazilika svatého Petra a Pavla, lat: 50.06440, lon: 14.41780, height_m: 58, hero: true}
   - {id: main_station, name: Hlavní nádraží, lat: 50.08320, lon: 14.43530, height_m: 30, hero: true}
-  - {id: old_new_synagogue, name: Staronová synagoga, lat: 50.09030, lon: 14.41890, height_m: 20, hero: true}
+  - {id: old_new_synagogue, name: Staronová synagoga, lat: 50.09007, lon: 14.41859, height_m: 20, hero: true}
   - {id: klementinum, name: Klementinum, lat: 50.08650, lon: 14.41650, height_m: 68, hero: true}
-  - {id: vitkov, name: Národní památník na Vítkově, lat: 50.08890, lon: 14.45050, height_m: 34, hero: true}
+  - {id: vitkov, name: Národní památník na Vítkově, lat: 50.08850, lon: 14.44994, height_m: 34, hero: true}
   - {id: letna_park, name: Letenské sady, lat: 50.09600, lon: 14.42000, kind: park}
   - {id: kampa, name: Kampa, lat: 50.08500, lon: 14.40780, kind: park}
   - {id: riegrovy_sady, name: Riegrovy sady, lat: 50.07900, lon: 14.44250, kind: park}
