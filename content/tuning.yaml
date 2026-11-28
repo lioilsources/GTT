@@ -1128,3 +1128,5 @@ models:
   bridge_end_m: 15.0            # citypack (v3): bridge deck this close to either end sits on the terrain
   bridge_clear_m: 4.5           # validate (v3): no bridge face from a road surface up to this (game m)
   bridge_below_m: 0.3           # validate (v3): … nor this close below it (depth fight with the road)
+  ground_float_m: 20.0          # citypack (v4): source ground this high above the lowest is an underside (Žižkov pods), not the foot
+  part_box_slack_m: 0.5         # citypack (v4): models.yaml `parts` also take faces of other groups inside the picked box + this

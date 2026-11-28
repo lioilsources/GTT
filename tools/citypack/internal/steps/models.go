@@ -51,7 +51,8 @@ var roleNames = map[string]pb.ModelRole{
 // copperRule is tuning `models.copper_*` (specs/models.md v2 "Role"): a part (not an installation)
 // whose top is at least minTop above the foot and whose footprint (larger side of its box) is at
 // most slender × its own height has copper roofs. Zero values switch the rule off.
-type copperRule struct{ minTop, slender float64 }
+// v4 adds the part rules of tuning `models.ground_float_m` and `models.part_box_slack_m`.
+type copperRule struct{ minTop, slender, groundFloat, boxSlack float64 }
 
 func (c copperRule) slenderPart(top, height, footprint float64, installation bool) bool {
 	return !installation && c.minTop > 0 && top >= c.minTop && footprint <= c.slender*height
@@ -180,6 +181,10 @@ func Models(e *Env) error {
 		}
 		if len(picked[i]) == 0 {
 			return fmt.Errorf("models %s: no source buildings selected", id)
+		}
+		for k := range mc.Parts {
+			lp := e.Proj.Forward(mc.Parts[k].At[0], mc.Parts[k].At[1])
+			mc.Parts[k].XY = [2]float64{lp.X, lp.Y}
 		}
 		var m *pb.Model
 		detail := mt.MinDetailM
@@ -509,7 +514,7 @@ func buildModel(bs []*srcBuilding, mc config.ModelConfig, detail float64, mt con
 		if b.Bridge {
 			part, plan = buildBridgePart(b, mc, detail, mt.WeldM, mt.BridgeEndM, tg)
 		} else {
-			part, plan = buildPart(b, mc, copperRule{mt.CopperMinTopM, mt.CopperSlender}, detail, mt.WeldM, tg, exag)
+			part, plan = buildPart(b, mc, copperRule{mt.CopperMinTopM, mt.CopperSlender, mt.GroundFloatM, mt.PartBoxSlackM}, detail, mt.WeldM, tg, exag)
 		}
 		if part == nil {
 			continue
@@ -594,6 +599,21 @@ func buildPart(b *srcBuilding, mc config.ModelConfig, cu copperRule, detail, wel
 			}
 		}
 	}
+	// v4: a ground polygon high above the lowest one is the underside of something (the pods of
+	// the Žižkov tower), not the foot: it gives neither the anchor nor the ground plane.
+	isFoot := func(p citygml.Poly) bool {
+		if p.Kind != citygml.Ground {
+			return false
+		}
+		if cu.groundFloat <= 0 {
+			return true
+		}
+		lo := math.Inf(1)
+		for _, v := range p.Rings[0] {
+			lo = math.Min(lo, v.Z)
+		}
+		return lo <= foot+cu.groundFloat
+	}
 	if !groundSeen {
 		foot = allMin
 	}
@@ -608,11 +628,46 @@ func buildPart(b *srcBuilding, mc config.ModelConfig, cu copperRule, detail, wel
 	if math.Max(whole.x2-whole.x1, math.Max(whole.y2-whole.y1, whole.z2-whole.z1)) < detail {
 		return nil, nil
 	}
+	// v4 `parts`: each entry picks the smallest group box (not an installation) around its point.
+	// IPR derives walls from the roof edges and often files them under the whole building, so a
+	// polygon of any group lying inside the picked box (+ cu.boxSlack) takes the override too.
+	type partPick struct {
+		pr *config.PartRole
+		bx box
+	}
+	partRole := make([]*config.PartRole, len(b.Groups))
+	var picks []partPick
+	for k := range mc.Parts {
+		pr := &mc.Parts[k]
+		best, bestA := -1, math.Inf(1)
+		for i, bx := range boxes {
+			if b.Groups[i].Installation || pr.XY[0] < bx.x1 || pr.XY[0] > bx.x2 || pr.XY[1] < bx.y1 || pr.XY[1] > bx.y2 {
+				continue
+			}
+			if a := (bx.x2 - bx.x1) * (bx.y2 - bx.y1); a < bestA {
+				best, bestA = i, a
+			}
+		}
+		if best < 0 {
+			slog.Warn("models: parts entry hits no part", "building", b.ID, "at", pr.At)
+			continue
+		}
+		partRole[best] = pr
+		picks = append(picks, partPick{pr, boxes[best]})
+	}
+	inBox := func(p citygml.Poly, bx box) bool {
+		for _, v := range p.Rings[0] {
+			if v.X < bx.x1-cu.boxSlack || v.X > bx.x2+cu.boxSlack || v.Y < bx.y1-cu.boxSlack || v.Y > bx.y2+cu.boxSlack {
+				return false
+			}
+		}
+		return true
+	}
 	// Footprint (ground polygons, or every vertex) for the anchor and the base.
 	var fp []geo.Pt
 	for pass := 0; pass < 2 && len(fp) == 0; pass++ {
 		for _, p := range b.Polys {
-			if pass == 0 && p.Kind != citygml.Ground {
+			if pass == 0 && !isFoot(p) {
 				continue
 			}
 			for _, v := range p.Rings[0] {
@@ -628,7 +683,7 @@ func buildPart(b *srcBuilding, mc config.ModelConfig, cu copperRule, detail, wel
 	// the ground stay real. Without ground polygons the part stays rigid.
 	var gv []citygml.V3
 	for _, p := range b.Polys {
-		if p.Kind == citygml.Ground {
+		if isFoot(p) {
 			gv = append(gv, p.Rings[0]...)
 		}
 	}
@@ -683,6 +738,21 @@ func buildPart(b *srcBuilding, mc config.ModelConfig, cu copperRule, detail, wel
 		g, gb := b.Groups[p.Group], boxes[p.Group]
 		slender := cu.slenderPart(gb.z2-foot, gb.z2-gb.z1, math.Max(gb.x2-gb.x1, gb.y2-gb.y1), g.Installation)
 		role := surfaceRole(p.Kind, mc, b.ID, g.ID, g.Usage == towerUsage, slender)
+		pr := partRole[p.Group]
+		for _, pk := range picks {
+			if pr == nil && !g.Installation && inBox(p, pk.bx) {
+				pr = pk.pr
+			}
+		}
+		if pr != nil {
+			over := pr.Walls
+			if p.Kind == citygml.Roof {
+				over = pr.Roof
+			}
+			if r, ok := roleNames[over]; ok {
+				role = r
+			}
+		}
 		surface := pb.ModelSurface_SURFACE_WALL
 		if p.Kind == citygml.Roof {
 			surface = pb.ModelSurface_SURFACE_ROOF

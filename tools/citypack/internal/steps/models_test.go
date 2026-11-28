@@ -285,3 +285,39 @@ func TestModelReplaces(t *testing.T) {
 		t.Fatalf("replaces %+v, want buildings 0 and 3 (the second is 50 %% covered, the last is the landmark)", got)
 	}
 }
+
+// v4 `parts`: an override picks the smallest group box around its point (a tower part of a larger
+// building), the rest of the building keeps its roles.
+func TestBuildPartPartRoles(t *testing.T) {
+	b := box("_m", 0, 0, 20, 10, 0, false)
+	tw := box("_m", 30, 0, 4, 30, 0, true)
+	b.Groups = append(b.Groups, tw.Groups[0])
+	for _, p := range tw.Polys {
+		if p.Kind == citygml.Ground {
+			continue
+		}
+		p.Group = 1
+		b.Polys = append(b.Polys, p)
+	}
+	mc := config.ModelConfig{Parts: []config.PartRole{{Walls: "stone", Roof: "slate", XY: [2]float64{32, 2}}}}
+	part, _ := buildPart(b, mc, copperRule{}, 1.5, 0.1, nil, 1)
+	count := map[pb.ModelRole]int{}
+	for _, x := range part.Roles {
+		count[pb.ModelRole(x)]++
+	}
+	if count[pb.ModelRole_ROLE_SLATE] != 2 || count[pb.ModelRole_ROLE_STONE] != 8 || count[pb.ModelRole_ROLE_ROOF] != 2 ||
+		count[pb.ModelRole_ROLE_WALL] != 8 || count[pb.ModelRole_ROLE_COPPER] != 0 {
+		t.Fatalf("roles %v: want slate 2, stone 8 (tower), roof 2, wall 8 (block)", count)
+	}
+}
+
+// v4: a ground polygon far above the foot (the underside of a pod) is not the foot.
+func TestBuildPartFloatingGround(t *testing.T) {
+	b := box("_z", 0, 0, 10, 120, 250, false)
+	pod := []citygml.V3{{X: 30, Y: 30, Z: 330}, {X: 30, Y: 40, Z: 330}, {X: 40, Y: 40, Z: 330}, {X: 40, Y: 30, Z: 330}}
+	b.Polys = append(b.Polys, citygml.Poly{Kind: citygml.Ground, Rings: [][]citygml.V3{pod}})
+	part, _ := buildPart(b, config.ModelConfig{}, copperRule{groundFloat: 20}, 1.5, 0.1, flatTerrain(30), 2)
+	if part.AnchorX != 50 || part.AnchorY != 50 || part.BaseZDm != 300 {
+		t.Fatalf("anchor (%d, %d) base %d dm, want (50, 50) and 300 (the pod is not the foot)", part.AnchorX, part.AnchorY, part.BaseZDm)
+	}
+}

@@ -6029,6 +6029,10 @@ export class TuningModels {
   bridgeClearM: number;
   /** validate (v3): … nor this close below it (depth fight with the road) */
   bridgeBelowM: number;
+  /** citypack (v4): source ground this high above the lowest is an underside (Žižkov pods), not the foot */
+  groundFloatM: number;
+  /** citypack (v4): models.yaml `parts` also take faces of other groups inside the picked box + this */
+  partBoxSlackM: number;
 
   constructor(r: R) {
     this.enabled = r.b('enabled');
@@ -6056,6 +6060,8 @@ export class TuningModels {
     this.bridgeEndM = r.d('bridge_end_m');
     this.bridgeClearM = r.d('bridge_clear_m');
     this.bridgeBelowM = r.d('bridge_below_m');
+    this.groundFloatM = r.d('ground_float_m');
+    this.partBoxSlackM = r.d('part_box_slack_m');
   }
 
   toJson(): Record<string, unknown> {
@@ -6085,6 +6091,8 @@ export class TuningModels {
       bridge_end_m: this.bridgeEndM,
       bridge_clear_m: this.bridgeClearM,
       bridge_below_m: this.bridgeBelowM,
+      ground_float_m: this.groundFloatM,
+      part_box_slack_m: this.partBoxSlackM,
     };
   }
 }

@@ -206,12 +206,17 @@ atribuce „data base © IPR Praha“ (v manifestu „3D model: data base © IPR
 Licence: https://www.geoportalpraha.cz/en/data-and-services/open-data , popis dat:
 https://geoportalpraha.cz/en/data-and-services/articles-and-projects/3d-model/3d-model-budovy-mosty .
 Soubory po mapových listech 1 : 5000 jsou položky ArcGIS Online uživatele `opendatapraha`
-(`BD3_Prah_<list>` typu GML); Hrad pokrývá list **Praha 7-1** (`BD3_Prah_7-1.gml`, 172 MB):
+(`BD3_Prah_<list>` typu GML); Hrad a pilot pokrývá list **Praha 7-1** (`BD3_Prah_7-1.gml`, 172 MB),
+druhá dávka (H4) přidává **6-1** (Obecní dům s Prašnou bránou, 144 MB), **6-2** (Národní muzeum,
+Žižkovská věž, 182 MB) a **7-2** (Tančící dům, Vyšehrad, 120 MB):
 
 ```
 mkdir -p run/citypack/prague/raw/models
-curl -L -o run/citypack/prague/raw/models/BD3_Prah_7-1.gml \
-  https://www.arcgis.com/sharing/rest/content/items/88dc83fcd48c4ac9aec3532c19395d72/data
+d=run/citypack/prague/raw/models; u=https://www.arcgis.com/sharing/rest/content/items
+curl -L -o $d/BD3_Prah_7-1.gml $u/88dc83fcd48c4ac9aec3532c19395d72/data
+curl -L -o $d/BD3_Prah_6-1.gml $u/78e0a97afa514482b86aa7a53b3fdb4f/data
+curl -L -o $d/BD3_Prah_6-2.gml $u/fc9e5b3903d3454fb5c8d02f74179b6e/data
+curl -L -o $d/BD3_Prah_7-2.gml $u/94f085ef4a524a129f6bc2bae86f8c22/data
 run/bin/citypack -force models prague && run/bin/citypack pack prague && run/bin/citypack validate prague
 ```
 

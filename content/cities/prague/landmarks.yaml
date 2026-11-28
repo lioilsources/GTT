@@ -10,7 +10,7 @@ landmarks:
   - {id: national_museum, name: Národní muzeum, lat: 50.07910, lon: 14.43070, height_m: 70, hero: true}
   - {id: national_theatre, name: Národní divadlo, lat: 50.08100, lon: 14.41350, height_m: 34, hero: true}
   - {id: dancing_house, name: Tančící dům, lat: 50.07550, lon: 14.41410, height_m: 24, hero: true}
-  - {id: powder_tower, name: Prašná brána, lat: 50.08720, lon: 14.42750, height_m: 65, hero: true}
+  - {id: powder_tower, name: Prašná brána, lat: 50.08724, lon: 14.42776, height_m: 65, hero: true}
   - {id: municipal_house, name: Obecní dům, lat: 50.08750, lon: 14.42820, height_m: 30, hero: true}
   - {id: rudolfinum, name: Rudolfinum, lat: 50.09000, lon: 14.41530, height_m: 30, hero: true}
   - {id: petrin_tower, name: Petřínská rozhledna, lat: 50.08350, lon: 14.39510, height_m: 64, hero: true}
