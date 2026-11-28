@@ -179,3 +179,16 @@ Rudolfinum 0,5 m, Vyšehrad 0,5 m, Národní muzeum 1,1 m, radnice 2,2 m, Žižk
 0,5 m (Overture ho pokrývá jen z 22 %), rozhledna 4,2 m (malý půdorys, kraj rastru), Tančící dům
 bez srovnání (Overture ho nemá; bod památky 11 m od těžiště, budova je správná: roh Rašínova
 nábřeží a Resslovy, 24 × 33 m).
+
+**Nasazení a čas snímku** (PR #334, balíček `8ddc88702eee`, nasazený web, headless Chromium se
+SwiftShaderem, tedy CPU – jen poměr; dvě kola model zapnutý / vypnutý `tuning.models.enabled`,
+po 9 s):
+
+| Místo | model zapnutý p50 / p90 | vypnutý p50 / p90 | trojúhelníky scény |
+|---|---|---|---|
+| Celetná u Prašné brány (Obecní dům s bránou, radnice, Týn) | 72,1 / 84,9 a 76,7 / 87,3 ms | 70,7 / 76,4 a 72,4 / 99,2 ms | +1,4–2,7 tis., +1–2 draw cally |
+| Staroměstské náměstí (radnice, Týn, Rudolfinum) | 100 / 100 ms (strop) | 100 / 100 ms (strop) | v šumu provozu (208–235 tis.) |
+
+U Celetné p50 +2–6 %, p90 kolísá víc mezi koly vypnutého modelu než mezi stavy; na Staroměstském
+náměstí drží SwiftShader snímek na stropu 100 ms v obou stavech. Na telefonech měří Ol1n
+(`plans/verify.yaml` M7-H4).
