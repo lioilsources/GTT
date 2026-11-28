@@ -1,6 +1,6 @@
 # Modely památek
 
-**version: 3** · P2 (vzhled), data v citypacku · plán `Prompts/06-METROPOLE_LANDMARKS3D_PLAN.md` ·
+**version: 4** · P2 (vzhled), data v citypacku · plán `Prompts/06-METROPOLE_LANDMARKS3D_PLAN.md` ·
 pod-plán `plans/M7_PAMATKY.md` · parita F-085 · bez vektorů
 
 ## Účel
@@ -29,7 +29,7 @@ uložení se nemění, auto dál naráží do půdorysů vrstvy 0 v chuncích. �
 `Manifest.models_version` = 2 (v1 bez `surfaces` a bez role `slate`); 0 nebo chybějící soubor =
 žádné modely. Klient v1 čte balíček v2 dál (nové pole ignoruje, neznámou roli kreslí jako stěnu).
 V3 formát nemění (`models_version` zůstává 2): mění pipeline (mosty, převod souřadnic, `towers`,
-pořadí částí) a validate. Části jsou seřazené podle vzdálenosti kotvy od bodu památky (první je
+pořadí částí) a validate. V4 také ne (`models_version` 2): přidává jen `parts` v `models.yaml`. Části jsou seřazené podle vzdálenosti kotvy od bodu památky (první je
 nejblíž; klient staví sítě s chunkem první části). Část mostu má `source_id` = `bridge:<ID_BUD>`.
 
 ## Pravidla
@@ -39,13 +39,17 @@ vrchol části o (`exaggeration` − 1) × výšku roviny proložené zemí zdro
 (terén − pata) přes vrcholy země zdroje; vrcholy `foot`, pod kterými je terén níž, se pak sníží
 až na terén (z může být záporné), takže žádná stěna nevisí a do svahu se zahrabe jen horní strana.
 Bez terénu `base_z_dm` = 0 a pata zůstane rovná.
+V4: plocha `GroundSurface`, jejíž nejnižší bod je víc než `models.ground_float_m` nad nejnižší zemí
+budovy, je podhled (kabiny Žižkovské věže 70–130 m nad zemí), ne pata: nedává kotvu, rovinu země
+ani vrcholy `foot`. Dřív věž stála 58 m pod terénem.
 
 **Výška vrcholu (oba klienti):** `z = base_z + displayHeight(extrusionScale(z_v))` jako u střech
 budov, pro `z_v ≤ 0` přímo `base_z + z_v` (`specs/terrain.md` „Jednotná zobrazená výška“).
 
 **Role a barvy (v2).** Každá role má barvu `color.model.<day|night>.<role>` (`wall` omítka,
 `roof` taška, `copper` měděná patina, `stone` tmavý pískovec, `glass`, `gold`, `slate` břidlice
-nebo olovo), přepis `color.city.<id>.model<Role>` (jen den). V1 kreslila `wall` barvou `landmark`
+nebo olovo), přepis `color.city.<id>.model<Role>` (jen den). V4: `wall` teplá světlá omítka
+(#EBD6B0) a `copper` sytější patina (#5FA083), aby omítka nebyla bílá a kopule z ní vystoupila. V1 kreslila `wall` barvou `landmark`
 palety města, celý model pak byl zelený.
 Světlo po trojúhelnících jako u budov: svislá plocha `ambient + (1 − ambient) × max(0, n · slunce)`,
 vodorovná `roofLight`, mezi nimi podle sklonu (váha |n_z|).
@@ -54,10 +58,19 @@ vodorovná `roofLight`, mezi nimi podle sklonu (váha |n_z|).
 `walls` podle id budovy zdroje → `walls` podle id části. Střecha (`RoofSurface`): `roof` →
 `roles` podle id budovy → `copper`, je-li část věž („vyznacna vez na strese“, IPR) nebo štíhlá
 a vysoká, a místo mědi `towers` podle id budovy (v3: břidlicové špice Týna, mostecké věže; části
-IPR nemají `gml:id`) → `roles` podle id části (jen id různé od budovy). Štíhlá a vysoká část: ne instalace
+IPR nemají `gml:id`) → `roles` podle id části (jen id různé od budovy) → v4 `parts`. Štíhlá a vysoká část: ne instalace
 (`BuildingInstallation`), vrchol aspoň `models.copper_min_top_m` nad patou budovy a delší strana
 obálky půdorysu části nejvýš `models.copper_slender` × výška části (vrchol − nejnižší bod části).
 Stěny věží zůstávají stěnami své budovy (kámen katedrály), měď dostanou jen střechy a špice.
+
+**Části bez id (v4).** Části IPR nemají `gml:id`, proto `models.yaml` `parts: [{at: [lon, lat],
+walls: <role>, roof: <role>}]`: položka vybere skupinu (budova nebo část, ne instalace) s nejmenší
+obálkou půdorysu, která bod obsahuje, a její stěny dostanou `walls`, střechy `roof` (prázdné =
+beze změny); vyhrává nad vším výše. IPR odvozuje stěny od okapů a často je vede pod celou budovou,
+proto přepis platí i pro plochy jiných skupin (ne instalací), které celé leží v obálce vybrané
+skupiny rozšířené o `models.part_box_slack_m`. Bod mimo všechny skupiny = varování. Použití: Prašná brána jako část
+Obecního domu (kámen, břidlice), věž Staroměstské radnice, kopule Národního muzea (měď; na
+pravidlo štíhlosti je široká).
 
 **Fasáda (W, v2).** Bez fotografií, procedurálně v enginu (dynamická textura, kreslí se násobením
 barvy vrcholu, bílá = beze změny, barvy `color.modelFacade.<day|night>`):
@@ -142,6 +155,6 @@ silnicí v rozsahu `bridge_below_m` … `bridge_clear_m` (zakrytí, boj o hloubk
 ## Scénář
 Žádné vektory (P2, vzhled bez pravidel; vektory `vectors/` jsou jen P0). Pravidla rolí a
 štíhlosti hlídají tabulkové testy `tools/citypack` (`TestSurfaceRole`, v3 `TestSurfaceRoleTowers`,
-mosty `TestBuildBridgePart`, `TestClipBridgeRoads`), UV a barvy testy W
+mosty `TestBuildBridgePart`, `TestClipBridgeRoads`, v4 `TestBuildPartPartRoles`, `TestBuildPartFloatingGround`), UV a barvy testy W
 (`web/test/models.test.ts`). Ruční kontrola (`plans/verify.yaml`): u Hradu v šikmém pohledu je model,
 1 km od něj půdorys, přepnutí bez probliknutí; shora střešní plán.

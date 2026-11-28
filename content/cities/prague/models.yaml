@@ -1,8 +1,10 @@
 # Landmark models (specs/models.md, Prompts/06-METROPOLE_LANDMARKS3D_PLAN.md).
-# Source: IPR Praha 3D model of buildings, CityGML, map sheet 1:5000 "Praha 7-1" (BD3_Prah_7-1.gml),
-# downloaded to run/citypack/prague/raw/models/ (never into git; docs/citypack.md).
+# Source: IPR Praha 3D model of buildings, CityGML, map sheets 1:5000 "Praha 7-1" (the pilot), "Praha 6-1"
+# (Municipal House), "Praha 6-2" (National Museum, Žižkov tower) and "Praha 7-2" (Dancing House,
+# Vyšehrad), BD3_Prah_<sheet>.gml downloaded to run/citypack/prague/raw/models/ (never into git;
+# docs/citypack.md).
 source: ipr_praha_3d
-files: [BD3_Prah_7-1.gml]
+files: [BD3_Prah_7-1.gml, BD3_Prah_6-1.gml, BD3_Prah_6-2.gml, BD3_Prah_7-2.gml]
 models:
   prague_castle:
     # The castle grounds with St. Vitus Cathedral (plan K4): the landmark building plus the
@@ -35,11 +37,13 @@ models:
     towers: {_79878: slate}
   st_nicholas:
     # St. Nicholas (Malá Strana): the church (_76469) and its belfry (_77005, a separate building).
-    # Plaster walls, copper dome and roofs (green patina, as the belfry).
+    # Warm plaster walls, dark nave roof (slate); the dome (IPR tower part) and the belfry keep the
+    # copper of the tower rule, so the green dome stands out of the roof (Ol1n 2026-11-28: the
+    # all-copper roof made the church read as one pale box).
     select: {buffer_m: 0}
     include: [_76469, _77005]
     exclude: []
-    roles: {_76469: copper, _77005: copper}
+    roles: {_76469: slate}
   national_theatre:
     # The National Theatre (_89947): plaster walls, dark slate roof (the real one is dark blue
     # with gold stars; the slate token is the nearest colour without a new role).
@@ -62,3 +66,79 @@ models:
     roles: {_81184: slate, _78361: slate, _78667: slate, "bridge:1000484": stone}
     walls: {_81184: stone, _78361: stone, _78667: stone, "bridge:1000484": stone}
     towers: {_81184: slate, _78361: slate}
+  # Batch 2 (plan H4, 2026-11-28), the most visible hero landmarks after the pilot.
+  old_town_hall:
+    # Old Town Hall (_80697): the houses of the hall keep plaster and tiled roofs, the tower is
+    # stone with a dark roof and dark corner turrets (`towers`). The astronomical clock is a
+    # facade detail the source does not have.
+    select: {buffer_m: 0}
+    include: [_80697]
+    exclude: []
+    towers: {_80697: slate}
+    parts:
+      - {at: [14.42067, 50.08704], walls: stone, roof: slate}   # the tower
+  municipal_house:
+    # Municipal House with the Powder Tower: one source building (_80330, sheet 6-1), the tower
+    # is its part, so powder_tower has no model of its own (plans/M7_PAMATKY.md). Plaster walls,
+    # dark roofs, copper domes (tower rule); the Powder Tower blackened stone with a slate roof
+    # and slate pinnacles.
+    select: {buffer_m: 0}
+    include: [_80330]
+    exclude: []
+    roles: {_80330: slate}
+    parts:
+      - {at: [14.427757, 50.087241], walls: stone, roof: slate}   # Powder Tower
+      - {at: [14.427875, 50.087283], walls: stone, roof: slate}   # its four pinnacles
+      - {at: [14.427816, 50.087165], walls: stone, roof: slate}
+      - {at: [14.427652, 50.087205], walls: stone, roof: slate}
+      - {at: [14.427714, 50.087310], walls: stone, roof: slate}
+  rudolfinum:
+    # Rudolfinum (_74123): light sandstone (the plaster colour), dark roof.
+    select: {buffer_m: 0}
+    include: [_74123]
+    exclude: []
+    roles: {_74123: slate}
+  national_museum:
+    # National Museum, historical building (_95801, sheet 6-2): light sandstone walls, dark roofs
+    # and corner cupolas, copper main dome with its lantern (the dome is too wide for the slender
+    # rule, hence `parts`).
+    select: {buffer_m: 0}
+    include: [_95801]
+    exclude: []
+    roles: {_95801: slate}
+    parts:
+      - {at: [14.430752, 50.079165], roof: copper}   # main dome
+      - {at: [14.430677, 50.079091], roof: copper}   # lantern
+  dancing_house:
+    # Dancing House (_100345, sheet 7-2): architecture only (R10), light walls, metal roof (slate).
+    select: {buffer_m: 0}
+    include: [_100345]
+    exclude: []
+    roles: {_100345: slate}
+    towers: {_100345: slate}
+  zizkov_tower:
+    # Žižkov TV tower (_95923, sheet 6-2): three steel tubes and the pods, metallic grey (glass
+    # role), dark tops.
+    select: {buffer_m: 0}
+    include: [_95923]
+    exclude: []
+    walls: {_95923: glass}
+    roles: {_95923: slate}
+    towers: {_95923: slate}
+  petrin_tower:
+    # Petřín Lookout Tower (_82876): the source draws the steel lattice as a solid octagonal
+    # frustum; rust-brown paint (roof role colour on the walls), dark top.
+    select: {buffer_m: 0}
+    include: [_82876]
+    exclude: []
+    walls: {_82876: roof}
+    roles: {_82876: slate}
+  vysehrad:
+    # Basilica of St. Peter and St. Paul (_121789, sheet 7-2): stone walls, dark roof, the two
+    # openwork spires dark stone (`towers`, not copper).
+    select: {buffer_m: 0}
+    include: [_121789]
+    exclude: []
+    roles: {_121789: slate}
+    walls: {_121789: stone}
+    towers: {_121789: slate}

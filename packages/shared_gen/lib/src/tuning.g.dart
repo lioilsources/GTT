@@ -6382,7 +6382,9 @@ class TuningModels {
         roofSeamM = r.d('roof_seam_m'),
         bridgeEndM = r.d('bridge_end_m'),
         bridgeClearM = r.d('bridge_clear_m'),
-        bridgeBelowM = r.d('bridge_below_m');
+        bridgeBelowM = r.d('bridge_below_m'),
+        groundFloatM = r.d('ground_float_m'),
+        partBoxSlackM = r.d('part_box_slack_m');
 
   bool enabled;
 
@@ -6455,6 +6457,12 @@ class TuningModels {
   /// validate (v3): … nor this close below it (depth fight with the road)
   double bridgeBelowM;
 
+  /// citypack (v4): source ground this high above the lowest is an underside (Žižkov pods), not the foot
+  double groundFloatM;
+
+  /// citypack (v4): models.yaml `parts` also take faces of other groups inside the picked box + this
+  double partBoxSlackM;
+
   Map<String, Object> toJson() => {
         'enabled': enabled,
         'max_tris': maxTris,
@@ -6481,5 +6489,7 @@ class TuningModels {
         'bridge_end_m': bridgeEndM,
         'bridge_clear_m': bridgeClearM,
         'bridge_below_m': bridgeBelowM,
+        'ground_float_m': groundFloatM,
+        'part_box_slack_m': partBoxSlackM,
       };
 }

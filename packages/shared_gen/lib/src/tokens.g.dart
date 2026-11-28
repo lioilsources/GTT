@@ -146,9 +146,9 @@ abstract final class Tokens {
   static const int colorWaterSmall = 0xFF9CC8EE;
   static const int colorWaterShore = 0xFF86BDEA;
   static const int colorWaterLine = 0xFF2A5A8E;
-  static const int colorModelDayWall = 0xFFE8E0CE;
+  static const int colorModelDayWall = 0xFFEBD6B0;
   static const int colorModelDayRoof = 0xFF8C4B3A;
-  static const int colorModelDayCopper = 0xFF78A890;
+  static const int colorModelDayCopper = 0xFF5FA083;
   static const int colorModelDayStone = 0xFF7A6F5E;
   static const int colorModelDayGlass = 0xFF8FB3C9;
   static const int colorModelDayGold = 0xFFD8B04A;

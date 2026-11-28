@@ -108,3 +108,74 @@ po 9 s):
 
 Rozdíl je v šumu (SwiftShader drží snímek u stropu 100 ms, p99 je saturované). Na telefonech
 měří Ol1n (`plans/verify.yaml` M7-H1b).
+
+## H2c – fotografická textura (zkouška, odložená)
+
+**Rozhodnutí Ol1na 2026-11-28:** zůstává kreslená procedurální fasáda (H2b); fotografická textura
+z IPR „Fotorealistický 3D model“ (CC BY 4.0) je odložená.
+
+- **Zkouška:** bake fotografií na LOD2 katedrály sv. Víta, textura 1024² a 2048²; balíček +0,3–1 MB,
+  paměť GPU 5,6–22 MB, čas snímku v šumu.
+- **Proč odloženo:** tmavé a zrnité, jiné slunce než ve hře, nesedí stylem města, věže bez mědi,
+  v noci bez oken.
+- **Kód:** větve `web/photo-texture-trial` a `shared/photo-texture-bake`, bez PR.
+- **Případné zavedení:** jen hero památky, 1024² v KTX2, auto-expozice a míchání s barvou role,
+  krok `citypack models-photo` s vlastní specifikací.
+
+## H1c – oprava sv. Mikuláše (specs/models.md v4, 2026-11-28)
+
+Podnět Ol1n: „Chrám svatého Mikuláše je mimo, je to budova celá v bílé.“ **Ověřeno:** výběr je
+správný (kostel `_76469` a zvonice `_77005`, jezuitská kolej `_75652` a sousední domy ve výběru
+nejsou), model sedí na bodu památky (kotva < 1 m, střešní plán proti půdorysům Overture posun 3,5 m,
+tj. v šumu kreslení Overture). **Příčina:** materiály. `roles: {_76469: copper}` dávalo měď všem
+střechám, takže střecha lodi i kopule byly jedna světle zelená plocha a světlá stěna `#E8E0CE`
+s okenní texturou ve hře vypadala bíle; z Mostecké (pozice snímků H1b) je navíc kopule nad horním
+okrajem obrazu a vidět je jen loď. **Oprava:** střecha lodi `slate` (tmavá), kopule (věž IPR)
+a zvonice dál měď z pravidla věží, `color.model.day.wall` teplá světlá omítka `#EBD6B0`,
+`color.model.day.copper` sytější patina `#5FA083` (platí pro všechny modely: paláce Hradu, Národní
+divadlo jsou také omítka). Snímky před a po z Karmelitské (−1217, −201), odkud je kopule vidět.
+
+## H4 – druhá dávka (specs/models.md v4, 2026-11-28)
+
+Plán 06 další pořadí neuvádí (H4: „ostatní hero památky“), dávka = nejviditelnější hero památky.
+**Data:** listy IPR **6-1** (Obecní dům), **6-2** (Národní muzeum, Žižkovská věž) a **7-2** (Tančící
+dům, Vyšehrad) vedle 7-1 (radnice, Rudolfinum, Petřín), `docs/citypack.md`. Rozhledna i vysílač
+**jsou** ve 3D modelu budov (žádná jiná sada ani ruční popis): rozhledna jako plný osmiboký
+komolý jehlan (mřížku zdroj nemá), věž jako tři tubusy s kabinami.
+
+| Památka | Zdroj | Materiály | Trojúhelníky |
+|---|---|---|---|
+| `old_town_hall` | `_80697` (7-1) | domy omítka, taškové střechy; věž kámen, tmavá střecha a vížky (`parts`, `towers`) | 466 |
+| `municipal_house` | `_80330` (6-1), **včetně Prašné brány** | omítka, tmavé střechy, měděné kopulky; brána kámen, břidlice, 4 vížky (`parts`) | 1 750 |
+| `rudolfinum` | `_74123` (7-1) | světlý pískovec (omítka), tmavá střecha | 417 |
+| `national_museum` | `_95801` (6-2) | světlé zdi, tmavé střechy a nárožní kopulky, měděná hlavní kopule a lucerna (`parts`) | 1 248 |
+| `dancing_house` | `_100345` (7-2) | světlé zdi, kovová střecha (`slate`); jen architektura (R10) | 441 |
+| `zizkov_tower` | `_95923` (6-2) | kovově šedé tubusy (role `glass`), tmavé střechy kabin | 836 |
+| `petrin_tower` | `_82876` (7-1) | rezavě hnědá (role `roof` na stěnách), tmavý vrchol | 166 |
+| `vysehrad` | `_121789` (7-2) | kámen, tmavá střecha, tmavé věže (`towers`) | 190 |
+
+Celkem s pilotem **13 modelů, 17 230 trojúhelníků** (limit města 120 000), `models.pb`
+**134,2 kB** po gzipu (limit 1,5 MB). Žádná nová výjimka z `max_tris` (výjimky dál jen Hrad 12 000
+a Karlův most 6 000, zdůvodněné výše).
+
+**Prašná brána a Obecní dům** jsou ve zdroji jedna budova `_80330` (brána je její `BuildingPart`
+„vyznacna vez na strese“), výběr jde po budovách. Model nese id `municipal_house`; `powder_tower`
+vlastní model nemá, je jeho součástí. Bod `powder_tower` v `landmarks.yaml` ležel 19 m západně
+od brány a `buildings` mu přiřadil sousední blok v Celetné (72 × 55 m), který pak stál jako 65m
+zelená věž; bod je teď na bráně (50,08724, 14,42776 podle IPR, souhlasí s částmi Overture brány).
+
+**Nové v pipeline (v4, formát beze změny):** `models.yaml` `parts` přepíše role jedné části budovy
+podle bodu (části IPR nemají `gml:id`; stěny vede IPR často pod celou budovou, proto i plochy jiných
+skupin v obálce části); podhledy `GroundSurface` výš než `ground_float_m` (20 m) nad nejnižší zemí
+nejsou pata – Žižkovská věž dřív stála 58 m pod terénem.
+
+**Co ve zdroji chybí:** orloj (fasádní detail, LOD2 ho nemá), mřížka rozhledny, sochy a zábradlí
+Rudolfina; Tančící dům je v Overture jen 6 × 5 m úlomek, model ho poprvé ukazuje celý.
+Zbývá z 20 hero: Hlavní nádraží, Staronová synagoga, Klementinum, Vítkov (plochy Staroměstské
+a Václavské náměstí model nepotřebují).
+
+**Poloha** (posun střešního plánu proti půdorysům Overture s největším překryvem, rastr 0,5 m):
+Rudolfinum 0,5 m, Vyšehrad 0,5 m, Národní muzeum 1,1 m, radnice 2,2 m, Žižkov 0,7 m, Obecní dům
+0,5 m (Overture ho pokrývá jen z 22 %), rozhledna 4,2 m (malý půdorys, kraj rastru), Tančící dům
+bez srovnání (Overture ho nemá; bod památky 11 m od těžiště, budova je správná: roh Rašínova
+nábřeží a Resslovy, 24 × 33 m).
