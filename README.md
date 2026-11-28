@@ -21,7 +21,7 @@ Zadání: [Prompts/](Prompts/) (00–05), postup: [plans/PROGRESS.md](plans/PROG
 | Testy | 1787 / 1787 prochází (2026-11-23T10:59) |
 | Funkce (`parity.yaml`) | 75 v obou klientech, 6 jen web, 0 jen Flutter, 3 rozpracováno |
 
-_Stav k 2026-11-27, generuje `metro progress`._
+_Stav k 2026-11-28, generuje `metro progress`._
 <!-- /metro:status -->
 
 ## Parametry URL (web)
