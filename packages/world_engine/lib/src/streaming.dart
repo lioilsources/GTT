@@ -11,13 +11,20 @@ import 'model.dart';
 import 'style_geometry.dart';
 
 class LoadedChunk {
-  LoadedChunk(this.data)
+  LoadedChunk(this.data, {this.hidden = const {}})
     : ground = {
         for (final g in data.ground) g.kind: ui.Vertices.raw(ui.VertexMode.triangles, g.xy, indices: g.indices),
       };
 
   final ChunkData data;
   final Map<GroundKind, ui.Vertices> ground;
+
+  /// Buildings a landmark roof plan stands in for (specs/models.md): `Chunk.buildings` indices.
+  /// They are not drawn and cast no shadow; [ChunkData.buildings] keeps them for collisions.
+  final Set<int> hidden;
+
+  /// Whether [b] of this chunk is drawn (not replaced by a landmark model).
+  bool shows(BuildingData b) => hidden.isEmpty || !hidden.contains(b.index);
 
   int get key => City.chunkKey(data.x, data.y);
 
@@ -33,7 +40,7 @@ class LoadedChunk {
     _disposeShadows();
     _shadowKey = k;
     return _shadows = [
-      for (final m in buildShadowMeshes(data.buildings, dirX: dirX, dirY: dirY, ratio: ratio, maxM: maxM))
+      for (final m in buildShadowMeshes(data.buildings.where(shows), dirX: dirX, dirY: dirY, ratio: ratio, maxM: maxM))
         ui.Vertices.raw(ui.VertexMode.triangles, m.xy, indices: m.indices),
     ];
   }
@@ -71,6 +78,9 @@ class ChunkStreamer {
   bool _disposed = false;
 
   Iterable<LoadedChunk> get chunks => loaded.values;
+
+  /// Buildings of chunk [key] hidden behind a landmark roof plan; none with `models.enabled` off.
+  Set<int> hiddenIn(int key) => tuning.models.enabled ? (city.replaced[key] ?? const {}) : const {};
 
   List<(int, int)> wanted(double x, double y, double heading) => window.wanted(x, y, heading);
 
@@ -113,7 +123,7 @@ class ChunkStreamer {
       final bytes = await source.read(chunkPath(cx, cy));
       final data = await compute(prepareChunk, bytes, debugLabel: 'chunk $cx,$cy');
       if (_disposed || loaded.containsKey(key)) return;
-      final c = LoadedChunk(data);
+      final c = LoadedChunk(data, hidden: hiddenIn(key));
       loaded[key] = c;
       _failedAt.remove(key);
       onLoaded?.call(c);
