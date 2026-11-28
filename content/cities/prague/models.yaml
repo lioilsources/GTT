@@ -1,7 +1,7 @@
 # Landmark models (specs/models.md, Prompts/06-METROPOLE_LANDMARKS3D_PLAN.md).
 # Source: IPR Praha 3D model of buildings, CityGML, map sheets 1:5000 "Praha 7-1" (the pilot), "Praha 6-1"
 # (Municipal House), "Praha 6-2" (National Museum, Žižkov tower) and "Praha 7-2" (Dancing House,
-# Vyšehrad), BD3_Prah_<sheet>.gml downloaded to run/citypack/prague/raw/models/ (never into git;
+# Vyšehrad; batch 3: Main Station, Vítkov), BD3_Prah_<sheet>.gml downloaded to run/citypack/prague/raw/models/ (never into git;
 # docs/citypack.md).
 source: ipr_praha_3d
 files: [BD3_Prah_7-1.gml, BD3_Prah_6-1.gml, BD3_Prah_6-2.gml, BD3_Prah_7-2.gml]
@@ -142,3 +142,38 @@ models:
     roles: {_121789: slate}
     walls: {_121789: stone}
     towers: {_121789: slate}
+  # Batch 3 (plan H4, 2026-11-28): the last hero landmarks with a building.
+  main_station:
+    # Prague Main Station, the historical Fanta building (_88777, sheet 6-1): the domed hall, its
+    # two towers, both wings and the end pavilions. The platform halls (_88812, _89138) and the
+    # flat canopy along the wing (_89197) stay footprints. Light plaster walls, dark roofs, dark
+    # towers and dome (`towers`, not copper).
+    select: {buffer_m: 0}
+    include: [_88777]
+    exclude: [_89197]
+    roles: {_88777: slate}
+    towers: {_88777: slate}
+  old_new_synagogue:
+    # Old New Synagogue (_75255, sheet 7-1): the free-standing hall with its steep saddle roof and
+    # the low annexes; dark brick-stone walls (stone), dark tiled roof (roof). The Jewish Town Hall
+    # next door (_75717) is not part of it.
+    select: {buffer_m: 0}
+    include: [_75255]
+    exclude: [_74917]
+    walls: {_75255: stone}
+  klementinum:
+    # Klementinum (sheet 7-1): the block between Křižovnická, Karlova and Platnéřská – the west
+    # wing with St. Salvator (_80023, _81330), the east wing with the Astronomical Tower (_80104),
+    # St. Clement (_81335) and the oval Italian Chapel (_81581). Plaster walls, tiled roofs, the
+    # tower roofs copper (tower rule).
+    select: {buffer_m: 0}
+    include: [_80023, _80104, _81330, _81335, _81581]
+    exclude: []
+  vitkov:
+    # National Memorial on Vítkov Hill (_82507, sheet 6-1) with the terrace of the equestrian
+    # statue in front of it (_82623): light granite walls and flat roofs (the light wall colour on
+    # both, `roles`).
+    select: {buffer_m: 0}
+    include: [_82507, _82623]
+    exclude: []
+    roles: {_82507: wall, _82623: wall}

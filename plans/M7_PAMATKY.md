@@ -171,8 +171,8 @@ nejsou pata – Žižkovská věž dřív stála 58 m pod terénem.
 
 **Co ve zdroji chybí:** orloj (fasádní detail, LOD2 ho nemá), mřížka rozhledny, sochy a zábradlí
 Rudolfina; Tančící dům je v Overture jen 6 × 5 m úlomek, model ho poprvé ukazuje celý.
-Zbývá z 20 hero: Hlavní nádraží, Staronová synagoga, Klementinum, Vítkov (plochy Staroměstské
-a Václavské náměstí model nepotřebují).
+Zbývající hero památky s budovou přidala třetí dávka (H4c níže); plochy Staroměstského
+a Václavského náměstí model nepotřebují.
 
 **Poloha** (posun střešního plánu proti půdorysům Overture s největším překryvem, rastr 0,5 m):
 Rudolfinum 0,5 m, Vyšehrad 0,5 m, Národní muzeum 1,1 m, radnice 2,2 m, Žižkov 0,7 m, Obecní dům
@@ -192,3 +192,39 @@ po 9 s):
 U Celetné p50 +2–6 %, p90 kolísá víc mezi koly vypnutého modelu než mezi stavy; na Staroměstském
 náměstí drží SwiftShader snímek na stropu 100 ms v obou stavech. Na telefonech měří Ol1n
 (`plans/verify.yaml` M7-H4).
+
+## H4c – třetí dávka (specs/models.md v4, 2026-11-28)
+
+Poslední hero památky s budovou. **Data:** listy, které už balíček čte (6-1 nádraží a Vítkov, 7-1
+synagoga a Klementinum), formát ani spec beze změny, jen `models.yaml` a dva body v `landmarks.yaml`.
+
+| Památka | Zdroj | Materiály | Trojúhelníky |
+|---|---|---|---|
+| `main_station` | `_88777` (6-1): historická Fantova budova – kupolová hala, dvě věže, křídla, koncové pavilony | světlá omítka, tmavé střechy, kupole a věže (`roles`, `towers` slate) | 906 |
+| `old_new_synagogue` | `_75255` (7-1): samostatná síň se strmou sedlovou střechou a nízkými přístavky | tmavý kámen (`stone`), tmavá tašková střecha (`roof`) | 41 |
+| `klementinum` | `_80023`, `_80104` (s Astronomickou věží), `_81330` (sv. Salvátor), `_81335` (sv. Kliment), `_81581` (Vlašská kaple) | omítka, taškové střechy, měděné střechy věží (pravidlo věží) | 1 748 |
+| `vitkov` | `_82507` památník, `_82623` terasa jezdecké sochy před ním | světlý kámen: barva `wall` na zdech i plochých střechách (`roles`) | 337 |
+
+Celkem **17 modelů, 20 262 trojúhelníků** (limit města 120 000), `models.pb` **162,7 kB** po
+gzipu (limit 1,5 MB), Klementinum 231 polygonů střešního plánu (limit 400). Žádná nová výjimka
+z `max_tris`.
+
+**Co výběr nebere:** u nádraží nástupištní haly (`_88812`, `_89138`, ~1 300 ploch) a plochou
+markýzu podél křídla (`_89197`, `exclude`); u synagogy dům v Pařížské (`_74917`, `exclude`),
+Židovskou radnici a Vysokou synagogu; u Klementina domy přes Karlovu a dvě drobné stavby na
+nádvoří pod 8 m; u Vítkova dva sloupky před terasou a nízký objekt severně. Socha Žižky ve zdroji
+není (jen terasa s podstavcem).
+
+**Body památek.** `buildings` přiřazuje památce nejbližší budovu Overture do 40 m a `replaces` ji
+pak vždy skryje. Bod synagogy ležel v Pařížské (33 m od síně) a vybral sousední dům, bod Vítkova
+20 m severně od památníku; oba jsou teď na budově (synagoga 50,09007 / 14,41859, Vítkov
+50,08850 / 14,44994 podle IPR).
+
+**Poloha** (posun střešního plánu proti vlastním půdorysům Overture, rastr 0,5 m, `lmpb/fit.py`
+jen s budovami Overture krytými modelem z poloviny): Staronová synagoga 0 m (IoU 0,93),
+Klementinum 0 m (IoU 0,78), Vítkov 0,7 m (Overture pokrývá jen půlku), Hlavní nádraží 2,1 m
+(IoU 0,83 → 0,90).
+
+**Snímky** před / po z nasazeného webu (šikmý pohled, auto stojí): nádraží z Vrchlického sadů
+(790, −660), synagoga z Pařížské (−200, 370), Klementinum z Křižovnické u Mánesova mostu
+(−425, 150), Vítkov z Husitské (2050, 10). Balíček `pack-prague-8a8b3c940ff0` (3,6 MB tar.gz).

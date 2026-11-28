@@ -208,7 +208,8 @@ https://geoportalpraha.cz/en/data-and-services/articles-and-projects/3d-model/3d
 Soubory po mapových listech 1 : 5000 jsou položky ArcGIS Online uživatele `opendatapraha`
 (`BD3_Prah_<list>` typu GML); Hrad a pilot pokrývá list **Praha 7-1** (`BD3_Prah_7-1.gml`, 172 MB),
 druhá dávka (H4) přidává **6-1** (Obecní dům s Prašnou bránou, 144 MB), **6-2** (Národní muzeum,
-Žižkovská věž, 182 MB) a **7-2** (Tančící dům, Vyšehrad, 120 MB):
+Žižkovská věž, 182 MB) a **7-2** (Tančící dům, Vyšehrad, 120 MB); třetí dávka (Hlavní nádraží
+a Vítkov v 6-1, Staronová synagoga a Klementinum v 7-1) nový list nepotřebuje:
 
 ```
 mkdir -p run/citypack/prague/raw/models
